@@ -16,17 +16,17 @@ A trip represents a journey taken by a Mobility as a Service customer with a geo
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
-| Company Name | String | Required | |
-| Device Type | String | Required | | 
-| Unique ID | UUID | Required | | 
-| Trip Duration | Integer | Required | Time, in Seconds | 
-| Trip Distance | Integer | Required | Trip Distance, in Meters | 
-| Start Point | Point | Required | | 
-| End Point | Point | Required | | 
-| Route | Line | Optional | | 
-| Device ID | UUID | Required | | 
-| Start Time | Unix Timestamp | Required | | 
-| End Time | Unix Timestamp | Required | |
+| `company_name` | String | Required | |
+| `device_type` | String | Required | | 
+| `trip_id` | UUID | Required | | 
+| `trip_duration` | Integer | Required | Time, in Seconds | 
+| `trip_distance` | Integer | Required | Trip Distance, in Meters | 
+| `start_point` | Point | Required | | 
+| `end_point` | Point | Required | | 
+| `route` | Line | Optional | | 
+| `device_id` | UUID | Required | | 
+| `start_time` | Unix Timestamp | Required | | 
+| `end_time` | Unix Timestamp | Required | |
 
 
 ## System Data / Avaliabity Data 
@@ -35,12 +35,12 @@ The following data standard is for avaliability data. The API should return the 
 
 | Field | Type | Required/Optional | Other | 
 | ----- | ---- | ----------------- | ----- | 
-| Device Type | String | Required | | 
-| Avaliability Start | Unix Timestamp | Required | | 
-| Avaliability End | Unix Timestamp | Required |  | 
-| Placement Reason | String | Required | Reason for placement (Rebalancing, Drop off, etc) | 
-| Pickup Reason | String | Required | Reason for removal (matience, pick up) | 
-| Associated Trips | UUID | Optional | list of associated trips | 
+| `device_type` | String | Required | | 
+| `avaliability_start_time` | Unix Timestamp | Required | | 
+| `avaliability_end_time` | Unix Timestamp | Required |  | 
+| `placement_reason` | String | Required | Reason for placement (Rebalancing, Drop off, etc) | 
+| `pickup_reason` | String | Required | Reason for removal (matience, pick up) | 
+| `associated_trips` | [UUID] | Optional | list of associated trips | 
 
 
 
