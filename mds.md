@@ -2,34 +2,43 @@
 
 The Mobility Data Standard defines data standards for Mobility as a Service Providers in working with the LADOT to meet in order to ensure timely and shared access to data. 
 
+The MDS is a an API specification. All providers who comply with the MDS should provide a way of getting authenticated access via an API key to LADOT. Providers are responsible for documenting their own API. 
+
 * Authors: Hunter Owens, Jose Elias, Marcel Porras 
 
-* Date: 3 May 2017 
+* Date: 3 May 2018 
 
 * Version: ALPHA 
 
-## Sections 
+# Sections 
 
 ## Trip Data
 
-A trip represents a journey taken by a Mobility as a Service customer with a geotagged start and stop point. The follow data to be provided via a RESTful API for Trip Data. The API should allow to query trips at least by ID, GeoFence for start or end, and time. The following fields to be provided. 
+An MDS compatable API should expose an endpoint `/trips` that allows a user to query historical trip data. The API endpoint may be paginated. 
+
+A trip represents a journey taken by a Mobility as a Service customer with a geotagged start and stop point. The follow data to be provided via a RESTful API for Trip Data. The API should allow to query trips at least by ID, GeoFence for start or end, and time. The following fields to be provided. All fields should use `lower_case_with_underscores` to implement the API. Pagination is allowed.  
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
 | `company_name` | String | Required | |
 | `device_type` | String | Required | | 
-| `trip_id` | UUID | Required | | 
+| `trip_id` | UUID | Required | a unique ID for each trip | 
 | `trip_duration` | Integer | Required | Time, in Seconds | 
 | `trip_distance` | Integer | Required | Trip Distance, in Meters | 
 | `start_point` | Point | Required | | 
 | `end_point` | Point | Required | | 
 | `route` | Line | Optional | | 
+| `sample_rate` | Integer | Optional | The frequency, in seconds, in which the route is sampled | 
 | `device_id` | UUID | Required | | 
 | `start_time` | Unix Timestamp | Required | | 
 | `end_time` | Unix Timestamp | Required | |
+| `standard_cost` | Integer | Optional | The cost, in cents that it would cost to perform that trip in the standard operation of the System. | 
+| `actual_cost` | Integer | Optional | The actual cost paid by the user of the Mobility as a server provider | 
 
 
 ## System Data / Avaliabity Data 
+
+An MDS compatable API should expose an endpoint `/avalibilty` that reports on historical avaliability data. 
 
 The following data standard is for avaliability data. The API should return the avaliabity for a system a time range. The API should allow queries at least by time period, geographical areas. 
 
@@ -37,13 +46,12 @@ The following data standard is for avaliability data. The API should return the 
 | ----- | ---- | ----------------- | ----- | 
 | `device_type` | String | Required | | 
 | `avaliability_start_time` | Unix Timestamp | Required | | 
-| `avaliability_end_time` | Unix Timestamp | Required |  | 
+| `avaliability_end_time` | Unix Timestamp | Required | If a device is still avalible, use NaN  | 
 | `placement_reason` | String | Required | Reason for placement (Rebalancing, Drop off, etc) | 
 | `pickup_reason` | String | Required | Reason for removal (matience, pick up) | 
 | `associated_trips` | [UUID] | Optional | list of associated trips | 
 
 
-
-
 ## Metrics 
 
+## S
