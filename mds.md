@@ -36,10 +36,10 @@ The following data standard is for avaliability data. The API should return the 
 | Field | Type | Required/Optional | Other | 
 | ----- | ---- | ----------------- | ----- | 
 | `device_type` | String | Required | | 
-| `avaliability_start_time` | Unix Timestamp | Required | | 
-| `avaliability_end_time` | Unix Timestamp | Required |  | 
+| `availability_start_time` | Unix Timestamp | Required | | 
+| `availability_end_time` | Unix Timestamp | Required |  | 
 | `placement_reason` | String | Required | Reason for placement (Rebalancing, Drop off, etc) | 
-| `pickup_reason` | String | Required | Reason for removal (matience, pick up) | 
+| `pickup_reason` | String | Required | Reason for removal (maintenance, pick up) | 
 | `associated_trips` | [UUID] | Optional | list of associated trips | 
 
 
