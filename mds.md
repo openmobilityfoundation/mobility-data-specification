@@ -47,11 +47,31 @@ The following data standard is for avaliability data. The API should return the 
 | `device_type` | String | Required | | 
 | `avaliability_start_time` | Unix Timestamp | Required | | 
 | `avaliability_end_time` | Unix Timestamp | Required | If a device is still avalible, use NaN  | 
-| `placement_reason` | String | Required | Reason for placement (Rebalancing, Drop off, etc) | 
-| `pickup_reason` | String | Required | Reason for removal (matience, pick up) | 
+| `placement_reason` | Enum | Required | Reason for placement (Rebalancing, Drop off, etc) | 
+| `pickup_reason` | Enum | Required | Reason for removal (matience, pick up) | 
 | `associated_trips` | [UUID] | Optional | list of associated trips | 
 
 
+### Avaliabity Enum Definitions 
+For `placement_reason`, options are `user_drop_off`, `rebalancing_drop_off`. 
+
+For `pickup_reason`, options are `user_pick_up`, `rebalacing_pick_up`, `out_of_service_area_pick_up`, `matienence_pick_up`. 
+
+### Realtime Data
+All MDS compatable APIs should expose a NBFS feed as well. For historical 
+
+_TK TK_ how to access NBFS historical feeds via API. 
+
 ## Metrics 
 
-## S
+All MDS compatable APIs should expose a list of Service Areas over time at the `/service_areas` endpoint. The follow fields should be included in the response. 
+
+| Field | Type | Required/Optional | Other | 
+| ----- | ---- | ----------------- | ----- | 
+| `operator_name` | String | Required |  |
+| `service_area_id` | UUID | Required |  | 
+| `service_start_date` | Unix Timestamp | Required | Date at which this service area became effective | 
+| `service_end_date` | Unix Timestamp | Required | Date at which this service area was replaced. If current effictive, place NaN | 
+| `service_area` | MultiPolygon | Required | | 
+| `prior_service_area` | UUID | Optional | If exists, the UUID of the prior service area. | 
+| `replacement_service_area` | UUID | Optional | If exists, the UUID of the service area that replaced this one | 
