@@ -48,14 +48,14 @@ The following data standard is for avaliability data. The API should return the 
 | `avaliability_start_time` | Unix Timestamp | Required | | 
 | `avaliability_end_time` | Unix Timestamp | Required | If a device is still avalible, use NaN  | 
 | `placement_reason` | Enum | Required | Reason for placement (Rebalancing, Drop off, etc) | 
-| `pickup_reason` | Enum | Required | Reason for removal (matience, pick up) | 
-| `associated_trips` | [UUID] | Optional | list of associated trips | 
+| `pickup_reason` | Enum | Required | Reason for removal (maintenance, pick up) | 
+| `associated_trips` | [UUID] | Optional | list of associated maintenance | 
 
 
 ### Avaliabity Enum Definitions 
 For `placement_reason`, options are `user_drop_off`, `rebalancing_drop_off`. 
 
-For `pickup_reason`, options are `user_pick_up`, `rebalacing_pick_up`, `out_of_service_area_pick_up`, `matienence_pick_up`. 
+For `pickup_reason`, options are `user_pick_up`, `rebalacing_pick_up`, `out_of_service_area_pick_up`, `maintenance_pick_up`. 
 
 ### Realtime Data
 All MDS compatable APIs should expose a NBFS feed as well. For historical 
