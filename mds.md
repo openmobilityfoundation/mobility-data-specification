@@ -59,11 +59,11 @@ INPUT
 | ----- | -------- | ----------------- | ----- |
 | `provider_id` | String | Required | Issued by Provider Registration API |
 | `API_KEY` | String | Required | API_Key issued to provider using API Key Regisration API |
-| `vehicle_type` | Enum |  | Vehicle Type |
-| `vehicle_year` | Enum |  | Year Manufacturered |
-| `vehicle_mfgr` | Enum |  | Vehicle Manufacturer |
-| `vehicle_model` | Enum |  | Vehicle Model |
-| `VIN` | Enum |  | Vehicle Identification Number assigned my Manufacturer |
+| `vehicle_type` | Enum | Required | Vehicle Type |
+| `vehicle_year` | Enum | Required | Year Manufacturered |
+| `vehicle_mfgr` | Enum | Required | Vehicle Manufacturer |
+| `vehicle_model` | Enum | Required | Vehicle Model |
+| `VIN` | Enum | Required | Vehicle Identification Number assigned my Manufacturer |
 
 RESPONSE
 
@@ -83,8 +83,10 @@ INPUT
 | `provider_id` | String | Required | Issued by Provider Registration API |
 | `vehicle_id` | String | Required | Issued by Vehicle Registration API | 
 | `start_point` | Point | Required | Trip Origin | 
-| `end_point` | Point |  | Trip Destination | 
-| `est_departure_time` | Unix Timestamp | Required | Trip Destination | 
+| `end_point` | Point | Required | Trip Destination | 
+| `est_departure_time` | Unix Timestamp | Required | Estimated Departure Time | 
+| `est_arrival_time` | Unix Timestamp |  | Estimated Arrival Time | 
+
 
 RESPONSE
 
