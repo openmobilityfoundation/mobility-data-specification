@@ -122,7 +122,6 @@ This API is used by providers when the status of a properly registered vehicle c
 
 | Field | Type | Required/Optional | Other | 
 | ----- | ---- | ----------------- | ----- | 
- 
 | `time_stamp` | Unix Timestamp | Required | Time of day (ZULU) when the vehicle status changed|  
 | `vehicle_id` | UUID | Required | Provided by the Vehicle Registration API | 
 | `GPS_pos` | DDD.DDDDD° | Required | GPS location at the time of status change  |
