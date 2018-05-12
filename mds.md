@@ -23,7 +23,7 @@ INPUT
 | `company_admin_email` | String | Required | Email of designated administrator as shown on the applicable permit |
 | `company_admin_phone` | String | Required | Phone number of designated administrator shown on the applicable permit |
 | `username` | String | Required | Username for accessing the system | 
-| `permit_num` | String | Required | Permit number issued by municipality | 
+| `permit_application_num` | String | Required | Application number issued by municipality | 
 
 RESPONSE
 
@@ -85,7 +85,7 @@ INPUT
 | `start_point` | Point | Required | Trip Origin | 
 | `end_point` | Point | Required | Trip Destination | 
 | `est_departure_time` | Unix Timestamp | Required | Estimated Departure Time | 
-| `est_arrival_time` | Unix Timestamp |  | Estimated Arrival Time |
+| `est_arrival_time` | Unix Timestamp | Required | Estimated Arrival Time |
 | `act_departure_time` | Unix Timestamp | Required | | 
 | `act_arrival_time` | Unix Timestamp | Required | |
 | `status` | Enum |  | Open/Closed |
