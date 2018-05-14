@@ -1,4 +1,4 @@
-# Transportation 2.0 APIs, Data Specifications & Workflows 
+# # Mobility Data Standard v0.2 
 
 The Mobility Data Standard is a specification that contains a collection of RESTful Application Program Interfaces (API's) used to specify the digital relationship between mobility providers and a municipality.  
 
