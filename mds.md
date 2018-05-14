@@ -1,6 +1,6 @@
 # Transportation 2.0 Technical Specification v0.2 
 
-The Mobility Data Standard is a specification that contains a collection of RESTful Application Program Interfaces (API's) used to specify the digital relationship between mobility providers and a municipality.  
+This specification contains a collection of RESTful Application Program Interfaces (API's) used to specify the digital relationship between mobility as a service operators and the city of Los Angeles.  
 
 * Authors: Hunter Owens, Jose Elias, Marcel Porras, John Ellis, Todd Petersen
 
