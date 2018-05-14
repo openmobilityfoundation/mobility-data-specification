@@ -96,8 +96,8 @@ INPUT
 | ----- | ---- | ----------------- | ----- | 
 | `vehicle_id` | UUID | Required | Provided by the Vehicle Registration API | 
 | `time_stamp` | Unix Timestamp | Required | Time of day (ZULU) data was sampled | 
-| `maint_type` | Enum | Required | Maintenance performed | 
-| `maint_action` | Enum | Required | Type of maintenance performed | 
+| `maint_type` | Enum | Required | Type of Maintenance performed | 
+| `maint_action` | Enum | Required | Maintenance action performed | 
 
 
 RESPONSE
