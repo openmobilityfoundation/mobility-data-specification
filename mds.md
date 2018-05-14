@@ -87,7 +87,7 @@ RESPONSE
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
-| message | String |  | "The vehicle was Deregistered" |
+| message | Enum |  | See Message Enum |
 
 
 ## InitMovementPlan()
@@ -133,7 +133,7 @@ RESPONSE
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
-| message | String |  | "The movement plan activated successfully" |
+| message | Enum |  | See Message Enum |
 
 
 ## CloseMovementPlan()
@@ -150,7 +150,7 @@ RESPONSE
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
-| message | String |  | "The movement plan was closed successfully" |
+| message | Enum |  | See Message Enum |
 
 
 ## UpdateTripData()
@@ -159,17 +159,37 @@ A trip represents a route taken by a provider's customer.   Trip data will be re
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
-| `trip_id` | UUID | Required | a unique ID for each trip provided by the Movement Plan API | 
+| `trip_id` | UUID | Required | Issued by InitMovementPlan() API  | 
 | `time_stamp` | Unix Timestamp | Required | Time of day (ZULU) data was sampled| 
 | `GPS_pos` | DDD.DDDDD° | Required | GPS location in decimal degress at time of sample  |
 
-## FindParking()
 
-This API finds an approved parking place based on inputs from the operator
+## CheckParking()
+
+This API is used to determine whether parking is required for this location.
+
+INPUT
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
-| `trip_id` | UUID | Required | a unique ID for each trip provided by the Movement Plan API | 
+| `GPS_pos` | DDD.DDDDD°  | Required | Current Location  | 
+| `time_stamp` | Unix Timestamp | Required | Time of day (ZULU) data was sampled| 
+
+RESPONSE
+
+| Field | Type     | Required/Optional | Other |
+| ----- | -------- | ----------------- | ----- |
+| `message` | Enum | | See Message Enum | 
+
+## GetParking()
+
+This API finds an approved parking place based on inputs from the operator
+
+INPUT
+
+| Field | Type     | Required/Optional | Other |
+| ----- | -------- | ----------------- | ----- |
+| `trip_id` | UUID | Required | Issued by InitMovementPlan() API | 
 | `time_stamp` | Unix Timestamp | Required | Time of day (ZULU) data was sampled| 
 | `GPS_pos` | DDD.DDDDD° | Required | GPS location in decimal degress at time of sample |
 | `park_option` | Enum | Required | Choose the type of parking place desired |
@@ -206,6 +226,8 @@ For `reason_code`, options are `rebalacing`, `maintenance`.
 For `park_option`, options are `closest`, `least expensive`.
 
 For `currency` options are `USD`, `CANUSD`.
+
+For `message` options are `200: OK`, `201: Created`, `202: Accepted`,`240: Parking NOT Required for this location`, `241: Parking Required for this location`. 
 
 
 ## Metrics 
