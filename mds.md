@@ -72,7 +72,7 @@ RESPONSE
 | `vehicle_id` | UUID |  | Acknowledgment of registration  |
 
 
-## Movement Plan API
+## Start Dockless API
 
 The movement plan API is used for initiating a trip request from a given origin to a given desitination at a given time.  It will be required for ALL trips PRIOR to departure.  The API will acknowledge the request with a response containing a permission to proceed and a unique Trip Identifier.
 
