@@ -129,7 +129,7 @@ RESPONSE
 
 ## ActivateMovementPlan()
 
-This API will take an initialized API using `trip_id` as a reference and will activate it, meaning that the trip is in motion.
+This API will take an initialized API using `trip_id` as a reference and will activate it, meaning that the trip is in motion.  This API can also be used to re-activate a deactivated movement plan.
 
 INPUT
 
@@ -144,9 +144,9 @@ RESPONSE
 | `message` | Enum |  | See Message Enum |
 
 
-## CloseMovementPlan()
+## DeactivateMovementPlan()
 
-This API will take an initialized API using TRIP_ID as a reference to change the 
+This API will close a Movement Plan for a given Trip_ID.   The response includes a warning whether parking is enforced for the given GPS Position.
 
 INPUT
 
@@ -224,7 +224,7 @@ For `park_option`, options are `closest`, `least expensive`.
 
 For `currency` options are `USD`, `CAD`.
 
-For `message` options are `200: OK`, `201: Created`, `202: Accepted`,`240: Parking NOT Required for this location`, `241: Parking Required for this location`. 
+For `message` options are `200: OK`, `201: Created`, `202: Accepted`,`240: Parking NOT enforced for this location`, `241: Parking enforced for this location`. 
 
 For `maint_type` options are `Tire`, `Wheel`, `Brake`, `Chain`, `Frame`, `Controls`, `Propulsion`,
 
