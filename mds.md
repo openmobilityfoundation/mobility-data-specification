@@ -31,7 +31,24 @@ RESPONSE
 | ----- | -------- | ----------------- | ----- |
 | `provider_id` | UUID |  | Provider ID used for subsequent operations |
 
- 
+## UpdateAdminInformation()
+
+INPUT
+
+| Field | Type     | Required/Optional | Other |
+| ----- | -------- | ----------------- | ----- |
+| `provider_id` | UUID |  | Provider ID used for subsequent operations |
+| `company_admin_name` | String | Required | Name of designated administrator as shown on the applicable permit |
+| `company_admin_email` | String | Required | Email of designated administrator as shown on the applicable permit |
+| `company_admin_phone` | String | Required | Phone number of designated administrator shown on the applicable permit |
+| `username` | String | Required | Username for accessing the system |  
+
+RESPONSE
+
+| Field | Type     | Required/Optional | Other |
+| ----- | -------- | ----------------- | ----- |
+| `message` | Enum |  | See Message Enum |
+
 ## RegisterAPIKey()
 
 The API Key Registration API will issue API_KEYs used for operations.
@@ -46,7 +63,7 @@ RESPONSE
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
-| `API_KEY` | String |  | API_KEY for accessing vechicle operations API's |
+| `API_KEY` | String |  | API_KEY for accessing vehicle operations API's |
 
 
 ## RegisterVehicle()
@@ -70,7 +87,7 @@ RESPONSE
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
-| `vehicle_id` | UUID |  | Used for future transactions  |
+| `vehicle_id` | UUID |  | Used for accessing vehicle operations API's  |
 
 
 ## DeRegisterVehicle()
@@ -82,12 +99,13 @@ INPUT
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
 | `vehicle_id` | String | Required | Issued by RegisterVehicle() API |
+| `reason_code` | Enum | Required | Reason for status change  |
 
 RESPONSE
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
-| message | Enum |  | See Message Enum |
+| `message` | Enum |  | See Message Enum |
 
 ## UpdateVehicleStatus() 
 
@@ -122,7 +140,6 @@ RESPONSE
 | `trip_id` | UUID |  | a unique ID for each trip | 
 
 
-
 ## ActivateMovementPlan()
 
 This API will take an initialized API using `trip_id` as a reference and will activate it, meaning that the trip is in motion.
@@ -137,7 +154,7 @@ RESPONSE
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
-| message | Enum |  | See Message Enum |
+| `message` | Enum |  | See Message Enum |
 
 
 ## CloseMovementPlan()
@@ -154,7 +171,7 @@ RESPONSE
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
-| message | Enum |  | See Message Enum |
+| `message` | Enum |  | See Message Enum |
 
 
 ## UpdateTripData()
@@ -204,7 +221,7 @@ RESPONSE
 | ----- | -------- | ----------------- | ----- |
 | `GPS_pos` | DDD.DDDDD° |  | GPS location of acceptable parking place |
 | `price` | XXX,XXX.XXXX |  | Price (Amount) |
-| `currency` | ENUM|  | Currency |
+| `currency` | ENUM |  | Currency |
 
 
 ### Avaliabity Enum Definitions 
@@ -216,7 +233,7 @@ For `reason_code`, options are `rebalacing`, `maintenance`.
 
 For `park_option`, options are `closest`, `least expensive`.
 
-For `currency` options are `USD`, `CANUSD`.
+For `currency` options are `USD`, `CAD`.
 
 For `message` options are `200: OK`, `201: Created`, `202: Accepted`,`240: Parking NOT Required for this location`, `241: Parking Required for this location`. 
 
