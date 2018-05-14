@@ -8,9 +8,9 @@ The Mobility Data Standard is a specification that contains a collection of REST
 
 * Version: ALPHA 
 
-# Sections 
+# API Definitions 
 
-## RegisterProvider() API
+## RegisterProvider()
 
 The Provider Regisration API is required of all providers in order to obtain an API key necessary for operations.  Registration request will take a valid permit number, company name and assign a Provider ID used for interacting with subsequent API's.  A subsequent email will also be sent to the provider containing the provider ID and a temporary password that can be used to access the provider portal.
 
@@ -32,7 +32,7 @@ RESPONSE
 | `provider_id` | UUID |  | Provider ID used for subsequent operations |
 
  
-## RegisterAPIKey() API
+## RegisterAPIKey()
 
 The API Key Registration API will issue API_KEYs used for operations.
 
@@ -49,7 +49,7 @@ RESPONSE
 | `API_KEY` | String |  | API_KEY for accessing vechicle operations API's |
 
 
-## RegisterVehicle() API
+## RegisterVehicle()
 
 The Vehicle Regisration API is required in order to register a vehicle for use in the system.  The API will require a valid Provider ID and API_KEY.
 
@@ -63,7 +63,8 @@ INPUT
 | `vehicle_year` | Enum | Required | Year Manufacturered |
 | `vehicle_mfgr` | Enum | Required | Vehicle Manufacturer |
 | `vehicle_model` | Enum | Required | Vehicle Model |
-| `VIN` | String | Required | Vehicle Identification Number assigned my Manufacturer |
+| `VIN` | String | Required | Vehicle Identification Number assigned my Manufacturer or Operator |
+
 
 RESPONSE
 
@@ -72,7 +73,7 @@ RESPONSE
 | `vehicle_id` | UUID |  | Used for future transactions  |
 
 
-## DeRegisterVehicle() API
+## DeRegisterVehicle()
 
 The DeRegisterVehicle() API is used to deregister a vehicle from the fleet.
 
@@ -89,7 +90,7 @@ RESPONSE
 | message | String |  | "The vehicle was Deregistered" |
 
 
-## InitMovementPlan() API
+## InitMovementPlan()
 
 The InitMovementPlan() API is used for initiating a trip request from a given origin to a given desitination at a given time.  It will be required for ALL trips PRIOR to departure.  The API will acknowledge the request with a response containing a permission to proceed and a unique Trip Identifier.
 
@@ -118,7 +119,7 @@ RESPONSE
 | `trip_id` | UUID |  | a unique ID for each trip | 
 
 
-## OpenMovementPlan() API
+## ActivateMovementPlan()
 
 This API will take an initialized API using `trip_id` as a reference and will activate it, meaning that the trip is in motion.
 
@@ -132,10 +133,10 @@ RESPONSE
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
-| message | String |  | "The status was Opened successfully" |
+| message | String |  | "The movement plan activated successfully" |
 
 
-## CloseMovementPlan() API
+## CloseMovementPlan()
 
 This API will take an initialized API using TRIP_ID as a reference to change the 
 
@@ -149,24 +150,40 @@ RESPONSE
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
-| message | String |  | "The status was changed successfully" |
+| message | String |  | "The movement plan was closed successfully" |
 
 
-
-## UpdateTripData() API
+## UpdateTripData()
 
 A trip represents a route taken by a provider's customer.   Trip data will be reported to the API every 5 seconds while the vehicle is in motion.   
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
-| `provider_id` | String | Required | Issued by Provider Registration API |
 | `trip_id` | UUID | Required | a unique ID for each trip provided by the Movement Plan API | 
 | `time_stamp` | Unix Timestamp | Required | Time of day (ZULU) data was sampled| 
-| `vehicle_id` | UUID | Required | Provided by the Vehicle Registration API | 
-| `GPS_pos` | DDD.DDDDD° | Required | GPS location in decimal degress  |
+| `GPS_pos` | DDD.DDDDD° | Required | GPS location in decimal degress at time of sample  |
+
+## FindParking()
+
+This API finds an approved parking place based on inputs from the operator
+
+| Field | Type     | Required/Optional | Other |
+| ----- | -------- | ----------------- | ----- |
+| `trip_id` | UUID | Required | a unique ID for each trip provided by the Movement Plan API | 
+| `time_stamp` | Unix Timestamp | Required | Time of day (ZULU) data was sampled| 
+| `GPS_pos` | DDD.DDDDD° | Required | GPS location in decimal degress at time of sample |
+| `park_option` | Enum | Required | Choose the type of parking place desired |
+
+RESPONSE
+
+| Field | Type     | Required/Optional | Other |
+| ----- | -------- | ----------------- | ----- |
+| `GPS_pos` | DDD.DDDDD° |  | GPS location of acceptable parking place |
+| `price` | XXX,XXX.XXXX |  | Price (Amount) |
+| `currency` | ENUM|  | Currency |
 
 
-## UpdateVehicleStatus() API 
+## UpdateVehicleStatus() 
 
 This API is used by providers when the status of a properly registered vehicle changes.   
 
@@ -185,6 +202,10 @@ For `trip_status`, options are `Planned`, `Open`, `Closed`.
 For `veh_status`, options are `in-service`, `out-of-service`. 
 
 For `reason_code`, options are `rebalacing`, `maintenance`. 
+
+For `park_option`, options are `closest`, `least expensive`.
+
+For `currency` options are `USD`, `CANUSD`.
 
 
 ## Metrics 
