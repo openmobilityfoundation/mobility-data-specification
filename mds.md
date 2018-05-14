@@ -1,4 +1,4 @@
-# Mobility Data Standard
+# Transportation 2.0 APIs, Data Specifications & Workflows 
 
 The Mobility Data Standard is a specification that contains a collection of RESTful Application Program Interfaces (API's) used to specify the digital relationship between mobility providers and a municipality.  
 
@@ -12,16 +12,16 @@ The Mobility Data Standard is a specification that contains a collection of REST
 
 ## RegisterVehicle()
 
-The Vehicle Regisration API is required in order to register a vehicle for use in the system.  The API will require a valid Provider ID and API_KEY.
+The Vehicle Registration API is required in order to register a vehicle for use in the system.  The API will require a valid Provider ID and API_KEY.
 
 INPUT
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
 | `provider_id` | UUID | Required | Issued by Provider Registration API |
-| `API_KEY` | String | Required | API_Key issued to provider using API Key Regisration API |
+| `API_KEY` | String | Required | API_Key issued to provider using API Key Registration API |
 | `vehicle_type` | Enum | Required | Vehicle Type |
-| `vehicle_year` | Enum | Required | Year Manufacturered |
+| `vehicle_year` | Enum | Required | Year Manufactured |
 | `vehicle_mfgr` | Enum | Required | Vehicle Manufacturer |
 | `vehicle_model` | Enum | Required | Vehicle Model |
 | `VIN` | String | Required | Vehicle Identification Number assigned my Manufacturer or Operator |
@@ -109,7 +109,7 @@ RESPONSE
 
 ## InitPilotedMovementPlan()
 
-The InitMovementPlan() API is used for initiating a trip request from a human piloted vehicle.  It will be required for ALL trips at the time ofdeparture.  The API will acknowledge the request with a response containing a permission to proceed and a unique Trip Identifier.
+The InitMovementPlan() API is used for initiating a trip request from a human piloted vehicle.  It will be required for ALL trips at the time of departure.  The API will acknowledge the request with a response containing a permission to proceed and a unique Trip Identifier.
 
 INPUT
 
@@ -154,7 +154,7 @@ INPUT
 | ----- | -------- | ----------------- | ----- |
 | `trip_id` | UUID |  | Issued by InitMovementPlan() API | 
 | `time_stamp` | Unix Timestamp | Required | Time of day (ZULU) data was sampled| 
-| `GPS_pos` | DDD.DDDDD° | Required | GPS location in decimal degress at time of sample  |
+| `GPS_pos` | DDD.DDDDD° | Required | GPS location in decimal degrees at time of sample  |
 
 RESPONSE
 
@@ -171,7 +171,7 @@ A trip represents a route taken by a provider's customer.   Trip data will be re
 | ----- | -------- | ----------------- | ----- |
 | `trip_id` | UUID | Required | Issued by InitMovementPlan() API  | 
 | `time_stamp` | Unix Timestamp | Required | Time of day (ZULU) data was sampled| 
-| `GPS_pos` | DDD.DDDDD° | Required | GPS location in decimal degress at time of sample  |
+| `GPS_pos` | DDD.DDDDD° | Required | GPS location in decimal degrees at time of sample  |
 
 
 ## CheckParking()
@@ -201,7 +201,7 @@ INPUT
 | ----- | -------- | ----------------- | ----- |
 | `trip_id` | UUID | Required | Issued by InitMovementPlan() API | 
 | `time_stamp` | Unix Timestamp | Required | Time of day (ZULU) data was sampled| 
-| `GPS_pos` | DDD.DDDDD° | Required | GPS location in decimal degress at time of sample |
+| `GPS_pos` | DDD.DDDDD° | Required | GPS location in decimal degrees at time of sample |
 | `park_option` | Enum | Required | Choose the type of parking place desired |
 
 RESPONSE
@@ -213,12 +213,12 @@ RESPONSE
 | `currency` | ENUM |  | Currency |
 
 
-### Avaliabity Enum Definitions 
+### Availability Enum Definitions 
 For `trip_status`, options are `Planned`, `Open`, `Closed`.  
 
 For `veh_status`, options are `in-service`, `out-of-service`. 
 
-For `reason_code`, options are `rebalacing`, `maintenance`. 
+For `reason_code`, options are `rebalancing`, `maintenance`. 
 
 For `park_option`, options are `closest`, `least expensive`.
 
@@ -232,7 +232,7 @@ For `maint_action` options are `Repair`, `Replace`, `Inspect`.
 
 ## Metrics 
 
-All MDS compatable APIs should expose a list of Service Areas over time at the `/service_areas` endpoint. The follow fields should be included in the response. 
+All MDS compatible APIs should expose a list of Service Areas over time at the `/service_areas` endpoint. The follow fields should be included in the response. 
 
 | Field | Type | Required/Optional | Other | 
 | ----- | ---- | ----------------- | ----- | 
