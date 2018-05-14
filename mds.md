@@ -10,56 +10,6 @@ The Mobility Data Standard is a specification that contains a collection of REST
 
 # API Definitions 
 
-## RegisterProvider()
-
-The Provider Regisration API is required of all providers in order to obtain an API key necessary for operations.  Registration request will take a valid permit number, company name and assign a Provider ID used for interacting with subsequent API's.  A subsequent email will also be sent to the provider containing the provider ID and a temporary password that can be used to access the provider portal.
-
-INPUT
-
-| Field | Type     | Required/Optional | Other |
-| ----- | -------- | ----------------- | ----- |
-| `company_name` | String | Required | Name of Company as shown on the applicable permit |
-| `permit_application_num` | String | Required | Application number issued by municipality | 
-
-RESPONSE
-
-| Field | Type     | Required/Optional | Other |
-| ----- | -------- | ----------------- | ----- |
-| `provider_id` | UUID |  | Provider ID used for subsequent operations |
-
-## GetProviderInformation()
-
-INPUT
-
-| Field | Type     | Required/Optional | Other |
-| ----- | -------- | ----------------- | ----- |
-| `provider_id` | UUID |  | Provider ID used for subsequent operations |
-
-RESPONSE
-
-| Field | Type     | Required/Optional | Other |
-| ----- | -------- | ----------------- | ----- |
-| `company_admin_name` | String |  | Name of designated administrator as shown on the applicable permit |
-| `company_admin_email` | String |  | Email of designated administrator as shown on the applicable permit |
-| `company_admin_phone` | String |  | Phone number of designated administrator shown on the applicable permit |
-
-## RegisterAPIKey()
-
-The API Key Registration API will issue API_KEYs used for operations.
-
-INPUT
-
-| Field | Type     | Required/Optional | Other |
-| ----- | -------- | ----------------- | ----- |
-| `provider_id` | UUID | Required | As issued by RegisterProvider() API |
-
-RESPONSE
-
-| Field | Type     | Required/Optional | Other |
-| ----- | -------- | ----------------- | ----- |
-| `API_KEY` | String |  | API_KEY for accessing vehicle operations API's |
-
-
 ## RegisterVehicle()
 
 The Vehicle Regisration API is required in order to register a vehicle for use in the system.  The API will require a valid Provider ID and API_KEY.
@@ -101,7 +51,7 @@ RESPONSE
 | ----- | -------- | ----------------- | ----- |
 | `message` | Enum |  | See Message Enum |
 
-## RemoveFromService()
+## RemoveVehFromService()
 
 This API is used by providers when the status of a properly registered vehicle changes.   
 
@@ -120,7 +70,7 @@ RESPONSE
 | ----- | -------- | ----------------- | ----- |
 | `message` | Enum |  | See Message Enum |
 
-## ReturnToService()
+## ReturnVehToService()
 
 This API is used by providers when the status of a properly registered vehicle changes.   
 
@@ -130,7 +80,7 @@ INPUT
 | ----- | ---- | ----------------- | ----- | 
 | `vehicle_id` | UUID | Required | Provided by the Vehicle Registration API | 
 | `time_stamp` | Unix Timestamp | Required | Time of day (ZULU) data was sampled | 
-| `GPS_pos` | DDD.DDDDD° | Required | GPS location at the time of status change  |
+| `GPS_pos` | DDD.DDDDD° | Required | GPS location at the time vehicle was returned  |
 
 RESPONSE
 
@@ -146,8 +96,8 @@ INPUT
 | ----- | ---- | ----------------- | ----- | 
 | `vehicle_id` | UUID | Required | Provided by the Vehicle Registration API | 
 | `time_stamp` | Unix Timestamp | Required | Time of day (ZULU) data was sampled | 
-| `veh_maint` | Enum | Required | Maintenance performed | 
-| `maint_type` | Enum | Required | Type of maintenance performed | 
+| `maint_type` | Enum | Required | Maintenance performed | 
+| `maint_action` | Enum | Required | Type of maintenance performed | 
 
 
 RESPONSE
@@ -276,9 +226,9 @@ For `currency` options are `USD`, `CAD`.
 
 For `message` options are `200: OK`, `201: Created`, `202: Accepted`,`240: Parking NOT Required for this location`, `241: Parking Required for this location`. 
 
-For `veh_maint` options are `Tire`, `Wheel`, `Brake`, `Chain`, `Frame`, `Controls`, `Propulsion`,
+For `maint_type` options are `Tire`, `Wheel`, `Brake`, `Chain`, `Frame`, `Controls`, `Propulsion`,
 
-For `maint_type` options are `Repair`, `Replace`, `Inspect`.
+For `maint_action` options are `Repair`, `Replace`, `Inspect`.
 
 ## Metrics 
 
