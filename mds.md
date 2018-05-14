@@ -89,6 +89,17 @@ RESPONSE
 | ----- | -------- | ----------------- | ----- |
 | message | Enum |  | See Message Enum |
 
+## UpdateVehicleStatus() 
+
+This API is used by providers when the status of a properly registered vehicle changes.   
+
+| Field | Type | Required/Optional | Other | 
+| ----- | ---- | ----------------- | ----- | 
+| `time_stamp` | Unix Timestamp | Required | Time of day (ZULU) when the vehicle status changed|  
+| `vehicle_id` | UUID | Required | Provided by the Vehicle Registration API | 
+| `GPS_pos` | DDD.DDDDD° | Required | GPS location at the time of status change  |
+| `reason_code` | Enum | Required | Reason for status change  |
+| `veh_status` | Enum | Required | Status of vehicle  |
 
 ## InitMovementPlan()
 
@@ -166,7 +177,7 @@ A trip represents a route taken by a provider's customer.   Trip data will be re
 
 ## CheckParking()
 
-This API is used to determine whether parking is required for this location.
+This API is used to determine whether parking is regulated for this location.
 
 INPUT
 
@@ -201,19 +212,6 @@ RESPONSE
 | `GPS_pos` | DDD.DDDDD° |  | GPS location of acceptable parking place |
 | `price` | XXX,XXX.XXXX |  | Price (Amount) |
 | `currency` | ENUM|  | Currency |
-
-
-## UpdateVehicleStatus() 
-
-This API is used by providers when the status of a properly registered vehicle changes.   
-
-| Field | Type | Required/Optional | Other | 
-| ----- | ---- | ----------------- | ----- | 
-| `time_stamp` | Unix Timestamp | Required | Time of day (ZULU) when the vehicle status changed|  
-| `vehicle_id` | UUID | Required | Provided by the Vehicle Registration API | 
-| `GPS_pos` | DDD.DDDDD° | Required | GPS location at the time of status change  |
-| `reason_code` | Enum | Required | Reason for status change  |
-| `veh_status` | Enum | Required | Status of vehicle  |
 
 
 ### Avaliabity Enum Definitions 
