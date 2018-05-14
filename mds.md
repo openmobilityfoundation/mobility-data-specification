@@ -19,10 +19,6 @@ INPUT
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
 | `company_name` | String | Required | Name of Company as shown on the applicable permit |
-| `company_admin_name` | String | Required | Name of designated administrator as shown on the applicable permit |
-| `company_admin_email` | String | Required | Email of designated administrator as shown on the applicable permit |
-| `company_admin_phone` | String | Required | Phone number of designated administrator shown on the applicable permit |
-| `username` | String | Required | Username for accessing the system | 
 | `permit_application_num` | String | Required | Application number issued by municipality | 
 
 RESPONSE
@@ -31,25 +27,7 @@ RESPONSE
 | ----- | -------- | ----------------- | ----- |
 | `provider_id` | UUID |  | Provider ID used for subsequent operations |
 
-## UpdateAdminInformation()
-
-INPUT
-
-| Field | Type     | Required/Optional | Other |
-| ----- | -------- | ----------------- | ----- |
-| `provider_id` | UUID |  | Provider ID used for subsequent operations |
-| `company_admin_name` | String |  | Name of designated administrator as shown on the applicable permit |
-| `company_admin_email` | String |  | Email of designated administrator as shown on the applicable permit |
-| `company_admin_phone` | String |  | Phone number of designated administrator shown on the applicable permit |
-| `username` | String |  | Username for accessing the system |  
-
-RESPONSE
-
-| Field | Type     | Required/Optional | Other |
-| ----- | -------- | ----------------- | ----- |
-| `message` | Enum |  | See Message Enum |
-
-## GetAdminInformation()
+## GetProviderInformation()
 
 INPUT
 
@@ -182,6 +160,8 @@ INPUT
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
 | `trip_id` | UUID |  | Issued by InitMovementPlan() API | 
+| `time_stamp` | Unix Timestamp | Required | Time of day (ZULU) data was sampled| 
+| `GPS_pos` | DDD.DDDDD° | Required | GPS location in decimal degress at time of sample  |
 
 RESPONSE
 
