@@ -101,17 +101,60 @@ RESPONSE
 | ----- | -------- | ----------------- | ----- |
 | `message` | Enum |  | See Message Enum |
 
-## UpdateVehicleStatus() 
+## RemoveFromService()
 
 This API is used by providers when the status of a properly registered vehicle changes.   
 
+INPUT 
+
 | Field | Type | Required/Optional | Other | 
 | ----- | ---- | ----------------- | ----- | 
-| `time_stamp` | Unix Timestamp | Required | Time of day (ZULU) when the vehicle status changed|  
 | `vehicle_id` | UUID | Required | Provided by the Vehicle Registration API | 
+| `time_stamp` | Unix Timestamp | Required | Time of day (ZULU) data was sampled | 
 | `GPS_pos` | DDD.DDDDD° | Required | GPS location at the time of status change  |
 | `reason_code` | Enum | Required | Reason for status change  |
-| `veh_status` | Enum | Required | Status of vehicle  |
+
+RESPONSE
+
+| Field | Type     | Required/Optional | Other |
+| ----- | -------- | ----------------- | ----- |
+| `message` | Enum |  | See Message Enum |
+
+## ReturnToService()
+
+This API is used by providers when the status of a properly registered vehicle changes.   
+
+INPUT 
+
+| Field | Type | Required/Optional | Other | 
+| ----- | ---- | ----------------- | ----- | 
+| `vehicle_id` | UUID | Required | Provided by the Vehicle Registration API | 
+| `time_stamp` | Unix Timestamp | Required | Time of day (ZULU) data was sampled | 
+| `GPS_pos` | DDD.DDDDD° | Required | GPS location at the time of status change  |
+
+RESPONSE
+
+| Field | Type     | Required/Optional | Other |
+| ----- | -------- | ----------------- | ----- |
+| `message` | Enum |  | See Message Enum |
+
+## ReportMaintenance() 
+
+INPUT 
+
+| Field | Type | Required/Optional | Other | 
+| ----- | ---- | ----------------- | ----- | 
+| `vehicle_id` | UUID | Required | Provided by the Vehicle Registration API | 
+| `time_stamp` | Unix Timestamp | Required | Time of day (ZULU) data was sampled | 
+| `veh_maint` | Enum | Required | Maintenance performed | 
+| `maint_type` | Enum | Required | Type of maintenance performed | 
+
+
+RESPONSE
+
+| Field | Type     | Required/Optional | Other |
+| ----- | -------- | ----------------- | ----- |
+| `message` | Enum |  | See Message Enum |
 
 
 ## InitPilotedMovementPlan()
@@ -233,6 +276,9 @@ For `currency` options are `USD`, `CAD`.
 
 For `message` options are `200: OK`, `201: Created`, `202: Accepted`,`240: Parking NOT Required for this location`, `241: Parking Required for this location`. 
 
+For `veh_maint` options are `Tire`, `Wheel`, `Brake`, `Chain`, `Frame`, `Controls`, `Propulsion`,
+
+For `maint_type` options are `Repair`, `Replace`, `Inspect`.
 
 ## Metrics 
 
