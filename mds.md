@@ -226,7 +226,7 @@ For `currency` options are `USD`, `CAD`.
 
 For `message` options are `200: OK`, `201: Created`, `202: Accepted`,`240: Parking NOT enforced for this location`, `241: Parking enforced for this location`. 
 
-For `maint_type` options are `Tire`, `Wheel`, `Brake`, `Chain`, `Frame`, `Controls`, `Propulsion`,
+For `maint_type` options are `Tire`, `Wheel`, `Brake`, `Frame`, `Controls`, `Propulsion`,
 
 For `maint_action` options are `Repair`, `Replace`, `Inspect`.
 
