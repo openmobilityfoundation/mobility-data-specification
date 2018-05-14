@@ -88,7 +88,7 @@ INPUT
 | `est_arrival_time` | Unix Timestamp | Required | Estimated Arrival Time |
 | `act_departure_time` | Unix Timestamp | Required | | 
 | `act_arrival_time` | Unix Timestamp | Required | |
-| `status` | Enum |  | Open/Closed |
+| `mp_status` | Enum |  | Open/Closed |
 | `trip_duration` | Integer | Required | Time, in Seconds | 
 | `trip_distance` | Integer | Required | Trip Distance, in Meters |
 | `route` | Line | Optional | | 
@@ -126,11 +126,13 @@ This API is used by providers when the status of a properly registered vehicle c
 | `vehicle_id` | UUID | Required | Provided by the Vehicle Registration API | 
 | `GPS_pos` | DDD.DDDDD° | Required | GPS location at the time of status change  |
 | `reason_code` | Enum | Required | Reason for status change  |
-| `status` | Enum | Required | Status of vehicle  |
+| `veh_status` | Enum | Required | Status of vehicle  |
 
 
 ### Avaliabity Enum Definitions 
-For `status`, options are `in-service`, `out-of-service`. 
+For `mp_status`, options are `Planned`, `Open`, `Closed`.  
+
+For `veh_status`, options are `in-service`, `out-of-service`. 
 
 For `reason_code`, options are `rebalacing`, `maintenance`. 
 
