@@ -101,9 +101,10 @@ This API is used by providers when the status of a properly registered vehicle c
 | `reason_code` | Enum | Required | Reason for status change  |
 | `veh_status` | Enum | Required | Status of vehicle  |
 
-## InitMovementPlan()
 
-The InitMovementPlan() API is used for initiating a trip request from a given origin to a given desitination at a given time.  It will be required for ALL trips PRIOR to departure.  The API will acknowledge the request with a response containing a permission to proceed and a unique Trip Identifier.
+## InitPilotedMovementPlan()
+
+The InitMovementPlan() API is used for initiating a trip request from a human piloted vehicle.  It will be required for ALL trips at the time ofdeparture.  The API will acknowledge the request with a response containing a permission to proceed and a unique Trip Identifier.
 
 INPUT
 
@@ -112,22 +113,14 @@ INPUT
 | `provider_id` | String | Required | Issued by Provider Registration API |
 | `vehicle_id` | String | Required | Issued by Vehicle Registration API | 
 | `start_point` | Point | Required | Trip Origin | 
-| `end_point` | Point | Required | Trip Destination | 
-| `est_departure_time` | Unix Timestamp | Required | Estimated Departure Time | 
-| `est_arrival_time` | Unix Timestamp | Required | Estimated Arrival Time |
-| `act_departure_time` | Unix Timestamp | Required | | 
-| `act_arrival_time` | Unix Timestamp | Required | |
-| `trip_duration` | Integer | Required | Time, in Seconds | 
-| `trip_distance` | Integer | Required | Trip Distance, in Meters |
-| `route` | Line | Optional | | 
-| `standard_cost` | Integer | Optional | The cost, in cents that it would cost to perform that trip in the standard operation of the System. | 
-| `actual_cost` | Integer | Optional | The actual cost paid by the user of the Mobility as a server provider | 
+| `act_departure_time` | Unix Timestamp | Required | Estimated Departure Time |  
 
 RESPONSE
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
 | `trip_id` | UUID |  | a unique ID for each trip | 
+
 
 
 ## ActivateMovementPlan()
@@ -177,7 +170,7 @@ A trip represents a route taken by a provider's customer.   Trip data will be re
 
 ## CheckParking()
 
-This API is used to determine whether parking is regulated for this location.
+This API is used to determine whether parking is regulated for a given destination.
 
 INPUT
 
