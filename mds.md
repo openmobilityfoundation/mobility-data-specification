@@ -10,7 +10,7 @@ The Mobility Data Standard is a specification that contains a collection of REST
 
 # Sections 
 
-## Provider Registration API
+## RegisterProvider() API
 
 The Provider Regisration API is required of all providers in order to obtain an API key necessary for operations.  Registration request will take a valid permit number, company name and assign a Provider ID used for interacting with subsequent API's.  A subsequent email will also be sent to the provider containing the provider ID and a temporary password that can be used to access the provider portal.
 
@@ -29,10 +29,10 @@ RESPONSE
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
-| `provider_id` | UUID |  | ID used for operations |
+| `provider_id` | UUID |  | Provider ID used for subsequent operations |
 
  
-## API Key Registration API
+## RegisterAPIKey() API
 
 The API Key Registration API will issue API_KEYs used for operations.
 
@@ -40,16 +40,16 @@ INPUT
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
-| `provider_id` | UUID | Required | ID used for operations |
+| `provider_id` | UUID | Required | As issued by RegisterProvider() API |
 
 RESPONSE
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
-| `API_KEY` | String |  | API_KEY for accessing operational API's |
+| `API_KEY` | String |  | API_KEY for accessing vechicle operations API's |
 
 
-## Vehicle Registration API
+## RegisterVehicle() API
 
 The Vehicle Regisration API is required in order to register a vehicle for use in the system.  The API will require a valid Provider ID and API_KEY.
 
@@ -69,12 +69,29 @@ RESPONSE
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
-| `vehicle_id` | UUID |  | Acknowledgment of registration  |
+| `vehicle_id` | UUID |  | Used for future transactions  |
 
 
-## Start Dockless API
+## DeRegisterVehicle() API
 
-The movement plan API is used for initiating a trip request from a given origin to a given desitination at a given time.  It will be required for ALL trips PRIOR to departure.  The API will acknowledge the request with a response containing a permission to proceed and a unique Trip Identifier.
+The DeRegisterVehicle() API is used to deregister a vehicle from the fleet.
+
+INPUT
+
+| Field | Type     | Required/Optional | Other |
+| ----- | -------- | ----------------- | ----- |
+| `vehicle_id` | String | Required | Issued by RegisterVehicle() API |
+
+RESPONSE
+
+| Field | Type     | Required/Optional | Other |
+| ----- | -------- | ----------------- | ----- |
+| message | String |  | "The vehicle was Deregistered" |
+
+
+## InitMovementPlan() API
+
+The InitMovementPlan() API is used for initiating a trip request from a given origin to a given desitination at a given time.  It will be required for ALL trips PRIOR to departure.  The API will acknowledge the request with a response containing a permission to proceed and a unique Trip Identifier.
 
 INPUT
 
@@ -88,7 +105,6 @@ INPUT
 | `est_arrival_time` | Unix Timestamp | Required | Estimated Arrival Time |
 | `act_departure_time` | Unix Timestamp | Required | | 
 | `act_arrival_time` | Unix Timestamp | Required | |
-| `mp_status` | Enum |  | Open/Closed |
 | `trip_duration` | Integer | Required | Time, in Seconds | 
 | `trip_distance` | Integer | Required | Trip Distance, in Meters |
 | `route` | Line | Optional | | 
@@ -100,10 +116,44 @@ RESPONSE
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
 | `trip_id` | UUID |  | a unique ID for each trip | 
-| `trip_clearance` | enum |  | Status (approved, not-approved)  | 
 
 
-## Trip Data API
+## OpenMovementPlan() API
+
+This API will take an initialized API using `trip_id` as a reference and will activate it, meaning that the trip is in motion.
+
+INPUT
+
+| Field | Type     | Required/Optional | Other |
+| ----- | -------- | ----------------- | ----- |
+| `trip_id` | UUID |  | Issued by InitMovementPlan() API | 
+
+RESPONSE
+
+| Field | Type     | Required/Optional | Other |
+| ----- | -------- | ----------------- | ----- |
+| message | String |  | "The status was Opened successfully" |
+
+
+## CloseMovementPlan() API
+
+This API will take an initialized API using TRIP_ID as a reference to change the 
+
+INPUT
+
+| Field | Type     | Required/Optional | Other |
+| ----- | -------- | ----------------- | ----- |
+| `trip_id` | UUID |  | Issued by InitMovementPlan() API | 
+
+RESPONSE
+
+| Field | Type     | Required/Optional | Other |
+| ----- | -------- | ----------------- | ----- |
+| message | String |  | "The status was changed successfully" |
+
+
+
+## UpdateTripData() API
 
 A trip represents a route taken by a provider's customer.   Trip data will be reported to the API every 5 seconds while the vehicle is in motion.   
 
@@ -116,7 +166,7 @@ A trip represents a route taken by a provider's customer.   Trip data will be re
 | `GPS_pos` | DDD.DDDDD° | Required | GPS location in decimal degress  |
 
 
-## Vehicle Status API 
+## UpdateVehicleStatus() API 
 
 This API is used by providers when the status of a properly registered vehicle changes.   
 
@@ -130,7 +180,7 @@ This API is used by providers when the status of a properly registered vehicle c
 
 
 ### Avaliabity Enum Definitions 
-For `mp_status`, options are `Planned`, `Open`, `Closed`.  
+For `trip_status`, options are `Planned`, `Open`, `Closed`.  
 
 For `veh_status`, options are `in-service`, `out-of-service`. 
 
