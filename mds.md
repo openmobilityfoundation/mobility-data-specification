@@ -1,4 +1,4 @@
-# Mobility Data Standard v0.1
+# Transportation 2.0 Technical Specification v0.1
 
 The Mobility Data Standard defines data standards for Mobility as a Service Providers in working with the LADOT to meet in order to ensure timely and shared access to data. 
 
