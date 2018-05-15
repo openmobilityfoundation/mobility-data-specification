@@ -1,17 +1,17 @@
 # mobility-data-standard
 
-A data standard for Mobility as a Service Providers, such as Dockless Bikeshare, E-Scooters, and Shared Ride Providers.  who work within in the City of Los Angeles. 
+A data standard and API specification for Mobility as a Service Providers, such as Dockless Bikeshare, E-Scooters, and Shared Ride Providers who work within in the City of Los Angeles. 
 
 Inspired by [GTFS](https://developers.google.com/transit/gtfs/reference/) and [GBFS](https://github.com/NABSA/gbfs). Specifically, the goals of Transportation Application Spefification is to provide API and data standards for municipalities to help ingest, compare and analyze mobility as a service provider data. 
 
-The spec lives in `mds.md`. Currently, there are two implementations avaliable. Version `.1` defines a data standard for 
+The specification is a way to implement realtime data sharing, measurement and regulation for municipalities and mobility as a service providers. It is meant to ensure that governments have the ability to enforce, evaluate and manage providers. 
+
+The spec lives in `transportation-tech-specification.md`. Currently, there are two implementations avaliable. Version `v0.1` defines a data standard for providers to implement that the City can query in realtime, while `v0.2` impl 
 
 ## Roadmap
 
-The City of Los Angeles is currently looking for feedback and comments on the draft versions. 
+The City of Los Angeles is currently looking for feedback and comments on the draft versions. Comments can be made by making an Github Issue, while suggested changes can be made using a pull request. 
 
-
-
-## Comment Period 
+## Contact
 
 Questions can be directed to jose.elias@lacity.org or hunter.owens@lacity.org
