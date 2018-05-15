@@ -3,7 +3,7 @@
 ## Meta: 
 * The following document lays out two possible implementations of the Transportation Technical Specification. `v0.1` is a provider implemented API that the Municipality will query. `v0.2` is a municipality implmented API that the provider will query and integrate with during operations. 
 
-* At the onset of the program, `v0.1` will be required, with phasing to `v0.2`
+* At the onset of the program, `v0.1` will be required, with phasing to `v0.2` at a time to be announced. 
 
 
 # Transportation 2.0 Technical Specification v0.1
@@ -112,7 +112,7 @@ Body:
 | `VIN` | String | Required | Vehicle Identification Number assigned my Manufacturer or Operator |
 
 
-RESPONSE
+Response: 
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
@@ -134,57 +134,50 @@ Body:
 | `vehicle_id` | String | Required | Issued by RegisterVehicle() API |
 | `reason_code` | Enum | Required | Reason for status change  |
 
-RESPONSE
+Response:
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
 | `message` | Enum |  | See Message Enum |
 
-## RemoveVehFromService()
+## service-vehicle
 
-This API is used by providers when the status of a properly registered vehicle changes.   
+This API is used by providers when a vehicle is either remove or returned to service. 
 
-INPUT 
+Request Type: `POST`
+
+Enpoint: `service-vehicle`
+
+Body: 
 
 | Field | Type | Required/Optional | Other | 
 | ----- | ---- | ----------------- | ----- | 
 | `vehicle_id` | UUID | Required | Provided by the Vehicle Registration API | 
 | `time_stamp` | Unix Timestamp | Required | Time of day (ZULU) data was sampled | 
-| `GPS_pos` | DDD.DDDDD° | Required | GPS location at the time of status change  |
+| `GPS_pos` | Point | Required | GPS location at the time of status change  |
 | `reason_code` | Enum | Required | Reason for status change  |
+| `service-start` | Boolean | Required | `True` if service start, `False` if return froms servicing | 
 
-RESPONSE
-
-| Field | Type     | Required/Optional | Other |
-| ----- | -------- | ----------------- | ----- |
-| `message` | Enum |  | See Message Enum |
-
-## ReturnVehToService()
-
-This API is used by providers when the status of a properly registered vehicle changes.   
-
-INPUT 
-
-| Field | Type | Required/Optional | Other | 
-| ----- | ---- | ----------------- | ----- | 
-| `vehicle_id` | UUID | Required | Provided by the Vehicle Registration API | 
-| `time_stamp` | Unix Timestamp | Required | Time of day (ZULU) data was sampled | 
-| `GPS_pos` | DDD.DDDDD° | Required | GPS location at the time vehicle was returned  |
-
-RESPONSE
+Response:
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
 | `message` | Enum |  | See Message Enum |
 
-## ReportMaintenance() 
 
-INPUT 
+## report-maintenance
+
+Used to report maintenance events. 
+
+Request Type: `POST`
+
+Endpoint: `report-maintenance`
+Body 
 
 | Field | Type | Required/Optional | Other | 
 | ----- | ---- | ----------------- | ----- | 
 | `vehicle_id` | UUID | Required | Provided by the Vehicle Registration API | 
-| `time_stamp` | Unix Timestamp | Required | Time of day (ZULU) data was sampled | 
+| `time_stamp` | Unix Timestamp | Required | Time of day (UTC) data was sampled | 
 | `maint_type` | Enum | Required | Type of Maintenance performed | 
 | `maint_action` | Enum | Required | Maintenance action performed | 
 
@@ -196,11 +189,16 @@ RESPONSE
 | `message` | Enum |  | See Message Enum |
 
 
-## InitPilotedMovementPlan()
+## pilot-movement-plan
 
-The InitMovementPlan() API is used for initiating a trip request from a human piloted vehicle.  It will be required for ALL trips at the time of departure.  The API will acknowledge the request with a response containing a permission to proceed and a unique Trip Identifier.
+The pilot-movement-plan API is used for initiating a trip request from a human piloted vehicle.  It will be required for ALL trips at the time of departure.  The API will acknowledge the request with a response containing a permission to proceed and a unique Trip Identifier.
 
-INPUT
+Request Type: `POST`
+
+
+Endpoint: `pilot-movement-plan`
+
+Body:
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
@@ -208,92 +206,123 @@ INPUT
 | `vehicle_id` | String | Required | Issued by Vehicle Registration API | 
 | `start_point` | Point | Required | Trip Origin | 
 | `act_departure_time` | Unix Timestamp | Required | Estimated Departure Time |  
+| `end_point` | Point | Optional  | Trip destination if known | 
 
-RESPONSE
+Response: 
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
 | `trip_id` | UUID |  | a unique ID for each trip | 
 
 
-## ActivateMovementPlan()
+## activate-movement-plan
 
 This API will take an initialized API using `trip_id` as a reference and will activate it, meaning that the trip is in motion.  This API can also be used to re-activate a deactivated movement plan.
 
-INPUT
+Request Type: `POST`
+
+
+Endpoint: `activate-movement-plan`
+
+Body:
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
-| `trip_id` | UUID |  | Issued by InitMovementPlan() API | 
+| `trip_id` | UUID |  | Issued by pilot-movement-plan API | 
 
-RESPONSE
+Response:
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
 | `message` | Enum |  | See Message Enum |
 
 
-## DeactivateMovementPlan()
+## close-movement-plan 
 
 This API will close a Movement Plan for a given Trip_ID.   The response includes a warning whether parking is enforced for the given GPS Position.
 
-INPUT
+Request Type: `POST`
+
+
+Endpoint: `close-movement-plan`
+
+Body
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
 | `trip_id` | UUID |  | Issued by InitMovementPlan() API | 
-| `time_stamp` | Unix Timestamp | Required | Time of day (ZULU) data was sampled| 
-| `GPS_pos` | DDD.DDDDD° | Required | GPS location in decimal degrees at time of sample  |
+| `timestamp` | Unix Timestamp | Required | Time of day (UTC) data was sampled| 
+| `location` | Point | Required | GPS location in decimal degrees at time of sample  |
 
-RESPONSE
+Response:
 
-| Field | Type     | Required/Optional | Other |
-| ----- | -------- | ----------------- | ----- |
-| `message` | Enum |  | See Message Enum |
+| Field | Type     | Other |
+| ----- | -------- | ----- |
+| `message` | Enum | See Message Enum |
 
 
-## UpdateTripData()
+## update-trip-data
 
 A trip represents a route taken by a provider's customer.   Trip data will be reported to the API every 5 seconds while the vehicle is in motion.   
+
+Request Type: `POST`
+
+Endpoint: `update-trip-data`
+
+Body:
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
 | `trip_id` | UUID | Required | Issued by InitMovementPlan() API  | 
-| `time_stamp` | Unix Timestamp | Required | Time of day (ZULU) data was sampled| 
-| `GPS_pos` | DDD.DDDDD° | Required | GPS location in decimal degrees at time of sample  |
+| `timestamp` | Unix Timestamp | Required | Time of day (ZULU) data was sampled| 
+| `location` | Point | Required | GPS location in decimal degrees at time of sample  |
+
+Response: 
+| Field | Type | Other | 
+| ---- | --- | --- |
+| `message` | Enum | see message enum | 
 
 
-## CheckParking()
+## check-parking
 
 This API is used to determine whether parking is regulated for a given destination.
 
-INPUT
+Request Type: `POST`
+
+
+Endpoint: `check-parking`
+
+Body:
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
-| `GPS_pos` | DDD.DDDDD°  | Required | Current Location  | 
-| `time_stamp` | Unix Timestamp | Required | Time of day (ZULU) data was sampled| 
+| `location` | Point  | Required | Current Location  | 
+| `timestamp` | Unix Timestamp | Required | Time of day (ZULU) data was sampled| 
 
-RESPONSE
+Response: 
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
 | `message` | Enum | | See Message Enum | 
 
-## GetParking()
+## get-parking-info
 
-This API finds an approved parking place based on inputs from the operator
+This API finds returns a list of approved parking spaces based on post parameters. 
 
-INPUT
+Request Type: `POST`
+
+Endpoint: `get-parking-info`
+
+Body: 
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
 | `trip_id` | UUID | Required | Issued by InitMovementPlan() API | 
-| `time_stamp` | Unix Timestamp | Required | Time of day (ZULU) data was sampled| 
+| `timestamp` | Unix Timestamp | Required | Time of day (ZULU) data was sampled| 
 | `GPS_pos` | DDD.DDDDD° | Required | GPS location in decimal degrees at time of sample |
 | `park_option` | Enum | Required | Choose the type of parking place desired |
 
-RESPONSE
+Reponse: 
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
@@ -301,6 +330,26 @@ RESPONSE
 | `price` | XXX,XXX.XXXX |  | Price (Amount) |
 | `currency` | ENUM |  | Currency |
 
+
+# service-areas 
+
+Gets the list service area avalible to the provider. 
+
+Request Type: `GET`
+
+Endpoint: `service-areas`
+
+Body: 
+
+| Field | Type | Required/Optional | Other | 
+| ----- | ---- | ----------------- | ----- | 
+| `operator_name` | String | Required |  |
+| `service_area_id` | UUID | Required |  | 
+| `service_start_date` | Unix Timestamp | Required | Date at which this service area became effective | 
+| `service_end_date` | Unix Timestamp | Required | Date at which this service area was replaced. If current effictive, place NaN | 
+| `service_area` | MultiPolygon | Required | | 
+| `prior_service_area` | UUID | Optional | If exists, the UUID of the prior service area. | 
+| `replacement_service_area` | UUID | Optional | If exists, the UUID of the service area that replaced this one | 
 
 ### Availability Enum Definitions 
 For `trip_status`, options are `Planned`, `Open`, `Closed`.  
@@ -319,16 +368,3 @@ For `maint_action` options are `Repair`, `Replace`, `Inspect`.
 
 For `message` options are `200: OK`, `201: Created`, `202: Accepted`,`240: Parking NOT enforced for this location`, `241: Parking enforced for this location`. 
 
-## Metrics 
-
-All MDS compatible APIs should expose a list of Service Areas over time at the `/service_areas` endpoint. The follow fields should be included in the response. 
-
-| Field | Type | Required/Optional | Other | 
-| ----- | ---- | ----------------- | ----- | 
-| `operator_name` | String | Required |  |
-| `service_area_id` | UUID | Required |  | 
-| `service_start_date` | Unix Timestamp | Required | Date at which this service area became effective | 
-| `service_end_date` | Unix Timestamp | Required | Date at which this service area was replaced. If current effictive, place NaN | 
-| `service_area` | MultiPolygon | Required | | 
-| `prior_service_area` | UUID | Optional | If exists, the UUID of the prior service area. | 
-| `replacement_service_area` | UUID | Optional | If exists, the UUID of the service area that replaced this one | 
