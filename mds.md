@@ -119,11 +119,15 @@ RESPONSE
 | `vehicle_id` | UUID |  | Used for accessing vehicle operations API's  |
 
 
-## deregister-vehicle
+## remove-vehicle
 
-The DeRegisterVehicle  API is used to deregister a vehicle from the fleet.
+The remove-vehicle  API is used to deregister a vehicle from the fleet.
 
-INPUT
+Endpoint: `remove-vehicle`
+
+Request Type: `POST`
+
+Body:
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
