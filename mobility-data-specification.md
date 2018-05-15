@@ -1,16 +1,16 @@
-# Transportation Technical Specification
+# Mobility Data Specification
 
 ## Meta: 
-* The following document lays out two possible implementations of the Transportation Technical Specification. `v0.1` is a provider implemented API that the Municipality will query. `v0.2` is a municipality implmented API that the provider will query and integrate with during operations. 
+* The following document lays out two possible implementations of the Mobility Data Specification. `v0.1` is a provider implemented API for data exchange and operational information that the Municipality will query. `v0.2` is a municipality implmented API that the provider will query and integrate with during operations. 
 
 * At the onset of the program, `v0.1` will be required, with phasing to `v0.2` at a time to be announced. 
 
 
-# Transportation 2.0 Technical Specification v0.1
+# Mobility Data Specification v0.1
 
 This specification contains a data standard for Mobility as a Service providers to define an API that a municipality can access during the pilot phases of a program.  
 
-* Authors: Hunter Owens, Jose Elias, Marcel Porras, John Ellis, Todd Petersen
+* Authors: LADOT
 
 * Date: 23 May 2018 
 
@@ -79,11 +79,11 @@ All MDS compatable APIs should expose a list of Service Areas over time at the `
 | `prior_service_area` | UUID | Optional | If exists, the UUID of the prior service area. | 
 | `replacement_service_area` | UUID | Optional | If exists, the UUID of the service area that replaced this one | 
 
-# Transportation 2.0 Technical Specification v0.2 
+# Mobility Data Specification v0.2 
 
 This specification contains a collection of RESTful Application Program Interfaces (API's) used to specify the digital relationship between mobility as a service operators and the city of Los Angeles.  
 
-* Authors: Hunter Owens, Jose Elias, Marcel Porras, John Ellis, Todd Petersen
+* Authors: LADOT
 
 * Date: 23 May 2018 
 
