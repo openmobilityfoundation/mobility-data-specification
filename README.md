@@ -1,6 +1,6 @@
 # Mobility Data Specification
 
-A data standard and API specification for Mobility as a Service Providers, such as Dockless Bikeshare, E-Scooters, and Shared Ride Providers who work within in the City of Los Angeles. 
+A data standard and API specification for Mobility as a Service Providers, such as Dockless Bikeshare, E-Scooters, and Shared Ride Providers who work within in the City of Los Angeles and on the public right of way. 
 
 Inspired by [GTFS](https://developers.google.com/transit/gtfs/reference/) and [GBFS](https://github.com/NABSA/gbfs). Specifically, the goals of MDS is to provide API and data standards for municipalities to help ingest, compare and analyze mobility as a service provider data. 
 
