@@ -6,7 +6,11 @@ Inspired by [GTFS](https://developers.google.com/transit/gtfs/reference/) and [G
 
 The specification is a way to implement realtime data sharing, measurement and regulation for municipalities and mobility as a service providers. It is meant to ensure that governments have the ability to enforce, evaluate and manage providers. 
 
-The spec lives in `mobility-data-specification.md`. Currently, there are two implementations avaliable. Version `v0.1` defines a data standard for providers to implement that the City can query in realtime, while `v0.2` implements an API that providers can query for similar information and additional realtime parking, cost and trip permission information. 
+The specification lives in `mobility-data-specification.md`. Currently, there are two implementations avaliable. Version `v0.1` defines a data specification for providers to implement that the City can query in realtime, while `v0.2` implements an API that providers can query for similar information and additional realtime parking, cost and trip permission information. 
+
+The draft rules and guidelines are included in this repository for viewing and comment. The filename is `ladot-draft-dockless-rules.pdf`.  
+
+The specification will be versioned using Git tags. Currently, it is in draft form. 
 
 ## Roadmap
 
