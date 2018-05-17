@@ -156,7 +156,7 @@ Body:
 | `time_stamp` | Unix Timestamp | Required | Time of day (UTC) data was sampled | 
 | `GPS_pos` | Point | Required | GPS location at the time of status change  |
 | `reason_code` | Enum | Required | Reason for status change  |
-| `service-start` | Boolean | Required | `True` if service start, `False` if return from servicing |
+| `service_start` | Boolean | Required | `True` if service start, `False` if return from servicing |
 
 Response:
 
