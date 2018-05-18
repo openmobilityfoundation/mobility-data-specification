@@ -1,7 +1,7 @@
 # Mobility Data Specification
 
 ## Meta: 
-* The following document lays out two possible implementations of the Mobility Data Specification. `v0.1` is a provider implemented API for data exchange and operational information that the Municipality will query. `v0.2` is a municipality implmented API that the provider will query and integrate with during operations. 
+* The following document lays out two possible implementations of the Mobility Data Specification. `v0.1` is a provider implemented API for data exchange and operational information that the Municipality will query. `v0.2` is a municipality implemented API that the provider will query and integrate with during operations.
 
 * At the onset of the program, `v0.1` will be required, with phasing to `v0.2` at a time to be announced. 
 
@@ -19,7 +19,7 @@ This specification contains a data standard for Mobility as a Service providers 
 
 ## Trip Data
 
-An MDS compatable API should expose an endpoint `/trips` that allows a user to query historical trip data. The API endpoint may be paginated. 
+An MDS compatible API should expose an endpoint `/trips` that allows a user to query historical trip data. The API endpoint may be paginated.
 
 A trip represents a journey taken by a Mobility as a Service customer with a geotagged start and stop point. The follow data to be provided via a RESTful API for Trip Data. The API should allow to query trips at least by ID, GeoFence for start or end, and time. The following fields to be provided. All fields should use `lower_case_with_underscores` to implement the API. Pagination is allowed.  
 
@@ -38,36 +38,36 @@ A trip represents a journey taken by a Mobility as a Service customer with a geo
 | `start_time` | Unix Timestamp | Required | | 
 | `end_time` | Unix Timestamp | Required | |
 | `standard_cost` | Integer | Optional | The cost, in cents that it would cost to perform that trip in the standard operation of the System. | 
-| `actual_cost` | Integer | Optional | The actual cost paid by the user of the Mobility as a server provider | 
+| `actual_cost` | Integer | Optional | The actual cost paid by the user of the Mobility as a service provider |
 
 
-## System Data / Avaliabity Data 
+## System Data / Availability Data
 
-An MDS compatable API should expose an endpoint `/avalibilty` that reports on historical avaliability data. 
+An MDS compatible API should expose an endpoint `/availability` that reports on historical availability data.
 
-The following data standard is for avaliability data. The API should return the avaliabity for a system a time range. The API should allow queries at least by time period, geographical areas. 
+The following data standard is for availability data. The API should return the availability for a system a time range. The API should allow queries at least by time period, geographical areas.
 
 | Field | Type | Required/Optional | Other | 
 | ----- | ---- | ----------------- | ----- | 
 | `device_type` | String | Required | | 
-| `avaliability_start_time` | Unix Timestamp | Required | | 
-| `avaliability_end_time` | Unix Timestamp | Required | If a device is still avalible, use NaN  | 
+| `availability_start_time` | Unix Timestamp | Required | |
+| `availability_end_time` | Unix Timestamp | Required | If a device is still available, use NaN  |
 | `placement_reason` | Enum | Required | Reason for placement (Rebalancing, Drop off, etc) | 
 | `pickup_reason` | Enum | Required | Reason for removal (maintenance, pick up) | 
 | `associated_trips` | [UUID] | Optional | list of associated maintenance | 
 
 
-### Avaliabity Enum Definitions 
+### Availability Enum Definitions
 For `placement_reason`, options are `user_drop_off`, `rebalancing_drop_off`. 
 
 For `pickup_reason`, options are `user_pick_up`, `rebalacing_pick_up`, `out_of_service_area_pick_up`, `maintenance_pick_up`. 
 
 ### Realtime Data
-All MDS compatable APIs should expose a NBFS feed as well. For historical data, a `time` parameter should be provided to access what the NBFS feed showed a given time. 
+All MDS compatible APIs should expose a NBFS feed as well. For historical data, a `time` parameter should be provided to access what the NBFS feed showed at a given time.
 
 ## Metrics 
 
-All MDS compatable APIs should expose a list of Service Areas over time at the `/service_areas` endpoint. The follow fields should be included in the response. 
+All MDS compatible APIs should expose a list of Service Areas over time at the `/service_areas` endpoint. The follow fields should be included in the response.
 
 | Field | Type | Required/Optional | Other | 
 | ----- | ---- | ----------------- | ----- | 
@@ -142,21 +142,21 @@ Response:
 
 ## service-vehicle
 
-This API is used by providers when a vehicle is either remove or returned to service. 
+This API is used by providers when a vehicle is either removed or returned to service.
 
 Request Type: `POST`
 
-Enpoint: `service-vehicle`
+Endpoint: `service-vehicle`
 
 Body: 
 
 | Field | Type | Required/Optional | Other | 
 | ----- | ---- | ----------------- | ----- | 
 | `vehicle_id` | UUID | Required | Provided by the Vehicle Registration API | 
-| `time_stamp` | Unix Timestamp | Required | Time of day (ZULU) data was sampled | 
+| `time_stamp` | Unix Timestamp | Required | Time of day (UTC) data was sampled | 
 | `GPS_pos` | Point | Required | GPS location at the time of status change  |
 | `reason_code` | Enum | Required | Reason for status change  |
-| `service-start` | Boolean | Required | `True` if service start, `False` if return froms servicing | 
+| `service_start` | Boolean | Required | `True` if service start, `False` if return from servicing |
 
 Response:
 
@@ -274,7 +274,7 @@ Body:
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
 | `trip_id` | UUID | Required | Issued by InitMovementPlan() API  | 
-| `timestamp` | Unix Timestamp | Required | Time of day (ZULU) data was sampled| 
+| `timestamp` | Unix Timestamp | Required | Time of day (UTC) data was sampled|
 | `location` | Point | Required | GPS location in decimal degrees at time of sample  |
 
 Response: 
@@ -297,7 +297,7 @@ Body:
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
 | `location` | Point  | Required | Current Location  | 
-| `timestamp` | Unix Timestamp | Required | Time of day (ZULU) data was sampled| 
+| `timestamp` | Unix Timestamp | Required | Time of day (UTC) data was sampled|
 
 Response: 
 
@@ -307,7 +307,7 @@ Response:
 
 ## get-parking-info
 
-This API finds returns a list of approved parking spaces based on post parameters. 
+This API returns a list of approved parking spaces based on post parameters.
 
 Request Type: `POST`
 
@@ -318,7 +318,7 @@ Body:
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
 | `trip_id` | UUID | Required | Issued by InitMovementPlan() API | 
-| `timestamp` | Unix Timestamp | Required | Time of day (ZULU) data was sampled| 
+| `timestamp` | Unix Timestamp | Required | Time of day (UTC) data was sampled|
 | `GPS_pos` | DDD.DDDDD° | Required | GPS location in decimal degrees at time of sample |
 | `park_option` | Enum | Required | Choose the type of parking place desired |
 
@@ -333,7 +333,7 @@ Reponse:
 
 # service-areas 
 
-Gets the list service area avalible to the provider. 
+Gets the list of service areas available to the provider.
 
 Request Type: `GET`
 
@@ -346,7 +346,7 @@ Body:
 | `operator_name` | String | Required |  |
 | `service_area_id` | UUID | Required |  | 
 | `service_start_date` | Unix Timestamp | Required | Date at which this service area became effective | 
-| `service_end_date` | Unix Timestamp | Required | Date at which this service area was replaced. If current effictive, place NaN | 
+| `service_end_date` | Unix Timestamp | Required | Date at which this service area was replaced. If currently effective, place NaN |
 | `service_area` | MultiPolygon | Required | | 
 | `prior_service_area` | UUID | Optional | If exists, the UUID of the prior service area. | 
 | `replacement_service_area` | UUID | Optional | If exists, the UUID of the service area that replaced this one | 
