@@ -11,6 +11,12 @@ This specification contains a data standard for *mobility as a service* provider
 * All response fields should use `lower_case_with_underscores` to implement the API
 * Responses may be paginated
 
+## Table of Contents
+
+* [Trips](#trips)
+* [Availability](#availability)
+* [Service Areas](#service-areas)
+
 ## Trips
 
 A trip represents a journey taken by a *mobility as a service* customer with a geo-tagged start and stop point.

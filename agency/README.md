@@ -6,6 +6,21 @@ This specification contains a collection of RESTful APIs used to specify the dig
 * Date: 23 May 2018
 * Version: ALPHA
 
+## Table of Contents
+
+* [register-vehicle](#register-vehicle)
+* [remove-vehicle](#remove-vehicle)
+* [service-vehicle](#service-vehicle)
+* [report-maintenance](#report-maintenance)
+* [pilot-movement-plan](#pilot-movement-plan)
+* [activate-movement-plan](#activate-movement-plan)
+* [close-movement-plan](#close-movement-plan)
+* [update-trip-data](#update-trip-data)
+* [check-parking](#check-parking)
+* [get-parking-info](#get-parking-info)
+* [service-areas](#service-areas)
+* [Enum definitions](#enum-definitions)
+
 ## register-vehicle
 
 The Vehicle Registration API is required in order to register a vehicle for use in the system. The API will require a valid `provider_id` and `api_key`.
@@ -214,7 +229,7 @@ Reponse:
 | `price` | Decimal |  | Price (Amount) |
 | `currency` | Enum |  | (`USD`, `CAD`) |
 
-## service-areas 
+## service-areas
 
 Gets the list of service areas available to the provider.
 
