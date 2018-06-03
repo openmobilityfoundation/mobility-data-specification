@@ -36,11 +36,13 @@ Response:
 | `trip_distance` | Integer | Required | Trip Distance, in Meters | 
 | `start_point` | Point | Required | | 
 | `end_point` | Point | Required | | 
+| `accuracy` | Integer | Required | The approximate level of accuracy, in meters, represented by start_point and end_point. Accommodates privacy blurring and hardware limitations. |
 | `route` | Line | Optional | | 
 | `sample_rate` | Integer | Optional | The frequency, in seconds, in which the route is sampled | 
 | `device_id` | UUID | Required | | 
 | `start_time` | Unix Timestamp | Required | | 
 | `end_time` | Unix Timestamp | Required | |
+| `parking_verification` | String | Optional | A URL to a photo (or other evidence) of proper vehicle parking | 
 | `standard_cost` | Integer | Optional | The cost, in cents that it would cost to perform that trip in the standard operation of the System. | 
 | `actual_cost` | Integer | Optional | The actual cost paid by the user of the Mobility as a service provider |
 
@@ -60,6 +62,7 @@ Response:
 | `availability_start_time` | Unix Timestamp | Required | |
 | `availability_end_time` | Unix Timestamp | Required | If a device is still available, use NaN  |
 | `placement_reason` | Enum | Required | Reason for placement (`user_drop_off`, `rebalancing_drop_off`) | 
+| `allowed_placement` | Bool | Required | Indicates whether provider believes placement was allowable under service area rules. | 
 | `pickup_reason` | Enum | Required | Reason for removal (`user_pick_up`, `rebalacing_pick_up`, `out_of_service_area_pick_up`, `maintenance_pick_up`) | 
 | `associated_trips` | [UUID] | Optional | list of associated maintenance | 
 
