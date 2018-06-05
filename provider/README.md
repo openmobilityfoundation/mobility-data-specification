@@ -36,7 +36,7 @@ Response:
 | `trip_distance` | Integer | Required | Trip Distance, in Meters | 
 | `start_point` | Point | Required | | 
 | `end_point` | Point | Required | | 
-| `accuracy` | Integer | Required | The approximate level of accuracy, in meters, represented by start_point and end_point. Accommodates privacy blurring and hardware limitations. |
+| `accuracy` | Integer | Required | The approximate level of accuracy, in meters, represented by start_point and end_point. |
 | `route` | Line | Optional | | 
 | `sample_rate` | Integer | Optional | The frequency, in seconds, in which the route is sampled | 
 | `device_id` | UUID | Required | | 
