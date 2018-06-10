@@ -1,16 +1,14 @@
-﻿CITY OF LOS ANGELES
-CALIFORNIA
+CITY OF LOS ANGELES, CALIFORNIA
 
-ERIC GARCETTI
-MAYOR
+ERIC GARCETTI, MAYOR
 
 DEPARTMENT OF TRANSPORTATION
-100 South Main Street, 10th Floor Los Angeles, California 90012 
-(213) 972-8470 
-FAX (213) 972-8410
 
-Seleta J. Reynolds
-GENERAL MANAGER
+100 South Main Street, 10th Floor Los Angeles, California 90012 
+
+(213) 972-8470, FAX (213) 972-8410
+
+Seleta J. Reynolds, GENERAL MANAGER
 
 - Authors: LADOT
 - Date: 14 May 2018
@@ -26,11 +24,11 @@ In the last decade, coinciding with the introduction of the smartphone, the City
 
 **City** means the City of Los Angeles.
 
-**Customer** means a personor organization that buys a mobility service from an Operator.
+**Customer** means a person or organization that buys a mobility service from an Operator.
 
 **Municipality** means a city or a town that has corporate status and local government.
 
-**Program** means the Dockless On-DemandPersonal MobilityBeta withinthe City.
+**Program** means the Dockless On-Demand Personal Mobility Beta withinthe City.
 
 **Operator** means a company that operates a Mobility-as-a-Service company within a Municipality.
 
