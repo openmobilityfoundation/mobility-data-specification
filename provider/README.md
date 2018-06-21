@@ -59,6 +59,7 @@ Response:
 | Field | Type | Required/Optional | Other | 
 | ----- | ---- | ----------------- | ----- | 
 | `device_type` | String | Required | | 
+| `device_id` | UUID | Required | |
 | `availability_start_time` | Unix Timestamp | Required | |
 | `availability_end_time` | Unix Timestamp | Required | If a device is still available, use NaN  |
 | `placement_reason` | Enum | Required | Reason for placement (`user_drop_off`, `rebalancing_drop_off`) | 
