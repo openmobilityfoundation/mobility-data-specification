@@ -58,6 +58,7 @@ Response:
 
 | Field | Type | Required/Optional | Other | 
 | ----- | ---- | ----------------- | ----- | 
+| `company_name` | String | Required | |
 | `device_type` | String | Required | | 
 | `device_id` | UUID | Required | |
 | `availability_start_time` | Unix Timestamp | Required | |
