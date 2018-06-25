@@ -34,8 +34,8 @@ Response:
 | `trip_id` | UUID | Required | a unique ID for each trip | 
 | `trip_duration` | Integer | Required | Time, in Seconds | 
 | `trip_distance` | Integer | Required | Trip Distance, in Meters | 
-| `start_point` | Point | Required | | 
-| `end_point` | Point | Required | | 
+| `start_point` | Point | Required | Must be in WGS 84 (EPSG:4326) standard GPS projection | 
+| `end_point` | Point | Required | Must be in WGS 84 (EPSG:4326) standard GPS projection | 
 | `accuracy` | Integer | Required | The approximate level of accuracy, in meters, represented by start_point and end_point. |
 | `route` | Line | Optional | | 
 | `sample_rate` | Integer | Optional | The frequency, in seconds, in which the route is sampled | 
@@ -86,7 +86,7 @@ Response:
 | `service_area_id` | UUID | Required |  | 
 | `service_start_date` | Unix Timestamp | Required | Date at which this service area became effective | 
 | `service_end_date` | Unix Timestamp | Required | Date at which this service area was replaced. If current effictive, place NaN | 
-| `service_area` | MultiPolygon | Required | | 
+| `service_area` | MultiPolygon | Required | Must be in WGS 84 (EPSG:4326) standard GPS projection | 
 | `prior_service_area` | UUID | Optional | If exists, the UUID of the prior service area. | 
 | `replacement_service_area` | UUID | Optional | If exists, the UUID of the service area that replaced this one | 
 
