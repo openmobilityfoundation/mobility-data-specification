@@ -46,25 +46,41 @@ Response:
 | `standard_cost` | Integer | Optional | The cost, in cents that it would cost to perform that trip in the standard operation of the System. | 
 | `actual_cost` | Integer | Optional | The actual cost paid by the user of the Mobility as a service provider |
 
-## Availability
+## Status Change
 
-Availability is the inventory of vehicles available for customer use.
+Status  is the inventory of vehicles available for customer use.
 
-The availability API allows a user to query the historical availability for a system within a time range. The API should allow queries at least by time period and geographical area.
+The  API allows a user to query the historical availability for a system within a time range. The API should allow queries at least by time period and geographical area.
 
-Endpoint: `/availability`  
+Endpoint: `/status-changes`  
 Method: `GET`  
 Response:
 
 | Field | Type | Required/Optional | Other | 
 | ----- | ---- | ----------------- | ----- | 
-| `device_type` | String | Required | | 
-| `availability_start_time` | Unix Timestamp | Required | |
-| `availability_end_time` | Unix Timestamp | Required | If a device is still available, use NaN  |
-| `placement_reason` | Enum | Required | Reason for placement (`user_drop_off`, `rebalancing_drop_off`) | 
-| `allowed_placement` | Bool | Required | Indicates whether provider believes placement was allowable under service area rules. | 
-| `pickup_reason` | Enum | Required | Reason for removal (`user_pick_up`, `rebalacing_pick_up`, `out_of_service_area_pick_up`, `maintenance_pick_up`) | 
-| `associated_trips` | [UUID] | Optional | list of associated maintenance | 
+| `device_id` | UUID	| Required | Should be the same as in Trips | 	
+| `device_type` | Enum |	Required | | 	
+| `event_type` | Enum |	Required | 	One of four possible types, see event type table  |
+| `reason` |	Enum |	Required |	Reason for status change.  Allowable values determined by event_type | 
+| `event_time` | Unix Timestamp |	Required | Date/time that event occurred.  Based on GPS clock. 
+| `location` | Point | Required | Must be in WGS 84 (EPSG:4326) standard GPS projection |
+| `battery_pct`	| Float | Required if Applicable | 	Percent battery charge of device, expressed between 0 and 1 | 
+| `associated_trips` | 	UUID |	Optional based on device | 	For “Reserved” event types, associated trips (foreign key to Trips API) | 
+
+### Event Types 
+
+| event_type | event_type_description |  reason | reason_description	|
+
+| `available` |	A device becomes available for customer use	| `service_start` |	Device introduced into service at the beginning of the day (if program does not operate 24/7) | 
+| | | `user_drop_off` |	User ends reservation | 
+| | | `rebalance_drop_off` |	Device moved for rebalancing | 
+| | | `maintenance_drop_off` | 	Device introduced into service after being removed for maintenance | 
+| `reserved` | A customer reserves a device (even if trip has not started yet) |	`user_pick_up` |	Customer reserves device | 
+| `unavailable` |	A device is on the street but becomes unavailable for customer use | `maintenance` |	A device is no longer available due to equipment issues |
+| | | `low_battery` | A device is no longer available due to insufficient battery | 
+| `removed` | A device is removed from the street and unavailable for customer use | `service_end`	| Device removed from street because service has ended for the day (if program does not operate 24/7) | 
+| | | `rebalance_pick_up` |	Device removed from street and will be placed at another location to rebalance service | 
+| | | `maintenance_pick_up`	 | Device removed from street so it can be worked on | 
 
 ### Realtime Data
 
