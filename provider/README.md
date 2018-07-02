@@ -70,7 +70,7 @@ Response:
 ### Event Types 
 
 | event_type | event_type_description |  reason | reason_description	|
-
+| ---------- | ---------------------- | ------- | ------------------  |
 | `available` |	A device becomes available for customer use	| `service_start` |	Device introduced into service at the beginning of the day (if program does not operate 24/7) | 
 | () | () | `user_drop_off` |	User ends reservation | 
 | () | () | `rebalance_drop_off` |	Device moved for rebalancing | 
