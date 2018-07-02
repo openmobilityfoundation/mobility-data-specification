@@ -72,15 +72,15 @@ Response:
 | event_type | event_type_description |  reason | reason_description	|
 
 | `available` |	A device becomes available for customer use	| `service_start` |	Device introduced into service at the beginning of the day (if program does not operate 24/7) | 
-| | | `user_drop_off` |	User ends reservation | 
-| | | `rebalance_drop_off` |	Device moved for rebalancing | 
-| | | `maintenance_drop_off` | 	Device introduced into service after being removed for maintenance | 
+| () | () | `user_drop_off` |	User ends reservation | 
+| () | () | `rebalance_drop_off` |	Device moved for rebalancing | 
+| () | () | `maintenance_drop_off` | 	Device introduced into service after being removed for maintenance | 
 | `reserved` | A customer reserves a device (even if trip has not started yet) |	`user_pick_up` |	Customer reserves device | 
 | `unavailable` |	A device is on the street but becomes unavailable for customer use | `maintenance` |	A device is no longer available due to equipment issues |
-| | | `low_battery` | A device is no longer available due to insufficient battery | 
+| () | () | `low_battery` | A device is no longer available due to insufficient battery | 
 | `removed` | A device is removed from the street and unavailable for customer use | `service_end`	| Device removed from street because service has ended for the day (if program does not operate 24/7) | 
-| | | `rebalance_pick_up` |	Device removed from street and will be placed at another location to rebalance service | 
-| | | `maintenance_pick_up`	 | Device removed from street so it can be worked on | 
+| () | () | `rebalance_pick_up` |	Device removed from street and will be placed at another location to rebalance service | 
+| () | () | `maintenance_pick_up`	 | Device removed from street so it can be worked on | 
 
 ### Realtime Data
 
