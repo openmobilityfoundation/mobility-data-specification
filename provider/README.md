@@ -66,7 +66,7 @@ Response:
 | `location` | Point | Required | Must be in WGS 84 (EPSG:4326) standard GPS projection |
 | `battery_pct`	| Float | Required if Applicable | 	Percent battery charge of device, expressed between 0 and 1 | 
 | `associated_trips` | 	UUID |	Optional based on device | 	For “Reserved” event types, associated trips (foreign key to Trips API) | 
-
+| `company_name` | String | Required | Company Name | 
 ### Event Types 
 
 | event_type | event_type_description |  reason | reason_description	|
