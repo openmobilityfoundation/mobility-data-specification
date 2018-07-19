@@ -14,7 +14,7 @@ The specification is a way to implement realtime data sharing, measurement and r
 
 At the onset of the program, [`provider`][provider] will be required, with phasing to [`agency`][agency] at a time to be announced.
 
-The draft rules and guidelines are included in this repository for viewing and comment at [ladot-draft-dockless-rules.pdf](ladot-draft-dockless-rules.pdf). *NOTE:* This document has not been updated to reflect the name changes expressed in [PR #7](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/7) 
+The rules and guidelines can be found on [Council Clerk Connect](https://cityclerk.lacity.org/lacityclerkconnect/index.cfm?fa=ccfi.viewrecord&cfnumber=17-1125).
 
 The specification will be versioned using Git tags. Currently, it is in draft form. 
 
