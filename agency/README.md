@@ -34,6 +34,7 @@ Body:
 | `provider_id` | UUID | Required | Issued by Provider Registration API |
 | `api_key` | String | Required | API key issued to provider using API Key Registration API |
 | `vehicle_type` | Enum | Required | Vehicle Type |
+| `propulsion_type` | Enum | Required | Propulsion Type |
 | `vehicle_year` | Enum | Required | Year Manufactured |
 | `vehicle_mfgr` | Enum | Required | Vehicle Manufacturer |
 | `vehicle_model` | Enum | Required | Vehicle Model |
@@ -248,6 +249,16 @@ Body:
 | `replacement_service_area` | UUID | Optional | If exists, the UUID of the service area that replaced this one | 
 
 ## Enum Definitions 
+
+<a name="vehicle_type"></a> For `vehicle_type`, options are:
+* `bike`
+* `scooter`
+* `recumbent`
+
+<a name="propulsion_type"></a> For `propulsion_type`, options are:
+* `human`
+* `electric`
+* `combustion`
 
 <a name="reason_code"></a> For `reason_code`, options are:
 * `rebalancing`
