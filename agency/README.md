@@ -62,7 +62,7 @@ Response:
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
-| `message` | Enum |  | See [Message](####message) Enum |
+| `message` | Enum |  | See [Message](###message) Enum |
 
 ## service-vehicle
 
@@ -77,14 +77,14 @@ Body:
 | `vehicle_id` | UUID | Required | Provided by the Vehicle Registration API | 
 | `timestamp` | Unix Timestamp | Required | Time of day (UTC) data was sampled | 
 | `gps_pos` | Point | Required | GPS location at the time of status change  |
-| `reason_code` | Enum | Required | [Reason](####reason_code) for status change.  |
+| `reason_code` | Enum | Required | [Reason](###reason_code) for status change.  |
 | `service_start` | Boolean | Required | `True` if service start, `False` if return from servicing |
 
 Response:
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
-| `message` | Enum |  | See [Message](####message) Enum |
+| `message` | Enum |  | See [Message](###message) Enum |
 
 ## report-maintenance
 
@@ -105,7 +105,7 @@ Response:
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
-| `message` | Enum |  | See [Message](####message) Enum |
+| `message` | Enum |  | See [Message](###message) Enum |
 
 ## start-trip
 
@@ -149,7 +149,7 @@ Response:
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
-| `message` | Enum |  | See [Message](####message) Enum |
+| `message` | Enum |  | See [Message](###message) Enum |
 
 ## close-movement-plan 
 
@@ -169,7 +169,7 @@ Response:
 
 | Field | Type     | Other |
 | ----- | -------- | ----- |
-| `message` | Enum | See [Message](####message) Enum |
+| `message` | Enum | See [Message](###message) Enum |
 
 ## update-trip-data
 
@@ -189,7 +189,7 @@ Response:
 
 | Field | Type | Other | 
 | ---- | --- | --- |
-| `message` | Enum | See [Message](####message) Enum | 
+| `message` | Enum | See [Message](###message) Enum | 
 
 ## check-parking
 
@@ -208,7 +208,7 @@ Response:
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
-| `message` | Enum | | See [Message](####message) Enum | 
+| `message` | Enum | | See [Message](###message) Enum | 
 
 ## get-parking-info
 
@@ -253,25 +253,25 @@ Body:
 
 ## Enum Definitions 
 
-#### vehicle_type
+### vehicle_type
 For `vehicle_type`, options are:
 * `bike`
 * `scooter`
 * `recumbent`
 
-#### propulsion_type
+### propulsion_type
 For `propulsion_type`, options are:
 * `human`
 * `electric`
 * `combustion`
 
-#### reason_code
+### reason_code
 For `reason_code`, options are:
 * `rebalancing`
 * `maintenance`
 
 
-#### message
+### message
 For 'message', options are: 
 * `200: OK`
 * `201: Created`
