@@ -267,7 +267,7 @@ For `reason_code`, options are:
 * `rebalancing`
 * `maintenance`
 
-For `#message` options are: 
+For #message options are: 
 * `200: OK`
 * `201: Created`
 * `202: Accepted`
