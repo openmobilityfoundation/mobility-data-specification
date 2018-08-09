@@ -46,7 +46,7 @@ Response:
 | ----- | -------- | ----------------- | ----- |
 | `vehicle_id` | UUID |  | Used for accessing vehicle operations API's |
 
-## remove-vehicle
+## deregister-vehicle
 
 The remove-vehicle API is used to deregister a vehicle from the fleet.
 
@@ -57,7 +57,6 @@ Body:
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
 | `vehicle_id` | String | Required | Issued by RegisterVehicle() API |
-| `reason_code` | Enum | Required | [Reason](#reason_code) for status change  |
 
 Response:
 
