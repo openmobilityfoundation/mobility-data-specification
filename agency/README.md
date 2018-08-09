@@ -253,22 +253,25 @@ Body:
 
 ## Enum Definitions 
 
+#### vehicle_type
 For `vehicle_type`, options are:
 * `bike`
 * `scooter`
 * `recumbent`
 
+#### propulsion_type
 For `propulsion_type`, options are:
 * `human`
 * `electric`
 * `combustion`
 
+#### reason_code
 For `reason_code`, options are:
 * `rebalancing`
 * `maintenance`
 
 
-### message
+#### message
 For 'message', options are: 
 * `200: OK`
 * `201: Created`
