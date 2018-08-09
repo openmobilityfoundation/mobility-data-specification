@@ -8,24 +8,24 @@ This specification contains a collection of RESTful APIs used to specify the dig
 
 ## Table of Contents
 
-* [register-vehicle](#register-vehicle)
-* [remove-vehicle](#remove-vehicle)
-* [service-vehicle](#service-vehicle)
-* [report-maintenance](#report-maintenance)
-* [pilot-movement-plan](#pilot-movement-plan)
-* [activate-movement-plan](#activate-movement-plan)
-* [close-movement-plan](#close-movement-plan)
-* [update-trip-data](#update-trip-data)
-* [check-parking](#check-parking)
-* [get-parking-info](#get-parking-info)
-* [service-areas](#service-areas)
+* [register_vehicle](#register_vehicle)
+* [remove_vehicle](#remove_vehicle)
+* [service_vehicle](#service_vehicle)
+* [report_maintenance](#report_maintenance)
+* [pilot_movement_plan](#pilot_movement_plan)
+* [activate_movement_plan](#activate_movement_plan)
+* [close_movement_plan](#close_movement_plan)
+* [update_trip_data](#update_trip_data)
+* [check_parking](#check_parking)
+* [get_parking_info](#get_parking_info)
+* [service_areas](#service_areas)
 * [Enum definitions](#enum-definitions)
 
-## register-vehicle
+## register_vehicle
 
 The Vehicle Registration API is required in order to register a vehicle for use in the system. The API will require a valid `provider_id` and `api_key`.
 
-Endpoint: `/register-vehicle`  
+Endpoint: `/register_vehicle`  
 Method: `POST`  
 Body:
 
@@ -46,11 +46,11 @@ Response:
 | ----- | -------- | ----------------- | ----- |
 | `vehicle_id` | UUID |  | Used for accessing vehicle operations API's |
 
-## remove-vehicle
+## remove_vehicle
 
-The remove-vehicle API is used to deregister a vehicle from the fleet.
+The remove_vehicle API is used to deregister a vehicle from the fleet.
 
-Endpoint: `/remove-vehicle`  
+Endpoint: `/remove_vehicle`  
 Method: `POST`  
 Body:
 
@@ -65,11 +65,11 @@ Response:
 | ----- | -------- | ----------------- | ----- |
 | `message` | Enum |  | See [Message](#message) Enum |
 
-## service-vehicle
+## service_vehicle
 
 This API is used by providers when a vehicle is either removed or returned to service.
 
-Endpoint: `/service-vehicle`  
+Endpoint: `/service_vehicle`  
 Method: `POST`  
 Body:
 
@@ -87,11 +87,11 @@ Response:
 | ----- | -------- | ----------------- | ----- |
 | `message` | Enum |  | See [Message](#message) Enum |
 
-## report-maintenance
+## report_maintenance
 
 Used to report maintenance events.
 
-Endpoint: `/report-maintenance`  
+Endpoint: `/report_maintenance`  
 Method: `POST`  
 Body:
 
@@ -108,11 +108,11 @@ Response:
 | ----- | -------- | ----------------- | ----- |
 | `message` | Enum |  | See [Message](#message) Enum |
 
-## pilot-movement-plan
+## pilot_movement_plan
 
-The pilot-movement-plan API is used for initiating a trip request from a human piloted vehicle. It will be required for ALL trips at the time of departure. The API will acknowledge the request with a response containing a permission to proceed and a unique Trip Identifier.
+The pilot_movement_plan API is used for initiating a trip request from a human piloted vehicle. It will be required for ALL trips at the time of departure. The API will acknowledge the request with a response containing a permission to proceed and a unique Trip Identifier.
 
-Endpoint: `/pilot-movement-plan`  
+Endpoint: `/pilot_movement_plan`  
 Method: `POST`  
 Body:
 
@@ -130,17 +130,17 @@ Response:
 | ----- | -------- | ----------------- | ----- |
 | `trip_id` | UUID |  | a unique ID for each trip | 
 
-## activate-movement-plan
+## activate_movement_plan
 
 This API will take an initialized API using `trip_id` as a reference and will activate it, meaning that the trip is in motion.  This API can also be used to re-activate a deactivated movement plan.
 
-Endpoint: `/activate-movement-plan`  
+Endpoint: `/activate_movement_plan`  
 Method: `POST`  
 Body:
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
-| `trip_id` | UUID |  | Issued by pilot-movement-plan API | 
+| `trip_id` | UUID |  | Issued by pilot_movement_plan API | 
 
 Response:
 
@@ -148,11 +148,11 @@ Response:
 | ----- | -------- | ----------------- | ----- |
 | `message` | Enum |  | See [Message](#message) Enum |
 
-## close-movement-plan 
+## close_movement_plan 
 
 This API will close a Movement Plan for a given `trip_id`. The response includes a warning whether parking is enforced for the given GPS Position.
 
-Endpoint: `/close-movement-plan`  
+Endpoint: `/close_movement_plan`  
 Method: `POST`  
 Body:
 
@@ -168,11 +168,11 @@ Response:
 | ----- | -------- | ----- |
 | `message` | Enum | See [Message](#message) Enum |
 
-## update-trip-data
+## update_trip_data
 
 A trip represents a route taken by a provider's customer.   Trip data will be reported to the API every 5 seconds while the vehicle is in motion.   
 
-Endpoint: `/update-trip-data`  
+Endpoint: `/update_trip_data`  
 Method: `POST`  
 Body:
 
@@ -188,11 +188,11 @@ Response:
 | ---- | --- | --- |
 | `message` | Enum | See [Message](#message) Enum | 
 
-## check-parking
+## check_parking
 
 This API is used to determine whether parking is regulated for a given destination.
 
-Endpoint: `/check-parking`  
+Endpoint: `/check_parking`  
 Method: `POST`  
 Body:
 
@@ -207,11 +207,11 @@ Response:
 | ----- | -------- | ----------------- | ----- |
 | `message` | Enum | | See [Message](#message) Enum | 
 
-## get-parking-info
+## get_parking_info
 
 This API returns a list of approved parking spaces based on post parameters.
 
-Endpoint: `/get-parking-info`  
+Endpoint: `/get_parking_info`  
 Method: `POST`  
 Body: 
 
@@ -230,11 +230,11 @@ Reponse:
 | `price` | Decimal |  | Price (Amount) |
 | `currency` | Enum |  | (`USD`, `CAD`) |
 
-## service-areas
+## service_areas
 
 Gets the list of service areas available to the provider.
 
-Endpoint: `/service-areas`  
+Endpoint: `/service_areas`  
 Method: `GET`  
 Body: 
 
