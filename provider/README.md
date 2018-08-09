@@ -52,7 +52,7 @@ Status  is the inventory of vehicles available for customer use.
 
 The  API allows a user to query the historical availability for a system within a time range. The API should allow queries at least by time period and geographical area.
 
-Endpoint: `/status-changes`  
+Endpoint: `/status_changes`  
 Method: `GET`  
 Response:
 
