@@ -9,7 +9,7 @@ This specification contains a collection of RESTful APIs used to specify the dig
 ## Table of Contents
 
 * [register-vehicle](#register-vehicle)
-* [remove-vehicle](#remove-vehicle)
+* [deregister-vehicle](#deregister-vehicle)
 * [service-vehicle](#service-vehicle)
 * [report-maintenance](#report-maintenance)
 * [pilot-movement-plan](#pilot-movement-plan)
