@@ -84,7 +84,7 @@ Response:
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
-| `message` | Enum |  | See [Message](#message) Enum |
+| `message` | Enum |  | See [Message](###message) Enum |
 
 ## report-maintenance
 
@@ -105,7 +105,7 @@ Response:
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
-| `message` | Enum |  | See [Message](#message) Enum |
+| `message` | Enum |  | See [Message](###message) Enum |
 
 ## start-trip
 
@@ -149,7 +149,7 @@ Response:
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
-| `message` | Enum |  | See [Message](#message) Enum |
+| `message` | Enum |  | See [Message](###message) Enum |
 
 ## close-movement-plan 
 
@@ -267,6 +267,8 @@ For `reason_code`, options are:
 * `rebalancing`
 * `maintenance`
 
+
+###message
 For 'message', options are: 
 * `200: OK`
 * `201: Created`
