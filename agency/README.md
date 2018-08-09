@@ -77,7 +77,7 @@ Body:
 | `vehicle_id` | UUID | Required | Provided by the Vehicle Registration API | 
 | `timestamp` | Unix Timestamp | Required | Time of day (UTC) data was sampled | 
 | `gps_pos` | Point | Required | GPS location at the time of status change  |
-| `reason_code` | Enum | Required | [Reason](#reason_code) for status change.  |
+| `reason_code` | Enum | Required | [Reason](reason_code) for status change.  |
 | `service_start` | Boolean | Required | `True` if service start, `False` if return from servicing |
 
 Response:
@@ -106,6 +106,10 @@ Response:
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
 | `message` | Enum |  | See [Message](#message) Enum |
+
+## start-trip
+
+The start-trip API is used to initate a trip using a vehicle_id.   It will be requird for ALL trip at the time of departure.  The API will acknowledge
 
 ## pilot-movement-plan
 
@@ -263,7 +267,7 @@ For `reason_code`, options are:
 * `rebalancing`
 * `maintenance`
 
-For `message` options are: 
+For `#message` options are: 
 * `200: OK`
 * `201: Created`
 * `202: Accepted`
