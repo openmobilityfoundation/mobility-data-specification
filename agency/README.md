@@ -107,10 +107,6 @@ Response:
 | ----- | -------- | ----------------- | ----- |
 | `message` | Enum |  | See [Message](#message) Enum |
 
-## start-trip
-
-The start-trip API is used to initate a trip using a vehicle_id.   It will be requird for ALL trip at the time of departure.  The API will acknowledge
-
 ## pilot-movement-plan
 
 The pilot-movement-plan API is used for initiating a trip request from a human piloted vehicle. It will be required for ALL trips at the time of departure. The API will acknowledge the request with a response containing a permission to proceed and a unique Trip Identifier.
