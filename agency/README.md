@@ -9,7 +9,7 @@ This specification contains a collection of RESTful APIs used to specify the dig
 ## Table of Contents
 
 * [register-vehicle](#register-vehicle)
-* [remove-vehicle](#remove-vehicle)
+* [deregister-vehicle](#deregister-vehicle)
 * [service-vehicle](#service-vehicle)
 * [report-maintenance](#report-maintenance)
 * [pilot-movement-plan](#pilot-movement-plan)
@@ -46,7 +46,7 @@ Response:
 | ----- | -------- | ----------------- | ----- |
 | `vehicle_id` | UUID |  | Used for accessing vehicle operations API's |
 
-## remove-vehicle
+## deregister-vehicle
 
 The remove-vehicle API is used to deregister a vehicle from the fleet.
 
@@ -57,7 +57,6 @@ Body:
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
 | `vehicle_id` | String | Required | Issued by RegisterVehicle() API |
-| `reason_code` | Enum | Required | [Reason](#reason_code) for status change  |
 
 Response:
 
@@ -250,21 +249,26 @@ Body:
 
 ## Enum Definitions 
 
+#### vehicle_type
 For `vehicle_type`, options are:
 * `bike`
 * `scooter`
 * `recumbent`
 
+#### propulsion_type
 For `propulsion_type`, options are:
 * `human`
 * `electric`
 * `combustion`
 
+#### reason_code
 For `reason_code`, options are:
 * `rebalancing`
 * `maintenance`
 
-For `message` options are: 
+
+#### message
+For 'message', options are: 
 * `200: OK`
 * `201: Created`
 * `202: Accepted`
