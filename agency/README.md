@@ -13,7 +13,7 @@ This specification contains a collection of RESTful APIs used to specify the dig
 * [update-vehicle-status](#update-vehicle-status)
 * [start-trip](#start-trip)
 * [end-trip](#start-trip)
-* [update-trip-data](#update-trip-data)
+* [update-trip-telemetry](#update-trip-telemetry)
 * [check-parking](#check-parking)
 * [service-areas](#service-areas)
 * [Event types](#Event-Types)
@@ -128,25 +128,67 @@ Body:
 | `accuracy` | Integer | Required | The approximate level of accuracy, in meters, represented by start_point and end_point. |
 | `battery_pct_end` | Float | Require if Applicable | Percent battery charge of device, expressed between 0 and 1 |
 
-## update-trip-data
+## update-trip-telemetry
 
 A trip represents a route taken by a provider's customer.   Trip data will be reported to the API every 5 seconds while the vehicle is in motion.   
 
-Endpoint: `/update-trip-data`  
-Method: `POST`  
+Endpoint: `/update-trip-telemetry`  
+Method: `POST`
+API Key: `Required` 
 Body:
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
 | `trip_id` | UUID | Required | Issued by InitMovementPlan() API  | 
 | `timestamp` | Unix Timestamp | Required | Time of day (UTC) data was sampled|
-| `location` | Point | Required | GPS location in decimal degrees at time of sample  |
+| `route` | Route | Required | See detail below. | 
+| `accuracy` | Integer | Required | The approximate level of accuracy, in meters, represented by start_point and end_point. |
 
 Response:
 
 | Field | Type | Other | 
 | ---- | --- | --- |
 | `message` | Enum | See [Message](#message) Enum | 
+
+
+### Route
+
+To represent a route, MDS provider APIs should create a GeoJSON Feature Collection where ever observed point in the route, plus a time stamp, should be included. The representation needed is below.
+
+The route must include at least 2 points, a start point and end point. Additionally, it must include all possible GPS samples collected by a provider. All points must be in WGS 84 (EPSG:4326) standard GPS projection 
+```
+
+"route": {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "type": "Feature",
+                "properties": {
+                    "timestamp": 1529968782.421409
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -118.46710503101347,
+                        33.9909333514159
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "timestamp": 1531007628.3774529
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -118.464851975441,
+                        33.990366257735
+                    ]
+                }
+            }
+        ] }
+```
 
 ## check-parking
 
@@ -224,4 +266,4 @@ For 'message', options are:
 * `204: Removed`
 * `210: Permitted limit reached, failed to activate vehicle`
 * `240: Parking NOT enforced for this location`
-* `241: Parking enforced for this location
+* `241: Parking enforced for this location`
