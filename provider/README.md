@@ -36,7 +36,7 @@ Response:
 | `trip_distance` | Integer | Required | Trip Distance, in Meters | 
 | `route` | Route | Required | See detail below. | 
 | `accuracy` | Integer | Required | The approximate level of accuracy, in meters, represented by start_point and end_point. |
-| `provider_id` | String | Required | Issued by Provider Registration API |
+| `provider_id` | String | Required | Issued by the city during the permitting process |
 | `vehicle_id` | UUID | Required | Vehicle Identification Number assigned by Manufacturer or Operator| 
 | `start_time` | Unix Timestamp | Required | | 
 | `end_time` | Unix Timestamp | Required | |
