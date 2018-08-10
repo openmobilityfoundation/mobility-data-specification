@@ -28,7 +28,6 @@ Body:
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
-
 | `provider_id` | String | Required | Issued by Provider Registration API |
 | `vehicle_id` | String |  | Vehicle Identification Number assigned by Manufacturer or Operator |
 | `vehicle_type` | Enum | Required | Vehicle Type |
