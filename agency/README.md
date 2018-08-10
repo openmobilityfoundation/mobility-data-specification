@@ -3,18 +3,20 @@
 This specification contains a collection of RESTful APIs used to specify the digital relationship between *mobility as a service* providers and the agencies that regulate them.
 
 * Authors: LADOT
-* Date: 23 May 2018
+* Date: 10 Aug 2018
 * Version: ALPHA
 
 ## Table of Contents
 
 * [register-vehicle](#register-vehicle)
 * [deregister-vehicle](#deregister-vehicle)
-* [service-vehicle](#service-vehicle)
-* [report-maintenance](#report-maintenance)
+* [update-vehicle-status](#update-vehicle-status)
+* [start-trip](#start-trip)
+* [end-trip](#start-trip)
 * [update-trip-data](#update-trip-data)
 * [check-parking](#check-parking)
 * [service-areas](#service-areas)
+* [Event types](#Event-Types)
 * [Enum definitions](#enum-definitions)
 
 ## register-vehicle
@@ -28,7 +30,7 @@ Body:
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
-| `provider_id` | String | Required | Issued by Provider Registration API |
+| `provider_id` | String | Required | Issued by city |
 | `vehicle_id` | String |  | Vehicle Identification Number assigned by Manufacturer or Operator |
 | `vehicle_type` | Enum | Required | Vehicle Type |
 | `propulsion_type` | Enum | Required | Propulsion Type |
@@ -53,7 +55,7 @@ Body:
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
-| `provider_id` | String | Required | Issued by Provider Registration API |
+| `provider_id` | String | Required | Issued by city |
 | `vehicle_id` | String |  | Vehicle Identification Number assigned by Manufacturer or Operator |
 
 
@@ -63,21 +65,24 @@ Response:
 | ----- | -------- | ----------------- | ----- |
 | `message` | Enum |  | See [Message](#message) Enum |
 
-## service-vehicle
+## update-vehicle-status
 
 This API is used by providers when a vehicle is either removed or returned to service.
 
-Endpoint: `/service-vehicle`  
-Method: `POST`  
+Endpoint: `/update-vehicle-status`  
+Method: `POST`
+API Key: `Required` 
 Body:
 
 | Field | Type | Required/Optional | Other | 
 | ----- | ---- | ----------------- | ----- | 
-| `vehicle_id` | UUID | Required | Provided by the Vehicle Registration API | 
-| `timestamp` | Unix Timestamp | Required | Time of day (UTC) data was sampled | 
-| `gps_pos` | Point | Required | GPS location at the time of status change  |
+| `provider_id` | String | Required | Issued by city |
+| `vehicle_id` | String | Required | Provided by the Vehicle Registration API | 
+| `timestamp` | Unix Timestamp | Required | Date/time that event occurred. Based on GPS clock. | 
+| `location` | Point | Required | Location at the time of status change in WGS 84 (EPSG:4326) standard GPS projection  |
+| `event_type` | Enum | Required | [Event Type](#event_type) for status change.  |
 | `reason_code` | Enum | Required | [Reason](#reason_code) for status change.  |
-| `service_start` | Boolean | Required | `True` if service start, `False` if return from servicing |
+| `battery_pct` | Float | Require if Applicable | Percent battery charge of device, expressed between 0 and 1 |
 
 Response:
 
@@ -85,27 +90,43 @@ Response:
 | ----- | -------- | ----------------- | ----- |
 | `message` | Enum |  | See [Message](#message) Enum |
 
-## report-maintenance
+## start-trip
 
-Used to report maintenance events.
-
-Endpoint: `/report-maintenance`  
-Method: `POST`  
+Endpoint: `/start-trip`  
+Method: `POST`
+API Key: `Required` 
 Body:
 
 | Field | Type | Required/Optional | Other | 
 | ----- | ---- | ----------------- | ----- | 
-| `vehicle_id` | UUID | Required | Provided by the Vehicle Registration API | 
-| `timestamp` | Unix Timestamp | Required | Time of day (UTC) data was sampled | 
-| `maint_type` | Enum | Required | Type of Maintenance performed (`Tire`, `Wheel`, `Brake`, `Frame`, `Controls`, `Propulsion`.) | 
-| `maint_action` | Enum | Required | Maintenance action performed (`Repair`, `Replace`, `Inspect`) | 
+| `provider_id` | String | Required | Issued by city |
+| `vehicle_id` | String | Required | Provided by the Vehicle Registration API | 
+| `timestamp` | Unix Timestamp | Required | Date/time that event occurred. Based on GPS clock. | 
+| `location` | Point | Required | Location at the time of status change in WGS 84 (EPSG:4326) standard GPS projection  |
+| `accuracy` | Integer | Required | The approximate level of accuracy, in meters, represented by start_point and end_point. |
+| `battery_pct_start` | Float | Require if Applicable | Percent battery charge of device, expressed between 0 and 1 |
 
 Response:
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
-| `message` | Enum |  | See [Message](#message) Enum |
+| `trip_id` | UUID | Required | a unique ID for each trip | 
 
+
+## end-trip
+
+Endpoint: `/end-trip`  
+Method: `POST`
+API Key: `Required` 
+Body:
+
+| Field | Type | Required/Optional | Other | 
+| ----- | ---- | ----------------- | ----- | 
+| `trip_id` | UUID | Required | See [start-trip](#start-trip) |
+| `timestamp` | Unix Timestamp | Required | Date/time that event occurred. Based on GPS clock. | 
+| `location` | Point | Required | Location at the time of status change in WGS 84 (EPSG:4326) standard GPS projection  |
+| `accuracy` | Integer | Required | The approximate level of accuracy, in meters, represented by start_point and end_point. |
+| `battery_pct_end` | Float | Require if Applicable | Percent battery charge of device, expressed between 0 and 1 |
 
 ## update-trip-data
 
@@ -146,7 +167,6 @@ Response:
 | ----- | -------- | ----------------- | ----- |
 | `message` | Enum | | See [Message](#message) Enum | 
 
-
 ## service-areas
 
 Gets the list of service areas available to the provider.
@@ -157,13 +177,29 @@ Body:
 
 | Field | Type | Required/Optional | Other | 
 | ----- | ---- | ----------------- | ----- | 
-| `operator_name` | String | Required |  |
+| `provider_id` | String | Required | Issued by city |
 | `service_area_id` | UUID | Required |  | 
 | `service_start_date` | Unix Timestamp | Required | Date at which this service area became effective | 
 | `service_end_date` | Unix Timestamp | Required | Date at which this service area was replaced. If currently effective, place NaN |
 | `service_area` | MultiPolygon | Required | | 
 | `prior_service_area` | UUID | Optional | If exists, the UUID of the prior service area. | 
 | `replacement_service_area` | UUID | Optional | If exists, the UUID of the service area that replaced this one | 
+
+### Event Types 
+
+| event_type | event_type_description |  reason | reason_description	|
+| ---------- | ---------------------- | ------- | ------------------  |
+| `available` |	A device becomes available for customer use	| `service_start` |	Device introduced into service at the beginning of the day (if program does not operate 24/7) | 
+| | | `user_drop_off` |	User ends reservation | 
+| | | `rebalance_drop_off` |	Device moved for rebalancing | 
+| | | `maintenance_drop_off` | 	Device introduced into service after being removed for maintenance | 
+| `reserved` | A customer reserves a device (even if trip has not started yet) |	`user_pick_up` |	Customer reserves device | 
+| `unavailable` |	A device is on the street but becomes unavailable for customer use | `maintenance` |	A device is no longer available due to equipment issues |
+| | | `low_battery` | A device is no longer available due to insufficient battery | 
+| `removed` | A device is removed from the street and unavailable for customer use | `service_end`	| Device removed from street because service has ended for the day (if program does not operate 24/7) | 
+| | | `rebalance_pick_up` |	Device removed from street and will be placed at another location to rebalance service | 
+| | | `maintenance_pick_up`	 | Device removed from street so it can be worked on | 
+| `inactive` | A device has been deregistered  | 	|  |
 
 ## Enum Definitions 
 
@@ -179,15 +215,13 @@ For `propulsion_type`, options are:
 * `electric`
 * `combustion`
 
-#### reason_code
-For `reason_code`, options are:
-* `rebalancing`
-* `maintenance`
-
 #### message
 For 'message', options are: 
 * `200: OK`
 * `201: Created`
 * `202: Accepted`
+* `203: Added`
+* `204: Removed`
+* `210: Permitted limit reached, failed to activate vehicle`
 * `240: Parking NOT enforced for this location`
-* `241: Parking enforced for this location`
+* `241: Parking enforced for this location
