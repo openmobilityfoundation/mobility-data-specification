@@ -12,12 +12,8 @@ This specification contains a collection of RESTful APIs used to specify the dig
 * [deregister-vehicle](#deregister-vehicle)
 * [service-vehicle](#service-vehicle)
 * [report-maintenance](#report-maintenance)
-* [pilot-movement-plan](#pilot-movement-plan)
-* [activate-movement-plan](#activate-movement-plan)
-* [close-movement-plan](#close-movement-plan)
 * [update-trip-data](#update-trip-data)
 * [check-parking](#check-parking)
-* [get-parking-info](#get-parking-info)
 * [service-areas](#service-areas)
 * [Enum definitions](#enum-definitions)
 
@@ -31,20 +27,20 @@ Body:
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
-| `provider_id` | UUID | Required | Issued by Provider Registration API |
+| `provider_id` | String | Required | Issued by Provider Registration API |
 | `api_key` | String | Required | API key issued to provider using API Key Registration API |
+| `vehicle_id` | String |  | Vehicle Identification Number assigned by Manufacturer or Operator |
 | `vehicle_type` | Enum | Required | Vehicle Type |
 | `propulsion_type` | Enum | Required | Propulsion Type |
 | `vehicle_year` | Enum | Required | Year Manufactured |
 | `vehicle_mfgr` | Enum | Required | Vehicle Manufacturer |
 | `vehicle_model` | Enum | Required | Vehicle Model |
-| `vin` | String | Required | Vehicle Identification Number assigned by Manufacturer or Operator |
 
 Response:
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
-| `vehicle_id` | UUID |  | Used for accessing vehicle operations API's |
+| `message` | Enum |  | See [Message](#message) Enum |
 
 ## deregister-vehicle
 
@@ -56,7 +52,7 @@ Body:
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
-| `vehicle_id` | String | Required | Issued by RegisterVehicle() API |
+| `message` | Enum |  | See [Message](#message) Enum |
 
 Response:
 
