@@ -23,12 +23,13 @@ The Vehicle Registration API is required in order to register a vehicle for use 
 
 Endpoint: `/register-vehicle`  
 Method: `POST`  
+API Key: `Required`
 Body:
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
+
 | `provider_id` | String | Required | Issued by Provider Registration API |
-| `api_key` | String | Required | API key issued to provider using API Key Registration API |
 | `vehicle_id` | String |  | Vehicle Identification Number assigned by Manufacturer or Operator |
 | `vehicle_type` | Enum | Required | Vehicle Type |
 | `propulsion_type` | Enum | Required | Propulsion Type |
@@ -46,13 +47,16 @@ Response:
 
 The remove-vehicle API is used to deregister a vehicle from the fleet.
 
-Endpoint: `/remove-vehicle`  
-Method: `POST`  
+Endpoint: `/deregister-vehicle`  
+Method: `POST`
+API Key: `Required`
 Body:
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
-| `message` | Enum |  | See [Message](#message) Enum |
+| `provider_id` | String | Required | Issued by Provider Registration API |
+| `vehicle_id` | String |  | Vehicle Identification Number assigned by Manufacturer or Operator |
+
 
 Response:
 
