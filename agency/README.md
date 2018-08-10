@@ -23,7 +23,7 @@ The Vehicle Registration API is required in order to register a vehicle for use 
 
 Endpoint: `/register-vehicle`  
 Method: `POST`  
-API Key: `Required`
+API Key: `Required`  
 Body:
 
 | Field | Type     | Required/Optional | Other |
@@ -48,7 +48,7 @@ The remove-vehicle API is used to deregister a vehicle from the fleet.
 
 Endpoint: `/deregister-vehicle`  
 Method: `POST`
-API Key: `Required`
+API Key: `Required`  
 Body:
 
 | Field | Type     | Required/Optional | Other |
