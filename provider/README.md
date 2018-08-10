@@ -37,7 +37,7 @@ Response:
 | `route` | Route | Required | See detail below. | 
 | `accuracy` | Integer | Required | The approximate level of accuracy, in meters, represented by start_point and end_point. |
 | `provider_id` | String | Required | Issued by the city during the permitting process |
-| `vehicle_id` | UUID | Required | Vehicle Identification Number assigned by Manufacturer or Operator| 
+| `vehicle_id` | String | Required | Vehicle Identification Number assigned by Manufacturer or Operator| 
 | `start_time` | Unix Timestamp | Required | | 
 | `end_time` | Unix Timestamp | Required | |
 | `parking_verification` | String | Optional | A URL to a photo (or other evidence) of proper vehicle parking | 
@@ -95,7 +95,7 @@ Response:
 
 | Field | Type | Required/Optional | Other | 
 | ----- | ---- | ----------------- | ----- | 
-| `device_id` | UUID	| Required | Should be the same as in Trips | 	
+| `vehicle_id` | String | Required | Vehicle Identification Number used in Trips| 	
 | `device_type` | Enum |	Required | | 	
 | `event_type` | Enum |	Required | 	One of four possible types, see event type table  |
 | `reason` |	Enum |	Required |	Reason for status change.  Allowable values determined by event_type | 
