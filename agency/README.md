@@ -47,7 +47,7 @@ Response:
 The remove-vehicle API is used to deregister a vehicle from the fleet.
 
 Endpoint: `/deregister-vehicle`  
-Method: `POST`
+Method: `POST`  
 API Key: `Required`  
 Body:
 
