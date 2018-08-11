@@ -236,8 +236,9 @@ Body:
 | | | `rebalance_drop_off` |	Device moved for rebalancing | 
 | | | `maintenance_drop_off` | 	Device introduced into service after being removed for maintenance | 
 | `reserved` | A customer reserves a device (even if trip has not started yet) |	`user_pick_up` |	Customer reserves device | 
-| `unavailable` |	A device is on the street but becomes unavailable for customer use | `maintenance` |	A device is no longer available due to equipment issues |
+| `unavailable` |	A device is on the street but becomes unavailable for customer use | `default` |  Default state for a newly registered vehicle	|
 | | | `low_battery` | A device is no longer available due to insufficient battery | 
+| | | ``maintenance`` | A device is no longer available due to equipment issues | 
 | `removed` | A device is removed from the street and unavailable for customer use | `service_end`	| Device removed from street because service has ended for the day (if program does not operate 24/7) | 
 | | | `rebalance_pick_up` |	Device removed from street and will be placed at another location to rebalance service | 
 | | | `maintenance_pick_up`	 | Device removed from street so it can be worked on | 
