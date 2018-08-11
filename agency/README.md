@@ -133,9 +133,9 @@ Body:
 A trip represents a route taken by a provider's customer.   Trip data will be reported to the API every 5 seconds while the vehicle is in motion.   
 
 Endpoint: `/update-trip-telemetry`  
-Method: `POST`
+Method: `POST` 
 API Key: `Required` 
-Body:
+Body: 
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
