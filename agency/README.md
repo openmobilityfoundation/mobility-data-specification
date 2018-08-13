@@ -268,3 +268,4 @@ For 'message', options are:
 * `210: Permitted limit reached, failed to activate vehicle`
 * `240: Parking NOT enforced for this location`
 * `241: Parking enforced for this location`
+* `310: Error, vehicle is not properly registered`
