@@ -14,7 +14,6 @@ This specification contains a collection of RESTful APIs used to specify the dig
 * [start-trip](#start-trip)
 * [end-trip](#start-trip)
 * [update-trip-telemetry](#update-trip-telemetry)
-* [check-parking](#check-parking)
 * [service-areas](#service-areas)
 * [Event types](#Event-Types)
 * [Enum definitions](#enum-definitions)
@@ -30,8 +29,9 @@ Body:
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
+| `unique_id` | UUID | UUID v4 provided by Operator |
 | `provider_id` | String | Required | Issued by city |
-| `vehicle_id` | String |  | Vehicle Identification Number assigned by Manufacturer or Operator |
+| `vehicle_id` | String |  | Vehicle Identification Number (VIN) visible on device|
 | `vehicle_type` | Enum | Required | Vehicle Type |
 | `propulsion_type` | Enum | Required | Propulsion Type |
 | `vehicle_year` | Enum | Required | Year Manufactured |
@@ -55,9 +55,7 @@ Body:
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
-| `provider_id` | String | Required | Issued by city |
-| `vehicle_id` | String |  | Vehicle Identification Number assigned by Manufacturer or Operator |
-
+| `unique_id` | UUID | ID used in [Register](#register-vehicle) |
 
 Response:
 
@@ -71,14 +69,13 @@ This API is used by providers when a vehicle is either removed or returned to se
 
 Endpoint: `/update-vehicle-status`  
 Method: `POST`
-API Key: `Required` 
+API Key: `Required`
 Body:
 
-| Field | Type | Required/Optional | Other | 
-| ----- | ---- | ----------------- | ----- | 
-| `provider_id` | String | Required | Issued by city |
-| `vehicle_id` | String | Required | Provided by the Vehicle Registration API | 
-| `timestamp` | Unix Timestamp | Required | Date/time that event occurred. Based on GPS clock. | 
+| Field | Type | Required/Optional | Other |
+| ----- | ---- | ----------------- | ----- |
+| `unique_id` | UUID | ID used in [Register](#register-vehicle) |
+| `timestamp` | Unix Timestamp | Required | Date/time that event occurred. Based on GPS clock. |
 | `location` | Point | Required | Location at the time of status change in WGS 84 (EPSG:4326) standard GPS projection  |
 | `event_type` | Enum | Required | [Event Type](#event_type) for status change.  |
 | `reason_code` | Enum | Required | [Reason](#reason_code) for status change.  |
@@ -94,14 +91,15 @@ Response:
 
 Endpoint: `/start-trip`  
 Method: `POST`
-API Key: `Required` 
+API Key: `Required`
 Body:
 
-| Field | Type | Required/Optional | Other | 
-| ----- | ---- | ----------------- | ----- | 
+| Field | Type | Required/Optional | Other |
+| ----- | ---- | ----------------- | ----- |
+| `unique_id` | UUID | ID used in [Register](#register-vehicle) |
 | `provider_id` | String | Required | Issued by city |
-| `vehicle_id` | String | Required | Provided by the Vehicle Registration API | 
-| `timestamp` | Unix Timestamp | Required | Date/time that event occurred. Based on GPS clock. | 
+| `vehicle_id` | String | Required | Provided by the Vehicle Registration API |
+| `timestamp` | Unix Timestamp | Required | Date/time that event occurred. Based on GPS clock. |
 | `location` | Point | Required | Location at the time of status change in WGS 84 (EPSG:4326) standard GPS projection  |
 | `accuracy` | Integer | Required | The approximate level of accuracy, in meters, represented by start_point and end_point. |
 | `battery_pct_start` | Float | Require if Applicable | Percent battery charge of device, expressed between 0 and 1 |
@@ -110,20 +108,20 @@ Response:
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
-| `trip_id` | UUID | Required | a unique ID for each trip | 
+| `trip_id` | UUID | Required | a unique ID for each trip |
 
 
 ## end-trip
 
 Endpoint: `/end-trip`  
 Method: `POST`
-API Key: `Required` 
+API Key: `Required`
 Body:
 
-| Field | Type | Required/Optional | Other | 
-| ----- | ---- | ----------------- | ----- | 
+| Field | Type | Required/Optional | Other |
+| ----- | ---- | ----------------- | ----- |
 | `trip_id` | UUID | Required | See [start-trip](#start-trip) |
-| `timestamp` | Unix Timestamp | Required | Date/time that event occurred. Based on GPS clock. | 
+| `timestamp` | Unix Timestamp | Required | Date/time that event occurred. Based on GPS clock. |
 | `location` | Point | Required | Location at the time of status change in WGS 84 (EPSG:4326) standard GPS projection  |
 | `accuracy` | Integer | Required | The approximate level of accuracy, in meters, represented by start_point and end_point. |
 | `battery_pct_end` | Float | Require if Applicable | Percent battery charge of device, expressed between 0 and 1 |
@@ -133,29 +131,29 @@ Body:
 A trip represents a route taken by a provider's customer.   Trip data will be reported to the API every 5 seconds while the vehicle is in motion.   
 
 Endpoint: `/update-trip-telemetry`  
-Method: `POST` 
-API Key: `Required` 
-Body: 
+Method: `POST`
+API Key: `Required`
+Body:
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
-| `trip_id` | UUID | Required | Issued by InitMovementPlan() API  | 
+| `trip_id` | UUID | Required | Issued by InitMovementPlan() API  |
 | `timestamp` | Unix Timestamp | Required | Time of day (UTC) data was sampled|
-| `route` | Route | Required | See detail below. | 
+| `route` | Route | Required | See detail below. |
 | `accuracy` | Integer | Required | The approximate level of accuracy, in meters, represented by start_point and end_point. |
 
 Response:
 
-| Field | Type | Other | 
+| Field | Type | Other |
 | ---- | --- | --- |
-| `message` | Enum | See [Message](#message) Enum | 
+| `message` | Enum | See [Message](#message) Enum |
 
 
 ### Route
 
 To represent a route, MDS provider APIs should create a GeoJSON Feature Collection where ever observed point in the route, plus a time stamp, should be included. The representation needed is below.
 
-The route must include at least 2 points, a start point and end point. Additionally, it must include all possible GPS samples collected by a provider. All points must be in WGS 84 (EPSG:4326) standard GPS projection 
+The route must include at least 2 points, a start point and end point. Additionally, it must include all possible GPS samples collected by a provider. All points must be in WGS 84 (EPSG:4326) standard GPS projection
 ```
 
 "route": {
@@ -189,62 +187,42 @@ The route must include at least 2 points, a start point and end point. Additiona
             }
         ] }
 ```
-
-## check-parking
-
-This API is used to determine whether parking is regulated for a given destination.
-
-Endpoint: `/check-parking`  
-Method: `POST`  
-Body:
-
-| Field | Type     | Required/Optional | Other |
-| ----- | -------- | ----------------- | ----- |
-| `location` | Point  | Required | Current Location  | 
-| `timestamp` | Unix Timestamp | Required | Time of day (UTC) data was sampled|
-
-Response: 
-
-| Field | Type     | Required/Optional | Other |
-| ----- | -------- | ----------------- | ----- |
-| `message` | Enum | | See [Message](#message) Enum | 
-
 ## service-areas
 
 Gets the list of service areas available to the provider.
 
 Endpoint: `/service-areas`  
 Method: `GET`  
-Body: 
+Body:
 
-| Field | Type | Required/Optional | Other | 
-| ----- | ---- | ----------------- | ----- | 
+| Field | Type | Required/Optional | Other |
+| ----- | ---- | ----------------- | ----- |
 | `provider_id` | String | Required | Issued by city |
-| `service_area_id` | UUID | Required |  | 
-| `service_start_date` | Unix Timestamp | Required | Date at which this service area became effective | 
+| `service_area_id` | UUID | Required |  |
+| `service_start_date` | Unix Timestamp | Required | Date at which this service area became effective |
 | `service_end_date` | Unix Timestamp | Required | Date at which this service area was replaced. If currently effective, place NaN |
-| `service_area` | MultiPolygon | Required | | 
-| `prior_service_area` | UUID | Optional | If exists, the UUID of the prior service area. | 
-| `replacement_service_area` | UUID | Optional | If exists, the UUID of the service area that replaced this one | 
+| `service_area` | MultiPolygon | Required | |
+| `prior_service_area` | UUID | Optional | If exists, the UUID of the prior service area. |
+| `replacement_service_area` | UUID | Optional | If exists, the UUID of the service area that replaced this one |
 
-### Event Types 
+### Event Types
 
 | event_type | event_type_description |  reason | reason_description	|
 | ---------- | ---------------------- | ------- | ------------------  |
-| `available` |	A device becomes available for customer use	| `service_start` |	Device introduced into service at the beginning of the day (if program does not operate 24/7) | 
-| | | `user_drop_off` |	User ends reservation | 
-| | | `rebalance_drop_off` |	Device moved for rebalancing | 
-| | | `maintenance_drop_off` | 	Device introduced into service after being removed for maintenance | 
-| `reserved` | A customer reserves a device (even if trip has not started yet) |	`user_pick_up` |	Customer reserves device | 
+| `available` |	A device becomes available for customer use	| `service_start` |	Device introduced into service at the beginning of the day (if program does not operate 24/7) |
+| | | `user_drop_off` |	User ends reservation |
+| | | `rebalance_drop_off` |	Device moved for rebalancing |
+| | | `maintenance_drop_off` | 	Device introduced into service after being removed for maintenance |
+| `reserved` | A customer reserves a device (even if trip has not started yet) |	`user_pick_up` |	Customer reserves device |
 | `unavailable` |	A device is on the street but becomes unavailable for customer use | `default` |  Default state for a newly registered vehicle	|
-| | | `low_battery` | A device is no longer available due to insufficient battery | 
-| | | ``maintenance`` | A device is no longer available due to equipment issues | 
-| `removed` | A device is removed from the street and unavailable for customer use | `service_end`	| Device removed from street because service has ended for the day (if program does not operate 24/7) | 
-| | | `rebalance_pick_up` |	Device removed from street and will be placed at another location to rebalance service | 
-| | | `maintenance_pick_up`	 | Device removed from street so it can be worked on | 
+| | | `low_battery` | A device is no longer available due to insufficient battery |
+| | | ``maintenance`` | A device is no longer available due to equipment issues |
+| `removed` | A device is removed from the street and unavailable for customer use | `service_end`	| Device removed from street because service has ended for the day (if program does not operate 24/7) |
+| | | `rebalance_pick_up` |	Device removed from street and will be placed at another location to rebalance service |
+| | | `maintenance_pick_up`	 | Device removed from street so it can be worked on |
 | `inactive` | A device has been deregistered  | 	|  |
 
-## Enum Definitions 
+## Enum Definitions
 
 #### vehicle_type
 For `vehicle_type`, options are:
@@ -259,7 +237,7 @@ For `propulsion_type`, options are:
 * `combustion`
 
 #### message
-For 'message', options are: 
+For 'message', options are:
 * `200: OK`
 * `201: Created`
 * `202: Accepted`
