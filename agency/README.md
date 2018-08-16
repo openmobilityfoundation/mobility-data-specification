@@ -9,7 +9,7 @@ This specification contains a collection of RESTful APIs used to specify the dig
 ## Table of Contents
 
 * [register_vehicle](#register_vehicle)
-* [remove_vehicle](#remove_vehicle)
+* [deregister_vehicle](#deregister_vehicle)
 * [service_vehicle](#service_vehicle)
 * [report_maintenance](#report_maintenance)
 * [pilot_movement_plan](#pilot_movement_plan)
@@ -46,9 +46,9 @@ Response:
 | ----- | -------- | ----------------- | ----- |
 | `vehicle_id` | UUID |  | Used for accessing vehicle operations API's |
 
-## remove_vehicle
+## deregister_vehicle
 
-The remove_vehicle API is used to deregister a vehicle from the fleet.
+The deregister_vehicle API is used to deregister a vehicle from the fleet.
 
 Endpoint: `/remove_vehicle`  
 Method: `POST`  
