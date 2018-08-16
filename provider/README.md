@@ -34,17 +34,53 @@ Response:
 | `trip_id` | UUID | Required | a unique ID for each trip | 
 | `trip_duration` | Integer | Required | Time, in Seconds | 
 | `trip_distance` | Integer | Required | Trip Distance, in Meters | 
-| `start_point` | Point | Required | Must be in WGS 84 (EPSG:4326) standard GPS projection | 
-| `end_point` | Point | Required | Must be in WGS 84 (EPSG:4326) standard GPS projection | 
+| `route` | Route | Required | See detail below. | 
 | `accuracy` | Integer | Required | The approximate level of accuracy, in meters, represented by start_point and end_point. |
-| `route` | Line | Optional | | 
-| `sample_rate` | Integer | Optional | The frequency, in seconds, in which the route is sampled | 
 | `device_id` | UUID | Required | | 
 | `start_time` | Unix Timestamp | Required | | 
 | `end_time` | Unix Timestamp | Required | |
 | `parking_verification` | String | Optional | A URL to a photo (or other evidence) of proper vehicle parking | 
 | `standard_cost` | Integer | Optional | The cost, in cents that it would cost to perform that trip in the standard operation of the System. | 
 | `actual_cost` | Integer | Optional | The actual cost paid by the user of the Mobility as a service provider |
+
+### Routes
+
+To represent a route, MDS provider APIs should create a GeoJSON Feature Collection where ever observed point in the route, plus a time stamp, should be included. The representation needed is below.
+
+The route must include at least 2 points, a start point and end point. Additionally, it must include all possible GPS samples collected by a provider. All points must be in WGS 84 (EPSG:4326) standard GPS projection 
+```
+
+"route": {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "type": "Feature",
+                "properties": {
+                    "timestamp": 1529968782.421409
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -118.46710503101347,
+                        33.9909333514159
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "timestamp": 1531007628.3774529
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -118.464851975441,
+                        33.990366257735
+                    ]
+                }
+            }
+        ] }
+```
 
 ## Status Change
 

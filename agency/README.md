@@ -57,7 +57,6 @@ Body:
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
 | `vehicle_id` | String | Required | Issued by RegisterVehicle() API |
-| `reason_code` | Enum | Required | [Reason](#reason_code) for status change  |
 
 Response:
 
@@ -250,21 +249,26 @@ Body:
 
 ## Enum Definitions 
 
-<a name="vehicle_type"></a> For `vehicle_type`, options are:
+#### vehicle_type
+For `vehicle_type`, options are:
 * `bike`
 * `scooter`
 * `recumbent`
 
-<a name="propulsion_type"></a> For `propulsion_type`, options are:
+#### propulsion_type
+For `propulsion_type`, options are:
 * `human`
 * `electric`
 * `combustion`
 
-<a name="reason_code"></a> For `reason_code`, options are:
+#### reason_code
+For `reason_code`, options are:
 * `rebalancing`
 * `maintenance`
 
-<a name="message"></a> For `message` options are: 
+
+#### message
+For 'message', options are: 
 * `200: OK`
 * `201: Created`
 * `202: Accepted`
