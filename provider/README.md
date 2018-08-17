@@ -30,7 +30,8 @@ Response:
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
 | `company_name` | String | Required | |
-| `device_type` | String | Required | | 
+| `vehicle_type` | Enum | Required | |
+| `propulsion_type` | Enum | Required |  |
 | `trip_id` | UUID | Required | a unique ID for each trip | 
 | `trip_duration` | Integer | Required | Time, in Seconds | 
 | `trip_distance` | Integer | Required | Trip Distance, in Meters | 
@@ -67,6 +68,7 @@ Response:
 | `battery_pct`	| Float | Required if Applicable | 	Percent battery charge of device, expressed between 0 and 1 | 
 | `associated_trips` | 	UUID |	Optional based on device | 	For “Reserved” event types, associated trips (foreign key to Trips API) | 
 | `company_name` | String | Required | Company Name | 
+
 ### Event Types 
 
 | event_type | event_type_description |  reason | reason_description	|
@@ -104,3 +106,16 @@ Response:
 | `prior_service_area` | UUID | Optional | If exists, the UUID of the prior service area. | 
 | `replacement_service_area` | UUID | Optional | If exists, the UUID of the service area that replaced this one | 
 
+### Enum
+
+#### vehicle_type
+For `vehicle_type`, options are:
+* `bike`
+* `scooter`
+* `recumbent`
+
+#### propulsion_type
+For `propulsion_type`, options are:
+* `human`
+* `electric`
+* `combustion`
