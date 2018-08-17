@@ -36,8 +36,9 @@ Response:
 | `trip_distance` | Integer | Required | Trip Distance, in Meters | 
 | `route` | Route | Required | See detail below. | 
 | `accuracy` | Integer | Required | The approximate level of accuracy, in meters, represented by start_point and end_point. |
+| `device_id` | UUID | Required | A unique device ID in UUID format. | 
 | `provider_id` | String | Required | Issued by the city during the permitting process |
-| `vehicle_id` | String | Required | Vehicle Identification Number assigned by Manufacturer or Operator| 
+| `vin` | String | Required | Vehicle Identification Number assigned by Manufacturer or Operator| 
 | `start_time` | Unix Timestamp | Required | | 
 | `end_time` | Unix Timestamp | Required | |
 | `parking_verification` | String | Optional | A URL to a photo (or other evidence) of proper vehicle parking | 
