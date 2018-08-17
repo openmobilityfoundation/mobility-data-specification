@@ -9,7 +9,7 @@ This specification contains a collection of RESTful APIs used to specify the dig
 ## Table of Contents
 
 * [register-vehicle](#register-vehicle)
-* [remove-vehicle](#remove-vehicle)
+* [deregister-vehicle](#deregister-vehicle)
 * [service-vehicle](#service-vehicle)
 * [report-maintenance](#report-maintenance)
 * [pilot-movement-plan](#pilot-movement-plan)
@@ -42,7 +42,7 @@ Body:
 | `device_id` | UUID | Required | UUID geneated by requestor to uniquely identify the device. Must be consistent with that physical device. If UUID is not unique, API will return a status code not equal to `200` | 
 
 
-## remove-vehicle
+## deregister-vehicle
 
 The remove-vehicle API is used to deregister a vehicle from the fleet.
 
@@ -52,8 +52,9 @@ Body:
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
-| `device_id` | UUID | Required | Issued by RegisterVehicle() API |
+| `device_id` | UUID | Required | |
 | `reason_code` | Enum | Required | [Reason](#reason_code) for status change  |
+
 
 Response:
 
@@ -246,21 +247,26 @@ Body:
 
 ## Enum Definitions 
 
+#### vehicle_type
 For `vehicle_type`, options are:
 * `bike`
 * `scooter`
 * `recumbent`
 
+#### propulsion_type
 For `propulsion_type`, options are:
 * `human`
 * `electric`
 * `combustion`
 
+#### reason_code
 For `reason_code`, options are:
 * `rebalancing`
 * `maintenance`
 
-For `message` options are: 
+
+#### message
+For 'message', options are: 
 * `200: OK`
 * `201: Created`
 * `202: Accepted`
