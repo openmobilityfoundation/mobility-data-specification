@@ -29,7 +29,7 @@ Body:
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
-| `unique_id` | UUID | UUID v4 provided by Operator |
+| `unique_id` | UUID | UUID v4 provided by Operator to uniquely identify a vehicle |
 | `provider_id` | String | Required | Issued by city |
 | `vehicle_id` | String |  | Vehicle Identification Number (VIN) visible on device|
 | `vehicle_type` | Enum | Required | Vehicle Type |
@@ -243,7 +243,5 @@ For 'message', options are:
 * `202: Accepted`
 * `203: Added`
 * `204: Removed`
-* `210: Permitted limit reached, failed to activate vehicle`
-* `240: Parking NOT enforced for this location`
-* `241: Parking enforced for this location`
-* `310: Error, vehicle is not properly registered`
+* `210: Warning: vehicle used in this trip has not been properly registered`
+* `310: Error: vehicle is not properly registered`
