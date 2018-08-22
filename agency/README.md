@@ -39,12 +39,8 @@ Body:
 | `vehicle_mfgr` | Enum | Required | Vehicle Manufacturer |
 | `vehicle_model` | Enum | Required | Vehicle Model |
 | `vin` | String | Required | Vehicle Identification Number assigned by Manufacturer or Operator |
+| `device_id` | UUID | Required | UUID geneated by requestor to uniquely identify the device. Must be consistent with that physical device. If UUID is not unique, API will return a status code not equal to `200` | 
 
-Response:
-
-| Field | Type     | Required/Optional | Other |
-| ----- | -------- | ----------------- | ----- |
-| `vehicle_id` | UUID |  | Used for accessing vehicle operations API's |
 
 ## deregister-vehicle
 
@@ -56,7 +52,9 @@ Body:
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
-| `vehicle_id` | String | Required | Issued by RegisterVehicle() API |
+| `device_id` | UUID | Required | |
+| `reason_code` | Enum | Required | [Reason](#reason_code) for status change  |
+
 
 Response:
 
@@ -74,7 +72,7 @@ Body:
 
 | Field | Type | Required/Optional | Other | 
 | ----- | ---- | ----------------- | ----- | 
-| `vehicle_id` | UUID | Required | Provided by the Vehicle Registration API | 
+| `device_id` | UUID | Required | | 
 | `timestamp` | Unix Timestamp | Required | Time of day (UTC) data was sampled | 
 | `gps_pos` | Point | Required | GPS location at the time of status change  |
 | `reason_code` | Enum | Required | [Reason](#reason_code) for status change.  |
@@ -96,7 +94,7 @@ Body:
 
 | Field | Type | Required/Optional | Other | 
 | ----- | ---- | ----------------- | ----- | 
-| `vehicle_id` | UUID | Required | Provided by the Vehicle Registration API | 
+| `device_id` | UUID | Required | | 
 | `timestamp` | Unix Timestamp | Required | Time of day (UTC) data was sampled | 
 | `maint_type` | Enum | Required | Type of Maintenance performed (`Tire`, `Wheel`, `Brake`, `Frame`, `Controls`, `Propulsion`.) | 
 | `maint_action` | Enum | Required | Maintenance action performed (`Repair`, `Replace`, `Inspect`) | 
@@ -118,7 +116,7 @@ Body:
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
 | `provider_id` | String | Required | Issued by Provider Registration API |
-| `vehicle_id` | String | Required | Issued by Vehicle Registration API | 
+| `vehicle_id` | UUID | Required | | 
 | `start_point` | Point | Required | Trip Origin | 
 | `est_departure_time` | Unix Timestamp | Required | Estimated Departure Time |  
 | `end_point` | Point | Optional  | Trip destination if known | 
