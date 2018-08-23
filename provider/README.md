@@ -14,7 +14,7 @@ This specification contains a data standard for *mobility as a service* provider
 ## Table of Contents
 
 * [Trips](#trips)
-* [Availability](#availability)
+* [Status Change](#status-change)
 * [Service Areas](#service-areas)
 
 ## Trips
