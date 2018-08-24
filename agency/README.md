@@ -44,6 +44,7 @@ Response:
 | ----- | -------- | ----------------- | ----- |
 | `message` | Enum |  | See [Message](#message) Enum |
 
+
 ## deregister-vehicle
 
 The remove-vehicle API is used to deregister a vehicle from the fleet.
@@ -56,6 +57,9 @@ Body:
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
 | `unique_id` | UUID | ID used in [Register](#register-vehicle) |
+| `device_id` | UUID | Required | |
+| `reason_code` | Enum | Required | [Reason](#reason_code) for status change  |
+
 
 Response:
 
@@ -103,6 +107,7 @@ Body:
 | `location` | Point | Required | Location at the time of status change in WGS 84 (EPSG:4326) standard GPS projection  |
 | `accuracy` | Integer | Required | The approximate level of accuracy, in meters, represented by start_point and end_point. |
 | `battery_pct_start` | Float | Require if Applicable | Percent battery charge of device, expressed between 0 and 1 |
+
 
 Response:
 
@@ -223,6 +228,12 @@ Body:
 | `inactive` | A device has been deregistered  | 	|  |
 
 ## Enum Definitions
+=======
+| `service_area` | MultiPolygon | Required | | 
+| `prior_service_area` | UUID | Optional | If exists, the UUID of the prior service area. | 
+| `replacement_service_area` | UUID | Optional | If exists, the UUID of the service area that replaced this one | 
+
+## Enum Definitions 
 
 #### vehicle_type
 For `vehicle_type`, options are:
@@ -236,8 +247,14 @@ For `propulsion_type`, options are:
 * `electric`
 * `combustion`
 
+#### reason_code
+For `reason_code`, options are:
+* `rebalancing`
+* `maintenance`
+
+
 #### message
-For 'message', options are:
+For 'message', options are: 
 * `200: OK`
 * `201: Created`
 * `202: Accepted`
