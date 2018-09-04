@@ -261,6 +261,9 @@ For 'message', options are:
 * `203: Added`
 * `204: Removed`
 * `210: Warning: vehicle used in this trip has not been properly registered`
+* `305: Error: vehicle is already registered`
+* `306: Error: vehicle registration cannot be found`
 * `310: Error: vehicle is not properly registered`
+* `311: Error: duplicate registration found, please use a different unique_id`
 * `315: Error: vehicle is not active`
 * `320: Error: vehicle trip has not been properly started`
