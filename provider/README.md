@@ -6,8 +6,7 @@ This specification contains a data standard for *mobility as a service* provider
 
 * [General Information](#general-information)
 * [Trips](#trips)
-* [System Status](#system-status)
-* [Service Areas](#service-areas)
+* [Status Changes](#status-changes)
 
 ## General Information
 
@@ -17,14 +16,14 @@ The following information applies to all `provider` API endpoints.
 
 Responses must be `UTF-8` encoded `application/json` and must minimally include the MDS `version` and a `data` payload:
 
-```json
+```js
 {
     "version": "0.1",
     "data": {
         "trips": [{
             "company_name": "...",
             "trip_id": "...",
-            ...etc
+            //etc.
         }]
     }
 }
@@ -43,14 +42,14 @@ The following keys must be used for pagination links:
  - `prev`: url to the previous page of data
  - `next`: url to the next page of data
 
-```json
+```js
 {
     "version": "0.1",
     "data": {
         "trips": [{
             "company_name": "...",
             "trip_id": "...",
-            ...etc
+            //etc.
         }]
     },
     "first": "https://...",
@@ -151,15 +150,15 @@ Routes must include at least 2 points: the start point and end point. Additional
 
 [Top][toc]
 
-## System Status
+## Service Changes
 
 The status of the inventory of vehicles available for customer use.
 
 This API allows a user to query the historical availability for a system within a time range. The API should allow queries at least by time period and geographical area.
 
-Endpoint: `/system_status`  
+Endpoint: `/service_changes`  
 Method: `GET`  
-Data: `{ "system_status": [] }`, an array of objects with the following structure
+Data: `{ "service_changes": [] }`, an array of objects with the following structure
 
 | Field | Type | Required/Optional | Comments |
 | ----- | ---- | ----------------- | ----- |
@@ -191,26 +190,6 @@ Data: `{ "system_status": [] }`, an array of objects with the following structur
 ### Realtime Data
 
 All MDS compatible `provider` APIs must expose a [GBFS](https://github.com/NABSA/gbfs) feed as well. For historical data, a `time` parameter should be provided to access what the GBFS feed showed at a given time.
-
-[Top][toc]
-
-## Service Areas 
-
-Service areas are the geographic regions within which a *mobility as a service* provider is permitted to operate.
-
-Endpoint: `/service_areas`  
-Method: `GET`  
-Data: `{ "service_areas": [] }`, an array of objects with the following structure
-
-| Field | Type | Required/Optional | Other |
-| ----- | ---- | ----------------- | ----- |
-| `provider_name` | String | Required | |
-| `service_area_id` | UUID | Required | |
-| `service_start_date` | Unix Timestamp | Required | Date at which this service area became effective |
-| `service_end_date` | Unix Timestamp | Required | Date at which this service area was replaced. |
-| `service_area` | MultiPolygon | Required | |
-| `prior_service_area` | UUID | Optional | If exists, the UUID of the prior service area. |
-| `replacement_service_area` | UUID | Optional | If exists, the UUID of the service area that replaced this one |
 
 [Top][toc]
 
