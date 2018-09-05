@@ -116,7 +116,7 @@ To represent a route, MDS `provider` APIs should create a GeoJSON Feature Collec
 
 Routes must include at least 2 points: the start point and end point. Additionally, routes must include all possible GPS samples collected by a provider.
 
-```json
+```js
 "route": {
     "type": "FeatureCollection",
     "features": [{
@@ -150,15 +150,15 @@ Routes must include at least 2 points: the start point and end point. Additional
 
 [Top][toc]
 
-## Service Changes
+## Status Changes
 
 The status of the inventory of vehicles available for customer use.
 
 This API allows a user to query the historical availability for a system within a time range. The API should allow queries at least by time period and geographical area.
 
-Endpoint: `/service_changes`  
+Endpoint: `/status_changes`  
 Method: `GET`  
-Data: `{ "service_changes": [] }`, an array of objects with the following structure
+Data: `{ "status_changes": [] }`, an array of objects with the following structure
 
 | Field | Type | Required/Optional | Comments |
 | ----- | ---- | ----------------- | ----- |
