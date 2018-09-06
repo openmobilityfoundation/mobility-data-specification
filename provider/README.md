@@ -77,8 +77,8 @@ Data: `{ "trips": [] }`, an array of objects with the following structure
 
 | Field | Type    | Required/Optional | Comments |
 | ----- | -------- | ----------------- | ----- |
-| `provider_name` | String | Required | |
-| `provider_id` | String | Required | Issued by the City during the permitting process |
+| `provider_name` | String | Required | The public-facing name of the Provider |
+| `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS |
 | `device_id` | UUID | Required | A unique device ID in UUID format |
 | `vin` | String | Required | Vehicle Identification Number assigned by Provider |
 | `vehicle_type` | Enum | Required | see [vehicle types](#vehicle-types) table |
@@ -162,9 +162,12 @@ Data: `{ "status_changes": [] }`, an array of objects with the following structu
 
 | Field | Type | Required/Optional | Comments |
 | ----- | ---- | ----------------- | ----- |
-| `provider_name` | String | Required | |
+| `provider_name` | String | Required | The public-facing name of the Provider |
+| `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS |
 | `vin` | String | Required | Vehicle Identification Number assigned by Provider |
+| `device_id` | UUID | Required | A unique device ID in UUID format |
 | `vehicle_type` | Enum | Required | see [vehicle types](#vehicle-types) table |
+| `propulsion_type` | Enum | Required | see [propulsion types](#propulsion-types) table |
 | `event_type` | Enum | Required | See [event types](#event-types) table |
 | `reason` | Enum | Required | Reason for status change, allowable values determined by `event_type` |
 | `event_time` | Unix Timestamp | Required | Date/time that event occurred, based on device clock |
