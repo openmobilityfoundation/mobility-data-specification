@@ -18,7 +18,7 @@ Responses must be `UTF-8` encoded `application/json` and must minimally include 
 
 ```js
 {
-    "version": "0.1",
+    "version": "0.1.0",
     "data": {
         "trips": [{
             "company_name": "...",
@@ -44,7 +44,7 @@ The following keys must be used for pagination links:
 
 ```js
 {
-    "version": "0.1",
+    "version": "0.1.0",
     "data": {
         "trips": [{
             "company_name": "...",
@@ -58,6 +58,12 @@ The following keys must be used for pagination links:
     "next": "https://..."
 }
 ```
+
+### UUIDs for Devices
+
+**MDS** defines the *device* as the unit that transmits GPS signals for a particular vehicle. A given device must have a UUID (`device_id` below) that is unique within the Provider's fleet.
+
+Additionally, `device_id` must remain constant for the device's lifetime of service, regardless of the vehicle components that house the device.
 
 ### Geographic Data
 
