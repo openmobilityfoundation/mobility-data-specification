@@ -83,10 +83,10 @@ Data: `{ "trips": [] }`, an array of objects with the following structure
 
 | Field | Type    | Required/Optional | Comments |
 | ----- | -------- | ----------------- | ----- |
-| `provider_name` | String | Required | The public-facing name of the Provider |
 | `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS |
+| `provider_name` | String | Required | The public-facing name of the Provider |
 | `device_id` | UUID | Required | A unique device ID in UUID format |
-| `vin` | String | Required | Vehicle Identification Number assigned by Provider |
+| `vehicle_id` | String | Required | Vehicle Identification Number assigned by Provider |
 | `vehicle_type` | Enum | Required | see [vehicle types](#vehicle-types) table |
 | `propulsion_type` | Enum | Required | see [propulsion types](#propulsion-types) table |
 | `trip_id` | UUID | Required | a unique ID for each trip |
@@ -102,19 +102,19 @@ Data: `{ "trips": [] }`, an array of objects with the following structure
 
 ### Vehicle Types
 
-| vehicle_type | description |
-|-------|-------------|
-| bicycle | |
-| scooter | |
-| recumbent | |
+| `vehicle_type` |
+|--------------|
+| bicycle      |
+| scooter      |
+| adaptive     |
 
 ### Propulsion Types
 
-| propulsion_type | description |
-|-------|-------------|
-| human | |
-| electric | |
-| combustion | |
+| `propulsion_type` |
+|-----------------|
+| human           |
+| electric        |
+| combustion      |
 
 ### Routes
 
@@ -168,22 +168,22 @@ Data: `{ "status_changes": [] }`, an array of objects with the following structu
 
 | Field | Type | Required/Optional | Comments |
 | ----- | ---- | ----------------- | ----- |
-| `provider_name` | String | Required | The public-facing name of the Provider |
 | `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS |
-| `vin` | String | Required | Vehicle Identification Number assigned by Provider |
+| `provider_name` | String | Required | The public-facing name of the Provider |
 | `device_id` | UUID | Required | A unique device ID in UUID format |
+| `vehicle_id` | String | Required | Vehicle Identification Number assigned by Provider |
 | `vehicle_type` | Enum | Required | see [vehicle types](#vehicle-types) table |
 | `propulsion_type` | Enum | Required | see [propulsion types](#propulsion-types) table |
 | `event_type` | Enum | Required | See [event types](#event-types) table |
-| `reason` | Enum | Required | Reason for status change, allowable values determined by `event_type` |
+| `event_type_reason` | Enum | Required | Reason for status change, allowable values determined by [`event type`](#event-types) |
 | `event_time` | Unix Timestamp | Required | Date/time that event occurred, based on device clock |
-| `location` | Point | Required | |
+| `event_location` | Point | Required | |
 | `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |
 | `associated_trips` | UUID | Optional based on device | For "Reserved" event types, associated trips (foreign key to Trips API) |
 
 ### Event Types 
 
-| event_type | event_type_description | reason | reason_description |
+| `event_type` | Description | `event_type_reason` | Description |
 | ---------- | ---------------------- | ------- | ------------------ |
 | `available` | A device becomes available for customer use | `service_start` | Device introduced into service at the beginning of the day (if program does not operate 24/7) |
 | | | `user_drop_off` | User ends reservation |
