@@ -106,7 +106,6 @@ Data: `{ "trips": [] }`, an array of objects with the following structure
 |--------------|
 | bicycle      |
 | scooter      |
-| adaptive     |
 
 ### Propulsion Types
 
