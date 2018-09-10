@@ -86,7 +86,7 @@ Data: `{ "trips": [] }`, an array of objects with the following structure
 | `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS |
 | `provider_name` | String | Required | The public-facing name of the Provider |
 | `device_id` | UUID | Required | A unique device ID in UUID format |
-| `vehicle_id` | String | Required | Vehicle Identification Number assigned by Provider |
+| `vehicle_id` | String | Required | The Vehicle Identification Number visible on the vehicle itself |
 | `vehicle_type` | Enum | Required | see [vehicle types](#vehicle-types) table |
 | `propulsion_type` | Enum | Required | see [propulsion types](#propulsion-types) table |
 | `trip_id` | UUID | Required | a unique ID for each trip |
@@ -171,7 +171,7 @@ Data: `{ "status_changes": [] }`, an array of objects with the following structu
 | `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS |
 | `provider_name` | String | Required | The public-facing name of the Provider |
 | `device_id` | UUID | Required | A unique device ID in UUID format |
-| `vehicle_id` | String | Required | Vehicle Identification Number assigned by Provider |
+| `vehicle_id` | String | Required | The Vehicle Identification Number visible on the vehicle itself |
 | `vehicle_type` | Enum | Required | see [vehicle types](#vehicle-types) table |
 | `propulsion_type` | Enum | Required | see [propulsion types](#propulsion-types) table |
 | `event_type` | Enum | Required | See [event types](#event-types) table |
