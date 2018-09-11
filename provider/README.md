@@ -93,7 +93,7 @@ Data: `{ "trips": [] }`, an array of objects with the following structure
 | `trip_duration` | Integer | Required | Time, in Seconds |
 | `trip_distance` | Integer | Required | Trip Distance, in Meters |
 | `route` | Route | Required | See detail below |
-| `accuracy` | Integer | Required | The approximate level of accuracy, in meters, represented by start_point and end_point |
+| `accuracy` | Integer | Required | The approximate level of accuracy, in meters, of `Points` within `route` |
 | `start_time` | Unix Timestamp | Required | |
 | `end_time` | Unix Timestamp | Required | |
 | `parking_verification_url` | String | Optional | A URL to a photo (or other evidence) of proper vehicle parking |
