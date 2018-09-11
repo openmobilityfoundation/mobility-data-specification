@@ -72,8 +72,8 @@ Response:
 This API is used by providers when a vehicle is either removed or returned to service.
 
 Endpoint: `/update_vehicle_status`  
-Method: `POST`
-API Key: `Required`
+Method: `PUT` 
+API Key: `Required` 
 Body:
 
 | Field | Type | Required/Optional | Other |
