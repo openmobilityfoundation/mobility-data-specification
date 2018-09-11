@@ -1,0 +1,497 @@
+{
+    "definitions": {},
+    "$id": "https://github.com/CityofLosAngeles/mobility-data-specification/blob/master/provider",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "The MDS Provider schema",
+    "type": "object",
+    "required": [ "version", "data" ],
+    "properties": {
+        "version": {
+            "$id": "#/properties/version",
+            "type": "string",
+            "title": "The MDS Provider version this data represents",
+            "examples": [
+                "0.1.0-dev"
+            ],
+            "pattern": "^(.*)$"
+        },
+        "data": {
+            "$id": "#/properties/data",
+            "type": "object",
+            "title": "The page of data",
+            "required": [
+            ],
+            "properties": {
+                "trips": {
+                    "$id": "#/properties/data/properties/trips",
+                    "type": "array",
+                    "title": "The Trips Schema",
+                    "items": {
+                        "$id": "#/properties/data/properties/trips/items",
+                        "type": "object",
+                        "title": "The Trip Schema",
+                        "required": [
+                            "provider_name",
+                            "provider_id",
+                            "device_id",
+                            "vehicle_id",
+                            "vehicle_type",
+                            "propulsion_type",
+                            "trip_id",
+                            "trip_duration",
+                            "trip_distance",
+                            "route",
+                            "accuracy",
+                            "start_time",
+                            "end_time",
+                            "parking_verification_url",
+                            "standard_cost",
+                            "actual_cost"
+                        ],
+                        "properties": {
+                            "provider_name": {
+                                "$id": "#/properties/data/properties/trips/items/properties/provider_name",
+                                "type": "string",
+                                "title": "The Provider_name Schema",
+                                "default": "",
+                                "examples": [
+                                    "Provider Name"
+                                ],
+                                "pattern": "^(.*)$"
+                            },
+                            "provider_id": {
+                                "$id": "#/properties/data/properties/trips/items/properties/provider_id",
+                                "type": "string",
+                                "title": "The Provider_id Schema",
+                                "default": "",
+                                "examples": [
+                                    "3c960026-b5ee-11e8-96f8-529269fb1459"
+                                ],
+                                "pattern": "^(.*)$"
+                            },
+                            "device_id": {
+                                "$id": "#/properties/data/properties/trips/items/properties/device_id",
+                                "type": "string",
+                                "title": "The Device_id Schema",
+                                "default": "",
+                                "examples": [
+                                    "3c9604d6-b5ee-11e8-96f8-529269fb1459"
+                                ],
+                                "pattern": "^(.*)$"
+                            },
+                            "vehicle_id": {
+                                "$id": "#/properties/data/properties/trips/items/properties/vehicle_id",
+                                "type": "string",
+                                "title": "The Vehicle_id Schema",
+                                "default": "",
+                                "examples": [
+                                    "ABC123"
+                                ],
+                                "pattern": "^(.*)$"
+                            },
+                            "vehicle_type": {
+                                "$id": "#/properties/data/properties/trips/items/properties/vehicle_type",
+                                "type": "string",
+                                "title": "The Vehicle_type Schema",
+                                "default": "",
+                                "examples": [
+                                    "scooter"
+                                ],
+                                "pattern": "^(.*)$"
+                            },
+                            "propulsion_type": {
+                                "$id": "#/properties/data/properties/trips/items/properties/propulsion_type",
+                                "type": "string",
+                                "title": "The Propulsion_type Schema",
+                                "default": "",
+                                "examples": [
+                                    "electric"
+                                ],
+                                "pattern": "^(.*)$"
+                            },
+                            "trip_id": {
+                                "$id": "#/properties/data/properties/trips/items/properties/trip_id",
+                                "type": "string",
+                                "title": "The Trip_id Schema",
+                                "default": "",
+                                "examples": [
+                                    "3c960850-b5ee-11e8-96f8-529269fb1459"
+                                ],
+                                "pattern": "^(.*)$"
+                            },
+                            "trip_duration": {
+                                "$id": "#/properties/data/properties/trips/items/properties/trip_duration",
+                                "type": "integer",
+                                "title": "The Trip_duration Schema",
+                                "default": 0,
+                                "examples": [
+                                    600
+                                ]
+                            },
+                            "trip_distance": {
+                                "$id": "#/properties/data/properties/trips/items/properties/trip_distance",
+                                "type": "integer",
+                                "title": "The Trip_distance Schema",
+                                "default": 0,
+                                "examples": [
+                                    1000
+                                ]
+                            },
+                            "route": {
+                                "$id": "#/properties/data/properties/trips/items/properties/route",
+                                "type": "object",
+                                "title": "The Route Schema",
+                                "required": [
+                                    "type",
+                                    "features"
+                                ],
+                                "properties": {
+                                    "type": {
+                                        "$id": "#/properties/data/properties/trips/items/properties/route/properties/type",
+                                        "type": "string",
+                                        "title": "The Type Schema",
+                                        "default": "",
+                                        "examples": [
+                                            "FeatureCollection"
+                                        ],
+                                        "pattern": "^(.*)$"
+                                    },
+                                    "features": {
+                                        "$id": "#/properties/data/properties/trips/items/properties/route/properties/features",
+                                        "type": "array",
+                                        "title": "The Features Schema",
+                                        "items": {
+                                            "$id": "#/properties/data/properties/trips/items/properties/route/properties/features/items",
+                                            "type": "object",
+                                            "title": "The Items Schema",
+                                            "required": [
+                                                "type",
+                                                "properties",
+                                                "geometry"
+                                            ],
+                                            "properties": {
+                                                "type": {
+                                                    "$id": "#/properties/data/properties/trips/items/properties/route/properties/features/items/properties/type",
+                                                    "type": "string",
+                                                    "title": "The Type Schema",
+                                                    "default": "",
+                                                    "examples": [
+                                                        "Feature"
+                                                    ],
+                                                    "pattern": "^(.*)$"
+                                                },
+                                                "properties": {
+                                                    "$id": "#/properties/data/properties/trips/items/properties/route/properties/features/items/properties/properties",
+                                                    "type": "object",
+                                                    "title": "The Properties Schema",
+                                                    "required": [
+                                                        "timestamp"
+                                                    ],
+                                                    "properties": {
+                                                        "timestamp": {
+                                                            "$id": "#/properties/data/properties/trips/items/properties/route/properties/features/items/properties/properties/properties/timestamp",
+                                                            "type": "number",
+                                                            "title": "The Timestamp Schema",
+                                                            "default": 0.0,
+                                                            "examples": [
+                                                                1529968782.421409
+                                                            ]
+                                                        }
+                                                    }
+                                                },
+                                                "geometry": {
+                                                    "$id": "#/properties/data/properties/trips/items/properties/route/properties/features/items/properties/geometry",
+                                                    "type": "object",
+                                                    "title": "The Geometry Schema",
+                                                    "required": [
+                                                        "type",
+                                                        "coordinates"
+                                                    ],
+                                                    "properties": {
+                                                        "type": {
+                                                            "$id": "#/properties/data/properties/trips/items/properties/route/properties/features/items/properties/geometry/properties/type",
+                                                            "type": "string",
+                                                            "title": "The Type Schema",
+                                                            "default": "",
+                                                            "examples": [
+                                                                "Point"
+                                                            ],
+                                                            "pattern": "^(.*)$"
+                                                        },
+                                                        "coordinates": {
+                                                            "$id": "#/properties/data/properties/trips/items/properties/route/properties/features/items/properties/geometry/properties/coordinates",
+                                                            "type": "array",
+                                                            "title": "The Coordinates Schema",
+                                                            "items": {
+                                                                "$id": "#/properties/data/properties/trips/items/properties/route/properties/features/items/properties/geometry/properties/coordinates/items",
+                                                                "type": "number",
+                                                                "title": "The Items Schema",
+                                                                "default": 0.0,
+                                                                "examples": [
+                                                                    -118.46710503101347,
+                                                                    33.9909333514159
+                                                                ]
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "accuracy": {
+                                "$id": "#/properties/data/properties/trips/items/properties/accuracy",
+                                "type": "integer",
+                                "title": "The Accuracy Schema",
+                                "default": 0,
+                                "examples": [
+                                    15
+                                ]
+                            },
+                            "start_time": {
+                                "$id": "#/properties/data/properties/trips/items/properties/start_time",
+                                "type": "number",
+                                "title": "The Start_time Schema",
+                                "default": 0.0,
+                                "examples": [
+                                    1529968782.421409
+                                ]
+                            },
+                            "end_time": {
+                                "$id": "#/properties/data/properties/trips/items/properties/end_time",
+                                "type": "number",
+                                "title": "The End_time Schema",
+                                "default": 0.0,
+                                "examples": [
+                                    1531007628.3774529
+                                ]
+                            },
+                            "parking_verification_url": {
+                                "$id": "#/properties/data/properties/trips/items/properties/parking_verification_url",
+                                "type": "string",
+                                "title": "The Parking_verification_url Schema",
+                                "default": "",
+                                "examples": [
+                                    "https://data.provider.co/parking_verify"
+                                ],
+                                "pattern": "^(.*)$"
+                            },
+                            "standard_cost": {
+                                "$id": "#/properties/data/properties/trips/items/properties/standard_cost",
+                                "type": "integer",
+                                "title": "The Standard_cost Schema",
+                                "default": 0,
+                                "examples": [
+                                    500
+                                ]
+                            },
+                            "actual_cost": {
+                                "$id": "#/properties/data/properties/trips/items/properties/actual_cost",
+                                "type": "integer",
+                                "title": "The Actual_cost Schema",
+                                "default": 0,
+                                "examples": [
+                                    520
+                                ]
+                            }
+                        }
+                    }
+                },
+                "status_changes": {
+                    "$id": "#/properties/data/properties/status_changes",
+                    "type": "array",
+                    "title": "The Status_changes Schema",
+                    "items": {
+                        "$id": "#/properties/data/properties/status_changes/items",
+                        "type": "object",
+                        "title": "The Items Schema",
+                        "required": [
+                            "provider_name",
+                            "provider_id",
+                            "device_id",
+                            "vehicle_id",
+                            "vehicle_type",
+                            "propulsion_type",
+                            "event_type",
+                            "event_type_reason",
+                            "event_time",
+                            "event_location",
+                            "battery_pct",
+                            "associated_trips"
+                        ],
+                        "properties": {
+                            "provider_name": {
+                                "$id": "#/properties/data/properties/status_changes/items/properties/provider_name",
+                                "type": "string",
+                                "title": "The Provider_name Schema",
+                                "default": "",
+                                "examples": [
+                                    "Provider Name"
+                                ],
+                                "pattern": "^(.*)$"
+                            },
+                            "provider_id": {
+                                "$id": "#/properties/data/properties/status_changes/items/properties/provider_id",
+                                "type": "string",
+                                "title": "The Provider_id Schema",
+                                "default": "",
+                                "examples": [
+                                    "3c960026-b5ee-11e8-96f8-529269fb1459"
+                                ],
+                                "pattern": "^(.*)$"
+                            },
+                            "device_id": {
+                                "$id": "#/properties/data/properties/status_changes/items/properties/device_id",
+                                "type": "string",
+                                "title": "The Device_id Schema",
+                                "default": "",
+                                "examples": [
+                                    "3c9604d6-b5ee-11e8-96f8-529269fb1459"
+                                ],
+                                "pattern": "^(.*)$"
+                            },
+                            "vehicle_id": {
+                                "$id": "#/properties/data/properties/status_changes/items/properties/vehicle_id",
+                                "type": "string",
+                                "title": "The Vehicle_id Schema",
+                                "default": "",
+                                "examples": [
+                                    "ABC123"
+                                ],
+                                "pattern": "^(.*)$"
+                            },
+                            "vehicle_type": {
+                                "$id": "#/properties/data/properties/status_changes/items/properties/vehicle_type",
+                                "type": "string",
+                                "title": "The Vehicle_type Schema",
+                                "default": "",
+                                "examples": [
+                                    "scooter"
+                                ],
+                                "pattern": "^(.*)$"
+                            },
+                            "propulsion_type": {
+                                "$id": "#/properties/data/properties/status_changes/items/properties/propulsion_type",
+                                "type": "array",
+                                "title": "The Propulsion_type Schema",
+                                "items": {
+                                    "$id": "#/properties/data/properties/status_changes/items/properties/propulsion_type/items",
+                                    "type": "string",
+                                    "title": "The Items Schema",
+                                    "default": "",
+                                    "examples": [
+                                        "electric",
+                                        "combustion"
+                                    ],
+                                    "pattern": "^(.*)$"
+                                }
+                            },
+                            "event_type": {
+                                "$id": "#/properties/data/properties/status_changes/items/properties/event_type",
+                                "type": "string",
+                                "title": "The Event_type Schema",
+                                "default": "",
+                                "examples": [
+                                    "available"
+                                ],
+                                "pattern": "^(.*)$"
+                            },
+                            "event_type_reason": {
+                                "$id": "#/properties/data/properties/status_changes/items/properties/event_type_reason",
+                                "type": "string",
+                                "title": "The Event_type_reason Schema",
+                                "default": "",
+                                "examples": [
+                                    "service_start"
+                                ],
+                                "pattern": "^(.*)$"
+                            },
+                            "event_time": {
+                                "$id": "#/properties/data/properties/status_changes/items/properties/event_time",
+                                "type": "number",
+                                "title": "The Event_time Schema",
+                                "default": 0.0,
+                                "examples": [
+                                    1529968782.421409
+                                ]
+                            },
+                            "event_location": {
+                                "$id": "#/properties/data/properties/status_changes/items/properties/event_location",
+                                "type": "string",
+                                "title": "The Event_location Schema",
+                                "default": "",
+                                "examples": [
+                                    ""
+                                ],
+                                "pattern": "^(.*)$"
+                            },
+                            "battery_pct": {
+                                "$id": "#/properties/data/properties/status_changes/items/properties/battery_pct",
+                                "type": "number",
+                                "title": "The Battery_pct Schema",
+                                "default": 0.0,
+                                "examples": [
+                                    0.89
+                                ]
+                            },
+                            "associated_trips": {
+                                "$id": "#/properties/data/properties/status_changes/items/properties/associated_trips",
+                                "type": "array",
+                                "title": "The Associated_trips Schema",
+                                "items": {
+                                    "$id": "#/properties/data/properties/status_changes/items/properties/associated_trips/items",
+                                    "type": "string",
+                                    "title": "The Items Schema",
+                                    "default": "",
+                                    "examples": [
+                                        "3c960850-b5ee-11e8-96f8-529269fb1459"
+                                    ],
+                                    "pattern": "^(.*)$"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "first": {
+            "$id": "#/properties/first",
+            "type": "string",
+            "title": "The URL to the first page of data",
+            "examples": [
+                "https://data.provider.co/trips/first"
+            ],
+            "pattern": "^(.*)$"
+        },
+        "last": {
+            "$id": "#/properties/last",
+            "type": "string",
+            "title": "The URL to the last page of data",
+            "examples": [
+                "https://data.provider.co/trips/last"
+            ],
+            "pattern": "^(.*)$"
+        },
+        "prev": {
+            "$id": "#/properties/prev",
+            "type": "string",
+            "title": "The URL to the previous page of data",
+            "examples": [
+                "https://data.provider.co/trips/prev"
+            ],
+            "pattern": "^(.*)$"
+        },
+        "next": {
+            "$id": "#/properties/next",
+            "type": "string",
+            "title": "The URL to the next page of data",
+            "default": "",
+            "examples": [
+                "https://data.provider.co/trips/next"
+            ],
+            "pattern": "^(.*)$"
+        }
+    },
+    "additionalProperties": false
+}
