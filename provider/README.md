@@ -87,9 +87,9 @@ Data: `{ "trips": [] }`, an array of objects with the following structure
 | `provider_name` | String | Required | The public-facing name of the Provider |
 | `device_id` | UUID | Required | A unique device ID in UUID format |
 | `vehicle_id` | String | Required | The Vehicle Identification Number visible on the vehicle itself |
-| `vehicle_type` | Enum | Required | see [vehicle types](#vehicle-types) table |
-| `propulsion_type` | Enum | Required | see [propulsion types](#propulsion-types) table |
-| `trip_id` | UUID | Required | a unique ID for each trip |
+| `vehicle_type` | Enum | Required | See [vehicle types](#vehicle-types) table |
+| `propulsion_type` | Enum[] | Required | See [propulsion types](#propulsion-types) table; allows multiple values |
+| `trip_id` | UUID | Required | A unique ID for each trip |
 | `trip_duration` | Integer | Required | Time, in Seconds |
 | `trip_distance` | Integer | Required | Trip Distance, in Meters |
 | `route` | Route | Required | See detail below |
@@ -172,13 +172,13 @@ Data: `{ "status_changes": [] }`, an array of objects with the following structu
 | `device_id` | UUID | Required | A unique device ID in UUID format |
 | `vehicle_id` | String | Required | The Vehicle Identification Number visible on the vehicle itself |
 | `vehicle_type` | Enum | Required | see [vehicle types](#vehicle-types) table |
-| `propulsion_type` | Enum | Required | see [propulsion types](#propulsion-types) table |
+| `propulsion_type` | Enum[] | Required | See [propulsion types](#propulsion-types) table; allows multiple values |
 | `event_type` | Enum | Required | See [event types](#event-types) table |
 | `event_type_reason` | Enum | Required | Reason for status change, allowable values determined by [`event type`](#event-types) |
 | `event_time` | Unix Timestamp | Required | Date/time that event occurred, based on device clock |
 | `event_location` | Point | Required | |
 | `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |
-| `associated_trips` | UUID | Optional based on device | For "Reserved" event types, associated trips (foreign key to Trips API) |
+| `associated_trips` | UUID[] | Optional based on device | For "Reserved" event types, associated trips (foreign key to Trips API) |
 
 ### Event Types 
 
