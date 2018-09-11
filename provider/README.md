@@ -21,7 +21,7 @@ Responses must be `UTF-8` encoded `application/json` and must minimally include 
     "version": "0.1.0",
     "data": {
         "trips": [{
-            "company_name": "...",
+            "provider_id": "...",
             "trip_id": "...",
             //etc.
         }]
@@ -47,7 +47,7 @@ The following keys must be used for pagination links:
     "version": "0.1.0",
     "data": {
         "trips": [{
-            "company_name": "...",
+            "provider_id": "...",
             "trip_id": "...",
             //etc.
         }]
