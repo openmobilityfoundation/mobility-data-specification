@@ -21,7 +21,7 @@ Responses must be `UTF-8` encoded `application/json` and must minimally include 
     "version": "0.1.0",
     "data": {
         "trips": [{
-            "company_name": "...",
+            "provider_id": "...",
             "trip_id": "...",
             //etc.
         }]
@@ -47,7 +47,7 @@ The following keys must be used for pagination links:
     "version": "0.1.0",
     "data": {
         "trips": [{
-            "company_name": "...",
+            "provider_id": "...",
             "trip_id": "...",
             //etc.
         }]
@@ -83,17 +83,17 @@ Data: `{ "trips": [] }`, an array of objects with the following structure
 
 | Field | Type    | Required/Optional | Comments |
 | ----- | -------- | ----------------- | ----- |
-| `provider_name` | String | Required | The public-facing name of the Provider |
 | `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS |
+| `provider_name` | String | Required | The public-facing name of the Provider |
 | `device_id` | UUID | Required | A unique device ID in UUID format |
-| `vin` | String | Required | Vehicle Identification Number assigned by Provider |
-| `vehicle_type` | Enum | Required | see [vehicle types](#vehicle-types) table |
-| `propulsion_type` | Enum | Required | see [propulsion types](#propulsion-types) table |
-| `trip_id` | UUID | Required | a unique ID for each trip |
+| `vehicle_id` | String | Required | The Vehicle Identification Number visible on the vehicle itself |
+| `vehicle_type` | Enum | Required | See [vehicle types](#vehicle-types) table |
+| `propulsion_type` | Enum[] | Required | See [propulsion types](#propulsion-types) table; allows multiple values |
+| `trip_id` | UUID | Required | A unique ID for each trip |
 | `trip_duration` | Integer | Required | Time, in Seconds |
 | `trip_distance` | Integer | Required | Trip Distance, in Meters |
 | `route` | Route | Required | See detail below |
-| `accuracy` | Integer | Required | The approximate level of accuracy, in meters, represented by start_point and end_point |
+| `accuracy` | Integer | Required | The approximate level of accuracy, in meters, of `Points` within `route` |
 | `start_time` | Unix Timestamp | Required | |
 | `end_time` | Unix Timestamp | Required | |
 | `parking_verification_url` | String | Optional | A URL to a photo (or other evidence) of proper vehicle parking |
@@ -102,19 +102,18 @@ Data: `{ "trips": [] }`, an array of objects with the following structure
 
 ### Vehicle Types
 
-| vehicle_type | description |
-|-------|-------------|
-| bicycle | |
-| scooter | |
-| recumbent | |
+| `vehicle_type` |
+|--------------|
+| bicycle      |
+| scooter      |
 
 ### Propulsion Types
 
-| propulsion_type | description |
-|-------|-------------|
-| human | |
-| electric | |
-| combustion | |
+| `propulsion_type` |
+|-----------------|
+| human           |
+| electric        |
+| combustion      |
 
 ### Routes
 
@@ -168,22 +167,22 @@ Data: `{ "status_changes": [] }`, an array of objects with the following structu
 
 | Field | Type | Required/Optional | Comments |
 | ----- | ---- | ----------------- | ----- |
-| `provider_name` | String | Required | The public-facing name of the Provider |
 | `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS |
-| `vin` | String | Required | Vehicle Identification Number assigned by Provider |
+| `provider_name` | String | Required | The public-facing name of the Provider |
 | `device_id` | UUID | Required | A unique device ID in UUID format |
+| `vehicle_id` | String | Required | The Vehicle Identification Number visible on the vehicle itself |
 | `vehicle_type` | Enum | Required | see [vehicle types](#vehicle-types) table |
-| `propulsion_type` | Enum | Required | see [propulsion types](#propulsion-types) table |
+| `propulsion_type` | Enum[] | Required | See [propulsion types](#propulsion-types) table; allows multiple values |
 | `event_type` | Enum | Required | See [event types](#event-types) table |
-| `reason` | Enum | Required | Reason for status change, allowable values determined by `event_type` |
+| `event_type_reason` | Enum | Required | Reason for status change, allowable values determined by [`event type`](#event-types) |
 | `event_time` | Unix Timestamp | Required | Date/time that event occurred, based on device clock |
-| `location` | Point | Required | |
+| `event_location` | Point | Required | |
 | `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |
-| `associated_trips` | UUID | Optional based on device | For "Reserved" event types, associated trips (foreign key to Trips API) |
+| `associated_trips` | UUID[] | Optional based on device | For "Reserved" event types, associated trips (foreign key to Trips API) |
 
 ### Event Types 
 
-| event_type | event_type_description | reason | reason_description |
+| `event_type` | Description | `event_type_reason` | Description |
 | ---------- | ---------------------- | ------- | ------------------ |
 | `available` | A device becomes available for customer use | `service_start` | Device introduced into service at the beginning of the day (if program does not operate 24/7) |
 | | | `user_drop_off` | User ends reservation |
