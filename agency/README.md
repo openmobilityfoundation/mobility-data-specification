@@ -206,7 +206,9 @@ Body:
 | `service_area_id` | UUID  | Optional | ability to get a retired or old service area if none, will return active area |  
 
 Response: 
-| Field | Types  | Required/Optional | Other | 
+
+| Field | Types  | Required/Optional | Other |
+| ----- | ---- | ----------------- | ----- |
 | `service_area_id` | UUID | Required |  |
 | `service_start_date` | Unix Timestamp | Required | Date at which this service area became effective |
 | `service_end_date` | Unix Timestamp | Required | Date at which this service area was replaced. If currently effective, place NaN |
