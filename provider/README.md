@@ -52,10 +52,12 @@ The following keys must be used for pagination links:
             //etc.
         }]
     },
-    "first": "https://...",
-    "last": "https://...",
-    "prev": "https://...",
-    "next": "https://..."
+    "links": {
+        "first": "https://...",
+        "last": "https://...",
+        "prev": "https://...",
+        "next": "https://..."
+    }
 }
 ```
 
