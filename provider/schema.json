@@ -2,16 +2,19 @@
     "definitions": {},
     "$id": "https://github.com/CityofLosAngeles/mobility-data-specification/blob/master/provider",
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "title": "The MDS Provider schema",
+    "title": "The MDS Provider Schema",
     "type": "object",
-    "required": [ "version", "data" ],
+    "required": [
+        "version",
+        "data"
+    ],
     "properties": {
         "version": {
             "$id": "#/properties/version",
             "type": "string",
             "title": "The MDS Provider version this data represents",
             "examples": [
-                "0.1.0-dev"
+                "0.1.0"
             ],
             "pattern": "^(.*)$"
         },
@@ -19,8 +22,7 @@
             "$id": "#/properties/data",
             "type": "object",
             "title": "The page of data",
-            "required": [
-            ],
+            "required": [],
             "properties": {
                 "trips": {
                     "$id": "#/properties/data/properties/trips",
@@ -43,17 +45,13 @@
                             "route",
                             "accuracy",
                             "start_time",
-                            "end_time",
-                            "parking_verification_url",
-                            "standard_cost",
-                            "actual_cost"
+                            "end_time"
                         ],
                         "properties": {
                             "provider_name": {
                                 "$id": "#/properties/data/properties/trips/items/properties/provider_name",
                                 "type": "string",
-                                "title": "The Provider_name Schema",
-                                "default": "",
+                                "description": "The public-facing name of the Provider",
                                 "examples": [
                                     "Provider Name"
                                 ],
@@ -62,27 +60,27 @@
                             "provider_id": {
                                 "$id": "#/properties/data/properties/trips/items/properties/provider_id",
                                 "type": "string",
-                                "title": "The Provider_id Schema",
+                                "description": "The UUID for the Provider, unique within MDS",
                                 "default": "",
                                 "examples": [
                                     "3c960026-b5ee-11e8-96f8-529269fb1459"
                                 ],
-                                "pattern": "^(.*)$"
+                                "pattern": "^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$"
                             },
                             "device_id": {
                                 "$id": "#/properties/data/properties/trips/items/properties/device_id",
                                 "type": "string",
-                                "title": "The Device_id Schema",
+                                "description": "A unique device ID in UUID format",
                                 "default": "",
                                 "examples": [
                                     "3c9604d6-b5ee-11e8-96f8-529269fb1459"
                                 ],
-                                "pattern": "^(.*)$"
+                                "pattern": "^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$"
                             },
                             "vehicle_id": {
                                 "$id": "#/properties/data/properties/trips/items/properties/vehicle_id",
                                 "type": "string",
-                                "title": "The Vehicle_id Schema",
+                                "description": "The Vehicle Identification Number visible on the vehicle itself",
                                 "default": "",
                                 "examples": [
                                     "ABC123"
@@ -92,37 +90,39 @@
                             "vehicle_type": {
                                 "$id": "#/properties/data/properties/trips/items/properties/vehicle_type",
                                 "type": "string",
-                                "title": "The Vehicle_type Schema",
-                                "default": "",
-                                "examples": [
+                                "description": "The type of vehicle",
+                                "enum": [
+                                    "bicycle",
                                     "scooter"
-                                ],
-                                "pattern": "^(.*)$"
+                                ]
                             },
                             "propulsion_type": {
                                 "$id": "#/properties/data/properties/trips/items/properties/propulsion_type",
-                                "type": "string",
-                                "title": "The Propulsion_type Schema",
-                                "default": "",
-                                "examples": [
-                                    "electric"
-                                ],
-                                "pattern": "^(.*)$"
+                                "type": "array",
+                                "description": "The type of propulsion; allows multiple values",
+                                "items": {
+                                    "type": "string",
+                                    "enum": [
+                                        "human",
+                                        "electric",
+                                        "combustion"
+                                    ]
+                                },
+                                "minItems": 1
                             },
                             "trip_id": {
                                 "$id": "#/properties/data/properties/trips/items/properties/trip_id",
                                 "type": "string",
-                                "title": "The Trip_id Schema",
-                                "default": "",
+                                "description": "A unique ID for each trip",
                                 "examples": [
                                     "3c960850-b5ee-11e8-96f8-529269fb1459"
                                 ],
-                                "pattern": "^(.*)$"
+                                "pattern": "^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$"
                             },
                             "trip_duration": {
                                 "$id": "#/properties/data/properties/trips/items/properties/trip_duration",
                                 "type": "integer",
-                                "title": "The Trip_duration Schema",
+                                "description": "The length of time, in seconds, that the trip lasted",
                                 "default": 0,
                                 "examples": [
                                     600
@@ -131,7 +131,7 @@
                             "trip_distance": {
                                 "$id": "#/properties/data/properties/trips/items/properties/trip_distance",
                                 "type": "integer",
-                                "title": "The Trip_distance Schema",
+                                "description": "The distance, in meters, that the trip covered",
                                 "default": 0,
                                 "examples": [
                                     1000
@@ -159,7 +159,6 @@
                                     "features": {
                                         "$id": "#/properties/data/properties/trips/items/properties/route/properties/features",
                                         "type": "array",
-                                        "title": "The Features Schema",
                                         "items": {
                                             "$id": "#/properties/data/properties/trips/items/properties/route/properties/features/items",
                                             "type": "object",
@@ -243,7 +242,7 @@
                             "accuracy": {
                                 "$id": "#/properties/data/properties/trips/items/properties/accuracy",
                                 "type": "integer",
-                                "title": "The Accuracy Schema",
+                                "title": "The approximate level of accuracy, in meters, of Points within route",
                                 "default": 0,
                                 "examples": [
                                     15
@@ -252,7 +251,7 @@
                             "start_time": {
                                 "$id": "#/properties/data/properties/trips/items/properties/start_time",
                                 "type": "number",
-                                "title": "The Start_time Schema",
+                                "description": "The time the trip began, expressed as a Unix Timestamp",
                                 "default": 0.0,
                                 "examples": [
                                     1529968782.421409
@@ -261,7 +260,7 @@
                             "end_time": {
                                 "$id": "#/properties/data/properties/trips/items/properties/end_time",
                                 "type": "number",
-                                "title": "The End_time Schema",
+                                "description": "The time the trip ended, expressed as a Unix Timestamp",
                                 "default": 0.0,
                                 "examples": [
                                     1531007628.3774529
@@ -270,17 +269,17 @@
                             "parking_verification_url": {
                                 "$id": "#/properties/data/properties/trips/items/properties/parking_verification_url",
                                 "type": "string",
-                                "title": "The Parking_verification_url Schema",
+                                "description": "A URL to a photo (or other evidence) of proper vehicle parking",
                                 "default": "",
                                 "examples": [
-                                    "https://data.provider.co/parking_verify"
+                                    "https://data.provider.co/parking_verify/1234.jpg"
                                 ],
-                                "pattern": "^(.*)$"
+                                "pattern": "^(https://.*)$"
                             },
                             "standard_cost": {
                                 "$id": "#/properties/data/properties/trips/items/properties/standard_cost",
                                 "type": "integer",
-                                "title": "The Standard_cost Schema",
+                                "description": "The cost, in cents, that it would cost to perform the trip in the standard operation of the System",
                                 "default": 0,
                                 "examples": [
                                     500
@@ -289,7 +288,7 @@
                             "actual_cost": {
                                 "$id": "#/properties/data/properties/trips/items/properties/actual_cost",
                                 "type": "integer",
-                                "title": "The Actual_cost Schema",
+                                "description": "The actual cost, in cents, paid by the customer of the mobility as a service provider",
                                 "default": 0,
                                 "examples": [
                                     520
@@ -301,7 +300,7 @@
                 "status_changes": {
                     "$id": "#/properties/data/properties/status_changes",
                     "type": "array",
-                    "title": "The Status_changes Schema",
+                    "title": "The status_changes Schema",
                     "items": {
                         "$id": "#/properties/data/properties/status_changes/items",
                         "type": "object",
@@ -316,16 +315,13 @@
                             "event_type",
                             "event_type_reason",
                             "event_time",
-                            "event_location",
-                            "battery_pct",
-                            "associated_trips"
+                            "event_location"
                         ],
                         "properties": {
                             "provider_name": {
                                 "$id": "#/properties/data/properties/status_changes/items/properties/provider_name",
                                 "type": "string",
-                                "title": "The Provider_name Schema",
-                                "default": "",
+                                "description": "The public-facing name of the Provider",
                                 "examples": [
                                     "Provider Name"
                                 ],
@@ -334,27 +330,27 @@
                             "provider_id": {
                                 "$id": "#/properties/data/properties/status_changes/items/properties/provider_id",
                                 "type": "string",
-                                "title": "The Provider_id Schema",
+                                "description": "The UUID for the Provider, unique within MDS",
                                 "default": "",
                                 "examples": [
                                     "3c960026-b5ee-11e8-96f8-529269fb1459"
                                 ],
-                                "pattern": "^(.*)$"
+                                "pattern": "^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$"
                             },
                             "device_id": {
                                 "$id": "#/properties/data/properties/status_changes/items/properties/device_id",
                                 "type": "string",
-                                "title": "The Device_id Schema",
+                                "description": "A unique device ID in UUID format",
                                 "default": "",
                                 "examples": [
                                     "3c9604d6-b5ee-11e8-96f8-529269fb1459"
                                 ],
-                                "pattern": "^(.*)$"
+                                "pattern": "^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$"
                             },
                             "vehicle_id": {
                                 "$id": "#/properties/data/properties/status_changes/items/properties/vehicle_id",
                                 "type": "string",
-                                "title": "The Vehicle_id Schema",
+                                "description": "The Vehicle Identification Number visible on the vehicle itself",
                                 "default": "",
                                 "examples": [
                                     "ABC123"
@@ -364,53 +360,58 @@
                             "vehicle_type": {
                                 "$id": "#/properties/data/properties/status_changes/items/properties/vehicle_type",
                                 "type": "string",
-                                "title": "The Vehicle_type Schema",
-                                "default": "",
-                                "examples": [
+                                "description": "The type of vehicle",
+                                "enum": [
+                                    "bicycle",
                                     "scooter"
-                                ],
-                                "pattern": "^(.*)$"
+                                ]
                             },
                             "propulsion_type": {
                                 "$id": "#/properties/data/properties/status_changes/items/properties/propulsion_type",
                                 "type": "array",
-                                "title": "The Propulsion_type Schema",
+                                "description": "The type of propulsion; allows multiple values",
                                 "items": {
-                                    "$id": "#/properties/data/properties/status_changes/items/properties/propulsion_type/items",
                                     "type": "string",
-                                    "title": "The Items Schema",
-                                    "default": "",
-                                    "examples": [
+                                    "enum": [
+                                        "human",
                                         "electric",
                                         "combustion"
-                                    ],
-                                    "pattern": "^(.*)$"
-                                }
+                                    ]
+                                },
+                                "minItems": 1
                             },
                             "event_type": {
                                 "$id": "#/properties/data/properties/status_changes/items/properties/event_type",
                                 "type": "string",
-                                "title": "The Event_type Schema",
-                                "default": "",
-                                "examples": [
-                                    "available"
-                                ],
-                                "pattern": "^(.*)$"
+                                "description": "The type of the event",
+                                "enum": [
+                                    "available",
+                                    "reserved",
+                                    "unavailable",
+                                    "removed"
+                                ]
                             },
                             "event_type_reason": {
                                 "$id": "#/properties/data/properties/status_changes/items/properties/event_type_reason",
                                 "type": "string",
-                                "title": "The Event_type_reason Schema",
-                                "default": "",
-                                "examples": [
-                                    "service_start"
-                                ],
-                                "pattern": "^(.*)$"
+                                "description": "The reason for the event",
+                                "enum": [
+                                    "service_start",
+                                    "user_drop_off",
+                                    "rebalance_drop_off",
+                                    "maintenance_drop_off",
+                                    "user_pick_up",
+                                    "maintenance",
+                                    "low_battery",
+                                    "service_end",
+                                    "rebalance_pick_up",
+                                    "maintenance_pick_up"
+                                ]
                             },
                             "event_time": {
                                 "$id": "#/properties/data/properties/status_changes/items/properties/event_time",
                                 "type": "number",
-                                "title": "The Event_time Schema",
+                                "description": "The time the event occurred, expressed as a Unix Timestamp",
                                 "default": 0.0,
                                 "examples": [
                                     1529968782.421409
@@ -419,35 +420,31 @@
                             "event_location": {
                                 "$id": "#/properties/data/properties/status_changes/items/properties/event_location",
                                 "type": "string",
-                                "title": "The Event_location Schema",
-                                "default": "",
-                                "examples": [
-                                    ""
-                                ],
+                                "description": "The GPS coordinates of where the event occurred",
                                 "pattern": "^(.*)$"
                             },
                             "battery_pct": {
                                 "$id": "#/properties/data/properties/status_changes/items/properties/battery_pct",
                                 "type": "number",
-                                "title": "The Battery_pct Schema",
+                                "description": "Percent charge of device battery, expressed between 0 and 1",
                                 "default": 0.0,
                                 "examples": [
                                     0.89
-                                ]
+                                ],
+                                "minimum": 0,
+                                "maximum": 1
                             },
                             "associated_trips": {
                                 "$id": "#/properties/data/properties/status_changes/items/properties/associated_trips",
                                 "type": "array",
-                                "title": "The Associated_trips Schema",
+                                "description": "For 'Reserved' event types, associated trip_ids",
                                 "items": {
                                     "$id": "#/properties/data/properties/status_changes/items/properties/associated_trips/items",
                                     "type": "string",
-                                    "title": "The Items Schema",
-                                    "default": "",
                                     "examples": [
                                         "3c960850-b5ee-11e8-96f8-529269fb1459"
                                     ],
-                                    "pattern": "^(.*)$"
+                                    "pattern": "^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$"
                                 }
                             }
                         }
