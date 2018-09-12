@@ -90,7 +90,6 @@ Data: `{ "trips": [] }`, an array of objects with the following structure
 | `vehicle_type` | Enum | Required | See [vehicle types](#vehicle-types) table |
 | `propulsion_type` | Enum[] | Required | See [propulsion types](#propulsion-types) table; allows multiple values |
 | `trip_id` | UUID | Required | A unique ID for each trip |
-| `trip_duration` | Integer | Required | Time, in Seconds |
 | `trip_distance` | Integer | Required | Trip Distance, in Meters |
 | `route` | Route | Required | See detail below |
 | `accuracy` | Integer | Required | The approximate level of accuracy, in meters, of `Points` within `route` |
