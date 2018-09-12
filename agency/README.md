@@ -202,7 +202,11 @@ Body:
 
 | Field | Type | Required/Optional | Other |
 | ----- | ---- | ----------------- | ----- |
-| `provider_id` | String | Required | Issued by city |
+| `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS |
+| `service_area_id` | UUID  | Optional | ability to get a retired or old service area if none, will return active area |  
+
+Response: 
+| Field | Types  | Required/Optional | Other | 
 | `service_area_id` | UUID | Required |  |
 | `service_start_date` | Unix Timestamp | Required | Date at which this service area became effective |
 | `service_end_date` | Unix Timestamp | Required | Date at which this service area was replaced. If currently effective, place NaN |
@@ -226,12 +230,6 @@ Body:
 | | | `rebalance_pick_up` |	Device removed from street and will be placed at another location to rebalance service |
 | | | `maintenance_pick_up`	 | Device removed from street so it can be worked on |
 | `inactive` | A device has been deregistered  | 	|  |
-
-## Enum Definitions
-=======
-| `service_area` | MultiPolygon | Required | | 
-| `prior_service_area` | UUID | Optional | If exists, the UUID of the prior service area. | 
-| `replacement_service_area` | UUID | Optional | If exists, the UUID of the service area that replaced this one | 
 
 ## Enum Definitions 
 
