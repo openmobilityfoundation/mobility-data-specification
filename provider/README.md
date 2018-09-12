@@ -112,6 +112,7 @@ Data: `{ "trips": [] }`, an array of objects with the following structure
 | `propulsion_type` |
 |-----------------|
 | human           |
+| electric_assist |
 | electric        |
 | combustion      |
 
