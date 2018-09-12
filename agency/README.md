@@ -72,8 +72,8 @@ Response:
 This API is used by providers when a vehicle is either removed or returned to service.
 
 Endpoint: `/update_vehicle_status`  
-Method: `POST`
-API Key: `Required`
+Method: `PUT` 
+API Key: `Required` 
 Body:
 
 | Field | Type | Required/Optional | Other |
@@ -136,8 +136,8 @@ Body:
 A trip represents a route taken by a provider's customer.   Trip data will be reported to the API every 5 seconds while the vehicle is in motion.   
 
 Endpoint: `/update_trip_telemetry`  
-Method: `POST`
-API Key: `Required`
+Method: `POST`  
+API Key: `Required`  
 Body:
 
 | Field | Type     | Required/Optional | Other |
@@ -264,6 +264,6 @@ For 'message', options are:
 * `305: Error: vehicle is already registered`
 * `306: Error: vehicle registration cannot be found`
 * `310: Error: vehicle is not properly registered`
-* `311: Error: duplicate registration found, please use a different unique_id`
+* `311: Error: duplicate registration found, please use a different unique_id or update existing unique_id status using the update-vehicle-status endpoint`
 * `315: Error: vehicle is not active`
 * `320: Error: vehicle trip has not been properly started`
