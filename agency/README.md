@@ -202,7 +202,7 @@ Body:
 
 | Field | Type | Required/Optional | Other |
 | ----- | ---- | ----------------- | ----- |
-| `provider_id` | String | Required | Issued in MDS spec |
+| `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS |
 | `service_area_id` | UUID  | Optional | ability to get a retired or old service area if none, will return active area |  
 
 Response: 
