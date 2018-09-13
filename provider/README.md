@@ -84,7 +84,7 @@ the format returned by Python's [`time.time()`](https://docs.python.org/3/librar
 
 A trip represents a journey taken by a *mobility as a service* customer with a geo-tagged start and stop point.
 
-The trips API allows a user to query historical trip data. The API should allow querying trips at least by ID, geofence for start or end, and time.
+The trips API allows a user to query historical trip data.
 
 Endpoint: `/trips`  
 Method: `GET`  
@@ -108,6 +108,19 @@ Data: `{ "trips": [] }`, an array of objects with the following structure
 | `parking_verification_url` | String | Optional | A URL to a photo (or other evidence) of proper vehicle parking |
 | `standard_cost` | Integer | Optional | The cost, in cents, that it would cost to perform that trip in the standard operation of the System |
 | `actual_cost` | Integer | Optional | The actual cost, in cents, paid by the customer of the *mobility as a service* provider |
+
+### Trips Query Parameters
+
+The trips API should allow querying trips with a combination of query parameters.
+
+* `device_id`
+* `vehicle_id`
+* `start_time`
+* `end_time`
+* `start_location`
+* `end_location`
+
+All of these query params will use the *Type* listed above with the exception of `start_location` and `end_location` which can be provided as stringified GeoJson Polygons.
 
 ### Vehicle Types
 
@@ -169,7 +182,7 @@ Routes must include at least 2 points: the start point and end point. Additional
 
 The status of the inventory of vehicles available for customer use.
 
-This API allows a user to query the historical availability for a system within a time range. The API should allow queries at least by time period and geographical area.
+This API allows a user to query the historical availability for a system within a time range.
 
 Endpoint: `/status_changes`  
 Method: `GET`  
@@ -189,6 +202,16 @@ Data: `{ "status_changes": [] }`, an array of objects with the following structu
 | `event_location` | Point | Required | |
 | `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |
 | `associated_trips` | UUID[] | Optional based on device | Array of UUID's. For "Reserved" event types, associated trips (foreign key to Trips API) |
+
+### Status Changes Query Parameters
+
+The status_changes API should allow querying status changes with a combination of query parameters.
+
+* `start_time`
+* `end_time`
+* `location`
+
+The `time` parameters can be provided as Unix Timestamps individually or together. The `location` parameter can be provided as a stringified GeoJson Polygon.
 
 ### Event Types
 
