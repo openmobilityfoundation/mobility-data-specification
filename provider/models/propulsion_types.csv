@@ -1,0 +1,4 @@
+propulsion_type,comments
+human,"A human powers the vehicle"
+electric,"An electric motor powers the vehicle"
+combustion,"A combustion engine powers the vehicle"

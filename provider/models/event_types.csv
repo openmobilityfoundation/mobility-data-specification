@@ -1,0 +1,6 @@
+event_type,description
+available,"A device becomes available for customer use"
+reserved,"A customer reserves a device (even if trip has not started yet)"
+unavailable,"A device is on the street but becomes unavailable for customer use"
+removed,"A device is removed from the street and unavailable for customer use"
+inactive,"A device has been deregistered"

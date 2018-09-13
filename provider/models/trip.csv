@@ -1,0 +1,16 @@
+field_name,data_type,required,comments
+mds_version,string,true,"The MDS version this record targets"
+provider_id,UUID,true,"A UUID for the Provider, unique within MDS"
+provider_name,string,true,"The public-facing name of the Provider"
+device_id,UUID,true,"A unique device ID in UUID format"
+vehicle_id,string,true,"The Vehicle Identification Number visible on the vehicle itself"
+vehicle_type,Enum,true,"See the table of vehicle_types"
+propulsion_type,Enum[],true,"List of propulsion_types; allows multiple values, separated by semicolon ;"
+trip_id,UUID,true,"A unique ID for each trip"
+start_time,ISO 8601 timestamp,true,
+end_time,timestamp,true,
+trip_duration,integer,true,"Time, in Seconds"
+trip_distance,integer,true,"Trip Distance, in Meters"
+parking_verification_url,string,false,"A URL to a photo (or other evidence) of proper vehicle parking"
+standard_cost,integer,false,"The cost, in cents, that it would cost to perform that trip in the standard operation of the System"
+actual_cost,integer,false,"The actual cost, in cents, paid by the customer of the *mobility as a service* provider"
