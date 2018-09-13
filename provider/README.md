@@ -37,10 +37,10 @@ All response fields must use `lower_case_with_underscores`.
 
 The following keys must be used for pagination links:
 
- - `first`: url to the first page of data
- - `last`: url to the last page of data
- - `prev`: url to the previous page of data
- - `next`: url to the next page of data
+* `first`: url to the first page of data
+* `last`: url to the last page of data
+* `prev`: url to the previous page of data
+* `next`: url to the next page of data
 
 ```js
 {
@@ -119,7 +119,7 @@ Data: `{ "trips": [] }`, an array of objects with the following structure
 
 ### Routes
 
-To represent a route, MDS `provider` APIs should create a GeoJSON Feature Collection, which includes every observed point in the route, and a timestamp. 
+To represent a route, MDS `provider` APIs should create a GeoJSON Feature Collection, which includes every observed point in the route, and a timestamp.
 
 Routes must include at least 2 points: the start point and end point. Additionally, routes must include all possible GPS samples collected by a provider.
 
@@ -182,7 +182,7 @@ Data: `{ "status_changes": [] }`, an array of objects with the following structu
 | `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |
 | `associated_trips` | UUID[] | Optional based on device | Array of UUID's. For "Reserved" event types, associated trips (foreign key to Trips API) |
 
-### Event Types 
+### Event Types
 
 | `event_type` | Description | `event_type_reason` | Description |
 | ---------- | ---------------------- | ------- | ------------------ |
