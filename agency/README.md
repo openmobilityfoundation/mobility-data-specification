@@ -44,7 +44,6 @@ Response:
 | ----- | -------- | ----------------- | ----- |
 | `message` | Enum |  | See [Message](#message) Enum |
 
-
 ## deregister_vehicle
 
 The remove-vehicle API is used to deregister a vehicle from the fleet.
@@ -60,7 +59,6 @@ Body:
 | `device_id` | UUID | Required | |
 | `reason_code` | Enum | Required | [Reason](#reason_code) for status change  |
 
-
 Response:
 
 | Field | Type     | Required/Optional | Other |
@@ -72,8 +70,8 @@ Response:
 This API is used by providers when a vehicle is either removed or returned to service.
 
 Endpoint: `/update_vehicle_status`  
-Method: `PUT` 
-API Key: `Required` 
+Method: `PUT`
+API Key: `Required`
 Body:
 
 | Field | Type | Required/Optional | Other |
@@ -108,13 +106,11 @@ Body:
 | `accuracy` | Integer | Required | The approximate level of accuracy, in meters, represented by start_point and end_point. |
 | `battery_pct_start` | Float | Require if Applicable | Percent battery charge of device, expressed between 0 and 1 |
 
-
 Response:
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
 | `trip_id` | UUID | Required | a unique ID for each trip |
-
 
 ## end_trip
 
@@ -133,7 +129,7 @@ Body:
 
 ## update_trip_telemetry
 
-A trip represents a route taken by a provider's customer.   Trip data will be reported to the API every 5 seconds while the vehicle is in motion.   
+A trip represents a route taken by a provider's customer.   Trip data will be reported to the API every 5 seconds while the vehicle is in motion.
 
 Endpoint: `/update_trip_telemetry`  
 Method: `POST`  
@@ -153,14 +149,13 @@ Response:
 | ---- | --- | --- |
 | `message` | Enum | See [Message](#message) Enum |
 
-
 ### Route
 
 To represent a route, MDS provider APIs should create a GeoJSON Feature Collection where ever observed point in the route, plus a time stamp, should be included. The representation needed is below.
 
 The route must include at least 2 points, a start point and end point. Additionally, it must include all possible GPS samples collected by a provider. All points must be in WGS 84 (EPSG:4326) standard GPS projection
-```
 
+```js
 "route": {
         "type": "FeatureCollection",
         "features": [
@@ -192,6 +187,7 @@ The route must include at least 2 points, a start point and end point. Additiona
             }
         ] }
 ```
+
 ## service_areas
 
 Gets the list of service areas available to the provider.
@@ -205,7 +201,7 @@ Body:
 | `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS |
 | `service_area_id` | UUID  | Optional | ability to get a retired or old service area if none, will return active area |  
 
-Response: 
+Response:
 
 | Field | Types  | Required/Optional | Other |
 | ----- | ---- | ----------------- | ----- |
@@ -218,43 +214,50 @@ Response:
 
 ### Event Types
 
-| event_type | event_type_description |  reason | reason_description	|
+| event_type | event_type_description |  reason | reason_description  |
 | ---------- | ---------------------- | ------- | ------------------  |
-| `available` |	A device becomes available for customer use	| `service_start` |	Device introduced into service at the beginning of the day (if program does not operate 24/7) |
-| | | `user_drop_off` |	User ends reservation |
-| | | `rebalance_drop_off` |	Device moved for rebalancing |
-| | | `maintenance_drop_off` | 	Device introduced into service after being removed for maintenance |
-| `reserved` | A customer reserves a device (even if trip has not started yet) |	`user_pick_up` |	Customer reserves device |
-| `unavailable` |	A device is on the street but becomes unavailable for customer use | `default` |  Default state for a newly registered vehicle	|
+| `available` |    A device becomes available for customer use    | `service_start` |    Device introduced into service at the beginning of the day (if program does not operate 24/7) |
+| | | `user_drop_off` |    User ends reservation |
+| | | `rebalance_drop_off` | Device moved for rebalancing |
+| | | `maintenance_drop_off` |  Device introduced into service after being removed for maintenance |
+| `reserved` | A customer reserves a device (even if trip has not started yet) | `user_pick_up` | Customer reserves device |
+| `unavailable` |    A device is on the street but becomes unavailable for customer use | `default` |  Default state for a newly registered vehicle    |
 | | | `low_battery` | A device is no longer available due to insufficient battery |
 | | | ``maintenance`` | A device is no longer available due to equipment issues |
-| `removed` | A device is removed from the street and unavailable for customer use | `service_end`	| Device removed from street because service has ended for the day (if program does not operate 24/7) |
-| | | `rebalance_pick_up` |	Device removed from street and will be placed at another location to rebalance service |
-| | | `maintenance_pick_up`	 | Device removed from street so it can be worked on |
-| `inactive` | A device has been deregistered  | 	|  |
+| `removed` | A device is removed from the street and unavailable for customer use | `service_end`| Device removed from street because service has ended for the day (if program does not operate 24/7) |
+| | | `rebalance_pick_up` |    Device removed from street and will be placed at another location to rebalance service |
+| | | `maintenance_pick_up`     | Device removed from street so it can be worked on |
+| `inactive` | A device has been deregistered  |     |  |
 
-## Enum Definitions 
+## Enum Definitions
 
-#### vehicle_type
+### vehicle_type
+
 For `vehicle_type`, options are:
+
 * `bike`
 * `scooter`
 * `recumbent`
 
-#### propulsion_type
+### propulsion_type
+
 For `propulsion_type`, options are:
+
 * `human`
 * `electric`
 * `combustion`
 
-#### reason_code
+### reason_code
+
 For `reason_code`, options are:
+
 * `rebalancing`
 * `maintenance`
 
+### message
 
-#### message
-For 'message', options are: 
+For 'message', options are:
+
 * `200: OK`
 * `201: Created`
 * `202: Accepted`
