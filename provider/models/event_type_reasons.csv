@@ -1,0 +1,11 @@
+event_type,event_type_reason,description
+available,service_start,"Device introduced into service at the beginning of the day (if program does not operate 24/7)"
+available,user_drop_off,"User ends reservation"
+available,rebalance_drop_off,"Device moved for rebalancing"
+available,maintenance_drop_off,"Device introduced into service after being removed for maintenance"
+reserved,user_pick_up,"Customer reserves device"
+unavailable,maintenance,"A device is no longer available due to equipment issues"
+unavailable,low_battery,"A device is no longer available due to insufficient battery"
+removed,service_end,"Device removed from street because service has ended for the day (if program does not operate 24/7)"
+removed,rebalance_pick_up,"Device removed from street and will be placed at another location to rebalance service"
+removed,maintenance_pick_up,"Device removed from street so it can be worked on"
