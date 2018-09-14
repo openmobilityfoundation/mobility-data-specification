@@ -120,9 +120,25 @@ Data: `{ "trips": [] }`, an array of objects with the following structure
 
 ### Routes
 
-To represent a route, MDS `provider` APIs should create a GeoJSON Feature Collection, which includes every observed point in the route, and a timestamp.
+To represent a route, MDS `provider` APIs should create a GeoJSON Feature Collection, which includes every observed point in the route. Each point is expressed as a GeoJSON `Feature` with a `Point` geometry.
+
+Route point features must include at least a UTC timestamp and accuracy radius in the `properties` key. Optional fields may be omitted or use the `null` value.
 
 Routes must include at least 2 points: the start point and end point. Additionally, routes must include all possible GPS samples collected by a provider.
+
+#### Route point feature properties
+
+| Field | Type | Required? | Example | Comments |
+| -- | -- | -- | -- | -- |
+| `timestamp` | Unix Timestamp | Required | `1529968782.421409` | Date when location was observed, expressed as seconds since midnight (0 hours) UTC on Jan 1, 1970. |
+| `horizontalAccuracy` | Number | Required | `10` | Radius of uncertainty in meters. Must be positive. This field is not well-defined across platforms; but should be supplied in the spirit of [Android's `Location.getAccuracy`](https://developer.android.com/reference/android/location/Location#getAccuracy()) or [`CLLocation.horizontalAccuracy` from iOS](https://developer.apple.com/documentation/corelocation/cllocation/1423599-horizontalaccuracy). |
+| `speed` | Number | Optional | `3.4` | Instantaneous speed in meters per second. Must be non-negative or `null`. Ref: [iOS](https://developer.apple.com/documentation/corelocation/cllocation/1423798-speed) [Android](https://developer.android.com/reference/android/location/Location#getSpeed()) |
+| `course` | Number | Optional | `352` | The direction in which the device is traveling, measured in degrees and relative to due north. Must be in the range `[0, 360)` or `null`. Ref: [iOS](https://developer.apple.com/documentation/corelocation/cllocation/1423832-course) [Android](https://developer.android.com/reference/android/location/Location#getBearing()) |
+| `altitude` | Number | Optional | `45` | The altitude, measured in meters. Ignored if `verticalAccuracy` is `null`. Ref: [iOS](https://developer.apple.com/documentation/corelocation/cllocation/1423820-altitude) [Android](https://developer.android.com/reference/android/location/Location#getAltitude()) |
+| `verticalAccuracy` | Number | Optional | `30` | The uncertainty of the altitude value, in meters. Must be non-negative or `null`. Ref: [iOS](https://developer.apple.com/documentation/corelocation/cllocation/1423550-verticalaccuracy) [Android](https://developer.android.com/reference/android/location/Location.html#getVerticalAccuracyMeters()) |
+
+
+#### Example route
 
 ```js
 "route": {
@@ -130,7 +146,10 @@ Routes must include at least 2 points: the start point and end point. Additional
     "features": [{
         "type": "Feature",
         "properties": {
-            "timestamp": 1529968782.421409
+            "timestamp": 1529968782.421409,
+            "horizontalAccuracy": 15,
+            "speed": 5.4,
+            "course": null,
         },
         "geometry": {
             "type": "Point",
@@ -143,7 +162,8 @@ Routes must include at least 2 points: the start point and end point. Additional
     {
         "type": "Feature",
         "properties": {
-            "timestamp": 1531007628.3774529
+            "timestamp": 1531007628.3774529,
+            "horizontalAccuracy": 12
         },
         "geometry": {
             "type": "Point",
