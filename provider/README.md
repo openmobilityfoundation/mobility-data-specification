@@ -95,6 +95,7 @@ Data: `{ "trips": [] }`, an array of objects with the following structure
 | `trip_duration` | Integer | Required | Time, in Seconds |
 | `trip_distance` | Integer | Required | Trip Distance, in Meters |
 | `route` | Route | Required | See detail below |
+| `access_method` | Enum | Required | How the user gained access to the vehicle |
 | `accuracy` | Integer | Required | The approximate level of accuracy, in meters, of `Points` within `route` |
 | `start_time` | Unix Timestamp | Required | |
 | `end_time` | Unix Timestamp | Required | |
@@ -155,6 +156,23 @@ Routes must include at least 2 points: the start point and end point. Additional
     }]
 }
 ```
+
+### Access methods
+
+| `access_method` | meaning                                                                        |
+|-----------------|--------------------------------------------------------------------------------|
+| `qr_code`       | The user scanned a QR code with their mobile device                            |
+| `keypad`        | The user entered an identification number on a keypad                          |
+| `transit_card`  | The user used a transit card to unlock the vehicle                             |
+| `rfid`          | The user unlocked the vehicle with an RFID card or fob that is not a transit card |
+| `mobile_id`     | The user entered the ID of the device on their mobile phone                    |
+| `other_mobile`  | The user used a mobile phone, but did not scan a QR code or enter a vehicle ID | 
+| `credit_card_pay`   | The user swiped/inserted/tapped their credit card to pay for the ride      |
+| `credit_card_id`    | The user swiped/inserted/tapped their credit card to identify themselves, but their card was not charged an additional amount |
+| `cash_attendant` | The user paid an attendant or operator cash to use the vehicle                |
+| `cash_automated` | The user paid cash using an automated system                                  |
+| `no_security`    | The vehicles are unsecured and can be used by anyone without charge           |
+|------------------|-------------------------------------------------------------------------------|
 
 [Top][toc]
 
