@@ -10,7 +10,7 @@
   "properties": {
     "version": {
       "$id": "#/properties/version",
-      "$ref": "common.json#definitions/version"
+      "$ref": "common.json#/definitions/version"
     },
     "data": {
       "$id": "#/properties/data",
@@ -119,105 +119,8 @@
               },
               "route": {
                 "$id": "#/properties/data/properties/trips/items/properties/route",
-                "type": "object",
                 "title": "The Route Schema",
-                "required": [
-                  "type",
-                  "features"
-                ],
-                "properties": {
-                  "type": {
-                    "$id": "#/properties/data/properties/trips/items/properties/route/properties/type",
-                    "type": "string",
-                    "title": "The Type Schema",
-                    "default": "",
-                    "examples": [
-                      "FeatureCollection"
-                    ],
-                    "pattern": "^(.*)$"
-                  },
-                  "features": {
-                    "$id": "#/properties/data/properties/trips/items/properties/route/properties/features",
-                    "type": "array",
-                    "items": {
-                      "$id": "#/properties/data/properties/trips/items/properties/route/properties/features/items",
-                      "type": "object",
-                      "title": "The Items Schema",
-                      "required": [
-                        "type",
-                        "properties",
-                        "geometry"
-                      ],
-                      "properties": {
-                        "type": {
-                          "$id": "#/properties/data/properties/trips/items/properties/route/properties/features/items/properties/type",
-                          "type": "string",
-                          "title": "The Type Schema",
-                          "default": "",
-                          "examples": [
-                            "Feature"
-                          ],
-                          "pattern": "^(.*)$"
-                        },
-                        "properties": {
-                          "$id": "#/properties/data/properties/trips/items/properties/route/properties/features/items/properties/properties",
-                          "type": "object",
-                          "title": "The Properties Schema",
-                          "required": [
-                            "timestamp"
-                          ],
-                          "properties": {
-                            "timestamp": {
-                              "$id": "#/properties/data/properties/trips/items/properties/route/properties/features/items/properties/properties/properties/timestamp",
-                              "type": "number",
-                              "title": "The Timestamp Schema",
-                              "default": 0.0,
-                              "examples": [
-                                1529968782.421409
-                              ]
-                            }
-                          }
-                        },
-                        "geometry": {
-                          "$id": "#/properties/data/properties/trips/items/properties/route/properties/features/items/properties/geometry",
-                          "type": "object",
-                          "title": "The Geometry Schema",
-                          "required": [
-                            "type",
-                            "coordinates"
-                          ],
-                          "properties": {
-                            "type": {
-                              "$id": "#/properties/data/properties/trips/items/properties/route/properties/features/items/properties/geometry/properties/type",
-                              "type": "string",
-                              "title": "The Type Schema",
-                              "default": "",
-                              "examples": [
-                                "Point"
-                              ],
-                              "pattern": "^(.*)$"
-                            },
-                            "coordinates": {
-                              "$id": "#/properties/data/properties/trips/items/properties/route/properties/features/items/properties/geometry/properties/coordinates",
-                              "type": "array",
-                              "title": "The Coordinates Schema",
-                              "items": {
-                                "$id": "#/properties/data/properties/trips/items/properties/route/properties/features/items/properties/geometry/properties/coordinates/items",
-                                "type": "number",
-                                "title": "The Items Schema",
-                                "default": 0.0,
-                                "examples": [
-                                  -118.46710503101347,
-                                  33.9909333514159
-                                ]
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
+                "$ref": "http://geojson.org/schema/FeatureCollection.json"
               },
               "accuracy": {
                 "$id": "#/properties/data/properties/trips/items/properties/accuracy",
@@ -281,7 +184,7 @@
     },
     "links": {
       "$id": "#properties/links",
-      "$ref": "common.json#definitions/links"
+      "$ref": "common.json#/definitions/links"
     }
   },
   "additionalProperties": false

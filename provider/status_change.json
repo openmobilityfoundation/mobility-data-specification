@@ -11,7 +11,7 @@
   "properties": {
     "version": {
       "$id": "#/properties/version",
-      "$ref": "common.json#definitions/version"
+      "$ref": "common.json#/definitions/version"
     },
     "data": {
       "$id": "#/properties/data",
@@ -162,7 +162,7 @@
     },
     "links": {
       "$id": "#properties/links",
-      "$ref": "common.json#definitions/links"
+      "$ref": "common.json#/definitions/links"
     }
   },
   "additionalProperties": false
