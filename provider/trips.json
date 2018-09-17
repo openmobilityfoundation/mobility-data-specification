@@ -53,23 +53,13 @@
               },
               "provider_id": {
                 "$id": "#/properties/data/properties/trips/items/properties/provider_id",
-                "type": "string",
                 "description": "The UUID for the Provider, unique within MDS",
-                "default": "",
-                "examples": [
-                  "3c960026-b5ee-11e8-96f8-529269fb1459"
-                ],
-                "pattern": "^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$"
+                "$ref": "common.json#/definitions/uuid"
               },
               "device_id": {
                 "$id": "#/properties/data/properties/trips/items/properties/device_id",
-                "type": "string",
-                "description": "A unique device ID in UUID format",
-                "default": "",
-                "examples": [
-                  "3c9604d6-b5ee-11e8-96f8-529269fb1459"
-                ],
-                "pattern": "^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$"
+                "$ref": "common.json#/definitions/uuid",
+                "description": "A unique device ID in UUID format"
               },
               "vehicle_id": {
                 "$id": "#/properties/data/properties/trips/items/properties/vehicle_id",
@@ -106,12 +96,8 @@
               },
               "trip_id": {
                 "$id": "#/properties/data/properties/trips/items/properties/trip_id",
-                "type": "string",
                 "description": "A unique ID for each trip",
-                "examples": [
-                  "3c960850-b5ee-11e8-96f8-529269fb1459"
-                ],
-                "pattern": "^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$"
+                "$ref": "common.json#/definitions/uuid"
               },
               "trip_duration": {
                 "$id": "#/properties/data/properties/trips/items/properties/trip_duration",
