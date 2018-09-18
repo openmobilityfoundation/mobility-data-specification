@@ -1,7 +1,7 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "http://geojson.org/schema/FeatureCollection.json",
-  "title": "GeoJSON FeatureCollection",
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "https://github.com/CityofLosAngeles/mobility-data-specification/blob/master/FeatureCollectionMDS.json",
+  "title": "GeoJSON FeatureCollection (MDS spin)",
   "type": "object",
   "required": [
     "type",
