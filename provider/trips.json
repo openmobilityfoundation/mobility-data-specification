@@ -120,7 +120,7 @@
               "route": {
                 "$id": "#/properties/data/properties/trips/items/properties/route",
                 "title": "The Route Schema",
-                "$ref": "http://geojson.org/schema/FeatureCollection.json"
+                "$ref": "FeatureCollectionMDS.json"
               },
               "accuracy": {
                 "$id": "#/properties/data/properties/trips/items/properties/accuracy",
