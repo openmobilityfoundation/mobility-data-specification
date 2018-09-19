@@ -82,18 +82,8 @@
               },
               "propulsion_type": {
                 "$id": "#/properties/data/properties/status_changes/items/properties/propulsion_type",
-                "type": "array",
                 "description": "The type of propulsion; allows multiple values",
-                "items": {
-                  "type": "string",
-                  "enum": [
-                    "combustion",
-                    "electric",
-                    "electric_assist",
-                    "human"
-                  ]
-                },
-                "minItems": 1
+                "$ref": "common.json#/definitions/propulsion_type"
               },
               "event_type": {
                 "$id": "#/properties/data/properties/status_changes/items/properties/event_type",

@@ -24,6 +24,21 @@
       "format": "uri",
       "pattern": "^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$"
     },
+    "propulsion_type": {
+      "$id": "#/definitions/propulsion_type",
+      "type": "array",
+      "description": "The type of propulsion; allows multiple values",
+      "items": {
+        "type": "string",
+        "enum": [
+          "combustion",
+          "electric",
+          "electric_assist",
+          "human"
+        ]
+      },
+      "minItems": 1
+    },
     "links": {
       "$id": "#/definitions/links",
       "type": "object",
