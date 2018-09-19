@@ -39,6 +39,15 @@
       },
       "minItems": 1
     },
+    "vehicle_type": {
+      "$id": "#/definitions/vehicle_type",
+      "type": "string",
+      "description": "The type of vehicle",
+      "enum": [
+        "bicycle",
+        "scooter"
+      ]
+    },
     "links": {
       "$id": "#/definitions/links",
       "type": "object",

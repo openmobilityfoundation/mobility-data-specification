@@ -75,12 +75,8 @@
               },
               "vehicle_type": {
                 "$id": "#/properties/data/properties/trips/items/properties/vehicle_type",
-                "type": "string",
-                "description": "The type of vehicle",
-                "enum": [
-                  "bicycle",
-                  "scooter"
-                ]
+                "$ref": "common.json#/definitions/vehicle_type",
+                "description": "The type of vehicle"
               },
               "propulsion_type": {
                 "$id": "#/properties/data/properties/trips/items/properties/propulsion_type",
