@@ -17,7 +17,9 @@
       "$id": "#/properties/data",
       "type": "object",
       "title": "The page of data",
-      "required": [],
+      "required": [
+        "status_changes"
+      ],
       "properties": {
         "status_changes": {
           "$id": "#/properties/data/properties/status_changes",
@@ -85,9 +87,10 @@
                 "items": {
                   "type": "string",
                   "enum": [
-                    "human",
+                    "combustion",
                     "electric",
-                    "combustion"
+                    "electric_assist",
+                    "human"
                   ]
                 },
                 "minItems": 1

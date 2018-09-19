@@ -2,7 +2,6 @@
   "$id": "https://github.com/CityofLosAngeles/mobility-data-specification/blob/master/common",
   "$schema": "http://json-schema.org/draft-06/schema#",
   "title": "The MDS Provider Schema, common definitions",
-  "definitions": {},
   "type": "object",
   "definitions": {
     "version": {
@@ -12,7 +11,7 @@
       "examples": [
         "0.1.0"
       ],
-      "pattern": "^0\.1\.[0-9]+$"
+      "pattern": "^0\\.1\\.[0-9]+$"
     },
     "uuid": {
       "$id": "#/definitions/uuid",

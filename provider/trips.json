@@ -16,7 +16,9 @@
       "$id": "#/properties/data",
       "type": "object",
       "title": "The page of data",
-      "required": [],
+      "required": [
+        "trips"
+      ],
       "properties": {
         "trips": {
           "$id": "#/properties/data/properties/trips",
@@ -87,9 +89,10 @@
                 "items": {
                   "type": "string",
                   "enum": [
-                    "human",
+                    "combustion",
                     "electric",
-                    "combustion"
+                    "electric_assist",
+                    "human"
                   ]
                 },
                 "minItems": 1
