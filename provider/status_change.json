@@ -120,9 +120,8 @@
               },
               "event_location": {
                 "$id": "#/properties/data/properties/status_changes/items/properties/event_location",
-                "type": "string",
                 "description": "The GPS coordinates of where the event occurred",
-                "pattern": "^(.*)$"
+                "$ref": "Point.json#"
               },
               "battery_pct": {
                 "$id": "#/properties/data/properties/status_changes/items/properties/battery_pct",
