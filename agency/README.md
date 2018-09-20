@@ -29,7 +29,7 @@ Body:
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
-| `unique_id` | UUID | UUID v4 provided by Operator to uniquely identify a vehicle |
+| `unique_id` | UUID | Required | UUID v4 provided by Operator to uniquely identify a vehicle |
 | `provider_id` | String | Required | Issued by city |
 | `vehicle_id` | String |  | Vehicle Identification Number (VIN) visible on device|
 | `vehicle_type` | Enum | Required | Vehicle Type |
@@ -55,7 +55,7 @@ Body:
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
-| `unique_id` | UUID | ID used in [Register](#register_vehicle) |
+| `unique_id` | UUID | Required | ID used in [Register](#register_vehicle) |
 | `device_id` | UUID | Required | |
 | `reason_code` | Enum | Required | [Reason](#reason_code) for status change  |
 
@@ -76,7 +76,7 @@ Body:
 
 | Field | Type | Required/Optional | Other |
 | ----- | ---- | ----------------- | ----- |
-| `unique_id` | UUID | ID used in [Register](#register_vehicle) |
+| `unique_id` | UUID | Required | ID used in [Register](#register_vehicle) |
 | `timestamp` | Unix Timestamp | Required | Date/time that event occurred. Based on GPS clock. |
 | `location` | Point | Required | Location at the time of status change in WGS 84 (EPSG:4326) standard GPS projection  |
 | `event_type` | Enum | Required | [Event Type](#event_type) for status change.  |
@@ -98,7 +98,7 @@ Body:
 
 | Field | Type | Required/Optional | Other |
 | ----- | ---- | ----------------- | ----- |
-| `unique_id` | UUID | ID used in [Register](#register_vehicle) |
+| `unique_id` | UUID | Required | ID used in [Register](#register_vehicle) |
 | `provider_id` | String | Required | Issued by city |
 | `vehicle_id` | String | Required | Provided by the Vehicle Registration API |
 | `timestamp` | Unix Timestamp | Required | Date/time that event occurred. Based on GPS clock. |
