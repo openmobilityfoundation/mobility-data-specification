@@ -194,12 +194,12 @@ Gets the list of service areas available to the provider.
 
 Endpoint: `/service_areas`  
 Method: `GET`  
-Body:
+Query Parameters:
 
-| Field | Type | Required/Optional | Other |
+| Parameter | Type | Required/Optional | Description |
 | ----- | ---- | ----------------- | ----- |
 | `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS |
-| `service_area_id` | UUID  | Optional | ability to get a retired or old service area if none, will return active area |  
+| `service_area_id` | UUID  | Optional | If provided, retrieve a specific service area (e.g. a retired or old service area). If omitted, will return all active service areas. |  
 
 Response:
 
