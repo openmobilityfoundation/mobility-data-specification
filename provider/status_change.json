@@ -1,6 +1,6 @@
 {
   "definitions": {},
-  "$id": "https://github.com/CityofLosAngeles/mobility-data-specification/blob/master/provider/status_change",
+  "$id": "https://raw.githubusercontent.com/ian-r-rose/mobility-data-specification/more-json-schema/provider/status_change.json",
   "$schema": "http://json-schema.org/draft-06/schema#",
   "title": "The MDS Provider Schema, status_change payload",
   "type": "object",

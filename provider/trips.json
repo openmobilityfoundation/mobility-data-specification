@@ -1,5 +1,5 @@
 {
-  "$id": "https://github.com/CityofLosAngeles/mobility-data-specification/blob/master/provider/trips",
+  "$id": "https://raw.githubusercontent.com/ian-r-rose/mobility-data-specification/more-json-schema/provider/trips.json",
   "$schema": "http://json-schema.org/draft-06/schema#",
   "title": "The MDS Provider Schema, trips payload",
   "type": "object",
@@ -90,7 +90,7 @@
               },
               "trip_duration": {
                 "$id": "#/properties/data/properties/trips/items/properties/trip_duration",
-                "type": "integer",
+                "type": "number",
                 "description": "The length of time, in seconds, that the trip lasted",
                 "default": 0,
                 "examples": [
@@ -99,7 +99,7 @@
               },
               "trip_distance": {
                 "$id": "#/properties/data/properties/trips/items/properties/trip_distance",
-                "type": "integer",
+                "type": "number",
                 "description": "The distance, in meters, that the trip covered",
                 "default": 0,
                 "examples": [

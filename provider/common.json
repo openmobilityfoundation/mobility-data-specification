@@ -1,5 +1,5 @@
 {
-  "$id": "https://github.com/CityofLosAngeles/mobility-data-specification/blob/master/common",
+  "$id": "https://raw.githubusercontent.com/ian-r-rose/mobility-data-specification/more-json-schema/provider/common.json",
   "$schema": "http://json-schema.org/draft-06/schema#",
   "title": "The MDS Provider Schema, common definitions",
   "type": "object",
