@@ -10,7 +10,7 @@ This specification contains a data standard for *mobility as a service* provider
 
 ## General Information
 
-The following information applies to all `provider` API endpoints. Details on providing authorization to endpoints is specified in the [auth](auth) document.
+The following information applies to all `provider` API endpoints. Details on providing authorization to endpoints is specified in the [auth](auth.md) document.
 
 ### Response Format
 
