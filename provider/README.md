@@ -113,7 +113,8 @@ The trips API should allow querying trips with a combination of query parameters
 * `start_location`
 * `end_location`
 
-All of these query params will use the *Type* listed above with the exception of `start_location` and `end_location` which can be provided as stringified GeoJson Polygons.
+All of these query params will use the *Type* listed above with the exception of `start_location` and `end_location` which can be provided as stringified bounding-box. For example `-122.4183,37.7758,-122.4120,37.7858` would get all trips within that bound box. The order is definied as  southwest longitude, southwest latitude, northeast longitude, northeast latitude (separated by commas). 
+
 
 ### Vehicle Types
 
@@ -204,7 +205,8 @@ The status_changes API should allow querying status changes with a combination o
 * `end_time`
 * `location`
 
-The `time` parameters can be provided as Unix Timestamps individually or together. The `location` parameter can be provided as a stringified GeoJson Polygon.
+The `time` parameters can be provided as Unix Timestamps individually or together. The `location` parameter which can be provided as stringified bounding box lat/longs. For example `-122.4183,37.7758,-122.4120,37.7858` would get all trips within that bound box. The order is definied as  southwest longitude, southwest latitude, northeast longitude, northeast latitude (separated by commas). 
+
 
 ### Event Types
 
