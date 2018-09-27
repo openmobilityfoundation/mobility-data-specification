@@ -95,6 +95,12 @@
         }
       },
       "additionalProperties": false
+    },
+    "timestamp": {
+      "$id": "#/definitions/timestamp",
+      "title": "Floating-point seconds since Unix epoch",
+      "type": "number",
+      "minimum": 0.0
     }
   }
 }

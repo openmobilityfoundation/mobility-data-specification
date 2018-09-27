@@ -35,9 +35,9 @@
         }
       }
     },
-    "FeatureMDS": {
-      "$id": "#/definitions/FeatureMDS",
-      "title": "GeoJSON Feature (MDS spin)",
+    "MDS_Feature_Point": {
+      "$id": "#/definitions/MDS_Feature_Point",
+      "title": "MDS GeoJSON Feature Point",
       "type": "object",
       "required": [
         "type",
@@ -58,8 +58,7 @@
           ],
           "properties": {
             "timestamp": {
-              "type": "number",
-              "minimum": 0.0
+              "$ref": "#/definitions/timestamp"
             }
           }
         },

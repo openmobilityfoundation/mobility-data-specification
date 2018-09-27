@@ -35,9 +35,9 @@
         }
       }
     },
-    "FeatureMDS": {
-      "$id": "#/definitions/FeatureMDS",
-      "title": "GeoJSON Feature (MDS spin)",
+    "MDS_Feature_Point": {
+      "$id": "#/definitions/MDS_Feature_Point",
+      "title": "MDS GeoJSON Feature Point",
       "type": "object",
       "required": [
         "type",
@@ -58,8 +58,7 @@
           ],
           "properties": {
             "timestamp": {
-              "type": "number",
-              "minimum": 0.0
+              "$ref": "#/definitions/timestamp"
             }
           }
         },
@@ -75,9 +74,9 @@
         }
       }
     },
-    "FeatureCollectionMDS": {
-      "$id": "#/definitions/FeatureCollectionMDS",
-      "title": "GeoJSON FeatureCollection (MDS spin)",
+    "MDS_FeatureCollection_Route": {
+      "$id": "#/definitions/MDS_FeatureCollection_Route",
+      "title": "MDS GeoJSON FeatureCollection Route",
       "type": "object",
       "required": [
         "type",
@@ -93,7 +92,7 @@
         "features": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/FeatureMDS"
+            "$ref": "#/definitions/MDS_Feature_Point"
           },
           "minItems": 2
         },
