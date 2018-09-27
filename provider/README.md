@@ -224,13 +224,8 @@ Data: `{ "status_changes": [] }`, an array of objects with the following structu
 | `propulsion_type` | Enum[] | Required | Array of [propulsion types](#propulsion-types); allows multiple values |
 | `event_type` | Enum | Required | See [event types](#event-types) table |
 | `event_type_reason` | Enum | Required | Reason for status change, allowable values determined by [`event type`](#event-types) |
-<<<<<<< HEAD
 | `event_time` | [timestamp][ts] | Required | Date/time that event occurred, based on device clock |
 | `event_location` | GeoJSON [Point Feature][geo] | Required | |
-=======
-| `event_time` | Unix Timestamp | Required | Date/time that event occurred, based on device clock |
-| `event_location` | GeoJSON Point | Required | |
->>>>>>> c968f28... Make event_position a `Point`. Reuse the `Point` schema.
 | `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |
 | `associated_trips` | UUID[] | Optional based on device | Array of UUID's. For "Reserved" event types, associated trips (foreign key to Trips API) |
 
@@ -274,10 +269,6 @@ All MDS compatible `provider` APIs must expose a [GBFS](https://github.com/NABSA
 
 [Top][toc]
 
-<<<<<<< HEAD
 [geo]: #geographic-data
 [toc]: #table-of-contents
 [ts]: #timestamps
-=======
-[toc]: #table-of-contents
->>>>>>> c968f28... Make event_position a `Point`. Reuse the `Point` schema.
