@@ -9,9 +9,9 @@
       "type": "string",
       "title": "The MDS Provider version this data represents",
       "examples": [
-        "0.1.0"
+        "0.2.0"
       ],
-      "pattern": "^0\\.1\\.[0-9]+$"
+      "pattern": "^0\\.2\\.[0-9]+$"
     },
     "uuid": {
       "$id": "#/definitions/uuid",
