@@ -116,12 +116,18 @@ The trips API should allow querying trips with a combination of query parameters
 * `device_id`
 * `vehicle_id`
 * `start_time`
+* `end_time`
 * `bbox`
-* `end_location`
 
-All of these query params will use the *Type* listed above with the exception of `bbox`, which is the bounding box.
+All of these query params will use the *Type* listed above with the exception of `bbox`, which is the bounding-box.
 
-For example `-122.4183,37.7758,-122.4120,37.7858` would get all trips within that bound box where any point inside the `route` is inside said box. The order is definied as  southwest longitude, southwest latitude, northeast longitude, northeast latitude (separated by commas). 
+For example:
+
+```
+bbox=-122.4183,37.7758,-122.4120,37.7858
+```
+
+Gets all trips within that bounding-box where any point inside the `route` is inside said box. The order is definied as: southwest longitude, southwest latitude, northeast longitude, northeast latitude (separated by commas). 
 
 
 ### Vehicle Types
@@ -213,9 +219,15 @@ The status_changes API should allow querying status changes with a combination o
 * `end_time`
 * `bbox`
 
-The `time` parameters can be provided as Unix Timestamps individually or together. 
+The `time` parameters can be provided as timestamps individually or together. 
 
-The `bbox` parameter which can be provided as stringified bounding-box lat/longs. For example `-122.4183,37.7758,-122.4120,37.7858` would get all trips within that bound box. The order is definied as  southwest longitude, southwest latitude, northeast longitude, northeast latitude (separated by commas). 
+`bbox` is the bounding-box, for example:
+
+```
+bbox=-122.4183,37.7758,-122.4120,37.7858
+```
+
+Gets all status changes with an `event_location` within that bounding-box. The order is definied as: southwest longitude, southwest latitude, northeast longitude, northeast latitude (separated by commas). 
 
 
 ### Event Types
