@@ -69,6 +69,25 @@ Additionally, `device_id` must remain constant for the device's lifetime of serv
 
 References to geographic datatypes (Point, MultiPolygon, etc.) imply coordinates encoded in the [WGS 84 (EPSG:4326)](https://en.wikipedia.org/wiki/World_Geodetic_System) standard GPS projection expressed as [Decimal Degrees](https://en.wikipedia.org/wiki/Decimal_degrees).
 
+Whenever an individual location coordinate measurement is presented, it must be
+represented as a GeoJSON [`Feature`](https://tools.ietf.org/html/rfc7946#section-3.2) object with a corresponding [`timestamp`][ts] property and [`Point`](https://tools.ietf.org/html/rfc7946#section-3.1.2) geometry:
+
+```json
+{
+    "type": "Feature",
+    "properties": {
+        "timestamp": 1529968782.421409
+    },
+    "geometry": {
+        "type": "Point",
+        "coordinates": [
+            -118.46710503101347,
+            33.9909333514159
+        ]
+    }
+}
+```
+
 [Top][toc]
 
 ## Trips
@@ -92,13 +111,33 @@ Data: `{ "trips": [] }`, an array of objects with the following structure
 | `trip_id` | UUID | Required | A unique ID for each trip |
 | `trip_duration` | Integer | Required | Time, in Seconds |
 | `trip_distance` | Integer | Required | Trip Distance, in Meters |
-| `route` | Route | Required | See detail below |
+| `route` | GeoJSON `FeatureCollection` | Required | See [Routes](#routes) detail below |
 | `accuracy` | Integer | Required | The approximate level of accuracy, in meters, of `Points` within `route` |
 | `start_time` | Unix Timestamp | Required | |
 | `end_time` | Unix Timestamp | Required | |
 | `parking_verification_url` | String | Optional | A URL to a photo (or other evidence) of proper vehicle parking |
 | `standard_cost` | Integer | Optional | The cost, in cents, that it would cost to perform that trip in the standard operation of the System |
 | `actual_cost` | Integer | Optional | The actual cost, in cents, paid by the customer of the *mobility as a service* provider |
+
+### Trips Query Parameters
+
+The trips API should allow querying trips with a combination of query parameters.
+
+* `device_id`
+* `vehicle_id`
+* `start_time`
+* `end_time`
+* `bbox`
+
+All of these query params will use the *Type* listed above with the exception of `bbox`, which is the bounding-box.
+
+For example:
+
+```
+bbox=-122.4183,37.7758,-122.4120,37.7858
+```
+
+Gets all trips within that bounding-box where any point inside the `route` is inside said box. The order is defined as: southwest longitude, southwest latitude, northeast longitude, northeast latitude (separated by commas).
 
 ### Vehicle Types
 
@@ -118,7 +157,7 @@ Data: `{ "trips": [] }`, an array of objects with the following structure
 
 ### Routes
 
-To represent a route, MDS `provider` APIs should create a GeoJSON Feature Collection, which includes every observed point in the route, and a timestamp. 
+To represent a route, MDS `provider` APIs must create a GeoJSON [`FeatureCollection`](https://tools.ietf.org/html/rfc7946#section-3.3), which includes every [observed point][geo] in the route.
 
 Routes must include at least 2 points: the start point and end point. Additionally, routes must include all possible GPS samples collected by a provider.
 
@@ -176,8 +215,8 @@ Data: `{ "status_changes": [] }`, an array of objects with the following structu
 | `propulsion_type` | Enum[] | Required | See [propulsion types](#propulsion-types) table; allows multiple values |
 | `event_type` | Enum | Required | See [event types](#event-types) table |
 | `event_type_reason` | Enum | Required | Reason for status change, allowable values determined by [`event type`](#event-types) |
-| `event_time` | Unix Timestamp | Required | Date/time that event occurred, based on device clock |
-| `event_location` | Point | Required | |
+| `event_time` | [timestamp][ts] | Required | Date/time that event occurred, based on device clock |
+| `event_location` | GeoJSON [Point Feature][geo] | Required | |
 | `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |
 | `associated_trips` | UUID[] | Optional based on device | For "Reserved" event types, associated trips (foreign key to Trips API) |
 
@@ -203,3 +242,7 @@ All MDS compatible `provider` APIs must expose a [GBFS](https://github.com/NABSA
 [Top][toc]
 
 [toc]: #table-of-contents
+=======
+[geo]: #geographic-data
+[toc]: #table-of-contents
+[ts]: #timestamps
