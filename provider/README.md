@@ -73,6 +73,13 @@ References to geographic datatypes (Point, MultiPolygon, etc.) imply coordinates
 
 [Top][toc]
 
+### Timestamps
+
+References to `timestamp` imply floating-point seconds since [Unix epoch](https://en.wikipedia.org/wiki/Unix_time), such as
+the format returned by Python's [`time.time()`](https://docs.python.org/3/library/time.html#time.time) function.
+
+[Top][toc]
+
 ## Trips
 
 A trip represents a journey taken by a *mobility as a service* customer with a geo-tagged start and stop point.
@@ -96,8 +103,8 @@ Data: `{ "trips": [] }`, an array of objects with the following structure
 | `trip_distance` | Integer | Required | Trip Distance, in Meters |
 | `route` | Route | Required | See detail below |
 | `accuracy` | Integer | Required | The approximate level of accuracy, in meters, of `Points` within `route` |
-| `start_time` | Unix Timestamp | Required | |
-| `end_time` | Unix Timestamp | Required | |
+| `start_time` | [timestamp][ts] | Required | |
+| `end_time` | [timestamp][ts] | Required | |
 | `parking_verification_url` | String | Optional | A URL to a photo (or other evidence) of proper vehicle parking |
 | `standard_cost` | Integer | Optional | The cost, in cents, that it would cost to perform that trip in the standard operation of the System |
 | `actual_cost` | Integer | Optional | The actual cost, in cents, paid by the customer of the *mobility as a service* provider |
@@ -120,7 +127,7 @@ Data: `{ "trips": [] }`, an array of objects with the following structure
 
 ### Routes
 
-To represent a route, MDS `provider` APIs should create a GeoJSON Feature Collection, which includes every observed point in the route, and a timestamp.
+To represent a route, MDS `provider` APIs should create a GeoJSON Feature Collection, which includes every observed point in the route, and a [timestamp][ts].
 
 Routes must include at least 2 points: the start point and end point. Additionally, routes must include all possible GPS samples collected by a provider.
 
@@ -178,7 +185,7 @@ Data: `{ "status_changes": [] }`, an array of objects with the following structu
 | `propulsion_type` | Enum[] | Required | Array of [propulsion types](#propulsion-types); allows multiple values |
 | `event_type` | Enum | Required | See [event types](#event-types) table |
 | `event_type_reason` | Enum | Required | Reason for status change, allowable values determined by [`event type`](#event-types) |
-| `event_time` | Unix Timestamp | Required | Date/time that event occurred, based on device clock |
+| `event_time` | [timestamp][ts] | Required | Date/time that event occurred, based on device clock |
 | `event_location` | Point | Required | |
 | `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |
 | `associated_trips` | UUID[] | Optional based on device | Array of UUID's. For "Reserved" event types, associated trips (foreign key to Trips API) |
@@ -205,3 +212,4 @@ All MDS compatible `provider` APIs must expose a [GBFS](https://github.com/NABSA
 [Top][toc]
 
 [toc]: #table-of-contents
+[ts]: #timestamps
