@@ -35,6 +35,46 @@
         }
       }
     },
+    "FeatureMDS": {
+      "$id": "#/definitions/FeatureMDS",
+      "title": "GeoJSON Feature (MDS spin)",
+      "type": "object",
+      "required": [
+        "type",
+        "properties",
+        "geometry"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "emum": [
+            "Feature"
+          ]
+        },
+        "properties": {
+          "type": "object",
+          "required": [
+            "timestamp"
+          ],
+          "properties": {
+            "timestamp": {
+              "type": "number",
+              "minimum": 0.0
+            }
+          }
+        },
+        "geometry": {
+          "$ref": "#/definitions/Point"
+        },
+        "bbox": {
+          "type": "array",
+          "minItems": 4,
+          "items": {
+            "type": "number"
+          }
+        }
+      }
+    },
     "FeatureCollectionMDS": {
       "$id": "#/definitions/FeatureCollectionMDS",
       "title": "GeoJSON FeatureCollection (MDS spin)",
@@ -53,43 +93,7 @@
         "features": {
           "type": "array",
           "items": {
-            "title": "GeoJSON Feature",
-            "type": "object",
-            "required": [
-              "type",
-              "properties",
-              "geometry"
-            ],
-            "properties": {
-              "type": {
-                "type": "string",
-                "emum": [
-                  "Feature"
-                ]
-              },
-              "properties": {
-                "type": "object",
-                "required": [
-                  "timestamp"
-                ],
-                "properties": {
-                  "timestamp": {
-                    "type": "number",
-                    "minimum": 0.0
-                  }
-                }
-              },
-              "geometry": {
-                "$ref": "#/definitions/Point"
-              },
-              "bbox": {
-                "type": "array",
-                "minItems": 4,
-                "items": {
-                  "type": "number"
-                }
-              }
-            }
+            "$ref": "#/definitions/FeatureMDS"
           },
           "minItems": 2
         },
