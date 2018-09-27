@@ -16,20 +16,25 @@ The following information applies to all `provider` API endpoints. Details on pr
 
 Responses must be `UTF-8` encoded `application/json` and must minimally include the MDS `version` and a `data` payload:
 
-```js
+```json
 {
-    "version": "0.1.0",
+    "version": "x.y.z",
     "data": {
         "trips": [{
             "provider_id": "...",
             "trip_id": "...",
-            //etc.
         }]
     }
 }
 ```
 
 All response fields must use `lower_case_with_underscores`.
+
+#### JSON Schema
+
+MDS defines [JSON Schema](https://json-schema.org/) files for [`trips`][trips-schema] and [`status_changes`][sc-schema].
+
+`provider` API responses must validate against their respective schema files. The schema files always take precedence over the language and examples in this and other supporting documentation meant for *human* consumption.
 
 ### Pagination
 
@@ -42,14 +47,13 @@ The following keys must be used for pagination links:
 * `prev`: url to the previous page of data
 * `next`: url to the next page of data
 
-```js
+```json
 {
-    "version": "0.1.0",
+    "version": "x.y.z",
     "data": {
         "trips": [{
             "provider_id": "...",
             "trip_id": "...",
-            //etc.
         }]
     },
     "links": {
@@ -63,7 +67,7 @@ The following keys must be used for pagination links:
 
 ### UUIDs for Devices
 
-**MDS** defines the *device* as the unit that transmits GPS signals for a particular vehicle. A given device must have a UUID (`device_id` below) that is unique within the Provider's fleet.
+MDS defines the *device* as the unit that transmits GPS signals for a particular vehicle. A given device must have a UUID (`device_id` below) that is unique within the Provider's fleet.
 
 Additionally, `device_id` must remain constant for the device's lifetime of service, regardless of the vehicle components that house the device.
 
@@ -107,7 +111,7 @@ The trips API allows a user to query historical trip data.
 
 Endpoint: `/trips`  
 Method: `GET`  
-Data: `{ "trips": [] }`, an array of objects with the following structure
+Response: See the [`trips` schema][trips-schema] for the expected format.
 
 | Field | Type    | Required/Optional | Comments |
 | ----- | -------- | ----------------- | ----- |
@@ -212,7 +216,7 @@ This API allows a user to query the historical availability for a system within 
 
 Endpoint: `/status_changes`  
 Method: `GET`  
-Data: `{ "status_changes": [] }`, an array of objects with the following structure
+Response: See the [`status_changes` schema][sc-schema] for the expected format.
 
 | Field | Type | Required/Optional | Comments |
 | ----- | ---- | ----------------- | ----- |
@@ -270,5 +274,7 @@ All MDS compatible `provider` APIs must expose a [GBFS](https://github.com/NABSA
 [Top][toc]
 
 [geo]: #geographic-data
+[sc-schema]: status_changes.json
 [toc]: #table-of-contents
+[trips-schema]: trips.json
 [ts]: #timestamps
