@@ -231,7 +231,7 @@ Response: See the [`status_changes` schema][sc-schema] for the expected format.
 | `event_time` | [timestamp][ts] | Required | Date/time that event occurred, based on device clock |
 | `event_location` | GeoJSON [Point Feature][geo] | Required | |
 | `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |
-| `associated_trips` | UUID[] | Optional based on device | Array of UUID's. For "Reserved" event types, associated trips (foreign key to Trips API) |
+| `associated_trips` | UUID[] | Optional based `event_type_reason` | Array of UUID's. For `user`-generated event types, associated trips (foreign key to Trips API) |
 
 ### Status Changes Query Parameters
 
