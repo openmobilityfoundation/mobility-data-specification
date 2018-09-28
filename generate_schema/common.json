@@ -1,0 +1,106 @@
+{
+  "$id": "https://raw.githubusercontent.com/CityofLosAngeles/mobility-data-specification/master/provider/common.json",
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "title": "The MDS Provider Schema, common definitions",
+  "type": "object",
+  "definitions": {
+    "version": {
+      "$id": "#/definitions/version",
+      "type": "string",
+      "title": "The MDS Provider version this data represents",
+      "examples": [
+        "0.2.0"
+      ],
+      "pattern": "^0\\.2\\.[0-9]+$"
+    },
+    "uuid": {
+      "$id": "#/definitions/uuid",
+      "type": "string",
+      "title": "A UUID 4 used to uniquely identifty an object",
+      "default": "",
+      "examples": [
+        "3c9604d6-b5ee-11e8-96f8-529269fb1459"
+      ],
+      "format": "uri",
+      "pattern": "^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$"
+    },
+    "propulsion_type": {
+      "$id": "#/definitions/propulsion_type",
+      "type": "array",
+      "description": "The type of propulsion; allows multiple values",
+      "items": {
+        "type": "string",
+        "enum": [
+          "combustion",
+          "electric",
+          "electric_assist",
+          "human"
+        ]
+      },
+      "minItems": 1
+    },
+    "vehicle_type": {
+      "$id": "#/definitions/vehicle_type",
+      "type": "string",
+      "description": "The type of vehicle",
+      "enum": [
+        "bicycle",
+        "scooter"
+      ]
+    },
+    "links": {
+      "$id": "#/definitions/links",
+      "type": "object",
+      "properties": {
+        "first": {
+          "$id": "#/definitions/links/first",
+          "type": "string",
+          "title": "The URL to the first page of data",
+          "examples": [
+            "https://data.provider.co/trips/first"
+          ],
+          "format": "uri",
+          "pattern": "^(.*)$"
+        },
+        "last": {
+          "$id": "#/definitions/links/last",
+          "type": "string",
+          "title": "The URL to the last page of data",
+          "examples": [
+            "https://data.provider.co/trips/last"
+          ],
+          "format": "uri",
+          "pattern": "^(.*)$"
+        },
+        "prev": {
+          "$id": "#/definitions/links/prev",
+          "type": "string",
+          "title": "The URL to the previous page of data",
+          "examples": [
+            "https://data.provider.co/trips/prev"
+          ],
+          "format": "uri",
+          "pattern": "^(.*)$"
+        },
+        "next": {
+          "$id": "#/definitions/links/next",
+          "type": "string",
+          "title": "The URL to the next page of data",
+          "default": "",
+          "examples": [
+            "https://data.provider.co/trips/next"
+          ],
+          "format": "uri",
+          "pattern": "^(.*)$"
+        }
+      },
+      "additionalProperties": false
+    },
+    "timestamp": {
+      "$id": "#/definitions/timestamp",
+      "title": "Floating-point seconds since Unix epoch",
+      "type": "number",
+      "minimum": 0.0
+    }
+  }
+}

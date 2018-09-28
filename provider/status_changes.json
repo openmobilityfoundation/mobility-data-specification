@@ -1,0 +1,320 @@
+{
+  "$id": "https://raw.githubusercontent.com/CityofLosAngeles/mobility-data-specification/master/provider/status_changes.json",
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "title": "The MDS Provider Schema, status_change payload",
+  "type": "object",
+  "definitions": {
+    "Point": {
+      "$id": "#/definitions/Point",
+      "title": "GeoJSON Point",
+      "type": "object",
+      "required": [
+        "type",
+        "coordinates"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "Point"
+          ]
+        },
+        "coordinates": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "number"
+          }
+        },
+        "bbox": {
+          "type": "array",
+          "minItems": 4,
+          "items": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "MDS_Feature_Point": {
+      "$id": "#/definitions/MDS_Feature_Point",
+      "title": "MDS GeoJSON Feature Point",
+      "type": "object",
+      "required": [
+        "type",
+        "properties",
+        "geometry"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "emum": [
+            "Feature"
+          ]
+        },
+        "properties": {
+          "type": "object",
+          "required": [
+            "timestamp"
+          ],
+          "properties": {
+            "timestamp": {
+              "$ref": "#/definitions/timestamp"
+            }
+          }
+        },
+        "geometry": {
+          "$ref": "#/definitions/Point"
+        },
+        "bbox": {
+          "type": "array",
+          "minItems": 4,
+          "items": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "links": {
+      "$id": "#/definitions/links",
+      "type": "object",
+      "properties": {
+        "first": {
+          "$id": "#/definitions/links/first",
+          "type": "string",
+          "title": "The URL to the first page of data",
+          "examples": [
+            "https://data.provider.co/trips/first"
+          ],
+          "format": "uri",
+          "pattern": "^(.*)$"
+        },
+        "last": {
+          "$id": "#/definitions/links/last",
+          "type": "string",
+          "title": "The URL to the last page of data",
+          "examples": [
+            "https://data.provider.co/trips/last"
+          ],
+          "format": "uri",
+          "pattern": "^(.*)$"
+        },
+        "prev": {
+          "$id": "#/definitions/links/prev",
+          "type": "string",
+          "title": "The URL to the previous page of data",
+          "examples": [
+            "https://data.provider.co/trips/prev"
+          ],
+          "format": "uri",
+          "pattern": "^(.*)$"
+        },
+        "next": {
+          "$id": "#/definitions/links/next",
+          "type": "string",
+          "title": "The URL to the next page of data",
+          "default": "",
+          "examples": [
+            "https://data.provider.co/trips/next"
+          ],
+          "format": "uri",
+          "pattern": "^(.*)$"
+        }
+      },
+      "additionalProperties": false
+    },
+    "propulsion_type": {
+      "$id": "#/definitions/propulsion_type",
+      "type": "array",
+      "description": "The type of propulsion; allows multiple values",
+      "items": {
+        "type": "string",
+        "enum": [
+          "combustion",
+          "electric",
+          "electric_assist",
+          "human"
+        ]
+      },
+      "minItems": 1
+    },
+    "vehicle_type": {
+      "$id": "#/definitions/vehicle_type",
+      "type": "string",
+      "description": "The type of vehicle",
+      "enum": [
+        "bicycle",
+        "scooter"
+      ]
+    },
+    "version": {
+      "$id": "#/definitions/version",
+      "type": "string",
+      "title": "The MDS Provider version this data represents",
+      "examples": [
+        "0.2.0"
+      ],
+      "pattern": "^0\\.2\\.[0-9]+$"
+    },
+    "uuid": {
+      "$id": "#/definitions/uuid",
+      "type": "string",
+      "title": "A UUID 4 used to uniquely identifty an object",
+      "default": "",
+      "examples": [
+        "3c9604d6-b5ee-11e8-96f8-529269fb1459"
+      ],
+      "format": "uri",
+      "pattern": "^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$"
+    }
+  },
+  "required": [
+    "version",
+    "data"
+  ],
+  "properties": {
+    "version": {
+      "$id": "#/properties/version",
+      "$ref": "#/definitions/version"
+    },
+    "data": {
+      "$id": "#/properties/data",
+      "type": "object",
+      "title": "The page of data",
+      "required": [
+        "status_changes"
+      ],
+      "properties": {
+        "status_changes": {
+          "$id": "#/properties/data/properties/status_changes",
+          "type": "array",
+          "title": "The status_changes Schema",
+          "items": {
+            "$id": "#/properties/data/properties/status_changes/items",
+            "type": "object",
+            "title": "The Items Schema",
+            "required": [
+              "provider_name",
+              "provider_id",
+              "device_id",
+              "vehicle_id",
+              "vehicle_type",
+              "propulsion_type",
+              "event_type",
+              "event_type_reason",
+              "event_time",
+              "event_location"
+            ],
+            "properties": {
+              "provider_name": {
+                "$id": "#/properties/data/properties/status_changes/items/properties/provider_name",
+                "type": "string",
+                "description": "The public-facing name of the Provider",
+                "examples": [
+                  "Provider Name"
+                ],
+                "pattern": "^(.*)$"
+              },
+              "provider_id": {
+                "$id": "#/properties/data/properties/status_changes/items/properties/provider_id",
+                "description": "The UUID for the Provider, unique within MDS",
+                "$ref": "#/definitions/uuid"
+              },
+              "device_id": {
+                "$id": "#/properties/data/properties/status_changes/items/properties/device_id",
+                "description": "A unique device ID in UUID format",
+                "$ref": "#/definitions/uuid"
+              },
+              "vehicle_id": {
+                "$id": "#/properties/data/properties/status_changes/items/properties/vehicle_id",
+                "type": "string",
+                "description": "The Vehicle Identification Number visible on the vehicle itself",
+                "default": "",
+                "examples": [
+                  "ABC123"
+                ],
+                "pattern": "^(.*)$"
+              },
+              "vehicle_type": {
+                "$id": "#/properties/data/properties/status_changes/items/properties/vehicle_type",
+                "$ref": "#/definitions/vehicle_type",
+                "description": "The type of vehicle"
+              },
+              "propulsion_type": {
+                "$id": "#/properties/data/properties/status_changes/items/properties/propulsion_type",
+                "description": "The type of propulsion; allows multiple values",
+                "$ref": "#/definitions/propulsion_type"
+              },
+              "event_type": {
+                "$id": "#/properties/data/properties/status_changes/items/properties/event_type",
+                "type": "string",
+                "description": "The type of the event",
+                "enum": [
+                  "available",
+                  "reserved",
+                  "unavailable",
+                  "removed"
+                ]
+              },
+              "event_type_reason": {
+                "$id": "#/properties/data/properties/status_changes/items/properties/event_type_reason",
+                "type": "string",
+                "description": "The reason for the event",
+                "enum": [
+                  "service_start",
+                  "user_drop_off",
+                  "rebalance_drop_off",
+                  "maintenance_drop_off",
+                  "user_pick_up",
+                  "maintenance",
+                  "low_battery",
+                  "service_end",
+                  "rebalance_pick_up",
+                  "maintenance_pick_up"
+                ]
+              },
+              "event_time": {
+                "$id": "#/properties/data/properties/status_changes/items/properties/event_time",
+                "type": "number",
+                "description": "The time the event occurred, expressed as a Unix Timestamp",
+                "default": 0.0,
+                "examples": [
+                  1529968782.421409
+                ]
+              },
+              "event_location": {
+                "$id": "#/properties/data/properties/status_changes/items/properties/event_location",
+                "description": "The GPS coordinates of where the event occurred",
+                "$ref": "#/definitions/FeatureMDS"
+              },
+              "battery_pct": {
+                "$id": "#/properties/data/properties/status_changes/items/properties/battery_pct",
+                "type": "number",
+                "description": "Percent charge of device battery, expressed between 0 and 1",
+                "default": 0.0,
+                "examples": [
+                  0.89
+                ],
+                "minimum": 0,
+                "maximum": 1
+              },
+              "associated_trips": {
+                "$id": "#/properties/data/properties/status_changes/items/properties/associated_trips",
+                "type": "array",
+                "description": "For 'Reserved' event types, associated trip_ids",
+                "items": {
+                  "$id": "#/properties/data/properties/status_changes/items/properties/associated_trips/items",
+                  "$ref": "#/definitions/uuid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "links": {
+      "$id": "#properties/links",
+      "$ref": "#/definitions/links"
+    }
+  },
+  "additionalProperties": false
+}
