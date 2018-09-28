@@ -110,7 +110,7 @@
               "route": {
                 "$id": "#/properties/data/properties/trips/items/properties/route",
                 "title": "The Route Schema",
-                "$ref": "#/definitions/FeatureCollectionMDS"
+                "$ref": "#/definitions/MDS_FeatureCollection_Route"
               },
               "accuracy": {
                 "$id": "#/properties/data/properties/trips/items/properties/accuracy",

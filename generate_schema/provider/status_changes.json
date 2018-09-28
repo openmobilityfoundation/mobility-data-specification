@@ -121,7 +121,7 @@
               "event_location": {
                 "$id": "#/properties/data/properties/status_changes/items/properties/event_location",
                 "description": "The GPS coordinates of where the event occurred",
-                "$ref": "#/definitions/FeatureMDS"
+                "$ref": "#/definitions/MDS_Feature_Point"
               },
               "battery_pct": {
                 "$id": "#/properties/data/properties/status_changes/items/properties/battery_pct",

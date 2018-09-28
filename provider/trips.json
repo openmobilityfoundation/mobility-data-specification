@@ -168,6 +168,12 @@
       },
       "minItems": 1
     },
+    "timestamp": {
+      "$id": "#/definitions/timestamp",
+      "title": "Floating-point seconds since Unix epoch",
+      "type": "number",
+      "minimum": 0.0
+    },
     "vehicle_type": {
       "$id": "#/definitions/vehicle_type",
       "type": "string",
@@ -304,7 +310,7 @@
               "route": {
                 "$id": "#/properties/data/properties/trips/items/properties/route",
                 "title": "The Route Schema",
-                "$ref": "#/definitions/FeatureCollectionMDS"
+                "$ref": "#/definitions/MDS_FeatureCollection_Route"
               },
               "accuracy": {
                 "$id": "#/properties/data/properties/trips/items/properties/accuracy",
