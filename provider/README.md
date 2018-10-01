@@ -237,11 +237,8 @@ Response: See the [`status_changes` schema][sc-schema] for the expected format.
 
 The status_changes API should allow querying status changes with a combination of query parameters.
 
-* `start_time`
-* `end_time`
+* `event_time`
 * `bbox`
-
-The `time` parameters can be provided as timestamps individually or together. 
 
 `bbox` is the bounding-box, for example:
 
