@@ -16,7 +16,7 @@ At the onset of the program, [`provider`][provider] will be required, with phasi
 
 The rules and guidelines can be found on [Council Clerk Connect](https://cityclerk.lacity.org/lacityclerkconnect/index.cfm?fa=ccfi.viewrecord&cfnumber=17-1125).
 
-The specification will be versioned using Git tags and [semantic versioning](https://semver.org/). Currently, it is in 0.1.0. 
+The specification will be versioned using Git tags and [semantic versioning](https://semver.org/). See the list of [releases](https://github.com/CityOfLosAngeles/mobility-data-specification/releases) for more information.
 
 ## Roadmap
 
