@@ -206,7 +206,7 @@ Query Parameters:
 | Parameter | Type | Required/Optional | Description |
 | ----- | ---- | ----------------- | ----- |
 | `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS |
-| `service_area_id` | UUID  | Optional | If provided, retrieve a specific service area (e.g. a retired or old service area). If omitted, will return all active service areas. |  
+| `service_area_id` | UUID  | Optional | If provided, retrieve a specific service area (e.g. a retired or old service area). If omitted, will return all active service areas. |
 
 Response:
 
@@ -218,6 +218,16 @@ Response:
 | `service_area` | MultiPolygon | Required | |
 | `prior_service_area` | UUID | Optional | If exists, the UUID of the prior service area. |
 | `replacement_service_area` | UUID | Optional | If exists, the UUID of the service area that replaced this one |
+| `type` | Enum | Required |  See [area types](#area-types) table |
+
+### Area types
+
+| `type` | Description |
+|------------| ----------- |
+| unrestricted | Areas where devices may be picked up/dropped off. A provider's unrestricted area shall be contained completely inside the agency's unrestricted area for the provider in question, but it need not cover the entire agency unrestricted area. See the provider version of the service areas endpoint |
+| restricted | Areas where device pick-up/drop-off is not allowed |
+| preferred_pick_up | Areas where users are encouraged to pick up devices |
+| preferred_drop_off | Areas where users are encouraged to drop off devices |
 
 ### Event Types
 
