@@ -138,8 +138,8 @@ The trips API should allow querying trips with a combination of query parameters
 
 * `device_id`
 * `vehicle_id`
-* `start_time`
-* `end_time`
+* `start_time`: filters for trips where `start_time` occurs at or after the given time
+* `end_time`: filters for trips where `end_time` occurs at or before the given time
 * `bbox`
 
 All of these query params will use the *Type* listed above with the exception of `bbox`, which is the bounding-box.
@@ -237,17 +237,15 @@ Response: See the [`status_changes` schema][sc-schema] for the expected format.
 
 The status_changes API should allow querying status changes with a combination of query parameters.
 
-* `event_time`
-* `bbox`
+* `start_time`: filters for status changes where `event_time` occurs at or after the given time
+* `end_time`: filters for status changes where `event_time` occurs at or before the given time
+* `bbox`: filters for status changes where `event_location` is within defined bounding-box. The order is definied as: southwest longitude, southwest latitude, northeast longitude, northeast latitude (separated by commas). 
 
-`bbox` is the bounding-box, for example:
+Example:
 
 ```
 bbox=-122.4183,37.7758,-122.4120,37.7858
 ```
-
-Gets all status changes with an `event_location` within that bounding-box. The order is definied as: southwest longitude, southwest latitude, northeast longitude, northeast latitude (separated by commas). 
-
 
 ### Event Types
 
