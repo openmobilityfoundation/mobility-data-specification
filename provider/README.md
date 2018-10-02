@@ -10,26 +10,31 @@ This specification contains a data standard for *mobility as a service* provider
 
 ## General Information
 
-The following information applies to all `provider` API endpoints.
+The following information applies to all `provider` API endpoints. Details on providing authorization to endpoints is specified in the [auth](auth.md) document.
 
 ### Response Format
 
 Responses must be `UTF-8` encoded `application/json` and must minimally include the MDS `version` and a `data` payload:
 
-```js
+```json
 {
-    "version": "0.1.0",
+    "version": "x.y.z",
     "data": {
         "trips": [{
             "provider_id": "...",
             "trip_id": "...",
-            //etc.
         }]
     }
 }
 ```
 
 All response fields must use `lower_case_with_underscores`.
+
+#### JSON Schema
+
+MDS defines [JSON Schema](https://json-schema.org/) files for [`trips`][trips-schema] and [`status_changes`][sc-schema].
+
+`provider` API responses must validate against their respective schema files. The schema files always take precedence over the language and examples in this and other supporting documentation meant for *human* consumption.
 
 ### Pagination
 
@@ -42,14 +47,13 @@ The following keys must be used for pagination links:
 * `prev`: url to the previous page of data
 * `next`: url to the next page of data
 
-```js
+```json
 {
-    "version": "0.1.0",
+    "version": "x.y.z",
     "data": {
         "trips": [{
             "provider_id": "...",
             "trip_id": "...",
-            //etc.
         }]
     },
     "links": {
@@ -63,7 +67,7 @@ The following keys must be used for pagination links:
 
 ### UUIDs for Devices
 
-**MDS** defines the *device* as the unit that transmits GPS signals for a particular vehicle. A given device must have a UUID (`device_id` below) that is unique within the Provider's fleet.
+MDS defines the *device* as the unit that transmits GPS signals for a particular vehicle. A given device must have a UUID (`device_id` below) that is unique within the Provider's fleet.
 
 Additionally, `device_id` must remain constant for the device's lifetime of service, regardless of the vehicle components that house the device.
 
@@ -71,17 +75,43 @@ Additionally, `device_id` must remain constant for the device's lifetime of serv
 
 References to geographic datatypes (Point, MultiPolygon, etc.) imply coordinates encoded in the [WGS 84 (EPSG:4326)](https://en.wikipedia.org/wiki/World_Geodetic_System) standard GPS projection expressed as [Decimal Degrees](https://en.wikipedia.org/wiki/Decimal_degrees).
 
+Whenever an individual location coordinate measurement is presented, it must be
+represented as a GeoJSON [`Feature`](https://tools.ietf.org/html/rfc7946#section-3.2) object with a corresponding [`timestamp`][ts] property and [`Point`](https://tools.ietf.org/html/rfc7946#section-3.1.2) geometry:
+
+```json
+{
+    "type": "Feature",
+    "properties": {
+        "timestamp": 1529968782.421409
+    },
+    "geometry": {
+        "type": "Point",
+        "coordinates": [
+            -118.46710503101347,
+            33.9909333514159
+        ]
+    }
+}
+```
+
+[Top][toc]
+
+### Timestamps
+
+References to `timestamp` imply floating-point seconds since [Unix epoch](https://en.wikipedia.org/wiki/Unix_time), such as
+the format returned by Python's [`time.time()`](https://docs.python.org/3/library/time.html#time.time) function.
+
 [Top][toc]
 
 ## Trips
 
 A trip represents a journey taken by a *mobility as a service* customer with a geo-tagged start and stop point.
 
-The trips API allows a user to query historical trip data. The API should allow querying trips at least by ID, geofence for start or end, and time.
+The trips API allows a user to query historical trip data.
 
 Endpoint: `/trips`  
 Method: `GET`  
-Data: `{ "trips": [] }`, an array of objects with the following structure
+Response: See the [`trips` schema][trips-schema] for the expected format.
 
 | Field | Type    | Required/Optional | Comments |
 | ----- | -------- | ----------------- | ----- |
@@ -94,14 +124,34 @@ Data: `{ "trips": [] }`, an array of objects with the following structure
 | `trip_id` | UUID | Required | A unique ID for each trip |
 | `trip_duration` | Integer | Required | Time, in Seconds |
 | `trip_distance` | Integer | Required | Trip Distance, in Meters |
-| `route` | Route | Required | See detail below |
+| `route` | GeoJSON `FeatureCollection` | Required | See [Routes](#routes) detail below |
 | `access_method` | Enum | Required | How the user gained access to the vehicle |
 | `accuracy` | Integer | Required | The approximate level of accuracy, in meters, of `Points` within `route` |
-| `start_time` | Unix Timestamp | Required | |
-| `end_time` | Unix Timestamp | Required | |
+| `start_time` | [timestamp][ts] | Required | |
+| `end_time` | [timestamp][ts] | Required | |
 | `parking_verification_url` | String | Optional | A URL to a photo (or other evidence) of proper vehicle parking |
 | `standard_cost` | Integer | Optional | The cost, in cents, that it would cost to perform that trip in the standard operation of the System |
 | `actual_cost` | Integer | Optional | The actual cost, in cents, paid by the customer of the *mobility as a service* provider |
+
+### Trips Query Parameters
+
+The trips API should allow querying trips with a combination of query parameters.
+
+* `device_id`
+* `vehicle_id`
+* `start_time`
+* `end_time`
+* `bbox`
+
+All of these query params will use the *Type* listed above with the exception of `bbox`, which is the bounding-box.
+
+For example:
+
+```
+bbox=-122.4183,37.7758,-122.4120,37.7858
+```
+
+Gets all trips within that bounding-box where any point inside the `route` is inside said box. The order is defined as: southwest longitude, southwest latitude, northeast longitude, northeast latitude (separated by commas).
 
 ### Vehicle Types
 
@@ -121,7 +171,7 @@ Data: `{ "trips": [] }`, an array of objects with the following structure
 
 ### Routes
 
-To represent a route, MDS `provider` APIs should create a GeoJSON Feature Collection, which includes every observed point in the route, and a timestamp.
+To represent a route, MDS `provider` APIs must create a GeoJSON [`FeatureCollection`](https://tools.ietf.org/html/rfc7946#section-3.3), which includes every [observed point][geo] in the route.
 
 Routes must include at least 2 points: the start point and end point. Additionally, routes must include all possible GPS samples collected by a provider.
 
@@ -166,7 +216,7 @@ Routes must include at least 2 points: the start point and end point. Additional
 | `transit_card`  | The user used a transit card to unlock the vehicle                             |
 | `rfid`          | The user accessed the vehicle with an RFID card or fob that is not a transit card |
 | `mobile_id`     | The user entered the ID of the device on their mobile phone                    |
-| `other_mobile`  | The user used a mobile phone, but did not scan a QR code or enter a vehicle ID | 
+| `other_mobile`  | The user used a mobile phone, but did not scan a QR code or enter a vehicle ID |
 | `credit_card_pay`   | The user swiped/inserted/tapped their credit card to pay for the ride      |
 | `credit_card_id`    | The user swiped/inserted/tapped their credit card to identify themselves, but their card was not charged an additional amount |
 | `cash_attendant` | The user paid an attendant or operator cash to use the vehicle                |
@@ -183,11 +233,11 @@ Routes must include at least 2 points: the start point and end point. Additional
 
 The status of the inventory of vehicles available for customer use.
 
-This API allows a user to query the historical availability for a system within a time range. The API should allow queries at least by time period and geographical area.
+This API allows a user to query the historical availability for a system within a time range.
 
 Endpoint: `/status_changes`  
 Method: `GET`  
-Data: `{ "status_changes": [] }`, an array of objects with the following structure
+Response: See the [`status_changes` schema][sc-schema] for the expected format.
 
 | Field | Type | Required/Optional | Comments |
 | ----- | ---- | ----------------- | ----- |
@@ -199,10 +249,29 @@ Data: `{ "status_changes": [] }`, an array of objects with the following structu
 | `propulsion_type` | Enum[] | Required | Array of [propulsion types](#propulsion-types); allows multiple values |
 | `event_type` | Enum | Required | See [event types](#event-types) table |
 | `event_type_reason` | Enum | Required | Reason for status change, allowable values determined by [`event type`](#event-types) |
-| `event_time` | Unix Timestamp | Required | Date/time that event occurred, based on device clock |
-| `event_location` | Point | Required | |
+| `event_time` | [timestamp][ts] | Required | Date/time that event occurred, based on device clock |
+| `event_location` | GeoJSON [Point Feature][geo] | Required | |
 | `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |
-| `associated_trips` | UUID[] | Optional based on device | Array of UUID's. For "Reserved" event types, associated trips (foreign key to Trips API) |
+| `associated_trips` | UUID[] | Optional based `event_type_reason` | Array of UUID's. For `user`-generated event types, associated trips (foreign key to Trips API) |
+
+### Status Changes Query Parameters
+
+The status_changes API should allow querying status changes with a combination of query parameters.
+
+* `start_time`
+* `end_time`
+* `bbox`
+
+The `time` parameters can be provided as timestamps individually or together.
+
+`bbox` is the bounding-box, for example:
+
+```
+bbox=-122.4183,37.7758,-122.4120,37.7858
+```
+
+Gets all status changes with an `event_location` within that bounding-box. The order is definied as: southwest longitude, southwest latitude, northeast longitude, northeast latitude (separated by commas).
+
 
 ### Event Types
 
@@ -225,4 +294,8 @@ All MDS compatible `provider` APIs must expose a [GBFS](https://github.com/NABSA
 
 [Top][toc]
 
+[geo]: #geographic-data
+[sc-schema]: status_changes.json
 [toc]: #table-of-contents
+[trips-schema]: trips.json
+[ts]: #timestamps
