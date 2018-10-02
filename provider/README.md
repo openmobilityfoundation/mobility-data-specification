@@ -225,7 +225,6 @@ Routes must include at least 2 points: the start point and end point. Additional
 | `ivr`            | An interactive voice response system was used to access the vehicle           |
 | `sms`            | An SMS system was used to access the vehicle                                  |
 | `no_security`    | The vehicles are unsecured and can be used by anyone without charge           |
-|------------------|-------------------------------------------------------------------------------|
 
 [Top][toc]
 
