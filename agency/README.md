@@ -1,6 +1,6 @@
 # Mobility Data Specification: **Agency**
 
-This specification contains a collection of RESTful APIs used to specify the digital relationship between *mobility as a service* providers and the agencies that regulate them.
+This specification contains a collection of REST-like APIs used to specify the digital relationship between *mobility as a service* providers and the agencies that regulate them.
 
 * Authors: LADOT
 * Date: 10 Aug 2018
