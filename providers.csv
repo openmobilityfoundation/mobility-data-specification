@@ -1,4 +1,4 @@
 provider_name,provider_id,url,mds_api_url
-JUMP,c20e08cf-8488-46a6-a66c-5d8fb827f7e0,https://jump.com,https://api.uber.com/v0.1/emobility/mds/
+JUMP,c20e08cf-8488-46a6-a66c-5d8fb827f7e0,https://jump.com,https://api.uber.com/v0.1/emobility/mds
 Lime,63f13c48-34ff-49d2-aca7-cf6a5b6171c3,https://li.me,https://data.lime.bike/api/partners/v1/mds
 Bird,2411d395-04f2-47c9-ab66-d09e9e3c3251,https://www.bird.co,https://mds.bird.co
