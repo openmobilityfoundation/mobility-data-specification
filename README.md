@@ -24,6 +24,8 @@ The City of Los Angeles is currently looking for feedback and comments on the dr
 
 *9/12/2018 Update*: LADOT presentation on MDS ([Video](https://youtu.be/sRMc1nWnmEU) / [Presentation Materials](https://goo.gl/MjvA4d))
 
+*10/1/2018 Update*: Applications for the Conditional Permit are now open for submission. The full application and instructions are available at the following link: http://ladot.lacity.org/ladot-begins-conditional-permit-program-dockless-mobility
+
 ## Contact
 
 Questions can be directed to jose.elias@lacity.org. 
