@@ -125,7 +125,7 @@ Response: See the [`trips` schema][trips-schema] for the expected format.
 | `trip_duration` | Integer | Required | Time, in Seconds |
 | `trip_distance` | Integer | Required | Trip Distance, in Meters |
 | `route` | GeoJSON `FeatureCollection` | Required | See [Routes](#routes) detail below |
-| `access_method` | Enum | Required | Array of [access methods](#access-methods): how the user gained access to the vehicle |
+| `access_method` | Enum | Required | An [access method](#access-methods): how the user gained access to the vehicle |
 | `accuracy` | Integer | Required | The approximate level of accuracy, in meters, of `Points` within `route` |
 | `start_time` | [timestamp][ts] | Required | |
 | `end_time` | [timestamp][ts] | Required | |
