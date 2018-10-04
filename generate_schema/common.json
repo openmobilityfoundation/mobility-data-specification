@@ -21,7 +21,6 @@
       "examples": [
         "3c9604d6-b5ee-11e8-96f8-529269fb1459"
       ],
-      "format": "uri",
       "pattern": "^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$"
     },
     "propulsion_type": {

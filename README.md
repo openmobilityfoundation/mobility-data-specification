@@ -22,7 +22,7 @@ The specification will be versioned using Git tags and [semantic versioning](htt
 
 The City of Los Angeles is currently looking for feedback and comments on the draft versions. Comments can be made by making an Github Issue, while suggested changes can be made using a pull request.
 
-*9/12/2018 Update*: LADOT presentation on MDS ([Video](https://www.youtube.com/channel/UC90xEQsc5WdUuFg-I8j-cuQ?feature=em-share_video_user) / [Presentation Materials](https://goo.gl/MjvA4d))
+*9/12/2018 Update*: LADOT presentation on MDS ([Video](https://youtu.be/sRMc1nWnmEU) / [Presentation Materials](https://goo.gl/MjvA4d))
 
 ## Contact
 

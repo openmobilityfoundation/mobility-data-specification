@@ -41,6 +41,87 @@
               "event_time",
               "event_location"
             ],
+            "oneOf": [
+              {
+                "properties": {
+                  "event_type": {
+                    "type": "string",
+                    "description": "The type of the event",
+                    "enum": [
+                      "available"
+                    ]
+                  },
+                  "event_type_reason": {
+                    "type": "string",
+                    "description": "The reason for the event",
+                    "enum": [
+                      "service_start",
+                      "user_drop_off",
+                      "rebalance_drop_off",
+                      "maintenance_drop_off"
+                    ]
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "event_type": {
+                    "type": "string",
+                    "description": "The type of the event",
+                    "enum": [
+                      "reserved"
+                    ]
+                  },
+                  "event_type_reason": {
+                    "type": "string",
+                    "description": "The reason for the event",
+                    "enum": [
+                      "user_pick_up"
+                    ]
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "event_type": {
+                    "type": "string",
+                    "description": "The type of the event",
+                    "enum": [
+                      "unavailable"
+                    ]
+                  },
+                  "event_type_reason": {
+                    "type": "string",
+                    "description": "The reason for the event",
+                    "enum": [
+                      "default",
+                      "low_battery",
+                      "maintenance"
+                    ]
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "event_type": {
+                    "type": "string",
+                    "description": "The type of the event",
+                    "enum": [
+                      "removed"
+                    ]
+                  },
+                  "event_type_reason": {
+                    "type": "string",
+                    "description": "The reason for the event",
+                    "enum": [
+                      "service_end",
+                      "rebalance_pick_up",
+                      "maintenance_pick_up"
+                    ]
+                  }
+                }
+              }
+            ],
             "properties": {
               "provider_name": {
                 "$id": "#/properties/data/properties/status_changes/items/properties/provider_name",
@@ -81,34 +162,6 @@
                 "description": "The type of propulsion; allows multiple values",
                 "$ref": "#/definitions/propulsion_type"
               },
-              "event_type": {
-                "$id": "#/properties/data/properties/status_changes/items/properties/event_type",
-                "type": "string",
-                "description": "The type of the event",
-                "enum": [
-                  "available",
-                  "reserved",
-                  "unavailable",
-                  "removed"
-                ]
-              },
-              "event_type_reason": {
-                "$id": "#/properties/data/properties/status_changes/items/properties/event_type_reason",
-                "type": "string",
-                "description": "The reason for the event",
-                "enum": [
-                  "service_start",
-                  "user_drop_off",
-                  "rebalance_drop_off",
-                  "maintenance_drop_off",
-                  "user_pick_up",
-                  "maintenance",
-                  "low_battery",
-                  "service_end",
-                  "rebalance_pick_up",
-                  "maintenance_pick_up"
-                ]
-              },
               "event_time": {
                 "$id": "#/properties/data/properties/status_changes/items/properties/event_time",
                 "type": "number",
@@ -146,7 +199,8 @@
             }
           }
         }
-      }
+      },
+      "additionalProperties": false
     },
     "links": {
       "$id": "#properties/links",
