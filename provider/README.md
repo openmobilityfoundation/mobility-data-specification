@@ -113,6 +113,8 @@ Endpoint: `/trips`
 Method: `GET`  
 Response: See the [`trips` schema][trips-schema] for the expected format.
 
+Data: `{ "trips": [] }`, an array of objects with the following structure
+
 | Field | Type    | Required/Optional | Comments |
 | ----- | -------- | ----------------- | ----- |
 | `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS |
@@ -217,6 +219,8 @@ This API allows a user to query the historical availability for a system within 
 Endpoint: `/status_changes`  
 Method: `GET`  
 Response: See the [`status_changes` schema][sc-schema] for the expected format.
+
+Data: `{ "status_changes": [] }`, an array of objects with the following structure
 
 | Field | Type | Required/Optional | Comments |
 | ----- | ---- | ----------------- | ----- |
