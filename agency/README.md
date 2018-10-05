@@ -22,9 +22,10 @@ This specification contains a collection of RESTful APIs used to specify the dig
 
 The Vehicle Registration API is required in order to register a vehicle for use in the system. The API will require a valid `provider_id` and `api_key`.
 
-Endpoint: `/register_vehicle`  
-Method: `POST`  
-API Key: `Required`  
+Endpoint: `/register_vehicle`\
+Method: `POST`\
+API Key: `Required`
+
 Body:
 
 | Field | Type     | Required/Optional | Other |
@@ -48,9 +49,10 @@ Response:
 
 The remove-vehicle API is used to deregister a vehicle from the fleet.
 
-Endpoint: `/deregister_vehicle`  
-Method: `POST`  
-API Key: `Required`  
+Endpoint: `/deregister_vehicle`\
+Method: `POST`\
+API Key: `Required`
+
 Body:
 
 | Field | Type     | Required/Optional | Other |
@@ -69,9 +71,10 @@ Response:
 
 This API is used by providers when a vehicle is either removed or returned to service.
 
-Endpoint: `/update_vehicle_status`  
-Method: `PUT`
+Endpoint: `/update_vehicle_status`\
+Method: `PUT`\
 API Key: `Required`
+
 Body:
 
 | Field | Type | Required/Optional | Other |
@@ -91,9 +94,10 @@ Response:
 
 ## start_trip
 
-Endpoint: `/start_trip`  
-Method: `POST`
+Endpoint: `/start_trip`\
+Method: `POST`\
 API Key: `Required`
+
 Body:
 
 | Field | Type | Required/Optional | Other |
@@ -114,9 +118,10 @@ Response:
 
 ## end_trip
 
-Endpoint: `/end_trip`  
-Method: `POST`
+Endpoint: `/end_trip`\
+Method: `POST`\
 API Key: `Required`
+
 Body:
 
 | Field | Type | Required/Optional | Other |
@@ -131,9 +136,10 @@ Body:
 
 A trip represents a route taken by a provider's customer.   Trip data will be reported to the API every 5 seconds while the vehicle is in motion.
 
-Endpoint: `/update_trip_telemetry`  
-Method: `POST`  
-API Key: `Required`  
+Endpoint: `/update_trip_telemetry`\
+Method: `POST`\
+API Key: `Required`
+
 Body:
 
 | Field | Type     | Required/Optional | Other |
@@ -192,8 +198,9 @@ The route must include at least 2 points, a start point and end point. Additiona
 
 Gets the list of service areas available to the provider.
 
-Endpoint: `/service_areas`  
-Method: `GET`  
+Endpoint: `/service_areas`\
+Method: `GET`
+
 Query Parameters:
 
 | Parameter | Type | Required/Optional | Description |
