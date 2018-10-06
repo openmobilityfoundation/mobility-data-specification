@@ -270,7 +270,13 @@ Gets all status changes with an `event_location` within that bounding-box. The o
 
 ## Realtime Data
 
-All MDS compatible `provider` APIs must expose a [GBFS](https://github.com/NABSA/gbfs) feed as well. For historical data, a `time` parameter should be provided to access what the GBFS feed showed at a given time.
+All MDS compatible `provider` APIs must expose a public [GBFS](https://github.com/NABSA/gbfs) feed as well. Given that GBFS hasn't fully [evolved to support dockless mobility](https://github.com/NABSA/gbfs/pull/92) yet, we follow the current guidelines in making bike information avaliable to the public. 
+
+  - `system_information.json` is always required
+  - `free_bike_status.json` is required for MDS
+  - `station_information.json` and `station_status.json` don't apply for MDS
+
+
 
 [Top][toc]
 
