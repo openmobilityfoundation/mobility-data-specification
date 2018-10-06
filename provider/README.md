@@ -122,7 +122,6 @@ Response: See the [`trips` schema][trips-schema] for the expected format.
 | `vehicle_type` | Enum | Required | See [vehicle types](#vehicle-types) table |
 | `propulsion_type` | Enum[] | Required | Array of [propulsion types](#propulsion-types); allows multiple values |
 | `trip_id` | UUID | Required | A unique ID for each trip |
-| `trip_duration` | Integer | Required | Time, in Seconds |
 | `trip_distance` | Integer | Required | Trip Distance, in Meters |
 | `route` | GeoJSON `FeatureCollection` | Required | See [Routes](#routes) detail below |
 | `accuracy` | Integer | Required | The approximate level of accuracy, in meters, of `Points` within `route` |
