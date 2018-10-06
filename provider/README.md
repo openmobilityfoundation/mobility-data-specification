@@ -124,12 +124,12 @@ Data: `{ "trips": [] }`, an array of objects with the following structure
 | `vehicle_type` | Enum | Required | See [vehicle types](#vehicle-types) table |
 | `propulsion_type` | Enum[] | Required | Array of [propulsion types](#propulsion-types); allows multiple values |
 | `trip_id` | UUID | Required | A unique ID for each trip |
-| `trip_duration` | Integer | Required | Time, in Seconds |
+| `reserved_duration` | Integer | Required | Time, in Seconds, from start_time until the trip is complete |
+| `travel_duration` | Integer | Required | Time, in seconds, from when a vehicle is moved until trip is complete. The delta between `reserved_duration` and `travel_duration` represents the time it took a user from reservation to starting the device | 
 | `trip_distance` | Integer | Required | Trip Distance, in Meters |
 | `route` | GeoJSON `FeatureCollection` | Required | See [Routes](#routes) detail below |
 | `accuracy` | Integer | Required | The approximate level of accuracy, in meters, of `Points` within `route` |
 | `start_time` | [timestamp][ts] | Required | |
-| `end_time` | [timestamp][ts] | Required | |
 | `parking_verification_url` | String | Optional | A URL to a photo (or other evidence) of proper vehicle parking |
 | `standard_cost` | Integer | Optional | The cost, in cents, that it would cost to perform that trip in the standard operation of the System |
 | `actual_cost` | Integer | Optional | The actual cost, in cents, paid by the customer of the *mobility as a service* provider |

@@ -130,13 +130,22 @@
                   1529968782.421409
                 ]
               },
-              "end_time": {
-                "$id": "#/properties/data/properties/trips/items/properties/end_time",
+              "resevered_duration": {
+                "$id": "#/properties/data/properties/trips/items/properties/resevered_duration",
                 "type": "number",
-                "description": "The time the trip ended, expressed as a Unix Timestamp",
-                "default": 0.0,
+                "description": "The time that the device was reserved by the user, expressed as a integer number of seconds",
+                "default": 0,
                 "examples": [
-                  1531007628.3774529
+                  450
+                ]
+              },
+              "travel_duration": {
+                "$id": "#/properties/data/properties/trips/items/properties/resevered_duration",
+                "type": "number",
+                "description": "The time that the device was was moving, expressed as a integer number of seconds. Must always be less than reserved_duration",
+                "default": 0,
+                "examples": [
+                  450
                 ]
               },
               "parking_verification_url": {
