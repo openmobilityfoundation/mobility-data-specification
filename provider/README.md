@@ -7,6 +7,7 @@ This specification contains a data standard for *mobility as a service* provider
 * [General Information](#general-information)
 * [Trips](#trips)
 * [Status Changes](#status-changes)
+* [Realtime Data](#realtime-data)
 
 ## General Information
 
@@ -269,9 +270,15 @@ bbox=-122.4183,37.7758,-122.4120,37.7858
 | | | `rebalance_pick_up` | Device removed from street and will be placed at another location to rebalance service |
 | | | `maintenance_pick_up` | Device removed from street so it can be worked on |
 
-### Realtime Data
+## Realtime Data
 
-All MDS compatible `provider` APIs must expose a [GBFS](https://github.com/NABSA/gbfs) feed as well. For historical data, a `time` parameter should be provided to access what the GBFS feed showed at a given time.
+All MDS compatible `provider` APIs must expose a public [GBFS](https://github.com/NABSA/gbfs) feed as well. Given that GBFS hasn't fully [evolved to support dockless mobility](https://github.com/NABSA/gbfs/pull/92) yet, we follow the current guidelines in making bike information avaliable to the public. 
+
+  - `system_information.json` is always required
+  - `free_bike_status.json` is required for MDS
+  - `station_information.json` and `station_status.json` don't apply for MDS
+
+
 
 [Top][toc]
 
