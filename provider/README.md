@@ -110,13 +110,11 @@ A trip represents a journey taken by a *mobility as a service* customer with a g
 
 The trips API allows a user to query historical trip data.
 
-Endpoint: `/trips`\
-Method: `GET`
+Endpoint: `/trips`  
+Method: `GET`  
+Schema: [`trips` schema][trips-schema]  
+`data` Payload: `{ "trips": [] }`, an array of objects with the following structure  
 
-Response: See the [`trips` schema][trips-schema] for the expected format._
-Data: `{ "trips": [] }`, an array of objects with the following structure
-
-Data: `{ "trips": [] }`, an array of objects with the following structure
 
 | Field | Type    | Required/Optional | Comments |
 | ----- | -------- | ----------------- | ----- |
@@ -219,12 +217,10 @@ The status of the inventory of vehicles available for customer use.
 
 This API allows a user to query the historical availability for a system within a time range.
 
-Endpoint: `/status_changes`\
-Method: `GET`
-
-Response: See the [`status_changes` schema][sc-schema] for the expected format.
-
-Data: `{ "status_changes": [] }`, an array of objects with the following structure
+Endpoint: `/status_changes`  
+Method: `GET`  
+Schema: [`status_changes` schema][sc-schema]  
+`data` Payload: `{ "status_changes": [] }`, an array of objects with the following structure
 
 | Field | Type | Required/Optional | Comments |
 | ----- | ---- | ----------------- | ----- |
