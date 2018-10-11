@@ -26,18 +26,18 @@ The City of Los Angeles is currently looking for feedback and comments on the dr
 
 *10/1/2018 Update*: Applications for the Conditional Permit are now open for submission on the [LADOT Website](http://ladot.lacity.org/ladot-begins-conditional-permit-program-dockless-mobility)
 
-## Associated Repos / Implementations
+## Related Projects
 
-**City of Los Angeles:**
-* [mds-dev](https://github.com/cityoflosangeles/mds-dev) - Code to do cap checking, fake data generation and more with provider data. 
-* [mds-validator](https://github.com/cityoflosangeles/mds-validator) - Code to validate MDS APIs using JSONSchema. 
-* [Aqueduct](https://github.com/cityoflosangeles/aqueduct) - ETL, Data Warehousing, and Machine Learning Platform for LA City Data Science team. Handles extracting MDS provider APIs and storing in data warehouse. 
+### City of Los Angeles
+* [`mds-dev`](https://github.com/cityoflosangeles/mds-dev) - Code to do cap checking, fake data generation and more with provider data. 
+* [`mds-validator`](https://github.com/cityoflosangeles/mds-validator) - Code to validate MDS APIs using JSONSchema. 
+* [`Aqueduct`](https://github.com/cityoflosangeles/aqueduct) - ETL, Data Warehousing, and Machine Learning Platform for LA City Data Science team. Handles extracting MDS provider APIs and storing in data warehouse. 
 
-**City of Santa Monica**
-* [mds-provider](https://github.com/cityofsantamonica/mds-provider) - Python Package to wrap provider API, validate using JSONSchema, load into Postgres Data Warehouse. 
-* [mds-provider-services](https://github.com/cityofsantamonica/mds-provider-services) - Docker containers to handle each step in mds-provider and setting up the various depdencies. 
+### City of Santa Monica
+* [`mds-provider`](https://github.com/cityofsantamonica/mds-provider) - Python package implementing the provider API, validation using JSONSchema, data loading to multiple targets, and fake provider data generation.
+* [`mds-provider-services`](https://github.com/cityofsantamonica/mds-provider-services) - Python scripts wrapped in Docker containers implementing an MDS provider data ingestion flow, using `mds-provider` and handling the various dependencies.
 
-**Others** 
+### Others
 
 Please open a pull request if you create open source or private MDS tooling. 
 
