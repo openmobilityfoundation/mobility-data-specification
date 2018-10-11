@@ -26,6 +26,21 @@ The City of Los Angeles is currently looking for feedback and comments on the dr
 
 *10/1/2018 Update*: Applications for the Conditional Permit are now open for submission on the [LADOT Website](http://ladot.lacity.org/ladot-begins-conditional-permit-program-dockless-mobility)
 
+## Associated Repos / Implementations
+
+**City of Los Angeles:**
+* [mds-dev](https://github.com/cityoflosangeles/mds-dev) - Code to do cap checking, fake data generation and more with provider data. 
+* [mds-validator](https://github.com/cityoflosangeles/mds-validator) - Code to validate MDS APIs using JSONSchema. 
+* [Aqueduct](https://github.com/cityoflosangeles/aqueduct) - ETL, Data Warehousing, and Machine Learning Platform for LA City Data Science team. Handles extracting MDS provider APIs and storing in data warehouse. 
+
+**City of Santa Monica**
+* [mds-provider](https://github.com/cityofsantamonica/mds-provider) - Python Package to wrap provider API, validate using JSONSchema, load into Postgres Data Warehouse. 
+* [mds-provider-services](https://github.com/cityofsantamonica/mds-provider-services) - Docker containers to handle each step in mds-provider and setting up the various depdencies. 
+
+**Others** 
+
+Please open a pull request if you create open source or private MDS tooling. 
+
 ## Contact
 
 Questions can be directed to jose.elias@lacity.org. 
