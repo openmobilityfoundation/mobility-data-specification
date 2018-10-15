@@ -1,13 +1,13 @@
 # Authorization
 
-MDS `providers` **SHALL** provide authorization for API endpoints via a bearer token based auth system. 
+MDS `providers` **SHALL** provide authorization for API endpoints via a bearer token based auth system.
 
 For example, the `Authorization` header sent as part of an HTTP request:
 
 ```
 GET /trips HTTP/1.1
 Host: api.provider.co
-Authorization: Bearer <token> 
+Authorization: Bearer <token>
 ```
 
 More info on how to document [Bearer Auth in swagger](https://swagger.io/docs/specification/authentication/bearer-authentication/)
@@ -23,3 +23,11 @@ JWTs provide a safe, secure way to verify the identity of an agency and provide 
 MDS `providers` **MAY** include any metadata in the JWT they wish that helps to route, log, permission, or debug agency requests, leaving their internal implementation flexible.
 
 JWT provides a helpful [debugger](https://jwt.io/#debugger) for testing your token and verifying security.
+
+## OAuth 2.0
+
+OAuth 2.0's `client_credentials` grant type (outlined in [RFC6749](https://tools.ietf.org/html/rfc6749#section-4.4)) is **RECOMMENDED** as the authentication and authorization scheme.
+
+OAuth 2.0 is an industry standard authorization framework with a variety of existing tooling. The `client_credentials` grant type facilitates generation of tokens that can be used for access by agencies and distributed to data partners.
+
+If an MDS `provider` implements this auth scheme, it **MAY** choose to specify token scopes that define access parameters like allowable time ranges. These guidelines **SHOULD** be encoded into the returned token in a parseable way.
