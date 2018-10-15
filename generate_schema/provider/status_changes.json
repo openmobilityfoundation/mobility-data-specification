@@ -177,9 +177,8 @@
               },
               "battery_pct": {
                 "$id": "#/properties/data/properties/status_changes/items/properties/battery_pct",
-                "type": "number",
+                "type": ["number", "null"],
                 "description": "Percent charge of device battery, expressed between 0 and 1",
-                "default": 0.0,
                 "examples": [
                   0.89
                 ],
@@ -188,7 +187,7 @@
               },
               "associated_trips": {
                 "$id": "#/properties/data/properties/status_changes/items/properties/associated_trips",
-                "type": "array",
+                "type": ["array", "null"],
                 "description": "For 'Reserved' event types, associated trip_ids",
                 "items": {
                   "$id": "#/properties/data/properties/status_changes/items/properties/associated_trips/items",
