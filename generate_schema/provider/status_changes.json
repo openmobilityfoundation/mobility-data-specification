@@ -94,7 +94,6 @@
                     "type": "string",
                     "description": "The reason for the event",
                     "enum": [
-                      "default",
                       "low_battery",
                       "maintenance"
                     ]
