@@ -7,6 +7,7 @@ This specification contains a data standard for *mobility as a service* provider
 * [General Information](#general-information)
 * [Trips](#trips)
 * [Status Changes](#status-changes)
+* [Realtime Data](#realtime-data)
 
 ## General Information
 
@@ -109,13 +110,11 @@ A trip represents a journey taken by a *mobility as a service* customer with a g
 
 The trips API allows a user to query historical trip data.
 
-Endpoint: `/trips`\
-Method: `GET`
+Endpoint: `/trips`  
+Method: `GET`  
+Schema: [`trips` schema][trips-schema]  
+`data` Payload: `{ "trips": [] }`, an array of objects with the following structure  
 
-Response: See the [`trips` schema][trips-schema] for the expected format._
-Data: `{ "trips": [] }`, an array of objects with the following structure
-
-Data: `{ "trips": [] }`, an array of objects with the following structure
 
 | Field | Type    | Required/Optional | Comments |
 | ----- | -------- | ----------------- | ----- |
@@ -218,12 +217,10 @@ The status of the inventory of vehicles available for customer use.
 
 This API allows a user to query the historical availability for a system within a time range.
 
-Endpoint: `/status_changes`\
-Method: `GET`
-
-Response: See the [`status_changes` schema][sc-schema] for the expected format.
-
-Data: `{ "status_changes": [] }`, an array of objects with the following structure
+Endpoint: `/status_changes`  
+Method: `GET`  
+Schema: [`status_changes` schema][sc-schema]  
+`data` Payload: `{ "status_changes": [] }`, an array of objects with the following structure
 
 | Field | Type | Required/Optional | Comments |
 | ----- | ---- | ----------------- | ----- |
@@ -269,9 +266,15 @@ bbox=-122.4183,37.7758,-122.4120,37.7858
 | | | `rebalance_pick_up` | Device removed from street and will be placed at another location to rebalance service |
 | | | `maintenance_pick_up` | Device removed from street so it can be worked on |
 
-### Realtime Data
+## Realtime Data
 
-All MDS compatible `provider` APIs must expose a [GBFS](https://github.com/NABSA/gbfs) feed as well. For historical data, a `time` parameter should be provided to access what the GBFS feed showed at a given time.
+All MDS compatible `provider` APIs must expose a public [GBFS](https://github.com/NABSA/gbfs) feed as well. Given that GBFS hasn't fully [evolved to support dockless mobility](https://github.com/NABSA/gbfs/pull/92) yet, we follow the current guidelines in making bike information avaliable to the public. 
+
+  - `system_information.json` is always required
+  - `free_bike_status.json` is required for MDS
+  - `station_information.json` and `station_status.json` don't apply for MDS
+
+
 
 [Top][toc]
 
