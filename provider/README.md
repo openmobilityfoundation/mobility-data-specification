@@ -239,10 +239,7 @@ Data: `{ "status_changes": [] }`, an array of objects with the following structu
 
 All MDS compatible `provider` APIs must expose a [GBFS](https://github.com/NABSA/gbfs) feed as well. For historical data, a `time` parameter should be provided to access what the GBFS feed showed at a given time.
 
-[Top][toc]
-
 [toc]: #table-of-contents
-=======
 [geo]: #geographic-data
 [toc]: #table-of-contents
 [ts]: #timestamps
