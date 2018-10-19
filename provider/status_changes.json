@@ -47,12 +47,19 @@
       "properties": {
         "type": {
           "type": "string",
-          "emum": [
+          "enum": [
             "Feature"
           ]
         },
         "properties": {
-          "type": "object",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "object"
+            }
+          ],
           "required": [
             "timestamp"
           ],
@@ -139,9 +146,10 @@
     },
     "timestamp": {
       "$id": "#/definitions/timestamp",
-      "title": "Floating-point seconds since Unix epoch",
+      "title": "Integer seconds since Unix epoch",
       "type": "number",
-      "minimum": 0.0
+      "multiple_of": 1.0,
+      "minimum": 1483228800
     },
     "vehicle_type": {
       "$id": "#/definitions/vehicle_type",
