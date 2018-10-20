@@ -342,12 +342,8 @@
               },
               "event_time": {
                 "$id": "#/properties/data/properties/status_changes/items/properties/event_time",
-                "type": "number",
                 "description": "The time the event occurred, expressed as a Unix Timestamp",
-                "default": 0.0,
-                "examples": [
-                  1529968782.421409
-                ]
+                "$ref": "#/definitions/timestamp"
               },
               "event_location": {
                 "$id": "#/properties/data/properties/status_changes/items/properties/event_location",
