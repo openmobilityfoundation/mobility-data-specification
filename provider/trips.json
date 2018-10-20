@@ -330,25 +330,20 @@
               },
               "start_time": {
                 "$id": "#/properties/data/properties/trips/items/properties/start_time",
-                "type": "number",
                 "description": "The time the trip began, expressed as a Unix Timestamp",
-                "default": 0.0,
-                "examples": [
-                  1529968782.421409
-                ]
+                "$ref": "#/definitions/timestamp"
               },
               "end_time": {
                 "$id": "#/properties/data/properties/trips/items/properties/end_time",
-                "type": "number",
                 "description": "The time the trip ended, expressed as a Unix Timestamp",
-                "default": 0.0,
-                "examples": [
-                  1531007628.3774529
-                ]
+                "$ref": "#/definitions/timestamp"
               },
               "parking_verification_url": {
                 "$id": "#/properties/data/properties/trips/items/properties/parking_verification_url",
-                "type": ["string", "null"],
+                "type": [
+                  "string",
+                  "null"
+                ],
                 "description": "A URL to a photo (or other evidence) of proper vehicle parking",
                 "examples": [
                   "https://data.provider.co/parking_verify/1234.jpg"
@@ -357,7 +352,10 @@
               },
               "standard_cost": {
                 "$id": "#/properties/data/properties/trips/items/properties/standard_cost",
-                "type": ["integer", "null"],
+                "type": [
+                  "integer",
+                  "null"
+                ],
                 "description": "The cost, in cents, that it would cost to perform the trip in the standard operation of the System",
                 "examples": [
                   500
@@ -365,7 +363,10 @@
               },
               "actual_cost": {
                 "$id": "#/properties/data/properties/trips/items/properties/actual_cost",
-                "type": ["integer", "null"],
+                "type": [
+                  "integer",
+                  "null"
+                ],
                 "description": "The actual cost, in cents, paid by the customer of the mobility as a service provider",
                 "examples": [
                   520
