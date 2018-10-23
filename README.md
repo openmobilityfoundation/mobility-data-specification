@@ -8,13 +8,13 @@ The specification is a way to implement realtime data sharing, measurement and r
 
 **MDS** is currently comprised of two distinct components:
 
-* The [`provider`][provider] API is to be implemented by *mobility as a service* providers, for data exchange and operational information that a municipality will query.
+* The [`provider`][provider] API is to be implemented by *mobility as a service* providers, for data exchange and operational information that a municipality will query. Provider past facing presenting the historical view of operations. 
 
-* The [`agency`][agency] API is to be implemented by *municipalities* and other regulatory agencies, for providers to query and integrate with during operations.
+* The [`agency`][agency] API is to be implemented by *municipalities* and other regulatory agencies, for providers to query and integrate with during operations. Agency future facing, provide tools to inform and permit operations.
 
-At the onset of the program, [`provider`][provider] will be required, with phasing to [`agency`][agency] at a time to be announced.
+Cities and regulators can choose best how to implement *Agency* and *Provider* either separately, concurrently, or by endpoint. 
 
-The rules and guidelines can be found on [Council Clerk Connect](https://cityclerk.lacity.org/lacityclerkconnect/index.cfm?fa=ccfi.viewrecord&cfnumber=17-1125).
+For Los Angeles, the rules and guidelines can be found on [Council Clerk Connect](https://cityclerk.lacity.org/lacityclerkconnect/index.cfm?fa=ccfi.viewrecord&cfnumber=17-1125).
 
 The specification will be versioned using Git tags and [semantic versioning](https://semver.org/). See the list of [releases](https://github.com/CityOfLosAngeles/mobility-data-specification/releases) for more information.
 
