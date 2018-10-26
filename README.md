@@ -26,7 +26,7 @@ The City of Los Angeles is currently looking for feedback and comments on the dr
 
 *10/1/2018 Update*: Applications for the Conditional Permit are now open for submission on the [LADOT Website](http://ladot.lacity.org/ladot-begins-conditional-permit-program-dockless-mobility)
 
-*10/28/2018 Update*: [LADOT Guidelines for Handling of Data from Mobility Service Providers](https://static1.squarespace.com/static/57c864609f74567457be9b71/t/5bd38544b208fc6deefa4b0c/1540588869826/LADOT+Guidelines+for+Handling+of+Data+from+MSPs++%282018-10-25%29.pdf)
+*10/28/2018 Update*: [LADOT Guidelines for Handling of Data from Mobility Service Providers](http://www.urbanmobilityla.com/s/LADOT-Guidelines-for-Handling-of-Data-from-MSPs-2018-10-25.pdf)
 
 ## Related Projects
 
