@@ -8,30 +8,34 @@ This specification contains a collection of RESTful APIs used to specify the dig
 
 ## Table of Contents
 
-* [register_vehicle](#register_vehicle)
-* [deregister_vehicle](#deregister_vehicle)
-* [update_vehicle_status](#update_vehicle_status)
-* [start_trip](#start_trip)
-* [end_trip](#start_trip)
-* [update_trip_telemetry](#update_trip_telemetry)
-* [service_areas](#service_areas)
+* [Vehicle](#vehicle)
+* [Trip](#trip)
+* [Service area](#service_area)
 * [Event types](#Event-Types)
 * [Enum definitions](#enum-definitions)
 
-## register_vehicle
+## Vehicle
 
-The Vehicle Registration API is required in order to register a vehicle for use in the system. The API will require a valid `provider_id` and `api_key`.
+The vehicle API allows the provider to register and deregister vehicles, as well as update their status.
+The API will require a valid `provider_id` and `api_key`.
 
-Endpoint: `/register_vehicle`\
-Method: `POST`\
+Endpoint: `/vehicle/{provider_id}/{unique_id}`\
 API Key: `Required`
 
+Path:
+
+| Field | Type     | Required/Optional | Other |
+| ----- | -------- | ----------------- | ----- |
+| `provider_id` | UUID | Required | Issued by city |
+| `unique_id` | UUID | Required | Unique ID for the vehicle |
+
+### PUT: Register vehicle
+
+Method: `PUT`\
 Body:
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
-| `unique_id` | UUID | Required | UUID v4 provided by Operator to uniquely identify a vehicle |
-| `provider_id` | String | Required | Issued by city |
 | `vehicle_id` | String |  | Vehicle Identification Number (VIN) visible on device|
 | `vehicle_type` | Enum | Required | Vehicle Type |
 | `propulsion_type` | Enum | Required | Propulsion Type |
@@ -45,41 +49,22 @@ Response:
 | ----- | -------- | ----------------- | ----- |
 | `message` | Enum |  | See [Message](#message) Enum |
 
-## deregister_vehicle
+### DELETE: Deregister vehicle
 
-The remove-vehicle API is used to deregister a vehicle from the fleet.
-
-Endpoint: `/deregister_vehicle`\
-Method: `POST`\
-API Key: `Required`
-
-Body:
-
-| Field | Type     | Required/Optional | Other |
-| ----- | -------- | ----------------- | ----- |
-| `unique_id` | UUID | Required | ID used in [Register](#register_vehicle) |
-| `device_id` | UUID | Required | |
-| `reason_code` | Enum | Required | [Reason](#reason_code) for status change  |
-
+Method: `DELETE`\
 Response:
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
 | `message` | Enum |  | See [Message](#message) Enum |
 
-## update_vehicle_status
+### POST: Update vehicle status
 
-This API is used by providers when a vehicle is either removed or returned to service.
-
-Endpoint: `/update_vehicle_status`\
 Method: `POST`\
-API Key: `Required`
-
 Body:
 
 | Field | Type | Required/Optional | Other |
 | ----- | ---- | ----------------- | ----- |
-| `unique_id` | UUID | Required | ID used in [Register](#register_vehicle) |
 | `timestamp` | Unix Timestamp | Required | Date/time that event occurred. Based on GPS clock. |
 | `location` | Point | Required | Location at the time of status change in WGS 84 (EPSG:4326) standard GPS projection  |
 | `event_type` | Enum | Required | [Event Type](#event_type) for status change.  |
@@ -92,19 +77,26 @@ Response:
 | ----- | -------- | ----------------- | ----- |
 | `message` | Enum |  | See [Message](#message) Enum |
 
-## start_trip
+## Trip
 
-Endpoint: `/start_trip`\
-Method: `POST`\
+Endpoint: `/trip/{provider_id}/{unique_id}`\
 API Key: `Required`
 
+Path:
+
+| Field | Type     | Required/Optional | Other |
+| ----- | -------- | ----------------- | ----- |
+| `provider_id` | UUID | Required | Issued by city |
+| `unique_id` | UUID | Required | Unique ID for the trip |
+
+### PUT: Start trip
+
+Method: `PUT`\
 Body:
 
 | Field | Type | Required/Optional | Other |
 | ----- | ---- | ----------------- | ----- |
-| `unique_id` | UUID | Required | ID used in [Register](#register_vehicle) |
-| `provider_id` | String | Required | Issued by city |
-| `vehicle_id` | String | Required | Provided by the Vehicle Registration API |
+| `vehicle_id` | UUID | Required | ID used in [Register vehicle](#register_vehicle) |
 | `timestamp` | Unix Timestamp | Required | Date/time that event occurred. Based on GPS clock. |
 | `location` | Point | Required | Location at the time of status change in WGS 84 (EPSG:4326) standard GPS projection  |
 | `accuracy` | Integer | Required | The approximate level of accuracy, in meters, represented by start_point and end_point. |
@@ -116,35 +108,27 @@ Response:
 | ----- | -------- | ----------------- | ----- |
 | `trip_id` | UUID | Required | a unique ID for each trip |
 
-## end_trip
+### PATCH: End trip
 
-Endpoint: `/end_trip`\
-Method: `POST`\
-API Key: `Required`
-
+Method: `PATCH`\
 Body:
 
 | Field | Type | Required/Optional | Other |
 | ----- | ---- | ----------------- | ----- |
-| `trip_id` | UUID | Required | See [start_trip](#start_trip) |
 | `timestamp` | Unix Timestamp | Required | Date/time that event occurred. Based on GPS clock. |
 | `location` | Point | Required | Location at the time of status change in WGS 84 (EPSG:4326) standard GPS projection  |
 | `accuracy` | Integer | Required | The approximate level of accuracy, in meters, represented by start_point and end_point. |
 | `battery_pct_end` | Float | Require if Applicable | Percent battery charge of device, expressed between 0 and 1 |
 
-## update_trip_telemetry
+### POST: Update trip telemetry
 
 A trip represents a route taken by a provider's customer.   Trip data will be reported to the API every 5 seconds while the vehicle is in motion.
 
-Endpoint: `/update_trip_telemetry`\
 Method: `POST`\
-API Key: `Required`
-
 Body:
 
 | Field | Type     | Required/Optional | Other |
 | ----- | -------- | ----------------- | ----- |
-| `trip_id` | UUID | Required | Issued by InitMovementPlan() API  |
 | `timestamp` | Unix Timestamp | Required | Time of day (UTC) data was sampled|
 | `route` | Route | Required | See detail below. |
 | `accuracy` | Integer | Required | The approximate level of accuracy, in meters, represented by start_point and end_point. |
@@ -194,19 +178,19 @@ The route must include at least 2 points, a start point and end point. Additiona
         ] }
 ```
 
-## service_areas
+## Service area
 
 Gets the list of service areas available to the provider.
 
-Endpoint: `/service_areas`\
+Endpoint: `/service_area/{provider_id}[/{unique_id}]`\
 Method: `GET`
 
-Query Parameters:
+Path:
 
 | Parameter | Type | Required/Optional | Description |
 | ----- | ---- | ----------------- | ----- |
-| `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS |
-| `service_area_id` | UUID  | Optional | If provided, retrieve a specific service area (e.g. a retired or old service area). If omitted, will return all active service areas. |  
+| `provider_id` | UUID | Required | Issued by city |
+| `unique_id` | UUID  | Optional | If provided, retrieve a specific service area (e.g. a retired or old service area). If omitted, will return the active service area |
 
 Response:
 
