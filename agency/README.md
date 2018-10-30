@@ -226,9 +226,8 @@ Response:
 
 For `vehicle_type`, options are:
 
-* `bike`
+* `bicycle`
 * `scooter`
-* `recumbent`
 
 ### propulsion_type
 
@@ -236,6 +235,7 @@ For `propulsion_type`, options are:
 
 * `human`
 * `electric`
+* `electric_assist`
 * `combustion`
 
 ### reason_code
