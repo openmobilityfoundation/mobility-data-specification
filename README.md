@@ -8,19 +8,17 @@ The specification is a way to implement realtime data sharing, measurement and r
 
 **MDS** is currently comprised of two distinct components:
 
-* The [`provider`][provider] API is to be implemented by *mobility as a service* providers, for data exchange and operational information that a municipality will query. Provider past facing presenting the historical view of operations. 
+* The [`provider`][provider] API is to be implemented by *mobility as a service* providers, for data exchange and operational information that a municipality will query. `provider` presents the historical view of operations.
 
-* The [`agency`][agency] API is to be implemented by *municipalities* and other regulatory agencies, for providers to query and integrate with during operations. Agency future facing, provide tools to inform and permit operations.
+* The [`agency`][agency] API is to be implemented by *municipalities* and other regulatory agencies, for providers to query and integrate with during operations. `agency` provides tools to inform and permit future operations.
 
 Cities and regulators can choose best how to implement *Agency* and *Provider* either separately, concurrently, or by endpoint. 
-
-For Los Angeles, the rules and guidelines can be found on [Council Clerk Connect](https://cityclerk.lacity.org/lacityclerkconnect/index.cfm?fa=ccfi.viewrecord&cfnumber=17-1125).
 
 The specification will be versioned using Git tags and [semantic versioning](https://semver.org/). See the list of [releases](https://github.com/CityOfLosAngeles/mobility-data-specification/releases) for more information.
 
 ## Roadmap
 
-The City of Los Angeles is currently looking for feedback and comments on the draft versions. Comments can be made by making an Github Issue, while suggested changes can be made using a pull request.
+The City of Los Angeles is currently looking for feedback and comments on the draft versions. Comments can be made by making an Github Issue, while suggested changes can be made using a pull request. The rules and guidelines for the Los Angeles Dockless Bikeshare Systems / Pilot Program can be found on [Council Clerk Connect](https://cityclerk.lacity.org/lacityclerkconnect/index.cfm?fa=ccfi.viewrecord&cfnumber=17-1125).
 
 *9/12/2018 Update*: LADOT presentation on MDS ([Video](https://youtu.be/sRMc1nWnmEU) / [Presentation Materials](https://goo.gl/MjvA4d))
 
