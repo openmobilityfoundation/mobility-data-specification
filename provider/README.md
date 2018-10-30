@@ -163,12 +163,14 @@ Gets all trips within that bounding-box where any point inside the `route` is in
 
 ### Propulsion Types
 
-| `propulsion_type` |
-|-----------------|
-| human           |
-| electric_assist |
-| electric        |
-| combustion      |
+| `propulsion_type` | Description |
+| ----------------- | ----------------- |
+| human           | Pedal or foot propulsion |
+| electric_assist | Provides power only alongside human propulsion |
+| electric        | Contains throttle mode with a battery-powered motor |
+| combustion      | Contains throttle mode with a gas engine-powered motor |
+
+A device may have one or more values from the `propulsion_type`, depending on the number of modes of operation. For example, a scooter that can be powered by foot or by electric motor would have the `propulsion_type` represented by the array `['human', 'electric']`. A bicycle with pedal-assist would have the `propulsion_type` represented by the array `['human', 'electric_assist']` if it can also be operated as a traditional bicycle.
 
 ### Routes
 
