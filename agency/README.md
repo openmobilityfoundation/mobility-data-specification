@@ -17,6 +17,7 @@ This specification contains a collection of RESTful APIs used to specify the dig
 * [service_areas](#service_areas)
 * [Event types](#Event-Types)
 * [Enum definitions](#enum-definitions)
+* [Responses](#responses)
 
 ## register_vehicle
 
@@ -39,11 +40,7 @@ Body:
 | `vehicle_mfgr` | Enum | Required | Vehicle Manufacturer |
 | `vehicle_model` | Enum | Required | Vehicle Model |
 
-Response:
-
-| Field | Type     | Required/Optional | Other |
-| ----- | -------- | ----------------- | ----- |
-| `message` | Enum |  | See [Message](#message) Enum |
+Response: see [Responses](#responses)
 
 ## deregister_vehicle
 
@@ -61,11 +58,7 @@ Body:
 | `device_id` | UUID | Required | |
 | `reason_code` | Enum | Required | [Reason](#reason_code) for status change  |
 
-Response:
-
-| Field | Type     | Required/Optional | Other |
-| ----- | -------- | ----------------- | ----- |
-| `message` | Enum |  | See [Message](#message) Enum |
+Response: see [Responses](#responses)
 
 ## update_vehicle_status
 
@@ -86,11 +79,7 @@ Body:
 | `reason_code` | Enum | Required | [Reason](#reason_code) for status change.  |
 | `battery_pct` | Float | Require if Applicable | Percent battery charge of device, expressed between 0 and 1 |
 
-Response:
-
-| Field | Type     | Required/Optional | Other |
-| ----- | -------- | ----------------- | ----- |
-| `message` | Enum |  | See [Message](#message) Enum |
+Response: see [Responses](#responses)
 
 ## start_trip
 
@@ -110,11 +99,7 @@ Body:
 | `accuracy` | Integer | Required | The approximate level of accuracy, in meters, represented by start_point and end_point. |
 | `battery_pct_start` | Float | Require if Applicable | Percent battery charge of device, expressed between 0 and 1 |
 
-Response:
-
-| Field | Type     | Required/Optional | Other |
-| ----- | -------- | ----------------- | ----- |
-| `trip_id` | UUID | Required | a unique ID for each trip |
+Response: see [Responses](#responses)
 
 ## end_trip
 
@@ -131,6 +116,8 @@ Body:
 | `location` | Point | Required | Location at the time of status change in WGS 84 (EPSG:4326) standard GPS projection  |
 | `accuracy` | Integer | Required | The approximate level of accuracy, in meters, represented by start_point and end_point. |
 | `battery_pct_end` | Float | Require if Applicable | Percent battery charge of device, expressed between 0 and 1 |
+
+Response: see [Responses](#responses)
 
 ## update_trip_telemetry
 
@@ -149,11 +136,7 @@ Body:
 | `route` | Route | Required | See detail below. |
 | `accuracy` | Integer | Required | The approximate level of accuracy, in meters, represented by start_point and end_point. |
 
-Response:
-
-| Field | Type | Other |
-| ---- | --- | --- |
-| `message` | Enum | See [Message](#message) Enum |
+Response: see [Responses](#responses)
 
 ### Route
 
@@ -261,19 +244,48 @@ For `reason_code`, options are:
 * `rebalancing`
 * `maintenance`
 
-### message
+## Responses
 
-For 'message', options are:
+RESTful responses are returned for all endpoints:
 
-* `200: OK`
-* `201: Created`
-* `202: Accepted`
-* `203: Added`
-* `204: Removed`
-* `210: Warning: vehicle used in this trip has not been properly registered`
-* `305: Error: vehicle is already registered`
-* `306: Error: vehicle registration cannot be found`
-* `310: Error: vehicle is not properly registered`
-* `311: Error: duplicate registration found, please use a different unique_id or update existing unique_id status using the update-vehicle-status endpoint`
-* `315: Error: vehicle is not active`
-* `320: Error: vehicle trip has not been properly started`
+* **200:** OK, operation successful. For `PUT` operations, object existed and has been updated.
+* **201:** For `PUT` operations, new object created
+* **400:** Malformed request.
+
+    In this case, the answer presents the errors as an `application/json` body containing the list of errors
+
+    Error:
+    | Field | Type | Required/Optional | Other |
+    |-------|--------|-------------------|-------|
+    | `category` | Enum | Required | The error category (see below) |
+    | `message` | String | Required | The error message |
+
+    For `category`, options are:
+
+    - `key-error`: A field is missing, `message` indicates which one.
+    - `type-error`: A value has the wrong type, `message` indicates in which field.
+    - `value-error`: A value is invalid, `message` indicates why and in which field.
+    - `syntax-error`: The data is syntaxically incorrect, `message` indicates line and column
+
+    Example:
+
+    ```json
+    {
+        "errors": [
+            {
+                "category": "key-error",
+                "message": "Missing required field 'accuracy'"
+            },
+            {
+                "category": "value-error",
+                "message": "Point #6 in 'route' has invalid coordinates"
+            }
+        ]
+    }
+    ```
+
+* **401:** Unauthorized, the API key was not provided in HTTP headers.
+* **403:** Forbidden, an invalid authentication has been provided or the API key does not match the `provider_id`.
+* **404:** Object does not exist, returned on `GET`, `PATCH`, `POST` or `DELETE` operations if the object does not exist.
+* **409:** Conflict, returned on `PUT`, `POST` or `PATCH` operations when an object already exists and an update is not possible.
+* **500:** Internal server error. In this case, the answer may contain a `text/plain` body with an error message for troubleshooting.
