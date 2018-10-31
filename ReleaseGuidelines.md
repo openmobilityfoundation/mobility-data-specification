@@ -43,7 +43,7 @@ In anticipation of ongoing maintenance, a branch will be created for the current
 
 This *release branch* represents the current state of that release series. All maintenance/bugfix work for the series is collected in this branch. To work on a patch, cut a branch from the release branch. When ready, submit a PR against the release branch.
 
-When a PATCH release is ready (e.g. `0.2.0` to `0.2.1`), the release branch (e.g. `0.2.x`) is merged to *both* `master` (to make the release official) and `dev` (to ensure the patch is incorporated with any new work).
+When a PATCH release is ready (e.g. `0.2.0` to `0.2.1`), the release branch (e.g. `0.2.x`) is merged to `master` (to make the release official) and `dev` is rebased onto `master` (to ensure the patch is incorporated with any new work).
 
 As stated earlier, at this time MDS will maintain *two concurrent MINOR versions*. This means that when a MINOR release is made (e.g. `0.4.0`), work on the outgoing series (`0.2.x`, in this case) ceases and its release branch is removed.
 
@@ -66,13 +66,56 @@ More detail on this can be read in the Release Checklist below.
 
 The following steps **must** be followed for **every** release of MDS:
 
-  1. Ensure the [Milestone][mds-milestones] for this release is at `100%`
+1. Ensure the [Milestone][mds-milestones] for this release is at `100%`
 
-  1. Update [`ReleaseNotes.md`](ReleaseNotes.md) following the existing format
+1. Run the schema generator to ensure the schema files are up to date
 
-  1. [Open a PR][mds-pr-new] against `master`, comparing either `dev` (for a MINOR release) or a *release branch* (e.g. `0.2.x`) for a PATCH release. In the case of a new MINOR version, allow a minimum of 24 hours for community discussion and review of the PR.
+   ```console
+   cd generate_schema/
+   pipenv run python generate_provider_schema.py
+   ```
 
-  1. Write more checklist items.
+1. Update [`ReleaseNotes.md`](ReleaseNotes.md) following the existing format
+
+1. [Open a PR][mds-pr-new] against `master`, comparing either `dev` (for a MINOR release) or a release branch (e.g. `0.2.x`) for a PATCH release.
+
+    In the case of a new MINOR version, allow a minimum of 24 hours for community discussion and review of the PR.
+
+1. Once the PR has been sufficiently reviewed, `rebase merge` into `master`
+
+1. Create a tag on the tip of `master` for this release, e.g. for `0.3.0`
+
+    ```console
+    git checkout master
+    git fetch && git pull
+    git tag 0.3.0
+    git push --tags
+    ```
+
+1. Publish a [new Release in GitHub][mds-releases-new] for the tag you just pushed. Copy in the release notes from Step 3.
+
+1. What kind of release was this?
+   * **PATCH:** rebase `dev` onto `master` to incorporate the PATCH into `dev`
+
+       *Caution: be aware that this may impact existing PRs open against `dev`*
+
+        ```console
+        git checkout dev
+        git rebase master
+        git push --force origin dev
+        ```
+
+   * **MINOR:** cut a new branch for this release series from the tip of `master`
+
+        Make this branch the default branch in GitHub. E.g. for `0.3.0`
+
+        ```console
+        git checkout master
+        git checkout -b 0.3.x
+        git push origin 0.3.x
+        ```
+
+       Remove any outgoing series' release branch (e.g. `0.1.x` when releasing `0.3.0`), if applicable.
 
 [mds-dev]: https://github.com/CityOfLosAngeles/mobility-data-specification/tree/dev
 [mds-master]: https://github.com/CityOfLosAngeles/mobility-data-specification/tree/master
@@ -80,5 +123,6 @@ The following steps **must** be followed for **every** release of MDS:
 [mds-pr]: https://github.com/CityofLosAngeles/mobility-data-specification/pulls
 [mds-pr-new]: https://github.com/CityOfLosAngeles/mobility-data-specification/compare
 [mds-releases]: https://github.com/CityOfLosAngeles/mobility-data-specification/releases
+[mds-releases-new]: https://github.com/CityOfLosAngeles/mobility-data-specification/releases/new
 [mds-tags]: https://github.com/CityOfLosAngeles/mobility-data-specification/tags
 [semver]: https://semver.org/
