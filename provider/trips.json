@@ -149,7 +149,10 @@
         },
         "next": {
           "$id": "#/definitions/links/next",
-          "type": "string",
+          "type": [
+            "null",
+            "string"
+          ],
           "title": "The URL to the next page of data",
           "examples": [
             "https://data.provider.co/trips/next"
