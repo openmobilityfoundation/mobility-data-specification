@@ -39,7 +39,7 @@ MDS defines [JSON Schema](https://json-schema.org/) files for [`trips`][trips-sc
 
 ### Pagination
 
-`provider` APIs may decide to paginate the data payload. If so, pagination must comply with the [JSON API](http://jsonapi.org/format/#fetching-pagination) specification.
+`provider` APIs may decide to paginate the data payload. If so, pagination must comply with the [JSON API](http://jsonapi.org/format/#fetching-pagination) specification. 
 
 The following keys must be used for pagination links:
 
@@ -47,6 +47,8 @@ The following keys must be used for pagination links:
 * `last`: url to the last page of data
 * `prev`: url to the previous page of data
 * `next`: url to the next page of data
+
+At a minimum, paginated payloads must include a `next` key.
 
 ```json
 {
