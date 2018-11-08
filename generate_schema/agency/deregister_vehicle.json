@@ -1,0 +1,34 @@
+{
+  "$id": "https://raw.githubusercontent.com/CityofLosAngeles/mobility-data-specification/master/agency/deregister_vehicle.json",
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "title": "The MDS Agency Schema, deregister_vehicle payload",
+  "type": "object",
+  "definitions": {},
+  "required": [
+    "unique_id",
+    "device_id",
+    "reason_code"
+  ],
+  "properties": {
+    "unique_id": {
+      "$id": "#/properties/unique_id",
+      "description": "The UUID for the vehicle, unique within MDS",
+      "$ref": "#/definitions/uuid"
+    },
+    "device_id": {
+      "$id": "#/properties/device_id",
+      "$ref": "#/definitions/uuid",
+      "description": "A unique device ID in UUID format"
+    },
+    "reason_code": {
+      "$id": "#/properties/reason_code",
+      "type": "string",
+      "description": "The reason for deregistering the vehicle",
+      "enum": [
+        "rebalancing",
+        "maintenance"
+      ]
+    }
+  },
+  "additionalProperties": false
+}

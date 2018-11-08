@@ -1,0 +1,137 @@
+{
+  "$id": "https://raw.githubusercontent.com/CityofLosAngeles/mobility-data-specification/master/agency/update_vehicle_status.json",
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "title": "The MDS Agency Schema, update_vehicle_status payload",
+  "type": "object",
+  "definitions": {
+    "Point": {
+      "$id": "#/definitions/Point",
+      "title": "GeoJSON Point",
+      "type": "object",
+      "required": [
+        "type",
+        "coordinates"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "Point"
+          ]
+        },
+        "coordinates": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "number"
+          }
+        },
+        "bbox": {
+          "type": "array",
+          "minItems": 4,
+          "items": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "MDS_Feature_Point": {
+      "$id": "#/definitions/MDS_Feature_Point",
+      "title": "MDS GeoJSON Feature Point",
+      "type": "object",
+      "required": [
+        "type",
+        "properties",
+        "geometry"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "Feature"
+          ]
+        },
+        "properties": {
+          "type": "object",
+          "required": [
+            "timestamp"
+          ],
+          "properties": {
+            "timestamp": {
+              "$ref": "#/definitions/timestamp"
+            }
+          }
+        },
+        "geometry": {
+          "$ref": "#/definitions/Point"
+        },
+        "bbox": {
+          "type": "array",
+          "minItems": 4,
+          "items": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "uuid": {
+      "$id": "#/definitions/uuid",
+      "type": "string",
+      "title": "A UUID 4 used to uniquely identifty an object",
+      "default": "",
+      "examples": [
+        "3c9604d6-b5ee-11e8-96f8-529269fb1459"
+      ],
+      "pattern": "^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$"
+    },
+    "timestamp": {
+      "$id": "#/definitions/timestamp",
+      "title": "Integer milliseconds since Unix epoch",
+      "type": "number",
+      "multipleOf": 1.0,
+      "minimum": 0
+    }
+  },
+  "required": [
+    "unique_id",
+    "timestamp",
+    "location",
+    "event_type",
+    "event_type_reason"
+  ],
+  "oneOf": [
+    {
+      "$ref": "#/definitions/available_event"
+    },
+    {
+      "$ref": "#/definitions/unavailable_event"
+    },
+    {
+      "$ref": "#/definitions/reserved_event"
+    },
+    {
+      "$ref": "#/definitions/removed_event"
+    }
+  ],
+  "properties": {
+    "unique_id": {
+      "$id": "#/properties/unique_id",
+      "description": "The UUID for the vehicle, unique within MDS",
+      "$ref": "#/definitions/uuid"
+    },
+    "battery_pct": {
+      "$id": "#/properties/battery_pct",
+      "$ref": "#/definitions/battery_pct"
+    },
+    "location": {
+      "$id": "#/properties/location",
+      "description": "The GPS coordinates of where the event occurred",
+      "$ref": "#/definitions/MDS_Feature_Point"
+    },
+    "timestamp": {
+      "$id": "#/properties/location",
+      "$ref": "#/definitions/timestamp"
+    }
+  },
+  "additionalProperties": false
+}

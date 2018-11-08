@@ -6,7 +6,7 @@ name = "pypi"
 [packages]
 
 [dev-packages]
-jsonschema = "==3.0.0a3"
+jsonschema = "==3.0.0b3"
 requests = "*"
 
 [requires]
