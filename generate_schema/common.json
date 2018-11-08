@@ -47,6 +47,97 @@
         "scooter"
       ]
     },
+    "available_event": {
+      "$id": "#/definitions/available_event",
+      "type": "object",
+      "description": "An event type describing a vehicle becoming available",
+      "properties": {
+        "event_type": {
+          "type": "string",
+          "description": "The type of the event",
+          "enum": [
+            "available"
+          ]
+        },
+        "event_type_reason": {
+          "type": "string",
+          "description": "The reason for the event",
+          "enum": [
+            "service_start",
+            "user_drop_off",
+            "rebalance_drop_off",
+            "maintenance_drop_off"
+          ]
+        }
+      }
+    },
+    "reserved_event": {
+      "$id": "#/definitions/reserved_event",
+      "type": "object",
+      "description": "An event type describing a vehicle becoming reserved",
+      "properties": {
+        "event_type": {
+          "type": "string",
+          "description": "The type of the event",
+          "enum": [
+            "reserved"
+          ]
+        },
+        "event_type_reason": {
+          "type": "string",
+          "description": "The reason for the event",
+          "enum": [
+            "user_pick_up"
+          ]
+        }
+      }
+    },
+    "unavailable_event": {
+      "$id": "#/definitions/unavailable_event",
+      "type": "object",
+      "description": "An event type describing a vehicle becoming unavailable",
+      "properties": {
+        "event_type": {
+          "type": "string",
+          "description": "The type of the event",
+          "enum": [
+            "unavailable"
+          ]
+        },
+        "event_type_reason": {
+          "type": "string",
+          "description": "The reason for the event",
+          "enum": [
+            "default",
+            "low_battery",
+            "maintenance"
+          ]
+        }
+      }
+    },
+    "removed_event": {
+      "$id": "#/definitions/removed_event",
+      "type": "object",
+      "description": "An event type describing a vehicle becoming removed",
+      "properties": {
+        "event_type": {
+          "type": "string",
+          "description": "The type of the event",
+          "enum": [
+            "removed"
+          ]
+        },
+        "event_type_reason": {
+          "type": "string",
+          "description": "The reason for the event",
+          "enum": [
+            "service_end",
+            "rebalance_pick_up",
+            "maintenance_pick_up"
+          ]
+        }
+      }
+    },
     "links": {
       "$id": "#/definitions/links",
       "type": "object",

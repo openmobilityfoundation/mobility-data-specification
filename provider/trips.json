@@ -47,12 +47,19 @@
       "properties": {
         "type": {
           "type": "string",
-          "emum": [
+          "enum": [
             "Feature"
           ]
         },
         "properties": {
-          "type": "object",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "object"
+            }
+          ],
           "required": [
             "timestamp"
           ],
@@ -85,7 +92,7 @@
       "properties": {
         "type": {
           "type": "string",
-          "emum": [
+          "enum": [
             "FeatureCollection"
           ]
         },

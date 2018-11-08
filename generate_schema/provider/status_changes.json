@@ -42,85 +42,10 @@
               "event_location"
             ],
             "oneOf": [
-              {
-                "properties": {
-                  "event_type": {
-                    "type": "string",
-                    "description": "The type of the event",
-                    "enum": [
-                      "available"
-                    ]
-                  },
-                  "event_type_reason": {
-                    "type": "string",
-                    "description": "The reason for the event",
-                    "enum": [
-                      "service_start",
-                      "user_drop_off",
-                      "rebalance_drop_off",
-                      "maintenance_drop_off"
-                    ]
-                  }
-                }
-              },
-              {
-                "properties": {
-                  "event_type": {
-                    "type": "string",
-                    "description": "The type of the event",
-                    "enum": [
-                      "reserved"
-                    ]
-                  },
-                  "event_type_reason": {
-                    "type": "string",
-                    "description": "The reason for the event",
-                    "enum": [
-                      "user_pick_up"
-                    ]
-                  }
-                }
-              },
-              {
-                "properties": {
-                  "event_type": {
-                    "type": "string",
-                    "description": "The type of the event",
-                    "enum": [
-                      "unavailable"
-                    ]
-                  },
-                  "event_type_reason": {
-                    "type": "string",
-                    "description": "The reason for the event",
-                    "enum": [
-                      "default",
-                      "low_battery",
-                      "maintenance"
-                    ]
-                  }
-                }
-              },
-              {
-                "properties": {
-                  "event_type": {
-                    "type": "string",
-                    "description": "The type of the event",
-                    "enum": [
-                      "removed"
-                    ]
-                  },
-                  "event_type_reason": {
-                    "type": "string",
-                    "description": "The reason for the event",
-                    "enum": [
-                      "service_end",
-                      "rebalance_pick_up",
-                      "maintenance_pick_up"
-                    ]
-                  }
-                }
-              }
+              { "$ref": "#definitions/available_event" },
+              { "$ref": "#definitions/unavailable_event" },
+              { "$ref": "#definitions/reserved_event" },
+              { "$ref": "#definitions/removed_event" }
             ],
             "properties": {
               "provider_name": {

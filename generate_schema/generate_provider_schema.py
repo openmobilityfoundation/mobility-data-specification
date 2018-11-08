@@ -148,6 +148,10 @@ if __name__ == '__main__':
             "vehicle_type": common["definitions"]["vehicle_type"],
             "version": common["definitions"]["version"],
             "uuid": common["definitions"]["uuid"],
+            "available_event": common["definitions"]["available_event"],
+            "unavailable_event": common["definitions"]["unavailable_event"],
+            "reserved_event": common["definitions"]["reserved_event"],
+            "removed_event": common["definitions"]["removed_event"],
             }
 
     # Check that it is a valid schema
