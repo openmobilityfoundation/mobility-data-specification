@@ -83,7 +83,7 @@ Body:
 | `timestamp` | Unix Timestamp | Required | Date/time that event occurred. Based on GPS clock. |
 | `location` | Point | Required | Location at the time of status change in WGS 84 (EPSG:4326) standard GPS projection  |
 | `event_type` | Enum | Required | [Event Type](#event_type) for status change.  |
-| `reason_code` | Enum | Required | [Reason](#reason_code) for status change.  |
+| `event_type_reason` | Enum | Required | [Reason](#event_type) for status change.  |
 | `battery_pct` | Float | Require if Applicable | Percent battery charge of device, expressed between 0 and 1 |
 
 Response:
@@ -106,7 +106,7 @@ Body:
 | `provider_id` | String | Required | Issued by city |
 | `vehicle_id` | String | Required | Provided by the Vehicle Registration API |
 | `timestamp` | Unix Timestamp | Required | Date/time that event occurred. Based on GPS clock. |
-| `location` | Point | Required | Location at the time of status change in WGS 84 (EPSG:4326) standard GPS projection  |
+| `location` | GeoJSON [Point Feature](#geographic-data) | Required | Location at the time of status change in WGS 84 (EPSG:4326) standard GPS projection  |
 | `accuracy` | Integer | Required | The approximate level of accuracy, in meters, represented by start_point and end_point. |
 | `battery_pct_start` | Float | Require if Applicable | Percent battery charge of device, expressed between 0 and 1 |
 
@@ -128,7 +128,7 @@ Body:
 | ----- | ---- | ----------------- | ----- |
 | `trip_id` | UUID | Required | See [start_trip](#start_trip) |
 | `timestamp` | Unix Timestamp | Required | Date/time that event occurred. Based on GPS clock. |
-| `location` | Point | Required | Location at the time of status change in WGS 84 (EPSG:4326) standard GPS projection  |
+| `location` | GeoJSON [Point Feature](#geographic-data) | Required | Location at the time of status change in WGS 84 (EPSG:4326) standard GPS projection  |
 | `accuracy` | Integer | Required | The approximate level of accuracy, in meters, represented by start_point and end_point. |
 | `battery_pct_end` | Float | Require if Applicable | Percent battery charge of device, expressed between 0 and 1 |
 
@@ -157,7 +157,7 @@ Response:
 
 ### Route
 
-To represent a route, MDS provider APIs should create a GeoJSON Feature Collection where ever observed point in the route, plus a time stamp, should be included. The representation needed is below.
+To represent a route, MDS provider APIs should create a GeoJSON Feature Collection where every observed point in the route, plus a time stamp, should be included. The representation needed is below.
 
 The route must include at least 2 points, a start point and end point. Additionally, it must include all possible GPS samples collected by a provider. All points must be in WGS 84 (EPSG:4326) standard GPS projection
 
@@ -229,6 +229,31 @@ Response:
 | preferred_pick_up | Areas where users are encouraged to pick up devices |
 | preferred_drop_off | Areas where users are encouraged to drop off devices |
 
+
+
+### Geographic Data
+
+References to geographic datatypes (Point, MultiPolygon, etc.) imply coordinates encoded in the [WGS 84 (EPSG:4326)](https://en.wikipedia.org/wiki/World_Geodetic_System) standard GPS projection expressed as [Decimal Degrees](https://en.wikipedia.org/wiki/Decimal_degrees).
+
+Whenever an individual location coordinate measurement is presented, it must be
+represented as a GeoJSON [`Feature`](https://tools.ietf.org/html/rfc7946#section-3.2) object with a corresponding [`timestamp`][ts] property and [`Point`](https://tools.ietf.org/html/rfc7946#section-3.1.2) geometry:
+
+```json
+{
+    "type": "Feature",
+    "properties": {
+        "timestamp": 1529968782.421409
+    },
+    "geometry": {
+        "type": "Point",
+        "coordinates": [
+            -118.46710503101347,
+            33.9909333514159
+        ]
+    }
+}
+```
+
 ### Event Types
 
 | event_type | event_type_description |  reason | reason_description  |
@@ -254,7 +279,6 @@ For `vehicle_type`, options are:
 
 * `bike`
 * `scooter`
-* `recumbent`
 
 ### propulsion_type
 
@@ -262,6 +286,7 @@ For `propulsion_type`, options are:
 
 * `human`
 * `electric`
+* `electric_assist`
 * `combustion`
 
 ### reason_code
