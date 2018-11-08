@@ -48,6 +48,8 @@ The following keys must be used for pagination links:
 * `prev`: url to the previous page of data
 * `next`: url to the next page of data
 
+At a minimum, paginated payloads must include a `next` key, which must be set to `null` to indicate the last page of data. 
+
 ```json
 {
     "version": "x.y.z",
