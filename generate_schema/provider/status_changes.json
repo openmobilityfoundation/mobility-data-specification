@@ -42,10 +42,10 @@
               "event_location"
             ],
             "oneOf": [
-              { "$ref": "#definitions/available_event" },
-              { "$ref": "#definitions/unavailable_event" },
-              { "$ref": "#definitions/reserved_event" },
-              { "$ref": "#definitions/removed_event" }
+              { "$ref": "#/definitions/available_event" },
+              { "$ref": "#/definitions/unavailable_event" },
+              { "$ref": "#/definitions/reserved_event" },
+              { "$ref": "#/definitions/removed_event" }
             ],
             "properties": {
               "provider_name": {
