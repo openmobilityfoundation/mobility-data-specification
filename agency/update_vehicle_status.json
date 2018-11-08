@@ -1,0 +1,199 @@
+{
+  "$id": "https://raw.githubusercontent.com/CityofLosAngeles/mobility-data-specification/master/agency/update_vehicle_status.json",
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "title": "The MDS Agency Schema, update_vehicle_status payload",
+  "type": "object",
+  "definitions": {
+    "Point": {
+      "$id": "#/definitions/Point",
+      "title": "GeoJSON Point",
+      "type": "object",
+      "required": [
+        "type",
+        "coordinates"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "Point"
+          ]
+        },
+        "coordinates": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "number"
+          }
+        },
+        "bbox": {
+          "type": "array",
+          "minItems": 4,
+          "items": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "uuid": {
+      "$id": "#/definitions/uuid",
+      "type": "string",
+      "title": "A UUID 4 used to uniquely identifty an object",
+      "default": "",
+      "examples": [
+        "3c9604d6-b5ee-11e8-96f8-529269fb1459"
+      ],
+      "pattern": "^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$"
+    },
+    "battery_pct": {
+      "$id": "#/definitions/battery_pct",
+      "type": "number",
+      "description": "Percent charge of device battery, expressed between 0 and 1",
+      "default": 0.0,
+      "examples": [
+        0.89
+      ],
+      "minimum": 0,
+      "maximum": 1
+    },
+    "timestamp": {
+      "$id": "#/definitions/timestamp",
+      "title": "Floating-point seconds since Unix epoch",
+      "type": "number",
+      "minimum": 0.0
+    },
+    "available_event": {
+      "$id": "#/definitions/available_event",
+      "type": "object",
+      "description": "An event type describing a vehicle becoming available",
+      "properties": {
+        "event_type": {
+          "type": "string",
+          "description": "The type of the event",
+          "enum": [
+            "available"
+          ]
+        },
+        "event_type_reason": {
+          "type": "string",
+          "description": "The reason for the event",
+          "enum": [
+            "service_start",
+            "user_drop_off",
+            "rebalance_drop_off",
+            "maintenance_drop_off"
+          ]
+        }
+      }
+    },
+    "unavailable_event": {
+      "$id": "#/definitions/unavailable_event",
+      "type": "object",
+      "description": "An event type describing a vehicle becoming unavailable",
+      "properties": {
+        "event_type": {
+          "type": "string",
+          "description": "The type of the event",
+          "enum": [
+            "unavailable"
+          ]
+        },
+        "event_type_reason": {
+          "type": "string",
+          "description": "The reason for the event",
+          "enum": [
+            "default",
+            "low_battery",
+            "maintenance"
+          ]
+        }
+      }
+    },
+    "reserved_event": {
+      "$id": "#/definitions/reserved_event",
+      "type": "object",
+      "description": "An event type describing a vehicle becoming reserved",
+      "properties": {
+        "event_type": {
+          "type": "string",
+          "description": "The type of the event",
+          "enum": [
+            "reserved"
+          ]
+        },
+        "event_type_reason": {
+          "type": "string",
+          "description": "The reason for the event",
+          "enum": [
+            "user_pick_up"
+          ]
+        }
+      }
+    },
+    "removed_event": {
+      "$id": "#/definitions/removed_event",
+      "type": "object",
+      "description": "An event type describing a vehicle becoming removed",
+      "properties": {
+        "event_type": {
+          "type": "string",
+          "description": "The type of the event",
+          "enum": [
+            "removed"
+          ]
+        },
+        "event_type_reason": {
+          "type": "string",
+          "description": "The reason for the event",
+          "enum": [
+            "service_end",
+            "rebalance_pick_up",
+            "maintenance_pick_up"
+          ]
+        }
+      }
+    }
+  },
+  "required": [
+    "unique_id",
+    "timestamp",
+    "location",
+    "event_type",
+    "event_type_reason"
+  ],
+  "oneOf": [
+    {
+      "$ref": "#definitions/available_event"
+    },
+    {
+      "$ref": "#definitions/unavailable_event"
+    },
+    {
+      "$ref": "#definitions/reserved_event"
+    },
+    {
+      "$ref": "#definitions/removed_event"
+    }
+  ],
+  "properties": {
+    "unique_id": {
+      "$id": "#/properties/unique_id",
+      "description": "The UUID for the vehicle, unique within MDS",
+      "$ref": "#/definitions/uuid"
+    },
+    "battery_pct": {
+      "$id": "#/properties/battery_pct",
+      "$ref": "#/definitions/battery_pct"
+    },
+    "location": {
+      "$id": "#/properties/location",
+      "description": "The GPS coordinates of where the event occurred",
+      "$ref": "#/definitions/Point"
+    },
+    "timestamp": {
+      "$id": "#/properties/location",
+      "$ref": "#/definitions/timestamp"
+    }
+  },
+  "additionalProperties": false
+}

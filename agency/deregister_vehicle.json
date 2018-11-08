@@ -3,7 +3,29 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "title": "The MDS Agency Schema, deregister_vehicle payload",
   "type": "object",
-  "definitions": {},
+  "definitions": {
+    "uuid": {
+      "$id": "#/definitions/uuid",
+      "type": "string",
+      "title": "A UUID 4 used to uniquely identifty an object",
+      "default": "",
+      "examples": [
+        "3c9604d6-b5ee-11e8-96f8-529269fb1459"
+      ],
+      "pattern": "^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$"
+    },
+    "battery_pct": {
+      "$id": "#/definitions/battery_pct",
+      "type": "number",
+      "description": "Percent charge of device battery, expressed between 0 and 1",
+      "default": 0.0,
+      "examples": [
+        0.89
+      ],
+      "minimum": 0,
+      "maximum": 1
+    }
+  },
   "required": [
     "unique_id",
     "device_id",

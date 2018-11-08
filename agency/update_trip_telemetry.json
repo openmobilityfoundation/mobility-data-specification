@@ -1,0 +1,86 @@
+{
+  "$id": "https://raw.githubusercontent.com/CityofLosAngeles/mobility-data-specification/master/agency/update_trip_telemetry.json",
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "title": "The MDS Agency Schema, update_trip_telemetry payload",
+  "type": "object",
+  "definitions": {
+    "MDS_FeatureCollection_Route": {
+      "$id": "#/definitions/MDS_FeatureCollection_Route",
+      "title": "MDS GeoJSON FeatureCollection Route",
+      "type": "object",
+      "required": [
+        "type",
+        "features"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "FeatureCollection"
+          ]
+        },
+        "features": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MDS_Feature_Point"
+          },
+          "minItems": 2
+        },
+        "bbox": {
+          "type": "array",
+          "minItems": 4,
+          "items": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "uuid": {
+      "$id": "#/definitions/uuid",
+      "type": "string",
+      "title": "A UUID 4 used to uniquely identifty an object",
+      "default": "",
+      "examples": [
+        "3c9604d6-b5ee-11e8-96f8-529269fb1459"
+      ],
+      "pattern": "^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$"
+    },
+    "timestamp": {
+      "$id": "#/definitions/timestamp",
+      "title": "Floating-point seconds since Unix epoch",
+      "type": "number",
+      "minimum": 0.0
+    }
+  },
+  "required": [
+    "trip_id",
+    "timestamp",
+    "route",
+    "accuracy"
+  ],
+  "properties": {
+    "trip_id": {
+      "$id": "#/properties/trip_id",
+      "description": "The UUID for the trip.",
+      "$ref": "#/definitions/uuid"
+    },
+    "accuracy": {
+      "$id": "#/properties/accuracy",
+      "type": "integer",
+      "title": "The approximate level of accuracy, in meters, of Points within route",
+      "default": 0,
+      "examples": [
+        15
+      ]
+    },
+    "route": {
+      "$id": "#/properties/location",
+      "$ref": "#/definitions/MDS_FeatureCollection_Route"
+    },
+    "timestamp": {
+      "$id": "#/properties/location",
+      "$ref": "#/definitions/timestamp"
+    }
+  },
+  "additionalProperties": false
+}
