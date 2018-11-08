@@ -157,3 +157,106 @@ if __name__ == '__main__':
     # Write to the `provider` directory.
     with open("../provider/status_changes.json", "w") as statusfile:
         statusfile.write(json.dumps(status_changes, indent=2))
+
+    # Create the standalone register_vehicle JSON schema by including the needed definitions
+    register_vehicle = get_json_file('agency/register_vehicle.json')
+    register_vehicle["definitions"] = {
+            "propulsion_type": common["definitions"]["propulsion_type"],
+            "vehicle_type": common["definitions"]["vehicle_type"],
+            "uuid": common["definitions"]["uuid"],
+            }
+
+    # Check that it is a valid schema
+    jsonschema.Draft6Validator.check_schema(register_vehicle)
+    # Write to the `provider` directory.
+    with open("../agency/register_vehicle.json", "w") as rvfile:
+        rvfile.write(json.dumps(register_vehicle, indent=2))
+
+    # Create the standalone deregister_vehicle JSON schema by including the needed definitions
+    deregister_vehicle = get_json_file('agency/deregister_vehicle.json')
+    deregister_vehicle["definitions"] = {
+            "uuid": common["definitions"]["uuid"],
+            }
+
+    # Check that it is a valid schema
+    jsonschema.Draft6Validator.check_schema(deregister_vehicle)
+    # Write to the `provider` directory.
+    with open("../agency/deregister_vehicle.json", "w") as drvfile:
+        drvfile.write(json.dumps(deregister_vehicle, indent=2))
+
+    # Create the standalone update_vehicle_status JSON schema by including the needed definitions
+    update_vehicle_status = get_json_file('agency/update_vehicle_status.json')
+    update_vehicle_status["definitions"] = {
+            POINT: point,
+            MDS_FEATURE_POINT: mds_feature_point,
+            "uuid": common["definitions"]["uuid"],
+            "timestamp": common["definitions"]["timestamp"],
+            }
+
+    # Check that it is a valid schema
+    jsonschema.Draft6Validator.check_schema(update_vehicle_status)
+    # Write to the `provider` directory.
+    with open("../agency/update_vehicle_status.json", "w") as uvsfile:
+        uvsfile.write(json.dumps(update_vehicle_status, indent=2))
+
+
+    # Create the standalone start_trip JSON schema by including the needed definitions
+    start_trip = get_json_file('agency/start_trip.json')
+    start_trip["definitions"] = {
+            POINT: point,
+            MDS_FEATURE_POINT: mds_feature_point,
+            "uuid": common["definitions"]["uuid"],
+            "timestamp": common["definitions"]["timestamp"],
+            }
+
+    # Check that it is a valid schema
+    jsonschema.Draft6Validator.check_schema(start_trip)
+    # Write to the `provider` directory.
+    with open("../agency/start_trip.json", "w") as stfile:
+        stfile.write(json.dumps(start_trip, indent=2))
+
+
+    # Create the standalone end_trip JSON schema by including the needed definitions
+    end_trip = get_json_file('agency/end_trip.json')
+    end_trip["definitions"] = {
+            POINT: point,
+            MDS_FEATURE_POINT: mds_feature_point,
+            "uuid": common["definitions"]["uuid"],
+            "timestamp": common["definitions"]["timestamp"],
+            }
+
+    # Check that it is a valid schema
+    jsonschema.Draft6Validator.check_schema(end_trip)
+    # Write to the `provider` directory.
+    with open("../agency/end_trip.json", "w") as etfile:
+        etfile.write(json.dumps(end_trip, indent=2))
+
+
+    # Create the standalone update_trip_telemetry JSON schema by including the needed definitions
+    update_trip_telemetry = get_json_file('agency/update_trip_telemetry.json')
+    update_trip_telemetry["definitions"] = {
+            POINT: point,
+            MDS_FEATURE_POINT: mds_feature_point,
+            MDS_FEATURECOLLECTION_ROUTE: mds_feature_collection_route,
+            "uuid": common["definitions"]["uuid"],
+            "timestamp": common["definitions"]["timestamp"],
+            }
+
+    # Check that it is a valid schema
+    jsonschema.Draft6Validator.check_schema(update_trip_telemetry)
+    # Write to the `provider` directory.
+    with open("../agency/update_trip_telemetry.json", "w") as uttfile:
+        uttfile.write(json.dumps(update_trip_telemetry, indent=2))
+
+
+    # Create the standalone service_areas JSON schema by including the needed definitions
+    service_areas = get_json_file('agency/service_areas.json')
+    service_areas["definitions"] = {
+            "uuid": common["definitions"]["uuid"],
+            }
+
+    # Check that it is a valid schema
+    jsonschema.Draft6Validator.check_schema(service_areas)
+    # Write to the `provider` directory.
+    with open("../agency/service_areas.json", "w") as safile:
+        safile.write(json.dumps(service_areas, indent=2))

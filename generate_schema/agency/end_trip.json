@@ -1,0 +1,43 @@
+{
+  "$id": "https://raw.githubusercontent.com/CityofLosAngeles/mobility-data-specification/master/agency/end_trip.json",
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "title": "The MDS Agency Schema, end_trip payload",
+  "type": "object",
+  "definitions": {},
+  "required": [
+    "trip_id",
+    "timestamp",
+    "location",
+    "accuracy"
+  ],
+  "properties": {
+    "trip_id": {
+      "$id": "#/properties/trip_id",
+      "description": "The UUID for the trip.",
+      "$ref": "#/definitions/uuid"
+    },
+    "battery_pct_end": {
+      "$id": "#/properties/battery_pct_end",
+      "$ref": "#/definitions/battery_pct"
+    },
+    "accuracy": {
+      "$id": "#/properties/accuracy",
+      "type": "integer",
+      "title": "The approximate level of accuracy, in meters, of Points within route",
+      "default": 0,
+      "examples": [
+        15
+      ]
+    },
+    "location": {
+      "$id": "#/properties/location",
+      "description": "The GPS coordinates of where the event occurred",
+      "$ref": "#/definitions/MDS_Feature_Point"
+    },
+    "timestamp": {
+      "$id": "#/properties/location",
+      "$ref": "#/definitions/timestamp"
+    }
+  },
+  "additionalProperties": false
+}

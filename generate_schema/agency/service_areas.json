@@ -1,0 +1,23 @@
+{
+  "$id": "https://raw.githubusercontent.com/CityofLosAngeles/mobility-data-specification/master/agency/service_areas.json",
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "title": "The MDS Agency Schema, service_areas payload",
+  "type": "object",
+  "definitions": {},
+  "required": [
+    "provider_id"
+  ],
+  "properties": {
+    "provider_id": {
+      "$id": "#/properties/provider_id",
+      "description": "The UUID for the Provider, unique within MDS",
+      "$ref": "#/definitions/uuid"
+    },
+    "service_area_id": {
+      "$id": "#/properties/service_area_id",
+      "description": "An optional UUID for a service area to check for the provider",
+      "$ref": "#/definitions/uuid"
+    }
+  },
+  "additionalProperties": false
+}

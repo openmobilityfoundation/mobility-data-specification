@@ -1,0 +1,157 @@
+{
+  "$id": "https://raw.githubusercontent.com/CityofLosAngeles/mobility-data-specification/master/agency/update_trip_telemetry.json",
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "title": "The MDS Agency Schema, update_trip_telemetry payload",
+  "type": "object",
+  "definitions": {
+    "Point": {
+      "$id": "#/definitions/Point",
+      "title": "GeoJSON Point",
+      "type": "object",
+      "required": [
+        "type",
+        "coordinates"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "Point"
+          ]
+        },
+        "coordinates": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "number"
+          }
+        },
+        "bbox": {
+          "type": "array",
+          "minItems": 4,
+          "items": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "MDS_Feature_Point": {
+      "$id": "#/definitions/MDS_Feature_Point",
+      "title": "MDS GeoJSON Feature Point",
+      "type": "object",
+      "required": [
+        "type",
+        "properties",
+        "geometry"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "Feature"
+          ]
+        },
+        "properties": {
+          "type": "object",
+          "required": [
+            "timestamp"
+          ],
+          "properties": {
+            "timestamp": {
+              "$ref": "#/definitions/timestamp"
+            }
+          }
+        },
+        "geometry": {
+          "$ref": "#/definitions/Point"
+        },
+        "bbox": {
+          "type": "array",
+          "minItems": 4,
+          "items": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "MDS_FeatureCollection_Route": {
+      "$id": "#/definitions/MDS_FeatureCollection_Route",
+      "title": "MDS GeoJSON FeatureCollection Route",
+      "type": "object",
+      "required": [
+        "type",
+        "features"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "FeatureCollection"
+          ]
+        },
+        "features": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MDS_Feature_Point"
+          },
+          "minItems": 2
+        },
+        "bbox": {
+          "type": "array",
+          "minItems": 4,
+          "items": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "uuid": {
+      "$id": "#/definitions/uuid",
+      "type": "string",
+      "title": "A UUID 4 used to uniquely identifty an object",
+      "default": "",
+      "examples": [
+        "3c9604d6-b5ee-11e8-96f8-529269fb1459"
+      ],
+      "pattern": "^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$"
+    },
+    "timestamp": {
+      "$id": "#/definitions/timestamp",
+      "title": "Integer milliseconds since Unix epoch",
+      "type": "number",
+      "multipleOf": 1.0,
+      "minimum": 0
+    }
+  },
+  "required": [
+    "trip_id",
+    "timestamp",
+    "route",
+    "accuracy"
+  ],
+  "properties": {
+    "trip_id": {
+      "$id": "#/properties/trip_id",
+      "description": "The UUID for the trip.",
+      "$ref": "#/definitions/uuid"
+    },
+    "accuracy": {
+      "$id": "#/properties/accuracy",
+      "type": "integer",
+      "title": "The approximate level of accuracy, in meters, of Points within route",
+      "default": 0,
+      "examples": [
+        15
+      ]
+    },
+    "route": {
+      "$id": "#/properties/location",
+      "$ref": "#/definitions/MDS_FeatureCollection_Route"
+    },
+    "timestamp": {
+      "$id": "#/properties/location",
+      "$ref": "#/definitions/timestamp"
+    }
+  },
+  "additionalProperties": false
+}
