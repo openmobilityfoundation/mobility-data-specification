@@ -1,0 +1,78 @@
+{
+  "$id": "https://raw.githubusercontent.com/CityofLosAngeles/mobility-data-specification/master/agency/register_vehicle.json",
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "title": "The MDS Agency Schema, register_vehicle payload",
+  "type": "object",
+  "definitions": {},
+  "required": [
+    "unique_id",
+    "provider_id",
+    "vehicle_id",
+    "vehicle_type",
+    "vehicle_year",
+    "vehicle_mfgr",
+    "vehicle_model"
+  ],
+  "properties": {
+    "unique_id": {
+      "$id": "#/properties/unique_id",
+      "description": "The UUID for the vehicle, unique within MDS",
+      "$ref": "#/definitions/uuid"
+    },
+    "provider_id": {
+      "$id": "#/properties/provider_id",
+      "description": "The UUID for the Provider, unique within MDS",
+      "$ref": "#/definitions/uuid"
+    },
+    "vehicle_id": {
+      "$id": "#/properties/vehicle_id",
+      "type": "string",
+      "description": "The Vehicle Identification Number visible on the vehicle itself",
+      "default": "",
+      "examples": [
+        "ABC123"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "vehicle_type": {
+      "$id": "#/properties/vehicle_type",
+      "$ref": "#/definitions/vehicle_type",
+      "description": "The type of vehicle"
+    },
+    "propulsion_type": {
+      "$id": "#/properties/propulsion_type",
+      "description": "The type of propulsion; allows multiple values",
+      "$ref": "#/definitions/propulsion_type"
+    },
+    "vehicle_year": {
+      "$id": "#/properties/vehicle_id",
+      "type": "integer",
+      "description": "The year the vehicle was manufactured",
+      "default": 1970,
+      "examples": [
+        2018
+      ]
+    },
+    "vehicle_mfgr": {
+      "$id": "#/properties/vehicle_mfgr",
+      "type": "string",
+      "description": "The vehicle manufacturer",
+      "default": "",
+      "examples": [
+        "ABC123"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "vehicle_model": {
+      "$id": "#/properties/vehicle_model",
+      "type": "string",
+      "description": "The vehicle model",
+      "default": "",
+      "examples": [
+        "ABC123"
+      ],
+      "pattern": "^(.*)$"
+    }
+  },
+  "additionalProperties": false
+}

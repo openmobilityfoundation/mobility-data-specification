@@ -148,6 +148,7 @@ if __name__ == '__main__':
             "vehicle_type": common["definitions"]["vehicle_type"],
             "version": common["definitions"]["version"],
             "uuid": common["definitions"]["uuid"],
+            "battery_pct": common["definitions"]["battery_pct"],
             "available_event": common["definitions"]["available_event"],
             "unavailable_event": common["definitions"]["unavailable_event"],
             "reserved_event": common["definitions"]["reserved_event"],
@@ -159,3 +160,30 @@ if __name__ == '__main__':
     # Write to the `provider` directory.
     with open("../provider/status_changes.json", "w") as statusfile:
         statusfile.write(json.dumps(status_changes, indent=2))
+
+    # Create the standalone register_vehicle JSON schema by including the needed definitions
+    register_vehicle = get_json_file('agency/register_vehicle.json')
+    register_vehicle["definitions"] = {
+            "propulsion_type": common["definitions"]["propulsion_type"],
+            "vehicle_type": common["definitions"]["vehicle_type"],
+            "uuid": common["definitions"]["uuid"],
+            }
+
+    # Check that it is a valid schema
+    jsonschema.Draft6Validator.check_schema(register_vehicle)
+    # Write to the `provider` directory.
+    with open("../agency/register_vehicle.json", "w") as rvfile:
+        rvfile.write(json.dumps(register_vehicle, indent=2))
+
+    # Create the standalone deregister_vehicle JSON schema by including the needed definitions
+    deregister_vehicle = get_json_file('agency/deregister_vehicle.json')
+    deregister_vehicle["definitions"] = {
+            "uuid": common["definitions"]["uuid"],
+            "battery_pct": common["definitions"]["battery_pct"],
+            }
+
+    # Check that it is a valid schema
+    jsonschema.Draft6Validator.check_schema(deregister_vehicle)
+    # Write to the `provider` directory.
+    with open("../agency/deregister_vehicle.json", "w") as rvfile:
+        rvfile.write(json.dumps(deregister_vehicle, indent=2))
