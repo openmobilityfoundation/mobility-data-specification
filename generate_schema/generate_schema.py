@@ -192,6 +192,7 @@ if __name__ == '__main__':
     update_vehicle_status = get_json_file('agency/update_vehicle_status.json')
     update_vehicle_status["definitions"] = {
             POINT: point,
+            MDS_FEATURE_POINT: mds_feature_point,
             "uuid": common["definitions"]["uuid"],
             "battery_pct": common["definitions"]["battery_pct"],
             "timestamp": common["definitions"]["timestamp"],
@@ -212,6 +213,7 @@ if __name__ == '__main__':
     start_trip = get_json_file('agency/start_trip.json')
     start_trip["definitions"] = {
             POINT: point,
+            MDS_FEATURE_POINT: mds_feature_point,
             "uuid": common["definitions"]["uuid"],
             "battery_pct": common["definitions"]["battery_pct"],
             "timestamp": common["definitions"]["timestamp"],
@@ -228,6 +230,7 @@ if __name__ == '__main__':
     end_trip = get_json_file('agency/end_trip.json')
     end_trip["definitions"] = {
             POINT: point,
+            MDS_FEATURE_POINT: mds_feature_point,
             "uuid": common["definitions"]["uuid"],
             "battery_pct": common["definitions"]["battery_pct"],
             "timestamp": common["definitions"]["timestamp"],
@@ -243,6 +246,8 @@ if __name__ == '__main__':
     # Create the standalone update_trip_telemetry JSON schema by including the needed definitions
     update_trip_telemetry = get_json_file('agency/update_trip_telemetry.json')
     update_trip_telemetry["definitions"] = {
+            POINT: point,
+            MDS_FEATURE_POINT: mds_feature_point,
             MDS_FEATURECOLLECTION_ROUTE: mds_feature_collection_route,
             "uuid": common["definitions"]["uuid"],
             "timestamp": common["definitions"]["timestamp"],

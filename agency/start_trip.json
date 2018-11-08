@@ -35,6 +35,52 @@
         }
       }
     },
+    "MDS_Feature_Point": {
+      "$id": "#/definitions/MDS_Feature_Point",
+      "title": "MDS GeoJSON Feature Point",
+      "type": "object",
+      "required": [
+        "type",
+        "properties",
+        "geometry"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "Feature"
+          ]
+        },
+        "properties": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "object"
+            }
+          ],
+          "required": [
+            "timestamp"
+          ],
+          "properties": {
+            "timestamp": {
+              "$ref": "#/definitions/timestamp"
+            }
+          }
+        },
+        "geometry": {
+          "$ref": "#/definitions/Point"
+        },
+        "bbox": {
+          "type": "array",
+          "minItems": 4,
+          "items": {
+            "type": "number"
+          }
+        }
+      }
+    },
     "uuid": {
       "$id": "#/definitions/uuid",
       "type": "string",
@@ -108,7 +154,7 @@
     "location": {
       "$id": "#/properties/location",
       "description": "The GPS coordinates of where the event occurred",
-      "$ref": "#/definitions/Point"
+      "$ref": "#/definitions/MDS_Feature_Point"
     },
     "timestamp": {
       "$id": "#/properties/location",

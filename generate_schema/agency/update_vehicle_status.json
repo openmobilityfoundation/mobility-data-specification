@@ -30,7 +30,7 @@
     "location": {
       "$id": "#/properties/location",
       "description": "The GPS coordinates of where the event occurred",
-      "$ref": "#/definitions/Point"
+      "$ref": "#/definitions/MDS_Feature_Point"
     },
     "timestamp": {
       "$id": "#/properties/location",
