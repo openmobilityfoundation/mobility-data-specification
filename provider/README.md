@@ -15,6 +15,8 @@ The following information applies to all `provider` API endpoints. Details on pr
 
 ### Response Format
 
+The response to a client request must include a status code defined in the [IANA HTTP Status Code Registry](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml).
+
 Responses must be `UTF-8` encoded `application/json` and must minimally include the MDS `version` and a `data` payload:
 
 ```json
