@@ -14,7 +14,7 @@ The specification is a way to implement realtime data sharing, measurement and r
 
 Cities and regulators can choose best how to implement *Agency* and *Provider* either separately, concurrently, or by endpoint. 
 
-The specification will be versioned using Git tags and [semantic versioning](https://semver.org/). See the list of [releases](https://github.com/CityOfLosAngeles/mobility-data-specification/releases) for more information.
+The specification will be versioned using Git tags and [semantic versioning](https://semver.org/). See prior [releases](https://github.com/CityOfLosAngeles/mobility-data-specification/releases) and the [Release Guidelines](ReleaseGuidelines.md) for more information.
 
 ## Roadmap
 
@@ -36,7 +36,7 @@ The City of Los Angeles is currently looking for feedback and comments on the dr
 
 ### City of Santa Monica
 * [`mds-provider`](https://github.com/cityofsantamonica/mds-provider) - Python package implementing the provider API, validation using JSONSchema, data loading to multiple targets, and fake provider data generation.
-* [`mds-provider-services`](https://github.com/cityofsantamonica/mds-provider-services) - Python scripts wrapped in Docker containers implementing an MDS provider data ingestion flow, using `mds-provider` and handling the various dependencies.
+* [`mds-provider-services`](https://github.com/cityofsantamonica/mds-provider-services) - Python scripts wrapped in Docker containers implementing a MDS provider data ingestion flow, using `mds-provider` and handling the various dependencies.
 
 ### Others
 
