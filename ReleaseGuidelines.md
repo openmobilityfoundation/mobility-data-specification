@@ -60,30 +60,44 @@ release should not surprise anyone that wishes to be informed. To that end, rele
 
 * Be PR-driven, to give the community ample awareness and time for feedback
 
+* Be announced on the [`mds-announce`][mds-announce] Google Group
+
 More detail on this can be read in the Release Checklist below.
 
 ## Release Checklist
 
 The following steps **must** be followed for **every** release of MDS:
 
-1. Ensure the [Milestone][mds-milestones] for this release is at `100%`
+1. Ensure the [Milestone][mds-milestones] for this release is at `100%`.
 
-1. Run the schema generator to ensure the schema files are up to date
+1. Run the schema generator to ensure the schema files are up to date:
 
    ```console
    cd generate_schema/
    pipenv run python generate_provider_schema.py
    ```
 
-1. Update [`ReleaseNotes.md`](ReleaseNotes.md) following the existing format
+1. Update [`ReleaseNotes.md`](ReleaseNotes.md) following the existing format:
+
+    ```md
+    ## 1.2.3
+
+    > Released yyyy-MM-dd
+
+    High level summary of the release.
+
+    * Specific change referencing a PR [#555](https://github.com/CityofLosAngeles/mobility-data-specification/pull/555)
+
+    * Another change summary referencing a PR [#777](https://github.com/CityofLosAngeles/mobility-data-specification/pull/777)
+    ```
 
 1. [Open a PR][mds-pr-new] against `master`, comparing either `dev` (for a MINOR release) or a release branch (e.g. `0.2.x`) for a PATCH release.
 
     In the case of a new MINOR version, allow a minimum of 24 hours for community discussion and review of the PR.
 
-1. Once the PR has been sufficiently reviewed, `rebase merge` into `master`
+1. Once the PR has been sufficiently reviewed, `rebase merge` into `master`.
 
-1. Create a tag on the tip of `master` for this release, e.g. for `0.3.0`
+1. Create a tag on the tip of `master` for this release, e.g. for `0.3.0`:
 
     ```console
     git checkout master
@@ -92,12 +106,12 @@ The following steps **must** be followed for **every** release of MDS:
     git push --tags
     ```
 
-1. Publish a [new Release in GitHub][mds-releases-new] for the tag you just pushed. Copy in the release notes from Step 3.
+1. Publish a [new Release in GitHub][mds-releases-new] for the tag you just pushed. Copy in the [release notes](ReleaseNotes.md) created earlier.
 
 1. What kind of release was this?
    * **PATCH:** rebase `dev` onto `master` to incorporate the PATCH into `dev`
 
-       *Caution: be aware that this may impact existing PRs open against `dev`*
+       *Caution: be aware that this may impact existing PRs open against `dev`!*
 
         ```console
         git checkout dev
@@ -117,6 +131,21 @@ The following steps **must** be followed for **every** release of MDS:
 
        Remove any outgoing series' release branch (e.g. `0.1.x` when releasing `0.3.0`), if applicable.
 
+1. Post a release announcement to [`mds-announce`](mailto:mds-announce@googlegroups.com), copying the [release notes](ReleaseNotes.md) created earlier and linking to the [GitHub release][mds-releases].
+
+    ```email
+    From:    mds-announce@googlegroups.com  
+    To:      mds-announce@googlegroups.com  
+    Subject: MDS 1.2.3 Release  
+
+    MDS 1.2.3 has been released.
+
+    <release notes>
+
+    <link to GitHub release>
+    ```
+
+[mds-announce]: https://groups.google.com/forum/#!forum/mds-announce
 [mds-dev]: https://github.com/CityOfLosAngeles/mobility-data-specification/tree/dev
 [mds-master]: https://github.com/CityOfLosAngeles/mobility-data-specification/tree/master
 [mds-milestones]: https://github.com/CityOfLosAngeles/mobility-data-specification/milestones

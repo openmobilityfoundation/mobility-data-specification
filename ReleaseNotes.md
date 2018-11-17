@@ -1,4 +1,6 @@
-### 0.1.1 (Released 2018/10/15)
+## 0.1.1
+
+> Released 2018-10-15
 
 This release backports two features from [`0.2.0`](https://github.com/CityOfLosAngeles/mobility-data-specification/releases/tag/0.2.0):
 
@@ -8,7 +10,9 @@ This release backports two features from [`0.2.0`](https://github.com/CityOfLosA
 
 This makes MDS `0.1.x` series more usable for Mobility Providers.
 
-### 0.2.0 (Released 2018/10/01)
+## 0.2.0
+
+> Released 2018-10-01
 
 This release includes a number of enhancements and clarifications to the [`provider`][provider] spec:
 
@@ -24,7 +28,9 @@ This release includes a number of enhancements and clarifications to the [`provi
 
 * Clarify the `associated_trips` field in Status Changes [#96](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/96)
 
-### 0.1.0 (Released 2018/09/11)
+## 0.1.0
+
+> Released 2018-09-11
 
 * Initial release!
 
