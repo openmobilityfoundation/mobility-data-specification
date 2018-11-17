@@ -46,5 +46,7 @@ Please open a pull request if you create open source or private MDS tooling.
 
 Questions can be directed to jose.elias@lacity.org. 
 
+To stay up to date on MDS releases, please subscribe to the [MDS-Announce](https://groups.google.com/forum/#!forum/mds-announce) mailing list. 
+
 [agency]: /agency/README.md
 [provider]: /provider/README.md
