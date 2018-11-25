@@ -41,6 +41,8 @@ The City of Los Angeles is currently looking for feedback and comments on the dr
 
 Please open a pull request if you create open source or private MDS tooling. 
 
+* [`midas`](https://github.com/polyconseil/midas) - Python/Django open source server for the [`agency`][agency] API, developped by BlueSystems.
+
 ## Contact
 
 Questions can be directed to jose.elias@lacity.org. 
