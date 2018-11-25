@@ -108,10 +108,9 @@
     },
     "timestamp": {
       "$id": "#/definitions/timestamp",
-      "title": "Integer seconds since Unix epoch",
+      "title": "Floating-point seconds since Unix epoch",
       "type": "number",
-      "multiple_of": 1.0, 
-      "minimum": 1483228800 
+      "minimum": 0.0
     }
   }
 }
