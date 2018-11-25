@@ -47,7 +47,7 @@
       "properties": {
         "type": {
           "type": "string",
-          "emum": [
+          "enum": [
             "Feature"
           ]
         },
@@ -85,7 +85,7 @@
       "properties": {
         "type": {
           "type": "string",
-          "emum": [
+          "enum": [
             "FeatureCollection"
           ]
         },
