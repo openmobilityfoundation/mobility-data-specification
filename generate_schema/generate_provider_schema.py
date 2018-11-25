@@ -53,7 +53,6 @@ def get_feature_schema(id=None, title=None, geometry=None, properties=None, requ
 
     f_properties = feature["properties"]["properties"]
     if required is not None:
-        del f_properties["oneOf"]
         f_properties["required"] = required
     if properties is not None:
         f_properties["properties"] = properties

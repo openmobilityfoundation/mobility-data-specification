@@ -52,6 +52,14 @@
           ]
         },
         "properties": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "object"
+            }
+          ],
           "required": [
             "timestamp"
           ],
