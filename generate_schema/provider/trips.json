@@ -123,13 +123,21 @@
               },
               "start_time": {
                 "$id": "#/properties/data/properties/trips/items/properties/start_time",
+                "type": "number",
                 "description": "The time the trip began, expressed as a Unix Timestamp",
-                "$ref": "#/definitions/timestamp"
+                "default": 0.0,
+                "examples": [
+                  1529968782.421409
+                ]
               },
               "end_time": {
                 "$id": "#/properties/data/properties/trips/items/properties/end_time",
+                "type": "number",
                 "description": "The time the trip ended, expressed as a Unix Timestamp",
-                "$ref": "#/definitions/timestamp"
+                "default": 0.0,
+                "examples": [
+                  1531007628.3774529
+                ]
               },
               "parking_verification_url": {
                 "$id": "#/properties/data/properties/trips/items/properties/parking_verification_url",
