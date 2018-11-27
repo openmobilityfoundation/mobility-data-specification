@@ -143,17 +143,6 @@ The trips API should allow querying trips with a combination of query parameters
 * `vehicle_id`
 * `min_end_time`: filters for trips where `end_time` occurs at or after the given time
 * `max_end_time`: filters for trips where `end_time` occurs before the given time
-* `bbox`
-
-All of these query params will use the *Type* listed above with the exception of `bbox`, which is the bounding-box.
-
-For example:
-
-```
-bbox=-122.4183,37.7758,-122.4120,37.7858
-```
-
-Gets all trips within that bounding-box where any point inside the `route` is inside said box. The order is defined as: southwest longitude, southwest latitude, northeast longitude, northeast latitude (separated by commas).
 
 ### Vehicle Types
 
@@ -243,13 +232,6 @@ The status_changes API should allow querying status changes with a combination o
 
 * `start_time`: filters for status changes where `event_time` occurs at or after the given time
 * `end_time`: filters for status changes where `event_time` occurs before the given time
-* `bbox`: filters for status changes where `event_location` is within defined bounding-box. The order is definied as: southwest longitude, southwest latitude, northeast longitude, northeast latitude (separated by commas). 
-
-Example:
-
-```
-bbox=-122.4183,37.7758,-122.4120,37.7858
-```
 
 ### Event Types
 
