@@ -1,3 +1,20 @@
+## 0.2.1
+
+> Released 2018-12-03
+
+This release is the first patch release of MDS 0.2. 
+
+We did not chose to include the `timestamp` change, as discussed in issue #104, because it is breaking. Early versions of this branch included that change. The change will be made in MDS 0.3.0. 
+
+**CHANGES**
+
+* Release Guidelines. Ref  #147 #129 
+* Many Validator Fixes/Null Fixes. Ref #166 #165 #128 
+* Many Clarifications / Cleanup to make the spec easier to read. 
+* JSON Schema is now much closer to the written spec, fails on Null if required, doesn't fail if field is not required. 
+
+Thanks to all contributors. 
+
 ## 0.1.1
 
 > Released 2018-10-15
