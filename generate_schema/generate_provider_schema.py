@@ -5,6 +5,7 @@ When run, makes standalone schemas for the MDS provider API.
 """
 
 import json
+import jsonschema
 import requests
 
 POINT = "Point"
@@ -52,6 +53,8 @@ def get_feature_schema(id=None, title=None, geometry=None, properties=None, requ
 
     f_properties = feature["properties"]["properties"]
     if required is not None:
+        del f_properties["oneOf"]
+        f_properties["type"] = "object"
         f_properties["required"] = required
     if properties is not None:
         f_properties["properties"] = properties
@@ -128,6 +131,9 @@ if __name__ == '__main__':
             "version": common["definitions"]["version"],
             "uuid": common["definitions"]["uuid"],
             }
+
+    # Check that it is a valid schema
+    jsonschema.Draft6Validator.check_schema(trips)
     # Write to the `provider` directory.
     with open("../provider/trips.json", "w") as tripfile:
         tripfile.write(json.dumps(trips, indent=2))
@@ -145,6 +151,9 @@ if __name__ == '__main__':
             "version": common["definitions"]["version"],
             "uuid": common["definitions"]["uuid"],
             }
+
+    # Check that it is a valid schema
+    jsonschema.Draft6Validator.check_schema(status_changes)
     # Write to the `provider` directory.
     with open("../provider/status_changes.json", "w") as statusfile:
         statusfile.write(json.dumps(status_changes, indent=2))

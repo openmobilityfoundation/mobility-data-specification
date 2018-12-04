@@ -7,6 +7,7 @@ This specification contains a data standard for *mobility as a service* provider
 * [General Information](#general-information)
 * [Trips](#trips)
 * [Status Changes](#status-changes)
+* [Realtime Data](#realtime-data)
 
 ## General Information
 
@@ -46,6 +47,8 @@ The following keys must be used for pagination links:
 * `last`: url to the last page of data
 * `prev`: url to the previous page of data
 * `next`: url to the next page of data
+
+At a minimum, paginated payloads must include a `next` key, which must be set to `null` to indicate the last page of data. 
 
 ```json
 {
@@ -111,7 +114,9 @@ The trips API allows a user to query historical trip data.
 
 Endpoint: `/trips`  
 Method: `GET`  
-Response: See the [`trips` schema][trips-schema] for the expected format.
+Schema: [`trips` schema][trips-schema]  
+`data` Payload: `{ "trips": [] }`, an array of objects with the following structure  
+
 
 | Field | Type    | Required/Optional | Comments |
 | ----- | -------- | ----------------- | ----- |
@@ -138,8 +143,8 @@ The trips API should allow querying trips with a combination of query parameters
 
 * `device_id`
 * `vehicle_id`
-* `start_time`
-* `end_time`
+* `start_time`: filters for trips where `start_time` occurs at or after the given time
+* `end_time`: filters for trips where `end_time` occurs at or before the given time
 * `bbox`
 
 All of these query params will use the *Type* listed above with the exception of `bbox`, which is the bounding-box.
@@ -161,12 +166,14 @@ Gets all trips within that bounding-box where any point inside the `route` is in
 
 ### Propulsion Types
 
-| `propulsion_type` |
-|-----------------|
-| human           |
-| electric_assist |
-| electric        |
-| combustion      |
+| `propulsion_type` | Description |
+| ----------------- | ----------------- |
+| human           | Pedal or foot propulsion |
+| electric_assist | Provides power only alongside human propulsion |
+| electric        | Contains throttle mode with a battery-powered motor |
+| combustion      | Contains throttle mode with a gas engine-powered motor |
+
+A device may have one or more values from the `propulsion_type`, depending on the number of modes of operation. For example, a scooter that can be powered by foot or by electric motor would have the `propulsion_type` represented by the array `['human', 'electric']`. A bicycle with pedal-assist would have the `propulsion_type` represented by the array `['human', 'electric_assist']` if it can also be operated as a traditional bicycle.
 
 ### Routes
 
@@ -216,7 +223,8 @@ This API allows a user to query the historical availability for a system within 
 
 Endpoint: `/status_changes`  
 Method: `GET`  
-Response: See the [`status_changes` schema][sc-schema] for the expected format.
+Schema: [`status_changes` schema][sc-schema]  
+`data` Payload: `{ "status_changes": [] }`, an array of objects with the following structure
 
 | Field | Type | Required/Optional | Comments |
 | ----- | ---- | ----------------- | ----- |
@@ -237,20 +245,15 @@ Response: See the [`status_changes` schema][sc-schema] for the expected format.
 
 The status_changes API should allow querying status changes with a combination of query parameters.
 
-* `start_time`
-* `end_time`
-* `bbox`
+* `start_time`: filters for status changes where `event_time` occurs at or after the given time
+* `end_time`: filters for status changes where `event_time` occurs at or before the given time
+* `bbox`: filters for status changes where `event_location` is within defined bounding-box. The order is definied as: southwest longitude, southwest latitude, northeast longitude, northeast latitude (separated by commas). 
 
-The `time` parameters can be provided as timestamps individually or together. 
-
-`bbox` is the bounding-box, for example:
+Example:
 
 ```
 bbox=-122.4183,37.7758,-122.4120,37.7858
 ```
-
-Gets all status changes with an `event_location` within that bounding-box. The order is definied as: southwest longitude, southwest latitude, northeast longitude, northeast latitude (separated by commas). 
-
 
 ### Event Types
 
@@ -267,9 +270,15 @@ Gets all status changes with an `event_location` within that bounding-box. The o
 | | | `rebalance_pick_up` | Device removed from street and will be placed at another location to rebalance service |
 | | | `maintenance_pick_up` | Device removed from street so it can be worked on |
 
-### Realtime Data
+## Realtime Data
 
-All MDS compatible `provider` APIs must expose a [GBFS](https://github.com/NABSA/gbfs) feed as well. For historical data, a `time` parameter should be provided to access what the GBFS feed showed at a given time.
+All MDS compatible `provider` APIs must expose a public [GBFS](https://github.com/NABSA/gbfs) feed as well. Given that GBFS hasn't fully [evolved to support dockless mobility](https://github.com/NABSA/gbfs/pull/92) yet, we follow the current guidelines in making bike information avaliable to the public. 
+
+  - `system_information.json` is always required
+  - `free_bike_status.json` is required for MDS
+  - `station_information.json` and `station_status.json` don't apply for MDS
+
+
 
 [Top][toc]
 

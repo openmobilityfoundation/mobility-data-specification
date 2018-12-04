@@ -47,7 +47,7 @@
       "properties": {
         "type": {
           "type": "string",
-          "emum": [
+          "enum": [
             "Feature"
           ]
         },
@@ -77,42 +77,53 @@
     "links": {
       "$id": "#/definitions/links",
       "type": "object",
+      "required": [
+        "next"
+      ],
       "properties": {
         "first": {
           "$id": "#/definitions/links/first",
-          "type": "string",
+          "type": [
+            "null",
+            "string"
+          ],
           "title": "The URL to the first page of data",
           "examples": [
             "https://data.provider.co/trips/first"
           ],
-          "format": "uri",
-          "pattern": "^(.*)$"
+          "format": "uri"
         },
         "last": {
           "$id": "#/definitions/links/last",
-          "type": "string",
+          "type": [
+            "null",
+            "string"
+          ],
           "title": "The URL to the last page of data",
           "examples": [
             "https://data.provider.co/trips/last"
           ],
-          "format": "uri",
-          "pattern": "^(.*)$"
+          "format": "uri"
         },
         "prev": {
           "$id": "#/definitions/links/prev",
-          "type": "string",
+          "type": [
+            "null",
+            "string"
+          ],
           "title": "The URL to the previous page of data",
           "examples": [
             "https://data.provider.co/trips/prev"
           ],
-          "format": "uri",
-          "pattern": "^(.*)$"
+          "format": "uri"
         },
         "next": {
           "$id": "#/definitions/links/next",
-          "type": "string",
+          "type": [
+            "null",
+            "string"
+          ],
           "title": "The URL to the next page of data",
-          "default": "",
           "examples": [
             "https://data.provider.co/trips/next"
           ],
@@ -169,7 +180,6 @@
       "examples": [
         "3c9604d6-b5ee-11e8-96f8-529269fb1459"
       ],
-      "format": "uri",
       "pattern": "^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$"
     }
   },
@@ -209,6 +219,86 @@
               "event_type_reason",
               "event_time",
               "event_location"
+            ],
+            "oneOf": [
+              {
+                "properties": {
+                  "event_type": {
+                    "type": "string",
+                    "description": "The type of the event",
+                    "enum": [
+                      "available"
+                    ]
+                  },
+                  "event_type_reason": {
+                    "type": "string",
+                    "description": "The reason for the event",
+                    "enum": [
+                      "service_start",
+                      "user_drop_off",
+                      "rebalance_drop_off",
+                      "maintenance_drop_off"
+                    ]
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "event_type": {
+                    "type": "string",
+                    "description": "The type of the event",
+                    "enum": [
+                      "reserved"
+                    ]
+                  },
+                  "event_type_reason": {
+                    "type": "string",
+                    "description": "The reason for the event",
+                    "enum": [
+                      "user_pick_up"
+                    ]
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "event_type": {
+                    "type": "string",
+                    "description": "The type of the event",
+                    "enum": [
+                      "unavailable"
+                    ]
+                  },
+                  "event_type_reason": {
+                    "type": "string",
+                    "description": "The reason for the event",
+                    "enum": [
+                      "low_battery",
+                      "maintenance"
+                    ]
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "event_type": {
+                    "type": "string",
+                    "description": "The type of the event",
+                    "enum": [
+                      "removed"
+                    ]
+                  },
+                  "event_type_reason": {
+                    "type": "string",
+                    "description": "The reason for the event",
+                    "enum": [
+                      "service_end",
+                      "rebalance_pick_up",
+                      "maintenance_pick_up"
+                    ]
+                  }
+                }
+              }
             ],
             "properties": {
               "provider_name": {
@@ -250,34 +340,6 @@
                 "description": "The type of propulsion; allows multiple values",
                 "$ref": "#/definitions/propulsion_type"
               },
-              "event_type": {
-                "$id": "#/properties/data/properties/status_changes/items/properties/event_type",
-                "type": "string",
-                "description": "The type of the event",
-                "enum": [
-                  "available",
-                  "reserved",
-                  "unavailable",
-                  "removed"
-                ]
-              },
-              "event_type_reason": {
-                "$id": "#/properties/data/properties/status_changes/items/properties/event_type_reason",
-                "type": "string",
-                "description": "The reason for the event",
-                "enum": [
-                  "service_start",
-                  "user_drop_off",
-                  "rebalance_drop_off",
-                  "maintenance_drop_off",
-                  "user_pick_up",
-                  "maintenance",
-                  "low_battery",
-                  "service_end",
-                  "rebalance_pick_up",
-                  "maintenance_pick_up"
-                ]
-              },
               "event_time": {
                 "$id": "#/properties/data/properties/status_changes/items/properties/event_time",
                 "type": "number",
@@ -294,9 +356,11 @@
               },
               "battery_pct": {
                 "$id": "#/properties/data/properties/status_changes/items/properties/battery_pct",
-                "type": "number",
+                "type": [
+                  "number",
+                  "null"
+                ],
                 "description": "Percent charge of device battery, expressed between 0 and 1",
-                "default": 0.0,
                 "examples": [
                   0.89
                 ],
@@ -305,7 +369,10 @@
               },
               "associated_trips": {
                 "$id": "#/properties/data/properties/status_changes/items/properties/associated_trips",
-                "type": "array",
+                "type": [
+                  "array",
+                  "null"
+                ],
                 "description": "For 'Reserved' event types, associated trip_ids",
                 "items": {
                   "$id": "#/properties/data/properties/status_changes/items/properties/associated_trips/items",
@@ -315,7 +382,8 @@
             }
           }
         }
-      }
+      },
+      "additionalProperties": false
     },
     "links": {
       "$id": "#properties/links",
