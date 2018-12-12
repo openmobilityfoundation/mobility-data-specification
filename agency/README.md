@@ -13,7 +13,7 @@ This specification contains a collection of RESTful APIs used to specify the dig
 * [Vehicle - Register](#vehicle---register)
 * [Vehicle - Event](#vehicle---event)
 * [update_trip_telemetry](#update_trip_telemetry)
-* [service_areas](#service_areas)
+* [Service Areas](#service-areas)
 * [Event types](#Event-Types)
 * [Enum definitions](#enum-definitions)
 
@@ -164,30 +164,46 @@ The route must include at least 2 points, a start point and end point. Additiona
         ] }
 ```
 
-## service_areas
+## Service Areas
 
-Gets the list of service areas available to the provider.
+The `/service_areas` endpoint gets the list of service areas available to the Provider or a single area.
 
-Endpoint: `/service_areas`\
+Endpoint: `/service_areas/{service_area_id}`
 Method: `GET`
 
-Query Parameters:
+Path Params:
 
-| Parameter | Type | Required/Optional | Description |
-| ----- | ---- | ----------------- | ----- |
-| `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS |
-| `service_area_id` | UUID  | Optional | If provided, retrieve a specific service area (e.g. a retired or old service area). If omitted, will return all active service areas. |  
+| Field             | Type | Required/Optional | Field Description                                                                                                                     |
+| ----------------- | ---- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `service_area_id` | UUIDv4| Optional          | If provided, retrieve a specific service area (e.g. a retired or old service area). If omitted, will return all active service areas. |
 
-Response:
+Query Params:
 
-| Field | Types  | Required/Optional | Other |
-| ----- | ---- | ----------------- | ----- |
-| `service_area_id` | UUID | Required |  |
-| `service_start_date` | Unix Timestamp | Required | Date at which this service area became effective |
-| `service_end_date` | Unix Timestamp | Required | Date at which this service area was replaced. If currently effective, place NaN |
-| `service_area` | MultiPolygon | Required | |
-| `prior_service_area` | UUID | Optional | If exists, the UUID of the prior service area. |
-| `replacement_service_area` | UUID | Optional | If exists, the UUID of the service area that replaced this one |
+| Parameter     | Type   | Required/Optional | Description                                                                                                                                                                |
+| ------------- | ------ | ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `provider_id` | UUIDv4  | Required          | A UUID for the Provider.                                                                                                                                |
+| `bbox`        | String | Optional          | The bounding box upper, left, lower and right coordinates in WGS84 degrees. All geometries overlapping this rectangle will be returned. The format is: `lat,long;lat,long` |
+
+200 Success Response:
+
+| Field              | Types                               | Required/Optional | Field Description                                                                           |
+| ------------------ | ----------------------------------- | ----------------- | ------------------------------------------------------------------------------------------- |
+| `service_area_id`  | UUIDv4                               | Required          | UUID issued by city                                                                      |
+| `start_date`       | Unix Timestamp                      | Required          | Date at which this service area became effective                                            |
+| `end_date`         | Unix Timestamp                      | Optional          | If exists, Date at which this service area was replaced.                                    |
+| `area`             | MultiPolygon                        | Required          | GeoJson [MultiPolygon](https://tools.ietf.org/html/rfc7946#section-3.1.7) in WGS84 degrees. |
+| `prev_area`        | UUIDv4                               | Optional          | If exists, the UUID of the prior service area.                                              |
+| `replacement_area` | UUIDv4                               | Optional          | If exists, the UUID of the service area that replaced this one                              |
+| `type`             | Enum                                | Required          | See [area types](#area-types) table                                                         |
+| `properties`       | [Area Properties](#area-properties) | Optional          | Additional properties of a service area                                                     |
+
+#### Area Properties
+
+Properties for `unrestricted` areas:
+
+| Field   | Types   | Required/Optional | Field Description                                               |
+| ------- | ------- | ----------------- | --------------------------------------------------------------- |
+| `quota` | Integer | Optional          | Number of allowable vehicles that can be deployed by Provider. |
 
 ## Vehicle Events
 
