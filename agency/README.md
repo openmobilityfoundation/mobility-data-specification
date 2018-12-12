@@ -1,136 +1,106 @@
 # Mobility Data Specification: **Agency**
 
-This specification contains a collection of RESTful APIs used to specify the digital relationship between *mobility as a service* providers and the agencies that regulate them.
+This specification contains a collection of RESTful APIs used to specify the digital relationship between *mobility as a service* Providers and the Agencies that regulate them.
 
 * Authors: LADOT
-* Date: 10 Aug 2018
+* Date: 11 Dec 2018
 * Version: ALPHA
 
 ## Table of Contents
 
-* [register_vehicle](#register_vehicle)
-* [deregister_vehicle](#deregister_vehicle)
-* [update_vehicle_status](#update_vehicle_status)
-* [start_trip](#start_trip)
-* [end_trip](#start_trip)
+* [Authorization](#authorization)
+* [Vehicles](#vehicles)
+* [Vehicle - Register](#vehicle---register)
+* [Vehicle - Event](#vehicle---event)
 * [update_trip_telemetry](#update_trip_telemetry)
 * [service_areas](#service_areas)
 * [Event types](#Event-Types)
 * [Enum definitions](#enum-definitions)
 
-## register_vehicle
+## Authorization
 
-The Vehicle Registration API is required in order to register a vehicle for use in the system. The API will require a valid `provider_id` and `api_key`.
+When making requests, the Agency API expects `provider_id` to be part of the claims in a [JWT](https://jwt.io/)  `access_token` in the `Authorization` header, in the form `Authorization: Bearer <access_token>`. The token issuance, expiration and revocation policies are at the discretion of the Agency.
 
-Endpoint: `/register_vehicle`\
-Method: `POST`\
-API Key: `Required`
+## Vehicles
 
-Body:
+The `/vehicles` endpoint returns the specified vehicle.  Providers can only retrieve data for vehicles in their registered fleet.
 
-| Field | Type     | Required/Optional | Other |
-| ----- | -------- | ----------------- | ----- |
-| `unique_id` | UUID | Required | UUID v4 provided by Operator to uniquely identify a vehicle |
-| `provider_id` | String | Required | Issued by city |
-| `vehicle_id` | String |  | Vehicle Identification Number (VIN) visible on device|
-| `vehicle_type` | Enum | Required | Vehicle Type |
-| `propulsion_type` | Enum | Required | Propulsion Type |
-| `vehicle_year` | Enum | Required | Year Manufactured |
-| `vehicle_mfgr` | Enum | Required | Vehicle Manufacturer |
-| `vehicle_model` | Enum | Required | Vehicle Model |
+Endpoint: `/vehicles/{vehicle_id}`
+Method: `GET`
 
-Response:
+Path Params:
 
-| Field | Type     | Required/Optional | Other |
-| ----- | -------- | ----------------- | ----- |
-| `message` | Enum |  | See [Message](#message) Enum |
+| Param        | Type | Required/Optional | Description                                 |
+| ------------ | ---- | ----------------- | ------------------------------------------- |
+| `vehicle_id` | UUIDv4 | Optional          | If provided, retrieve the specified vehicle |
 
-## deregister_vehicle
+200 Success Response:
 
-The remove-vehicle API is used to deregister a vehicle from the fleet.
+| Field         | Type           | Field Description                                                             |
+| ------------- | -------------- | ----------------------------------------------------------------------------- |
+| `vehicle_id`  | UUIDv4         | Provided by Operator to uniquely identify a vehicle                           |
+| `provider_id` | UUIDv4         | Issued by <insert here>                                                       |
+| `vin`         | String         | Vehicle Identification Number (VIN) visible on vehicle                        |
+| `type`        | Enum           | [Vehicle Type](#vehicle-type)                                                 |
+| `propulsion`  | Enum[]         | Array of [Propulsion Type](#propulsion-type); allows multiple values          |
+| `year`        | Integer        | Year Manufactured                                                             |
+| `mfgr`        | String         | Vehicle Manufacturer                                                          |
+| `model`       | String         | Vehicle Model                                                                 |
+| `status`      | Enum           | Vehicle status based on posted `event`. See [Vehicle Status](#vehicle-events) |
+| `prev_event`  | Enum           | Last [Vehicle Event](#vehicle-events)                                         |
+| `updated`     | Unix Timestamp | Date of last event update                                                     |
 
-Endpoint: `/deregister_vehicle`\
-Method: `POST`\
-API Key: `Required`
+## Vehicle - Register
 
-Body:
+The `/vehicles` registration endpoint is used to register a vehicle for use in the Agency jurisdiction. 
 
-| Field | Type     | Required/Optional | Other |
-| ----- | -------- | ----------------- | ----- |
-| `unique_id` | UUID | Required | ID used in [Register](#register_vehicle) |
-| `device_id` | UUID | Required | |
-| `reason_code` | Enum | Required | [Reason](#reason_code) for status change  |
+Endpoint: `/vehicles`
+Method: `POST`
 
-Response:
+Body Params:
 
-| Field | Type     | Required/Optional | Other |
-| ----- | -------- | ----------------- | ----- |
-| `message` | Enum |  | See [Message](#message) Enum |
+| Field        | Type    | Required/Optional | Field Description                                                    |
+| ------------ | ------- | ----------------- | -------------------------------------------------------------------- |
+| `vehicle_id` | UUIDv4  | Required          | Provided by Operator to uniquely identify a vehicle                  |
+| `vin`        | String  | Required          | Vehicle Identification Number (VIN) visible on vehicle               |
+| `type`       | Enum    | Required          | [Vehicle Type](#vehicle-type)                                        |
+| `propulsion` | Enum[]  | Required          | Array of [Propulsion Type](#propulsion-type); allows multiple values |
+| `year`       | Integer | Required          | Year Manufactured                                                    |
+| `mfgr`       | String  | Required          | Vehicle Manufacturer                                                 |
+| `model`      | String  | Required          | Vehicle Model                                                        |
 
-## update_vehicle_status
+201 Success Response:
 
-This API is used by providers when a vehicle is either removed or returned to service.
+_No content returned on success._
 
-Endpoint: `/update_vehicle_status`\
-Method: `POST`\
-API Key: `Required`
+## Vehicle - Event
 
-Body:
+The vehicle `/event` endpoint allows the Provider to control the state of the vehicle including deregister a vehicle from the fleet.
 
-| Field | Type | Required/Optional | Other |
-| ----- | ---- | ----------------- | ----- |
-| `unique_id` | UUID | Required | ID used in [Register](#register_vehicle) |
-| `timestamp` | Unix Timestamp | Required | Date/time that event occurred. Based on GPS clock. |
-| `location` | Point | Required | Location at the time of status change in WGS 84 (EPSG:4326) standard GPS projection  |
-| `event_type` | Enum | Required | [Event Type](#event_type) for status change.  |
-| `reason_code` | Enum | Required | [Reason](#reason_code) for status change.  |
-| `battery_pct` | Float | Require if Applicable | Percent battery charge of device, expressed between 0 and 1 |
+Endpoint: `/vehicles/{vehicle_id}/event`
+Method: `POST`
 
-Response:
+Path Params:
 
-| Field | Type     | Required/Optional | Other |
-| ----- | -------- | ----------------- | ----- |
-| `message` | Enum |  | See [Message](#message) Enum |
+| Field        | Type | Required/Optional | Field Description                        |
+| ------------ | ---- | ----------------- | ---------------------------------------- |
+| `vehicle_id` | UUIDv4 | Required          | ID used in [Register](#vehicle-register) |
 
-## start_trip
+Body Params:
 
-Endpoint: `/start_trip`\
-Method: `POST`\
-API Key: `Required`
+| Field       | Type                         | Required/Optional | Field Description                                                                                                                          |
+| ----------- | ---------------------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| `event`     | Enum                         | Required          | [Vehicle Event](#vehicle-events)                                                                                                           |
+| `telemetry` | [Telemetry](#telemetry-data) | Required          | Single point of telemetry                             |
+| `trip_id`   | UUIDv4                         | Optional          | UUID provided by Operator to uniquely identify the trip. Required for `trip_start`, `trip_end`, `trip_enter`, and `trip_leave` event types |
 
-Body:
+201 Success Response:
 
-| Field | Type | Required/Optional | Other |
-| ----- | ---- | ----------------- | ----- |
-| `unique_id` | UUID | Required | ID used in [Register](#register_vehicle) |
-| `provider_id` | String | Required | Issued by city |
-| `vehicle_id` | String | Required | Provided by the Vehicle Registration API |
-| `timestamp` | Unix Timestamp | Required | Date/time that event occurred. Based on GPS clock. |
-| `location` | Point | Required | Location at the time of status change in WGS 84 (EPSG:4326) standard GPS projection  |
-| `accuracy` | Integer | Required | The approximate level of accuracy, in meters, represented by start_point and end_point. |
-| `battery_pct_start` | Float | Require if Applicable | Percent battery charge of device, expressed between 0 and 1 |
+| Field        | Type | Field Description                                                             |
+| ------------ | ---- | ----------------------------------------------------------------------------- |
+| `vehicle_id` | UUIDv4| UUID provided by Operator to uniquely identify a vehicle                      |
+| `status`     | Enum | Vehicle status based on posted `event`. See [Vehicle Status](#vehicle-events) |
 
-Response:
-
-| Field | Type     | Required/Optional | Other |
-| ----- | -------- | ----------------- | ----- |
-| `trip_id` | UUID | Required | a unique ID for each trip |
-
-## end_trip
-
-Endpoint: `/end_trip`\
-Method: `POST`\
-API Key: `Required`
-
-Body:
-
-| Field | Type | Required/Optional | Other |
-| ----- | ---- | ----------------- | ----- |
-| `trip_id` | UUID | Required | See [start_trip](#start_trip) |
-| `timestamp` | Unix Timestamp | Required | Date/time that event occurred. Based on GPS clock. |
-| `location` | Point | Required | Location at the time of status change in WGS 84 (EPSG:4326) standard GPS projection  |
-| `accuracy` | Integer | Required | The approximate level of accuracy, in meters, represented by start_point and end_point. |
-| `battery_pct_end` | Float | Require if Applicable | Percent battery charge of device, expressed between 0 and 1 |
 
 ## update_trip_telemetry
 
@@ -219,47 +189,57 @@ Response:
 | `prior_service_area` | UUID | Optional | If exists, the UUID of the prior service area. |
 | `replacement_service_area` | UUID | Optional | If exists, the UUID of the service area that replaced this one |
 
-### Event Types
+## Vehicle Events
 
-| event_type | event_type_description |  reason | reason_description  |
-| ---------- | ---------------------- | ------- | ------------------  |
-| `available` |    A device becomes available for customer use    | `service_start` |    Device introduced into service at the beginning of the day (if program does not operate 24/7) |
-| | | `user_drop_off` |    User ends reservation |
-| | | `rebalance_drop_off` | Device moved for rebalancing |
-| | | `maintenance_drop_off` |  Device introduced into service after being removed for maintenance |
-| `reserved` | A customer reserves a device (even if trip has not started yet) | `user_pick_up` | Customer reserves device |
-| `unavailable` |    A device is on the street but becomes unavailable for customer use | `default` |  Default state for a newly registered vehicle    |
-| | | `low_battery` | A device is no longer available due to insufficient battery |
-| | | ``maintenance`` | A device is no longer available due to equipment issues |
-| `removed` | A device is removed from the street and unavailable for customer use | `service_end`| Device removed from street because service has ended for the day (if program does not operate 24/7) |
-| | | `rebalance_pick_up` |    Device removed from street and will be placed at another location to rebalance service |
-| | | `maintenance_pick_up`     | Device removed from street so it can be worked on |
-| `inactive` | A device has been deregistered  |     |  |
+List of valid vehicle events and the resulting vehicle status if the event is sucessful.
+
+| `event`                | description                                                                                          | valid initial `status`                             | `status` on success | status_description                                                      |
+| ---------------------- | ---------------------------------------------------------------------------------------------------- | -------------------------------------------------- | ------------------- | ----------------------------------------------------------------------- |
+| `service_start`        | Vehicle introduced into service at the beginning of the day (if program does not operate 24/7)       | `unavailable`, `removed`, `elsewhere`              | `available`         | Vehicle is on the street and available for customer use.                |
+| `trip_end`             | Customer ends trip and reservation                                                                   | `trip`                                             | `available`         |                                                                         |
+| `rebalance_drop_off`   | Vehicle moved for rebalancing                                                                        | `removed`                                          | `available`         |                                                                         |
+| `maintenance_drop_off` | Vehicle introduced into service after being removed for maintenance                                  | `removed`                                          | `available`         |                                                                         |
+| `cancel_reservation`   | Customer cancels reservation                                                                         | `reserved`                                         | `available`         |                                                                         |
+| `reserve`              | Customer reserves vehicle                                                                            | `available`                                        | `reserved`          | Vehicle is reserved or in use.                                          |
+| `trip_start`           | Customer starts a trip                                                                               | `available`                                        | `trip`              |                                                                         |
+| `trip_enter`           | Customer enters a service area managed by agency during an active trip.                              | `unavailable`, `removed`, `elsewhere`              | `trip`              |                                                                         |
+| `trip_leave`           | Customer enters a service area managed by agency during an active trip.                              | `trip`                                             | `elsewhere`         |                                                                         |
+| `register`             | Default state for a newly registered vehicle                                                         |                                                    | `unavailable`       | A vehicle is in the active fleet but not yet available for customer use |
+| `low_battery`          | A vehicle is no longer available due to insufficient battery                                         | `available`                                        | `unavailable`       |                                                                         |
+| `maintenance`          | A vehicle is no longer available due to equipment issues                                             | `available`, `reserved`                            | `unavailable`       |                                                                         |
+| `service_end`          | Vehicle removed from street because service has ended for the day (if program does not operate 24/7) | `available`, `unavailable`, `elsewhere`            | `removed`           | A vehicle is removed from the street and unavailable for customer use.  |
+| `rebalance_pick_up`    | Vehicle removed from street and will be placed at another location to rebalance service              | `available`, `unavailable`                         | `removed`           |                                                                         |
+| `maintenance_pick_up`  | Vehicle removed from street so it can be worked on                                                   | `available`, `unavailable`                         | `removed`           |                                                                         |
+| `deregister`           | A vehicle is deregistered                                                                            | `available`, `unavailable`, `removed`, `elsewhere` | `inactive`          | A vehicle is deactivated from the fleet and unavailable.                |
 
 ## Enum Definitions
 
-### vehicle_type
+### Area types
 
-For `vehicle_type`, options are:
+| `type`               | Description                                                                                                                                                                                                                                                                                           |
+| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `unrestricted`       | Areas where vehicles may be picked up/dropped off. A provider's unrestricted area shall be contained completely inside the agency's unrestricted area for the provider in question, but it need not cover the entire agency unrestricted area. See the provider version of the service areas endpoint |
+| `restricted`         | Areas where vehicle pick-up/drop-off is not allowed                                                                                                                                                                                                                                                   |
+| `preferred_pick_up`  | Areas where users are encouraged to pick up vehicles                                                                                                                                                                                                                                                  |
+| `preferred_drop_off` | Areas where users are encouraged to drop off vehicles                                                                                                                                                                                                                                                 |
 
-* `bike`
-* `scooter`
-* `recumbent`
+### Vehicle Type
 
-### propulsion_type
+| `type`    |
+| --------- |
+| `bicycle` |
+| `scooter` |
 
-For `propulsion_type`, options are:
+### Propulsion Type
 
-* `human`
-* `electric`
-* `combustion`
+| `propulsion`      | Description                                            |
+| ----------------- | ------------------------------------------------------ |
+| `human`           | Pedal or foot propulsion                               |
+| `electric_assist` | Provides power only alongside human propulsion         |
+| `electric`        | Contains throttle mode with a battery-powered motor    |
+| `combustion`      | Contains throttle mode with a gas engine-powered motor |
 
-### reason_code
-
-For `reason_code`, options are:
-
-* `rebalancing`
-* `maintenance`
+A vehicle may have one or more values from the `propulsion`, depending on the number of modes of operation. For example, a scooter that can be powered by foot or by electric motor would have the `propulsion` represented by the array `['human', 'electric']`. A bicycle with pedal-assist would have the `propulsion` represented by the array `['human', 'electric_assist']` if it can also be operated as a traditional bicycle.
 
 ### message
 
