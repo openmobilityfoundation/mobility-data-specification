@@ -12,9 +12,10 @@ This specification contains a collection of RESTful APIs used to specify the dig
 * [Vehicles](#vehicles)
 * [Vehicle - Register](#vehicle---register)
 * [Vehicle - Event](#vehicle---event)
-* [update_trip_telemetry](#update_trip_telemetry)
+* [Vehicles - Update Telemetry](#vehicles---update-telemetry)
 * [service_areas](#service_areas)
 * [Event types](#Event-Types)
+* [Telemetry Data](#telemetry-data)
 * [Enum definitions](#enum-definitions)
 
 ## Authorization
@@ -101,68 +102,29 @@ Body Params:
 | `vehicle_id` | UUIDv4| UUID provided by Operator to uniquely identify a vehicle                      |
 | `status`     | Enum | Vehicle status based on posted `event`. See [Vehicle Status](#vehicle-events) |
 
+## Vehicles - Update Telemetry
 
-## update_trip_telemetry
+The vehicle `/telemetry` endpoint allows a Provider to update vehicle telemetry data in batch for one or many of the vehicles in the fleet. Telemetry data will be reported to the API every 5 seconds while vehicles are in motion.
 
-A trip represents a route taken by a provider's customer.   Trip data will be reported to the API every 5 seconds while the vehicle is in motion.
+Endpoint: `/vehicles/telemetry`
+Method: `POST`
 
-Endpoint: `/update_trip_telemetry`\
-Method: `POST`\
-API Key: `Required`
+Body Params:
 
-Body:
+| Field         | Type                           | Required/Optional | Field Description                                                                      |
+| ------------- | ------------------------------ | ----------------- | -------------------------------------------------------------------------------------- |
+| `data`        | [Telemetry](#telemetry-data)[] | Required          | Array of telemetry for one or more vehicles.                                           |
 
-| Field | Type     | Required/Optional | Other |
-| ----- | -------- | ----------------- | ----- |
-| `trip_id` | UUID | Required | Issued by InitMovementPlan() API  |
-| `timestamp` | Unix Timestamp | Required | Time of day (UTC) data was sampled|
-| `route` | Route | Required | See detail below. |
-| `accuracy` | Integer | Required | The approximate level of accuracy, in meters, represented by start_point and end_point. |
+201 Success Response:
 
-Response:
+_No content returned on success._
 
-| Field | Type | Other |
-| ---- | --- | --- |
-| `message` | Enum | See [Message](#message) Enum |
+400 Failure Response:
 
-### Route
-
-To represent a route, MDS provider APIs should create a GeoJSON Feature Collection where ever observed point in the route, plus a time stamp, should be included. The representation needed is below.
-
-The route must include at least 2 points, a start point and end point. Additionally, it must include all possible GPS samples collected by a provider. All points must be in WGS 84 (EPSG:4326) standard GPS projection
-
-```js
-"route": {
-        "type": "FeatureCollection",
-        "features": [
-            {
-                "type": "Feature",
-                "properties": {
-                    "timestamp": 1529968782.421409
-                },
-                "geometry": {
-                    "type": "Point",
-                    "coordinates": [
-                        -118.46710503101347,
-                        33.9909333514159
-                    ]
-                }
-            },
-            {
-                "type": "Feature",
-                "properties": {
-                    "timestamp": 1531007628.3774529
-                },
-                "geometry": {
-                    "type": "Point",
-                    "coordinates": [
-                        -118.464851975441,
-                        33.990366257735
-                    ]
-                }
-            }
-        ] }
-```
+| `error`         | `error_description`              | `error_details`[]               |
+| --------------- | -------------------------------- | ------------------------------- |
+| `bad_param`     | A validation error occurred.     | Array of parameters with errors |
+| `missing_param` | A required parameter is missing. | Array of missing parameters     |
 
 ## service_areas
 
@@ -211,6 +173,23 @@ List of valid vehicle events and the resulting vehicle status if the event is su
 | `rebalance_pick_up`    | Vehicle removed from street and will be placed at another location to rebalance service              | `available`, `unavailable`                         | `removed`           |                                                                         |
 | `maintenance_pick_up`  | Vehicle removed from street so it can be worked on                                                   | `available`, `unavailable`                         | `removed`           |                                                                         |
 | `deregister`           | A vehicle is deregistered                                                                            | `available`, `unavailable`, `removed`, `elsewhere` | `inactive`          | A vehicle is deactivated from the fleet and unavailable.                |
+
+## Telemetry Data
+
+A standard point of vehicle telemetry. References to latitude and longitude imply coordinates encoded in the [WGS 84 (EPSG:4326)](https://en.wikipedia.org/wiki/World_Geodetic_System) standard GPS projection expressed as [Decimal Degrees](https://en.wikipedia.org/wiki/Decimal_degrees).
+
+| Field          | Type           | Required/Optional     | Field Description                                            |
+| -------------- | -------------- | --------------------- | ------------------------------------------------------------ |
+| `vehicle_id`   | UUIDv4         | Required              | ID used in [Register](#vehicle-register)                     |
+| `timestamp`    | Unix Timestamp | Required              | Date/time that event occurred. Based on GPS clock            |
+| `gps`          | Object         | Required              | Telemetry position data                                      |
+| `gps.lat`      | Double         | Required              | Latitude of the location                                     |
+| `gps.lng`      | Double         | Required              | Longitude of the location                                    |
+| `gps.altitude` | Double         | Required              | Altitude above mean sea level in meters                      |
+| `gps.heading`  | Double         | Required              | Degrees - clockwise starting at 0 degrees at true North      |
+| `gps.speed`    | Float          | Required              | Speed in meters / sec                                        |
+| `gps.accuracy` | Integer        | Required              | GPS accuracy value                                           |
+| `charge`       | Float          | Require if Applicable | Percent battery charge of vehicle, expressed between 0 and 1 |
 
 ## Enum Definitions
 
