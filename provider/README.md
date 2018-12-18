@@ -48,6 +48,8 @@ The following keys must be used for pagination links:
 * `prev`: url to the previous page of data
 * `next`: url to the next page of data
 
+At a minimum, paginated payloads must include a `next` key, which must be set to `null` to indicate the last page of data. 
+
 ```json
 {
     "version": "x.y.z",
@@ -83,7 +85,7 @@ represented as a GeoJSON [`Feature`](https://tools.ietf.org/html/rfc7946#section
 {
     "type": "Feature",
     "properties": {
-        "timestamp": 1529968782.421409
+        "timestamp": 1529968782421
     },
     "geometry": {
         "type": "Point",
@@ -99,8 +101,7 @@ represented as a GeoJSON [`Feature`](https://tools.ietf.org/html/rfc7946#section
 
 ### Timestamps
 
-References to `timestamp` imply floating-point seconds since [Unix epoch](https://en.wikipedia.org/wiki/Unix_time), such as
-the format returned by Python's [`time.time()`](https://docs.python.org/3/library/time.html#time.time) function.
+References to `timestamp` imply integer milliseconds since [Unix epoch](https://en.wikipedia.org/wiki/Unix_time). You can find the implementation of unix timestamp in milliseconds for your programming language [here](https://currentmillis.com/).
 
 [Top][toc]
 
@@ -153,12 +154,14 @@ The trips API should allow querying trips with a combination of query parameters
 
 ### Propulsion Types
 
-| `propulsion_type` |
-|-----------------|
-| human           |
-| electric_assist |
-| electric        |
-| combustion      |
+| `propulsion_type` | Description |
+| ----------------- | ----------------- |
+| human           | Pedal or foot propulsion |
+| electric_assist | Provides power only alongside human propulsion |
+| electric        | Contains throttle mode with a battery-powered motor |
+| combustion      | Contains throttle mode with a gas engine-powered motor |
+
+A device may have one or more values from the `propulsion_type`, depending on the number of modes of operation. For example, a scooter that can be powered by foot or by electric motor would have the `propulsion_type` represented by the array `['human', 'electric']`. A bicycle with pedal-assist would have the `propulsion_type` represented by the array `['human', 'electric_assist']` if it can also be operated as a traditional bicycle.
 
 ### Routes
 
@@ -172,7 +175,7 @@ Routes must include at least 2 points: the start point and end point. Additional
     "features": [{
         "type": "Feature",
         "properties": {
-            "timestamp": 1529968782.421409
+            "timestamp": 1529968782421
         },
         "geometry": {
             "type": "Point",
@@ -185,7 +188,7 @@ Routes must include at least 2 points: the start point and end point. Additional
     {
         "type": "Feature",
         "properties": {
-            "timestamp": 1531007628.3774529
+            "timestamp": 1531007628377
         },
         "geometry": {
             "type": "Point",

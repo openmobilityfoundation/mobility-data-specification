@@ -94,7 +94,6 @@
                     "type": "string",
                     "description": "The reason for the event",
                     "enum": [
-                      "default",
                       "low_battery",
                       "maintenance"
                     ]
@@ -164,12 +163,8 @@
               },
               "event_time": {
                 "$id": "#/properties/data/properties/status_changes/items/properties/event_time",
-                "type": "number",
                 "description": "The time the event occurred, expressed as a Unix Timestamp",
-                "default": 0.0,
-                "examples": [
-                  1529968782.421409
-                ]
+                "$ref": "#/definitions/timestamp"
               },
               "event_location": {
                 "$id": "#/properties/data/properties/status_changes/items/properties/event_location",
@@ -178,9 +173,8 @@
               },
               "battery_pct": {
                 "$id": "#/properties/data/properties/status_changes/items/properties/battery_pct",
-                "type": "number",
+                "type": ["number", "null"],
                 "description": "Percent charge of device battery, expressed between 0 and 1",
-                "default": 0.0,
                 "examples": [
                   0.89
                 ],
@@ -189,7 +183,7 @@
               },
               "associated_trips": {
                 "$id": "#/properties/data/properties/status_changes/items/properties/associated_trips",
-                "type": "array",
+                "type": ["array", "null"],
                 "description": "For 'Reserved' event types, associated trip_ids",
                 "items": {
                   "$id": "#/properties/data/properties/status_changes/items/properties/associated_trips/items",

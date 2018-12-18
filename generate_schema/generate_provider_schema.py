@@ -13,7 +13,7 @@ MDS_FEATURE_POINT = "MDS_Feature_Point"
 MDS_FEATURECOLLECTION_ROUTE = "MDS_FeatureCollection_Route"
 
 def get_definition(id):
-    return "#/definitions/{}".format(id)
+    return f"#/definitions/{id}"
 
 def get_point_schema():
     """
@@ -53,6 +53,8 @@ def get_feature_schema(id=None, title=None, geometry=None, properties=None, requ
 
     f_properties = feature["properties"]["properties"]
     if required is not None:
+        del f_properties["oneOf"]
+        f_properties["type"] = "object"
         f_properties["required"] = required
     if properties is not None:
         f_properties["properties"] = properties
