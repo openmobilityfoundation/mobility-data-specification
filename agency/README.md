@@ -26,28 +26,28 @@ When making requests, the Agency API expects `provider_id` to be part of the cla
 
 The `/vehicles` endpoint returns the specified vehicle.  Providers can only retrieve data for vehicles in their registered fleet.
 
-Endpoint: `/vehicles/{vehicle_id}`
+Endpoint: `/vehicles/{device_id}`
 Method: `GET`
 
 Path Params:
 
 | Param        | Type | Required/Optional | Description                                 |
 | ------------ | ---- | ----------------- | ------------------------------------------- |
-| `vehicle_id` | UUIDv4 | Optional          | If provided, retrieve the specified vehicle |
+| `device_id` | UUIDv4 | Optional          | If provided, retrieve the specified vehicle |
 
 200 Success Response:
 
 | Field         | Type           | Field Description                                                             |
 | ------------- | -------------- | ----------------------------------------------------------------------------- |
-| `vehicle_id`  | UUIDv4         | Provided by Operator to uniquely identify a vehicle                           |
+| `device_id`  | UUIDv4         | Provided by Operator to uniquely identify a vehicle                           |
 | `provider_id` | UUIDv4         | Issued by <insert here>                                                       |
-| `vin`         | String         | Vehicle Identification Number (VIN) visible on vehicle                        |
+| `vehicle_id`  | String         | Vehicle Identification Number (vehicle_id) visible on vehicle                        |
 | `type`        | Enum           | [Vehicle Type](#vehicle-type)                                                 |
 | `propulsion`  | Enum[]         | Array of [Propulsion Type](#propulsion-type); allows multiple values          |
 | `year`        | Integer        | Year Manufactured                                                             |
 | `mfgr`        | String         | Vehicle Manufacturer                                                          |
 | `model`       | String         | Vehicle Model                                                                 |
-| `status`      | Enum           | Vehicle status based on posted `event`. See [Vehicle Status](#vehicle-events) |
+| `status`      | Enum           | Current vehicle status. See [Vehicle Status](#vehicle-events)                 |
 | `prev_event`  | Enum           | Last [Vehicle Event](#vehicle-events)                                         |
 | `updated`     | Unix Timestamp | Date of last event update                                                     |
 
@@ -62,13 +62,13 @@ Body Params:
 
 | Field        | Type    | Required/Optional | Field Description                                                    |
 | ------------ | ------- | ----------------- | -------------------------------------------------------------------- |
-| `vehicle_id` | UUIDv4  | Required          | Provided by Operator to uniquely identify a vehicle                  |
-| `vin`        | String  | Required          | Vehicle Identification Number (VIN) visible on vehicle               |
+| `device_id` | UUIDv4  | Required          | Provided by Operator to uniquely identify a vehicle                  |
+| `vehicle_id` | String  | Required          | Vehicle Identification Number (vehicle_id) visible on vehicle               |
 | `type`       | Enum    | Required          | [Vehicle Type](#vehicle-type)                                        |
 | `propulsion` | Enum[]  | Required          | Array of [Propulsion Type](#propulsion-type); allows multiple values |
-| `year`       | Integer | Required          | Year Manufactured                                                    |
-| `mfgr`       | String  | Required          | Vehicle Manufacturer                                                 |
-| `model`      | String  | Required          | Vehicle Model                                                        |
+| `year`       | Integer | Optional          | Year Manufactured                                                    |
+| `mfgr`       | String  | Optional          | Vehicle Manufacturer                                                 |
+| `model`      | String  | Optional          | Vehicle Model                                                        |
 
 201 Success Response:
 
@@ -78,20 +78,20 @@ _No content returned on success._
 
 The vehicle `/event` endpoint allows the Provider to control the state of the vehicle including deregister a vehicle from the fleet.
 
-Endpoint: `/vehicles/{vehicle_id}/event`
+Endpoint: `/vehicles/{device_id}/event`
 Method: `POST`
 
 Path Params:
 
 | Field        | Type | Required/Optional | Field Description                        |
 | ------------ | ---- | ----------------- | ---------------------------------------- |
-| `vehicle_id` | UUIDv4 | Required          | ID used in [Register](#vehicle-register) |
+| `device_id` | UUIDv4 | Required          | ID used in [Register](#vehicle-register) |
 
 Body Params:
 
 | Field       | Type                         | Required/Optional | Field Description                                                                                                                          |
 | ----------- | ---------------------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| `event`     | Enum                         | Required          | [Vehicle Event](#vehicle-events)                                                                                                           |
+| `event_type` | Enum                         | Required          | [Vehicle Event](#vehicle-events)                                                                                                           |
 | `telemetry` | [Telemetry](#telemetry-data) | Required          | Single point of telemetry                             |
 | `trip_id`   | UUIDv4                         | Optional          | UUID provided by Operator to uniquely identify the trip. Required for `trip_start`, `trip_end`, `trip_enter`, and `trip_leave` event types |
 
@@ -99,8 +99,8 @@ Body Params:
 
 | Field        | Type | Field Description                                                             |
 | ------------ | ---- | ----------------------------------------------------------------------------- |
-| `vehicle_id` | UUIDv4| UUID provided by Operator to uniquely identify a vehicle                      |
-| `status`     | Enum | Vehicle status based on posted `event`. See [Vehicle Status](#vehicle-events) |
+| `device_id` | UUIDv4| UUID provided by Operator to uniquely identify a vehicle                      |
+| `status`     | Enum | Vehicle status based on posted `event_type`. See [Vehicle Status](#vehicle-events) |
 
 ## Vehicles - Update Telemetry
 
@@ -155,7 +155,7 @@ Response:
 
 List of valid vehicle events and the resulting vehicle status if the event is sucessful.
 
-| `event`                | description                                                                                          | valid initial `status`                             | `status` on success | status_description                                                      |
+| `event_type`                | description                                                                                          | valid initial `status`                             | `status` on success | status_description                                                      |
 | ---------------------- | ---------------------------------------------------------------------------------------------------- | -------------------------------------------------- | ------------------- | ----------------------------------------------------------------------- |
 | `service_start`        | Vehicle introduced into service at the beginning of the day (if program does not operate 24/7)       | `unavailable`, `removed`, `elsewhere`              | `available`         | Vehicle is on the street and available for customer use.                |
 | `trip_end`             | Customer ends trip and reservation                                                                   | `trip`                                             | `available`         |                                                                         |
