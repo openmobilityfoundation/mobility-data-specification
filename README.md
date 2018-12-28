@@ -20,6 +20,8 @@ The specification will be versioned using Git tags and [semantic versioning](htt
 
 The City of Los Angeles is currently looking for feedback and comments on the draft versions. Comments can be made by making an Github Issue, while suggested changes can be made using a pull request. The rules and guidelines for the Los Angeles Dockless Bikeshare Systems / Pilot Program can be found on [Council Clerk Connect](https://cityclerk.lacity.org/lacityclerkconnect/index.cfm?fa=ccfi.viewrecord&cfnumber=17-1125).
 
+*12/27/2018 Update*: Applications for the One-Year Dockless On-Demand Personal Mobility Permit are now available on the [LADOT Website](https://ladot.lacity.org/ladot-begins-one-year-dockless-demand-personal-mobility-program)
+
 *10/28/2018 Update*: [LADOT Guidelines for Handling of Data from Mobility Service Providers](http://www.urbanmobilityla.com/s/LADOT-Guidelines-for-Handling-of-Data-from-MSPs-2018-10-25.pdf)
 
 *10/1/2018 Update*: Applications for the Conditional Permit are now open for submission on the [LADOT Website](http://ladot.lacity.org/ladot-begins-conditional-permit-program-dockless-mobility)
