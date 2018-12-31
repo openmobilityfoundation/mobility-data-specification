@@ -205,39 +205,6 @@ Routes must include at least 2 points: the start point and end point. Additional
 
 [Top][toc]
 
-## Status Changes
-
-The status of the inventory of vehicles available for customer use.
-
-This API allows a user to query the historical availability for a system within a time range.
-
-Endpoint: `/status_changes`  
-Method: `GET`  
-Schema: [`status_changes` schema][sc-schema]  
-`data` Payload: `{ "status_changes": [] }`, an array of objects with the following structure
-
-| Field | Type | Required/Optional | Comments |
-| ----- | ---- | ----------------- | ----- |
-| `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS |
-| `provider_name` | String | Required | The public-facing name of the Provider |
-| `device_id` | UUID | Required | A unique device ID in UUID format |
-| `vehicle_id` | String | Required | The Vehicle Identification Number visible on the vehicle itself |
-| `vehicle_type` | Enum | Required | see [vehicle types](#vehicle-types) table |
-| `propulsion_type` | Enum[] | Required | Array of [propulsion types](#propulsion-types); allows multiple values |
-| `event_type` | Enum | Required | See [event types](#event-types) table |
-| `event_type_reason` | Enum | Required | Reason for status change, allowable values determined by [`event type`](#event-types) |
-| `event_time` | [timestamp][ts] | Required | Date/time that event occurred, based on device clock |
-| `event_location` | GeoJSON [Point Feature][geo] | Required | |
-| `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |
-| `associated_trips` | UUID[] | Optional based `event_type_reason` | Array of UUID's. For `user`-generated event types, associated trips (foreign key to Trips API) |
-
-### Status Changes Query Parameters
-
-The status_changes API should allow querying status changes with a combination of query parameters.
-
-* `start_time`: filters for status changes where `event_time` occurs at or after the given time
-* `end_time`: filters for status changes where `event_time` occurs before the given time
-
 ### Event Types
 
 | `event_type` | Description | `event_type_reason` | Description |
