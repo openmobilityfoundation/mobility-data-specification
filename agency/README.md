@@ -166,7 +166,11 @@ The route must include at least 2 points, a start point and end point. Additiona
 
 ## service_areas
 
-Gets the list of service areas available to the provider.
+Gets the list of service areas available to the provider. A service area is a rules engine that provides a set of service areas that implements [geofences and incentive areas](https://docs.google.com/document/d/170W8rWGMmBDb7U-4OvNAQgk_Jusk6UKrsE-BP-Gk5VQ/edit) along with a base layer set of rules for operation of devices inside a jurisdiction running the Agency endpoint. 
+
+The endpoint returns an a ordered list of GeoJSON MultiPolygons, per provider, shows which type of events are allowed in what areas. The list of the events in the same as defined in [provider/status_changes](https://github.com/CityOfLosAngeles/mobility-data-specification/tree/dev/provider#status-changes). 
+
+Rules are given from least-specific to most-specific. For any given point, the most recent point-in-polygon operation should be considered valid. For example, if you have two overlapping Polygons, the polygons who appeared closest to the end of the list represents in the in affect rules, subject to time rounds. 
 
 Endpoint: `/service_areas`\
 Method: `GET`
@@ -176,28 +180,22 @@ Query Parameters:
 | Parameter | Type | Required/Optional | Description |
 | ----- | ---- | ----------------- | ----- |
 | `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS |
-| `service_area_id` | UUID  | Optional | If provided, retrieve a specific service area (e.g. a retired or old service area). If omitted, will return all active service areas. |
 
-Response:
+Response: 
+
+The response is an order  JSON / List with each item has the following members. 
 
 | Field | Types  | Required/Optional | Other |
 | ----- | ---- | ----------------- | ----- |
 | `service_area_id` | UUID | Required |  |
-| `service_start_date` | Unix Timestamp | Required | Date at which this service area became effective |
-| `service_end_date` | Unix Timestamp | Required | Date at which this service area was replaced. If currently effective, place NaN |
-| `service_area` | MultiPolygon | Required | |
-| `prior_service_area` | UUID | Optional | If exists, the UUID of the prior service area. |
-| `replacement_service_area` | UUID | Optional | If exists, the UUID of the service area that replaced this one |
-| `type` | Enum | Required |  See [area types](#area-types) table |
-
-### Area types
-
-| `type` | Description |
-|------------| ----------- |
-| unrestricted | Areas where devices may be picked up/dropped off. A provider's unrestricted area shall be contained completely inside the agency's unrestricted area for the provider in question, but it need not cover the entire agency unrestricted area. See the provider version of the service areas endpoint |
-| restricted | Areas where device pick-up/drop-off is not allowed |
-| preferred_pick_up | Areas where users are encouraged to pick up devices |
-| preferred_drop_off | Areas where users are encouraged to drop off devices |
+| `service_start_date` | Unix Timestamp | Required | Datetime at which this service area enters into effect. For the base service_area, the time should be the start of permitted operations in the City. |
+| `service_end_date` | Unix Timestamp | Optional | Datetime at which the service area is no longer in effect. For example, a temporary restriction for an event can be placed in advance and set to end at a certain time. |
+| `service_area` | MultiPolygon | Required | Per [GeoJSON spec](https://tools.ietf.org/html/rfc7946), must follow the right-hand rule to designate interior.   |
+| `allowed_events` | List | Required | List of permitted events inside the area | 
+| `forbidden_events` | List | Required | List of events that is not permitted inside the area | 
+| `speed_cap` | Integer | Optional | Speed cap to be enable on device, in integers, for devices that support governors. Expressed in miles per hour |
+| `preferred_pick_up` | Boolean | Optional | If true, means this service area is an incentive zone for user pick up, and should be expressed to users |
+| `preferred_drop_off` | Boolean | Optional |  If true, means this service area is an incentive zone for user drop offs, and should be expressed to users in app |
 
 ## Vehicle Events
 
