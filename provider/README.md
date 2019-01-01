@@ -253,42 +253,6 @@ The status_changes API should allow querying status changes with a combination o
 | | | `rebalance_pick_up` | Device removed from street and will be placed at another location to rebalance service |
 | | | `maintenance_pick_up` | Device removed from street so it can be worked on |
 
-## Service Areas
-
-Gets the list of service areas available to the provider.
-
-Endpoint: `/service_areas`
-Method: `GET`
-Query Parameters:
-
-| Parameter | Type | Required/Optional | Description |
-| ----- | ---- | ----------------- | ----- |
-| `service_area_id` | UUID  | Optional | If provided, retrieve a specific service area (e.g. a retired or old service area). If omitted, will return all active service areas. |
-
-Response:
-
-| Field | Types  | Required/Optional | Other |
-| ----- | ---- | ----------------- | ----- |
-| `service_area_id` | UUID | Required |  |
-| `service_start_date` | Unix Timestamp | Required | Date at which this service area became effective |
-| `service_end_date` | Unix Timestamp | Required | Date at which this service area was replaced. If currently effective, place NaN |
-| `service_area` | MultiPolygon | Required | |
-| `prior_service_area` | UUID | Optional | If exists, the UUID of the prior service area. |
-| `replacement_service_area` | UUID | Optional | If exists, the UUID of the service area that replaced this one |
-| `type` | Enum | Required |  See [area types](#area-types) table |
-
-### Area types
-
-| `type` | Description |
-|------------| ----------- |
-| unrestricted | Areas where devices may be picked up/dropped off. A provider's unrestricted area shall be contained completely inside the agency's unrestricted area for the provider in question, but it need not cover the entire agency unrestricted area. See the agency version of the service areas endpoint |
-| agency_restricted | Areas where the agency does not allow device pick-up/drop-off |
-| agency_preferred_pick_up | Areas where users are encouraged by the agency to pick up devices |
-| agency_preferred_drop_off | Areas where users are encouraged by the agency to drop off devices |
-| provider_restricted | Areas where the provider does not allow device pick-up/drop-off |
-| provider_preferred_pick_up | Areas where users are encouraged by the provider to pick up devices |
-| provider_preferred_drop_off | Areas where users are encouraged by the provider to drop off devices |
-
 [Top][toc]
 
 ## Realtime Data
