@@ -168,7 +168,7 @@ The route must include at least 2 points, a start point and end point. Additiona
 
 Gets the list of service areas available to the provider. A service area is a rules engine that provides a set of service areas that implements [geofences and incentive areas](https://docs.google.com/document/d/170W8rWGMmBDb7U-4OvNAQgk_Jusk6UKrsE-BP-Gk5VQ/edit) along with a base layer set of rules for operation of devices inside a jurisdiction running the Agency endpoint. 
 
-The endpoint returns an a ordered list of GeoJSON MultiPolygons, per provider, shows which type of events are allowed in what areas. The list of the events in the same as defined in [provider/status_changes](https://github.com/CityOfLosAngeles/mobility-data-specification/tree/dev/provider#status-changes). 
+The endpoint returns an a ordered list of GeoJSON MultiPolygons, per provider, shows which type of events are allowed in what areas. The list of the events in the same as defined in [provider/status_changes](https://github.com/CityOfLosAngeles/mobility-data-specification/tree/master/provider#status-changes). 
 
 Rules are given from least-specific to most-specific. For any given point, the most recent point-in-polygon operation should be considered valid. For example, if you have two overlapping Polygons, the polygons who appeared closest to the end of the list represents in the in affect rules, subject to time rounds. 
 
