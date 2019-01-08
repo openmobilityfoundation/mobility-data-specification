@@ -15,6 +15,8 @@ The following information applies to all `provider` API endpoints. Details on pr
 
 ### Response Format
 
+The response to a client request must include a status code defined in the [IANA HTTP Status Code Registry](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml).
+
 Responses must be `UTF-8` encoded `application/json` and must minimally include the MDS `version` and a `data` payload:
 
 ```json
@@ -85,7 +87,7 @@ represented as a GeoJSON [`Feature`](https://tools.ietf.org/html/rfc7946#section
 {
     "type": "Feature",
     "properties": {
-        "timestamp": 1529968782.421409
+        "timestamp": 1529968782421
     },
     "geometry": {
         "type": "Point",
@@ -101,8 +103,7 @@ represented as a GeoJSON [`Feature`](https://tools.ietf.org/html/rfc7946#section
 
 ### Timestamps
 
-References to `timestamp` imply floating-point seconds since [Unix epoch](https://en.wikipedia.org/wiki/Unix_time), such as
-the format returned by Python's [`time.time()`](https://docs.python.org/3/library/time.html#time.time) function.
+References to `timestamp` imply integer milliseconds since [Unix epoch](https://en.wikipedia.org/wiki/Unix_time). You can find the implementation of unix timestamp in milliseconds for your programming language [here](https://currentmillis.com/).
 
 [Top][toc]
 
@@ -143,19 +144,8 @@ The trips API should allow querying trips with a combination of query parameters
 
 * `device_id`
 * `vehicle_id`
-* `start_time`: filters for trips where `start_time` occurs at or after the given time
-* `end_time`: filters for trips where `end_time` occurs at or before the given time
-* `bbox`
-
-All of these query params will use the *Type* listed above with the exception of `bbox`, which is the bounding-box.
-
-For example:
-
-```
-bbox=-122.4183,37.7758,-122.4120,37.7858
-```
-
-Gets all trips within that bounding-box where any point inside the `route` is inside said box. The order is defined as: southwest longitude, southwest latitude, northeast longitude, northeast latitude (separated by commas).
+* `min_end_time`: filters for trips where `end_time` occurs at or after the given time
+* `max_end_time`: filters for trips where `end_time` occurs before the given time
 
 ### Vehicle Types
 
@@ -187,7 +177,7 @@ Routes must include at least 2 points: the start point and end point. Additional
     "features": [{
         "type": "Feature",
         "properties": {
-            "timestamp": 1529968782.421409
+            "timestamp": 1529968782421
         },
         "geometry": {
             "type": "Point",
@@ -200,7 +190,7 @@ Routes must include at least 2 points: the start point and end point. Additional
     {
         "type": "Feature",
         "properties": {
-            "timestamp": 1531007628.3774529
+            "timestamp": 1531007628377
         },
         "geometry": {
             "type": "Point",
@@ -246,14 +236,7 @@ Schema: [`status_changes` schema][sc-schema]
 The status_changes API should allow querying status changes with a combination of query parameters.
 
 * `start_time`: filters for status changes where `event_time` occurs at or after the given time
-* `end_time`: filters for status changes where `event_time` occurs at or before the given time
-* `bbox`: filters for status changes where `event_location` is within defined bounding-box. The order is definied as: southwest longitude, southwest latitude, northeast longitude, northeast latitude (separated by commas). 
-
-Example:
-
-```
-bbox=-122.4183,37.7758,-122.4120,37.7858
-```
+* `end_time`: filters for status changes where `event_time` occurs before the given time
 
 ### Event Types
 
@@ -270,6 +253,44 @@ bbox=-122.4183,37.7758,-122.4120,37.7858
 | | | `rebalance_pick_up` | Device removed from street and will be placed at another location to rebalance service |
 | | | `maintenance_pick_up` | Device removed from street so it can be worked on |
 
+## Service Areas
+
+Gets the list of service areas available to the provider.
+
+Endpoint: `/service_areas`
+Method: `GET`
+Query Parameters:
+
+| Parameter | Type | Required/Optional | Description |
+| ----- | ---- | ----------------- | ----- |
+| `service_area_id` | UUID  | Optional | If provided, retrieve a specific service area (e.g. a retired or old service area). If omitted, will return all active service areas. |
+
+Response:
+
+| Field | Types  | Required/Optional | Other |
+| ----- | ---- | ----------------- | ----- |
+| `service_area_id` | UUID | Required |  |
+| `service_start_date` | Unix Timestamp | Required | Date at which this service area became effective |
+| `service_end_date` | Unix Timestamp | Required | Date at which this service area was replaced. If currently effective, place NaN |
+| `service_area` | MultiPolygon | Required | |
+| `prior_service_area` | UUID | Optional | If exists, the UUID of the prior service area. |
+| `replacement_service_area` | UUID | Optional | If exists, the UUID of the service area that replaced this one |
+| `type` | Enum | Required |  See [area types](#area-types) table |
+
+### Area types
+
+| `type` | Description |
+|------------| ----------- |
+| unrestricted | Areas where devices may be picked up/dropped off. A provider's unrestricted area shall be contained completely inside the agency's unrestricted area for the provider in question, but it need not cover the entire agency unrestricted area. See the agency version of the service areas endpoint |
+| agency_restricted | Areas where the agency does not allow device pick-up/drop-off |
+| agency_preferred_pick_up | Areas where users are encouraged by the agency to pick up devices |
+| agency_preferred_drop_off | Areas where users are encouraged by the agency to drop off devices |
+| provider_restricted | Areas where the provider does not allow device pick-up/drop-off |
+| provider_preferred_pick_up | Areas where users are encouraged by the provider to pick up devices |
+| provider_preferred_drop_off | Areas where users are encouraged by the provider to drop off devices |
+
+[Top][toc]
+
 ## Realtime Data
 
 All MDS compatible `provider` APIs must expose a public [GBFS](https://github.com/NABSA/gbfs) feed as well. Given that GBFS hasn't fully [evolved to support dockless mobility](https://github.com/NABSA/gbfs/pull/92) yet, we follow the current guidelines in making bike information avaliable to the public. 
@@ -277,8 +298,6 @@ All MDS compatible `provider` APIs must expose a public [GBFS](https://github.co
   - `system_information.json` is always required
   - `free_bike_status.json` is required for MDS
   - `station_information.json` and `station_status.json` don't apply for MDS
-
-
 
 [Top][toc]
 

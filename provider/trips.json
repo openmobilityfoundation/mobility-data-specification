@@ -52,7 +52,6 @@
           ]
         },
         "properties": {
-          "type": "object",
           "required": [
             "timestamp"
           ],
@@ -181,9 +180,10 @@
     },
     "timestamp": {
       "$id": "#/definitions/timestamp",
-      "title": "Floating-point seconds since Unix epoch",
+      "title": "Integer milliseconds since Unix epoch",
       "type": "number",
-      "minimum": 0.0
+      "multipleOf": 1.0,
+      "minimum": 0
     },
     "vehicle_type": {
       "$id": "#/definitions/vehicle_type",
@@ -333,21 +333,13 @@
               },
               "start_time": {
                 "$id": "#/properties/data/properties/trips/items/properties/start_time",
-                "type": "number",
                 "description": "The time the trip began, expressed as a Unix Timestamp",
-                "default": 0.0,
-                "examples": [
-                  1529968782.421409
-                ]
+                "$ref": "#/definitions/timestamp"
               },
               "end_time": {
                 "$id": "#/properties/data/properties/trips/items/properties/end_time",
-                "type": "number",
                 "description": "The time the trip ended, expressed as a Unix Timestamp",
-                "default": 0.0,
-                "examples": [
-                  1531007628.3774529
-                ]
+                "$ref": "#/definitions/timestamp"
               },
               "parking_verification_url": {
                 "$id": "#/properties/data/properties/trips/items/properties/parking_verification_url",

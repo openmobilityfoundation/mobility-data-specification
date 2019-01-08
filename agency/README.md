@@ -39,9 +39,9 @@ Path Params:
 
 | Field         | Type           | Field Description                                                             |
 | ------------- | -------------- | ----------------------------------------------------------------------------- |
-| `device_id`  | UUIDv4         | Provided by Operator to uniquely identify a vehicle                           |
-| `provider_id` | UUIDv4         | Issued by <insert here>                                                       |
-| `vehicle_id`  | String         | Vehicle Identification Number (vehicle_id) visible on vehicle                        |
+| `device_id`  | UUIDv4         | Provided by Operator to uniquely identify a vehicle                            |
+| `provider_id` | UUIDv4         | Issued by City and [tracked](../providers.csv)                                |
+| `vehicle_id`  | String         | Vehicle Identification Number (vehicle_id) visible on vehicle                 |
 | `type`        | Enum           | [Vehicle Type](#vehicle-type)                                                 |
 | `propulsion`  | Enum[]         | Array of [Propulsion Type](#propulsion-type); allows multiple values          |
 | `year`        | Integer        | Year Manufactured                                                             |
@@ -138,7 +138,7 @@ Query Parameters:
 | Parameter | Type | Required/Optional | Description |
 | ----- | ---- | ----------------- | ----- |
 | `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS |
-| `service_area_id` | UUID  | Optional | If provided, retrieve a specific service area (e.g. a retired or old service area). If omitted, will return all active service areas. |  
+| `service_area_id` | UUID  | Optional | If provided, retrieve a specific service area (e.g. a retired or old service area). If omitted, will return all active service areas. |
 
 Response:
 
@@ -150,6 +150,7 @@ Response:
 | `service_area` | MultiPolygon | Required | |
 | `prior_service_area` | UUID | Optional | If exists, the UUID of the prior service area. |
 | `replacement_service_area` | UUID | Optional | If exists, the UUID of the service area that replaced this one |
+| `type` | Enum | Required |  See [area types](#area-types) table |
 
 ## Vehicle Events
 

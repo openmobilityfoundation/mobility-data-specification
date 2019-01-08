@@ -13,7 +13,7 @@ MDS_FEATURE_POINT = "MDS_Feature_Point"
 MDS_FEATURECOLLECTION_ROUTE = "MDS_FeatureCollection_Route"
 
 def get_definition(id):
-    return "#/definitions/{}".format(id)
+    return f"#/definitions/{id}"
 
 def get_point_schema():
     """
