@@ -38,9 +38,9 @@ Path Params:
 
 | Field         | Type           | Field Description                                                             |
 | ------------- | -------------- | ----------------------------------------------------------------------------- |
-| `device_id`  | UUIDv4         | Provided by Operator to uniquely identify a vehicle                           |
-| `provider_id` | UUIDv4         | Issued by <insert here>                                                       |
-| `vehicle_id`  | String         | Vehicle Identification Number (vehicle_id) visible on vehicle                        |
+| `device_id`  | UUIDv4         | Provided by Operator to uniquely identify a vehicle                            |
+| `provider_id` | UUIDv4         | Issued by City and [tracked](../providers.csv)                                |
+| `vehicle_id`  | String         | Vehicle Identification Number (vehicle_id) visible on vehicle                 |
 | `type`        | Enum           | [Vehicle Type](#vehicle-type)                                                 |
 | `propulsion`  | Enum[]         | Array of [Propulsion Type](#propulsion-type); allows multiple values          |
 | `year`        | Integer        | Year Manufactured                                                             |
@@ -239,6 +239,7 @@ List of valid vehicle events and the resulting vehicle status if the event is su
 | `restricted`         | Areas where vehicle pick-up/drop-off is not allowed                                                                                                                                                                                                                                                   |
 | `preferred_pick_up`  | Areas where users are encouraged to pick up vehicles                                                                                                                                                                                                                                                  |
 | `preferred_drop_off` | Areas where users are encouraged to drop off vehicles                                                                                                                                                                                                                                                 |
+
 ### Vehicle Type
 
 | `type`    |
