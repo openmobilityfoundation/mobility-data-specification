@@ -39,15 +39,15 @@ Path Params:
 
 | Field         | Type           | Field Description                                                             |
 | ------------- | -------------- | ----------------------------------------------------------------------------- |
-| `device_id`  | UUIDv4         | Provided by Operator to uniquely identify a vehicle                           |
-| `provider_id` | UUIDv4         | Issued by <insert here>                                                       |
-| `vehicle_id`  | String         | Vehicle Identification Number (vehicle_id) visible on vehicle                        |
+| `device_id`  | UUIDv4         | Provided by Operator to uniquely identify a vehicle                            |
+| `provider_id` | UUIDv4         | Issued by City and [tracked](../providers.csv)                                |
+| `vehicle_id`  | String         | Vehicle Identification Number (vehicle_id) visible on vehicle                 |
 | `type`        | Enum           | [Vehicle Type](#vehicle-type)                                                 |
 | `propulsion`  | Enum[]         | Array of [Propulsion Type](#propulsion-type); allows multiple values          |
 | `year`        | Integer        | Year Manufactured                                                             |
 | `mfgr`        | String         | Vehicle Manufacturer                                                          |
 | `model`       | String         | Vehicle Model                                                                 |
-| `status`      | Enum           | Current vehicle status. See [Vehicle Status](#vehicle-events) |
+| `status`      | Enum           | Current vehicle status. See [Vehicle Status](#vehicle-events)                 |
 | `prev_event`  | Enum           | Last [Vehicle Event](#vehicle-events)                                         |
 | `updated`     | Unix Timestamp | Date of last event update                                                     |
 
@@ -66,9 +66,9 @@ Body Params:
 | `vehicle_id` | String  | Required          | Vehicle Identification Number (vehicle_id) visible on vehicle               |
 | `type`       | Enum    | Required          | [Vehicle Type](#vehicle-type)                                        |
 | `propulsion` | Enum[]  | Required          | Array of [Propulsion Type](#propulsion-type); allows multiple values |
-| `year`       | Integer | Required          | Year Manufactured                                                    |
-| `mfgr`       | String  | Required          | Vehicle Manufacturer                                                 |
-| `model`      | String  | Required          | Vehicle Model                                                        |
+| `year`       | Integer | Optional          | Year Manufactured                                                    |
+| `mfgr`       | String  | Optional          | Vehicle Manufacturer                                                 |
+| `model`      | String  | Optional          | Vehicle Model                                                        |
 
 201 Success Response:
 
@@ -105,7 +105,7 @@ Body Params:
 
 | Field       | Type                         | Required/Optional | Field Description                                                                                                                          |
 | ----------- | ---------------------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| `event_type`     | Enum                         | Required          | [Vehicle Event](#vehicle-events)                                                                                                           |
+| `event_type` | Enum                         | Required          | [Vehicle Event](#vehicle-events)                                                                                                           |
 | `telemetry` | [Telemetry](#telemetry-data) | Required          | Single point of telemetry                             |
 | `trip_id`   | UUIDv4                         | Optional          | UUID provided by Operator to uniquely identify the trip. Required for `trip_start`, `trip_end`, `trip_enter`, and `trip_leave` event types |
 
@@ -202,7 +202,7 @@ Query Parameters:
 | Parameter | Type | Required/Optional | Description |
 | ----- | ---- | ----------------- | ----- |
 | `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS |
-| `service_area_id` | UUID  | Optional | If provided, retrieve a specific service area (e.g. a retired or old service area). If omitted, will return all active service areas. |  
+| `service_area_id` | UUID  | Optional | If provided, retrieve a specific service area (e.g. a retired or old service area). If omitted, will return all active service areas. |
 
 Response:
 
@@ -268,6 +268,7 @@ List of valid vehicle events and the resulting vehicle status if the event is su
 A vehicle may have one or more values from the `propulsion`, depending on the number of modes of operation. For example, a scooter that can be powered by foot or by electric motor would have the `propulsion` represented by the array `['human', 'electric']`. A bicycle with pedal-assist would have the `propulsion` represented by the array `['human', 'electric_assist']` if it can also be operated as a traditional bicycle.
 
 ## Responses
+
 
 * **200:** OK: operation successful.
 * **201:** Created: `POST` operations, new object created
