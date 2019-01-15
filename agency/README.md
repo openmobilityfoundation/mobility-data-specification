@@ -216,7 +216,7 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | `gps.altitude` | Double         | Required              | Altitude above mean sea level in meters                      |
 | `gps.heading`  | Double         | Required              | Degrees - clockwise starting at 0 degrees at true North      |
 | `gps.speed`    | Float          | Required              | Speed in meters / sec                                        |
-| `gps.hdop`     | Float          | Required              | Horizontal GPS accuracy value (see [hdop](https://support.esri.com/en/other-resources/gis-dictionary/term/358112bd-b61c-4081-9679-4fca9e3eb926) |
+| `gps.hdop`     | Float          | Required              | Horizontal GPS accuracy value (see [hdop](https://support.esri.com/en/other-resources/gis-dictionary/term/358112bd-b61c-4081-9679-4fca9e3eb926)) |
 | `gps.satellites` | Integer      | Required              | Number of GPS satellites
 | `charge`       | Float          | Require if Applicable | Percent battery charge of vehicle, expressed between 0 and 1 |
 
