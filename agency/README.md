@@ -17,6 +17,7 @@ This specification contains a collection of RESTful APIs used to specify the dig
 * [Event types](#Event-Types)
 * [Telemetry Data](#telemetry-data)
 * [Enum definitions](#enum-definitions)
+* [Responses](#responses)
 
 ## Authorization
 
@@ -74,6 +75,20 @@ Body Params:
 
 _No content returned on success._
 
+400 Failure Response:
+
+| `error`              | `error_description`                               | `error_details`[]               |
+| -------------------- | ------------------------------------------------- | ------------------------------- |
+| `bad_param`          | A validation error occurred.                      | Array of parameters with errors |
+| `missing_param`      | A required parameter is missing.                  | Array of missing parameters     |
+
+409 Failure Response:
+
+| `error`              | `error_description`                               | `error_details`[]               |
+| -------------------- | ------------------------------------------------- | ------------------------------- |
+| `already_registered` | A vehicle with `device_id` is already registered |                                 |
+
+
 ## Vehicle - Event
 
 The vehicle `/event` endpoint allows the Provider to control the state of the vehicle including deregister a vehicle from the fleet.
@@ -101,6 +116,18 @@ Body Params:
 | ------------ | ---- | ----------------------------------------------------------------------------- |
 | `device_id` | UUIDv4| UUID provided by Operator to uniquely identify a vehicle                      |
 | `status`     | Enum | Vehicle status based on posted `event_type`. See [Vehicle Status](#vehicle-events) |
+
+400 Failure Response:
+
+| `error`             | `error_description`             | `error_details`[]               |
+| ------------------- | ------------------------------- | ------------------------------- |
+| `bad_param`         | A validation error occurred     | Array of parameters with errors |
+| `missing_param`     | A required parameter is missing | Array of missing parameters     |
+| `unregistered`      | Vehicle is not registered       |                                 |
+| `inactive`          | Vehicle is not active           |                                 |
+| `unavailable`       | Vehicle is unavailable          |                                 |
+| `no_active_trip`    | No trip is active for Vehicle   |                                 |
+| `trip_not_complete` | A trip is active for Vehicle    |                                 |
 
 ## Vehicles - Update Telemetry
 
@@ -189,7 +216,8 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | `gps.altitude` | Double         | Required              | Altitude above mean sea level in meters                      |
 | `gps.heading`  | Double         | Required              | Degrees - clockwise starting at 0 degrees at true North      |
 | `gps.speed`    | Float          | Required              | Speed in meters / sec                                        |
-| `gps.accuracy` | Integer        | Required              | GPS accuracy value                                           |
+| `gps.hdop`     | Float          | Required              | Horizontal GPS accuracy value (see [hdop](https://support.esri.com/en/other-resources/gis-dictionary/term/358112bd-b61c-4081-9679-4fca9e3eb926) |
+| `gps.satellites` | Integer      | Required              | Number of GPS satellites
 | `charge`       | Float          | Require if Applicable | Percent battery charge of vehicle, expressed between 0 and 1 |
 
 ## Enum Definitions
@@ -221,19 +249,22 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 
 A vehicle may have one or more values from the `propulsion`, depending on the number of modes of operation. For example, a scooter that can be powered by foot or by electric motor would have the `propulsion` represented by the array `['human', 'electric']`. A bicycle with pedal-assist would have the `propulsion` represented by the array `['human', 'electric_assist']` if it can also be operated as a traditional bicycle.
 
-### message
+## Responses
 
-For 'message', options are:
 
-* `200: OK`
-* `201: Created`
-* `202: Accepted`
-* `203: Added`
-* `204: Removed`
-* `210: Warning: vehicle used in this trip has not been properly registered`
-* `305: Error: vehicle is already registered`
-* `306: Error: vehicle registration cannot be found`
-* `310: Error: vehicle is not properly registered`
-* `311: Error: duplicate registration found, please use a different unique_id or update existing unique_id status using the update-vehicle-status endpoint`
-* `315: Error: vehicle is not active`
-* `320: Error: vehicle trip has not been properly started`
+* **200:** OK: operation successful.
+* **201:** Created: `POST` operations, new object created
+* **400:** Bad request.
+* **401:** Unauthorized: Invalid, expired, or insufficient scope of token.
+* **404:** Not Found: Object does not exist, returned on `GET` or `POST` operations if the object does not exist.
+* **409:** Conflict: `POST` operations when an object already exists and an update is not possible.
+* **412:** Precondition failed: `POST` operation rejected based on policy or business logic.
+* **500:** Internal server error: In this case, the answer may contain a `text/plain` body with an error message for troubleshooting.
+
+### Error Message Format
+
+| Field               | Type     | Field Description      |
+| ------------------- | -------- | ---------------------- |
+| `error`             | String   | Error message string   |
+| `error_description` | String   | Human readable error description (can be localized) |
+| `error_details`     | String[] | Array of error details |
