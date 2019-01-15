@@ -208,7 +208,7 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 
 | Field          | Type           | Required/Optional     | Field Description                                            |
 | -------------- | -------------- | --------------------- | ------------------------------------------------------------ |
-| `vehicle_id`   | UUIDv4         | Required              | ID used in [Register](#vehicle-register)                     |
+| `device_id`    | UUIDv4         | Required              | ID used in [Register](#vehicle-register)                     |
 | `timestamp`    | Unix Timestamp | Required              | Date/time that event occurred. Based on GPS clock            |
 | `gps`          | Object         | Required              | Telemetry position data                                      |
 | `gps.lat`      | Double         | Required              | Latitude of the location                                     |
