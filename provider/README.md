@@ -13,11 +13,39 @@ This specification contains a data standard for *mobility as a service* provider
 
 The following information applies to all `provider` API endpoints. Details on providing authorization to endpoints is specified in the [auth](auth.md) document.
 
+### Versioning
+
+`provider` APIs must handle requests for specific versions of the specification from clients. 
+
+Versioning must be implemented through the use of a custom media-type, `application/vnd.mds.provider+json`, combined with a required `version` parameter.
+
+The version parameter specifies the dot-separated combination of major and minor versions from a published version of the specification. For example, the media-type for version `0.2.1` would be specified as `application/vnd.mds.provider+json;version=0.2`
+
+> Note: Normally breaking changes are covered by different major versions in semver notation. However, as this specification is still pre-1.0.0, changes in minor versions may include breaking changes, and therefore are included in the version string.
+
+Clients must specify the version they are targeting through the `Accept` header. For example:
+
+```http
+Accept: application/vnd.mds.provider+json;version=0.3
+```
+
+> Since versioning was not added until the 0.3.0 release, if the `Accept` header is `application/json` or not set in the request, the `provider` API must respond as if version `0.2` was requested.
+
+Responses to client requests must indicate the version the response adheres to through the `Content-Type` header. For example:
+
+```http
+Content-Type: application/vnd.mds.provider+json;version=0.3
+```
+
+> Since versioning was not added until the 0.3.0 release, if the `Content-Type` header is `application/json` or not set in the response, version `0.2` must be assumed.
+
+If an unsupported or invalid version is requested, the API must respond with a status of `406 Not Acceptable`. In which case, the response should include a body specifying a list of supported versions.
+
 ### Response Format
 
-The response to a client request must include a status code defined in the [IANA HTTP Status Code Registry](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml).
+The response to a client request must include a valid HTTP status code defined in the [IANA HTTP Status Code Registry](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml). It also must set the `Content-Type` header, as specified in the [Versioning](#Versioning) section.
 
-Responses must be `UTF-8` encoded `application/json` and must minimally include the MDS `version` and a `data` payload:
+Response bodies must be a `UTF-8` encoded JSON object and must minimally include the MDS `version` and a `data` payload:
 
 ```json
 {
