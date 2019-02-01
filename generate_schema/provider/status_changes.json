@@ -121,6 +121,28 @@
                 }
               }
             ],
+            "anyOf": [
+              {
+                "not": {
+                  "properties": {
+                    "event_type_reason": {
+                      "enum": [
+                        "user_pick_up",
+                        "user_drop_off"
+                      ]
+                    }
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "associated_trip": {
+                    "description": "For user-generated event types, associated trip_id",
+                    "$ref": "#/definitions/uuid"
+                  }
+                }
+              }
+            ],
             "properties": {
               "provider_name": {
                 "$id": "#/properties/data/properties/status_changes/items/properties/provider_name",
@@ -180,15 +202,6 @@
                 ],
                 "minimum": 0,
                 "maximum": 1
-              },
-              "associated_trips": {
-                "$id": "#/properties/data/properties/status_changes/items/properties/associated_trips",
-                "type": ["array", "null"],
-                "description": "For 'Reserved' event types, associated trip_ids",
-                "items": {
-                  "$id": "#/properties/data/properties/status_changes/items/properties/associated_trips/items",
-                  "$ref": "#/definitions/uuid"
-                }
               }
             }
           }
