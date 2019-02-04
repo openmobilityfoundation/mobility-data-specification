@@ -1,8 +1,8 @@
 # Mobility Data Specification
 
-The Mobility Data Specification (**MDS**) is a set of data specifications and data sharing requirements focused on dockless e-scooters and bicycles. Inspired by [GTFS](https://developers.google.com/transit/gtfs/reference/) and [GBFS](https://github.com/NABSA/gbfs) the goals of the MDS are to provide API and data standards for municipalities to help ingest, compare and analyze *mobility as a service* provider data. 
+The Mobility Data Specification (**MDS**) is a set of data specifications and data sharing requirements focused on dockless e-scooters, bicycles and cars. Inspired by [GTFS](https://developers.google.com/transit/gtfs/reference/) and [GBFS](https://github.com/NABSA/gbfs) the goals of the MDS are to provide API and data standards for municipalities to help ingest, compare and analyze *mobility as a service* provider data. 
 
-The **MDS** helps the City ingest and analyze information from for-profit companies who operate dockless scooters and bicycles in the public right-of-way. MDS is a key piece of digital infrastructure that helps cities and regulators such as Los Angeles Department of Transportation (LADOT) understand how dockless mobility operate.
+The **MDS** helps the City ingest and analyze information from for-profit companies who operate dockless scooters, bicycles and cars in the public right-of-way. MDS is a key piece of digital infrastructure that helps cities and regulators such as Los Angeles Department of Transportation (LADOT) understand how dockless mobility operate.
 
 Mobility providers are required to share data with LADOT as part of the City of Los Angeles' Dockless Mobility Permit. Standardizing data collection between different providers improves cooperation, innovation, and efficiency of the City's transportation network.
 

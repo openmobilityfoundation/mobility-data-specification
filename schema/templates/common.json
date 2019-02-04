@@ -57,6 +57,7 @@
       "description": "The type of vehicle",
       "enum": [
         "bicycle",
+        "car",
         "scooter"
       ]
     },

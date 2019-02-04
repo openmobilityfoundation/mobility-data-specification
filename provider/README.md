@@ -217,6 +217,7 @@ When multiple query parameters are specified, they should all apply to the retur
 | `vehicle_type` |
 |--------------|
 | bicycle      |
+| car          |
 | scooter      |
 
 ### Propulsion Types
