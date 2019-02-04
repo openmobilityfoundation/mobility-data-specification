@@ -31,3 +31,9 @@ OAuth 2.0's `client_credentials` grant type (outlined in [RFC6749](https://tools
 OAuth 2.0 is an industry standard authorization framework with a variety of existing tooling. The `client_credentials` grant type facilitates generation of tokens that can be used for access by agencies and distributed to data partners.
 
 If an MDS `provider` implements this auth scheme, it **MAY** choose to specify token scopes that define access parameters like allowable time ranges. These guidelines **SHOULD** be encoded into the returned token in a parseable way.
+
+## Endpoint Authenication Requirements  
+
+The `/trips` and `/status_changes` endpoints may or may not authentication , it is up to the implementing provider to decide if they want historical information available with or without authentication. 
+
+As of MDS 0.3.0, `gbfs.json` is required. The required GBFS endpoints should be made available publicly. See [#realtime-data](https://github.com/CityOfLosAngeles/mobility-data-specification/tree/master/provider#realtime-data) for more information about how to implement GBFS for dockless systems. 
