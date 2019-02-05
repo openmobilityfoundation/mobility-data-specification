@@ -50,7 +50,7 @@ The following keys must be used for pagination links:
 * `prev`: url to the previous page of data
 * `next`: url to the next page of data
 
-At a minimum, paginated payloads must include a `next` key, which must be set to `null` to indicate the last page of data. 
+At a minimum, paginated payloads must include a `next` key, which must be set to `null` to indicate the last page of data.
 
 ```json
 {
@@ -113,10 +113,10 @@ A trip represents a journey taken by a *mobility as a service* customer with a g
 
 The trips API allows a user to query historical trip data.
 
-Endpoint: `/trips`  
-Method: `GET`  
-Schema: [`trips` schema][trips-schema]  
-`data` Payload: `{ "trips": [] }`, an array of objects with the following structure  
+Endpoint: `/trips`
+Method: `GET`
+Schema: [`trips` schema][trips-schema]
+`data` Payload: `{ "trips": [] }`, an array of objects with the following structure
 
 
 | Field | Type    | Required/Optional | Comments |
@@ -211,9 +211,9 @@ The status of the inventory of vehicles available for customer use.
 
 This API allows a user to query the historical availability for a system within a time range.
 
-Endpoint: `/status_changes`  
-Method: `GET`  
-Schema: [`status_changes` schema][sc-schema]  
+Endpoint: `/status_changes`
+Method: `GET`
+Schema: [`status_changes` schema][sc-schema]
 `data` Payload: `{ "status_changes": [] }`, an array of objects with the following structure
 
 | Field | Type | Required/Optional | Comments |
@@ -293,7 +293,7 @@ Response:
 
 ## Realtime Data
 
-All MDS compatible `provider` APIs must expose a public [GBFS](https://github.com/NABSA/gbfs) feed as well. Given that GBFS hasn't fully [evolved to support dockless mobility](https://github.com/NABSA/gbfs/pull/92) yet, we follow the current guidelines in making bike information avaliable to the public. 
+All MDS compatible `provider` APIs must expose a public [GBFS](https://github.com/NABSA/gbfs) feed as well. Given that GBFS hasn't fully [evolved to support dockless mobility](https://github.com/NABSA/gbfs/pull/92) yet, we follow the current guidelines in making bike information avaliable to the public.
 
   - `gbfs.json` is always required and must contain a `feeds` property that lists all published feeds
   - `system_information.json` is always required
