@@ -224,6 +224,7 @@ Schema: [`status_changes` schema][sc-schema]
 | `vehicle_id` | String | Required | The Vehicle Identification Number visible on the vehicle itself |
 | `vehicle_type` | Enum | Required | see [vehicle types](#vehicle-types) table |
 | `propulsion_type` | Enum[] | Required | Array of [propulsion types](#propulsion-types); allows multiple values |
+| `event_id` | UUID | Required | A unique ID for each event |
 | `event_type` | Enum | Required | See [event types](#event-types) table |
 | `event_type_reason` | Enum | Required | Reason for status change, allowable values determined by [`event type`](#event-types) |
 | `event_time` | [timestamp][ts] | Required | Date/time that event occurred, based on device clock |

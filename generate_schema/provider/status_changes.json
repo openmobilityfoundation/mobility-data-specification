@@ -36,6 +36,7 @@
               "vehicle_id",
               "vehicle_type",
               "propulsion_type",
+              "event_id",
               "event_type",
               "event_type_reason",
               "event_time",
@@ -76,6 +77,11 @@
                 "$id": "#/properties/data/properties/status_changes/items/properties/propulsion_type",
                 "description": "The type of propulsion; allows multiple values",
                 "$ref": "#/definitions/propulsion_type"
+              },
+              "event_id": {
+                "$id": "#/properties/data/properties/trips/items/properties/event_id",
+                "description": "A unique ID for each event",
+                "$ref": "#/definitions/uuid"
               },
               "event_time": {
                 "$id": "#/properties/data/properties/status_changes/items/properties/event_time",
