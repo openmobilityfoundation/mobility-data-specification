@@ -197,7 +197,7 @@ A device may have one or more values from the `propulsion_type`, depending on th
 
 To represent a route, MDS `provider` APIs must create a GeoJSON [`FeatureCollection`](https://tools.ietf.org/html/rfc7946#section-3.3), which includes every [observed point][geo] in the route.
 
-Routes must include at least 2 points: the start point and end point. Additionally, routes must include all possible GPS samples collected by a provider.
+Routes must include at least 2 points: the start point and end point. Additionally, routes must include all possible GPS samples collected by a provider. However, providers can truncate the the latitude and longitude to the level of precision representing the maximum accuracy of the specific measurement. (For example, a-GPS is accurate to 5 decimal places, differential GPS is generally accurate to 6 decimal places. Providers should truncate those readings to the appropriate number for their systems.) 
 
 ```js
 "route": {
