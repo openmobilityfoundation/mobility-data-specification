@@ -14,7 +14,7 @@ This specification contains a collection of RESTful APIs used to specify the dig
 * [Vehicle - Event](#vehicle---event)
 * [Vehicles - Update Telemetry](#vehicles---update-telemetry)
 * [service_areas](#service_areas)
-* [Event types](#Event-Types)
+* [Vehicle Events](#vehicle-events)
 * [Telemetry Data](#telemetry-data)
 * [Enum definitions](#enum-definitions)
 * [Responses](#responses)
@@ -191,10 +191,10 @@ List of valid vehicle events and the resulting vehicle status if the event is su
 | `maintenance_drop_off` | Vehicle introduced into service after being removed for maintenance                                  | `removed`                                          | `available`         |                                                                         |
 | `cancel_reservation`   | Customer cancels reservation                                                                         | `reserved`                                         | `available`         |                                                                         |
 | `reserve`              | Customer reserves vehicle                                                                            | `available`                                        | `reserved`          | Vehicle is reserved or in use.                                          |
-| `trip_start`           | Customer starts a trip                                                                               | `available`                                        | `trip`              |                                                                         |
+| `trip_start`           | Customer starts a trip                                                                               | `available`, `reserved`                          | `trip`              |                                                                         |
 | `trip_enter`           | Customer enters a service area managed by agency during an active trip.                              | `unavailable`, `removed`, `elsewhere`              | `trip`              |                                                                         |
 | `trip_leave`           | Customer enters a service area managed by agency during an active trip.                              | `trip`                                             | `elsewhere`         |                                                                         |
-| `register`             | Default state for a newly registered vehicle                                                         |                                                    | `unavailable`       | A vehicle is in the active fleet but not yet available for customer use |
+| `register`             | Default state for a newly registered vehicle                                                         | `inactive`                                          | `unavailable`       | A vehicle is in the active fleet but not yet available for customer use |
 | `low_battery`          | A vehicle is no longer available due to insufficient battery                                         | `available`                                        | `unavailable`       |                                                                         |
 | `maintenance`          | A vehicle is no longer available due to equipment issues                                             | `available`, `reserved`                            | `unavailable`       |                                                                         |
 | `service_end`          | Vehicle removed from street because service has ended for the day (if program does not operate 24/7) | `available`, `unavailable`, `elsewhere`            | `removed`           | A vehicle is removed from the street and unavailable for customer use.  |
