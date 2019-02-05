@@ -16,7 +16,12 @@ Cities and regulators can choose best how to implement *Agency* and *Provider* e
 
 The specification will be versioned using Git tags and [semantic versioning](https://semver.org/). See prior [releases](https://github.com/CityOfLosAngeles/mobility-data-specification/releases) and the [Release Guidelines](ReleaseGuidelines.md) for more information.
 
-## Roadmap
+## Announcements 
+
+*2/4/2019 update*: Webinar: City of Los Angeles One Year Permit Application Update
+LADOT is hosting a webinar on Thursday, February 7th, from 2 pm to 4 pm (pst) to give an overview of the MDS Agency sandbox, discuss and answer questions about integration and timeline for Agency services.  You can find out more about the MDS Agency program and specification on our webpage and FAQ. Invite info: support@ladot.io 
+
+Thursday 2:00 pm | 2 hours | (UTC-08:00) Pacific Time (US & Canada)
 
 The City of Los Angeles is currently looking for feedback and comments on the draft versions. Comments can be made by making an Github Issue, while suggested changes can be made using a pull request. The rules and guidelines for the Los Angeles Dockless Bikeshare Systems / Pilot Program can be found on [Council Clerk Connect](https://cityclerk.lacity.org/lacityclerkconnect/index.cfm?fa=ccfi.viewrecord&cfnumber=17-1125).
 
