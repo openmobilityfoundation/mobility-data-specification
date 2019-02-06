@@ -138,7 +138,7 @@ For the purposes of this specification, the intersection of two geographic datat
 ### Municipality Boundary
 Municipalities requiring MDS Provider API compliance should provide an unambiguous digital source for the municipality boundary. This boundary must be used when determining which data each `provider` API endpoint will include.
 
-The boundary file should be provided in Shapefile or GeoJSON format. The boundary file should be hosted online at a published address that all providers and `provider` API consumers can access and download.
+The boundary should be defined as a polygon or collection of polygons. The file defining the boundary should be provided in Shapefile or GeoJSON format and hosted online at a published address that all providers and `provider` API consumers can access and download.
 
 ### Timestamps
 
