@@ -37,6 +37,7 @@ The City of Los Angeles is currently looking for feedback and comments on the dr
 * [`mds-dev`](https://github.com/cityoflosangeles/mds-dev) - Code to do cap checking, fake data generation and more with provider data. 
 * [`mds-validator`](https://github.com/cityoflosangeles/mds-validator) - Code to validate MDS APIs using JSONSchema. 
 * [`aqueduct`](https://github.com/cityoflosangeles/aqueduct) - ETL, Data Warehousing, and Machine Learning Platform for LA City Data Science team. Handles extracting MDS provider APIs and storing in data warehouse. 
+* [`mds-agency-cli`](https://github.com/cityoflosangeles/mds-agency-cli) - Nodejs-based command-line interface to exercise the Agency API in the LADOT sandbox
 
 ### City of Santa Monica
 * [`mds-provider`](https://github.com/cityofsantamonica/mds-provider) - Python package implementing the provider API, validation using JSONSchema, data loading to multiple targets, and fake provider data generation.
