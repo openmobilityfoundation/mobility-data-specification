@@ -1,5 +1,4 @@
 provider_name,provider_id,url,mds_api_url,gbfs_api_url
-Cloud,bf95148b-d1d1-464e-a140-6d2563ac43d4,https://www.cloud.tt,https://mds.cloud.tt,https://mds.cloud.tt/gbfs,
 JUMP,c20e08cf-8488-46a6-a66c-5d8fb827f7e0,https://jump.com,https://api.uber.com/v0.2/emobility/mds,
 Lime,63f13c48-34ff-49d2-aca7-cf6a5b6171c3,https://li.me,https://data.lime.bike/api/partners/v1/mds,
 Bird,2411d395-04f2-47c9-ab66-d09e9e3c3251,https://www.bird.co,https://mds.bird.co,https://mds.bird.co/gbfs
@@ -11,3 +10,4 @@ Wheels,b79f8687-526d-4ae6-80bf-89b4c44dc071,https://wheels.co,https://mds.getwhe
 Spin,70aa475d-1fcd-4504-b69c-2eeb2107f7be,https://www.spin.app,https://api.spin.pm/api/v1/mds,
 WIND,d56d2df6-fa92-43de-ab61-92c3a84acd7d,https://www.wind.co,https://partners.wind.co/v1/mds,
 Tier,264aad41-b47c-415d-8585-0208d436516e,https://www.tier.app,https://partner.tier-services.io/mds,
+Cloud,bf95148b-d1d1-464e-a140-6d2563ac43d4,https://www.cloud.tt,https://mds.cloud.tt,https://mds.cloud.tt/gbfs
