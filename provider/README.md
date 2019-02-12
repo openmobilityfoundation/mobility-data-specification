@@ -175,6 +175,8 @@ The trips API should allow querying trips with a combination of query parameters
 * `min_end_time`: filters for trips where `end_time` occurs at or after the given time
 * `max_end_time`: filters for trips where `end_time` occurs before the given time
 
+When multiple query parameters are specified, they should all apply to the returned trips. For example, a request with `?min_end_time=1549800000000&max_end_time=1549886400000` should only return trips whose end time falls in the range `[1549800000000, 1549886400000)`.
+
 ### Vehicle Types
 
 | `vehicle_type` |
@@ -265,6 +267,8 @@ The status_changes API should allow querying status changes with a combination o
 
 * `start_time`: filters for status changes where `event_time` occurs at or after the given time
 * `end_time`: filters for status changes where `event_time` occurs before the given time
+
+When multiple query parameters are specified, they should all apply to the returned status changes. For example, a request with `?start_time=1549800000000&end_time=1549886400000` should only return status changes whose `event_time` falls in the range `[1549800000000, 1549886400000)`.
 
 ### Event Types
 
