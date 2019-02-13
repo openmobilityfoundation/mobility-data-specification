@@ -1,40 +1,22 @@
 {
-  "$id": "https://raw.githubusercontent.com/CityofLosAngeles/mobility-data-specification/master/agency/update_vehicle_status.json",
+  "$id": "https://raw.githubusercontent.com/CityofLosAngeles/mobility-data-specification/master/agency/post_vehicle_status.json",
   "$schema": "http://json-schema.org/draft-06/schema#",
-  "title": "The MDS Agency Schema, update_vehicle_status payload",
+  "title": "The MDS Agency Schema, POST vehicle status body",
   "type": "object",
   "definitions": {},
   "required": [
-    "unique_id",
-    "timestamp",
-    "location",
     "event_type",
-    "event_type_reason"
-  ],
-  "oneOf": [
-    { "$ref": "#/definitions/available_event" },
-    { "$ref": "#/definitions/unavailable_event" },
-    { "$ref": "#/definitions/reserved_event" },
-    { "$ref": "#/definitions/removed_event" }
+    "telemetry"
   ],
   "properties": {
-    "unique_id": {
-      "$id": "#/properties/unique_id",
-      "description": "The UUID for the vehicle, unique within MDS",
+    "event_type": {
+      "$ref": "#/definitions/vehicle_status"
+    },
+    "telemetry": {
+      "$ref": "#/definitions/telemetry"
+    },
+    "trip_id": {
       "$ref": "#/definitions/uuid"
-    },
-    "battery_pct": {
-      "$id": "#/properties/battery_pct",
-      "$ref": "#/definitions/battery_pct"
-    },
-    "location": {
-      "$id": "#/properties/location",
-      "description": "The GPS coordinates of where the event occurred",
-      "$ref": "#/definitions/MDS_Feature_Point"
-    },
-    "timestamp": {
-      "$id": "#/properties/location",
-      "$ref": "#/definitions/timestamp"
     }
   },
   "additionalProperties": false
