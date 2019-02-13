@@ -1,9 +1,31 @@
 {
-  "$id": "https://raw.githubusercontent.com/CityofLosAngeles/mobility-data-specification/master/agency/update_trip_telemetry.json",
+  "$id": "https://raw.githubusercontent.com/CityofLosAngeles/mobility-data-specification/master/agency/update_vehicle_status.json",
   "$schema": "http://json-schema.org/draft-06/schema#",
-  "title": "The MDS Agency Schema, update_trip_telemetry payload",
+  "title": "The MDS Agency Schema, update_vehicle_status payload",
   "type": "object",
   "definitions": {
+    "vehicle_status": {
+      "$id": "#/definitions/vehicle_status",
+      "type": "string",
+      "description": "A status event for a vehicle",
+      "enum": [
+        "service_start",
+        "trip_end",
+        "maintenance_drop_off",
+        "cancel_reservation",
+        "reserve",
+        "trip_start",
+        "trip_enter",
+        "trip_leave",
+        "register",
+        "low_battery",
+        "maintenance",
+        "service_end",
+        "rebalance_pick_up",
+        "rebalance_drop_off",
+        "deregister"
+      ]
+    },
     "telemetry": {
       "$id": "#/definitions/telemetry",
       "type": "object",
@@ -71,32 +93,53 @@
           "maximum": 1
         }
       }
+    },
+    "uuid": {
+      "$id": "#/definitions/uuid",
+      "type": "string",
+      "title": "A UUID 4 used to uniquely identifty an object",
+      "default": "",
+      "examples": [
+        "3c9604d6-b5ee-11e8-96f8-529269fb1459"
+      ],
+      "pattern": "^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$"
     }
   },
   "required": [
-    "trip_id",
+    "unique_id",
     "timestamp",
-    "route",
-    "accuracy"
+    "location",
+    "event_type",
+    "event_type_reason"
+  ],
+  "oneOf": [
+    {
+      "$ref": "#/definitions/available_event"
+    },
+    {
+      "$ref": "#/definitions/unavailable_event"
+    },
+    {
+      "$ref": "#/definitions/reserved_event"
+    },
+    {
+      "$ref": "#/definitions/removed_event"
+    }
   ],
   "properties": {
-    "trip_id": {
-      "$id": "#/properties/trip_id",
-      "description": "The UUID for the trip.",
+    "unique_id": {
+      "$id": "#/properties/unique_id",
+      "description": "The UUID for the vehicle, unique within MDS",
       "$ref": "#/definitions/uuid"
     },
-    "accuracy": {
-      "$id": "#/properties/accuracy",
-      "type": "integer",
-      "title": "The approximate level of accuracy, in meters, of Points within route",
-      "default": 0,
-      "examples": [
-        15
-      ]
+    "battery_pct": {
+      "$id": "#/properties/battery_pct",
+      "$ref": "#/definitions/battery_pct"
     },
-    "route": {
+    "location": {
       "$id": "#/properties/location",
-      "$ref": "#/definitions/MDS_FeatureCollection_Route"
+      "description": "The GPS coordinates of where the event occurred",
+      "$ref": "#/definitions/MDS_Feature_Point"
     },
     "timestamp": {
       "$id": "#/properties/location",
