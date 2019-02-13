@@ -188,7 +188,7 @@ if __name__ == '__main__':
     get_vehicle["definitions"] = {
             "propulsion_type": common["definitions"]["propulsion_type"],
             "vehicle_type": common["definitions"]["vehicle_type"],
-            "vehicle_status": common["definitions"]["vehicle_status"],
+            "vehicle_event": common["definitions"]["vehicle_event"],
             "timestamp": common["definitions"]["timestamp"],
             "uuid": common["definitions"]["uuid"],
             }
@@ -220,17 +220,17 @@ if __name__ == '__main__':
     ######################
 
     # Create the standalone POST vehicle event JSON schema by including the needed definitions
-    post_vehicle_status = get_json_file('agency/post_vehicle_status.json')
-    post_vehicle_status["definitions"] = {
-            "vehicle_status": common["definitions"]["vehicle_status"],
+    post_vehicle_event = get_json_file('agency/post_vehicle_event.json')
+    post_vehicle_event["definitions"] = {
+            "vehicle_event": common["definitions"]["vehicle_event"],
             "telemetry": common["definitions"]["telemetry"],
             "uuid": common["definitions"]["uuid"],
             }
     # Check that it is a valid schema
-    jsonschema.Draft6Validator.check_schema(post_vehicle_status)
+    jsonschema.Draft6Validator.check_schema(post_vehicle_event)
     # Write to the `agency` directory.
-    with open("../agency/post_vehicle_status.json", "w") as file:
-        file.write(json.dumps(post_vehicle_status, indent=2))
+    with open("../agency/post_vehicle_event.json", "w") as file:
+        file.write(json.dumps(post_vehicle_event, indent=2))
 
     ##########################
     # POST VEHICLE TELEMETRY #
