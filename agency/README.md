@@ -3,12 +3,13 @@
 This specification contains a collection of RESTful APIs used to specify the digital relationship between *mobility as a service* Providers and the Agencies that regulate them.
 
 * Authors: LADOT
-* Date: 11 Dec 2018
-* Version: ALPHA
+* Date: 12 Feb 2019	
+* Version: BETA
 
 ## Table of Contents
 
 * [Authorization](#authorization)
+* [Timestamps](#timestamps)
 * [Vehicles](#vehicles)
 * [Vehicle - Register](#vehicle---register)
 * [Vehicle - Event](#vehicle---event)
@@ -23,6 +24,10 @@ This specification contains a collection of RESTful APIs used to specify the dig
 
 When making requests, the Agency API expects `provider_id` to be part of the claims in a [JWT](https://jwt.io/)  `access_token` in the `Authorization` header, in the form `Authorization: Bearer <access_token>`. The token issuance, expiration and revocation policies are at the discretion of the Agency.
 
+## Timestamps
+
+As with the Provider API, `timestamp` refers to integer milliseconds since Unix epoch. 
+
 ## Vehicles
 
 The `/vehicles` endpoint returns the specified vehicle.  Providers can only retrieve data for vehicles in their registered fleet.
@@ -34,23 +39,23 @@ Path Params:
 
 | Param        | Type | Required/Optional | Description                                 |
 | ------------ | ---- | ----------------- | ------------------------------------------- |
-| `device_id` | UUIDv4 | Optional          | If provided, retrieve the specified vehicle |
+| `device_id` | UUID4 | Optional          | If provided, retrieve the specified vehicle |
 
 200 Success Response:
 
 | Field         | Type           | Field Description                                                             |
 | ------------- | -------------- | ----------------------------------------------------------------------------- |
-| `device_id`  | UUIDv4         | Provided by Operator to uniquely identify a vehicle                            |
-| `provider_id` | UUIDv4         | Issued by City and [tracked](../providers.csv)                                |
-| `vehicle_id`  | String         | Vehicle Identification Number (vehicle_id) visible on vehicle                 |
-| `type`        | Enum           | [Vehicle Type](#vehicle-type)                                                 |
-| `propulsion`  | Enum[]         | Array of [Propulsion Type](#propulsion-type); allows multiple values          |
-| `year`        | Integer        | Year Manufactured                                                             |
-| `mfgr`        | String         | Vehicle Manufacturer                                                          |
-| `model`       | String         | Vehicle Model                                                                 |
-| `status`      | Enum           | Current vehicle status. See [Vehicle Status](#vehicle-events)                 |
-| `prev_event`  | Enum           | Last [Vehicle Event](#vehicle-events)                                         |
-| `updated`     | Unix Timestamp | Date of last event update                                                     |
+| `device_id`   | UUID4      | Provided by Operator to uniquely identify a vehicle                            |
+| `provider_id` | UUID4     | Issued by City and [tracked](../providers.csv)                                |
+| `vehicle_id`  | String    | Vehicle Identification Number (vehicle_id) visible on vehicle                 |
+| `type`        | Enum      | [Vehicle Type](#vehicle-type)                                                 |
+| `propulsion`  | Enum[]    | Array of [Propulsion Type](#propulsion-type); allows multiple values          |
+| `year`        | Integer   | Year Manufactured                                                             |
+| `mfgr`        | String    | Vehicle Manufacturer                                                          |
+| `model`       | String    | Vehicle Model                                                                 |
+| `status`      | Enum      | Current vehicle status. See [Vehicle Status](#vehicle-events)                 |
+| `prev_event`  | Enum      | Last [Vehicle Event](#vehicle-events)                                         |
+| `updated`     | Timestamp | Date of last event update                                                     |
 
 ## Vehicle - Register
 
@@ -63,7 +68,7 @@ Body Params:
 
 | Field        | Type    | Required/Optional | Field Description                                                    |
 | ------------ | ------- | ----------------- | -------------------------------------------------------------------- |
-| `device_id` | UUIDv4  | Required          | Provided by Operator to uniquely identify a vehicle                  |
+| `device_id`  | UUID4    | Required          | Provided by Operator to uniquely identify a vehicle                  |
 | `vehicle_id` | String  | Required          | Vehicle Identification Number (vehicle_id) visible on vehicle               |
 | `type`       | Enum    | Required          | [Vehicle Type](#vehicle-type)                                        |
 | `propulsion` | Enum[]  | Required          | Array of [Propulsion Type](#propulsion-type); allows multiple values |
@@ -88,7 +93,6 @@ _No content returned on success._
 | -------------------- | ------------------------------------------------- | ------------------------------- |
 | `already_registered` | A vehicle with `device_id` is already registered |                                 |
 
-
 ## Vehicle - Event
 
 The vehicle `/event` endpoint allows the Provider to control the state of the vehicle including deregister a vehicle from the fleet.
@@ -100,21 +104,22 @@ Path Params:
 
 | Field        | Type | Required/Optional | Field Description                        |
 | ------------ | ---- | ----------------- | ---------------------------------------- |
-| `device_id` | UUIDv4 | Required          | ID used in [Register](#vehicle-register) |
+| `device_id`  | UUID4 | Required          | ID used in [Register](#vehicle-register) |
 
 Body Params:
 
 | Field       | Type                         | Required/Optional | Field Description                                                                                                                          |
 | ----------- | ---------------------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
 | `event_type` | Enum                         | Required          | [Vehicle Event](#vehicle-events)                                                                                                           |
-| `telemetry` | [Telemetry](#telemetry-data) | Required          | Single point of telemetry                             |
-| `trip_id`   | UUIDv4                         | Optional          | UUID provided by Operator to uniquely identify the trip. Required for `trip_start`, `trip_end`, `trip_enter`, and `trip_leave` event types |
+| `timestamp`  | Timestamp                    | Required |Date of last event update                                                     |
+| `telemetry`  | [Telemetry](#telemetry-data) | Required          | Single point of telemetry                             |
+| `trip_id`    | UUID4                        | Optional          | UUID provided by Operator to uniquely identify the trip. Required for `trip_start`, `trip_end`, `trip_enter`, and `trip_leave` event types |
 
 201 Success Response:
 
 | Field        | Type | Field Description                                                             |
 | ------------ | ---- | ----------------------------------------------------------------------------- |
-| `device_id` | UUIDv4| UUID provided by Operator to uniquely identify a vehicle                      |
+| `device_id`  | UUID4| UUID provided by Operator to uniquely identify a vehicle                      |
 | `status`     | Enum | Vehicle status based on posted `event_type`. See [Vehicle Status](#vehicle-events) |
 
 400 Failure Response:
@@ -164,7 +169,7 @@ Path Params:
 
 | Field             | Type | Required/Optional | Field Description                                                                                                                     |
 | ----------------- | ---- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `service_area_id` | UUIDv4| Optional          | If provided, retrieve a specific service area (e.g. a retired or old service area). If omitted, will return all active service areas. |
+| `service_area_id` | UUID4| Optional          | If provided, retrieve a specific service area (e.g. a retired or old service area). If omitted, will return all active service areas. |
 
 Query Params:
 
@@ -176,13 +181,13 @@ Query Params:
 
 | Field              | Types                               | Required/Optional | Field Description                                                                           |
 | ------------------ | ----------------------------------- | ----------------- | ------------------------------------------------------------------------------------------- |
-| `service_area_id`  | UUIDv4                               | Required          | UUID issued by city                                                                      |
-| `start_date`       | Unix Timestamp                      | Required          | Date at which this service area became effective                                            |
-| `end_date`         | Unix Timestamp                      | Optional          | If exists, Date at which this service area was replaced.                                    |
-| `area`             | MultiPolygon                        | Required          | GeoJson [MultiPolygon](https://tools.ietf.org/html/rfc7946#section-3.1.7) in WGS84 degrees. |
-| `prev_area`        | UUIDv4                               | Optional          | If exists, the UUID of the prior service area.                                              |
-| `replacement_area` | UUIDv4                               | Optional          | If exists, the UUID of the service area that replaced this one                              |
-| `type`             | Enum                                | Required          | See [area types](#area-types)                                                         |
+| `service_area_id`  | UUID4                                | Required          | UUID issued by city                                                                       |
+| `start_date`       | Timestamp                            | Required          | Date at which this service area became effective                                            |
+| `end_date`         | Timestamp                            | Optional          | If exists, Date at which this service area was replaced.                                    |
+| `area`             | MultiPolygon                         | Required          | GeoJson [MultiPolygon](https://tools.ietf.org/html/rfc7946#section-3.1.7) in WGS84 degrees. |
+| `prev_area`        | UUID4                                | Optional          | If exists, the UUID of the prior service area.                                              |
+| `replacement_area` | UUID4                                | Optional          | If exists, the UUID of the service area that replaced this one                              |
+| `type`             | Enum                                 | Required          | See [area types](#area-types)                                                         |
 
 ## Vehicle Events
 
@@ -213,8 +218,8 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 
 | Field          | Type           | Required/Optional     | Field Description                                            |
 | -------------- | -------------- | --------------------- | ------------------------------------------------------------ |
-| `device_id`    | UUIDv4         | Required              | ID used in [Register](#vehicle-register)                     |
-| `timestamp`    | Unix Timestamp | Required              | Date/time that event occurred. Based on GPS clock            |
+| `device_id`    | UUID4          | Required              | ID used in [Register](#vehicle-register)                     |
+| `timestamp`    | Timestamp      | Required              | Date/time that event occurred. Based on GPS clock            |
 | `gps`          | Object         | Required              | Telemetry position data                                      |
 | `gps.lat`      | Double         | Required              | Latitude of the location                                     |
 | `gps.lng`      | Double         | Required              | Longitude of the location                                    |
