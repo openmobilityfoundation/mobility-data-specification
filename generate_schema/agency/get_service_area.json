@@ -1,22 +1,43 @@
 {
-  "$id": "https://raw.githubusercontent.com/CityofLosAngeles/mobility-data-specification/master/agency/service_areas.json",
+  "$id": "https://raw.githubusercontent.com/CityofLosAngeles/mobility-data-specification/master/agency/get_service_areas.json",
   "$schema": "http://json-schema.org/draft-06/schema#",
-  "title": "The MDS Agency Schema, service_areas payload",
+  "title": "The MDS Agency Schema, GET service_areas payload",
   "type": "object",
   "definitions": {},
   "required": [
-    "provider_id"
+    "service_area_id",
+    "start_date",
+    "area",
+    "type"
   ],
   "properties": {
-    "provider_id": {
-      "$id": "#/properties/provider_id",
-      "description": "The UUID for the Provider, unique within MDS",
-      "$ref": "#/definitions/uuid"
-    },
     "service_area_id": {
       "$id": "#/properties/service_area_id",
-      "description": "An optional UUID for a service area to check for the provider",
+      "description": "UUID issued by the city",
       "$ref": "#/definitions/uuid"
+    },
+    "start_date": {
+      "description": "Date at which this service area became effective",
+      "$ref": "#/definitions/timestamp"
+    },
+    "end_date": {
+      "description": "If exists, date at which this service area was replaced",
+      "$ref": "#/definitions/timestamp"
+    },
+    "area": {
+      "description": "MultiPolygon for the service area",
+      "$ref": "#/definitions/MultiPolygon"
+    },
+    "prev_area": {
+      "description": "If exists, the UUID of the prior service area",
+      "$ref": "#/definitions/uuid"
+    },
+    "replacement_area": {
+      "description": "If exists, the UUID of the service area that replaced this one",
+      "$ref": "#/definitions/uuid"
+    },
+    "type": {
+      "$ref": "#/definitions/area_type"
     }
   },
   "additionalProperties": false
