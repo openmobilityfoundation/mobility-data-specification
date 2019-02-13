@@ -47,6 +47,107 @@
         "scooter"
       ]
     },
+    "vehicle_event": {
+      "$id": "#/definitions/vehicle_event",
+      "type": "string",
+      "description": "An event for a vehicle",
+      "enum": [
+        "service_start",
+        "trip_end",
+        "maintenance_drop_off",
+        "cancel_reservation",
+        "reserve",
+        "trip_start",
+        "trip_enter",
+        "trip_leave",
+        "register",
+        "low_battery",
+        "maintenance",
+        "service_end",
+        "rebalance_pick_up",
+        "rebalance_drop_off",
+        "deregister"
+      ]
+    },
+    "area_type": {
+      "$id": "#/definitions/area_type",
+      "type": "string",
+      "description": "The type of a service area",
+      "enum": [
+        "unrestricted",
+        "restricted",
+        "preferred_pick_up",
+        "preferred_drop_off"
+      ]
+    },
+    "telemetry": {
+      "$id": "#/definitions/telemetry",
+      "type": "object",
+      "description": "A vehicle telemetry datum",
+      "required": [
+        "device_id",
+        "timestamp",
+        "gps"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "device_id": {
+          "$ref": "#/definitions/uuid"
+        },
+        "timestamp": {
+          "$ref": "#/definitions/timestamp"
+        },
+        "gps": {
+          "type": "object",
+          "required": [
+            "lat",
+            "lng",
+            "altitude",
+            "heading",
+            "speed",
+            "hdop",
+            "staellites"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "lat": {
+              "type": "number",
+              "description": "Latitude of the location"
+            },
+            "lng": {
+              "type": "number",
+              "description": "Longitude of the location"
+            },
+            "altitude": {
+              "type": "number",
+              "description": "Altitude above mean sea level in meters"
+            },
+            "heading": {
+              "type": "number",
+              "description": "Degrees clockwise from true north"
+            },
+            "speed": {
+              "type": "number",
+              "description": "Speed in meters/sec"
+            },
+            "hdop": {
+              "type": "number",
+              "description": "Horizontal GPS accuracy value"
+            },
+            "satellites": {
+              "type": "integer",
+              "description": "Number of GPS satellites"
+            }
+          }
+        },
+        "charge": {
+          "type": "number",
+          "description": "Fraction of charge of the vehicle (required if applicable",
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    },
     "links": {
       "$id": "#/definitions/links",
       "type": "object",
