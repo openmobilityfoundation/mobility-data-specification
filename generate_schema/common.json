@@ -47,8 +47,8 @@
         "scooter"
       ]
     },
-    "vehicle_status": {
-      "$id": "#/definitions/vehicle_status",
+    "vehicle_event": {
+      "$id": "#/definitions/vehicle_event",
       "type": "string",
       "description": "A status event for a vehicle",
       "enum": [
