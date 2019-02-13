@@ -4,6 +4,65 @@
   "title": "The MDS Agency Schema, service_areas payload",
   "type": "object",
   "definitions": {
+    "MultiPolygon": {
+      "$id": "#/definitions/MultiPolygon",
+      "title": "GeoJSON MultiPolygon",
+      "type": "object",
+      "required": [
+        "type",
+        "coordinates"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "MultiPolygon"
+          ]
+        },
+        "coordinates": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "minItems": 4,
+              "items": {
+                "type": "array",
+                "minItems": 2,
+                "items": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        },
+        "bbox": {
+          "type": "array",
+          "minItems": 4,
+          "items": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "area_type": {
+      "$id": "#/definitions/area_type",
+      "type": "string",
+      "description": "The type of a service area",
+      "enum": [
+        "unrestricted",
+        "restricted",
+        "preferred_pick_up",
+        "preferred_drop_off"
+      ]
+    },
+    "timestamp": {
+      "$id": "#/definitions/timestamp",
+      "title": "Integer milliseconds since Unix epoch",
+      "type": "number",
+      "multipleOf": 1.0,
+      "minimum": 0
+    },
     "uuid": {
       "$id": "#/definitions/uuid",
       "type": "string",
