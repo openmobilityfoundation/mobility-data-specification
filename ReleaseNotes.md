@@ -1,3 +1,22 @@
+## 0.3.0 
+
+> Released 2019-02-15
+
+This release is the first minor version release of MDS with breaking changes for deployed provider API instances. 
+
+**CHANGES** 
+
+* Improved Time Based Filtering Query Parameters. #139. Thanks @babldev 
+* Changes in Service Area for Agency API. 
+* Switch timestamps to Integer milliseconds since Epoch rather then seconds. #179
+* Removed unused bbox query parameter. #183
+* Add GBFS discovery URL to `/providers.csv`. #205. Thanks @asadowns
+* Associated Trips -> Associated Trip, no longer an array. #88, #202, #217. Thanks @black-tea, @oderby
+* Version Requirements and documentation. #152, #216, and #114 
+* Agency API refactors to support launch of ladot.io sandbox. #193, #194. Thanks @toddapetersen, @sebdiem, @cttengsfmta. 
+* Clarification on Service Starts, Service Ends and Municipal Boundaries. #211, #226 
+* Documentation on how to implement truncate to save on payload size. 
+
 ## 0.2.1
 
 > Released 2018-12-03
