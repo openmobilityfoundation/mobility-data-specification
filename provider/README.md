@@ -127,7 +127,18 @@ represented as a GeoJSON [`Feature`](https://tools.ietf.org/html/rfc7946#section
 }
 ```
 
+#### Intersection Operation
+For the purposes of this specification, the intersection of two geographic datatypes is defined according to the [`ST_Intersects` PostGIS operation](https://postgis.net/docs/ST_Intersects.html)
+
+> If a geometry or geography shares any portion of space then they intersect. For geography -- tolerance is 0.00001 meters (so any points that are close are considered to intersect).<br>
+> Overlaps, Touches, Within all imply spatial intersection. If any of the aforementioned returns true, then the geometries also spatially intersect. Disjoint implies false for spatial intersection.
+
 [Top][toc]
+
+### Municipality Boundary
+Municipalities requiring MDS Provider API compliance should provide an unambiguous digital source for the municipality boundary. This boundary must be used when determining which data each `provider` API endpoint will include.
+
+The boundary should be defined as a polygon or collection of polygons. The file defining the boundary should be provided in Shapefile or GeoJSON format and hosted online at a published address that all providers and `provider` API consumers can access and download.
 
 ### Timestamps
 
@@ -139,7 +150,9 @@ References to `timestamp` imply integer milliseconds since [Unix epoch](https://
 
 A trip represents a journey taken by a *mobility as a service* customer with a geo-tagged start and stop point.
 
-The trips API allows a user to query historical trip data.
+The trips endpoint allows a user to query historical trip data.
+
+Unless stated otherwise by the municipality, the trips endpoint must return all trips with a `route` which [intersects](#intersection-operation) with the [municipality boundary](#municipality-boundary).
 
 Endpoint: `/trips`  
 Method: `GET`  
@@ -197,7 +210,7 @@ A device may have one or more values from the `propulsion_type`, depending on th
 
 ### Routes
 
-To represent a route, MDS `provider` APIs must create a GeoJSON [`FeatureCollection`](https://tools.ietf.org/html/rfc7946#section-3.3), which includes every [observed point][geo] in the route.
+To represent a route, MDS `provider` APIs must create a GeoJSON [`FeatureCollection`](https://tools.ietf.org/html/rfc7946#section-3.3), which includes every [observed point][geo] in the route, even those which occur outside the [municipality boundary](#municipality-boundary).
 
 Routes must include at least 2 points: the start point and end point. Routes must include all possible GPS samples collected by a Provider. Providers may round the latitude and longitude to the level of precision representing the maximum accuracy of the specific measurement. For example, [a-GPS](https://en.wikipedia.org/wiki/Assisted_GPS) is accurate to 5 decimal places, [differential GPS](https://en.wikipedia.org/wiki/Differential_GPS) is generally accurate to 6 decimal places. Providers may round those readings to the appropriate number for their systems.
 
@@ -239,7 +252,11 @@ Routes must include at least 2 points: the start point and end point. Routes mus
 
 The status of the inventory of vehicles available for customer use.
 
-This API allows a user to query the historical availability for a system within a time range.
+The status changes endpoint allows a user to query the historical availability for a system within a time range.
+
+Unless stated otherwise by the municipality, this endpoint must return only those status changes with a `event_location` that [intersects](#intersection-operation) with the [municipality boundary](#municipality-boundary).
+
+> Note: As a result of this definition, consumers should query the [trips endpoint](#trips) to infer when vehicles enter or leave the municipality boundary.
 
 Endpoint: `/status_changes`  
 Method: `GET`  
@@ -284,42 +301,6 @@ When multiple query parameters are specified, they should all apply to the retur
 | `removed` | A device is removed from the street and unavailable for customer use | `service_end` | Device removed from street because service has ended for the day (if program does not operate 24/7) |
 | | | `rebalance_pick_up` | Device removed from street and will be placed at another location to rebalance service |
 | | | `maintenance_pick_up` | Device removed from street so it can be worked on |
-
-## Service Areas
-
-Gets the list of service areas available to the provider.
-
-Endpoint: `/service_areas`
-Method: `GET`
-Query Parameters:
-
-| Parameter | Type | Required/Optional | Description |
-| ----- | ---- | ----------------- | ----- |
-| `service_area_id` | UUID  | Optional | If provided, retrieve a specific service area (e.g. a retired or old service area). If omitted, will return all active service areas. |
-
-Response:
-
-| Field | Types  | Required/Optional | Other |
-| ----- | ---- | ----------------- | ----- |
-| `service_area_id` | UUID | Required |  |
-| `service_start_date` | Unix Timestamp | Required | Date at which this service area became effective |
-| `service_end_date` | Unix Timestamp | Required | Date at which this service area was replaced. If currently effective, place NaN |
-| `service_area` | MultiPolygon | Required | |
-| `prior_service_area` | UUID | Optional | If exists, the UUID of the prior service area. |
-| `replacement_service_area` | UUID | Optional | If exists, the UUID of the service area that replaced this one |
-| `type` | Enum | Required |  See [area types](#area-types) table |
-
-### Area types
-
-| `type` | Description |
-|------------| ----------- |
-| unrestricted | Areas where devices may be picked up/dropped off. A provider's unrestricted area shall be contained completely inside the agency's unrestricted area for the provider in question, but it need not cover the entire agency unrestricted area. See the agency version of the service areas endpoint |
-| agency_restricted | Areas where the agency does not allow device pick-up/drop-off |
-| agency_preferred_pick_up | Areas where users are encouraged by the agency to pick up devices |
-| agency_preferred_drop_off | Areas where users are encouraged by the agency to drop off devices |
-| provider_restricted | Areas where the provider does not allow device pick-up/drop-off |
-| provider_preferred_pick_up | Areas where users are encouraged by the provider to pick up devices |
-| provider_preferred_drop_off | Areas where users are encouraged by the provider to drop off devices |
 
 [Top][toc]
 
