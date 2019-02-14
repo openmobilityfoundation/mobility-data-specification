@@ -52,6 +52,7 @@
           ]
         },
         "properties": {
+          "type": "object",
           "required": [
             "timestamp"
           ],

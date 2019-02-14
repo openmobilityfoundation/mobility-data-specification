@@ -13,11 +13,39 @@ This specification contains a data standard for *mobility as a service* provider
 
 The following information applies to all `provider` API endpoints. Details on providing authorization to endpoints is specified in the [auth](auth.md) document.
 
+### Versioning
+
+`provider` APIs must handle requests for specific versions of the specification from clients. 
+
+Versioning must be implemented through the use of a custom media-type, `application/vnd.mds.provider+json`, combined with a required `version` parameter.
+
+The version parameter specifies the dot-separated combination of major and minor versions from a published version of the specification. For example, the media-type for version `0.2.1` would be specified as `application/vnd.mds.provider+json;version=0.2`
+
+> Note: Normally breaking changes are covered by different major versions in semver notation. However, as this specification is still pre-1.0.0, changes in minor versions may include breaking changes, and therefore are included in the version string.
+
+Clients must specify the version they are targeting through the `Accept` header. For example:
+
+```http
+Accept: application/vnd.mds.provider+json;version=0.3
+```
+
+> Since versioning was not added until the 0.3.0 release, if the `Accept` header is `application/json` or not set in the request, the `provider` API must respond as if version `0.2` was requested.
+
+Responses to client requests must indicate the version the response adheres to through the `Content-Type` header. For example:
+
+```http
+Content-Type: application/vnd.mds.provider+json;version=0.3
+```
+
+> Since versioning was not added until the 0.3.0 release, if the `Content-Type` header is `application/json` or not set in the response, version `0.2` must be assumed.
+
+If an unsupported or invalid version is requested, the API must respond with a status of `406 Not Acceptable`. In which case, the response should include a body specifying a list of supported versions.
+
 ### Response Format
 
-The response to a client request must include a status code defined in the [IANA HTTP Status Code Registry](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml).
+The response to a client request must include a valid HTTP status code defined in the [IANA HTTP Status Code Registry](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml). It also must set the `Content-Type` header, as specified in the [Versioning](#Versioning) section.
 
-Responses must be `UTF-8` encoded `application/json` and must minimally include the MDS `version` and a `data` payload:
+Response bodies must be a `UTF-8` encoded JSON object and must minimally include the MDS `version` and a `data` payload:
 
 ```json
 {
@@ -147,6 +175,8 @@ The trips API should allow querying trips with a combination of query parameters
 * `min_end_time`: filters for trips where `end_time` occurs at or after the given time
 * `max_end_time`: filters for trips where `end_time` occurs before the given time
 
+When multiple query parameters are specified, they should all apply to the returned trips. For example, a request with `?min_end_time=1549800000000&max_end_time=1549886400000` should only return trips whose end time falls in the range `[1549800000000, 1549886400000)`.
+
 ### Vehicle Types
 
 | `vehicle_type` |
@@ -169,7 +199,7 @@ A device may have one or more values from the `propulsion_type`, depending on th
 
 To represent a route, MDS `provider` APIs must create a GeoJSON [`FeatureCollection`](https://tools.ietf.org/html/rfc7946#section-3.3), which includes every [observed point][geo] in the route.
 
-Routes must include at least 2 points: the start point and end point. Additionally, routes must include all possible GPS samples collected by a provider.
+Routes must include at least 2 points: the start point and end point. Routes must include all possible GPS samples collected by a Provider. Providers may round the latitude and longitude to the level of precision representing the maximum accuracy of the specific measurement. For example, [a-GPS](https://en.wikipedia.org/wiki/Assisted_GPS) is accurate to 5 decimal places, [differential GPS](https://en.wikipedia.org/wiki/Differential_GPS) is generally accurate to 6 decimal places. Providers may round those readings to the appropriate number for their systems.
 
 ```js
 "route": {
@@ -229,7 +259,7 @@ Schema: [`status_changes` schema][sc-schema]
 | `event_time` | [timestamp][ts] | Required | Date/time that event occurred, based on device clock |
 | `event_location` | GeoJSON [Point Feature][geo] | Required | |
 | `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |
-| `associated_trips` | UUID[] | Optional based `event_type_reason` | Array of UUID's. For `user`-generated event types, associated trips (foreign key to Trips API) |
+| `associated_trip` | UUID | Required if Applicable | Trip UUID (foreign key to Trips API) required if `event_type_reason` is `user_pick_up` or `user_drop_off` |
 
 ### Status Changes Query Parameters
 
@@ -237,6 +267,8 @@ The status_changes API should allow querying status changes with a combination o
 
 * `start_time`: filters for status changes where `event_time` occurs at or after the given time
 * `end_time`: filters for status changes where `event_time` occurs before the given time
+
+When multiple query parameters are specified, they should all apply to the returned status changes. For example, a request with `?start_time=1549800000000&end_time=1549886400000` should only return status changes whose `event_time` falls in the range `[1549800000000, 1549886400000)`.
 
 ### Event Types
 
@@ -295,6 +327,7 @@ Response:
 
 All MDS compatible `provider` APIs must expose a public [GBFS](https://github.com/NABSA/gbfs) feed as well. Given that GBFS hasn't fully [evolved to support dockless mobility](https://github.com/NABSA/gbfs/pull/92) yet, we follow the current guidelines in making bike information avaliable to the public. 
 
+  - `gbfs.json` is always required and must contain a `feeds` property that lists all published feeds
   - `system_information.json` is always required
   - `free_bike_status.json` is required for MDS
   - `station_information.json` and `station_status.json` don't apply for MDS

@@ -16,9 +16,11 @@ Cities and regulators can choose best how to implement *Agency* and *Provider* e
 
 The specification will be versioned using Git tags and [semantic versioning](https://semver.org/). See prior [releases](https://github.com/CityOfLosAngeles/mobility-data-specification/releases) and the [Release Guidelines](ReleaseGuidelines.md) for more information.
 
-## Roadmap
+## Announcements 
 
 The City of Los Angeles is currently looking for feedback and comments on the draft versions. Comments can be made by making an Github Issue, while suggested changes can be made using a pull request. The rules and guidelines for the Los Angeles Dockless Bikeshare Systems / Pilot Program can be found on [Council Clerk Connect](https://cityclerk.lacity.org/lacityclerkconnect/index.cfm?fa=ccfi.viewrecord&cfnumber=17-1125).
+
+*2/12/2019 Update*: City of Los Angeles One Year Permit Application MDS Agency Compliance: LADOT is seeking compliance with MDS Agency as a requirement of the one-year permit. LADOT hosted a webinar on Thursday, February 7th to give an overview of the MDS Agency sandbox, discuss and answer questions about integration and timeline for Agency services. Slides from the presentation can be viewed [here](https://ladot.lacity.org/sites/g/files/wph266/f/MDS%20Developer%20Webinar%20-%20One%20Year%20Permitting%20Overview.pdf).
 
 *12/27/2018 Update*: Applications for the One-Year Dockless On-Demand Personal Mobility Permit are now available on the [LADOT Website](https://ladot.lacity.org/ladot-begins-one-year-dockless-demand-personal-mobility-program)
 
@@ -35,10 +37,17 @@ The City of Los Angeles is currently looking for feedback and comments on the dr
 * [`mds-dev`](https://github.com/cityoflosangeles/mds-dev) - Code to do cap checking, fake data generation and more with provider data. 
 * [`mds-validator`](https://github.com/cityoflosangeles/mds-validator) - Code to validate MDS APIs using JSONSchema. 
 * [`aqueduct`](https://github.com/cityoflosangeles/aqueduct) - ETL, Data Warehousing, and Machine Learning Platform for LA City Data Science team. Handles extracting MDS provider APIs and storing in data warehouse. 
+* [`mds-agency-cli`](https://github.com/cityoflosangeles/mds-agency-cli) - Nodejs-based command-line interface to exercise the Agency API in the LADOT sandbox
 
 ### City of Santa Monica
 * [`mds-provider`](https://github.com/cityofsantamonica/mds-provider) - Python package implementing the provider API, validation using JSONSchema, data loading to multiple targets, and fake provider data generation.
 * [`mds-provider-services`](https://github.com/cityofsantamonica/mds-provider-services) - Python scripts wrapped in Docker containers implementing a MDS provider data ingestion flow, using `mds-provider` and handling the various dependencies.
+
+### City of Austin
+* [`transportation-dockless-dataviz`](https://github.com/cityofaustin/transportation-dockless-dataviz) - A hexbin origin/destintation web map of dockless trips using jQuery & Mapbox GL JS. See [http://dockless.austintexas.io/](http://dockless.austintexas.io/).
+* [`transportation-dockless-api`](https://github.com/cityofaustin/transportation-dockless-api) - Python Sanic-based API that provides an interface for retrieving anonymized and aggregated trip data. This API supplies data to our interactive [Dockless Mobility Explorer](https://dockless.austintexas.io). The source database for the API is our [Dockless Vehicle Trips](https://data.austintexas.gov/Transportation-and-Mobility/Dockless-Vehicle-Trips/7d8e-dm7r) dataset.
+* [`transportation-dockless-processing`](https://github.com/cityofaustin/transportation-dockless-processing) - Python scripts for dockless mobility data ETL.
+* [`mds-provider-client`](https://github.com/cityofaustin/mds-provider-client) - A forked Python client from [`CityofSantaMonica/mds-provider`](https://github.com/cityofsantamonica/mds-provider).
 
 ### Others
 
