@@ -13,9 +13,39 @@ This specification contains a data standard for *mobility as a service* provider
 
 The following information applies to all `provider` API endpoints. Details on providing authorization to endpoints is specified in the [auth](auth.md) document.
 
+### Versioning
+
+`provider` APIs must handle requests for specific versions of the specification from clients. 
+
+Versioning must be implemented through the use of a custom media-type, `application/vnd.mds.provider+json`, combined with a required `version` parameter.
+
+The version parameter specifies the dot-separated combination of major and minor versions from a published version of the specification. For example, the media-type for version `0.2.1` would be specified as `application/vnd.mds.provider+json;version=0.2`
+
+> Note: Normally breaking changes are covered by different major versions in semver notation. However, as this specification is still pre-1.0.0, changes in minor versions may include breaking changes, and therefore are included in the version string.
+
+Clients must specify the version they are targeting through the `Accept` header. For example:
+
+```http
+Accept: application/vnd.mds.provider+json;version=0.3
+```
+
+> Since versioning was not added until the 0.3.0 release, if the `Accept` header is `application/json` or not set in the request, the `provider` API must respond as if version `0.2` was requested.
+
+Responses to client requests must indicate the version the response adheres to through the `Content-Type` header. For example:
+
+```http
+Content-Type: application/vnd.mds.provider+json;version=0.3
+```
+
+> Since versioning was not added until the 0.3.0 release, if the `Content-Type` header is `application/json` or not set in the response, version `0.2` must be assumed.
+
+If an unsupported or invalid version is requested, the API must respond with a status of `406 Not Acceptable`. In which case, the response should include a body specifying a list of supported versions.
+
 ### Response Format
 
-Responses must be `UTF-8` encoded `application/json` and must minimally include the MDS `version` and a `data` payload:
+The response to a client request must include a valid HTTP status code defined in the [IANA HTTP Status Code Registry](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml). It also must set the `Content-Type` header, as specified in the [Versioning](#Versioning) section.
+
+Response bodies must be a `UTF-8` encoded JSON object and must minimally include the MDS `version` and a `data` payload:
 
 ```json
 {
@@ -85,7 +115,7 @@ represented as a GeoJSON [`Feature`](https://tools.ietf.org/html/rfc7946#section
 {
     "type": "Feature",
     "properties": {
-        "timestamp": 1529968782.421409
+        "timestamp": 1529968782421
     },
     "geometry": {
         "type": "Point",
@@ -97,12 +127,22 @@ represented as a GeoJSON [`Feature`](https://tools.ietf.org/html/rfc7946#section
 }
 ```
 
+#### Intersection Operation
+For the purposes of this specification, the intersection of two geographic datatypes is defined according to the [`ST_Intersects` PostGIS operation](https://postgis.net/docs/ST_Intersects.html)
+
+> If a geometry or geography shares any portion of space then they intersect. For geography -- tolerance is 0.00001 meters (so any points that are close are considered to intersect).<br>
+> Overlaps, Touches, Within all imply spatial intersection. If any of the aforementioned returns true, then the geometries also spatially intersect. Disjoint implies false for spatial intersection.
+
 [Top][toc]
+
+### Municipality Boundary
+Municipalities requiring MDS Provider API compliance should provide an unambiguous digital source for the municipality boundary. This boundary must be used when determining which data each `provider` API endpoint will include.
+
+The boundary should be defined as a polygon or collection of polygons. The file defining the boundary should be provided in Shapefile or GeoJSON format and hosted online at a published address that all providers and `provider` API consumers can access and download.
 
 ### Timestamps
 
-References to `timestamp` imply floating-point seconds since [Unix epoch](https://en.wikipedia.org/wiki/Unix_time), such as
-the format returned by Python's [`time.time()`](https://docs.python.org/3/library/time.html#time.time) function.
+References to `timestamp` imply integer milliseconds since [Unix epoch](https://en.wikipedia.org/wiki/Unix_time). You can find the implementation of unix timestamp in milliseconds for your programming language [here](https://currentmillis.com/).
 
 [Top][toc]
 
@@ -110,7 +150,9 @@ the format returned by Python's [`time.time()`](https://docs.python.org/3/librar
 
 A trip represents a journey taken by a *mobility as a service* customer with a geo-tagged start and stop point.
 
-The trips API allows a user to query historical trip data.
+The trips endpoint allows a user to query historical trip data.
+
+Unless stated otherwise by the municipality, the trips endpoint must return all trips with a `route` which [intersects](#intersection-operation) with the [municipality boundary](#municipality-boundary).
 
 Endpoint: `/trips`  
 Method: `GET`  
@@ -143,19 +185,10 @@ The trips API should allow querying trips with a combination of query parameters
 
 * `device_id`
 * `vehicle_id`
-* `start_time`: filters for trips where `start_time` occurs at or after the given time
-* `end_time`: filters for trips where `end_time` occurs at or before the given time
-* `bbox`
+* `min_end_time`: filters for trips where `end_time` occurs at or after the given time
+* `max_end_time`: filters for trips where `end_time` occurs before the given time
 
-All of these query params will use the *Type* listed above with the exception of `bbox`, which is the bounding-box.
-
-For example:
-
-```
-bbox=-122.4183,37.7758,-122.4120,37.7858
-```
-
-Gets all trips within that bounding-box where any point inside the `route` is inside said box. The order is defined as: southwest longitude, southwest latitude, northeast longitude, northeast latitude (separated by commas).
+When multiple query parameters are specified, they should all apply to the returned trips. For example, a request with `?min_end_time=1549800000000&max_end_time=1549886400000` should only return trips whose end time falls in the range `[1549800000000, 1549886400000)`.
 
 ### Vehicle Types
 
@@ -177,9 +210,9 @@ A device may have one or more values from the `propulsion_type`, depending on th
 
 ### Routes
 
-To represent a route, MDS `provider` APIs must create a GeoJSON [`FeatureCollection`](https://tools.ietf.org/html/rfc7946#section-3.3), which includes every [observed point][geo] in the route.
+To represent a route, MDS `provider` APIs must create a GeoJSON [`FeatureCollection`](https://tools.ietf.org/html/rfc7946#section-3.3), which includes every [observed point][geo] in the route, even those which occur outside the [municipality boundary](#municipality-boundary).
 
-Routes must include at least 2 points: the start point and end point. Additionally, routes must include all possible GPS samples collected by a provider.
+Routes must include at least 2 points: the start point and end point. Routes must include all possible GPS samples collected by a Provider. Providers may round the latitude and longitude to the level of precision representing the maximum accuracy of the specific measurement. For example, [a-GPS](https://en.wikipedia.org/wiki/Assisted_GPS) is accurate to 5 decimal places, [differential GPS](https://en.wikipedia.org/wiki/Differential_GPS) is generally accurate to 6 decimal places. Providers may round those readings to the appropriate number for their systems.
 
 ```js
 "route": {
@@ -187,7 +220,7 @@ Routes must include at least 2 points: the start point and end point. Additional
     "features": [{
         "type": "Feature",
         "properties": {
-            "timestamp": 1529968782.421409
+            "timestamp": 1529968782421
         },
         "geometry": {
             "type": "Point",
@@ -200,7 +233,7 @@ Routes must include at least 2 points: the start point and end point. Additional
     {
         "type": "Feature",
         "properties": {
-            "timestamp": 1531007628.3774529
+            "timestamp": 1531007628377
         },
         "geometry": {
             "type": "Point",
@@ -219,7 +252,11 @@ Routes must include at least 2 points: the start point and end point. Additional
 
 The status of the inventory of vehicles available for customer use.
 
-This API allows a user to query the historical availability for a system within a time range.
+The status changes endpoint allows a user to query the historical availability for a system within a time range.
+
+Unless stated otherwise by the municipality, this endpoint must return only those status changes with a `event_location` that [intersects](#intersection-operation) with the [municipality boundary](#municipality-boundary).
+
+> Note: As a result of this definition, consumers should query the [trips endpoint](#trips) to infer when vehicles enter or leave the municipality boundary.
 
 Endpoint: `/status_changes`  
 Method: `GET`  
@@ -239,21 +276,16 @@ Schema: [`status_changes` schema][sc-schema]
 | `event_time` | [timestamp][ts] | Required | Date/time that event occurred, based on device clock |
 | `event_location` | GeoJSON [Point Feature][geo] | Required | |
 | `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |
-| `associated_trips` | UUID[] | Optional based `event_type_reason` | Array of UUID's. For `user`-generated event types, associated trips (foreign key to Trips API) |
+| `associated_trip` | UUID | Required if Applicable | Trip UUID (foreign key to Trips API) required if `event_type_reason` is `user_pick_up` or `user_drop_off` |
 
 ### Status Changes Query Parameters
 
 The status_changes API should allow querying status changes with a combination of query parameters.
 
 * `start_time`: filters for status changes where `event_time` occurs at or after the given time
-* `end_time`: filters for status changes where `event_time` occurs at or before the given time
-* `bbox`: filters for status changes where `event_location` is within defined bounding-box. The order is definied as: southwest longitude, southwest latitude, northeast longitude, northeast latitude (separated by commas). 
+* `end_time`: filters for status changes where `event_time` occurs before the given time
 
-Example:
-
-```
-bbox=-122.4183,37.7758,-122.4120,37.7858
-```
+When multiple query parameters are specified, they should all apply to the returned status changes. For example, a request with `?start_time=1549800000000&end_time=1549886400000` should only return status changes whose `event_time` falls in the range `[1549800000000, 1549886400000)`.
 
 ### Event Types
 
@@ -270,15 +302,16 @@ bbox=-122.4183,37.7758,-122.4120,37.7858
 | | | `rebalance_pick_up` | Device removed from street and will be placed at another location to rebalance service |
 | | | `maintenance_pick_up` | Device removed from street so it can be worked on |
 
+[Top][toc]
+
 ## Realtime Data
 
 All MDS compatible `provider` APIs must expose a public [GBFS](https://github.com/NABSA/gbfs) feed as well. Given that GBFS hasn't fully [evolved to support dockless mobility](https://github.com/NABSA/gbfs/pull/92) yet, we follow the current guidelines in making bike information avaliable to the public. 
 
+  - `gbfs.json` is always required and must contain a `feeds` property that lists all published feeds
   - `system_information.json` is always required
   - `free_bike_status.json` is required for MDS
   - `station_information.json` and `station_status.json` don't apply for MDS
-
-
 
 [Top][toc]
 

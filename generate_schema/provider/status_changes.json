@@ -41,94 +41,12 @@
               "event_time",
               "event_location"
             ],
-            "oneOf": [
-              {
-                "properties": {
-                  "event_type": {
-                    "type": "string",
-                    "description": "The type of the event",
-                    "enum": [
-                      "available"
-                    ]
-                  },
-                  "event_type_reason": {
-                    "type": "string",
-                    "description": "The reason for the event",
-                    "enum": [
-                      "service_start",
-                      "user_drop_off",
-                      "rebalance_drop_off",
-                      "maintenance_drop_off"
-                    ]
-                  }
-                }
-              },
-              {
-                "properties": {
-                  "event_type": {
-                    "type": "string",
-                    "description": "The type of the event",
-                    "enum": [
-                      "reserved"
-                    ]
-                  },
-                  "event_type_reason": {
-                    "type": "string",
-                    "description": "The reason for the event",
-                    "enum": [
-                      "user_pick_up"
-                    ]
-                  }
-                }
-              },
-              {
-                "properties": {
-                  "event_type": {
-                    "type": "string",
-                    "description": "The type of the event",
-                    "enum": [
-                      "unavailable"
-                    ]
-                  },
-                  "event_type_reason": {
-                    "type": "string",
-                    "description": "The reason for the event",
-                    "enum": [
-                      "low_battery",
-                      "maintenance"
-                    ]
-                  }
-                }
-              },
-              {
-                "properties": {
-                  "event_type": {
-                    "type": "string",
-                    "description": "The type of the event",
-                    "enum": [
-                      "removed"
-                    ]
-                  },
-                  "event_type_reason": {
-                    "type": "string",
-                    "description": "The reason for the event",
-                    "enum": [
-                      "service_end",
-                      "rebalance_pick_up",
-                      "maintenance_pick_up"
-                    ]
-                  }
-                }
-              }
-            ],
             "properties": {
               "provider_name": {
                 "$id": "#/properties/data/properties/status_changes/items/properties/provider_name",
                 "type": "string",
                 "description": "The public-facing name of the Provider",
-                "examples": [
-                  "Provider Name"
-                ],
+                "examples": ["Provider Name"],
                 "pattern": "^(.*)$"
               },
               "provider_id": {
@@ -146,9 +64,7 @@
                 "type": "string",
                 "description": "The Vehicle Identification Number visible on the vehicle itself",
                 "default": "",
-                "examples": [
-                  "ABC123"
-                ],
+                "examples": ["ABC123"],
                 "pattern": "^(.*)$"
               },
               "vehicle_type": {
@@ -163,38 +79,109 @@
               },
               "event_time": {
                 "$id": "#/properties/data/properties/status_changes/items/properties/event_time",
-                "type": "number",
                 "description": "The time the event occurred, expressed as a Unix Timestamp",
-                "default": 0.0,
-                "examples": [
-                  1529968782.421409
-                ]
+                "$ref": "#/definitions/timestamp"
               },
               "event_location": {
                 "$id": "#/properties/data/properties/status_changes/items/properties/event_location",
                 "description": "The GPS coordinates of where the event occurred",
                 "$ref": "#/definitions/MDS_Feature_Point"
               },
+              "event_type": {
+                "type": "string",
+                "description": "The type of the event"
+              },
+              "event_type_reason": {
+                "type": "string",
+                "description": "The reason for the event"
+              },
               "battery_pct": {
                 "$id": "#/properties/data/properties/status_changes/items/properties/battery_pct",
                 "type": ["number", "null"],
                 "description": "Percent charge of device battery, expressed between 0 and 1",
-                "examples": [
-                  0.89
-                ],
+                "examples": [0.89],
                 "minimum": 0,
                 "maximum": 1
               },
-              "associated_trips": {
-                "$id": "#/properties/data/properties/status_changes/items/properties/associated_trips",
-                "type": ["array", "null"],
-                "description": "For 'Reserved' event types, associated trip_ids",
-                "items": {
-                  "$id": "#/properties/data/properties/status_changes/items/properties/associated_trips/items",
-                  "$ref": "#/definitions/uuid"
-                }
+              "associated_trip": {
+                "$id": "#/properties/data/properties/status_changes/items/properties/associated_trip",
+                "description": "Trip UUID, required if event_type_reason is user_pick_up or user_drop_off",
+                "$ref": "#/definitions/uuid"
               }
-            }
+            },
+            "allOf": [
+              {
+                "description": "valid event_type and event_type_reason combinations",
+                "oneOf": [
+                  {
+                    "properties": {
+                      "event_type": {
+                        "enum": ["available"]
+                      },
+                      "event_type_reason": {
+                        "enum": [
+                          "service_start",
+                          "user_drop_off",
+                          "rebalance_drop_off",
+                          "maintenance_drop_off"
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "properties": {
+                      "event_type": {
+                        "enum": ["reserved"]
+                      },
+                      "event_type_reason": {
+                        "enum": ["user_pick_up"]
+                      }
+                    }
+                  },
+                  {
+                    "properties": {
+                      "event_type": {
+                        "enum": ["unavailable"]
+                      },
+                      "event_type_reason": {
+                        "enum": ["low_battery", "maintenance"]
+                      }
+                    }
+                  },
+                  {
+                    "properties": {
+                      "event_type": {
+                        "enum": ["removed"]
+                      },
+                      "event_type_reason": {
+                        "enum": [
+                          "service_end",
+                          "rebalance_pick_up",
+                          "maintenance_pick_up"
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "description": "conditionally require associated_trip when applicable",
+                "oneOf": [
+                  {
+                    "not": {
+                      "properties": {
+                        "event_type_reason": {
+                          "enum": ["user_pick_up", "user_drop_off"]
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "required": ["associated_trip"]
+                  }
+                ]
+              }
+            ]
           }
         }
       },
