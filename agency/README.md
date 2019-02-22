@@ -128,11 +128,6 @@ Body Params:
 | ------------------- | ------------------------------- | ------------------------------- |
 | `bad_param`         | A validation error occurred     | Array of parameters with errors |
 | `missing_param`     | A required parameter is missing | Array of missing parameters     |
-| `unregistered`      | Vehicle is not registered       |                                 |
-| `inactive`          | Vehicle is not active           |                                 |
-| `unavailable`       | Vehicle is unavailable          |                                 |
-| `no_active_trip`    | No trip is active for Vehicle   |                                 |
-| `trip_not_complete` | A trip is active for Vehicle    |                                 |
 
 ## Vehicles - Update Telemetry
 
