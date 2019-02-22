@@ -203,7 +203,7 @@ List of valid vehicle events and the resulting vehicle status if the event is su
 | `reserve`              | Customer reserves vehicle                                                                            | `available`                                        | `reserved`          | Vehicle is reserved or in use.                                          |
 | `trip_start`           | Customer starts a trip                                                                               | `available`, `reserved`                          | `trip`              |                                                                         |
 | `trip_enter`           | Customer enters a service area managed by agency during an active trip.                              | `unavailable`, `removed`, `elsewhere`              | `trip`              |                                                                         |
-| `trip_leave`           | Customer enters a service area managed by agency during an active trip.                              | `trip`                                             | `elsewhere`         |                                                                         |
+| `trip_leave`           | Customer leaves a service area managed by agency during an active trip.                              | `trip`                                             | `elsewhere`         |                                                                         |
 | `register`             | Default state for a newly registered vehicle                                                         | `inactive`                                          | `unavailable`       | A vehicle is in the active fleet but not yet available for customer use |
 | `low_battery`          | A vehicle is no longer available due to insufficient battery                                         | `available`                                        | `unavailable`       |                                                                         |
 | `maintenance`          | A vehicle is no longer available due to equipment issues                                             | `available`, `reserved`                            | `unavailable`       |                                                                         |
@@ -268,7 +268,6 @@ A vehicle may have one or more values from the `propulsion`, depending on the nu
 * **401:** Unauthorized: Invalid, expired, or insufficient scope of token.
 * **404:** Not Found: Object does not exist, returned on `GET` or `POST` operations if the object does not exist.
 * **409:** Conflict: `POST` operations when an object already exists and an update is not possible.
-* **412:** Precondition failed: `POST` operation rejected based on policy or business logic.
 * **500:** Internal server error: In this case, the answer may contain a `text/plain` body with an error message for troubleshooting.
 
 ### Error Message Format
