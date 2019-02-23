@@ -93,6 +93,34 @@ _No content returned on success._
 | -------------------- | ------------------------------------------------- | ------------------------------- |
 | `already_registered` | A vehicle with `device_id` is already registered |                                 |
 
+## Vehicle - Update
+
+The `/vehicles` update endpoint is used to update some mutable aspect of a vehicle.  For now, only `vehicle_id`. 
+
+Endpoint: `/vehicles/{device_id}`
+Method: `PUT`
+
+Body Params:
+
+| Field        | Type    | Required/Optional | Field Description                                                    |
+| ------------ | ------- | ----------------- | -------------------------------------------------------------------- |
+| `vehicle_id` | String  | Required          | Vehicle Identification Number (vehicle_id) visible on vehicle               |
+
+201 Success Response:
+
+_No content returned on success._
+
+400 Failure Response:
+
+| `error`              | `error_description`                               | `error_details`[]               |
+| -------------------- | ------------------------------------------------- | ------------------------------- |
+| `bad_param`          | A validation error occurred.                      | Array of parameters with errors |
+| `missing_param`      | A required parameter is missing.                  | Array of missing parameters     |
+
+404 Failure Response:
+
+_No content returned if no vehicle matching `device_id` is found._
+
 ## Vehicle - Event
 
 The vehicle `/event` endpoint allows the Provider to control the state of the vehicle including deregister a vehicle from the fleet.
@@ -134,9 +162,9 @@ Body Params:
 | `no_active_trip`    | No trip is active for Vehicle   |                                 |
 | `trip_not_complete` | A trip is active for Vehicle    |                                 |
 
-## Vehicles - Update Telemetry
+## Vehicles - Telemetry
 
-The vehicle `/telemetry` endpoint allows a Provider to update vehicle telemetry data in batch for one or many of the vehicles in the fleet. Telemetry data will be reported to the API every 5 seconds while vehicles are in motion.
+The vehicle `/telemetry` endpoint allows a Provider to send vehicle telemetry data in a batch for any number of vehicles in the fleet. Telemetry data will be reported to the API every 5 seconds for each vehicle in motion.
 
 Endpoint: `/vehicles/telemetry`
 Method: `POST`
