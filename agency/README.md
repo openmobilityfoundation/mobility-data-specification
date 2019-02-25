@@ -3,7 +3,7 @@
 This specification contains a collection of RESTful APIs used to specify the digital relationship between *mobility as a service* Providers and the Agencies that regulate them.
 
 * Authors: LADOT
-* Date: 12 Feb 2019	
+* Date: 25 Feb 2019	
 * Version: BETA
 
 ## Table of Contents
@@ -30,7 +30,7 @@ As with the Provider API, `timestamp` refers to integer milliseconds since Unix 
 
 ## Vehicles
 
-The `/vehicles` endpoint returns the specified vehicle.  Providers can only retrieve data for vehicles in their registered fleet.
+The `/vehicles` endpoint returns the specified vehicle (if a device_id is provided) or a list of known vehicles.  Providers can only retrieve data for vehicles in their registered fleet.
 
 Endpoint: `/vehicles/{device_id}`
 Method: `GET`
@@ -41,7 +41,16 @@ Path Params:
 | ------------ | ---- | ----------------- | ------------------------------------------- |
 | `device_id` | UUID  | Optional          | If provided, retrieve the specified vehicle |
 
+Query Params:
+
+| Param        | Type | Required/Optional | Description                                 |
+| ------------ | ---- | ----------------- | ------------------------------------------- |
+| `skip` | Integer  | Optional          | If provided, offset into list |
+| `take` | Integer  | Optional          | If provided, number of vehicles to load |
+
 200 Success Response:
+
+If `device_id` is specified, `GET` will return a single vehicle record, otherwise it will be a list of vehicle records.  A vehicle record is as follows:
 
 | Field         | Type           | Field Description                                                             |
 | ------------- | -------------- | ----------------------------------------------------------------------------- |
@@ -56,6 +65,10 @@ Path Params:
 | `status`      | Enum      | Current vehicle status. See [Vehicle Status](#vehicle-events)                 |
 | `prev_event`  | Enum      | Last [Vehicle Event](#vehicle-events)                                         |
 | `updated`     | Timestamp | Date of last event update                                                     |
+
+404 Failure Response:
+
+_No content returned on vehicle not found._
 
 ## Vehicle - Register
 
