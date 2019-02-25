@@ -50,7 +50,21 @@ Query Params:
 
 200 Success Response:
 
-If `device_id` is specified, `GET` will return a single vehicle record, otherwise it will be a list of vehicle records.  A vehicle record is as follows:
+If `device_id` is specified, `GET` will return a single vehicle record, otherwise it will be a list of vehicle records with pagination details per the [JSON API](https://jsonapi.org/format/#fetching-pagination) spec:
+
+```
+{
+	"vehicles" [ ... ]
+ 	"links": {
+        "first": "https://...",
+        "last": "https://...",
+        "prev": "https://...",
+        "next": "https://..."
+    }
+}
+``` 
+  
+A vehicle record is as follows:
 
 | Field         | Type           | Field Description                                                             |
 | ------------- | -------------- | ----------------------------------------------------------------------------- |
