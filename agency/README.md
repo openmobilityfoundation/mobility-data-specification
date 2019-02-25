@@ -41,13 +41,6 @@ Path Params:
 | ------------ | ---- | ----------------- | ------------------------------------------- |
 | `device_id` | UUID  | Optional          | If provided, retrieve the specified vehicle |
 
-Query Params:
-
-| Param        | Type | Required/Optional | Description                                 |
-| ------------ | ---- | ----------------- | ------------------------------------------- |
-| `skip` | Integer  | Optional          | If provided, offset into list |
-| `take` | Integer  | Optional          | If provided, number of vehicles to load |
-
 200 Success Response:
 
 If `device_id` is specified, `GET` will return a single vehicle record, otherwise it will be a list of vehicle records with pagination details per the [JSON API](https://jsonapi.org/format/#fetching-pagination) spec:
