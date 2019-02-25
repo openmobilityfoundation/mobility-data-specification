@@ -54,7 +54,7 @@ If `device_id` is specified, `GET` will return a single vehicle record, otherwis
 
 ```
 {
-	"vehicles" [ ... ]
+	"vehicles": [ ... ]
  	"links": {
         "first": "https://...",
         "last": "https://...",
