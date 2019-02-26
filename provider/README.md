@@ -292,7 +292,6 @@ When multiple query parameters are specified, they should all apply to the retur
 | `event_type` | Description | `event_type_reason` | Description |
 | ---------- | ---------------------- | ------- | ------------------ |
 | `available` | A device becomes available for customer use | `service_start` | Device introduced into service at the beginning of the day (if program does not operate 24/7) |
-| | | `battery_charged` | A device becomes available because its battery is charged enough |
 | | | `user_drop_off` | User ends reservation |
 | | | `rebalance_drop_off` | Device moved for rebalancing |
 | | | `maintenance_drop_off` | Device introduced into service after being removed for maintenance |

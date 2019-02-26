@@ -311,7 +311,6 @@
                       },
                       "event_type_reason": {
                         "enum": [
-                          "battery_charged",
                           "service_start",
                           "user_drop_off",
                           "rebalance_drop_off",
