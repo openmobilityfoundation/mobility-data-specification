@@ -119,7 +119,7 @@ if __name__ == '__main__':
 
 
     # Create the standalone trips JSON schema by including the needed definitions
-    trips = get_json_file('provider/trips.json')
+    trips = get_json_file('provider/dockless-micromobility/trips.json')
     trips["definitions"] = {
             POINT: point,
             MDS_FEATURE_POINT: mds_feature_point,
@@ -135,12 +135,12 @@ if __name__ == '__main__':
     # Check that it is a valid schema
     jsonschema.Draft6Validator.check_schema(trips)
     # Write to the `provider` directory.
-    with open("../provider/trips.json", "w") as tripfile:
+    with open("../provider/dockless-micromobility/trips.json", "w") as tripfile:
         tripfile.write(json.dumps(trips, indent=2))
 
 
     # Create the standalone status_changes JSON schema by including the needed definitions
-    status_changes = get_json_file('provider/status_changes.json')
+    status_changes = get_json_file('provider/dockless-micromobility/status_changes.json')
     status_changes["definitions"] = {
             POINT: point,
             MDS_FEATURE_POINT: mds_feature_point,
@@ -155,5 +155,5 @@ if __name__ == '__main__':
     # Check that it is a valid schema
     jsonschema.Draft6Validator.check_schema(status_changes)
     # Write to the `provider` directory.
-    with open("../provider/status_changes.json", "w") as statusfile:
+    with open("../provider/dockless-micromobility/status_changes.json", "w") as statusfile:
         statusfile.write(json.dumps(status_changes, indent=2))
