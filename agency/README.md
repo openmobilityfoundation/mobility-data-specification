@@ -223,12 +223,12 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | `gps`          | Object         | Required              | Telemetry position data                                      |
 | `gps.lat`      | Double         | Required              | Latitude of the location                                     |
 | `gps.lng`      | Double         | Required              | Longitude of the location                                    |
-| `gps.altitude` | Double         | Required              | Altitude above mean sea level in meters                      |
-| `gps.heading`  | Double         | Required              | Degrees - clockwise starting at 0 degrees at true North      |
-| `gps.speed`    | Float          | Required              | Speed in meters / sec                                        |
-| `gps.hdop`     | Float          | Required              | Horizontal GPS accuracy value (see [hdop](https://support.esri.com/en/other-resources/gis-dictionary/term/358112bd-b61c-4081-9679-4fca9e3eb926)) |
-| `gps.satellites` | Integer      | Required              | Number of GPS satellites
-| `charge`       | Float          | Require if Applicable | Percent battery charge of vehicle, expressed between 0 and 1 |
+| `gps.altitude` | Double         | Required if Available | Altitude above mean sea level in meters                      |
+| `gps.heading`  | Double         | Required if Available | Degrees - clockwise starting at 0 degrees at true North      |
+| `gps.speed`    | Float          | Required if Available | Speed in meters / sec                                        |
+| `gps.hdop`     | Float          | Required if Available | Horizontal GPS accuracy value (see [hdop](https://support.esri.com/en/other-resources/gis-dictionary/term/358112bd-b61c-4081-9679-4fca9e3eb926)) |
+| `gps.satellites` | Integer      | Required if Available | Number of GPS satellites
+| `charge`       | Float          | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 1 |
 
 ## Enum Definitions
 
