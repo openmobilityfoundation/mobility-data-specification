@@ -32,7 +32,7 @@ OAuth 2.0 is an industry standard authorization framework with a variety of exis
 
 If an MDS `provider` implements this auth scheme, it **MAY** choose to specify token scopes that define access parameters like allowable time ranges. These guidelines **SHOULD** be encoded into the returned token in a parseable way.
 
-## Endpoint Authenication Requirements  
+## Endpoint Authentication Requirements  
 
 The `/trips` and `/status_changes` endpoints may or may not require authentication, it is up to the implementing provider to decide if they want historical information available with or without authentication. 
 
