@@ -176,6 +176,7 @@ Body Params:
 | ------------------- | ------------------------------- | ------------------------------- |
 | `bad_param`         | A validation error occurred     | Array of parameters with errors |
 | `missing_param`     | A required parameter is missing | Array of missing parameters     |
+| `unregistered`      | Vehicle is not registered       |                                 |
 
 ## Vehicles - Telemetry
 
