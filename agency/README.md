@@ -235,7 +235,7 @@ Query Params:
 
 ## Vehicle Events
 
-List of valid vehicle events and the resulting vehicle status if the event is sucessful.
+List of valid vehicle events and the resulting vehicle status if the event is sucessful.  Note that to handle out-of-order events, the validity of the initial-status is not enforced.  Events received out-of-order may result in transient incorrect vehicle states.
 
 | `event_type`                | description                                                                                          | valid initial `status`                             | `status` on success | status_description                                                      |
 | ---------------------- | ---------------------------------------------------------------------------------------------------- | -------------------------------------------------- | ------------------- | ----------------------------------------------------------------------- |
