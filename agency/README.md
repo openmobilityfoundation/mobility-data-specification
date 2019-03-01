@@ -3,7 +3,7 @@
 This specification contains a collection of RESTful APIs used to specify the digital relationship between *mobility as a service* Providers and the Agencies that regulate them.
 
 * Authors: LADOT
-* Date: 12 Feb 2019	
+* Date: 25 Feb 2019	
 * Version: BETA
 
 ## Table of Contents
@@ -30,7 +30,7 @@ As with the Provider API, `timestamp` refers to integer milliseconds since Unix 
 
 ## Vehicles
 
-The `/vehicles` endpoint returns the specified vehicle.  Providers can only retrieve data for vehicles in their registered fleet.
+The `/vehicles` endpoint returns the specified vehicle (if a device_id is provided) or a list of known vehicles.  Providers can only retrieve data for vehicles in their registered fleet.
 
 Endpoint: `/vehicles/{device_id}`
 Method: `GET`
@@ -42,6 +42,22 @@ Path Params:
 | `device_id` | UUID  | Optional          | If provided, retrieve the specified vehicle |
 
 200 Success Response:
+
+If `device_id` is specified, `GET` will return a single vehicle record, otherwise it will be a list of vehicle records with pagination details per the [JSON API](https://jsonapi.org/format/#fetching-pagination) spec:
+
+```
+{
+	"vehicles": [ ... ]
+ 	"links": {
+        "first": "https://...",
+        "last": "https://...",
+        "prev": "https://...",
+        "next": "https://..."
+    }
+}
+``` 
+  
+A vehicle record is as follows:
 
 | Field         | Type           | Field Description                                                             |
 | ------------- | -------------- | ----------------------------------------------------------------------------- |
@@ -56,6 +72,10 @@ Path Params:
 | `status`      | Enum      | Current vehicle status. See [Vehicle Status](#vehicle-events)                 |
 | `prev_event`  | Enum      | Last [Vehicle Event](#vehicle-events)                                         |
 | `updated`     | Timestamp | Date of last event update                                                     |
+
+404 Failure Response:
+
+_No content returned on vehicle not found._
 
 ## Vehicle - Register
 
@@ -93,6 +113,34 @@ _No content returned on success._
 | -------------------- | ------------------------------------------------- | ------------------------------- |
 | `already_registered` | A vehicle with `device_id` is already registered |                                 |
 
+## Vehicle - Update
+
+The `/vehicles` update endpoint is used to update some mutable aspect of a vehicle.  For now, only `vehicle_id`. 
+
+Endpoint: `/vehicles/{device_id}`
+Method: `PUT`
+
+Body Params:
+
+| Field        | Type    | Required/Optional | Field Description                                                    |
+| ------------ | ------- | ----------------- | -------------------------------------------------------------------- |
+| `vehicle_id` | String  | Required          | Vehicle Identification Number (vehicle_id) visible on vehicle               |
+
+201 Success Response:
+
+_No content returned on success._
+
+400 Failure Response:
+
+| `error`              | `error_description`                               | `error_details`[]               |
+| -------------------- | ------------------------------------------------- | ------------------------------- |
+| `bad_param`          | A validation error occurred.                      | Array of parameters with errors |
+| `missing_param`      | A required parameter is missing.                  | Array of missing parameters     |
+
+404 Failure Response:
+
+_No content returned if no vehicle matching `device_id` is found._
+
 ## Vehicle - Event
 
 The vehicle `/event` endpoint allows the Provider to control the state of the vehicle including deregister a vehicle from the fleet.
@@ -129,9 +177,9 @@ Body Params:
 | `bad_param`         | A validation error occurred     | Array of parameters with errors |
 | `missing_param`     | A required parameter is missing | Array of missing parameters     |
 
-## Vehicles - Update Telemetry
+## Vehicles - Telemetry
 
-The vehicle `/telemetry` endpoint allows a Provider to update vehicle telemetry data in batch for one or many of the vehicles in the fleet. Telemetry data will be reported to the API every 5 seconds while vehicles are in motion.
+The vehicle `/telemetry` endpoint allows a Provider to send vehicle telemetry data in a batch for any number of vehicles in the fleet. Telemetry data will be reported to the API every 5 seconds for each vehicle in motion.
 
 Endpoint: `/vehicles/telemetry`
 Method: `POST`
@@ -218,12 +266,12 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | `gps`          | Object         | Required              | Telemetry position data                                      |
 | `gps.lat`      | Double         | Required              | Latitude of the location                                     |
 | `gps.lng`      | Double         | Required              | Longitude of the location                                    |
-| `gps.altitude` | Double         | Required              | Altitude above mean sea level in meters                      |
-| `gps.heading`  | Double         | Required              | Degrees - clockwise starting at 0 degrees at true North      |
-| `gps.speed`    | Float          | Required              | Speed in meters / sec                                        |
-| `gps.hdop`     | Float          | Required              | Horizontal GPS accuracy value (see [hdop](https://support.esri.com/en/other-resources/gis-dictionary/term/358112bd-b61c-4081-9679-4fca9e3eb926)) |
-| `gps.satellites` | Integer      | Required              | Number of GPS satellites
-| `charge`       | Float          | Require if Applicable | Percent battery charge of vehicle, expressed between 0 and 1 |
+| `gps.altitude` | Double         | Required if Available | Altitude above mean sea level in meters                      |
+| `gps.heading`  | Double         | Required if Available | Degrees - clockwise starting at 0 degrees at true North      |
+| `gps.speed`    | Float          | Required if Available | Speed in meters / sec                                        |
+| `gps.hdop`     | Float          | Required if Available | Horizontal GPS accuracy value (see [hdop](https://support.esri.com/en/other-resources/gis-dictionary/term/358112bd-b61c-4081-9679-4fca9e3eb926)) |
+| `gps.satellites` | Integer      | Required if Available | Number of GPS satellites
+| `charge`       | Float          | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 1 |
 
 ## Enum Definitions
 
