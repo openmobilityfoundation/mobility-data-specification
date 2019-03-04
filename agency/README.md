@@ -258,7 +258,7 @@ List of valid vehicle events and the resulting vehicle status if the event is su
 | `trip_end`           |                                                         | Customer ends trip and reservation                                                             | `trip`                                             | `available`         |                                                                         |
 | `deregister`         | `missing`                                             | A vehicle is deregistered                                                                      | `available`, `unavailable`, `removed`, `elsewhere` | `inactive`          | A vehicle is deactivated from the fleet.                                |
 
-
+The diagram below shows the expected events and related `status` transitions for a vehicle:
 ![Event State Diagram](images/MDS_agency_event_state.png?raw=true "MDS Event State Diagram")
 
 ## Telemetry Data
