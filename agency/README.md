@@ -181,7 +181,7 @@ Body Params:
 
 ## Vehicles - Telemetry
 
-The vehicle `/telemetry` endpoint allows a Provider to send vehicle telemetry data in a batch for any number of vehicles in the fleet. Telemetry data will be reported to the API every 5 seconds for each vehicle in motion.
+The vehicle `/telemetry` endpoint allows a Provider to send vehicle telemetry data in a batch for any number of vehicles in the fleet.
 
 Endpoint: `/vehicles/telemetry`
 Method: `POST`
