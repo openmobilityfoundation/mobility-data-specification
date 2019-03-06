@@ -70,6 +70,8 @@ The following steps **must** be followed for **every** release of MDS:
 
 1. Ensure the [Milestone][mds-milestones] for this release is at `100%`.
 
+1. Update the [schema version regex][mds-schema-common]
+
 1. Run the schema generator to ensure the schema files are up to date:
 
    ```console
@@ -153,5 +155,6 @@ The following steps **must** be followed for **every** release of MDS:
 [mds-pr-new]: https://github.com/CityOfLosAngeles/mobility-data-specification/compare
 [mds-releases]: https://github.com/CityOfLosAngeles/mobility-data-specification/releases
 [mds-releases-new]: https://github.com/CityOfLosAngeles/mobility-data-specification/releases/new
+[mds-schema-common]: https://github.com/CityOfLosAngeles/mobility-data-specification/blob/master/generate_schema/common.json
 [mds-tags]: https://github.com/CityOfLosAngeles/mobility-data-specification/tags
 [semver]: https://semver.org/

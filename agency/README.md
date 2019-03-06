@@ -59,9 +59,9 @@ If `device_id` is specified, `GET` will return a single vehicle record, otherwis
   
 A vehicle record is as follows:
 
-| Field         | Type           | Field Description                                                             |
-| ------------- | -------------- | ----------------------------------------------------------------------------- |
-| `device_id`   | UUID       | Provided by Operator to uniquely identify a vehicle                            |
+| Field         | Type      | Field Description                                                             |
+| ------------- | --------- | ----------------------------------------------------------------------------- |
+| `device_id`   | UUID      | Provided by Operator to uniquely identify a vehicle                           |
 | `provider_id` | UUID      | Issued by City and [tracked](../providers.csv)                                |
 | `vehicle_id`  | String    | Vehicle Identification Number (vehicle_id) visible on vehicle                 |
 | `type`        | Enum      | [Vehicle Type](#vehicle-type)                                                 |
@@ -88,8 +88,8 @@ Body Params:
 
 | Field        | Type    | Required/Optional | Field Description                                                    |
 | ------------ | ------- | ----------------- | -------------------------------------------------------------------- |
-| `device_id`  | UUID     | Required          | Provided by Operator to uniquely identify a vehicle                  |
-| `vehicle_id` | String  | Required          | Vehicle Identification Number (vehicle_id) visible on vehicle               |
+| `device_id`  | UUID     | Required          | Provided by Operator to uniquely identify a vehicle                 |
+| `vehicle_id` | String  | Required          | Vehicle Identification Number (vehicle_id) visible on vehicle        |
 | `type`       | Enum    | Required          | [Vehicle Type](#vehicle-type)                                        |
 | `propulsion` | Enum[]  | Required          | Array of [Propulsion Type](#propulsion-type); allows multiple values |
 | `year`       | Integer | Optional          | Year Manufactured                                                    |
@@ -111,7 +111,7 @@ _No content returned on success._
 
 | `error`              | `error_description`                               | `error_details`[]               |
 | -------------------- | ------------------------------------------------- | ------------------------------- |
-| `already_registered` | A vehicle with `device_id` is already registered |                                 |
+| `already_registered` | A vehicle with `device_id` is already registered  |                                 |
 
 ## Vehicle - Update
 
@@ -152,14 +152,15 @@ Path Params:
 
 | Field        | Type | Required/Optional | Field Description                        |
 | ------------ | ---- | ----------------- | ---------------------------------------- |
-| `device_id`  | UUID  | Required          | ID used in [Register](#vehicle-register) |
+| `device_id`  | UUID | Required          | ID used in [Register](#vehicle-register) |
 
 Body Params:
 
-| Field       | Type                         | Required/Optional | Field Description                                                                                                                          |
-| ----------- | ---------------------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| `event_type` | Enum                         | Required          | [Vehicle Event](#vehicle-events)                                                                                                           |
-| `timestamp`  | Timestamp                    | Required |Date of last event update                                                     |
+| Field       | Type                          | Required/Optional | Field Description                                                                                                                          |
+| ----------- | ----------------------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| `event_type` | Enum                         | Required          | see [Vehicle Events](#vehicle-events)                                                                                                           |
+| `event_type_reason` | Enum                  | Required if Available | see [Vehicle Events](#vehicle-events)                                                                                                           |
+| `timestamp`  | Timestamp                    | Required          | Date of last event update                                                     |
 | `telemetry`  | [Telemetry](#telemetry-data) | Required          | Single point of telemetry                             |
 | `trip_id`    | UUID                         | Optional          | UUID provided by Operator to uniquely identify the trip. Required for `trip_start`, `trip_end`, `trip_enter`, and `trip_leave` event types |
 
@@ -237,24 +238,24 @@ Query Params:
 
 List of valid vehicle events and the resulting vehicle status if the event is sucessful.  Note that to handle out-of-order events, the validity of the initial-status is not enforced.  Events received out-of-order may result in transient incorrect vehicle states.
 
-| `event_type`                | description                                                                                          | valid initial `status`                             | `status` on success | status_description                                                      |
-| ---------------------- | ---------------------------------------------------------------------------------------------------- | -------------------------------------------------- | ------------------- | ----------------------------------------------------------------------- |
-| `service_start`        | Vehicle introduced into service at the beginning of the day (if program does not operate 24/7)       | `unavailable`, `removed`, `elsewhere`              | `available`         | Vehicle is on the street and available for customer use.                |
-| `trip_end`             | Customer ends trip and reservation                                                                   | `trip`                                             | `available`         |                                                                         |
-| `rebalance_drop_off`   | Vehicle moved for rebalancing                                                                        | `removed`                                          | `available`         |                                                                         |
-| `maintenance_drop_off` | Vehicle introduced into service after being removed for maintenance                                  | `removed`                                          | `available`         |                                                                         |
-| `cancel_reservation`   | Customer cancels reservation                                                                         | `reserved`                                         | `available`         |                                                                         |
-| `reserve`              | Customer reserves vehicle                                                                            | `available`                                        | `reserved`          | Vehicle is reserved or in use.                                          |
-| `trip_start`           | Customer starts a trip                                                                               | `available`, `reserved`                          | `trip`              |                                                                         |
-| `trip_enter`           | Customer enters a service area managed by agency during an active trip.                              | `unavailable`, `removed`, `elsewhere`              | `trip`              |                                                                         |
-| `trip_leave`           | Customer leaves a service area managed by agency during an active trip.                              | `trip`                                             | `elsewhere`         |                                                                         |
-| `register`             | Default state for a newly registered vehicle                                                         | `inactive`                                          | `unavailable`       | A vehicle is in the active fleet but not yet available for customer use |
-| `low_battery`          | A vehicle is no longer available due to insufficient battery                                         | `available`                                        | `unavailable`       |                                                                         |
-| `maintenance`          | A vehicle is no longer available due to equipment issues                                             | `available`, `reserved`                            | `unavailable`       |                                                                         |
-| `service_end`          | Vehicle removed from street because service has ended for the day (if program does not operate 24/7) | `available`, `unavailable`, `elsewhere`            | `removed`           | A vehicle is removed from the street and unavailable for customer use.  |
-| `rebalance_pick_up`    | Vehicle removed from street and will be placed at another location to rebalance service              | `available`, `unavailable`                         | `removed`           |                                                                         |
-| `maintenance_pick_up`  | Vehicle removed from street so it can be worked on                                                   | `available`, `unavailable`                         | `removed`           |                                                                         |
-| `deregister`           | A vehicle is deregistered                                                                            | `available`, `unavailable`, `removed`, `elsewhere` | `inactive`          | A vehicle is deactivated from the fleet and unavailable.                |
+| `event_type`         | `event_type_reason`                                     | description                                                                                    | valid initial `status`                             | `status` on success | status_description                                                      |
+| -------------------- | ------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | -------------------------------------------------- | ------------------- | ----------------------------------------------------------------------- |
+| `register`           |                                                         | Default state for a newly registered vehicle                                                   | `inactive`                                         | `removed`           | A vehicle is in the active fleet but not yet available for customer use |
+| `service_start`      |                                                         | Vehicle introduced into service at the beginning of the day (if program does not operate 24/7) | `unavailable`                                      | `available`         | Vehicle is on the street and available for customer use.                |
+| `service_end`        | `low_battery`, `maintenance`, `compliance`, `off_hours` | A vehicle is no longer available due to `event_type_reason`                                         | `available`                                        | `unavailable`       |                                                                         |
+| `provider_drop_off`  |                                                         | Vehicle moved for rebalancing                                                                  | `removed`, `elsewhere`                             | `available`         |                                                                         |
+| `provider_pick_up`   | `rebalance`, `maintenance`, `charge`, `compliance`      | Vehicle removed from street and will be placed at another location to rebalance service        | `available`, `unavailable`, `elsewhere`            | `removed`           |                                                                         |
+| `city_pick_up`       |                                                         | Vehicle removed by city                                                                        | `available`, `unavailable`                         | `removed`           |                                                                         |
+| `reserve`            |                                                         | Customer reserves vehicle                                                                      | `available`                                        | `reserved`          | Vehicle is reserved or in use.                                          |
+| `cancel_reservation` |                                                         | Customer cancels reservation                                                                   | `reserved`                                         | `available`         |                                                                         |
+| `trip_start`         |                                                         | Customer starts a trip                                                                         | `available`, `reserved`                            | `trip`              |                                                                         |
+| `trip_enter`         |                                                         | Customer enters the municipal area managed by agency during an active trip.                        | `removed`, `elsewhere`                             | `trip`              |                                                                         |
+| `trip_leave`         |                                                         | Customer leaves the municipal area managed by agency during an active trip.                        | `trip`                                             | `elsewhere`         |                                                                         |
+| `trip_end`           |                                                         | Customer ends trip and reservation                                                             | `trip`                                             | `available`         |                                                                         |
+| `deregister`         | `missing`                                               | A vehicle is deregistered                                                                      | `available`, `unavailable`, `removed`, `elsewhere` | `inactive`          | A vehicle is deactivated from the fleet.                                |
+
+The diagram below shows the expected events and related `status` transitions for a vehicle:
+![Event State Diagram](images/MDS_agency_event_state.png?raw=true "MDS Event State Diagram")
 
 ## Telemetry Data
 
