@@ -183,6 +183,9 @@ Body Params:
 
 The vehicle `/telemetry` endpoint allows a Provider to send vehicle telemetry data in a batch for any number of vehicles in the fleet.
 
+The Update Telemetry endpoint (/telemetry) shall be called for the specific trip within 24 hrs after the vehicle trip is over.   
+For any given trip, data reported via the (/telemetry) endpoint shall contain temporal and location data for every 300 ft (91 meters) while vehicle is in motion and 30 seconds while at rest. For Mobility Service Providers who do not calculate distance in real-time, a periodic rate of 14 seconds can be used while vehicle is in motion.
+
 Endpoint: `/vehicles/telemetry`
 Method: `POST`
 
