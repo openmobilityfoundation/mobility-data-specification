@@ -1,0 +1,8 @@
+## Below is the MDS CODEOWNERS file, which dictates who is required for review on any given file. 
+
+## All MDS approvals 
+* @hunterowens @thekaveman @cityoflosangeles/transportation
+
+
+## Agency Specific 
+/agency/* @cityoflosangeles/ellis-associates
