@@ -54,6 +54,8 @@ As stated earlier, at this time MDS will maintain *two concurrent MINOR versions
 ## Release Process
 The sections below define the release process itself, including timeline, roles, and communication best practices.
 
+> ** The process defined below currently being piloted with the MDS `provider` API only. Proposed changes to the `agency` API will be continue to be reviewed on an ad hoc basis. **
+
 ### Goals
 
 * _Fast, regular releases to support rapid evolution of MDS_
