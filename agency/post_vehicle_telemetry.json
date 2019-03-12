@@ -25,12 +25,7 @@
           "type": "object",
           "required": [
             "lat",
-            "lng",
-            "altitude",
-            "heading",
-            "speed",
-            "hdop",
-            "staellites"
+            "lng"
           ],
           "additionalProperties": false,
           "properties": {
