@@ -82,7 +82,7 @@ MDS operates on a six-week release cycle for both major updates (0.x) and patche
 
 **week 1 - proposals**
 
-Contributors submit proposals for inclusion in the release cycle in the form of pull requests and issues tagged with the Milestone for the upcoming release [Q: DOES THIS MAKE SENSE AS A PROCESS TO CORRAL ALL THE ISSUES TO BE CONSIDERED IN A RELEASE?]. Proposals should come with enough explanation to allow all stakeholders to understand intent and implementation strategy. |
+Contributors submit proposals for inclusion in the release cycle in the form of pull requests and issues tagged with the Milestone for the upcoming release. Proposals should come with enough explanation to allow all stakeholders to understand intent and implementation strategy. |
 
 **weeks 2-4 - consensus building, refinement, and implementation**
 
@@ -92,11 +92,11 @@ Contributors will provide feedback on proposals. Where possible, discussion will
 
 The week will start with an in-person/web conference work session for all contributors to review and discuss current proposals. Goal is to achieve consensus where possible, or to clearly articulate areas of disagreement where not. Minor changes may be accepted at this stage if they bring contributors to consensus.
 
-At the conclusion of week 5, release partner will review all items for which consensus was not reached and provide a recommended release plan to maintainers for approval. Any remaining approved pull requests to `dev` are merged.
+At the conclusion of week 5, release partner will review all items for which consensus was not reached and provide a recommended release plan to maintainers for approval. Any remaining approved pull requests to `dev` are merged or the release branch as necessary.
 
 **week 6 - release**
 
-​Changes will be merged into `master`, documentation will be updated, a release branch will be created, and new version will be formally released.
+​Documentation will be updated, a release branch will be created if necessary, changes will be merged into `master`, and new version will be formally released.
 
 ### Communication and Workflow
 The release annoncements and process schedule will be communicated via [`mds-announce`][mds-announce] Google Group. People wishing to stay informed should join the group for updates. Timing of web conference and in person work sessions will be communicated via mds-announce as well.
@@ -105,7 +105,7 @@ The following best practices are intended to create clarity around each release 
 
 * Categorize issues and PRs under an associated [Milestone][mds-milestones] for the release
 
-* Assign a due date for said Milestone that aligns with the end of the proposal period for the release cycle (week 1)
+* Assign a due date for said Milestone that aligns with proposed release date
 
 * Pull requests and release notes should include a summary of the major changes / impacts associated with the change or release
 
