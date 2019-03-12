@@ -107,7 +107,7 @@ The following best practices are intended to create clarity around each release 
 
 * Assign a due date for said Milestone that aligns with the end of the proposal period for the release cycle (week 1)
 
-* Include a summary of the major changes / impacts associated with the release
+* Pull requests and release notes should include a summary of the major changes / impacts associated with the change or release
 
 * Proposed changes should come in the form of PRs to give the community ample awareness and time for feedback
 
