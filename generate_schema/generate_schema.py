@@ -188,6 +188,7 @@ if __name__ == '__main__':
     get_vehicle["definitions"] = {
             "propulsion_type": common["definitions"]["propulsion_type"],
             "vehicle_type": common["definitions"]["vehicle_type"],
+            "vehicle_status": common["definitions"]["vehicle_status"],
             "vehicle_event": common["definitions"]["vehicle_event"],
             "timestamp": common["definitions"]["timestamp"],
             "uuid": common["definitions"]["uuid"],

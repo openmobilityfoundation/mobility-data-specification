@@ -82,7 +82,7 @@
       "description": "Current vehicle status",
       "$ref": "#/definitions/vehicle_status"
     },
-    "event": {
+    "prev_event": {
       "$id": "#/properties/prev_event",
       "description": "Last vehicle event",
       "$ref": "#/definitions/vehicle_event"
