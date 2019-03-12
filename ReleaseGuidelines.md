@@ -54,7 +54,7 @@ As stated earlier, at this time MDS will maintain *two concurrent MINOR versions
 ## Release Process
 The sections below define the release process itself, including timeline, roles, and communication best practices.
 
-> ** The process defined below currently being piloted with the MDS `provider` API only. Proposed changes to the `agency` API will be continue to be reviewed on an ad hoc basis. **
+> **The process defined below currently being piloted with the MDS `provider` API only. Proposed changes to the `agency` API will be continue to be reviewed on an ad hoc basis.**
 
 ### Goals
 
@@ -80,21 +80,21 @@ As of March 2019, LADOT and the City of Santa Monica are the project maintainers
 
 MDS operates on a six-week release cycle for both major updates (0.x) and patches (0.x.y). In general, major updates (0.x) are expected no more than once per quarter. The release cycle is broken down as follows:
 
-** week 1 - proposals **
+**week 1 - proposals**
 
 Contributors submit proposals for inclusion in the release cycle in the form of pull requests and issues tagged with the Milestone for the upcoming release [Q: DOES THIS MAKE SENSE AS A PROCESS TO CORRAL ALL THE ISSUES TO BE CONSIDERED IN A RELEASE?]. Proposals should come with enough explanation to allow all stakeholders to understand intent and implementation strategy. |
 
-** weeks 2-4 - discussion, refinement, and implementation **
+**weeks 2-4 - consensus building, refinement, and implementation**
 
 Contributors will provide feedback on proposals. Where possible, discussion will happen via GitHub. Weekly calls will support dialog around more complex or controversial issues. By the end of week 4, all active proposals must be in the form of a pull request. Proposals can be withdrawn or split apart for inclusion in future releases.
 
-** week 5 - consensus building and decision making **
+**week 5 - decision making**
 
 The week will start with an in-person/web conference work session for all contributors to review and discuss current proposals. Goal is to achieve consensus where possible, or to clearly articulate areas of disagreement where not. Minor changes may be accepted at this stage if they bring contributors to consensus.
 
 At the conclusion of week 5, release partner will review all items for which consensus was not reached and provide a recommended release plan to maintainers for approval. Any remaining approved pull requests to `dev` are merged.
 
-** week 6 - release **
+**week 6 - release**
 
 ​Changes will be merged into `master`, documentation will be updated, a release branch will be created, and new version will be formally released.
 
