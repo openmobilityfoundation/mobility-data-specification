@@ -43,10 +43,7 @@
     "device_id",
     "vehicle_id",
     "type",
-    "propulsion",
-    "year",
-    "mfgr",
-    "model"
+    "propulsion"
   ],
   "properties": {
     "device_id": {
