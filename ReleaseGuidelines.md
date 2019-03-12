@@ -1,12 +1,16 @@
 # MDS Release Guidelines
 
-MDS will see periodic updates and new [releases][mds-releases] from time to time. This document describes the general guidelines around how and when a new release is cut.
+MDS will see regular updates and new [releases][mds-releases]. This document describes the general guidelines around how and when a new release is cut.
 
 ## Table of Contents
 
 * [Versioning](#versioning)
 * [Branch Mechanics](#branch-mechanics)
-* [Schedule](#schedule)
+* [Release Process](#process)
+  * [Goals](#goals)
+  * [Roles](#roles)
+  * [Schedule](#schedule)
+  * [Communication and Workflow](#communication-and-workflow)
 * [Checklist](#release-checklist)
 
 ## Versioning
@@ -19,7 +23,7 @@ Given that MDS is stabilizing under MAJOR version `0.x` right now, it should be 
 
 At this early stage, MDS will be moving relatively quickly with an eye toward stabilization rather than backwards-compatibility.
 
-For now, MDS will maintain *two concurrent (MINOR) versions* (e.g. if `0.3.0` were the current verison, the `0.2.x` series would continue to receive maintenace in addition to `0.3.x`).
+For now, MDS will maintain *two concurrent (MINOR) versions* (e.g. if `0.3.0` were the current version, the `0.2.x` series would continue to receive maintenance in addition to `0.3.x`).
 
 ## Branch Mechanics
 
@@ -47,22 +51,63 @@ When a PATCH release is ready (e.g. `0.2.0` to `0.2.1`), the release branch (e.g
 
 As stated earlier, at this time MDS will maintain *two concurrent MINOR versions*. This means that when a MINOR release is made (e.g. `0.4.0`), work on the outgoing series (`0.2.x`, in this case) ceases and its release branch is removed.
 
-## Schedule
+## Release Process
+The sections below define the release process itself, including timeline, roles, and communication best practices.
 
-MDS does not currently define a set release cadence or schedule. That being said, a MDS
-release should not surprise anyone that wishes to be informed. To that end, releases will always:
+### Goals
 
-* Categorize issues and PRs under an associated [Milestone][mds-milestones]
+* _Fast, regular releases to support rapid evolution of MDS_
 
-* Assign a due date for said Milestone that is *at least 24 hours ahead of planned release*
+* _Consensus-oriented with clear decision making process when consensus can't be reached_
 
-* Include a summary of the major changes / impacts associated with the release, if any
+* _Encourage involvement from all stakeholders, especially public agencies_
 
-* Be PR-driven, to give the community ample awareness and time for feedback
+* _Frequent stakeholder communication on GitHub, web conference, and in-person_
 
-* Be announced on the [`mds-announce`][mds-announce] Google Group
+* _Regular review of release process to ensure it is serving the needs of the community._
 
-More detail on this can be read in the Release Checklist below.
+
+### Roles
+* **contributors** - Anyone making pull requests, opening issues, or engaging in technical discussion around implementation of features.
+* **maintainers** - Project maintainers have commit privileges in the main MDS repository and are responsible for implementing changes such as merging of pull requests and the creation of release branches.
+* **release partner** - Review changes when consensus cannot be reached and make final release inclusion recommendations to maintainers for approval.
+
+As of March 2019, LADOT and the City of Santa Monica are the project maintainers and Remix is the release partner.
+
+### Schedule
+
+MDS operates on a six-week release cycle for both major updates (0.x) and patches (0.x.y). In general, major updates (0.x) are expected no more than once per quarter. The release cycle is broken down as follows:
+
+** week 1 - proposals **
+
+Contributors submit proposals for inclusion in the release cycle in the form of pull requests and issues tagged with the Milestone for the upcoming release [Q: DOES THIS MAKE SENSE AS A PROCESS TO CORRAL ALL THE ISSUES TO BE CONSIDERED IN A RELEASE?]. Proposals should come with enough explanation to allow all stakeholders to understand intent and implementation strategy. |
+
+** weeks 2-4 - discussion, refinement, and implementation **
+
+Contributors will provide feedback on proposals. Where possible, discussion will happen via GitHub. Weekly calls will support dialog around more complex or controversial issues. By the end of week 4, all active proposals must be in the form of a pull request. Proposals can be withdrawn or split apart for inclusion in future releases.
+
+** week 5 - consensus building and decision making **
+
+The week will start with an in-person/web conference work session for all contributors to review and discuss current proposals. Goal is to achieve consensus where possible, or to clearly articulate areas of disagreement where not. Minor changes may be accepted at this stage if they bring contributors to consensus.
+
+At the conclusion of week 5, release partner will review all items for which consensus was not reached and provide a recommended release plan to maintainers for approval. Any remaining approved pull requests to `dev` are merged.
+
+** week 6 - release **
+
+​Changes will be merged into `master`, documentation will be updated, a release branch will be created, and new version will be formally released.
+
+### Communication and Workflow
+The release annoncements and process schedule will be communicated via [`mds-announce`][mds-announce] Google Group. People wishing to stay informed should join the group for updates. Timing of web conference and in person work sessions will be communicated via mds-announce as well.
+
+The following best practices are intended to create clarity around each release cycle:
+
+* Categorize issues and PRs under an associated [Milestone][mds-milestones] for the release
+
+* Assign a due date for said Milestone that aligns with the end of the proposal period for the release cycle (week 1)
+
+* Include a summary of the major changes / impacts associated with the release
+
+* Proposed changes should come in the form of PRs to give the community ample awareness and time for feedback
 
 ## Release Checklist
 
