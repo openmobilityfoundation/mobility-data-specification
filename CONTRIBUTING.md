@@ -15,8 +15,6 @@ Contributions should be offered through GitHub issues and pull requests. Please 
 
 In general, you may open an issue or make a pull request at any time. Once the issue or pull request is associated with a particular Milestone, it will be included for review within the process for that release.
 
-[NEED SOME CONTENT FOR WHAT MAKES A GOOD PULL REQUEST]
-
 ## What belongs in MDS
 MDS is a tool to facilitate data exchange between mobility service providers, public agencies, and public agency software partners. Although providers are often required to support MDS as part of mobility permits or policies, MDS is intended as a neutral mechanism for information exchange. It is not intended to force or foreclose any specific policy options that a public agency may choose to pursue.
 
