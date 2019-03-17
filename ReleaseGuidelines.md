@@ -49,12 +49,16 @@ This *release branch* represents the current state of that release series. All m
 
 When a PATCH release is ready (e.g. `0.2.0` to `0.2.1`), the release branch (e.g. `0.2.x`) is merged to `master` (to make the release official) and `dev` is rebased onto `master` (to ensure the patch is incorporated with any new work).
 
+Breaking changes should always be merged to develop. These may be merged at any time and will be incorporated into the next minor release. For non-breaking changes, these should either be merged to develop if the next release is a minor release, or to the appropriate release branch if the next version is a patch release. During each cycle, we merge changes to both dev and 0.n.x branches, so breaking changes can be proposed and worked on at any time
+
 As stated earlier, at this time MDS will maintain *two concurrent MINOR versions*. This means that when a MINOR release is made (e.g. `0.4.0`), work on the outgoing series (`0.2.x`, in this case) ceases and its release branch is removed.
 
 ## Release Process
 The sections below define the release process itself, including timeline, roles, and communication best practices.
 
 > **The process defined below currently being piloted with the MDS `provider` API only. Proposed changes to the `agency` API will be continue to be reviewed on an ad hoc basis.**
+
+>**It is our intent to maintain a level of coordination between the technical direction of `agency` and `provider`. As such, proposed changes to either API will be reviewed to ensure they do not create unnecessary duplicative functionality, introduce confusion about which API should be used for a given purpose, or prevent the reconciliation of data between the two APIs (for example: using data from `provider` to cross-validate data received via `agency`).**
 
 ### Goals
 
