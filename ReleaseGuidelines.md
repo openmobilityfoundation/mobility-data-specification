@@ -10,7 +10,7 @@ MDS will see regular updates and new [releases][mds-releases]. This document des
   * [Roles](#roles)
   * [Schedule](#schedule)
   * [Communication and Workflow](#communication-and-workflow)
-  * [Branch Mechanics](#branch-mechanics)
+* [Branch Mechanics](#branch-mechanics)
 * [Checklist](#release-checklist)
 
 ## Versioning
