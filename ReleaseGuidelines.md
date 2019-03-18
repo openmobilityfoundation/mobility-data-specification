@@ -5,12 +5,12 @@ MDS will see regular updates and new [releases][mds-releases]. This document des
 ## Table of Contents
 
 * [Versioning](#versioning)
-* [Branch Mechanics](#branch-mechanics)
 * [Release Process](#process)
   * [Goals](#goals)
   * [Roles](#roles)
   * [Schedule](#schedule)
   * [Communication and Workflow](#communication-and-workflow)
+  * [Branch Mechanics](#branch-mechanics)
 * [Checklist](#release-checklist)
 
 ## Versioning
@@ -25,33 +25,6 @@ At this early stage, MDS will be moving relatively quickly with an eye toward st
 
 For now, MDS will maintain *two concurrent (MINOR) versions* (e.g. if `0.3.0` were the current version, the `0.2.x` series would continue to receive maintenance in addition to `0.3.x`).
 
-## Branch Mechanics
-
-Aside from using `git tags` as mentioned earlier, here we outline a branching strategy to handle ongoing maintenance changes in parallel with features for new releases.
-
-### Primary branches
-
-At a high-level, there are two primary branches:
-
-* [`master`][mds-master] represents the current stable release (i.e. the most recent tag) of MDS. Development work generally *does not* happen here, but is rather merged from elsewhere.
-
-* [`dev`][mds-dev] represents work on the next MINOR release, and is the *long-term* development branch.
-
-### Feature branches
-
-Work on new features for MDS happens in branches cut from `dev`. When the feature is ready for review, submit a PR against `dev`, ideally with any merge conflicts already resolved. `dev` serves as the collection point for all new feature work.
-
-### Release branches
-
-In anticipation of ongoing maintenance, a branch will be created for the current release series. For example, at the time `0.2.0` is released, a branch will be cut from `master` for `0.2.x`.
-
-This *release branch* represents the current state of that release series. All maintenance/bugfix work for the series is collected in this branch. To work on a patch, cut a branch from the release branch. When ready, submit a PR against the release branch.
-
-When a PATCH release is ready (e.g. `0.2.0` to `0.2.1`), the release branch (e.g. `0.2.x`) is merged to `master` (to make the release official) and `dev` is rebased onto `master` (to ensure the patch is incorporated with any new work).
-
-Breaking changes should always be merged to develop. These may be merged at any time and will be incorporated into the next minor release. For non-breaking changes, these should either be merged to develop if the next release is a minor release, or to the appropriate release branch if the next version is a patch release. During each cycle, we merge changes to both dev and 0.n.x branches, so breaking changes can be proposed and worked on at any time
-
-As stated earlier, at this time MDS will maintain *two concurrent MINOR versions*. This means that when a MINOR release is made (e.g. `0.4.0`), work on the outgoing series (`0.2.x`, in this case) ceases and its release branch is removed.
 
 ## Release Process
 The sections below define the release process itself, including timeline, roles, and communication best practices.
@@ -114,6 +87,34 @@ The following best practices are intended to create clarity around each release 
 * Pull requests and release notes should include a summary of the major changes / impacts associated with the change or release
 
 * Proposed changes should come in the form of PRs to give the community ample awareness and time for feedback
+
+## Branch Mechanics
+
+Aside from using `git tags` as mentioned earlier, here we outline a branching strategy to handle ongoing maintenance changes in parallel with features for new releases.
+
+### Primary branches
+
+At a high-level, there are two primary branches:
+
+* [`master`][mds-master] represents the current stable release (i.e. the most recent tag) of MDS. Development work generally *does not* happen here, but is rather merged from elsewhere.
+
+* [`dev`][mds-dev] represents work on the next MINOR release, and is the *long-term* development branch.
+
+### Feature branches
+
+Work on new features for MDS happens in branches cut from `dev`. When the feature is ready for review, submit a PR against `dev`, ideally with any merge conflicts already resolved. `dev` serves as the collection point for all new feature work.
+
+### Release branches
+
+In anticipation of ongoing maintenance, a branch will be created for the current release series. For example, at the time `0.2.0` is released, a branch will be cut from `master` for `0.2.x`.
+
+This *release branch* represents the current state of that release series. All maintenance/bugfix work for the series is collected in this branch. To work on a patch, cut a branch from the release branch. When ready, submit a PR against the release branch.
+
+When a PATCH release is ready (e.g. `0.2.0` to `0.2.1`), the release branch (e.g. `0.2.x`) is merged to `master` (to make the release official) and `dev` is rebased onto `master` (to ensure the patch is incorporated with any new work).
+
+Breaking changes should always be merged to develop. These may be merged at any time and will be incorporated into the next minor release. For non-breaking changes, these should either be merged to develop if the next release is a minor release, or to the appropriate release branch if the next version is a patch release. During each cycle, we merge changes to both dev and 0.n.x branches, so breaking changes can be proposed and worked on at any time
+
+As stated earlier, at this time MDS will maintain *two concurrent MINOR versions*. This means that when a MINOR release is made (e.g. `0.4.0`), work on the outgoing series (`0.2.x`, in this case) ceases and its release branch is removed.
 
 ## Release Checklist
 
