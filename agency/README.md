@@ -145,6 +145,10 @@ _No content returned if no vehicle matching `device_id` is found._
 
 The vehicle `/event` endpoint allows the Provider to control the state of the vehicle including deregister a vehicle from the fleet.
 
+Different status changes on the same device must have different `timestamp` values. The (`timestamp`, `device_id`) pair can be seen as a unique identifier for any given status change.
+
+> Note: If a status change can only be expressed as the succession of multiple events, they can be sent with successive timestamps in order to express the order of these events.
+
 Endpoint: `/vehicles/{device_id}/event`
 Method: `POST`
 

@@ -258,6 +258,8 @@ Unless stated otherwise by the municipality, this endpoint must return only thos
 
 > Note: As a result of this definition, consumers should query the [trips endpoint](#trips) to infer when vehicles enter or leave the municipality boundary.
 
+Different status changes on the same device must have different `event_time` values. The (`event_time`, `device_id`) pair can be seen as a unique identifier for any given status change.
+
 Endpoint: `/status_changes`  
 Method: `GET`  
 Schema: [`status_changes` schema][sc-schema]  
