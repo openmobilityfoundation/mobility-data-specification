@@ -254,6 +254,8 @@ The status of the inventory of vehicles available for customer use.
 
 The status changes endpoint allows a user to query the historical availability for a system within a time range.
 
+This endpoint must return the status changes in chronological order, ie. by increasing `event_time`.
+
 Unless stated otherwise by the municipality, this endpoint must return only those status changes with a `event_location` that [intersects](#intersection-operation) with the [municipality boundary](#municipality-boundary).
 
 > Note: As a result of this definition, consumers should query the [trips endpoint](#trips) to infer when vehicles enter or leave the municipality boundary.
@@ -261,7 +263,7 @@ Unless stated otherwise by the municipality, this endpoint must return only thos
 Endpoint: `/status_changes`  
 Method: `GET`  
 Schema: [`status_changes` schema][sc-schema]  
-`data` Payload: `{ "status_changes": [] }`, an array of objects with the following structure
+`data` Payload: `{ "status_changes": [] }`, an array of objects with the following structure, order by increasing `event_time`.
 
 | Field | Type | Required/Optional | Comments |
 | ----- | ---- | ----------------- | ----- |
