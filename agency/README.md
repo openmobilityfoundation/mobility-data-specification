@@ -13,7 +13,7 @@ This specification contains a collection of RESTful APIs used to specify the dig
 * [Vehicles](#vehicles)
 * [Vehicle - Register](#vehicle---register)
 * [Vehicle - Event](#vehicle---event)
-* [Vehicles - Update Telemetry](#vehicles---update-telemetry)
+* [Vehicles - Update Telemetry](#vehicles---telemetry)
 * [Service Areas](#service-areas)
 * [Vehicle Events](#vehicle-events)
 * [Telemetry Data](#telemetry-data)
