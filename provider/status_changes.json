@@ -314,7 +314,8 @@
                           "service_start",
                           "user_drop_off",
                           "rebalance_drop_off",
-                          "maintenance_drop_off"
+                          "maintenance_drop_off",
+                          "agency_drop_off"
                         ]
                       }
                     }
@@ -343,7 +344,8 @@
                       "event_type_reason": {
                         "enum": [
                           "low_battery",
-                          "maintenance"
+                          "maintenance",
+                          "agency_pick_up"
                         ]
                       }
                     }
