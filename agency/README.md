@@ -201,10 +201,11 @@ _No content returned on success._
 
 400 Failure Response:
 
-| `error`         | `error_description`              | `error_details`[]               |
-| --------------- | -------------------------------- | ------------------------------- |
-| `bad_param`     | A validation error occurred.     | Array of parameters with errors |
-| `missing_param` | A required parameter is missing. | Array of missing parameters     |
+| `error`         | `error_description`                  | `error_details`[]               |
+| --------------- | ------------------------------------ | ------------------------------- |
+| `bad_param`     | A validation error occurred.         | Array of parameters with errors |
+| `invalid_data`  | None of the provided data was valid. |                                 |
+| `missing_param` | A required parameter is missing.     | Array of missing parameters     |
 
 ## Service Areas
 
