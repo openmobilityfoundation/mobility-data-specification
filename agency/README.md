@@ -197,14 +197,18 @@ Body Params:
 
 201 Success Response:
 
-_No content returned on success._
+| Field     | Type                           | Field Description                                                                                       |
+| --------- | ------------------------------ | ------------------------------------------------------------------------------------------------------- |
+| `result`  | String                         | Responds with number of successfully written telemetry data points and total number of provided points. |
+| `failures | [Telemetry](#telemetry-data)[] | Array of failed telemetry for zero or more vehicles (empty if all successful).                          |
 
 400 Failure Response:
 
-| `error`         | `error_description`              | `error_details`[]               |
-| --------------- | -------------------------------- | ------------------------------- |
-| `bad_param`     | A validation error occurred.     | Array of parameters with errors |
-| `missing_param` | A required parameter is missing. | Array of missing parameters     |
+| `error`         | `error_description`                  | `error_details`[]               |
+| --------------- | ------------------------------------ | ------------------------------- |
+| `bad_param`     | A validation error occurred.         | Array of parameters with errors |
+| `invalid_data`  | None of the provided data was valid. |                                 |
+| `missing_param` | A required parameter is missing.     | Array of missing parameters     |
 
 ## Service Areas
 
