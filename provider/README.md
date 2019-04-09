@@ -7,6 +7,7 @@ This specification contains a data standard for *mobility as a service* provider
 * [General Information](#general-information)
 * [Trips](#trips)
 * [Status Changes](#status-changes)
+* [Versions](#versions)
 * [Realtime Data](#realtime-data)
 
 ## General Information
@@ -304,6 +305,22 @@ When multiple query parameters are specified, they should all apply to the retur
 
 [Top][toc]
 
+## Versions
+
+The versions endpoint allows user to query for the versions the provider supports.
+
+Endpoint: `/versions`  
+Method: `GET`  
+Schema: [`versions` schema][versions-schema]  
+`data` Payload: `{ "versions": [] }`, an array of version strings usable in versioned requests
+
+Here is an example payload:
+
+    "versions": [ "0.2", "0.3" ]
+
+
+[Top][toc]
+
 ## Realtime Data
 
 All MDS compatible `provider` APIs must expose a public [GBFS](https://github.com/NABSA/gbfs) feed as well. Given that GBFS hasn't fully [evolved to support dockless mobility](https://github.com/NABSA/gbfs/pull/92) yet, we follow the current guidelines in making bike information avaliable to the public. 
@@ -320,3 +337,4 @@ All MDS compatible `provider` APIs must expose a public [GBFS](https://github.co
 [toc]: #table-of-contents
 [trips-schema]: trips.json
 [ts]: #timestamps
+[versions-schema] versions.json
