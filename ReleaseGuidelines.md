@@ -59,7 +59,7 @@ MDS operates on a six-week release cycle for both major updates (0.x) and patche
 
 **week 1 - proposals**
 
-Contributors submit proposals for inclusion in the release cycle in the form of pull requests and issues tagged with the Milestone for the upcoming release. Proposals should come with enough explanation to allow all stakeholders to understand intent and implementation strategy. |
+Contributors submit proposals for inclusion in the release cycle in the form of pull requests and issues tagged. If known, note what release you intended a proposal for in its description. Maintainers will tag appropriate pull requests and issues with the Milestone for the upcoming release. Proposals should come with enough explanation to allow all stakeholders to understand intent and implementation strategy. |
 
 **weeks 2-4 - consensus building, refinement, and implementation**
 
