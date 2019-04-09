@@ -145,7 +145,7 @@
                         "enum": ["unavailable"]
                       },
                       "event_type_reason": {
-                        "enum": ["low_battery", "maintenance", "agency_pick_up"]
+                        "enum": ["low_battery", "maintenance"]
                       }
                     }
                   },
@@ -158,7 +158,8 @@
                         "enum": [
                           "service_end",
                           "rebalance_pick_up",
-                          "maintenance_pick_up"
+                          "maintenance_pick_up",
+                          "agency_pick_up"
                         ]
                       }
                     }
