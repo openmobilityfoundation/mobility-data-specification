@@ -59,7 +59,7 @@ MDS operates on a six-week release cycle for both major updates (0.x) and patche
 
 **week 1 - proposals**
 
-Contributors submit proposals for inclusion in the release cycle in the form of pull requests and issues tagged. If known, note what release you intended a proposal for in its description. Maintainers will tag appropriate pull requests and issues with the Milestone for the upcoming release. Proposals should come with enough explanation to allow all stakeholders to understand intent and implementation strategy. |
+Contributors submit proposals for inclusion in the release cycle in the form of pull requests and issues tagged. If known, note what release you intended a proposal for in its description. Maintainers will tag appropriate pull requests and issues with the Milestone for the upcoming release. Proposals should come with enough explanation to allow all stakeholders to understand intent and implementation strategy.
 
 **weeks 2-4 - consensus building, refinement, and implementation**
 
@@ -69,14 +69,14 @@ Contributors will provide feedback on proposals. Where possible, discussion will
 
 The week will start with an in-person/web conference work session for all contributors to review and discuss current proposals. Goal is to achieve consensus where possible, or to clearly articulate areas of disagreement where not. Minor changes may be accepted at this stage if they bring contributors to consensus.
 
-At the conclusion of week 5, release partner will review all items for which consensus was not reached and provide a recommended release plan to maintainers for approval. Any remaining approved pull requests to `dev` are merged or the release branch as necessary.
+At the conclusion of week 5, the release partner will review all items for which consensus was not reached and provide a recommended release plan to maintainers for approval. Any remaining approved pull requests will be merged, and a maintainer or release partner will open a pull request containing release notes for the proposed release.
 
 **week 6 - release**
 
-​Documentation will be updated, a release branch will be created if necessary, changes will be merged into `master`, and new version will be formally released.
+Documentation will be updated, release notes will be merged, a tag will be created and `master` updated to point to it, and the new version will be formally released. See [Release Checklist](#release-checklist) for details about the release process.
 
 ### Communication and Workflow
-The release annoncements and process schedule will be communicated via [`mds-announce`][mds-announce] Google Group. People wishing to stay informed should join the group for updates. Timing of web conference and in person work sessions will be communicated via mds-announce as well.
+The release announcements and process schedule will be communicated via [`mds-announce`][mds-announce] Google Group. People wishing to stay informed should join the group for updates. Timing of web conference and in person work sessions will be communicated via mds-announce as well.
 
 The following best practices are intended to create clarity around each release cycle:
 
@@ -90,31 +90,64 @@ The following best practices are intended to create clarity around each release 
 
 ## Branch Mechanics
 
-Aside from using `git tags` as mentioned earlier, here we outline a branching strategy to handle ongoing maintenance changes in parallel with features for new releases.
+The branching strategy we describe here is intended to handle ongoing maintenance changes in parallel with features for new releases.
 
 ### Primary branches
 
 At a high-level, there are two primary branches:
 
-* [`master`][mds-master] represents the current stable release (i.e. the most recent tag) of MDS. Development work generally *does not* happen here, but is rather merged from elsewhere.
+* [`master`][mds-master] represents the latest release of MDS. It's only updated as part of the release process, and no pull requests should be based on or target it.
 
-* [`dev`][mds-dev] represents work on the next MINOR release, and is the *long-term* development branch.
+* [`dev`][mds-dev] contains all work that has happened since the last release, including both breaking and non-breaking changes.
 
 ### Feature branches
 
-Work on new features for MDS happens in branches cut from `dev`. When the feature is ready for review, submit a PR against `dev`, ideally with any merge conflicts already resolved. `dev` serves as the collection point for all new feature work.
+All development on changes to MDS should happen in branches cut from `dev` (with the exception of hotfixes to release branches, described below). When your work is ready for review, submit a PR against `dev`, ideally with any merge conflicts already resolved. `dev` serves as the collection point for all new feature work.
 
 ### Release branches
 
-In anticipation of ongoing maintenance, a branch will be created for the current release series. For example, at the time `0.2.0` is released, a branch will be cut from `master` for `0.2.x`.
+Whenever a MINOR version is released, a **release branch** will be created from `dev` to track any changes that should be included in subsequent PATCH versions. For example, at the time `0.4.0` is released, a branch called `0.4.x` will be created that initially points to the same commit as the `0.4.0` tag.
 
-This *release branch* represents the current state of that release series. All maintenance/bugfix work for the series is collected in this branch. To work on a patch, cut a branch from the release branch. When ready, submit a PR against the release branch.
+Release branches can be updated in two ways:
 
-When a PATCH release is ready (e.g. `0.2.0` to `0.2.1`), the release branch (e.g. `0.2.x`) is merged to `master` (to make the release official) and `dev` is rebased onto `master` (to ensure the patch is incorporated with any new work).
+* When a non-breaking change has been merged to `dev`, a maintainer will usually [backport](#backporting-changes) it onto the newest release branch. This can be skipped if the change isn't relevant to the release branch (e.g., because it modifies language that was added after the last MINOR release) or if there are no plans to make another PATCH release with the same MINOR version.
 
-Breaking changes should always be merged to develop. These may be merged at any time and will be incorporated into the next minor release. For non-breaking changes, these should either be merged to develop if the next release is a minor release, or to the appropriate release branch if the next version is a patch release. During each cycle, we merge changes to both dev and 0.n.x branches, so breaking changes can be proposed and worked on at any time
+* If a change needs to be made to spec language that exists in a release branch but is no longer relevant in `dev`, the contributor should create a feature branch based on the release branch and open a PR targeting the release branch directly. For example, if an endpoint was removed in `0.3.0` but needs to be modified for a `0.2.1` PATCH release, the contributor would create a PR based on the `0.2.x` release branch.
 
-As stated earlier, at this time MDS will maintain *two concurrent MINOR versions*. This means that when a MINOR release is made (e.g. `0.4.0`), work on the outgoing series (`0.2.x`, in this case) ceases and its release branch is removed.
+As stated earlier, at this time MDS will maintain *two concurrent MINOR versions*. This means that when a MINOR release is made (e.g. `0.4.0`), no further changes will be made to the outgoing series (`0.2.x`, in this case).
+
+### Backporting changes
+
+When non-breaking changes are merged to `dev`, it's generally necessary for a maintainer to backport these changes to the newest release branch so that they'll be included in any subsequent PATCH releases. There are a couple of different ways to do this:
+
+* If the changes can be applied to the release branch without significant editing, the maintainer can use `git cherry-pick` to copy the changes from `dev` into the release branch (assuming the SHA of the merge commit on `dev` was `b70719b`):
+
+  ```console
+  git fetch
+  git checkout 0.3.x
+  git pull
+  git cherry-pick -m 1 b70719b
+  git push
+  ```
+
+  Note that the `-m 1` option is unnecessary if the PR was merged with the "Squash and merge" option instead of creating a merge commit.
+
+* If backporting the change needs significant manual work (for example, if there were other changes to the relevant part of the spec in the last MINOR version), the maintainer can open a new PR for the backport targeting the relevant release branch.
+
+  First, create a branch containing the backported change (again, assuming the SHA of the merge commit was `b70719b`):
+
+  ```console
+  git fetch
+  git checkout 0.3.x
+  git pull
+  git checkout -b backport-helpful-change-to-0.3.x
+  git cherry-pick -m 1 b70719b
+  # Do any manual work needed to integrate the changes
+  git push -u origin backport-helpful-change-to-0.3.x
+  ```
+
+  Next, create a PR with the release branch (in this case, `0.3.x`) as its `base`. Once that PR has been approved, merge the PR into the release branch as usual.
+
 
 ## Release Checklist
 
@@ -122,7 +155,7 @@ The following steps **must** be followed for **every** release of MDS:
 
 1. Ensure the [Milestone][mds-milestones] for this release is at `100%`.
 
-1. Update the [schema version regex][mds-schema-common]
+1. Update the [schema version regex][mds-schema-common].
 
 1. Run the schema generator to ensure the schema files are up to date:
 
@@ -131,7 +164,7 @@ The following steps **must** be followed for **every** release of MDS:
    pipenv run python generate_provider_schema.py
    ```
 
-1. Update [`ReleaseNotes.md`](ReleaseNotes.md) following the existing format:
+1. [Open a PR][mds-pr-new] against `dev` that updates [`ReleaseNotes.md`](ReleaseNotes.md) using the following format:
 
     ```md
     ## 1.2.3
@@ -145,45 +178,49 @@ The following steps **must** be followed for **every** release of MDS:
     * Another change summary referencing a PR [#777](https://github.com/CityofLosAngeles/mobility-data-specification/pull/777)
     ```
 
-1. [Open a PR][mds-pr-new] against `master`, comparing either `dev` (for a MINOR release) or a release branch (e.g. `0.2.x`) for a PATCH release.
+    The description of this PR should include a link to a GitHub compare page showing the changes that will be included in the release. This URL depends on the type of release:
 
-    In the case of a new MINOR version, allow a minimum of 24 hours for community discussion and review of the PR.
+    * For a PATCH release like 0.4.2, compare the previous version in the series to the current state of the release branch: https://github.com/CityOfLosAngeles/mobility-data-specification/compare/0.4.1...0.4.x
 
-1. Once the PR has been sufficiently reviewed, `rebase merge` into `master`.
+    * For a MINOR release like 0.5.0, compare the last release in the previous series to the current state of `dev`: https://github.com/CityOfLosAngeles/mobility-data-specification/compare/master...dev
 
-1. Create a tag on the tip of `master` for this release, e.g. for `0.3.0`:
+    In the case of a new MINOR version, allow a minimum of 24 hours for community discussion and review of the current state of the release.
+
+1. Once the PR has been sufficiently reviewed, merge it into `dev`.
+
+1. Create a tag for this release on the tip of `dev` (for MINOR versions) or the relevant release branch (for PATCH versions). For example, for `0.5.0`:
 
     ```console
-    git checkout master
-    git fetch && git pull
-    git tag 0.3.0
+    git fetch
+    git checkout origin/dev
+    git tag 0.5.0
     git push --tags
     ```
 
+    Or for `0.4.2`:
+
+    ```console
+    git fetch
+    git checkout origin/0.4.x
+    git tag 0.4.2
+    git push --tags
+    ```
+
+1. If this release is a MINOR version, create a new [release branch](#release-branches). For example, if you've just created the `0.5.0` tag:
+
+    ```console
+    git push origin 0.5.0:0.5.x
+    ```
+
+1. Unless this is a maintenance release on an older branch (for example, releasing `0.3.2` after `0.4.0` has already come out), update `master` to point to the new tag:
+
+    ```console
+    git checkout master
+    git reset --hard 0.5.0
+    git push --force origin master
+    ```
+
 1. Publish a [new Release in GitHub][mds-releases-new] for the tag you just pushed. Copy in the [release notes](ReleaseNotes.md) created earlier.
-
-1. What kind of release was this?
-   * **PATCH:** rebase `dev` onto `master` to incorporate the PATCH into `dev`
-
-       *Caution: be aware that this may impact existing PRs open against `dev`!*
-
-        ```console
-        git checkout dev
-        git rebase master
-        git push --force origin dev
-        ```
-
-   * **MINOR:** cut a new branch for this release series from the tip of `master`
-
-        Make this branch the default branch in GitHub. E.g. for `0.3.0`
-
-        ```console
-        git checkout master
-        git checkout -b 0.3.x
-        git push origin 0.3.x
-        ```
-
-       Remove any outgoing series' release branch (e.g. `0.1.x` when releasing `0.3.0`), if applicable.
 
 1. Post a release announcement to [`mds-announce`](mailto:mds-announce@googlegroups.com), copying the [release notes](ReleaseNotes.md) created earlier and linking to the [GitHub release][mds-releases].
 
