@@ -7,7 +7,6 @@ This specification contains a data standard for *mobility as a service* provider
 * [General Information](#general-information)
 * [Trips](#trips)
 * [Status Changes](#status-changes)
-* [Versions](#versions)
 * [Realtime Data](#realtime-data)
 
 ## General Information
@@ -41,6 +40,22 @@ Content-Type: application/vnd.mds.provider+json;version=0.3
 > Since versioning was not added until the 0.3.0 release, if the `Content-Type` header is `application/json` or not set in the response, version `0.2` must be assumed.
 
 If an unsupported or invalid version is requested, the API must respond with a status of `406 Not Acceptable`. In which case, the response should include a body specifying a list of supported versions.
+
+A client can explicitly negotiate headers using the `OPTIONS` method to an MDS endpoint. For example, to check if `trips` supports either version `0.2` or `0.3` with a preference for `0.2`, the client would issue the following request:
+
+```http
+OPTIONS /trips/ HTTP/1.1 
+Host: provider.example.com 
+Accept: application/vnd.mds.provider+json;version=0.2,application/vnd.mds.provider+json;version=0.3;q=0.9
+```
+
+The response will include the most preferred supported version in the `Content-Type` header. For example, if only `0.3` is supported:
+
+```http
+Content-Type: application/vnd.mds.provider+json;version=0.3
+```
+
+The client can use the returned value verbatim as a version request in the `Accept` header.
 
 ### Response Format
 
@@ -305,22 +320,6 @@ When multiple query parameters are specified, they should all apply to the retur
 
 [Top][toc]
 
-## Versions
-
-The versions endpoint allows user to query for the versions the provider supports.
-
-Endpoint: `/versions`  
-Method: `GET`  
-Schema: [`versions` schema][versions-schema]  
-`data` Payload: `{ "versions": [] }`, an array of version strings usable in versioned requests
-
-Here is an example payload:
-
-    "versions": [ "0.2", "0.3" ]
-
-
-[Top][toc]
-
 ## Realtime Data
 
 All MDS compatible `provider` APIs must expose a public [GBFS](https://github.com/NABSA/gbfs) feed as well. Given that GBFS hasn't fully [evolved to support dockless mobility](https://github.com/NABSA/gbfs/pull/92) yet, we follow the current guidelines in making bike information avaliable to the public. 
@@ -337,4 +336,3 @@ All MDS compatible `provider` APIs must expose a public [GBFS](https://github.co
 [toc]: #table-of-contents
 [trips-schema]: trips.json
 [ts]: #timestamps
-[versions-schema] versions.json

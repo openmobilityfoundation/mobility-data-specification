@@ -157,17 +157,3 @@ if __name__ == '__main__':
     # Write to the `provider` directory.
     with open("../provider/status_changes.json", "w") as statusfile:
         statusfile.write(json.dumps(status_changes, indent=2))
-
-    # Create the standalone version JSON schema by including the needed definitions
-    versions = get_json_file("provider/versions.json")
-    versions["definitions"] = {
-        "links": common["definitions"]["links"],
-        "version": common["definitions"]["version"],
-    }
-
-    # Check that it is a valid schema
-    jsonschema.Draft6Validator.check_schema(versions)
-    # Write to the `provider` directory.
-    with open("../provider/versions.json", "w") as f:
-        f.write(json.dumps(versions, indent=2))
-        
