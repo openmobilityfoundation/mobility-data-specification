@@ -123,7 +123,8 @@
                           "service_start",
                           "user_drop_off",
                           "rebalance_drop_off",
-                          "maintenance_drop_off"
+                          "maintenance_drop_off",
+                          "agency_drop_off"
                         ]
                       }
                     }
@@ -157,7 +158,8 @@
                         "enum": [
                           "service_end",
                           "rebalance_pick_up",
-                          "maintenance_pick_up"
+                          "maintenance_pick_up",
+                          "agency_pick_up"
                         ]
                       }
                     }
