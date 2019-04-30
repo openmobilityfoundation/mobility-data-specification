@@ -12,7 +12,8 @@ This release represents a series of non-breaking changes and clarifications for 
 * New release process - thanks @jfh for documenting, all for partcipating 
 * Additional Breaking / Non-Breaking Documentation
 * [Add versions endpoint](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/300). Thanks @billdirks
-* [Add Agency Drop off / pick up](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/291). Thanks @margodawes 
+* [Add Agency Drop off / pick up](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/291). Thanks @margodawes
+* [Explicitly allow associated_trip for any event type](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/297) 
 
 *_Agency_*
 * Change from UUIDv4 to just UUID. Thanks @karcass
