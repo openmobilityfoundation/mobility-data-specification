@@ -7,18 +7,12 @@ This release represents a series of non-breaking changes and clarifications for 
 **CHANGES**
 
 *_Provider_*
-* New Battery Charged event type reason. Thanks @dbaty / @bors-ltd
-* MDS Schema version fix. 
-* New release process - thanks @jfh for documenting, all for partcipating 
-* Additional Breaking / Non-Breaking Documentation
-* [Add versions endpoint](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/300). Thanks @billdirks
-* [Add Agency Drop off / pick up](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/291). Thanks @margodawes
-* [Explicitly allow associated_trip for any event type](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/297) 
 * MDS Schema version fix.
 * [New release process](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/264). Thanks @jfh for documenting, all for participating 
 * [Additional documentation around what is considered Breaking / Non-Breaking](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/295). Thanks @rf-
 * [OPTIONS for version negotiation](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/293). Thanks @billdirks
 * [Add Agency Drop off / pick up](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/291). Thanks @margodawes 
+* [Explicitly allow associated_trip for any event type](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/297)
 
 *_Agency_*
 * Change from UUIDv4 to just UUID. Thanks @karcass
