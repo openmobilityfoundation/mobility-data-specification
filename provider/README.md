@@ -106,6 +106,10 @@ the format returned by Python's [`time.time()`](https://docs.python.org/3/librar
 
 [Top][toc]
 
+### Order of data from Provider APIs
+
+It is not to be assumed that the order of status changes, trips, or route points pulled from Provider APIs are sorted in any order. Client code can order by `event_time` for status changes, `end_time` for trips, and `timestamp` for route points.
+
 ## Trips
 
 A trip represents a journey taken by a *mobility as a service* customer with a geo-tagged start and stop point.
