@@ -29,7 +29,7 @@ Clients must specify the version they are targeting through the `Accept` header.
 Accept: application/vnd.mds.provider+json;version=0.3
 ```
 
-> Since versioning was not added until the 0.3.0 release, if the `Accept` header is `application/json` or not set in the request, the `provider` API must respond as if version `0.2` was requested.
+> Since versioning was not added until the 0.3.0 release, if the `Accept` header is `application/json`, `*/*`, or not set in the request, the `provider` API must respond as if version `0.2` was requested.
 
 Responses to client requests must indicate the version the response adheres to through the `Content-Type` header. For example:
 
