@@ -196,11 +196,11 @@
             },
             "hdop": {
               "type": "number",
-              "description": "Horizontal GPS accuracy value"
+              "description": "Horizontal GPS or GNSS accuracy value"
             },
             "satellites": {
               "type": "integer",
-              "description": "Number of GPS satellites"
+              "description": "Number of GPS or GNSS satellites"
             }
           }
         },

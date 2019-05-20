@@ -84,7 +84,7 @@
               },
               "event_location": {
                 "$id": "#/properties/data/properties/status_changes/items/properties/event_location",
-                "description": "The GPS coordinates of where the event occurred",
+                "description": "The GPS or GNSS coordinates of where the event occurred",
                 "$ref": "#/definitions/MDS_Feature_Point"
               },
               "event_type": {
