@@ -104,8 +104,8 @@ Note that the provider-scope is at present not included.  A Provider should not 
 | Name         | Type     | R/O | Description      |
 | ---          | ---      | --- | ---              |
 | `name`       | String   | R   | Name of cap item |
-| `rule_type`  | enum     | R   | Type of policy (see [“policy types”](#policy-types))|
-| `rule_units` | enum     | O   | Measured units of policy (see [“policy units”](#policy-units))|
+| `rule_type`  | enum     | R   | Type of policy (see [“rule types”](#rule-types))|
+| `rule_units` | enum     | O   | Measured units of policy (see [“rule units”](#rule-units))|
 | `geographies`| UUID[]   | R   | List of Geography UUIDs (non-overlapping) specifying the covered geography |
 | `statuses`   | Status[] | R   | Vehicle `status` to which this rule applies.  See [MDS Agency state diagram](https://github.com/CityOfLosAngeles/mobility-data-specification/blob/dev/agency/README.md#vehicle-events). |
 | `vehicle_types` | VehicleType[] | O | Applicable vehicle categories, default “all”.  See MDS shared data types document.  (link forthcoming) |
