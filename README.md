@@ -8,6 +8,8 @@ Mobility providers are required to share data with LADOT as part of the City of 
 
 **MDS Components** 
 
+MDS is currently comprised of two distinct components:
+
 * The [`provider`][provider] Application Program Interface (API) was created in May 2018 to be implemented by mobility providers. When a municipality queries information from a mobility provider, the Provider API automatically generates a historical view of operations in a standard format.
 
 * The [`agency`][agency] API was created in April 2019 to be implemented by regulatory agencies. Providers query the Agency API when an event occurs, like a trip starting or ending.
