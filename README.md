@@ -1,24 +1,43 @@
 # Mobility Data Specification
 
-A data standard and API specification for *mobility as a service* providers, such as Dockless Bikeshare, E-Scooters, and Shared Ride providers who work within the public right of way.
+In October of 2018, the City of Los Angeles implemented its first set of data specifications and data sharing requirements focused on dockless e-scooters and bicycles.
 
-Inspired by [GTFS](https://developers.google.com/transit/gtfs/reference/) and [GBFS](https://github.com/NABSA/gbfs). Specifically, the goals of the Mobility Data Specification (**MDS**) are to provide API and data standards for municipalities to help ingest, compare and analyze *mobility as a service* provider data. 
+The Mobility Data Specification (MDS) helps the City ingest and analyze information from for-profit companies who operate dockless scooters and bicycles in the public right-of-way. MDS is a key piece of digital infrastructure that helps the Los Angeles Department of Transportation (LADOT) understand how dockless mobility operates in Los Angeles, which then helps LADOT carry out its core responsibilities of safety, equity, and congestion relief.
 
-The specification is a way to implement realtime data sharing, measurement and regulation for municipalities and *mobility as a service* providers. It is meant to ensure that governments have the ability to enforce, evaluate and manage providers. 
+Mobility providers are required to share data with LADOT as part of the City of Los Angeles&#39; Dockless Mobility Permit. Standardizing data collection between different providers improves cooperation, innovation, and efficiency of the City&#39;s transportation network.
 
-**MDS** is currently comprised of two distinct components:
+**MDS Components** 
 
-* The [`provider`][provider] API is to be implemented by *mobility as a service* providers, for data exchange and operational information that a municipality will query. `provider` presents the historical view of operations.
+* The [`provider`][provider] Application Program Interface (API) was created in May 2018 to be implemented by mobility providers. When a municipality queries information from a mobility provider, the Provider API automatically generates a historical view of operations in a standard format.
 
-* The [`agency`][agency] API is to be implemented by *municipalities* and other regulatory agencies, for providers to query and integrate with during operations. `agency` provides tools to inform and permit future operations.
+* The [`agency`][agency] API was created in April 2019 to be implemented by regulatory agencies. Providers query the Agency API when an event occurs, like a trip starting or ending.
 
-Cities and regulators can choose best how to implement *Agency* and *Provider* either separately, concurrently, or by endpoint. 
+Regulators can choose best how to implement *Agency* and *Provider* either separately, concurrently, or by endpoint. 
 
-## Versions 
+**How MDS is used in Los Angeles**
+
+Information provided in MDS format enables LADOT:
+
+- To verify how many scooters are operating
+- To verify whether scooters are being deployed equitably across LA neighborhoods
+- To determine whether scooters are dropped off outside of a service area
+- To determine whether scooters are being parked in safe and appropriate parking areas
+- To provide data validation for myla311 requests and complaints on dockless vehicles
+- To inform future capital investments such as dockless vehicle drop zones or furniture zones
+- To inform policy making – number of scooters, distribution, etc.
+- Develop ways to communicate dynamic information on unplanned events, such as emergency road closures, water main breaks, etc. to mobility providers to help them keep their users and contractors informed for better route planning and re-balancing efforts.
+
+## Learn More
+
+To learn more about MDS and other related projects, including LADOT&#39;s Technology Action Plan, visit [ladot.io.](https://ladot.io/)
+
+For questions about MDS please contact [ladot.innovation@lacity.org](mailto:ladot.innovation@lacity.org).
+
+## MDS Versions 
 
 The specification will be versioned using Git tags and [semantic versioning](https://semver.org/). See prior [releases](https://github.com/CityOfLosAngeles/mobility-data-specification/releases) and the [Release Guidelines](ReleaseGuidelines.md) for more information.
 
-Please note, you may be viewing a development copy of the Mobility Data Specification based on the current branch. Info about the latest release and all releases is below. 
+Information about the latest release and all releases are below. Please note, you may be viewing a development copy of the Mobility Data Specification based on the current branch. Info about the latest release and all releases is below. 
 
 * [Latest Release](https://github.com/CityOfLosAngeles/mobility-data-specification/tree/master)
 
@@ -61,13 +80,7 @@ The City of Los Angeles is currently looking for feedback and comments on the dr
 
 Please open a pull request if you create open source or private MDS tooling. 
 
-* [`midas`](https://github.com/polyconseil/midas) - Python/Django open source server for the [`agency`][agency] API, developped by BlueSystems.
-
-## Contact
-
-Questions can be directed to jose.elias@lacity.org. 
-
-To stay up to date on MDS releases, please subscribe to the [MDS-Announce](https://groups.google.com/forum/#!forum/mds-announce) mailing list. 
+* [`midas`](https://github.com/polyconseil/midas) - Python/Django open source server for the [`agency`][agency] API, developed by BlueSystems.
 
 [agency]: /agency/README.md
 [provider]: /provider/README.md
