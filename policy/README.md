@@ -126,7 +126,7 @@ Rules are ordered most-specific to most-general.  E.g. an “earlier” cap rule
 
 Some Policies as established by the Agency may benefit from rider communication.  This optional field contains a map of languages to be (optionally?) shown to the user.  (Unanswered question: shown with what frequency?  At sign-up?  Once per day?)
 
-Langugate tag values will be per [BCP 47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt).
+Language tag values will be per [BCP 47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt).
 
 Example for a decreased speed-limit rule for Venice Beach on weekends:
 
