@@ -27,7 +27,7 @@ There are three intended audiences of this API:
 3. Tooling companies that want to create applications for policy-creation and editing
 
 <a name="background"></a>
-## Background
+##Background
 
 The goal of this specificiation is to enable Agencies to create, revise, and publish machine-readable micromobility policy, as set of rules for individual and collective micromobility device behavior exhibited by both providers and riders. Examples of policies include:
 
@@ -50,7 +50,7 @@ Policies may be published by Agencies or their authorized delegates via JSON obj
 
 Each policy will have a unique ID (UUID).
 
-Published policies should be treated as immutable data.  Updates to policies are accomplished by additional updates to policies with a field named “prev_policy”, a UUID reference to the previous policy.
+Published policies should be treated as immutable data.  Obsoleting or otherwise changing policies is accomplished by publishing additional policies with a field named “prev_policies”, a list of UUID references to the previous policy or policies.  
 
 Policies should be stored and accessible indefinitely so that the set of active policies at a given time in the past can be retrieved from the `/policies` endpoint.
 
@@ -65,66 +65,68 @@ Policies should be re-fetched whenever (a) a Policy expires, or (b) at an interv
 <a name="policy-fields"></a>
 ### Policy Fields
 
-| Name           | Type      | R/O | Description |
-| ---            | ---       | --- | --- |
-| `name`         | String    | R   | Name of policy |
-| `policy_id`    | UUID      | R   | Unique ID of policy |
-| `policy_type`  | enum      | R   | Type of policy (see [“policy types”](#policy-types))|
-| `policy_units` | enum      | O   | Measured units of policy (see [“policy units”](#policy-units))|
-| `desc`         | String    | R   | Description of policy |
-| `start_date`   | timestamp | R   | Beginning date/time of policy enforcement |
-| `end_date`     | timestamp | O   | End date/time of policy enforcement |
-| `prev_policy`  | UUID      | O   | Unique ID of prior policy replaced by this one |
-| `rules`        | Rule[]    | R   | List of applicable rule elements (see [“rule fields”](#rule-fields)) |
+| Name            | Type      | R/O | Description |
+| ---             | ---       | --- | --- |
+| `name`          | String    | R   | Name of policy |
+| `policy_id`     | UUID      | R   | Unique ID of policy |
+| `description`   | String    | R   | Description of policy |
+| `start_date`    | timestamp | R   | Beginning date/time of policy enforcement |
+| `end_date`      | timestamp | O   | End date/time of policy enforcement |
+| `prev_policies` | UUID[]    | O   | Unique IDs of prior policies replaced by this one |
+| `rules`         | Rule[]    | R   | List of applicable rule elements (see [“rule fields”](#rule-fields)) |
 
 Note that the provider-scope is at present not included.  A Provider should not be able to tell whether the policy is specific to them, or to a subset of Provider, or all Providers.
 
-<a name="policy-types"></a>
-### Policy Types 
+<a name="rule-types"></a>
+### Rule Types 
 
-| Name | Description |
-| --- | --- |
+| Name    | Description |
+| ---     | --- |
 | `count` | Fleet counts based on regions.  Rule max/min refers to number of devices. |
-| `time` | Individual limitations on time spent in one or more vehicle-states.  Rule max/min refers to number of minutes. |
+| `time`  | Individual limitations on time spent in one or more vehicle-states.  Rule max/min refers to number of minutes. |
 | `speed` | Global or local speed limits.  Rule max/min refers to miles per hour. |
-| `user` | Information for users, e.g. about helmet laws |
+| `user`  | Information for users, e.g. about helmet laws.  Generally can't be enforced via events and telemetry. |
 
-<a name="policy-units"></a>
-### Policy Units 
+<a name="rule-units"></a>
+### Rule Units 
 
-| Name | Description |
-| --- | --- |
+| Name      | Description |
+| ---       | --- |
 | `seconds` | Seconds |
-| `minutes` | Minutes (default for time) |
-| `hours` | Hours |
-| `mph` | Miles per hour (default for speed) |
-| `kph` | Kilometers per hour |
+| `minutes` | Minutes |
+| `hours`   | Hours |
+| `mph`     | Miles per hour |
+| `kph`     | Kilometers per hour |
 
 <a name="rule-fields"></a>
 ### Rule Fields 
 
-| Name | Type | R/O | Description |
-| --- | --- | --- | --- |
-| `name` | String | R | Name of cap item |
-| `geographies` | UUID[] | R | List of Geography UUIDs (non-overlapping) specifying the covered geography |
-| `statuses` | Status[] | R | Vehicle `status` to which this rule applies.  See [MDS Agency state diagram](https://github.com/CityOfLosAngeles/mobility-data-specification/blob/dev/agency/README.md#vehicle-events). |
-| `vehicle_types` | VehicleType[] | O | Applicable vehicle categories, default “all” |
-| `minimum` | integer | O | Minimum value, if applicable (default 0) |
-| `maximum` | integer | O | Maximum value, if applicable (default unlimited) |
-| `start_time` | time | O | Beginning time-of-day (hh:mm:ss) when the rule is in effect (default 00:00:00) |
-| `end_time` | time | O | Ending time-of-day (hh:mm:ss) when the rule is in effect (default 23:59:59) |
-| `days` | day[] | O | Days `["sun", "mon", "tue", "wed", "thu", "fri", "sat"]` when the rule is in effect (default all) |
-| `messages` | { string:string } | O | Message to rider user, if desired, in various languages, keyed by I18n (see [Messages](#messages))|
-| `value_url ` | URL | O | URL to an API endpoint that can provide dynamic information for the measured value (see [Value URL](#value-url)) |
+| Name         | Type     | R/O | Description      |
+| ---          | ---      | --- | ---              |
+| `name`       | String   | R   | Name of cap item |
+| `rule_type`  | enum     | R   | Type of policy (see [“rule types”](#rule-types))|
+| `rule_units` | enum     | O   | Measured units of policy (see [“rule units”](#rule-units))|
+| `geographies`| UUID[]   | R   | List of Geography UUIDs (non-overlapping) specifying the covered geography |
+| `statuses`   | Status[] | R   | Vehicle `status` to which this rule applies.  See [MDS Agency state diagram](https://github.com/CityOfLosAngeles/mobility-data-specification/blob/dev/agency/README.md#vehicle-events). |
+| `vehicle_types` | VehicleType[] | O | Applicable vehicle categories, default “all”.  See MDS shared data types document.  (link forthcoming) |
+| `minimum`    | integer | O | Minimum value, if applicable (default 0) |
+| `maximum`    | integer | O | Maximum value, if applicable (default unlimited) |
+| `start_time` | time    | O | Beginning time-of-day (hh:mm:ss) when the rule is in effect (default 00:00:00) |
+| `end_time`   | time    | O | Ending time-of-day (hh:mm:ss) when the rule is in effect (default 23:59:59) |
+| `days`       | day[]   | O | Days `["sun", "mon", "tue", "wed", "thu", "fri", "sat"]` when the rule is in effect (default all) |
+| `messages`   | { string:string } | O | Message to rider user, if desired, in various languages, keyed by language tag (see [Messages](#messages))|
+| `value_url ` | URL     | O | URL to an API endpoint that can provide dynamic information for the measured value (see [Value URL](#value-url)) |
 
 ### Order of Operations
 
-Rules are ordered most-general to most-specific.  E.g. a “later” cap would take precedence over an “earlier” cap.  The internal mechanics of ordering are up to the Policy editing and hosting software.
+Rules are ordered most-specific to most-general.  E.g. an “earlier” cap rule would take precedence over a “later” cap rule.  The internal mechanics of ordering are up to the Policy editing and hosting software.
 
 <a name="messages"></a>
 ### Messages
 
 Some Policies as established by the Agency may benefit from rider communication.  This optional field contains a map of languages to be (optionally?) shown to the user.  (Unanswered question: shown with what frequency?  At sign-up?  Once per day?)
+
+Language tag values will be per [BCP 47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt).
 
 Example for a decreased speed-limit rule for Venice Beach on weekends:
 
@@ -146,9 +148,9 @@ The payload returned from a GET call to the `value_url` will have the following 
 
 | Name         | Type      | R/O | Description |
 | ----         | ----      | --- | ----------- |
-| `value` | integer | R   | Value of whatever the rule measures |
-| `timestamp`   | timestamp | R   | Timestamp the value was recorded |
-| `policy_id`   | UUID | R   | Relevant `policy_id` for reference |
+| `value`      | integer   | R   | Value of whatever the rule measures |
+| `timestamp`  | timestamp | R   | Timestamp the value was recorded |
+| `policy_id`  | UUID      | R   | Relevant `policy_id` for reference |
 
 MDS will likely include some sort of streaming mechanism in the upcoming releases that may supplant or replace this mechanism.
 
@@ -184,6 +186,8 @@ Returns: One immutable GeoJSON FeatureCollection with an embedded UUID identifie
 
 Parameters: none
 
+Note: Intentionally omitted `GET /geographies` until a compelling use-case can be identified.
+ 
 <a name="authoring"></a>
 ## Authoring
 
@@ -202,10 +206,6 @@ Dynamic caps can also be implemented by replacing the “maximum” integer with
 
 A Compliance API will be described in a separate MDS specification.  In brief, it will take as inputs the MDS Agency data stream, the MDS geography data, and these MDS Policy objects and emit Compliance objects.  This work is in draft form but is closely informed by this Policy specification.
 
-<a name="#open-topics"></a>
-## Open Topics
-- preferred pick-up and drop-off areas
-
 <a name="examples"></a>
 ## Examples
 
@@ -217,19 +217,21 @@ List of no policies as returned from `/policies`
 }
 ```
 
+TODO add parking example that mixes time/count
+
 Cap management in Los Angeles. One Policy object.  Greater LA has a cap of 3000, with an additional 5000 vehicles permitted in the San Fernando Valley DAC areas, and 2500 in the non-SFV DAC areas.  The statuses shown here are the "in the public right-of-way" statuses.
 
 ```
 {
-    "id": "f3c5a65d-fd85-463e-9564-fc95ea473f7d",
+    "policy_id": "f3c5a65d-fd85-463e-9564-fc95ea473f7d",
     "name": "Mobility Caps",
-    "desc": "LADOT Mobility caps as described in the One-Year Permit",
-    "type": "count",
+    "description": "LADOT Mobility caps as described in the One-Year Permit",
     "start_date": 1552678594428,
     "end_date": null, 
-    "prev_policy": null,
+    "prev_policies": null,
     "rules": [{
         "name": "Greater LA",
+        "rule_type": "count",
         "geographies": ["b4bcc213-4888-48ce-a33d-4dd6c3384bda"],
         "statuses": ["available", "unavailable", "reserved", "trip"],
         "vehicle_types": ["bicycle", "scooter"],
@@ -237,12 +239,14 @@ Cap management in Los Angeles. One Policy object.  Greater LA has a cap of 3000,
         "minimum": 500
     }, {
         "name": "San Fernando Valley DAC",
+        "rule_type": "count",
         "geographies": ["ec551174-f324-4251-bfed-28d9f3f473fc"],
         "statuses": ["available", "unavailable", "reserved", "trip"],
         "vehicle_types": ["bicycle", "scooter"],
         "maximum": 5000
     }, {
         "name": "Non San Fernando Valley DAC",
+        "rule_type": "count",
         "geographies": ["4c2015c6-6702-48a6-ab58-94d963911182"],
         "statuses": ["available", "unavailable", "reserved", "trip"],
         "vehicle_types": ["bicycle", "scooter"],
@@ -255,21 +259,24 @@ Idle time limits example:
 
 ```
 {
-    "id": "a2c9a65f-fd85-463e-9564-fc95ea473f7d",
+    "policy_id": "a2c9a65f-fd85-463e-9564-fc95ea473f7d",
     "name": "Idle Times",
-    "desc": "LADOT Idle Time Limitations",
-    "type": "time",
-    "effective": 1552678594428,
-    "ends": null,
-    "supersedes": null,
+    "description": "LADOT Idle Time Limitations",
+    "start_date": 1552678594428,
+    "end_date": null,
+    "prev_policies": null,
     "rules": [{
         "name": "Greater LA (rentable)",
+        "rule_type": "time",
+        "rule_units": "minutes",
         "geographies": ["b4bcc213-4888-48ce-a33d-4dd6c3384bda"],
         "statuses": ["available", "reserved"],
         "vehicle_types": ["bicycle", "scooter"],
         "maximum": 7200
     }, {
         "name": "Greater LA (non-rentable)",
+        "rule_type": "time",
+        "rule_units": "minutes",
         "geographies": ["12b3fcf5-22af-4b0d-a169-ac7ac903d3b9"],
         "statuses": ["unavailable", "trip"],
         "vehicle_types": ["bicycle", "scooter"],
@@ -282,21 +289,24 @@ Speed limits
 
 ```
 {
-    "id": "95645117-fd85-463e-a2c9-fc95ea47463e",
+    "policy_id": "95645117-fd85-463e-a2c9-fc95ea47463e",
     "name": "Speed Limits",
-    "desc": "LADOT Pilot Speed Limit Limitations",
-    "type": "speed",
-    "effective": 1552678594428,
-    "ends": null,
+    "description": "LADOT Pilot Speed Limit Limitations",
+    "start_date": 1552678594428,
+    "end_date": null,
     "supersedes": null,
     "rules": [{
         "name": "Greater LA",
+        "rule_type": "speed",
+        "rule_units": "mph"
         "geographies": ["b4bcc213-4888-48ce-a33d-4dd6c3384bda"],
         "states": ["trip"],
         "vehicle_types": ["bicycle", "scooter"],
         "maximum": 15
     }, {
         "name": "Venice Beach on weekend afternoons",
+        "rule_type": "speed",
+        "rule_units": "mph",
         "geographies": ["ec551174-f324-4251-bfed-28d9f3f473fc"],
         "states": ["trip"],
         "vehicle_types": ["bicycle", "scooter"],
@@ -311,5 +321,36 @@ Speed limits
     }]
 }
 ```
+
+Parking
+
+```
+{
+    "policy_id": "283dc770-7d59-4880-844a-307681d7542f",
+    "name": "Parking",
+    "description": "West 34th Street Parking",
+    "start_date": 1552678594428,
+    "end_date": null,
+    "prev_policies": null,
+    "rules": [
+      {
+        "name": "West 34th Street Parking Time",
+        "rule_type": "time",
+        "rule_units": "hours",
+        "geographies": ["f3637b37-ee80-46e2-b01f-3a7f7f819dd9"],
+        "statuses": ["available", "trip"],
+        "vehicle_types": ["bicycle", "scooter"],
+        "maximum": 2
+      },
+      {
+        "name": "West 34th Street",
+        "rule_type": "count",
+        "geographies": ["f3637b37-ee80-46e2-b01f-3a7f7f819dd9"],
+        "statuses": ["available", "trip"],
+        "vehicle_types": ["bicycle", "scooter"],
+        "maximum": 300
+      }
+    ]
+  }
 
 More examples coming
