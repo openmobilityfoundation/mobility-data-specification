@@ -223,15 +223,15 @@ Cap management in Los Angeles. One Policy object.  Greater LA has a cap of 3000,
 
 ```
 {
-    "id": "f3c5a65d-fd85-463e-9564-fc95ea473f7d",
+    "policy_id": "f3c5a65d-fd85-463e-9564-fc95ea473f7d",
     "name": "Mobility Caps",
-    "desc": "LADOT Mobility caps as described in the One-Year Permit",
-    "type": "count",
+    "description": "LADOT Mobility caps as described in the One-Year Permit",
     "start_date": 1552678594428,
     "end_date": null, 
-    "prev_policy": null,
+    "prev_policies": null,
     "rules": [{
         "name": "Greater LA",
+        "rule_type": "count",
         "geographies": ["b4bcc213-4888-48ce-a33d-4dd6c3384bda"],
         "statuses": ["available", "unavailable", "reserved", "trip"],
         "vehicle_types": ["bicycle", "scooter"],
@@ -239,12 +239,14 @@ Cap management in Los Angeles. One Policy object.  Greater LA has a cap of 3000,
         "minimum": 500
     }, {
         "name": "San Fernando Valley DAC",
+        "rule_type": "count",
         "geographies": ["ec551174-f324-4251-bfed-28d9f3f473fc"],
         "statuses": ["available", "unavailable", "reserved", "trip"],
         "vehicle_types": ["bicycle", "scooter"],
         "maximum": 5000
     }, {
         "name": "Non San Fernando Valley DAC",
+        "rule_type": "count",
         "geographies": ["4c2015c6-6702-48a6-ab58-94d963911182"],
         "statuses": ["available", "unavailable", "reserved", "trip"],
         "vehicle_types": ["bicycle", "scooter"],
@@ -257,21 +259,24 @@ Idle time limits example:
 
 ```
 {
-    "id": "a2c9a65f-fd85-463e-9564-fc95ea473f7d",
+    "policy_id": "a2c9a65f-fd85-463e-9564-fc95ea473f7d",
     "name": "Idle Times",
-    "desc": "LADOT Idle Time Limitations",
-    "type": "time",
-    "effective": 1552678594428,
-    "ends": null,
-    "supersedes": null,
+    "description": "LADOT Idle Time Limitations",
+    "start_date": 1552678594428,
+    "end_date": null,
+    "prev_policies": null,
     "rules": [{
         "name": "Greater LA (rentable)",
+        "rule_type": "time",
+        "rule_units": "minutes",
         "geographies": ["b4bcc213-4888-48ce-a33d-4dd6c3384bda"],
         "statuses": ["available", "reserved"],
         "vehicle_types": ["bicycle", "scooter"],
         "maximum": 7200
     }, {
         "name": "Greater LA (non-rentable)",
+        "rule_type": "time",
+        "rule_units": "minutes",
         "geographies": ["12b3fcf5-22af-4b0d-a169-ac7ac903d3b9"],
         "statuses": ["unavailable", "trip"],
         "vehicle_types": ["bicycle", "scooter"],
@@ -284,21 +289,24 @@ Speed limits
 
 ```
 {
-    "id": "95645117-fd85-463e-a2c9-fc95ea47463e",
+    "policy_id": "95645117-fd85-463e-a2c9-fc95ea47463e",
     "name": "Speed Limits",
-    "desc": "LADOT Pilot Speed Limit Limitations",
-    "type": "speed",
-    "effective": 1552678594428,
-    "ends": null,
+    "description": "LADOT Pilot Speed Limit Limitations",
+    "start_date": 1552678594428,
+    "end_date": null,
     "supersedes": null,
     "rules": [{
         "name": "Greater LA",
+        "rule_type": "speed",
+        "rule_units": "mph"
         "geographies": ["b4bcc213-4888-48ce-a33d-4dd6c3384bda"],
         "states": ["trip"],
         "vehicle_types": ["bicycle", "scooter"],
         "maximum": 15
     }, {
         "name": "Venice Beach on weekend afternoons",
+        "rule_type": "speed",
+        "rule_units": "mph",
         "geographies": ["ec551174-f324-4251-bfed-28d9f3f473fc"],
         "states": ["trip"],
         "vehicle_types": ["bicycle", "scooter"],
@@ -313,5 +321,36 @@ Speed limits
     }]
 }
 ```
+
+Parking
+
+```
+{
+    "policy_id": "283dc770-7d59-4880-844a-307681d7542f",
+    "name": "Parking",
+    "description": "West 34th Street Parking",
+    "start_date": 1552678594428,
+    "end_date": null,
+    "prev_policies": null,
+    "rules": [
+      {
+        "name": "West 34th Street Parking Time",
+        "rule_type": "time",
+        "rule_units": "hours",
+        "geographies": ["f3637b37-ee80-46e2-b01f-3a7f7f819dd9"],
+        "statuses": ["available", "trip"],
+        "vehicle_types": ["bicycle", "scooter"],
+        "maximum": 2
+      },
+      {
+        "name": "West 34th Street",
+        "rule_type": "count",
+        "geographies": ["f3637b37-ee80-46e2-b01f-3a7f7f819dd9"],
+        "statuses": ["available", "trip"],
+        "vehicle_types": ["bicycle", "scooter"],
+        "maximum": 300
+      }
+    ]
+  }
 
 More examples coming
