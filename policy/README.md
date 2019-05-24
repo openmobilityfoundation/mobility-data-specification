@@ -27,9 +27,9 @@ There are three intended audiences of this API:
 3. Tooling companies that want to create applications for policy-creation and editing
 
 <a name="background"></a>
-##Background
+## Background
 
-The goal of this specificiation is to enable Agencies to create, revise, and publish machine-readable micromobility policy, as set of rules for individual and collective micromobility device behavior exhibited by both providers and riders. Examples of policies include:
+The goal of this specification is to enable Agencies to create, revise, and publish machine-readable micromobility policy, as set of rules for individual and collective micromobility device behavior exhibited by both providers and riders. Examples of policies include:
 
 * City-wide and localized caps (e.g. “Minimum 500 and maximum 3000 scooters within city boundaries”)
 * Exclusion zones (e.g. “No scooters are permitted in this district on weekends”)
@@ -46,17 +46,17 @@ This initial draft proposes a subset of possible policies for consideration, and
 <a name="distribution"></a>
 ## Distribution
 
-Policies may be published by Agencies or their authorized delegates via JSON objects.
+Policies may be published by Agencies or their authorized delegates via JSON objects via REST API.
 
 Each policy will have a unique ID (UUID).
 
-Published policies should be treated as immutable data.  Obsoleting or otherwise changing policies is accomplished by publishing additional policies with a field named “prev_policies”, a list of UUID references to the previous policy or policies.  
+Published policies should be treated as immutable data.  Obsoleting or otherwise changing policies is accomplished by publishing additional policies with a field named `prev_policies`, a list of UUID references to the previous policy or policies.  
 
 Policies should be stored and accessible indefinitely so that the set of active policies at a given time in the past can be retrieved from the `/policies` endpoint.
 
 Policies will typically be linked to one or more associated geographies.  Geography descriptions (e.g. geofences or lists of street segments) must also be maintained by the Agency indefinitely.  Policies without specific geographies (global policies) are assumed to apply to the entire service area managed by the Agency.
 
-Policies should be re-fetched whenever (a) a Policy expires, or (b) at an interval specified by the Agency.
+Policies should be re-fetched whenever (a) a Policy expires (via its `end_date`), or (b) at an interval specified by the Agency, e.g. "daily at midnight".
 
 
 <a name="schema"></a>
@@ -133,7 +133,7 @@ Example for a decreased speed-limit rule for Venice Beach on weekends:
 ```
 	"messages": {
 	            "en-US": "Remember to stay under 10 MPH on Venice Beach on weekends!”,
-	            "es-US": "¡Recuerda permanecer menos de 10 millas por hora en Venice Beach los fines de semana!"
+	            "es-US": "¡Recuerda mantener por debajo 10 millas por hora en Venice Beach los fines de semana!"
 	        },
 ```
 
