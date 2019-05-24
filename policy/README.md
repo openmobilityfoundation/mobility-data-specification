@@ -217,8 +217,6 @@ List of no policies as returned from `/policies`
 }
 ```
 
-TODO add parking example that mixes time/count
-
 Cap management in Los Angeles. One Policy object.  Greater LA has a cap of 3000, with an additional 5000 vehicles permitted in the San Fernando Valley DAC areas, and 2500 in the non-SFV DAC areas.  The statuses shown here are the "in the public right-of-way" statuses.
 
 ```
@@ -255,7 +253,7 @@ Cap management in Los Angeles. One Policy object.  Greater LA has a cap of 3000,
 }
 ```
 
-Idle time limits example:
+Idle time limits example.  Scooters and bikes can be in the public right-of-way for up to three days if rentable, one day if not.
 
 ```
 {
@@ -268,24 +266,24 @@ Idle time limits example:
     "rules": [{
         "name": "Greater LA (rentable)",
         "rule_type": "time",
-        "rule_units": "minutes",
+        "rule_units": "hours",
         "geographies": ["b4bcc213-4888-48ce-a33d-4dd6c3384bda"],
         "statuses": ["available", "reserved"],
         "vehicle_types": ["bicycle", "scooter"],
-        "maximum": 7200
+        "maximum": 72
     }, {
         "name": "Greater LA (non-rentable)",
         "rule_type": "time",
-        "rule_units": "minutes",
+        "rule_units": "hours",
         "geographies": ["12b3fcf5-22af-4b0d-a169-ac7ac903d3b9"],
         "statuses": ["unavailable", "trip"],
         "vehicle_types": ["bicycle", "scooter"],
-        "limit": 720
+        "limit": 24
     }]
 }
 ```
 
-Speed limits
+Speed limits example.  Fifteen MPH in greater LA, 10 MPH on Venice Beach on Saturday/Sunday from noon til midnight.
 
 ```
 {
@@ -322,7 +320,7 @@ Speed limits
 }
 ```
 
-Parking
+Parking example combining place and time.  Maximum 300 vehicles; each can stay up to 48 hours.
 
 ```
 {
@@ -332,25 +330,24 @@ Parking
     "start_date": 1552678594428,
     "end_date": null,
     "prev_policies": null,
-    "rules": [
-      {
-        "name": "West 34th Street Parking Time",
-        "rule_type": "time",
-        "rule_units": "hours",
-        "geographies": ["f3637b37-ee80-46e2-b01f-3a7f7f819dd9"],
-        "statuses": ["available", "trip"],
-        "vehicle_types": ["bicycle", "scooter"],
-        "maximum": 2
-      },
-      {
-        "name": "West 34th Street",
-        "rule_type": "count",
-        "geographies": ["f3637b37-ee80-46e2-b01f-3a7f7f819dd9"],
-        "statuses": ["available", "trip"],
-        "vehicle_types": ["bicycle", "scooter"],
-        "maximum": 300
-      }
-    ]
+    "rules": [{
+      "name": "West 34th Street Parking Time Limit",
+      "rule_type": "time",
+      "rule_units": "hours", 
+      "geographies": ["f3637b37-ee80-46e2-b01f-3a7f7f819dd9"],
+      "statuses": ["available", "trip"],
+      "vehicle_types": ["bicycle", "scooter"],
+      "maximum": 48
+    }, {
+      "name": "West 34th Street Parking Capacity",
+      "rule_type": "count",
+      "geographies": ["f3637b37-ee80-46e2-b01f-3a7f7f819dd9"],
+      "statuses": ["available", "trip"],
+      "vehicle_types": ["bicycle", "scooter"],
+      "maximum": 300
+    }]
   }
+}
+```
 
-More examples coming
+More examples to come.  :)
