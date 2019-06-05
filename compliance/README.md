@@ -45,17 +45,17 @@ Method: `GET`
 
 ### Snapshot Response
 
-| Name         | Type         | Required/Optional | Description     |
-| ------------ | ------------ | ----------------- | --------------- |
-| `policy`     | Policy       | Required          | See Policy Spec |
-| `compliance` | Compliance[] | Required          | ...             |
+| Name         | Type         | Required/Optional | Description                              |
+| ------------ | ------------ | ----------------- | ---------------------------------------- |
+| `policy`     | Policy       | Required          | See [Policy](../policy/README.md#schema) |
+| `compliance` | Compliance[] | Required          | ...                                      |
 
 ### Compliance
 
-| Name     | Type    | Required/Optional | Description |
-| -------- | ------- | ----------------- | ----------- |
-| `rule`   | Rule    | Required          | ...         |
-| `issues` | Issue[] | Required          | ...         |
+| Name     | Type    | Required/Optional | Description                            |
+| -------- | ------- | ----------------- | -------------------------------------- |
+| `rule`   | Rule    | Required          | See [Rule](../policy/README.md#schema) |
+| `issues` | Issue[] | Required          | ...                                    |
 
 ### Issue
 
@@ -80,6 +80,7 @@ CountIssue | TimeIssue | SpeedIssue
 | Name             | Type                     | Required/Optional | Description                                                                      |
 | ---------------- | ------------------------ | ----------------- | -------------------------------------------------------------------------------- |
 | `device_id`      | UUID                     | Required          | Unique ID for the vehicle                                                        |
+| `provider_id`    | UUID                     | Required          | Unique ID for the provider associated with the vehicle                           |
 | `geography_id`   | UUID                     | Required          | Specific geography the vehicle is violating the rule in.                         |
 | `gps`            | {lat: Float, lng: Float} | Required          | Latitude and Longitude for the vehicle                                           |
 | `vehicle_id`     | String                   | Required          | Vehicle Identification Number (vehicle_id) visible on vehicle                    |
