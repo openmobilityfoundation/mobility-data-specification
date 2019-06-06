@@ -104,6 +104,7 @@ Note that the provider-scope is at present not included.  A Provider should not 
 | Name         | Type     | R/O | Description      |
 | ---          | ---      | --- | ---              |
 | `name`       | String   | R   | Name of cap item |
+| `rule_id`    | UUID     | R   | Unique ID of rule |
 | `rule_type`  | enum     | R   | Type of policy (see [“rule types”](#rule-types))|
 | `rule_units` | enum     | O   | Measured units of policy (see [“rule units”](#rule-units))|
 | `geographies`| UUID[]   | R   | List of Geography UUIDs (non-overlapping) specifying the covered geography |
