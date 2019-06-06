@@ -19,6 +19,26 @@ MDS uses [Semantic Versioning][semver]. Each release is associated with a [`git 
 
 Given that MDS is stabilizing under MAJOR version `0.x` right now, it should be assumed that MINOR version increments (e.g. `0.2.0` to `0.3.0`) are equivalent to MAJOR version increments and may contain breaking changes.
 
+### Breaking vs. non-breaking changes
+
+Since MDS is used by a broad ecosystem of both API consumers and implementers, it needs a strict definition of what changes are “non-breaking” and are therefore allowed in PATCH releases.
+
+In the MDS spec, a breaking change is any change that requires either consumers or implementers to modify their code for it to continue to function correctly.
+
+Examples of breaking changes include:
+
+* Adding or removing a required endpoint or field
+* Adding or removing a request parameter
+* Changing the data type or semantics of an existing field, including clarifying previously-ambiguous requirements
+
+Examples of non-breaking changes include:
+
+* Adding or removing an optional endpoint or field
+* Adding or removing enum values
+* Modifying documentation or spec language that doesn't affect the behavior of the API directly
+
+One implication of this policy is that clients should be prepared to ignore the presence of unexpected fields in responses and unexpected values for enums. This is necessary to preserve compatibility between PATCH versions within the same MINOR version range, since optional fields and enum values can be added as non-breaking changes.
+
 ### Ongoing version support
 
 At this early stage, MDS will be moving relatively quickly with an eye toward stabilization rather than backwards-compatibility.

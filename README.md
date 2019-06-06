@@ -14,7 +14,15 @@ The specification is a way to implement realtime data sharing, measurement and r
 
 Cities and regulators can choose best how to implement *Agency* and *Provider* either separately, concurrently, or by endpoint. 
 
+## Versions 
+
 The specification will be versioned using Git tags and [semantic versioning](https://semver.org/). See prior [releases](https://github.com/CityOfLosAngeles/mobility-data-specification/releases) and the [Release Guidelines](ReleaseGuidelines.md) for more information.
+
+Please note, you may be viewing a development copy of the Mobility Data Specification based on the current branch. Info about the latest release and all releases is below. 
+
+* [Latest Release](https://github.com/CityOfLosAngeles/mobility-data-specification/tree/master)
+
+* [All Releases](https://github.com/CityOfLosAngeles/mobility-data-specification/releases)
 
 ## Announcements 
 

@@ -41,6 +41,22 @@ Content-Type: application/vnd.mds.provider+json;version=0.3
 
 If an unsupported or invalid version is requested, the API must respond with a status of `406 Not Acceptable`. In which case, the response should include a body specifying a list of supported versions.
 
+A client can explicitly negotiate headers using the `OPTIONS` method to an MDS endpoint. For example, to check if `trips` supports either version `0.2` or `0.3` with a preference for `0.2`, the client would issue the following request:
+
+```http
+OPTIONS /trips/ HTTP/1.1 
+Host: provider.example.com 
+Accept: application/vnd.mds.provider+json;version=0.2,application/vnd.mds.provider+json;version=0.3;q=0.9
+```
+
+The response will include the most preferred supported version in the `Content-Type` header. For example, if only `0.3` is supported:
+
+```http
+Content-Type: application/vnd.mds.provider+json;version=0.3
+```
+
+The client can use the returned value verbatim as a version request in the `Accept` header.
+
 ### Response Format
 
 The response to a client request must include a valid HTTP status code defined in the [IANA HTTP Status Code Registry](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml). It also must set the `Content-Type` header, as specified in the [Versioning](#Versioning) section.
@@ -276,7 +292,7 @@ Schema: [`status_changes` schema][sc-schema]
 | `event_time` | [timestamp][ts] | Required | Date/time that event occurred, based on device clock |
 | `event_location` | GeoJSON [Point Feature][geo] | Required | |
 | `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |
-| `associated_trip` | UUID | Required if Applicable | Trip UUID (foreign key to Trips API) required if `event_type_reason` is `user_pick_up` or `user_drop_off` |
+| `associated_trip` | UUID | Required if Applicable | Trip UUID (foreign key to Trips API), required if `event_type_reason` is `user_pick_up` or `user_drop_off`, or for any other status change event that marks the end of a trip. |
 
 ### Status Changes Query Parameters
 
@@ -295,12 +311,14 @@ When multiple query parameters are specified, they should all apply to the retur
 | | | `user_drop_off` | User ends reservation |
 | | | `rebalance_drop_off` | Device moved for rebalancing |
 | | | `maintenance_drop_off` | Device introduced into service after being removed for maintenance |
+| | | `agency_drop_off` | The administrative agency (ie, DOT) drops a device into the PROW using an admin code or similar | 
 | `reserved` | A customer reserves a device (even if trip has not started yet) | `user_pick_up` | Customer reserves device |
 | `unavailable` | A device is on the street but becomes unavailable for customer use | `maintenance` | A device is no longer available due to equipment issues |
 | | | `low_battery` | A device is no longer available due to insufficient battery |
 | `removed` | A device is removed from the street and unavailable for customer use | `service_end` | Device removed from street because service has ended for the day (if program does not operate 24/7) |
 | | | `rebalance_pick_up` | Device removed from street and will be placed at another location to rebalance service |
 | | | `maintenance_pick_up` | Device removed from street so it can be worked on |
+| | | `agency_pick_up` | The administrative agency (ie, DOT) removes a device using an admin code or similar |
 
 [Top][toc]
 
