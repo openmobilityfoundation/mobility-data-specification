@@ -109,7 +109,7 @@ def get_json_file(path):
 
 if __name__ == '__main__':
     # Load common data
-    common = get_json_file('common.json')
+    common = get_json_file('./templates/common.json')
     point = get_point_schema()
     multipolygon = get_multipolygon_schema()
     # Craft the MDS specific types
@@ -136,7 +136,7 @@ if __name__ == '__main__':
     #########
 
     # Create the standalone trips JSON schema by including the needed definitions
-    trips = get_json_file('provider/trips.json')
+    trips = get_json_file('./templates/provider/trips.json')
     trips["definitions"] = {
             POINT: point,
             MDS_FEATURE_POINT: mds_feature_point,
@@ -161,7 +161,7 @@ if __name__ == '__main__':
     ##################
 
     # Create the standalone status_changes JSON schema by including the needed definitions
-    status_changes = get_json_file('provider/status_changes.json')
+    status_changes = get_json_file('./templates/provider/status_changes.json')
     status_changes["definitions"] = {
             POINT: point,
             MDS_FEATURE_POINT: mds_feature_point,
@@ -184,7 +184,7 @@ if __name__ == '__main__':
     ###############
 
     # Create the standalone GET vehicle JSON schema by including the needed definitions
-    get_vehicle = get_json_file('agency/get_vehicle.json')
+    get_vehicle = get_json_file('./templates/agency/get_vehicle.json')
     get_vehicle["definitions"] = {
             "propulsion_type": common["definitions"]["propulsion_type"],
             "vehicle_type": common["definitions"]["vehicle_type"],
@@ -204,7 +204,7 @@ if __name__ == '__main__':
     ################
 
     # Create the standalone POST vehicle JSON schema by including the needed definitions
-    post_vehicle = get_json_file('agency/post_vehicle.json')
+    post_vehicle = get_json_file('./templates/agency/post_vehicle.json')
     post_vehicle["definitions"] = {
             "propulsion_type": common["definitions"]["propulsion_type"],
             "vehicle_type": common["definitions"]["vehicle_type"],
@@ -221,7 +221,7 @@ if __name__ == '__main__':
     ######################
 
     # Create the standalone POST vehicle event JSON schema by including the needed definitions
-    post_vehicle_event = get_json_file('agency/post_vehicle_event.json')
+    post_vehicle_event = get_json_file('./templates/agency/post_vehicle_event.json')
     post_vehicle_event["definitions"] = {
             "vehicle_event": common["definitions"]["vehicle_event"],
             "telemetry": common["definitions"]["telemetry"],
@@ -238,7 +238,7 @@ if __name__ == '__main__':
     ##########################
 
     # Create the standalone POST vehicle telemetry JSON schema by including the needed definitions
-    post_vehicle_telemetry = get_json_file('agency/post_vehicle_telemetry.json')
+    post_vehicle_telemetry = get_json_file('./templates/agency/post_vehicle_telemetry.json')
     post_vehicle_telemetry["definitions"] = {
             "telemetry": common["definitions"]["telemetry"],
             }
@@ -253,7 +253,7 @@ if __name__ == '__main__':
     ####################
 
     # Create the standalone GET service area JSON schema by including the needed definitions
-    get_service_area = get_json_file('agency/get_service_area.json')
+    get_service_area = get_json_file('./templates/agency/get_service_area.json')
     get_service_area["definitions"] = {
             MULTIPOLYGON: multipolygon,
             "area_type": common["definitions"]["area_type"],
