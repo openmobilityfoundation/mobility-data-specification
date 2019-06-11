@@ -131,6 +131,11 @@
                 "description": "The time the trip ended, expressed as a Unix Timestamp",
                 "$ref": "#/definitions/timestamp"
               },
+              "publication_time": {
+                "$id": "#/properties/data/properties/trips/items/properties/publication_time",
+                "description": "The time the trip became available through the trips endpoint, expressed as a Unix Timestamp",
+                "$ref": "#/definitions/timestamp"
+              },
               "parking_verification_url": {
                 "$id": "#/properties/data/properties/trips/items/properties/parking_verification_url",
                 "type": ["string", "null"],
