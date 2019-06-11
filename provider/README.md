@@ -191,6 +191,7 @@ Schema: [`trips` schema][trips-schema]
 | `accuracy` | Integer | Required | The approximate level of accuracy, in meters, of `Points` within `route` |
 | `start_time` | [timestamp][ts] | Required | |
 | `end_time` | [timestamp][ts] | Required | |
+| `publication_time` | [timestamp][ts] | Optional | Date/time that trip became available through the trips endpoint |
 | `parking_verification_url` | String | Optional | A URL to a photo (or other evidence) of proper vehicle parking |
 | `standard_cost` | Integer | Optional | The cost, in cents, that it would cost to perform that trip in the standard operation of the System |
 | `actual_cost` | Integer | Optional | The actual cost, in cents, paid by the customer of the *mobility as a service* provider |
@@ -290,6 +291,7 @@ Schema: [`status_changes` schema][sc-schema]
 | `event_type` | Enum | Required | See [event types](#event-types) table |
 | `event_type_reason` | Enum | Required | Reason for status change, allowable values determined by [`event type`](#event-types) |
 | `event_time` | [timestamp][ts] | Required | Date/time that event occurred at. See [Event Times](#event-times) |
+| `publication_time` | [timestamp][ts] | Optional | Date/time that event became available through the status changes endpoint |
 | `event_location` | GeoJSON [Point Feature][geo] | Required | |
 | `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |
 | `associated_trip` | UUID | Required if Applicable | Trip UUID (foreign key to Trips API), required if `event_type_reason` is `user_pick_up` or `user_drop_off`, or for any other status change event that marks the end of a trip. |
