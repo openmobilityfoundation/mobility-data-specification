@@ -290,7 +290,6 @@ Query String Parameters
   count: number,
   audits: {
     audit_trip_id: UUID,
-    audit_vehicle_id: string,
     audit_device_id: UUID,
     audit_subject_id: string,
     provider_id: UUID,
@@ -343,7 +342,6 @@ GET /audit/trips/{audit_trip_id}
   audit_trip_id: UUID,
   audit: {
     trip_id: UUID,
-    vehicle_id: string,
     device_id: UUID,
     subject_id: string,
     audit_start: Timestamp,
@@ -353,17 +351,6 @@ GET /audit/trips/{audit_trip_id}
     telemetry_start: Timestamp,
     telemetry_end: Timestamp,
     timestamp: Timestamp,
-    device: {
-      device_id: UUID,
-      provider_id: UUID,
-      vehicle_id: string,
-      type: 'scooter',
-      propulsion: ['electric'],
-      year: 2019,
-      mfgr: string,
-      model: string,
-      recorded: Timestamp
-    },
     audit_events: {
       audit_trip_id: UUID,
       audit_event_id: UUID,
