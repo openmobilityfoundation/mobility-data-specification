@@ -58,14 +58,14 @@ This endpoint shall be called once at the very beginning of an audit before any 
 
 #### Body Parameters
 
-| Name                | Type                                                          | R/O | Description                                                                                                                                |
-| ------------------- | ------------------------------------------------------------- | --- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| audit_event_id      | [UUID](../common/DataDefinitions.md#unique-identifiers-uuids) | O   | Unique event ID                                                                                                                            |
-| timestamp           | [Timestamp](../common/DataDefinitions.md#timestamps)          | R   | Timestamp on the audit device when the audit was started                                                                                   |
-| provider_id         | [UUID](../common/DataDefinitions.md#unique-identifiers-uuids) | R   | The UUID of the provider                                                                                                                   |
-| provider_vehicle_id | string                                                        | R   | The vehicle ID which appears on the provider’s vehicle                                                                                     |
-| audit_device_id     | string                                                        | R   | An identifier that uniquely identifies the audit device (e.g. a mobile phone). This can be a UUID or the device’s UDID                     |
-| telemetry           | [Telemetry](../common/DataDefinitions.md#telemetry-data)      | O   | Telemetry information from the audit device when the audit was started. If specified, must minimally contain `lat`, `lng`, and `timestamp` |
+| Name                | Type                                                          | R/O | Description                                                                                                                                        |
+| ------------------- | ------------------------------------------------------------- | --- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| audit_event_id      | [UUID](../common/DataDefinitions.md#unique-identifiers-uuids) | O   | Unique event ID                                                                                                                                    |
+| timestamp           | [Timestamp](../common/DataDefinitions.md#timestamps)          | R   | Timestamp on the audit device when the audit was started                                                                                           |
+| provider_id         | [UUID](../common/DataDefinitions.md#unique-identifiers-uuids) | R   | The UUID of the provider                                                                                                                           |
+| provider_vehicle_id | string                                                        | R   | The vehicle ID which appears on the provider’s vehicle                                                                                             |
+| audit_device_id     | [UUID]                                                        | R   | An identifier that uniquely identifies the audit device (e.g. a mobile phone). This can be an application generated UUID or the device’s IDFA/AAID |
+| telemetry           | [Telemetry](../common/DataDefinitions.md#telemetry-data)      | O   | Telemetry information from the audit device when the audit was started. If specified, must minimally contain `lat`, `lng`, and `timestamp`         |
 
 #### Response Codes
 
@@ -340,35 +340,46 @@ GET /audit/trips/{audit_trip_id}
 ```js
 {
   audit_trip_id: UUID,
-  audit: {
-    trip_id: UUID,
-    device_id: UUID,
-    subject_id: string,
-    audit_start: Timestamp,
-    audit_end: Timestamp,
-    trip_start: Timestamp,
-    trip_end: Timestamp,
-    telemetry_start: Timestamp,
-    telemetry_end: Timestamp,
+  audit_device_id: UUID,
+  audit_subject_id: string,
+  provider_id: UUID,
+  provider_name: string,
+  provider_vehicle_id: string,
+  provider_device_id: UUID | null,
+  timestamp: Timestamp,
+  recorded: Timestamp,
+  events: {
+    audit_trip_id: UUID,
+    audit_event_id: UUID,
+    audit_event_type: enum,
+    audit_issue_code: string,
+    audit_subject_id: string,
+    note: string,
     timestamp: Timestamp,
-    audit_events: {
-      audit_trip_id: UUID,
-      audit_event_id: UUID,
-      audit_event_type: enum,
-      audit_issue_code: string,
-      audit_subject_id: string,
-      note: string,
-      timestamp: Timestamp,
-      lat: Timestamp,
-      lng: number,
-      speed: number,
-      heading: number,
-      accuracy: number,
-      altitude: number,
-      charge: number,
+    gps: {
+      lat: float,
+      lng: float,
+      speed: float,
+      heading: float,
+      accuracy: float,
+      altitude: float
+    },
+    charge: float,
+    recorded: Timestamp
+  }[],
+  provider: null | {
+    device: {
+      device_id: UUID,
+      provider_id: UUID,
+      vehicle_id: string,
+      type: string,
+      propulsion: string[],
+      year: number,
+      mfgr: string,
+      model: string,
       recorded: Timestamp
-    }[],
-    vehicle_events: {
+    },
+    events: {
       device_id: UUID,
       provider_id: UUID,
       timestamp: Timestamp,
@@ -379,52 +390,19 @@ GET /audit/trips/{audit_trip_id}
       service_area_id: UUID,
       recorded: Timestamp,
     }[],
-    telemetry_events: {
+    telemetry: {
       device_id: UUID,
       provider_id: UUID,
       timestamp: Timestamp,
-      lat: number,
-      lng: number,
-      speed: number,
-      heading: number,
-      accuracy: number,
-      altitude: number,
-      charge: number,
-      recorded: Timestamp,
-    }[]
-  },
-  provider: {
-    provider_id: UUID,
-    provider_name: string,
-    vehicle_id: string,
-    device: {...},
-    trip_id: UUID,
-    trip_start: Timestamp,
-    telemetry_start: Timestamp,
-    trip_end: Timestamp,
-    telemetry_end: Timestamp,
-    vehicle_events: {
-      device_id: UUID,
-      provider_id: UUID,
-      timestamp: Timestamp,
-      event_type: enum,
-      event_type_reason: string,
-      telemetry_timestamp: Timestamp,
-      trip_id: UUID,
-      service_area_id: UUID,
-      recorded: Timestamp,
-    }[],
-    telemetry_events: {
-      device_id: UUID,
-      provider_id: UUID,
-      timestamp: Timestamp,
-      lat: number,
-      lng: number,
-      speed: number,
-      heading: number,
-      accuracy: number,
-      altitude: number,
-      charge: number,
+      gps: {
+        lat: float,
+        lng: float,
+        speed: float,
+        heading: float,
+        accuracy: float,
+        altitude: float
+      },
+      charge: float,
       recorded: Timestamp
     }[]
   }
