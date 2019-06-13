@@ -1,3 +1,22 @@
+## 0.3.2 
+
+> Released 2019-06-13
+
+This release is a series of non breaking and minor changes for provider, along with JSON Schema for agency. 
+
+**CHANGES** 
+
+*_Provider_*
+* [Add an optional recorded field to provider](https://github.com/CityOfLosAngeles/mobility-data-specification/issues/307)
+* [Ordering Definitions](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/301)
+* [406 response - version negiotation](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/327)
+
+*_Agency_*
+[JSON Schema for Agency](https://github.com/CityOfLosAngeles/mobility-data-specification/issues/169)
+
+*_Misc_*
+[Schema Folder Cleanup](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/328)
+[Global GNSS Support](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/316)
 ## 0.3.1
 
 > Released 2019-04-30
