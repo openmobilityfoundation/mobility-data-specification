@@ -259,7 +259,7 @@ GET /audit/trips
 
 This endpoint shall be called to get a list of existing audits. By using a combination of query string parameters the list of audits can be filtered. Matching audits are returned in most recent to oldest order.
 
-Query String Parameters
+#### Query String Parameters
 
 | Name                | Type                                                          | R/O | Description                                                                                                                                                                                                                     |
 | ------------------- | ------------------------------------------------------------- | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -322,6 +322,13 @@ GET /audit/trips/{audit_trip_id}
 | Name          | Type                                                          | R/O | Description                                        |
 | ------------- | ------------------------------------------------------------- | --- | -------------------------------------------------- |
 | audit_trip_id | [UUID](../common/DataDefinitions.md#unique-identifiers-uuids) | R   | Unique identifier for a single specific audit trip |
+
+
+#### Query String Parameters
+
+| Name                      | Type   | R/O | Description                                                                                                                               |
+| ------------------------- | ------ | --- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| event_viewport_adjustment | number | O   | (Seconds) Default 30. Include provider events and telemetry which occur within the specified number of seconds before or after the audit. |
 
 #### Response Codes
 
