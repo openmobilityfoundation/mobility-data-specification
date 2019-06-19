@@ -1,33 +1,36 @@
 # Mobility Data Specification: Compliance
 
-* Authors: LADOT
-* Date: 19 June 2019
-* Version: alpha
+- Authors: LADOT
+- Date: 19 June 2019
+- Version: alpha
 
 ## Table of Contents
-* [Audience](#audience)
-* [Background](#background)
-* [Distribution](#distribution)
-* [Schema](#schema)
-* [Endpoints](#endpoints)
-* [Authoring](#authoring)
-* [Compliance](#compliance)
-* [Open Topics](#open-topics)
-* [Examples](#examples)
+
+- [Audience](#audience)
+- [Background](#background)
+- [Distribution](#distribution)
+- [Schema](#schema)
+- [Endpoints](#endpoints)
+- [Authoring](#authoring)
+- [Compliance](#compliance)
+- [Open Topics](#open-topics)
+- [Examples](#examples)
 
 <a name="audience"></a>
+
 ## Audience
 
-There are three intended audiences of this API: 
+There are three intended audiences of this API:
 
 1. Agencies, as consumers in the form of automated compliance measurement from their digitally-enforcable Policy documents
 2. Providers, so that they can get real-time feedback their compliance status as measured by their supervising Agency
 3. Tooling companies that want to create applications for visualization, analysis, and reporting on compliance status
 
 <a name="background"></a>
+
 ## Background
 
-The [Policy API](../policy/readme.md) describes a schema for expressing mobility policy, as well as applicable geographic regions, in digital form.  The Compliance API describes how Policy and Geography documents are combined with fleet data ingested via Agency to measure the degree to which Providers are in compliance with the policies.
+The [Policy API](../policy/readme.md) describes a schema for expressing mobility policy, as well as applicable geographic regions, in digital form. The Compliance API describes how Policy and Geography documents are combined with fleet data ingested via Agency to measure the degree to which Providers are in compliance with the policies.
 
 ### Provider Compliance
 
@@ -39,7 +42,7 @@ Certain types of policy will be global across providerrs, e.g., instead of a per
 
 ## Compliance Architecture
 
-The Compliance API takes as inputs the event and telemetry stream from the [Agency API](../agency/README.md), plus the published and applicable Policy documents from the [Policy API](../policy/README.md), and emits a JSON document that describes deviations from the various Policy documents.  
+The Compliance API takes as inputs the event and telemetry stream from the [Agency API](../agency/README.md), plus the published and applicable Policy documents from the [Policy API](../policy/README.md), and emits a JSON document that describes deviations from the various Policy documents.
 
 ADD DIAGRAM
 
@@ -47,24 +50,29 @@ ADD DIAGRAM
 
 Endpoint: `/snapshot`
 Method: `GET`
-Returns: list of (Policy, Compliance[]) tuples.  See [Snapshot Response](#snapshot-response)
+Returns: list of (Policy, Compliance[]) tuples. See [Snapshot Response](#snapshot-response)
+
+Endpoint: `/snapshot/:policy_id`
+Method: `GET`
+Returns: [Snapshot Response](#snapshot-response)
 
 ## Schema
 
 <a name="snapshot-response"></a>
+
 ### Snapshot Response
 
 | Name         | Type         | Required/Optional | Description                              |
 | ------------ | ------------ | ----------------- | ---------------------------------------- |
 | `policy`     | Policy       | Required          | See [Policy](../policy/README.md#schema) |
-| `compliance` | Compliance[] | Required          | ...                                      |
+| `compliance` | Compliance[] | Required          | List of Compliance objects               |
 
 ### Compliance
 
 | Name      | Type    | Required/Optional | Description                            |
-| --------  | ------- | ----------------- | -------------------------------------- |
+| --------- | ------- | ----------------- | -------------------------------------- |
 | `rule`    | Rule    | Required          | See [Rule](../policy/README.md#schema) |
-| `matches` | Match[] | Required          | ...                                    |
+| `matches` | Match[] | Required          | List of matches for the rule           |
 
 ### Match
 
@@ -72,17 +80,19 @@ CountMatch | TimeMatch | SpeedMatch
 
 ### TimeMatch && SpeedMatch
 
-| Name                   | Type                                  | Required/Optional | Description                  |
-| ---------------------- | ------------------------------------- | ----------------- | ---------------------------- |
-| `measured`             | number                                | Required          | Measured value               |
-| `matched_vehicle`      | [MatchedVehicle](#MatchedVehicle)     | Required          | Vehicle matched with rule    |
+| Name              | Type                              | Required/Optional | Description                                   |
+| ----------------- | --------------------------------- | ----------------- | --------------------------------------------- |
+| `measured`        | number                            | Required          | Measured value                                |
+| `geography_id`    | UUID                              | Required          | Specific geography associated with the match. |
+| `matched_vehicle` | [MatchedVehicle](#MatchedVehicle) | Required          | Vehicle matched with rule                     |
 
 ### CountMatch
 
-| Name                    | Type                                    | Required/Optional | Description                   |
-| ----------------------- | --------------------------------------- | ----------------- | ----------------------------- |
-| `measured`              | number                                  | Required          | Measured value                |
-| `matched_vehicles` | [MatchedVehicle](#MatchedVehicle)[] | Required          | Vehicles matched to rule |
+| Name               | Type                                | Required/Optional | Description                                   |
+| ------------------ | ----------------------------------- | ----------------- | --------------------------------------------- |
+| `measured`         | number                              | Required          | Measured value                                |
+| `geography_id`     | UUID                                | Required          | Specific geography associated with the match. |
+| `matched_vehicles` | [MatchedVehicle](#MatchedVehicle)[] | Required          | Vehicles matched to rule                      |
 
 ### MatchedVehicle
 
@@ -90,7 +100,6 @@ CountMatch | TimeMatch | SpeedMatch
 | ---------------- | ------------------------ | ----------------- | -------------------------------------------------------------------------------- |
 | `device_id`      | UUID                     | Required          | Unique ID for the vehicle                                                        |
 | `provider_id`    | UUID                     | Required          | Unique ID for the provider associated with the vehicle                           |
-| `geography_id`   | UUID                     | Required          | Specific geography the vehicle is violating the rule in.                         |
 | `gps`            | {lat: Float, lng: Float} | Required          | Latitude and Longitude for the vehicle                                           |
 | `vehicle_id`     | String                   | Required          | Vehicle Identification Number (vehicle_id) visible on vehicle                    |
 | `vehicle_status` | Enum                     | Required          | Current vehicle status. See [Vehicle Status](../agency/README.md#vehicle-events) |
