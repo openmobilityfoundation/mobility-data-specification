@@ -1,22 +1,33 @@
-# Mobility Data Specification: ** Compliance **
+# Mobility Data Specification: Compliance
+
+* Authors: LADOT
+* Date: 15 June 2019
+* Version: alpha
 
 ## Table of Contents
+* [Audience](#audience)
+* [Background](#background)
+* [Distribution](#distribution)
+* [Schema](#schema)
+* [Endpoints](#endpoints)
+* [Authoring](#authoring)
+* [Compliance](#compliance)
+* [Open Topics](#open-topics)
+* [Examples](#examples)
 
-...
+<a name="audience"></a>
+## Audience
 
+There are three intended audiences of this API: 
+
+1. Agencies, as consumers in the form of automated compliance measurement, and as creators of policy
+2. Providers, so that they can get real-time feedback their compliance status as measured by their supervising Agency
+3. Tooling companies that want to create applications for visualization, analysis, and reporting on compliance status
+
+<a name="background"></a>
 ## Background
 
-The Agency API is a fleet-data-intake mechanism (and for the moment, a source of geography from `/service_areas`). The Policy API expresses policy in a machine-readable fashion. For cities and providers to execute policies against fleet data, geographies, and policies, a Compliance API is required.
-
-## Compliance Requirements
-
-...
-
-## Compliance Use-Cases
-
-...
-
-## Compliance Goals
+The [Policy API](../policy/readme.md) describes a schema for expressing mobility policy, as well as applicable geographic regions, in digital form.  The Compliance API describes how Policy and Geography documents are combined with fleet data ingested via Agency to measure the degree to which Providers are in compliance with the policies.
 
 ### Provider Compliance
 
