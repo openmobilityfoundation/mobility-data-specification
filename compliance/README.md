@@ -1,7 +1,7 @@
 # Mobility Data Specification: Compliance
 
 * Authors: LADOT
-* Date: 15 June 2019
+* Date: 19 June 2019
 * Version: alpha
 
 ## Table of Contents
@@ -20,7 +20,7 @@
 
 There are three intended audiences of this API: 
 
-1. Agencies, as consumers in the form of automated compliance measurement, and as creators of policy
+1. Agencies, as consumers in the form of automated compliance measurement from their digitally-enforcable Policy documents
 2. Providers, so that they can get real-time feedback their compliance status as measured by their supervising Agency
 3. Tooling companies that want to create applications for visualization, analysis, and reporting on compliance status
 
@@ -31,29 +31,27 @@ The [Policy API](../policy/readme.md) describes a schema for expressing mobility
 
 ### Provider Compliance
 
-Many Policies require no global information, only data that is available to a provider (e.g. speed limits). Having Providers compute their own compliance status for these cases is desirable so as to prevent round-trip API calls to the city. However, the city must also compute compliance, for enforcement purposes. If the provider does not wish to compute this on their own, they can rely entirely on the city's computation.
+Many Policies require no global information, only vehicle status and telemetry that is available to a provider (e.g. speed limits can be measured on a per-vehicle basis). Having providers compute their own compliance status for these cases is desirable so as to prevent round-trip API calls to the city. However, the city must also compute compliance, for enforcement purposes. If the provider does not wish to compute this on their own, they can rely entirely on the city's computation.
 
 ### Global Compliance
 
-Certain types of policy will be global across providerrs, e.g., instead of a per-provider fleet cap, a city might stipulate "the sum total of all permitted devices downtown may not exceed 2,000". This type of policy compliance cannot be computed without access to (anonymized) global knowledge. The compliance API will be required to provide whatever global state is needed, and the specific Policy will provide the paths to such endpoint(s). See the [Policy API](../policy/readme.md) for examples of such policies.
-
-### Active Management
-
-Some policies may be impractical or impossible to express in terms of _either_ provider-specific compliance or global-anonymous-information compliance. For cases such as these, the Policy will express "the provider _must_ submit certain types of events (with telemetry) to this endpoint for approval". E.g. "Is it okay if I end this trip at this location?"
+Certain types of policy will be global across providerrs, e.g., instead of a per-provider fleet cap, a city might stipulate "the sum total of all permitted devices downtown may not exceed 2,000". This type of policy compliance cannot be computed without access to (anonymized) global knowledge. The compliance API will be required to provide whatever global state is needed, and the specific Policy will provide the paths to such endpoint(s). See the Policy API [specification](../policy/README.md) and [examples](../policy/README.md) of such policies.
 
 ## Compliance Architecture
 
-...
+The Compliance API takes as inputs the event and telemetry stream from the [Agency API](../agency/README.md), plus the published and applicable Policy documents from the [Policy API](../policy/README.md), and emits a JSON document that describes deviations from the various Policy documents.  
+
+ADD DIAGRAM
 
 ## Compliance Endpoints
 
-Endpoint: `/snapshot?timestamp=nnn`
+Endpoint: `/snapshot`
 Method: `GET`
+Returns: list of (Policy, Compliance[]) tuples.  See [Snapshot Response](#snapshot-response)
 
-...
+## Schema
 
-## Schemas
-
+<a name="snapshot-response"></a>
 ### Snapshot Response
 
 | Name         | Type         | Required/Optional | Description                              |
@@ -63,30 +61,30 @@ Method: `GET`
 
 ### Compliance
 
-| Name     | Type    | Required/Optional | Description                            |
-| -------- | ------- | ----------------- | -------------------------------------- |
-| `rule`   | Rule    | Required          | See [Rule](../policy/README.md#schema) |
-| `issues` | Issue[] | Required          | ...                                    |
+| Name      | Type    | Required/Optional | Description                            |
+| --------  | ------- | ----------------- | -------------------------------------- |
+| `rule`    | Rule    | Required          | See [Rule](../policy/README.md#schema) |
+| `matches` | Match[] | Required          | ...                                    |
 
-### Issue
+### Match
 
-CountIssue | TimeIssue | SpeedIssue
+CountMatch | TimeMatch | SpeedMatch
 
-### TimeIssue && SpeedIssue
+### TimeMatch && SpeedMatch
 
 | Name                   | Type                                  | Required/Optional | Description                  |
 | ---------------------- | ------------------------------------- | ----------------- | ---------------------------- |
 | `measured`             | number                                | Required          | Measured value               |
-| `vehicle_in_violation` | [ViolationVehicle](#ViolationVehicle) | Required          | Vehicle in violation of rule |
+| `matched_vehicle`      | [MatchedVehicle](#MatchedVehicle)     | Required          | Vehicle matched with rule    |
 
-### CountIssue
+### CountMatch
 
 | Name                    | Type                                    | Required/Optional | Description                   |
 | ----------------------- | --------------------------------------- | ----------------- | ----------------------------- |
 | `measured`              | number                                  | Required          | Measured value                |
-| `vehicles_in_violation` | [ViolationVehicle](#ViolationVehicle)[] | Required          | Vehicles in violation of rule |
+| `matched_vehicles` | [MatchedVehicle](#MatchedVehicle)[] | Required          | Vehicles matched to rule |
 
-### ViolationVehicle
+### MatchedVehicle
 
 | Name             | Type                     | Required/Optional | Description                                                                      |
 | ---------------- | ------------------------ | ----------------- | -------------------------------------------------------------------------------- |
@@ -154,7 +152,7 @@ CountIssue | TimeIssue | SpeedIssue
         "maximum": 10,
         "minimum": 5
       },
-      "issues": []
+      "Matchs": []
     }
   ]
 }
@@ -214,10 +212,10 @@ CountIssue | TimeIssue | SpeedIssue
         "maximum": 10,
         "minimum": 5
       },
-      "issues": [
+      "Matchs": [
         {
           "measured": 15,
-          "vehicles_in_violation": [
+          "matched_vehicles": [
             {
               "device_id": "b2d4fc2a-a5d7-4267-acb2-d55b889e99e1",
               "vehicle_id": "test-vin-672813",
@@ -439,7 +437,7 @@ CountIssue | TimeIssue | SpeedIssue
         ],
         "maximum": 7200
       },
-      "issues": []
+      "Matchs": []
     }
   ]
 }
@@ -493,7 +491,7 @@ CountIssue | TimeIssue | SpeedIssue
         ],
         "maximum": 7200
       },
-      "issues": [
+      "Matchs": [
         {
           "measured": 1000035,
           "vehicle_in_violation": {
