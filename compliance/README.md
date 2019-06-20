@@ -45,13 +45,20 @@ ADD DIAGRAM
 
 ## Endpoints
 
-Endpoint: `/snapshot`
-Method: `GET`
+`GET /snapshot`
+
 Returns: list of [Snapshot Response](#snapshot-response)
 
-Endpoint: `/snapshot/:policy_id`
-Method: `GET`
+Errors:
+* 500 if server poops
+
+`GET /snapshot/:policy_id`
+
 Returns: single [Snapshot Response](#snapshot-response)
+
+Errors: 
+* 404 if policy_id not found
+* 500 if server poops
 
 ## Schema
 
