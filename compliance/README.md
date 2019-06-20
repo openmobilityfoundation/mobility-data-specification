@@ -2,18 +2,15 @@
 
 - Authors: LADOT
 - Date: 19 June 2019
-- Version: alpha
+- Version: 0.1 (alpha)
 
 ## Table of Contents
 
 - [Audience](#audience)
 - [Background](#background)
-- [Distribution](#distribution)
-- [Schema](#schema)
+- [Architecture](#architecture)
 - [Endpoints](#endpoints)
-- [Authoring](#authoring)
-- [Compliance](#compliance)
-- [Open Topics](#open-topics)
+- [Schema](#schema)
 - [Examples](#examples)
 
 <a name="audience"></a>
@@ -24,13 +21,13 @@ There are three intended audiences of this API:
 
 1. Agencies, as consumers in the form of automated compliance measurement from their digitally-enforcable Policy documents
 2. Providers, so that they can get real-time feedback their compliance status as measured by their supervising Agency
-3. Tooling companies that want to create applications for visualization, analysis, and reporting on compliance status
+3. Tooling companies, who might want to create applications for visualization, analysis, and reporting on compliance status
 
 <a name="background"></a>
 
 ## Background
 
-The [Policy API](../policy/readme.md) describes a schema for expressing mobility policy, as well as applicable geographic regions, in digital form. The Compliance API describes how Policy and Geography documents are combined with fleet data ingested via Agency to measure the degree to which Providers are in compliance with the policies.
+The [Policy API](../policy/readme.md) describes a schema for expressing mobility policy, as well as applicable geographic regions, in JSON document form. The Compliance API describes how Policy and Geography documents are combined with fleet data ingested via Agency to measure the degree to which Providers are in compliance with the policies.
 
 ### Provider Compliance
 
@@ -40,26 +37,25 @@ Many Policies require no global information, only vehicle status and telemetry t
 
 Certain types of policy will be global across providerrs, e.g., instead of a per-provider fleet cap, a city might stipulate "the sum total of all permitted devices downtown may not exceed 2,000". This type of policy compliance cannot be computed without access to (anonymized) global knowledge. The compliance API will be required to provide whatever global state is needed, and the specific Policy will provide the paths to such endpoint(s). See the Policy API [specification](../policy/README.md) and [examples](../policy/README.md) of such policies.
 
-## Compliance Architecture
+## Architecture
 
 The Compliance API takes as inputs the event and telemetry stream from the [Agency API](../agency/README.md), plus the published and applicable Policy documents from the [Policy API](../policy/README.md), and emits a JSON document that describes deviations from the various Policy documents.
 
 ADD DIAGRAM
 
-## Compliance Endpoints
+## Endpoints
 
 Endpoint: `/snapshot`
 Method: `GET`
-Returns: list of (Policy, Compliance[]) tuples. See [Snapshot Response](#snapshot-response)
+Returns: list of [Snapshot Response](#snapshot-response)
 
 Endpoint: `/snapshot/:policy_id`
 Method: `GET`
-Returns: [Snapshot Response](#snapshot-response)
+Returns: single [Snapshot Response](#snapshot-response)
 
 ## Schema
 
 <a name="snapshot-response"></a>
-
 ### Snapshot Response
 
 | Name         | Type         | Required/Optional | Description                              |
@@ -78,12 +74,12 @@ Returns: [Snapshot Response](#snapshot-response)
 
 CountMatch | TimeMatch | SpeedMatch
 
-### TimeMatch && SpeedMatch
+### TimeMatch and SpeedMatch
 
 | Name              | Type                              | Required/Optional | Description                                   |
 | ----------------- | --------------------------------- | ----------------- | --------------------------------------------- |
 | `measured`        | number                            | Required          | Measured value                                |
-| `geography_id`    | UUID                              | Required          | Specific geography associated with the match. |
+| `geography_id`    | UUID                              | Required          | Specific geography associated with the match  |
 | `matched_vehicle` | [MatchedVehicle](#MatchedVehicle) | Required          | Vehicle matched with rule                     |
 
 ### CountMatch
@@ -91,7 +87,7 @@ CountMatch | TimeMatch | SpeedMatch
 | Name               | Type                                | Required/Optional | Description                                   |
 | ------------------ | ----------------------------------- | ----------------- | --------------------------------------------- |
 | `measured`         | number                              | Required          | Measured value                                |
-| `geography_id`     | UUID                                | Required          | Specific geography associated with the match. |
+| `geography_id`     | UUID                                | Required          | Specific geography associated with the match  |
 | `matched_vehicles` | [MatchedVehicle](#MatchedVehicle)[] | Required          | Vehicles matched to rule                      |
 
 ### MatchedVehicle
@@ -100,60 +96,60 @@ CountMatch | TimeMatch | SpeedMatch
 | ---------------- | ------------------------ | ----------------- | -------------------------------------------------------------------------------- |
 | `device_id`      | UUID                     | Required          | Unique ID for the vehicle                                                        |
 | `provider_id`    | UUID                     | Required          | Unique ID for the provider associated with the vehicle                           |
-| `gps`            | {lat: Float, lng: Float} | Required          | Latitude and Longitude for the vehicle                                           |
+| `gps`            | (lat: Float, lng: Float) | Required          | Latitude and Longitude for the vehicle                                           |
 | `vehicle_id`     | String                   | Required          | Vehicle Identification Number (vehicle_id) visible on vehicle                    |
 | `vehicle_status` | Enum                     | Required          | Current vehicle status. See [Vehicle Status](../agency/README.md#vehicle-events) |
 | `vehicle_type`   | Enum                     | Required          | [Vehicle Type](../agency/README.md#vehicle-type)                                 |
 
-## Compliance Message Examples
+## Examples
 
 ### Count Compliance Example
 
 ```JSON
 {
-	"policy": {
-		"name": "LADOT Mobility Caps",
-		"description": "Mobility caps as described in the One-Year Permit",
-		"policy_id": "72971a3d-876c-41ea-8e48-c9bb965bbbcc",
-		"start_date": 1558389669540,
-		"end_date": null,
-		"prev_policies": null,
-		"rules": [{
-			"name": "Greater LA",
-			"rule_type": "count",
-			"geographies": [
-				"8917cf2d-a963-4ea2-a98b-7725050b3ec5"
-			],
-			"statuses": {
-				"available": [],
-				"unavailable": [],
-				"reserved": [],
-				"trip": []
-			},
-			"vehicle_types": [
-				"bicycle",
-				"scooter"
-			],
-			"maximum": 3,
-			"minimum": 1
-		}]
-	},
-	"compliance": [{
-		"rule": {
-			"name": "Greater LA",
-			"rule_type": "count",
-			"geographies": [
-				"8917cf2d-a963-4ea2-a98b-7725050b3ec5"
-			],
-			"vehicle_types": [
-				"bicycle",
-				"scooter"
-			],
-			"maximum": 3,
-			"minimum": 1
-		},
-		"matches": []
-	}]
+  "policy": {
+    "name": "LADOT Mobility Caps",
+    "description": "Mobility caps as described in the One-Year Permit",
+    "policy_id": "72971a3d-876c-41ea-8e48-c9bb965bbbcc",
+    "start_date": 1558389669540,
+    "end_date": null,
+    "prev_policies": null,
+    "rules": [{
+      "name": "Greater LA",
+      "rule_type": "count",
+      "geographies": [
+        "8917cf2d-a963-4ea2-a98b-7725050b3ec5"
+      ],
+      "statuses": {
+        "available": [],
+        "unavailable": [],
+        "reserved": [],
+        "trip": []
+      },
+      "vehicle_types": [
+        "bicycle",
+        "scooter"
+      ],
+      "maximum": 3,
+      "minimum": 1
+    }]
+  },
+  "compliance": [{
+    "rule": {
+      "name": "Greater LA",
+      "rule_type": "count",
+      "geographies": [
+        "8917cf2d-a963-4ea2-a98b-7725050b3ec5"
+      ],
+      "vehicle_types": [
+        "bicycle",
+        "scooter"
+      ],
+      "maximum": 3,
+      "minimum": 1
+    },
+    "matches": []
+  }]
 }
 ```
 
@@ -176,11 +172,11 @@ CountMatch | TimeMatch | SpeedMatch
           "8917cf2d-a963-4ea2-a98b-7725050b3ec5"
         ],
         "statuses": {
-				"available": [],
-				"unavailable": [],
-				"reserved": [],
-				"trip": []
-			},
+        "available": [],
+        "unavailable": [],
+        "reserved": [],
+        "trip": []
+      },
         "vehicle_types": [
           "bicycle",
           "scooter"
@@ -199,11 +195,11 @@ CountMatch | TimeMatch | SpeedMatch
           "8917cf2d-a963-4ea2-a98b-7725050b3ec5"
         ],
         "statuses": {
-				"available": [],
-				"unavailable": [],
-				"reserved": [],
-				"trip": []
-			},
+        "available": [],
+        "unavailable": [],
+        "reserved": [],
+        "trip": []
+      },
         "vehicle_types": [
           "bicycle",
           "scooter"
@@ -322,76 +318,76 @@ CountMatch | TimeMatch | SpeedMatch
 
 ```JSON
 {
-	"policy": {
-		"name": "Maximum Idle Time",
-		"description": "LADOT Pilot Idle Time Limitations",
-		"policy_id": "a2c9a65f-fd85-463e-9564-fc95ea473f7d",
-		"start_date": 1558389669540,
-		"end_date": null,
-		"prev_policies": null,
-		"rules": [{
-			"name": "Greater LA (rentable)",
-			"rule_type": "time",
-			"rule_units": "minutes",
-			"geographies": [
-				"8917cf2d-a963-4ea2-a98b-7725050b3ec5"
-			],
-			"statuses": {
-				"available": []
-			},
-			"vehicle_types": [
-				"bicycle",
-				"scooter"
-			],
-			"maximum": 7200
-		}]
-	},
-	"compliance": [{
-		"rule": {
-			"name": "Greater LA (rentable)",
-			"rule_type": "time",
-			"rule_units": "minutes",
-			"geographies": [
-				"8917cf2d-a963-4ea2-a98b-7725050b3ec5"
-			],
-			"statuses": [
-				"available"
-			],
-			"vehicle_types": [
-				"bicycle",
-				"scooter"
-			],
-			"maximum": 7200
-		},
-		"matches": [{
-				"measured": 1000035,
-				"geography_id": "8917cf2d-a963-4ea2-a98b-7725050b3ec5",
-				"matched_vehicle": {
-					"device_id": "d1f4351f-9768-4510-8d50-e9647b227588",
-					"vehicle_id": "test-vin-534731",
-					"vehicle_type": "bicycle",
-					"vehicle_status": "available",
-					"gps": {
-						"lat": 34.04452596567323,
-						"lng": -118.52363968662598
-					}
-				}
-			},
-			{
-				"measured": 1000036,
-				"geography_id": "8917cf2d-a963-4ea2-a98b-7725050b3ec5",
-				"matched_vehicle": {
-					"device_id": "94ac0e61-938f-4380-b00e-6c07de1f9f04",
-					"vehicle_id": "test-vin-811800",
-					"vehicle_type": "bicycle",
-					"vehicle_status": "available",
-					"gps": {
-						"lat": 34.13075876975959,
-						"lng": -118.18367765139591
-					}
-				}
-			}
-		]
-	}]
+  "policy": {
+    "name": "Maximum Idle Time",
+    "description": "LADOT Pilot Idle Time Limitations",
+    "policy_id": "a2c9a65f-fd85-463e-9564-fc95ea473f7d",
+    "start_date": 1558389669540,
+    "end_date": null,
+    "prev_policies": null,
+    "rules": [{
+      "name": "Greater LA (rentable)",
+      "rule_type": "time",
+      "rule_units": "minutes",
+      "geographies": [
+        "8917cf2d-a963-4ea2-a98b-7725050b3ec5"
+      ],
+      "statuses": {
+        "available": []
+      },
+      "vehicle_types": [
+        "bicycle",
+        "scooter"
+      ],
+      "maximum": 7200
+    }]
+  },
+  "compliance": [{
+    "rule": {
+      "name": "Greater LA (rentable)",
+      "rule_type": "time",
+      "rule_units": "minutes",
+      "geographies": [
+        "8917cf2d-a963-4ea2-a98b-7725050b3ec5"
+      ],
+      "statuses": [
+        "available"
+      ],
+      "vehicle_types": [
+        "bicycle",
+        "scooter"
+      ],
+      "maximum": 7200
+    },
+    "matches": [{
+        "measured": 1000035,
+        "geography_id": "8917cf2d-a963-4ea2-a98b-7725050b3ec5",
+        "matched_vehicle": {
+          "device_id": "d1f4351f-9768-4510-8d50-e9647b227588",
+          "vehicle_id": "test-vin-534731",
+          "vehicle_type": "bicycle",
+          "vehicle_status": "available",
+          "gps": {
+            "lat": 34.04452596567323,
+            "lng": -118.52363968662598
+          }
+        }
+      },
+      {
+        "measured": 1000036,
+        "geography_id": "8917cf2d-a963-4ea2-a98b-7725050b3ec5",
+        "matched_vehicle": {
+          "device_id": "94ac0e61-938f-4380-b00e-6c07de1f9f04",
+          "vehicle_id": "test-vin-811800",
+          "vehicle_type": "bicycle",
+          "vehicle_status": "available",
+          "gps": {
+            "lat": 34.13075876975959,
+            "lng": -118.18367765139591
+          }
+        }
+      }
+    ]
+  }]
 }
 ```
