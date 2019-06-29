@@ -17,7 +17,7 @@
 
 ## Audience
 
-There are three intended audiences of this API:
+This specification has three intended audiences:
 
 1. Agencies, as consumers in the form of automated compliance measurement from their digitally-enforcable Policy documents
 2. Providers, so that they can get real-time feedback their compliance status as measured by their supervising Agency
@@ -35,47 +35,50 @@ Many Policies require no global information, only vehicle status and telemetry t
 
 ### Global Compliance
 
-Certain types of policy will be global across providerrs, e.g., instead of a per-provider fleet cap, a city might stipulate "the sum total of all permitted devices downtown may not exceed 2,000". This type of policy compliance cannot be computed without access to (anonymized) global knowledge. The compliance API will be required to provide whatever global state is needed, and the specific Policy will provide the paths to such endpoint(s). See the Policy API [specification](../policy/README.md) and [examples](../policy/README.md) of such policies.
+Certain types of policy will be global across providerrs, e.g., instead of a per-provider fleet cap, a city might stipulate "the sum total of all permitted devices downtown may not exceed 2,000". This type of policy compliance cannot be computed without access to (anonymized) global knowledge. The compliance API will be R to provide whatever global state is needed, and the specific Policy will provide the paths to such endpoint(s). See the Policy API [specification](../policy/README.md) and [examples](../policy/README.md) of such policies.
 
 ## Architecture
 
 The Compliance API takes as inputs the event and telemetry stream from the [Agency API](../agency/README.md), plus the published and applicable Policy documents from the [Policy API](../policy/README.md), and emits a JSON document that describes deviations from the various Policy documents.
 
-ADD DIAGRAM
+(Diagram to be added)
 
 ## Endpoints
 
+Note: If a request comes from a Provider, the provider_id will be passed in the JWT authenticationIf the request comes from an Agency, its token will not contain a provider_id and all Providers will be measured.
+
 `GET /snapshot`
+
+Parameters:
+
+| Name         | Type         | R/O | Description                                     |
+| ------------ | ------------ | --- | ----------------------------------------        |
+| `provider_id`| UUID         | O   | If not provided in the JWT (default=all)        |
+| `policy_id`  | UUID         | O   | Test only for a particular policy (default=all) |
 
 Returns: list of [Snapshot Response](#snapshot-response)
 
 Errors:
-* 500 if server poops
-
-`GET /snapshot/:policy_id`
-
-Returns: single [Snapshot Response](#snapshot-response)
-
-Errors: 
 * 404 if policy_id not found
-* 500 if server poops
+* 500 if server error
 
 ## Schema
 
 <a name="snapshot-response"></a>
 ### Snapshot Response
 
-| Name         | Type         | Required/Optional | Description                              |
-| ------------ | ------------ | ----------------- | ---------------------------------------- |
-| `policy`     | Policy       | Required          | See [Policy](../policy/README.md#schema) |
-| `compliance` | Compliance[] | Required          | List of Compliance objects               |
+| Name         | Type         | R/O | Description                              |
+| ------------ | ------------ | --- | ---------------------------------------- |
+| `policy`     | Policy       | R   | See [Policy](../policy/README.md#schema) |
+| `compliance` | Compliance[] | R   | List of Compliance objects               |
+| `timestamp`  | Timestamp    | R   | Time of measurement                      |
 
 ### Compliance
 
-| Name      | Type    | Required/Optional | Description                            |
+| Name      | Type    | R/O | Description                            |
 | --------- | ------- | ----------------- | -------------------------------------- |
-| `rule`    | Rule    | Required          | See [Rule](../policy/README.md#schema) |
-| `matches` | Match[] | Required          | List of matches for the rule           |
+| `rule`    | Rule    | R          | See [Rule](../policy/README.md#schema) |
+| `matches` | Match[] | R          | List of matches for the rule           |
 
 ### Match
 
@@ -83,30 +86,32 @@ CountMatch | TimeMatch | SpeedMatch
 
 ### TimeMatch and SpeedMatch
 
-| Name              | Type                              | Required/Optional | Description                                   |
-| ----------------- | --------------------------------- | ----------------- | --------------------------------------------- |
-| `measured`        | number                            | Required          | Measured value                                |
-| `geography_id`    | UUID                              | Required          | Specific geography associated with the match  |
-| `matched_vehicle` | [MatchedVehicle](#MatchedVehicle) | Required          | Vehicle matched with rule                     |
+| Name              | Type                              | R/O | Description                                   |
+| ----------------- | --------------------------------- | --- | --------------------------------------------- |
+| `measured`        | number                            | R   | Measured value for this geography             |
+| `geography_id`    | UUID                              | R   | Specific geography associated with the match  |
+| `matched_vehicle` | [MatchedVehicle](#MatchedVehicle) | R   | Vehicle matched with rule                     |
 
 ### CountMatch
 
-| Name               | Type                                | Required/Optional | Description                                   |
-| ------------------ | ----------------------------------- | ----------------- | --------------------------------------------- |
-| `measured`         | number                              | Required          | Measured value                                |
-| `geography_id`     | UUID                                | Required          | Specific geography associated with the match  |
-| `matched_vehicles` | [MatchedVehicle](#MatchedVehicle)[] | Required          | Vehicles matched to rule                      |
+| Name               | Type                                | R/O | Description                                   |
+| ------------------ | ----------------------------------- | --- | --------------------------------------------- |
+| `measured`         | number                              | R   | Measured value for this geography             |
+| `geography_id`     | UUID                                | R   | Specific geography associated with the match  |
+| `matched_vehicles` | [MatchedVehicle](#MatchedVehicle)[] | R   | Vehicles matched to rule                      |
 
 ### MatchedVehicle
 
-| Name             | Type                     | Required/Optional | Description                                                                      |
-| ---------------- | ------------------------ | ----------------- | -------------------------------------------------------------------------------- |
-| `device_id`      | UUID                     | Required          | Unique ID for the vehicle                                                        |
-| `provider_id`    | UUID                     | Required          | Unique ID for the provider associated with the vehicle                           |
-| `gps`            | (lat: Float, lng: Float) | Required          | Latitude and Longitude for the vehicle                                           |
-| `vehicle_id`     | String                   | Required          | Vehicle Identification Number (vehicle_id) visible on vehicle                    |
-| `vehicle_status` | Enum                     | Required          | Current vehicle status. See [Vehicle Status](../agency/README.md#vehicle-events) |
-| `vehicle_type`   | Enum                     | Required          | [Vehicle Type](../agency/README.md#vehicle-type)                                 |
+| Name             | Type                     | R/O | Description                                                                         |
+| ---------------- | ------------------------ | --- | ----------------------------------------------------------------------------------- |
+| `device_id`      | UUID                     | R   | Unique ID for the vehicle                                                           |
+| `provider_id`    | UUID                     | R   | Unique ID for the provider associated with the vehicle                              |
+| `gps`            | (lat: Float, lng: Float) | R   | Latitude and Longitude for the vehicle                                              |
+| `vehicle_id`     | String                   | R   | Vehicle Identification Number (vehicle_id) visible on vehicle                       |
+| `vehicle_status` | Enum                     | R   | Most recent vehicle status. See [Vehicle Events](../agency/README.md#vehicle-events) |
+| `vehicle_event`  | Enum                     | R   | Most recent vehicle event. See [Vehicle Events](../agency/README.md#vehicle-events) |
+| `timestamp`      | Timestamp                | R   | Timestamp of most recent vehicle event                                              |
+| `vehicle_type`   | Enum                     | R   | [Vehicle Type](../agency/README.md#vehicle-type)                                    |
 
 ## Examples
 
