@@ -52,7 +52,7 @@ Note: If a request comes from a Provider, the provider_id will be passed in the 
 Parameters:
 
 | Name         | Type         | R/O | Description                                     |
-| ------------ | ------------ | --- | ----------------------------------------        |
+| ------------ | ------------ | --- | ----------------------------------------------- |
 | `provider_id`| UUID         | O   | If not provided in the JWT (default=all)        |
 | `policy_id`  | UUID         | O   | Test only for a particular policy (default=all) |
 
@@ -76,9 +76,9 @@ Errors:
 ### Compliance
 
 | Name      | Type    | R/O | Description                            |
-| --------- | ------- | ----------------- | -------------------------------------- |
-| `rule`    | Rule    | R          | See [Rule](../policy/README.md#schema) |
-| `matches` | Match[] | R          | List of matches for the rule           |
+| --------- | ------- | --- | -------------------------------------- |
+| `rule`    | Rule    | R   | See [Rule](../policy/README.md#schema) |
+| `matches` | Match[] | R   | List of matches for the rule           |
 
 ### Match
 
@@ -98,20 +98,20 @@ CountMatch | TimeMatch | SpeedMatch
 | ------------------ | ----------------------------------- | --- | --------------------------------------------- |
 | `measured`         | number                              | R   | Measured value for this geography             |
 | `geography_id`     | UUID                                | R   | Specific geography associated with the match  |
-| `matched_vehicles` | [MatchedVehicle](#MatchedVehicle)[] | R   | Vehicles matched to rule                      |
+| `matched_vehicles` | [MatchedVehicle](#MatchedVehicle)[] | R   | Vehicles matched to rule (if applicable)      |
 
 ### MatchedVehicle
 
-| Name             | Type                     | R/O | Description                                                                         |
-| ---------------- | ------------------------ | --- | ----------------------------------------------------------------------------------- |
-| `device_id`      | UUID                     | R   | Unique ID for the vehicle                                                           |
-| `provider_id`    | UUID                     | R   | Unique ID for the provider associated with the vehicle                              |
-| `gps`            | (lat: Float, lng: Float) | R   | Latitude and Longitude for the vehicle                                              |
-| `vehicle_id`     | String                   | R   | Vehicle Identification Number (vehicle_id) visible on vehicle                       |
+| Name             | Type                     | R/O | Description                                                                          |
+| ---------------- | ------------------------ | --- | ------------------------------------------------------------------------------------ |
+| `device_id`      | UUID                     | R   | Unique ID for the vehicle                                                            |
+| `provider_id`    | UUID                     | R   | Unique ID for the provider associated with the vehicle                               |
+| `gps`            | (lat: Float, lng: Float) | R   | Latitude and Longitude for the vehicle                                               |
+| `vehicle_id`     | String                   | R   | Vehicle Identification Number (vehicle_id) visible on vehicle                        |
 | `vehicle_status` | Enum                     | R   | Most recent vehicle status. See [Vehicle Events](../agency/README.md#vehicle-events) |
-| `vehicle_event`  | Enum                     | R   | Most recent vehicle event. See [Vehicle Events](../agency/README.md#vehicle-events) |
-| `timestamp`      | Timestamp                | R   | Timestamp of most recent vehicle event                                              |
-| `vehicle_type`   | Enum                     | R   | [Vehicle Type](../agency/README.md#vehicle-type)                                    |
+| `vehicle_event`  | Enum                     | R   | Most recent vehicle event. See [Vehicle Events](../agency/README.md#vehicle-events)  |
+| `timestamp`      | Timestamp                | R   | Timestamp of most recent vehicle event                                               |
+| `vehicle_type`   | Enum                     | R   | [Vehicle Type](../agency/README.md#vehicle-type)                                     |
 
 ## Examples
 
