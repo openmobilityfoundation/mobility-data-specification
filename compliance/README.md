@@ -1,8 +1,8 @@
 # Mobility Data Specification: Compliance
 
 - Authors: LADOT
-- Date: 19 June 2019
-- Version: 0.1 (alpha)
+- Date: 03 July 2019
+- Version: 0.1.1 (alpha)
 
 ## Table of Contents
 
@@ -45,7 +45,7 @@ The Compliance API takes as inputs the event and telemetry stream from the [Agen
 
 ## Endpoints
 
-Note: If a request comes from a Provider, the provider_id will be passed in the JWT authenticationIf the request comes from an Agency, its token will not contain a provider_id and all Providers will be measured.
+Note: If a request comes from a Provider, the provider_id will be passed in the JWT authentication.  If the request comes from an Agency, its token will not contain a provider_id and all Providers will be measured.
 
 `GET /snapshot`
 
@@ -59,10 +59,35 @@ Parameters:
 Returns: list of [Snapshot Response](#snapshot-response)
 
 Errors:
-* 404 if policy_id not found
+* 404 if `policy_id` not found
+* 500 if server error
+
+`GET /count/:rule_id`
+
+Returns number of vehicles across all providers in the public right-of-way for a given `Rule`.  Typically used in the `value_url` field for a global CountRule.  The Rule knows its own Geography elements, which will be used for the count.
+
+Parameters:
+
+| Name         | Type         | R/O | Description                              |
+| ------------ | ------------ | --- | ---------------------------------------- |
+| `timestamp`  | Timestamp    | O   | Time of measurement (default=now)        |
+
+Returns: a [Count Response](#count-response)
+
+Responses:
+* 200 if successful
+* 404 if `rule_id` not found
 * 500 if server error
 
 ## Schema
+
+<a name="count-response"></a>
+### Count Response
+| Name         | Type         | R/O | Description                              |
+| ------------ | ------------ | --- | ---------------------------------------- |
+| `policy`     | Policy       | R   | The full Policy which contains the requested Rule.  See [Policy](../policy/README.md#schema). |
+| `count`      | int          | R   | Number of devices matching the rule      |
+| `timestamp`  | Timestamp    | R   | Time of measurement                      |
 
 <a name="snapshot-response"></a>
 ### Snapshot Response
