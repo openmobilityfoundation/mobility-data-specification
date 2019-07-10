@@ -152,7 +152,7 @@ if __name__ == '__main__':
     # Check that it is a valid schema
     jsonschema.Draft6Validator.check_schema(trips)
     # Write to the `provider` directory.
-    with open("../provider/trips.json", "w") as tripfile:
+    with open("../provider/dockless_trips.json", "w") as tripfile:
         tripfile.write(json.dumps(trips, indent=2))
 
 
@@ -176,7 +176,7 @@ if __name__ == '__main__':
     # Check that it is a valid schema
     jsonschema.Draft6Validator.check_schema(status_changes)
     # Write to the `provider` directory.
-    with open("../provider/status_changes.json", "w") as statusfile:
+    with open("../provider/dockless_status_changes.json", "w") as statusfile:
         statusfile.write(json.dumps(status_changes, indent=2))
 
     ###############
