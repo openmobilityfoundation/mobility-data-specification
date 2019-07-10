@@ -13,6 +13,7 @@ This specification contains a data standard for *mobility as a service* provider
 
 The following information applies to all `provider` API endpoints. Details on providing authorization to endpoints is specified in the [auth](auth.md) document.
 
+Currently, the provider API is implemented for dockless scooter and bikeshare. To implement another mode, add it to the `schema/generate_schema.py` file and this README and submit a pull request. 
 ### Versioning
 
 `provider` APIs must handle requests for specific versions of the specification from clients. 
