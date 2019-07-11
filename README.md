@@ -53,6 +53,7 @@ MDS enables cities to
 * [`mds-validator`](https://github.com/cityoflosangeles/mds-validator) - Code to validate MDS APIs using JSONSchema. 
 * [`aqueduct`](https://github.com/cityoflosangeles/aqueduct) - ETL, Data Warehousing, and Machine Learning Platform for LA City Data Science team. Handles extracting MDS provider APIs and storing in data warehouse. 
 * [`mds-agency-cli`](https://github.com/cityoflosangeles/mds-agency-cli) - Nodejs-based command-line interface to exercise the Agency API in the LADOT sandbox
+* [`mds-core`](https://github.com/CityOfLosAngeles/mds-core) - An MDS Agency Server, built using PostgresQL, TypeScript, NodeJS.
 
 ### City of Santa Monica
 * [`mds-provider`](https://github.com/cityofsantamonica/mds-provider) - Python package implementing a provider API client, validation using JSONSchema, data loading to multiple targets, and fake provider data generation.
