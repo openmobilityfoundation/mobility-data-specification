@@ -29,8 +29,9 @@ Information about the latest release and all releases are below. Please note, yo
 The Mobility Data Specification is an Open Source project. Comments can be made by making an Github Issue, while suggested changes can be made using a pull request. Many cities and operators have implemented MDS, more details about their specific programs can be found below. 
 
 * Los Angeles: The rules and guidelines for the Los Angeles Dockless Bikeshare Systems / Pilot Program can be found on [Council Clerk Connect](https://cityclerk.lacity.org/lacityclerkconnect/index.cfm?fa=ccfi.viewrecord&cfnumber=17-1125) along with support info on [ladot.io](https://ladot.io/programs/dockless/).
+* Santa Monica: The rules and guidelines for the Santa Monica Shared Mobility Pilot Program can be found at https://www.smgov.net/sharedmobility
 
-[Add your City here by opening a pull request](/CityofLosAngeles/mobility-data-specification/compare)
+[Add your City here by opening a pull request](https://github.com/CityofLosAngeles/mobility-data-specification/compare)
 
 ## Use Cases
 MDS enables cities to 
