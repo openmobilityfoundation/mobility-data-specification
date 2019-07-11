@@ -67,7 +67,7 @@ MDS enables cities to
 
 ### Others
 
-* [`midas`](https://github.com/polyconseil/midas) - Python/Django open source server for the [`agency`][agency] API, developed by BlueSystems.
+* [`django-mds`](https://github.com/polyconseil/django-mds) - Python/Django open source server for the [`agency`][agency] API, developed by BlueSystems.
 
 Please open a pull request if you create open source or private tools for implementing or working with MDS data. 
 
