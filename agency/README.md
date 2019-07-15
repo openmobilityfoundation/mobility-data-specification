@@ -200,7 +200,7 @@ Body Params:
 | Field     | Type                           | Field Description                                                                                       |
 | --------- | ------------------------------ | ------------------------------------------------------------------------------------------------------- |
 | `result`  | String                         | Responds with number of successfully written telemetry data points and total number of provided points. |
-| `failures | [Telemetry](#telemetry-data)[] | Array of failed telemetry for zero or more vehicles (empty if all successful).                          |
+| `failures` | [Telemetry](#telemetry-data)[] | Array of failed telemetry for zero or more vehicles (empty if all successful).                          |
 
 400 Failure Response:
 
