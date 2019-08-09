@@ -10,73 +10,277 @@
 
 ```
 {
-  "name": "Venice Special Operations Zone",
-  "description": "LADOT Venice Drop-off/no-fly zones",
-  "policy_id": "dd9ace3e-14c8-461b-b5e7-1326505ff176",
-  "provider_ids": null,
-  "start_date": 1558389669540,
-  "end_date": null,
-  "prev_policies": null,
-  "rules": [
-    {
-      "name": "Valid Provider Drop Offs",
-      "rule_id": "7a043ac8-03cd-4b0d-9588-d0af24f82832",
-      "rule_type": "count",
-      "geographies": [
-        "6dc968c7-19f4-421c-b9d1-683dd3cdb632",
-        "2a4fbdb9-ff76-4060-aa92-1d37e26732e8",
-        "9bb19cd1-2530-4f7f-8de0-80e7326a3e32",
-        "fe9c910a-7aca-4a42-9d63-e014b3c243d7",
-        "7beb1d83-66e7-4654-8c6b-6710fa26d1bd",
-        "c7553640-730f-4ae1-a422-68bac4b849cc",
-        "e42f7e97-b5e6-4ebe-8ddc-05fc806ce54e",
-        "b539054b-541a-43b3-a182-58a0bd0958fd",
-        "73779ce8-e0fb-48c0-96ba-a1e7f7738279",
-        "aa4dc424-09e4-48f3-8471-df5186927016",
-        "f5f4a15d-447f-4969-aedb-a0e94ae5b183",
-        "456c25f0-a9ce-4ff3-8610-3cee919a3539",
-        "0a484e09-7a95-4e7d-86c7-a10a58268ee2",
-        "06b4e69e-da53-4340-8354-5a2262034657",
-        "b1fdf441-ce46-4f22-bb70-dd2e99df1001",
-        "2166b7dd-10ab-4219-9921-0d8c0f082308",
-        "86f9a2bd-48c8-4447-b6eb-60916da16aa1",
-        "d5d889c5-b6b9-4b83-bbcb-f5209d8dbcc3",
-        "5a5b5ffa-5f9f-4db8-ba09-72c5deaac41a",
-        "8ce201f3-34d7-46a2-aed3-282fcb6938ac",
-        "2d7f76f0-f45e-4563-8be1-280f77b1181a",
-        "9912fa40-b594-492f-91d0-113a7568bb2b"
+      "name": "LADOT Venice Beach Special Operations Zone Global Caps",
+      "description": "Global cap rule for Venice (aggregate number of vehicles across all providers)",
+      "policy_id": "16e3fca1-f771-440d-9f9c-713e364ffbf5",
+      "provider_ids": null,
+      "start_date": 1562043637000,
+      "published_date": 1562043637000,
+      "end_date": null,
+      "prev_policies": [
+        "8c3fa8e2-e0eb-4773-a52f-7aada073da46",
+        "eda761e0-ef67-4531-b5ff-504efc8bacb3"
       ],
-      "statuses": {
-        "available": [
-          "provider_drop_off"
-        ]
-      },
-      "vehicle_types": [
-        "bicycle",
-        "scooter"
-      ],
-      "maximum": 0
+      "rules": [
+        {
+          "name": "Venice Beach Special Operations Zone Global Cap",
+          "rule_id": "81b1bc92-65b7-4434-8ada-2feeb0b7b223",
+          "rule_type": "count",
+          "geographies": [
+            "e0e4a085-7a50-43e0-afa4-6792ca897c5a"
+          ],
+          "statuses": {
+            "available": [],
+            "reserved": [],
+            "trip": []
+          },
+          "vehicle_types": [
+            "bicycle",
+            "scooter"
+          ],
+          "maximum": 750,
+          "value_url": "https://api.ladot.io/compliance/count/81b1bc92-65b7-4434-8ada-2feeb0b7b223"
+        }
+      ]
     },
     {
-      "name": "Drop-off No-Fly Zones",
-      "rule_id": "596d7fe1-53fd-4ea4-8ba7-33f5ea8d98a6",
-      "rule_type": "count",
-      "geographies": [
-        "e0e4a085-7a50-43e0-afa4-6792ca897c5a"
+      "name": "LADOT Venice Global Caps",
+      "description": "Global cap rule for the Venice (aggregate number of vehicles across all providers)",
+      "policy_id": "808f7c4e-83e2-456d-9e49-655a461d393f",
+      "provider_ids": null,
+      "start_date": 1562043637000,
+      "end_date": null,
+      "published_date": 1562043637000,
+      "prev_policies": [
+        "8c3fa8e2-e0eb-4773-a52f-7aada073da46",
+        "eda761e0-ef67-4531-b5ff-504efc8bacb3",
+        "7813bb2c-20a2-45a9-9913-2ea9b6d194d3"
       ],
-      "statuses": {
-        "available": [
-          "provider_drop_off"
-        ]
-      },
-      "vehicle_types": [
-        "bicycle",
-        "scooter"
+      "rules": [
+        {
+          "name": "Greater Venice Area Global Cap",
+          "rule_id": "6d8f73ed-ba12-4715-af0b-1276b32b54a4",
+          "rule_type": "count",
+          "geographies": [
+            "3abf8e10-a380-45bb-bfd4-ec5b21b1b0b6"
+          ],
+          "statuses": {
+            "available": [],
+            "reserved": [],
+            "trip": []
+          },
+          "vehicle_types": [
+            "bicycle",
+            "scooter"
+          ],
+          "maximum": 1500,
+          "value_url": "https://api.ladot.io/compliance/count/6d8f73ed-ba12-4715-af0b-1276b32b54a4"
+        }
+      ]
+    },
+    {
+      "name": "VSOZ: Provider Caps",
+      "description": "LADOT Venice Special Ops Zone Provider Caps",
+      "policy_id": "94cd621c-bf29-430e-a0b8-9362a330b268",
+      "provider_ids": null,
+      "start_date": 1558389669540,
+      "end_date": null,
+      "published_date": 1558389669540,
+      "prev_policies": null,
+      "rules": [
+        {
+          "name": "VSOZ Cap",
+          "rule_id": "a9ce5330-323b-4ee6-b16e-21040dd5d8b2",
+          "rule_type": "count",
+          "geographies": [
+            "e0e4a085-7a50-43e0-afa4-6792ca897c5a"
+          ],
+          "statuses": {
+            "available": [],
+            "unavailable": [],
+            "reserved": [],
+            "trip": []
+          },
+          "vehicle_types": [
+            "bicycle",
+            "scooter"
+          ],
+          "maximum": 150
+        }
+      ]
+    },
+    {
+      "name": "VSOZ: Drop-off Caps",
+      "description": "LADOT Venice Special Ops Zone Drop-off Caps",
+      "policy_id": "5ba40320-b187-4c51-bd52-3dad0a60f0cc",
+      "provider_ids": null,
+      "start_date": 1558389669540,
+      "end_date": null,
+      "published_date": 1558389669540,
+      "prev_policies": null,
+      "rules": [
+        {
+          "name": "Drop-off Caps",
+          "rule_id": "03f36e3b-a513-4f1c-a0bf-2fa882f25b22",
+          "rule_type": "count",
+          "geographies": [
+            "6dc968c7-19f4-421c-b9d1-683dd3cdb632",
+            "2a4fbdb9-ff76-4060-aa92-1d37e26732e8",
+            "9bb19cd1-2530-4f7f-8de0-80e7326a3e32",
+            "fe9c910a-7aca-4a42-9d63-e014b3c243d7",
+            "7beb1d83-66e7-4654-8c6b-6710fa26d1bd",
+            "c7553640-730f-4ae1-a422-68bac4b849cc",
+            "e42f7e97-b5e6-4ebe-8ddc-05fc806ce54e",
+            "b539054b-541a-43b3-a182-58a0bd0958fd",
+            "73779ce8-e0fb-48c0-96ba-a1e7f7738279",
+            "aa4dc424-09e4-48f3-8471-df5186927016",
+            "f5f4a15d-447f-4969-aedb-a0e94ae5b183",
+            "456c25f0-a9ce-4ff3-8610-3cee919a3539",
+            "0a484e09-7a95-4e7d-86c7-a10a58268ee2",
+            "06b4e69e-da53-4340-8354-5a2262034657",
+            "b1fdf441-ce46-4f22-bb70-dd2e99df1001",
+            "2166b7dd-10ab-4219-9921-0d8c0f082308",
+            "86f9a2bd-48c8-4447-b6eb-60916da16aa1",
+            "d5d889c5-b6b9-4b83-bbcb-f5209d8dbcc3",
+            "5a5b5ffa-5f9f-4db8-ba09-72c5deaac41a",
+            "8ce201f3-34d7-46a2-aed3-282fcb6938ac",
+            "2d7f76f0-f45e-4563-8be1-280f77b1181a",
+            "9912fa40-b594-492f-91d0-113a7568bb2b"
+          ],
+          "statuses": {
+            "available": [
+              "provider_drop_off"
+            ]
+          },
+          "vehicle_types": [
+            "bicycle",
+            "scooter"
+          ],
+          "maximum": 5
+        }
+      ]
+    },
+    {
+      "name": "VSOZ: Dropzone Caps",
+      "description": "LADOT Venice Special Ops Zone Drop-off Caps",
+      "policy_id": "ac467d72-c539-4a32-9759-69cc9dc86944",
+      "provider_ids": null,
+      "start_date": 1558389669540,
+      "end_date": null,
+      "published_date": 1558389669540,
+      "prev_policies": null,
+      "rules": [
+        {
+          "name": "Dropzone Caps",
+          "rule_id": "37308204-936a-4db0-b9b9-0fa00e9dc868",
+          "rule_type": "count",
+          "geographies": [
+            "6dc968c7-19f4-421c-b9d1-683dd3cdb632",
+            "2a4fbdb9-ff76-4060-aa92-1d37e26732e8",
+            "9bb19cd1-2530-4f7f-8de0-80e7326a3e32",
+            "fe9c910a-7aca-4a42-9d63-e014b3c243d7",
+            "7beb1d83-66e7-4654-8c6b-6710fa26d1bd",
+            "c7553640-730f-4ae1-a422-68bac4b849cc",
+            "e42f7e97-b5e6-4ebe-8ddc-05fc806ce54e",
+            "b539054b-541a-43b3-a182-58a0bd0958fd",
+            "73779ce8-e0fb-48c0-96ba-a1e7f7738279",
+            "aa4dc424-09e4-48f3-8471-df5186927016",
+            "f5f4a15d-447f-4969-aedb-a0e94ae5b183",
+            "456c25f0-a9ce-4ff3-8610-3cee919a3539",
+            "0a484e09-7a95-4e7d-86c7-a10a58268ee2",
+            "06b4e69e-da53-4340-8354-5a2262034657",
+            "b1fdf441-ce46-4f22-bb70-dd2e99df1001",
+            "2166b7dd-10ab-4219-9921-0d8c0f082308",
+            "86f9a2bd-48c8-4447-b6eb-60916da16aa1",
+            "d5d889c5-b6b9-4b83-bbcb-f5209d8dbcc3",
+            "5a5b5ffa-5f9f-4db8-ba09-72c5deaac41a",
+            "8ce201f3-34d7-46a2-aed3-282fcb6938ac",
+            "2d7f76f0-f45e-4563-8be1-280f77b1181a",
+            "9912fa40-b594-492f-91d0-113a7568bb2b"
+          ],
+          "statuses": {
+            "available": [],
+            "unavailable": [],
+            "reserved": []
+          },
+          "vehicle_types": [
+            "bicycle",
+            "scooter"
+          ],
+          "maximum": 10
+        }
+      ]
+    },
+    {
+      "name": "VSOZ: Non-dropzone Caps",
+      "description": "LADOT Venice Special Ops Zone: Each Operator may deploy up to 25 vehicles outside of the 22 deployment zones.",
+      "policy_id": "64c1adb3-67df-4888-98ac-70598173cc21",
+      "provider_ids": null,
+      "start_date": 1558389669540,
+      "end_date": null,
+      "published_date": 1558389669540,
+      "prev_policies": [
+        "dd9ace3e-14c8-461b-b5e7-1326505ff176"
       ],
-      "maximum": 0
+      "rules": [
+        {
+          "name": "Valid Provider Drop Offs",
+          "rule_id": "e0c44896-676b-483b-8c1e-a9914ef79746",
+          "rule_type": "count",
+          "geographies": [
+            "6dc968c7-19f4-421c-b9d1-683dd3cdb632",
+            "2a4fbdb9-ff76-4060-aa92-1d37e26732e8",
+            "9bb19cd1-2530-4f7f-8de0-80e7326a3e32",
+            "fe9c910a-7aca-4a42-9d63-e014b3c243d7",
+            "7beb1d83-66e7-4654-8c6b-6710fa26d1bd",
+            "c7553640-730f-4ae1-a422-68bac4b849cc",
+            "e42f7e97-b5e6-4ebe-8ddc-05fc806ce54e",
+            "b539054b-541a-43b3-a182-58a0bd0958fd",
+            "73779ce8-e0fb-48c0-96ba-a1e7f7738279",
+            "aa4dc424-09e4-48f3-8471-df5186927016",
+            "f5f4a15d-447f-4969-aedb-a0e94ae5b183",
+            "456c25f0-a9ce-4ff3-8610-3cee919a3539",
+            "0a484e09-7a95-4e7d-86c7-a10a58268ee2",
+            "06b4e69e-da53-4340-8354-5a2262034657",
+            "b1fdf441-ce46-4f22-bb70-dd2e99df1001",
+            "2166b7dd-10ab-4219-9921-0d8c0f082308",
+            "86f9a2bd-48c8-4447-b6eb-60916da16aa1",
+            "d5d889c5-b6b9-4b83-bbcb-f5209d8dbcc3",
+            "5a5b5ffa-5f9f-4db8-ba09-72c5deaac41a",
+            "8ce201f3-34d7-46a2-aed3-282fcb6938ac",
+            "2d7f76f0-f45e-4563-8be1-280f77b1181a",
+            "9912fa40-b594-492f-91d0-113a7568bb2b"
+          ],
+          "statuses": {
+            "available": [
+              "provider_drop_off"
+            ]
+          },
+          "vehicle_types": [
+            "bicycle",
+            "scooter"
+          ]
+        },
+        {
+          "name": "VSOZ Non-dropzone Caps",
+          "rule_id": "84e2b85e-7542-4bed-8854-203927ced318",
+          "rule_type": "count",
+          "geographies": [
+            "e0e4a085-7a50-43e0-afa4-6792ca897c5a"
+          ],
+          "statuses": {
+            "available": [
+              "provider_drop_off"
+            ]
+          },
+          "vehicle_types": [
+            "bicycle",
+            "scooter"
+          ],
+          "maximum": 25
+        }
+      ]
     }
-  ]
-}
 ```
 
 #### Walkthrough
@@ -87,7 +291,7 @@ The Venice Special Operations Zone Restrictions published by LADOT !FIXME NEED L
 
 ##### Policy Design Approach
 
-The Venice Special Operations Zone Policy consists of two rules, first, a rule which contains geographies representing the 'valid' `provider_drop_off` zones, and a second rule which has the overarching Venice geography. During the evaluation of the policy, a set of vehicles will be provided, we'll refer to this set as `V`. The first rule will match all vehicles which have been `provider_drop_off`'d within one of the given geographies, let's call this group of vehicles `v_1`. When evaluating the second rule, the vehicles which will be considered in the evaluation will be a subset `V \ v_1`. At this point, we are considering a subset which cannot have a vehicle in a valid drop off zone for this policy; and because of this, all vehicles that match with the second rule will be considered in violation of the policy.
+The Venice Special Operations Zone Policy consists of two rules, first, a rule which contains geographies representing the 'valid' `provider_drop_off` zones, and a second rule which has the overarching Venice geography. During the evaluation of the policy, a set of vehicles will be provided, we'll refer to this set as `V`. The first rule will match all vehicles which have been `provider_drop_off`'d within one of the given geographies (because we provide no maximum or minimum we will default to an infinitely sized bucket), let's call this group of vehicles `v_1`. When evaluating the second rule, the vehicles which will be considered in the evaluation will be a subset `V \ v_1`. At this point, we are considering a subset which cannot have a vehicle in a valid drop off zone for this policy; and because of this, all vehicles that match with the second rule but cannot fit in its bucket will be considered in violation of the policy.
 
 ##### Side-notes
 
@@ -103,6 +307,7 @@ This is a very good example of a case where a `rule` is used for pattern matchin
   "provider_ids": null,
   "start_date": 1552678594428,
   "end_date": null,
+  "published_date": 1552678594428,
   "prev_policies": null,
   "rules": [
     {
@@ -136,6 +341,7 @@ This is a very good example of a case where a `rule` is used for pattern matchin
   "provider_ids": ["2411d395-04f2-47c9-ab66-d09e9e3c3251"]
   "start_date": 1558389669540,
   "end_date": null,
+  "published_date": 1558389669540,
   "prev_policies": null,
   "rules": [
     {
@@ -204,6 +410,7 @@ This is a very good example of a case where a `rule` is used for pattern matchin
   "provider_ids": ["3291c288-c9c8-42f1-bc3e-8502b077cd7f"]
   "start_date": 1558389669540,
   "end_date": null,
+  "published_date": 1558389669540,
   "prev_policies": null,
   "rules": [
     {
@@ -272,6 +479,7 @@ This is a very good example of a case where a `rule` is used for pattern matchin
   "provider_ids": ["c20e08cf-8488-46a6-a66c-5d8fb827f7e0"],
   "start_date": 1558389669540,
   "end_date": null,
+  "published_date": 1558389669540,
   "prev_policies": null,
   "rules": [
     {
@@ -374,6 +582,7 @@ This is a very good example of a case where a `rule` is used for pattern matchin
   "provider_ids": "63f13c48-34ff-49d2-aca7-cf6a5b6171c3",
   "start_date": 1558389669540,
   "end_date": null,
+  "published_date": 1558389669540,
   "prev_policies": null,
   "rules": [
     {
@@ -442,6 +651,7 @@ This is a very good example of a case where a `rule` is used for pattern matchin
   "provider_ids": ["e714f168-ce56-4b41-81b7-0b6a4bd26128"],
   "start_date": 1558389669540,
   "end_date": null,
+  "published_date": 1558389669540,
   "prev_policies": null,
   "rules": [
     {
@@ -510,6 +720,7 @@ This is a very good example of a case where a `rule` is used for pattern matchin
   "provider_ids": ["3c95765d-4da6-41c6-b61e-1954472ec6c9"],
   "start_date": 1558389669540,
   "end_date": null,
+  "published_date": 1558389669540,
   "prev_policies": null,
   "rules": [
     {
@@ -577,6 +788,7 @@ This is a very good example of a case where a `rule` is used for pattern matchin
   "policy_id": "784bb9d8-ae82-49a2-83f2-fe01c8e1bb7b",
   "provider_ids": ["70aa475d-1fcd-4504-b69c-2eeb2107f7be"]
   "start_date": 1558389669540,
+  "published_date": 1558389669540,
   "end_date": null,
   "prev_policies": null,
   "rules": [
@@ -646,6 +858,7 @@ This is a very good example of a case where a `rule` is used for pattern matchin
   "provider_ids": ["b79f8687-526d-4ae6-80bf-89b4c44dc071"]
   "start_date": 1558389669540,
   "end_date": null,
+  "published_date": 1558389669540,
   "prev_policies": null,
   "rules": [
     {
@@ -720,6 +933,7 @@ Idle time limits example. Scooters and bikes can be in the public right-of-way f
   "description": "LADOT Idle Time Limitations",
   "start_date": 1552678594428,
   "end_date": null,
+  "published_date": 1558389669540,
   "prev_policies": null,
   "rules": [{
       "name": "Greater LA (rentable)",
@@ -755,6 +969,7 @@ Speed limits example. Fifteen MPH in greater LA, 10 MPH on Venice Beach on Satur
   "description": "LADOT Pilot Speed Limit Limitations",
   "start_date": 1552678594428,
   "end_date": null,
+  "published_date": 1552678594428,
   "supersedes": null,
   "rules": [{
       "name": "Greater LA",

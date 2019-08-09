@@ -73,16 +73,17 @@ Policies should be re-fetched whenever (a) a Policy expires (via its `end_date`)
 
 ### Policy Fields
 
-| Name            | Type      | R/O | Description                                                                         |
-| --------------- | --------- | --- | ----------------------------------------------------------------------------------- |
-| `name`          | String    | R   | Name of policy                                                                      |
-| `policy_id`     | UUID      | R   | Unique ID of policy                                                                 |
-| `provider_ids`  | UUID[]    | O   | Providers for whom this policy is applicable (null or absent implies all Providers) |
-| `description`   | String    | R   | Description of policy                                                               |
-| `start_date`    | timestamp | R   | Beginning date/time of policy enforcement                                           |
-| `end_date`      | timestamp | O   | End date/time of policy enforcement                                                 |
-| `prev_policies` | UUID[]    | O   | Unique IDs of prior policies replaced by this one                                   |
-| `rules`         | Rule[]    | R   | List of applicable rule elements (see [“rule fields”](#rule-fields))                |
+| Name             | Type      | R/O | Description                                                                         |
+| ---------------- | --------- | --- | ----------------------------------------------------------------------------------- |
+| `name`           | String    | R   | Name of policy                                                                      |
+| `policy_id`      | UUID      | R   | Unique ID of policy                                                                 |
+| `provider_ids`   | UUID[]    | O   | Providers for whom this policy is applicable (null or absent implies all Providers) |
+| `description`    | String    | R   | Description of policy                                                               |
+| `start_date`     | timestamp | R   | Beginning date/time of policy enforcement                                           |
+| `end_date`       | timestamp | O   | End date/time of policy enforcement                                                 |
+| `published_date` | timestamp | R   | Timestamp that the policy was published                                             |
+| `prev_policies`  | UUID[]    | O   | Unique IDs of prior policies replaced by this one                                   |
+| `rules`          | Rule[]    | R   | List of applicable rule elements (see [“rule fields”](#rule-fields))                |
 
 If the Agency decides that Provider-specific Policy documents should not be shared with other Providers, e.g.
 punative Policy in response to violations, it will need to filter Policy objects before serving them via this endpoint.
@@ -114,22 +115,21 @@ punative Policy in response to violations, it will need to filter Policy objects
 
 ### Rule Fields
 
-| Name            | Type                        | R/O | Description                                                                                                                                                                                                                                                                                                                                     |
-| --------------- | --------------------------- | --- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `name`          | String                      | R   | Name of cap item                                                                                                                                                                                                                                                                                                                                |
-| `rule_type`     | enum                        | R   | Type of policy (see [“rule types”](#rule-types))                                                                                                                                                                                                                                                                                                |
-| `rule_units`    | enum                        | O   | Measured units of policy (see [“rule units”](#rule-units))                                                                                                                                                                                                                                                                                      |
-| `geographies`   | UUID[]                      | R   | List of Geography UUIDs (non-overlapping) specifying the covered geography                                                                                                                                                                                                                                                                      |
-| `statuses`      | { Status: Vehicle Event[] } | R   | Vehicle `statuses` to which this rule applies. Optionally, you may provide specific `event_type`'s for the rule to apply to as a subset of a given status, providing an empty list defaults to "all". See [MDS Agency state diagram](https://github.com/CityOfLosAngeles/mobility-data-specification/blob/dev/agency/README.md#vehicle-events). |
-| `vehicle_types` | VehicleType[]               | O   | Applicable vehicle categories, default “all”. See MDS shared data types document. (link forthcoming)                                                                                                                                                                                                                                            |
-| `minimum`       | integer                     | O   | Minimum value, if applicable (default 0)                                                                                                                                                                                                                                                                                                        |
-| `maximum`       | integer                     | O   | Maximum value, if applicable (default unlimited)                                                                                                                                                                                                                                                                                                |
-| `start_time`    | time                        | O   | Beginning time-of-day (hh:mm:ss) when the rule is in effect (default 00:00:00)                                                                                                                                                                                                                                                                  |
-| `end_time`      | time                        | O   | Ending time-of-day (hh:mm:ss) when the rule is in effect (default 23:59:59)                                                                                                                                                                                                                                                                     |
-| `days`          | day[]                       | O   | Days `["sun", "mon", "tue", "wed", "thu", "fri", "sat"]` when the rule is in effect (default all)                                                                                                                                                                                                                                               |
-| `messages`      | { string:string }           | O   | Message to rider user, if desired, in various languages, keyed by language tag (see [Messages](#messages))                                                                                                                                                                                                                                      |
-| `value_url`     | URL                         | O   | URL to an API endpoint that can provide dynamic information for the measured value (see [Value URL](#value-url))                                                                                                                                                                                                                                |
-
+| Name            | Type                        | R/O | Description                                                                                                                                                                                                                                                                                                                                             |
+| --------------- | --------------------------- | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `name`          | String                      | R   | Name of cap item                                                                                                                                                                                                                                                                                                                                        |
+| `rule_type`     | enum                        | R   | Type of policy (see [“rule types”](#rule-types))                                                                                                                                                                                                                                                                                                        |
+| `rule_units`    | enum                        | O   | Measured units of policy (see [“rule units”](#rule-units))                                                                                                                                                                                                                                                                                              |
+| `geographies`   | UUID[]                      | R   | List of Geography UUIDs (non-overlapping) specifying the covered geography                                                                                                                                                                                                                                                                              |
+| `statuses`      | { Status: Vehicle Event[] } | R   | Vehicle `statuses` to which this rule applies. Optionally, you may provide specific `event_type`'s for the rule to apply to as a subset of a given status, providing an empty list or null defaults to "all". See [MDS Agency state diagram](https://github.com/CityOfLosAngeles/mobility-data-specification/blob/dev/agency/README.md#vehicle-events). |
+| `vehicle_types` | VehicleType[]               | O   | Applicable vehicle categories, default “all”. See MDS shared data types document. (link forthcoming)                                                                                                                                                                                                                                                    |
+| `minimum`       | integer                     | O   | Minimum value, if applicable (default 0)                                                                                                                                                                                                                                                                                                                |
+| `maximum`       | integer                     | O   | Maximum value, if applicable (default unlimited)                                                                                                                                                                                                                                                                                                        |
+| `start_time`    | time                        | O   | Beginning time-of-day (hh:mm:ss) when the rule is in effect (default 00:00:00)                                                                                                                                                                                                                                                                          |
+| `end_time`      | time                        | O   | Ending time-of-day (hh:mm:ss) when the rule is in effect (default 23:59:59)                                                                                                                                                                                                                                                                             |
+| `days`          | day[]                       | O   | Days `["sun", "mon", "tue", "wed", "thu", "fri", "sat"]` when the rule is in effect (default all)                                                                                                                                                                                                                                                       |
+| `messages`      | { string:string }           | O   | Message to rider user, if desired, in various languages, keyed by language tag (see [Messages](#messages))                                                                                                                                                                                                                                              |
+| `value_url`     | URL                         | O   | URL to an API endpoint that can provide dynamic information for the measured value (see [Value URL](#value-url))                                                                                                                                                                                                                                        |
 
 ### Order of Operations
 
@@ -141,7 +141,7 @@ Rules, being in a list, are implicitly ordered according to the JSON Specificati
 
 ##### Evaluation Pseudocode
 
-The below example is intended to highlight the catching mechanisms of rule evaluation, and should not be considered a fully-fledged pseudocode representation of how to evaluate a policy.
+The below example is intended to highlight the bucketing mechanisms of rule evaluation, and should not be considered a fully-fledged pseudocode representation of how to evaluate a policy. This is specifically for count maximum rules; evaluation for other rule types will be explained as part of the Compliance API.
 
 ```
 let p = Policy object
@@ -150,10 +150,17 @@ let S = set of vehicles to consider (e.g. all vehicles for a specific provider)
 
 eval(rules, S) {
     let exclude = [] // Empty set
+    let matched_not_bucketed = [] // Empty set
     for rule in rules {
         let result = eval_rule(rule, S \ exclude)
         let matched_vehicles = all (violation_vehicle || violation_vehicles) in result
-        exclude.add(matched_vehicles)
+        let bucketed_vehicles = matched_vehicles(accumulator, vehicle => {
+            if (accumulator.length < rule.maximum) {
+                accumulator.add(vehicle)
+            }
+        })
+        matched_not_bucketed.add(matched_vehicles \ bucketed_vehicles)
+        exclude.add(bucketed_vehicles)
         ...
     }
     ...
