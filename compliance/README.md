@@ -45,51 +45,56 @@ The Compliance API takes as inputs the event and telemetry stream from the [Agen
 
 ## Endpoints
 
-Note: If a request comes from a Provider, the provider_id will be passed in the JWT authentication.  If the request comes from an Agency, its token will not contain a provider_id and all Providers will be measured.
+Note: If a request comes from a Provider, the provider_id will be passed in the JWT authentication. If the request comes from an Agency, its token will not contain a provider_id and all Providers will be measured.
 
 `GET /snapshot`
 
 Parameters:
 
-| Name         | Type         | R/O | Description                                     |
-| ------------ | ------------ | --- | ----------------------------------------------- |
-| `provider_id`| UUID         | O   | If not provided in the JWT (default=all)        |
-| `policy_id`  | UUID         | O   | Test only for a particular policy (default=all) |
+| Name          | Type | R/O | Description                                     |
+| ------------- | ---- | --- | ----------------------------------------------- |
+| `provider_id` | UUID | O   | If not provided in the JWT (default=all)        |
+| `policy_id`   | UUID | O   | Test only for a particular policy (default=all) |
 
 Returns: list of [Snapshot Response](#snapshot-response)
 
 Errors:
-* 404 if `policy_id` not found
-* 500 if server error
+
+- 404 if `policy_id` not found
+- 500 if server error
 
 `GET /count/:rule_id`
 
-Returns number of vehicles across all providers in the public right-of-way for a given `Rule`.  Typically used in the `value_url` field for a global CountRule.  The Rule knows its own Geography elements, which will be used for the count.
+Returns number of vehicles across all providers in the public right-of-way for a given `Rule`. Typically used in the `value_url` field for a global CountRule. The Rule knows its own Geography elements, which will be used for the count.
 
 Parameters:
 
-| Name         | Type         | R/O | Description                              |
-| ------------ | ------------ | --- | ---------------------------------------- |
-| `timestamp`  | Timestamp    | O   | Time of measurement (default=now)        |
+| Name        | Type      | R/O | Description                       |
+| ----------- | --------- | --- | --------------------------------- |
+| `timestamp` | Timestamp | O   | Time of measurement (default=now) |
 
 Returns: a [Count Response](#count-response)
 
 Responses:
-* 200 if successful
-* 404 if `rule_id` not found
-* 500 if server error
+
+- 200 if successful
+- 404 if `rule_id` not found
+- 500 if server error
 
 ## Schema
 
 <a name="count-response"></a>
+
 ### Count Response
-| Name         | Type         | R/O | Description                              |
-| ------------ | ------------ | --- | ---------------------------------------- |
-| `policy`     | Policy       | R   | The full Policy which contains the requested Rule.  See [Policy](../policy/README.md#schema). |
-| `count`      | int          | R   | Number of devices matching the rule      |
-| `timestamp`  | Timestamp    | R   | Time of measurement                      |
+
+| Name        | Type      | R/O | Description                                                                                  |
+| ----------- | --------- | --- | -------------------------------------------------------------------------------------------- |
+| `policy`    | Policy    | R   | The full Policy which contains the requested Rule. See [Policy](../policy/README.md#schema). |
+| `count`     | int       | R   | Number of devices matching the rule                                                          |
+| `timestamp` | Timestamp | R   | Time of measurement                                                                          |
 
 <a name="snapshot-response"></a>
+
 ### Snapshot Response
 
 | Name         | Type         | R/O | Description                              |
@@ -100,10 +105,12 @@ Responses:
 
 ### Compliance
 
-| Name      | Type    | R/O | Description                            |
-| --------- | ------- | --- | -------------------------------------- |
-| `rule`    | Rule    | R   | See [Rule](../policy/README.md#schema) |
-| `matches` | Match[] | R   | List of matches for the rule           |
+| Name                    | Type    | R/O | Description                                                                      |
+| ----------------------- | ------- | --- | -------------------------------------------------------------------------------- |
+| `rule`                  | Rule    | R   | See [Rule](../policy/README.md#schema)                                           |
+| `matches`               | Match[] | R   | List of matches for the rule                                                     |
+| `vehicles_in_violation` | UUID[]  | R   | Vehicles which overflowed during evaluation (could not fit into a rule's bucket) |
+| `total_violations`      | Number  | R   | Number of vehicles which are in violation of the policy (overflowed).            |
 
 ### Match
 
@@ -111,32 +118,17 @@ CountMatch | TimeMatch | SpeedMatch
 
 ### TimeMatch and SpeedMatch
 
-| Name              | Type                              | R/O | Description                                   |
-| ----------------- | --------------------------------- | --- | --------------------------------------------- |
-| `measured`        | number                            | R   | Measured value for this geography             |
-| `geography_id`    | UUID                              | R   | Specific geography associated with the match  |
-| `matched_vehicle` | [MatchedVehicle](#MatchedVehicle) | R   | Vehicle matched with rule                     |
+| Name           | Type   | R/O | Description                                  |
+| -------------- | ------ | --- | -------------------------------------------- |
+| `measured`     | number | R   | Measured value for this geography            |
+| `geography_id` | UUID   | R   | Specific geography associated with the match |
 
 ### CountMatch
 
-| Name               | Type                                | R/O | Description                                   |
-| ------------------ | ----------------------------------- | --- | --------------------------------------------- |
-| `measured`         | number                              | R   | Measured value for this geography             |
-| `geography_id`     | UUID                                | R   | Specific geography associated with the match  |
-| `matched_vehicles` | [MatchedVehicle](#MatchedVehicle)[] | R   | Vehicles matched to rule (if applicable)      |
-
-### MatchedVehicle
-
-| Name             | Type                     | R/O | Description                                                                          |
-| ---------------- | ------------------------ | --- | ------------------------------------------------------------------------------------ |
-| `device_id`      | UUID                     | R   | Unique ID for the vehicle                                                            |
-| `provider_id`    | UUID                     | R   | Unique ID for the provider associated with the vehicle                               |
-| `gps`            | (lat: Float, lng: Float) | R   | Latitude and Longitude for the vehicle                                               |
-| `vehicle_id`     | String                   | R   | Vehicle Identification Number (vehicle_id) visible on vehicle                        |
-| `vehicle_status` | Enum                     | R   | Most recent vehicle status. See [Vehicle Events](../agency/README.md#vehicle-events) |
-| `vehicle_event`  | Enum                     | R   | Most recent vehicle event. See [Vehicle Events](../agency/README.md#vehicle-events)  |
-| `timestamp`      | Timestamp                | R   | Timestamp of most recent vehicle event                                               |
-| `vehicle_type`   | Enum                     | R   | [Vehicle Type](../agency/README.md#vehicle-type)                                     |
+| Name           | Type   | R/O | Description                                  |
+| -------------- | ------ | --- | -------------------------------------------- |
+| `measured`     | number | R   | Measured value for this geography            |
+| `geography_id` | UUID   | R   | Specific geography associated with the match |
 
 ## Examples
 
