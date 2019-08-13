@@ -186,237 +186,92 @@ CountMatch | TimeMatch | SpeedMatch
 
 ```JSON
 {
-  "policy": {
-    "name": "LADOT Mobility Caps",
-    "description": "Mobility caps as described in the One-Year Permit",
-    "policy_id": "72971a3d-876c-41ea-8e48-c9bb965bbbcc",
-    "start_date": 1558389669540,
-    "end_date": null,
-    "prev_policies": null,
-    "rules": [
+  "policy":{
+    "name":"LADOT Mobility Caps",
+    "description":"Mobility caps as described in the One-Year Permit",
+    "policy_id":"72971a3d-876c-41ea-8e48-c9bb965bbbcc",
+    "start_date":1558389669540,
+    "end_date":null,
+    "prev_policies":null,
+    "provider_ids":[
+
+    ],
+    "rules":[
       {
-        "name": "Greater LA",
-        "rule_type": "count",
-        "geographies": [
+        "name":"Greater LA",
+        "rule_id":"47c8c7d4-14b5-43a3-b9a5-a32ecc2fb2c6",
+        "rule_type":"count",
+        "geographies":[
           "8917cf2d-a963-4ea2-a98b-7725050b3ec5"
         ],
-        "statuses": {
-        "available": [],
-        "unavailable": [],
-        "reserved": [],
-        "trip": []
-      },
-        "vehicle_types": [
+        "statuses":{
+          "available":[
+
+          ],
+          "unavailable":[
+
+          ],
+          "reserved":[
+
+          ],
+          "trip":[
+
+          ]
+        },
+        "vehicle_types":[
           "bicycle",
           "scooter"
         ],
-        "maximum": 3,
-        "minimum": 1
+        "maximum":10,
+        "minimum":5
       }
     ]
   },
-  "compliance": [
+  "compliance":[
     {
-      "rule": {
-        "name": "Greater LA",
-        "rule_type": "count",
-        "geographies": [
+      "rule":{
+        "name":"Greater LA",
+        "rule_id":"47c8c7d4-14b5-43a3-b9a5-a32ecc2fb2c6",
+        "rule_type":"count",
+        "geographies":[
           "8917cf2d-a963-4ea2-a98b-7725050b3ec5"
         ],
-        "statuses": {
-        "available": [],
-        "unavailable": [],
-        "reserved": [],
-        "trip": []
-      },
-        "vehicle_types": [
+        "statuses":{
+          "available":[
+
+          ],
+          "unavailable":[
+
+          ],
+          "reserved":[
+
+          ],
+          "trip":[
+
+          ]
+        },
+        "vehicle_types":[
           "bicycle",
           "scooter"
         ],
-        "maximum": 3,
-        "minimum": 1
+        "maximum":10,
+        "minimum":5
       },
-      "matches": [
+      "matches":[
         {
-          "measured": 4,
-          "geography_id": "8917cf2d-a963-4ea2-a98b-7725050b3ec5",
-          "matched_vehicles": [
-            {
-              "device_id": "b2d4fc2a-a5d7-4267-acb2-d55b889e99e1",
-              "vehicle_id": "test-vin-672813",
-              "vehicle_type": "bicycle",
-              "vehicle_status": "available",
-              "gps": {
-                "lat": 34.16425238145858,
-                "lng": -118.45892944848998
-              }
-            },
-            {
-              "device_id": "d079ef82-759c-4e32-8a20-a3b2c5fed538",
-              "vehicle_id": "test-vin-421457",
-              "vehicle_type": "bicycle",
-              "vehicle_status": "available",
-              "gps": {
-                "lat": 34.06067589712973,
-                "lng": -118.47780119361643
-              }
-            },
-            {
-              "device_id": "f240883d-ba8e-4049-ae26-66bea4124015",
-              "vehicle_id": "test-vin-234052",
-              "vehicle_type": "bicycle",
-              "vehicle_status": "available",
-              "gps": {
-                "lat": 34.05759774672531,
-                "lng": -118.50098374147873
-              }
-            },
-            {
-              "device_id": "fb1a2e71-ed4f-4aa5-bb52-18fc4c5b9c2b",
-              "vehicle_id": "test-vin-917364",
-              "vehicle_type": "bicycle",
-              "vehicle_status": "available",
-              "gps": {
-                "lat": 34.13022134212763,
-                "lng": -118.36098720614552
-              }
-            }
-          ]
+          "measured":10,
+          "geography_id":"8917cf2d-a963-4ea2-a98b-7725050b3ec5"
         }
       ]
     }
-  ]
-}
-```
-
-### Time Compliance Example
-
-```JSON
-{
-  "policy": {
-    "name": "Maximum Idle Time",
-    "description": "LADOT Pilot Idle Time Limitations",
-    "policy_id": "a2c9a65f-fd85-463e-9564-fc95ea473f7d",
-    "start_date": 1558389669540,
-    "end_date": null,
-    "prev_policies": null,
-    "rules": [
-      {
-        "name": "Greater LA (rentable)",
-        "rule_type": "time",
-        "rule_units": "minutes",
-        "geographies": [
-          "8917cf2d-a963-4ea2-a98b-7725050b3ec5"
-        ],
-        "statuses": [
-          "available"
-        ],
-        "vehicle_types": [
-          "bicycle",
-          "scooter"
-        ],
-        "maximum": 7200
-      }
-    ]
-  },
-  "compliance": [
-    {
-      "rule": {
-        "name": "Greater LA (rentable)",
-        "rule_type": "time",
-        "rule_units": "minutes",
-        "geographies": [
-          "8917cf2d-a963-4ea2-a98b-7725050b3ec5"
-        ],
-        "statuses": [
-          "available"
-        ],
-        "vehicle_types": [
-          "bicycle",
-          "scooter"
-        ],
-        "maximum": 7200
-      },
-      "matches": []
-    }
-  ]
-}
-```
-
-### Time Violation Example
-
-```JSON
-{
-  "policy": {
-    "name": "Maximum Idle Time",
-    "description": "LADOT Pilot Idle Time Limitations",
-    "policy_id": "a2c9a65f-fd85-463e-9564-fc95ea473f7d",
-    "start_date": 1558389669540,
-    "end_date": null,
-    "prev_policies": null,
-    "rules": [{
-      "name": "Greater LA (rentable)",
-      "rule_type": "time",
-      "rule_units": "minutes",
-      "geographies": [
-        "8917cf2d-a963-4ea2-a98b-7725050b3ec5"
-      ],
-      "statuses": {
-        "available": []
-      },
-      "vehicle_types": [
-        "bicycle",
-        "scooter"
-      ],
-      "maximum": 7200
-    }]
-  },
-  "compliance": [{
-    "rule": {
-      "name": "Greater LA (rentable)",
-      "rule_type": "time",
-      "rule_units": "minutes",
-      "geographies": [
-        "8917cf2d-a963-4ea2-a98b-7725050b3ec5"
-      ],
-      "statuses": [
-        "available"
-      ],
-      "vehicle_types": [
-        "bicycle",
-        "scooter"
-      ],
-      "maximum": 7200
-    },
-    "matches": [{
-        "measured": 1000035,
-        "geography_id": "8917cf2d-a963-4ea2-a98b-7725050b3ec5",
-        "matched_vehicle": {
-          "device_id": "d1f4351f-9768-4510-8d50-e9647b227588",
-          "vehicle_id": "test-vin-534731",
-          "vehicle_type": "bicycle",
-          "vehicle_status": "available",
-          "gps": {
-            "lat": 34.04452596567323,
-            "lng": -118.52363968662598
-          }
-        }
-      },
-      {
-        "measured": 1000036,
-        "geography_id": "8917cf2d-a963-4ea2-a98b-7725050b3ec5",
-        "matched_vehicle": {
-          "device_id": "94ac0e61-938f-4380-b00e-6c07de1f9f04",
-          "vehicle_id": "test-vin-811800",
-          "vehicle_type": "bicycle",
-          "vehicle_status": "available",
-          "gps": {
-            "lat": 34.13075876975959,
-            "lng": -118.18367765139591
-          }
-        }
-      }
-    ]
-  }]
+  ],
+  "vehicles_in_violation":[
+    "2c7f6d67-6363-42c5-9da7-08821d843f32",
+    "b298389c-40fc-4e7d-9d59-76981048cad0",
+    "1212cc01-53b6-40fa-9a9a-1cafe2ffaed4",
+    "6980acf2-f1af-4391-84a0-89f45e781ca9",
+    "1fba8618-3d42-4228-a900-6b36881247a8"
+  ],
+  "total_violations":5
 }
 ```
