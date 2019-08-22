@@ -86,16 +86,12 @@ MDS defines [JSON Schema](https://json-schema.org/) files for [`trips`][trips-sc
 
 ### Pagination
 
-`provider` APIs may decide to paginate the data payload. If so, pagination must comply with the [JSON API](http://jsonapi.org/format/#fetching-pagination) specification.
+The following keys must be provided for pagination links:
 
-The following keys must be used for pagination links:
-
-* `first`: url to the first page of data
-* `last`: url to the last page of data
 * `prev`: url to the previous page of data
 * `next`: url to the next page of data
 
-At a minimum, paginated payloads must include a `next` key, which must be set to `null` to indicate the last page of data. 
+The `next` key must be set to `null` to indicate the last page of data.
 
 ```json
 {
@@ -107,13 +103,20 @@ At a minimum, paginated payloads must include a `next` key, which must be set to
         }]
     },
     "links": {
-        "first": "https://...",
-        "last": "https://...",
         "prev": "https://...",
         "next": "https://..."
     }
 }
 ```
+
+Note that depending on the specifics of how the Provider implements pagination, the number of results per page can fluctuate.
+
+As an example, consider a query for a 3 hours window to a provider that paginates by hour:
+
+`GET /trips?min_end_time=1546315200000&max_end_time=1546322400000`
+- *Page 1:* 4:00 - 5pm UTC (10 rides)
+- *Page 2:* 5:00 - 6pm UTC (0 rides)
+- *Page 3:* 6:00 - 7pm UTC (5 rides)
 
 ### UUIDs for Devices
 
@@ -201,8 +204,6 @@ Schema: [`trips` schema][trips-schema]
 
 The trips API should allow querying trips with a combination of query parameters.
 
-* `device_id`
-* `vehicle_id`
 * `min_end_time`: filters for trips where `end_time` occurs at or after the given time
 * `max_end_time`: filters for trips where `end_time` occurs before the given time
 
