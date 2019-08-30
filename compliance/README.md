@@ -47,14 +47,14 @@ The Compliance API takes as inputs the event and telemetry stream from the [Agen
 
 Note: If a request comes from a Provider, the provider_id will be passed in the JWT authentication. If the request comes from an Agency, its token will not contain a provider_id and all Providers will be measured.
 
-`GET /snapshot`
+`GET /snapshot/:policy_id`
 
 Parameters:
 
-| Name          | Type | R/O | Description                                     |
-| ------------- | ---- | --- | ----------------------------------------------- |
-| `provider_id` | UUID | O   | If not provided in the JWT (default=all)        |
-| `policy_id`   | UUID | O   | Test only for a particular policy (default=all) |
+| Name          | Type | R/O | Description                   |
+| ------------- | ---- | --- | ----------------------------- |
+| `provider_id` | UUID | O   | If not provided in the JWT.   |
+| `end_date`    | UUID | O   | Take snapshot at a given time |
 
 Returns: list of [Snapshot Response](#snapshot-response)
 
@@ -131,56 +131,6 @@ CountMatch | TimeMatch | SpeedMatch
 | `geography_id` | UUID   | R   | Specific geography associated with the match |
 
 ## Examples
-
-### Count Compliance Example
-
-```JSON
-{
-  "policy": {
-    "name": "LADOT Mobility Caps",
-    "description": "Mobility caps as described in the One-Year Permit",
-    "policy_id": "72971a3d-876c-41ea-8e48-c9bb965bbbcc",
-    "start_date": 1558389669540,
-    "end_date": null,
-    "prev_policies": null,
-    "rules": [{
-      "name": "Greater LA",
-      "rule_type": "count",
-      "geographies": [
-        "8917cf2d-a963-4ea2-a98b-7725050b3ec5"
-      ],
-      "statuses": {
-        "available": [],
-        "unavailable": [],
-        "reserved": [],
-        "trip": []
-      },
-      "vehicle_types": [
-        "bicycle",
-        "scooter"
-      ],
-      "maximum": 3,
-      "minimum": 1
-    }]
-  },
-  "compliance": [{
-    "rule": {
-      "name": "Greater LA",
-      "rule_type": "count",
-      "geographies": [
-        "8917cf2d-a963-4ea2-a98b-7725050b3ec5"
-      ],
-      "vehicle_types": [
-        "bicycle",
-        "scooter"
-      ],
-      "maximum": 3,
-      "minimum": 1
-    },
-    "matches": []
-  }]
-}
-```
 
 ### Count Violation Example
 
