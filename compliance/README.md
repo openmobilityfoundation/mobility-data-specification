@@ -105,12 +105,12 @@ Responses:
 
 ### Compliance
 
-| Name                    | Type    | R/O | Description                                                                      |
-| ----------------------- | ------- | --- | -------------------------------------------------------------------------------- |
-| `rule`                  | Rule    | R   | See [Rule](../policy/README.md#schema)                                           |
-| `matches`               | Match[] | R   | List of matches for the rule                                                     |
-| `vehicles_in_violation` | UUID[]  | R   | Vehicles which overflowed during evaluation (could not fit into a rule's bucket) |
-| `total_violations`      | Number  | R   | Number of vehicles which are in violation of the policy (overflowed).            |
+| Name                    | Type                               | R/O | Description                                                                                                                           |
+| ----------------------- | ---------------------------------- | --- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `rule`                  | Rule                               | R   | See [Rule](../policy/README.md#schema)                                                                                                |
+| `matches`               | Match[]                            | R   | List of matches for the rule                                                                                                          |
+| `vehicles_in_violation` | (device_id: UUID, rule_id: UUID)[] | R   | Vehicles which overflowed during evaluation (could not fit into a rule's bucket), and the corresponding rule_id of their first match. |
+| `total_violations`      | Number                             | R   | Number of vehicles which are in violation of the policy (overflowed).                                                                 |
 
 ### Match
 
