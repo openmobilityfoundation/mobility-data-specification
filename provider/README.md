@@ -228,13 +228,14 @@ Schema: [`trips` schema][trips-schema]
 
 The trips API should allow querying trips with a combination of query parameters.
 
-| Parameter | Type | Comments |
-| ----- | ---- | -------- |
-| `device_id` | UUID | |
-| `vehicle_id` | UUID | |
-| `min_end_time` | [timestamp][ts] | filters for trips where `end_time` occurs at or after the given time |
-| `max_end_time` | [timestamp][ts] | filters for trips where `end_time` occurs before the given time|
+* `min_end_time`: filters for trips where `end_time` occurs at or after the given time
+* `max_end_time`: filters for trips where `end_time` occurs before the given time
+* `static_end_time`: An [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date for a static bucket of files representing either a Month, Day, or Hour. 
 
+| Request range | format | expected output | 
+| ------------- | ------ | --------------- | 
+| Month         | YYYY-DD | The month worth of data, or if the month is not complete or the file does not exist , an error | 
+| Day           | YYYY-MM-DD | That day worth of   
 When multiple query parameters are specified, they should all apply to the returned trips. For example, a request with `?min_end_time=1549800000000&max_end_time=1549886400000` should only return trips whose end time falls in the range `[1549800000000, 1549886400000)`.
 
 ### Vehicle Types
