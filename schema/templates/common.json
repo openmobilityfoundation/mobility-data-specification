@@ -215,11 +215,15 @@
           "properties": {
             "lat": {
               "type": "number",
-              "description": "Latitude of the location"
+              "description": "Latitude of the location",
+              "minimum": -90,
+              "maximum": 90
             },
             "lng": {
               "type": "number",
-              "description": "Longitude of the location"
+              "description": "Longitude of the location",
+              "minimum": -180,
+              "maximum": 180
             },
             "altitude": {
               "type": "number",
@@ -314,8 +318,8 @@
       "$id": "#/definitions/timestamp",
       "title": "Integer milliseconds since Unix epoch",
       "type": "number",
-      "multipleOf": 1.0, 
-      "minimum": 0 
+      "multipleOf": 1.0,
+      "minimum": 0
     }
   }
 }
