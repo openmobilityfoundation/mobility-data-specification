@@ -230,14 +230,15 @@ The trips API should allow querying trips with a combination of query parameters
 
 * `min_end_time`: filters for trips where `end_time` occurs at or after the given time
 * `max_end_time`: filters for trips where `end_time` occurs before the given time
-* `static_end_time`: An [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date for a static bucket of files representing either a Month, Day, or Hour. 
+* `static_end_time`: An [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date for a static bucket of files representing either a Month, Day, or Hour. Timezone UTC. 
 
 | Request range | format | expected output | 
 | ------------- | ------ | --------------- | 
-| Month         | YYYY-DD | The month worth of data, or if the month is not complete or the file does not exist , an error | 
-| Day           | YYYY-MM-DD | That day worth of   
-When multiple query parameters are specified, they should all apply to the returned trips. For example, a request with `?min_end_time=1549800000000&max_end_time=1549886400000` should only return trips whose end time falls in the range `[1549800000000, 1549886400000)`.
+| Month         | YYYY-DD | That month's worth of trips, or if the month is not complete or the file does not exist , an error | 
+| Day           | YYYY-MM-DD | That day's worth of trips, or if the day is not complete or the file does not exist, an error | 
+| Hour          | YYYY-MM-DD:HH | That hour worth of trips, or if the hour is not complete or hte file does not exist, an error. The minimum value of the hour should be 00 and the max 23, as the midnight hour should be denotated as the next day's zero hour. | 
 
+The `min_end_time` and `max_end_time` endpoints shall not be used in combination with the `static_end_time` endpoints, rather, the the former is good for real-ish time uses cases, while the latter is best for reconstructing the historical record and backfilling. It is considered permissive to return an incorrect query parameter responses for the `min_end_time`  / `max_end_time` if the range contains timestamps older than one month. 
 ### Vehicle Types
 
 | `vehicle_type` |
@@ -337,10 +338,17 @@ Because of the unreliability of device clocks, the Provider is unlikely to know 
 
 The status_changes API should allow querying status changes with a combination of query parameters.
 
-| Parameter | Type | Comments |
-| ----- | ---- | -------- |
-| `start_time` | [timestamp][ts] | filters for status changes where `event_time` occurs at or after the given time |
-| `end_time` | [timestamp][ts] | filters for status changes where `event_time` occurs before the given time |
+* `start_time`: filters for status changes where `event_time` occurs at or after the given time
+* `end_time`: filters for status changes where `event_time` occurs before the given time
+* `static_end_time`: An [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date for a static bucket of files representing either a Month, Day, or Hour. Timezone UTC. 
+
+| Request range | format | expected output | 
+| ------------- | ------ | --------------- | 
+| Month         | YYYY-DD | That month's worth of status changes, or if the month is not complete or the file does not exist , an error | 
+| Day           | YYYY-MM-DD | That day's worth of status changes, or if the day is not complete or the file does not exist, an error | 
+| Hour          | YYYY-MM-DD:HH | That hour worth of status changes, or if the hour is not complete or hte file does not exist, an error. The minimum value of the hour should be 00 and the max 23, as the midnight hour should be denotated as the next day's zero hour. | 
+
+The `min_end_time` and `max_end_time` endpoints shall not be used in combination with the `static_end_time` endpoints, rather, the the former is good for real-ish time uses cases, while the latter is best for reconstructing the historical record and backfilling. It is considered permissive to return an incorrect query parameter responses for the `min_end_time`  / `max_end_time` if the range contains timestamps older than one month. 
 
 When multiple query parameters are specified, they should all apply to the returned status changes. For example, a request with `?start_time=1549800000000&end_time=1549886400000` should only return status changes whose `event_time` falls in the range `[1549800000000, 1549886400000)`.
 
