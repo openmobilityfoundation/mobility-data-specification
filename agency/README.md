@@ -28,6 +28,10 @@ When making requests, the Agency API expects `provider_id` to be part of the cla
 
 As with the Provider API, `timestamp` refers to integer milliseconds since Unix epoch. 
 
+## Strings
+
+All String fields, such as `vehicle_id`, are limited to a maximum of 255 characters.
+
 ## Vehicles
 
 The `/vehicles` endpoint returns the specified vehicle (if a device_id is provided) or a list of known vehicles.  Providers can only retrieve data for vehicles in their registered fleet.
