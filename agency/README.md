@@ -200,7 +200,7 @@ Body Params:
 | Field     | Type                           | Field Description                                                                                       |
 | --------- | ------------------------------ | ------------------------------------------------------------------------------------------------------- |
 | `result`  | String                         | Responds with number of successfully written telemetry data points and total number of provided points. |
-| `failures | [Telemetry](#telemetry-data)[] | Array of failed telemetry for zero or more vehicles (empty if all successful).                          |
+| `failures` | [Telemetry](#telemetry-data)[] | Array of failed telemetry for zero or more vehicles (empty if all successful).                          |
 
 400 Failure Response:
 
@@ -266,12 +266,12 @@ The diagram below shows the expected events and related `status` transitions for
 
 ## Telemetry Data
 
-A standard point of vehicle telemetry. References to latitude and longitude imply coordinates encoded in the [WGS 84 (EPSG:4326)](https://en.wikipedia.org/wiki/World_Geodetic_System) standard GPS projection expressed as [Decimal Degrees](https://en.wikipedia.org/wiki/Decimal_degrees).
+A standard point of vehicle telemetry. References to latitude and longitude imply coordinates encoded in the [WGS 84 (EPSG:4326)](https://en.wikipedia.org/wiki/World_Geodetic_System) standard GPS or GNSS projection expressed as [Decimal Degrees](https://en.wikipedia.org/wiki/Decimal_degrees).
 
 | Field          | Type           | Required/Optional     | Field Description                                            |
 | -------------- | -------------- | --------------------- | ------------------------------------------------------------ |
 | `device_id`    | UUID           | Required              | ID used in [Register](#vehicle-register)                     |
-| `timestamp`    | Timestamp      | Required              | Date/time that event occurred. Based on GPS clock            |
+| `timestamp`    | Timestamp      | Required              | Date/time that event occurred. Based on GPS or GNSS clock            |
 | `gps`          | Object         | Required              | Telemetry position data                                      |
 | `gps.lat`      | Double         | Required              | Latitude of the location                                     |
 | `gps.lng`      | Double         | Required              | Longitude of the location                                    |
@@ -279,8 +279,8 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | `gps.heading`  | Double         | Required if Available | Degrees - clockwise starting at 0 degrees at true North      |
 | `gps.speed`    | Float          | Required if Available | Speed in meters / sec                                        |
 | `gps.accuracy` | Float          | Required if Available | Accuracy in meters                                           |
-| `gps.hdop`     | Float          | Required if Available | Horizontal GPS accuracy value (see [hdop](https://support.esri.com/en/other-resources/gis-dictionary/term/358112bd-b61c-4081-9679-4fca9e3eb926)) |
-| `gps.satellites` | Integer      | Required if Available | Number of GPS satellites
+| `gps.hdop`     | Float          | Required if Available | Horizontal GPS or GNSS accuracy value (see [hdop](https://support.esri.com/en/other-resources/gis-dictionary/term/358112bd-b61c-4081-9679-4fca9e3eb926)) |
+| `gps.satellites` | Integer      | Required if Available | Number of GPS or GNSS satellites
 | `charge`       | Float          | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 1 |
 
 ## Enum Definitions

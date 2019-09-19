@@ -14,4 +14,5 @@ Cloud,bf95148b-d1d1-464e-a140-6d2563ac43d4,https://www.cloud.tt,https://mds.clou
 BlueLA,f3c5a65d-fd85-463e-9564-fc95ea473f7d,https://www.bluela.com,https://api.bluela.com/mds/v0,https://api.bluela.com/gbfs/v1/meta
 Bolt,3291c288-c9c8-42f1-bc3e-8502b077cd7f,https://www.micromobility.com/,https://bolt.miami/bolt2/api/mds,
 CLEVR,daecbe87-a9f2-4a5a-b5df-8e3e14180513,https://clevrmobility.com,https://portal.clevrmobility.com/api/la/,https://portal.clevrmobility.com/api/gbfs/en/discovery/
-Sherpa,3c95765d-4da6-41c6-b61e-1954472ec6c9,,https://mds.bird.co,https://mds.bird.co/gbfs/sherpa
+SherpaLA,3c95765d-4da6-41c6-b61e-1954472ec6c9,,https://mds.bird.co,https://mds.bird.co/gbfs/platform-partner/sherpa-la
+OjO Electric,8d293326-8464-4256-8312-617ebcd0efad,https://www.ojoelectric.com,https://api.ojoelectric.com/api/mds,https://api.ojoelectric.com/api/mds/gbfs.json
