@@ -38,6 +38,7 @@
         "inactive",
         "removed",
         "reserved",
+        "trip",
         "unavailable"
       ]
     },
@@ -231,6 +232,7 @@
     "vehicle_id": {
       "$id": "#/properties/vehicle_id",
       "type": "string",
+      "maxLength": 255,
       "description": "The Vehicle Identification Number visible on the vehicle itself",
       "default": "",
       "examples": [
@@ -260,6 +262,7 @@
     "mfgr": {
       "$id": "#/properties/mfgr",
       "type": "string",
+      "maxLength": 255,
       "description": "The vehicle manufacturer",
       "default": "",
       "examples": [
@@ -270,6 +273,7 @@
     "model": {
       "$id": "#/properties/model",
       "type": "string",
+      "maxLength": 255,
       "description": "The vehicle model",
       "default": "",
       "examples": [
