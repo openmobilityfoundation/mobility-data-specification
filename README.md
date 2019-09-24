@@ -14,6 +14,15 @@ Mobility providers are required to share data with LADOT as part of the City of 
 
 Cities and regulators can choose best how to implement *Agency* and *Provider* either separately, concurrently, or by endpoint.
 
+## Learn More / Get Involved / Contributing
+
+* To stay up to date on MDS releases and planning calls, please subscribe to the [MDS-Announce](https://groups.google.com/forum/#!forum/mds-announce) mailing list. 
+* You can view info about past releases and planning calls in the [wiki](https://github.com/CityOfLosAngeles/mobility-data-specification/wiki). 
+* To understand the contributing guidelines review the [CONTRIBUTING page.](CONTRIBUTING.md) 
+* To learn more about MDS and other related projects, including LADOT's Technology Action Plan, visit [ladot.io.](https://ladot.io/)
+
+For questions about MDS please contact [ladot.innovation@lacity.org](mailto:ladot.innovation@lacity.org).
+
 ## Versions
 
 The specification will be versioned using Git tags and [semantic versioning](https://semver.org/). See prior [releases](https://github.com/CityOfLosAngeles/mobility-data-specification/releases) and the [Release Guidelines](ReleaseGuidelines.md) for more information.
@@ -75,11 +84,3 @@ Please open a pull request if you create open source or private tools for implem
 
 [agency]: /agency/README.md
 [provider]: /provider/README.md
-
-## Learn More / Get Involved 
-
-To stay up to date on MDS releases and planning calls, please subscribe to the [MDS-Announce](https://groups.google.com/forum/#!forum/mds-announce) mailing list. You can view info about past releases and planning calls in the [wiki](https://github.com/CityOfLosAngeles/mobility-data-specification/wiki). 
-
-To learn more about MDS and other related projects, including LADOT's Technology Action Plan, visit [ladot.io.](https://ladot.io/)
-
-For questions about MDS please contact [ladot.innovation@lacity.org](mailto:ladot.innovation@lacity.org).
