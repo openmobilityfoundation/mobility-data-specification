@@ -32,6 +32,7 @@ The Mobility Data Specification is an Open Source project. Comments can be made 
 * Santa Monica: The rules and guidelines for the Santa Monica Shared Mobility Pilot Program can be found at https://www.smgov.net/sharedmobility.
 * Austin: The rules and guidelines for Austin's Micromobility Program can be found at https://austintexas.gov/micromobility.
 [Add your City here by opening a pull request](https://github.com/CityofLosAngeles/mobility-data-specification/compare)
+* Ulm: A draft of the guidelines can be found at [the city's GitHub presence](https://github.com/stadtulm/mds-zonen).
 
 ## Use Cases
 MDS enables cities to 
