@@ -76,6 +76,31 @@ Response bodies must be a `UTF-8` encoded JSON object and must minimally include
 }
 ```
 
+#### Provider HTTP Codes
+
+* **200:** OK: operation successful.
+* **400:** Bad request.
+* **401:** Unauthorized: Invalid, expired, or insufficient scope of token.
+* **404:** Not Found: Object(s) do not exist.
+* **500:** Internal server error.
+
+#### Error Format
+
+```json
+{
+    "version": "x.y.z",
+    "error": "...",
+    "error_description": "...",
+    "error_details": [ "...", "..." ]
+}
+```
+
+| Field               | Type     | Field Description      |
+| ------------------- | -------- | ---------------------- |
+| `error`             | String   | Error message string   |
+| `error_description` | String   | Human readable error description (can be localized) |
+| `error_details`     | String[] (optional) | Array of error details |
+
 All response fields must use `lower_case_with_underscores`.
 
 #### JSON Schema
