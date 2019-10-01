@@ -25,6 +25,20 @@ def get_point_schema():
     # Modify some metadata
     point.pop("$schema")
     point["$id"] = get_definition(POINT)
+    # enforce lat/lon bounds
+    point["properties"]["coordinates"]["maxItems"] = 2
+    point["properties"]["coordinates"]["items"] = [
+        {
+          "type": "number",
+          "minimum": -180.0,
+          "maximum": 180.0
+        },
+        {
+           "type": "number",
+           "minimum": -90.0,
+           "maximum": 90.0
+        }
+    ]
     return point
 
 def get_multipolygon_schema():
