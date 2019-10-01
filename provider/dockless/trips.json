@@ -22,9 +22,19 @@
         "coordinates": {
           "type": "array",
           "minItems": 2,
-          "items": {
-            "type": "number"
-          }
+          "items": [
+            {
+              "type": "number",
+              "minimum": -180.0,
+              "maximum": 180.0
+            },
+            {
+              "type": "number",
+              "minimum": -90.0,
+              "maximum": 90.0
+            }
+          ],
+          "maxItems": 2
         },
         "bbox": {
           "type": "array",
