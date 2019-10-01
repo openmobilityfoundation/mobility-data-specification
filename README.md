@@ -40,8 +40,9 @@ The Mobility Data Specification is an Open Source project. Comments can be made 
 * Los Angeles: The rules and guidelines for the Los Angeles Dockless Bikeshare Systems / Pilot Program can be found on [Council Clerk Connect](https://cityclerk.lacity.org/lacityclerkconnect/index.cfm?fa=ccfi.viewrecord&cfnumber=17-1125) along with supporting info on [ladot.io](https://ladot.io/programs/dockless/).
 * Santa Monica: The rules and guidelines for the Santa Monica Shared Mobility Pilot Program can be found at https://www.smgov.net/sharedmobility.
 * Austin: The rules and guidelines for Austin's Micromobility Program can be found at https://austintexas.gov/micromobility.
-[Add your City here by opening a pull request](https://github.com/CityofLosAngeles/mobility-data-specification/compare)
 * Ulm: A draft of the guidelines can be found at [the city's GitHub presence](https://github.com/stadtulm/mds-zonen).
+
+[Add your City here by opening a pull request](https://github.com/CityofLosAngeles/mobility-data-specification/compare)
 
 ## Use Cases
 MDS enables cities to 
