@@ -76,7 +76,7 @@ Response bodies must be a `UTF-8` encoded JSON object and must minimally include
 }
 ```
 
-#### Provider HTTP Codes
+#### HTTP Response Codes
 
 * **200:** OK: operation successful.
 * **400:** Bad request.
@@ -88,7 +88,6 @@ Response bodies must be a `UTF-8` encoded JSON object and must minimally include
 
 ```json
 {
-    "version": "x.y.z",
     "error": "...",
     "error_description": "...",
     "error_details": [ "...", "..." ]
