@@ -3,8 +3,8 @@
 This specification contains a collection of RESTful APIs used to specify the digital relationship between _mobility as a service_ Providers and the Agencies that regulate them.
 
 - Authors: LADOT
-- Date: 03 June 2019
-- Version: alpha
+- Date: 02 October 2019
+- Version: beta
 
 ## Table of Contents
 
@@ -42,28 +42,25 @@ The goal of this specification is to enable Agencies to create, revise, and publ
 
 A machine-readable format will allow Providers to download policies and compute compliance for policies where it can be determined entirely by data obtained internally. Providers can then continually measure their own compliance against policies without further API calls.
 
-Geographical data will be stored as immutable GeoJSON and read from `/geographies` endpoint, referenced by UUID. In a future revision of Agency, we will deprecate the existing `/service_areas` endpoint. `/service_areas` currently only handles GeoJSON MultiPolygon and Polygon objects, and Policy documents might prefer Points for locations such as drop-zones. Using `/geographies` is intended to reduce external dependencies and cross-domain security issues. Policy may be used for a variety of enforcement actions, so it's important for the Agency to persist and keep immutable both Policy and Geography data.
-
 This initial draft proposes a subset of possible policies for consideration, and should not be taken to be the a comprehensive enumeration of all possible policies.
 
 <a name="distribution"></a>
 
 ## Distribution
 
-Policies may be published by Agencies or their authorized delegates via JSON objects via REST API. (TODO wording around flat-files). Serving Provider-specific policies will require authentication.
+Policies may be published by Agencies or their authorized delegates as JSON objects, served by either flat files or via REST API.  If an Agency wishes to publish Provider-specific policies to only those Providers, the REST option with authentication will be needed.  The flat-file formats as well as definitions for the REST API are described in subsequent sections.
 
-Each policy will have a unique ID (UUID).
+Policies will typically refer to one or more associated geographies. Geography descriptions (e.g. geofences or lists of street segments) should also be maintained by the Agency indefinitely. Policies without specific geographies (global policies) are assumed to apply to the entire region managed by the Agency.
 
-Published policies should be treated as immutable data. Obsoleting or otherwise changing policies is accomplished by publishing additional policies with a field named `prev_policies`, a list of UUID references to the previous policy or policies.
+Each policy and geography will have a unique ID (UUID).
 
-Policies should be stored and accessible indefinitely so that the set of active policies at a given time in the past can be retrieved from the `/policies` endpoint.
+Published policies and geographies should be treated as immutable data. Obsoleting or otherwise changing policies is accomplished by publishing additional policies with a field named `prev_policies`, a list of UUID references to the previous policy or policies.
 
-Policies will typically be linked to one or more associated geographies. Geography descriptions (e.g. geofences or lists of street segments) must also be maintained by the Agency indefinitely. Policies without specific geographies (global policies) are assumed to apply to the entire service area managed by the Agency.
+Geographical data will be stored as immutable GeoJSON and read from either `geographies.json` or the `/geographies` endpoint, referenced by UUID. In a future revision of Agency, we will deprecate the existing `/service_areas` endpoint. `/service_areas` currently only handles GeoJSON MultiPolygon and Polygon objects, and Policy documents might prefer Points for locations such as drop-zones. Using `/geographies` is intended to reduce external dependencies and cross-domain security issues. Policy may be used for a variety of enforcement actions, so it's important for the Agency to persist and keep immutable both Policy and Geography data.
 
-Policies should be re-fetched whenever (a) a Policy expires (via its `end_date`), or (b) at an interval specified by the Agency, e.g. "daily at midnight".
-Rules will be linked to one or more associated geographies. Geography descriptions (e.g. geofences or lists of street segments) must also be maintained by the Agency indefinitely.
+Policies should be stored and accessible indefinitely so that the set of active policies at a given time in the past can be retrieved from the `/policies` endpoint.  If using flat-files, storing only currently-active and future policies is acceptable so that the `policies.json` file does not grow without bound. 
 
-Policies should be re-fetched whenever (a) a Policy expires (via its `end_date`), or (b) at an interval specified by the Agency, e.g. "daily at midnight".
+Policies should be re-fetched whenever (a) a Policy expires (via its `end_date`), or (b) at an interval specified by the Agency, e.g. "daily at midnight".  Flat files will have an optional "expires" field that will apply to the file as a whole.
 
 <a name="schema"></a>
 
@@ -203,7 +200,49 @@ The payload returned from a GET call to the `value_url` will have the following 
 
 <a name="endpoints"></a>
 
-## Endpoints
+## Flat-file format
+
+To use flat files, Policy objects should be stored in two files: `policies.json` and `geographies.json`.  The `policies.json` file will look like the output of `GET /policies`.  Examples are as follows:
+
+Example `policies.json`
+```
+{
+    "version": "0.4.0",
+    "updated:" "1570035222868",
+    "policies": [
+        {
+            // policy JSON 1
+        },
+        {
+            // policy JSON 2
+        }
+    ]
+}
+```
+
+Example `geographies.json`
+```
+{
+    "version": "0.4.0",
+    "updated:" "1570035222868",
+    "geographies": [
+        {
+            // GeoJSON 1
+        },
+        {
+            // GeoJSON 2
+        }
+    ]
+}
+```
+
+The publishing Agency should establish and communicate to providers how frequently these files should be polled.  
+
+The `updated` field should be set to the time of publishing a revision, so that it is simple to identify a changed file.
+
+_Note: A simple tool to validate a `policies.json` and `geographies.json` in tandem will be contributed to the OMF._
+
+## REST Endpoints
 
 The provider-facing Policy API consists of the following two endpoints.
 
@@ -218,7 +257,7 @@ Parameters:
 
 Note: provider_id is an implicit parameter and will be encoded in the authentication key
 
-Returns: List of policy objects effective during the timespan described by greater than or equal to `start_time` and less than or equal to `end_time`
+Returns: List of policy objects effective during the timespan described by greater than or equal to `start_time` and less than or equal to `end_time`, plus a timestamp for `updated` and `version` with the schema version.
 
 Policies will be returned in order of effective date (see Policy Schema, below), with pagination as in Agency or Provider.
 
@@ -242,9 +281,9 @@ Note: Intentionally omitted `GET /geographies` until a compelling use-case can b
 
 Creating, editing, and publishing policies may be performed via a variety of mechanisms, and are therefore not specified here. Authoring tools would optionally provide schema extensions for tooling, including author, Provider-specificity, etc. We may add a specific instance of such extensions in a later revision of this document, but at present that’s TBD.
 
-One mechanism may be via a source-control repository, where pull-requests to Policy objects are proposed, left open to public commentary, etc., and served as static content via the endpoints listed above.
+One mechanism may be via a source-control repository, where pull-requests to Policy objects are proposed, left open to public commentary, etc., and served as static content via flat files or the endpoints listed above.
 
-Another possibility would be a policy-editing REST API, where drafts of Policy objects are mutable, pending publication. This would be the API for manual policy-creation with GUI tooling. LADOT may propose a specific separate policy-editing API in the future.
+Another possibility would be a policy-editing REST API, where drafts of Policy objects are mutable, pending publication. This would be the API for manual policy-creation with GUI tooling. LADOT will propose a specific policy-editing API in the future.
 
 Certain policies could be fully dynamic, e.g. caps could be raised and lowered via algorithm on a day-to-day or even hour-to-hour basis. No-fly-zones could be created in quasi-real-time in response to emergencies or road-closures.
 
@@ -254,4 +293,4 @@ Dynamic caps can also be implemented by replacing the “maximum” integer with
 
 ## Compliance
 
-A Compliance API will be described in a separate MDS specification. In brief, it will take as inputs the MDS Agency data stream, the MDS geography data, and these MDS Policy objects and emit Compliance objects. This work is in draft form but is closely informed by this Policy specification.
+A Compliance API will be described in a separate MDS specification. In brief, it will take as inputs the a snapshot of the MDS status at a particular time, the MDS geography data, and these MDS Policy objects and emit Compliance JSON measurements. MDS status can be generated from either Provider or Agency data.  This work is in draft form but is closely informed by this Policy specification.
