@@ -12,11 +12,8 @@ This specification contains a collection of RESTful APIs used to specify the dig
 - [Background](#background)
 - [Distribution](#distribution)
 - [Schema](#schema)
+- [File Format](#file-format)
 - [Endpoints](#endpoints)
-- [Authoring](#authoring)
-- [Compliance](#compliance)
-- [Open Topics](#open-topics)
-- [Examples](./Examples)
 
 <a name="audience"></a>
 
@@ -114,56 +111,24 @@ punative Policy in response to violations, it will need to filter Policy objects
 
 | Name            | Type                        | R/O | Description                                                                                                                                                                                                                                                                                                                                             |
 | --------------- | --------------------------- | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `name`          | String                      | R   | Name of cap item                                                                                                                                                                                                                                                                                                                                        |
-| `rule_type`     | enum                        | R   | Type of policy (see [“rule types”](#rule-types))                                                                                                                                                                                                                                                                                                        |
-| `rule_units`    | enum                        | O   | Measured units of policy (see [“rule units”](#rule-units))                                                                                                                                                                                                                                                                                              |
-| `geographies`   | UUID[]                      | R   | List of Geography UUIDs (non-overlapping) specifying the covered geography                                                                                                                                                                                                                                                                              |
-| `statuses`      | { Status: Vehicle Event[] } | R   | Vehicle `statuses` to which this rule applies. Optionally, you may provide specific `event_type`'s for the rule to apply to as a subset of a given status, providing an empty list or null defaults to "all". See [MDS Agency state diagram](https://github.com/CityOfLosAngeles/mobility-data-specification/blob/dev/agency/README.md#vehicle-events). |
-| `vehicle_types` | VehicleType[]               | O   | Applicable vehicle categories, default “all”. See MDS shared data types document. (link forthcoming)                                                                                                                                                                                                                                                    |
-| `minimum`       | integer                     | O   | Minimum value, if applicable (default 0)                                                                                                                                                                                                                                                                                                                |
-| `maximum`       | integer                     | O   | Maximum value, if applicable (default unlimited)                                                                                                                                                                                                                                                                                                        |
-| `start_time`    | time                        | O   | Beginning time-of-day (hh:mm:ss) when the rule is in effect (default 00:00:00)                                                                                                                                                                                                                                                                          |
-| `end_time`      | time                        | O   | Ending time-of-day (hh:mm:ss) when the rule is in effect (default 23:59:59)                                                                                                                                                                                                                                                                             |
-| `days`          | day[]                       | O   | Days `["sun", "mon", "tue", "wed", "thu", "fri", "sat"]` when the rule is in effect (default all)                                                                                                                                                                                                                                                       |
-| `messages`      | { string:string }           | O   | Message to rider user, if desired, in various languages, keyed by language tag (see [Messages](#messages))                                                                                                                                                                                                                                              |
-| `value_url`     | URL                         | O   | URL to an API endpoint that can provide dynamic information for the measured value (see [Value URL](#value-url))                                                                                                                                                                                                                                        |
+| `name`             | String                      | R   | Name of rule |
+| `rule_type`        | enum                        | R   | Type of policy (see [“rule types”](#rule-types)) |
+| `rule_units`       | enum                        | O   | Measured units of policy (see [“rule units”](#rule-units)) |
+| `geographies`      | UUID[]                      | R   | List of Geography UUIDs (non-overlapping) specifying the covered geography |
+| `statuses`         | { Status: Vehicle Event[] } | R   | Vehicle `statuses` to which this rule applies. Optionally, you may provide specific `event_type`'s for the rule to apply to as a subset of a given status, providing an empty list or null defaults to "all". See [MDS Agency state diagram](https://github.com/CityOfLosAngeles/mobility-data-specification/blob/dev/agency/README.md#vehicle-events). |
+| `vehicle_types`    | VehicleType[]               | O   | Applicable vehicle types, default “all”. |
+| `propulsion_types` | PropulsionType[]            | O   | Applicable vehicle propulsion categories, default “all”. |
+| `minimum`          | integer                     | O   | Minimum value, if applicable (default 0) |
+| `maximum`          | integer                     | O   | Maximum value, if applicable (default unlimited) |
+| `start_time`       | time                        | O   | Beginning time-of-day (hh:mm:ss) when the rule is in effect (default 00:00:00) |
+| `end_time`         | time                        | O   | Ending time-of-day (hh:mm:ss) when the rule is in effect (default 23:59:59) |
+| `days`             | day[]                       | O   | Days `["sun", "mon", "tue", "wed", "thu", "fri", "sat"]` when the rule is in effect (default all) |
+| `messages`         | { string:string }           | O   | Message to rider user, if desired, in various languages, keyed by language tag (see [Messages](#messages)) |
+| `value_url`        | URL                         | O   | URL to an API endpoint that can provide dynamic information for the measured value (see [Value URL](#value-url)) |
 
 ### Order of Operations
 
-Rules are ordered most-specific to most-general. E.g. an “earlier” cap rule would take precedence over a “later” cap rule. The internal mechanics of ordering are up to the Policy editing and hosting software.
-
-#### Rule Ordering
-
-Rules, being in a list, are implicitly ordered according to the JSON Specification. Rules are a very specific form of pattern matching; you specify the conditions for which a given rule is 'met', and a vehicle (or series of vehicles) may match with that specific rule. If a vehicle is matched with a rule, then it _will not_ be considered in the subsequent evaluation of rules within a given policy. This allows for expressing complex policies, such as a layer of 'valid' geographies in an earlier rule, with overarching 'invalid' geographies in later rules: see [LADOT Venice Beach Special Operations Example](./Examples.md#venice-beach-spec-ops)
-
-##### Evaluation Pseudocode
-
-The below example is intended to highlight the bucketing mechanisms of rule evaluation, and should not be considered a fully-fledged pseudocode representation of how to evaluate a policy. This is specifically for count maximum rules; evaluation for other rule types will be explained as part of the Compliance API.
-
-```
-let p = Policy object
-let rules = p.rules
-let S = set of vehicles to consider (e.g. all vehicles for a specific provider)
-
-eval(rules, S) {
-    let exclude = [] // Empty set
-    let matched_not_bucketed = [] // Empty set
-    for rule in rules {
-        let result = eval_rule(rule, S \ exclude)
-        let matched_vehicles = all (violation_vehicle || violation_vehicles) in result
-        let bucketed_vehicles = matched_vehicles(accumulator, vehicle => {
-            if (accumulator.length < rule.maximum) {
-                accumulator.add(vehicle)
-            }
-        })
-        matched_not_bucketed.add(matched_vehicles \ bucketed_vehicles)
-        exclude.add(bucketed_vehicles)
-        ...
-    }
-    ...
-}
-...
-```
+Rules are ordered most-specific to most-general. E.g. an “earlier” rule would take precedence over a “later” rule. The internal mechanics of ordering are up to the Policy editing and hosting software.
 
 <a name="messages"></a>
 
@@ -198,11 +163,11 @@ The payload returned from a GET call to the `value_url` will have the following 
 | `timestamp` | timestamp | R   | Timestamp the value was recorded    |
 | `policy_id` | UUID      | R   | Relevant `policy_id` for reference  |
 
-<a name="endpoints"></a>
+<a name="file-format"></a>
 
-## Flat-file format
+## File format
 
-To use flat files, Policy objects should be stored in two files: `policies.json` and `geographies.json`.  The `policies.json` file will look like the output of `GET /policies`.  Examples are as follows:
+To use flat files rather than REST endpoints, Policy objects should be stored in two files: `policies.json` and `geographies.json`.  The `policies.json` file will look like the output of `GET /policies`.  Examples are as follows:
 
 Example `policies.json`
 ```
@@ -240,7 +205,9 @@ The publishing Agency should establish and communicate to providers how frequent
 
 The `updated` field should be set to the time of publishing a revision, so that it is simple to identify a changed file.
 
-_Note: A simple tool to validate a `policies.json` and `geographies.json` in tandem will be contributed to the OMF._
+_Note: A simple tool to validate a `policies.json` and `geographies.json` in tandem will be contributed to the Open Mobility Foundation._
+
+<a name="endpoints"></a>
 
 ## REST Endpoints
 
@@ -252,8 +219,8 @@ Parameters:
 
 | Name         | Type      | R/O | Description                                    |
 | ------------ | --------- | --- | ---------------------------------------------- |
-| `start_time` | timestamp | O   | Earliest effective date, default=effective now |
-| `end_time`   | timestamp | O   | Latest effective date, default=all future      |
+| `start_date` | timestamp | O   | Earliest effective date, default=effective now |
+| `end_date`   | timestamp | O   | Latest effective date, default=all future      |
 
 Note: provider_id is an implicit parameter and will be encoded in the authentication key
 
@@ -275,22 +242,3 @@ Parameters: none
 
 Note: Intentionally omitted `GET /geographies` until a compelling use-case can be identified.
 
-<a name="authoring"></a>
-
-## Authoring
-
-Creating, editing, and publishing policies may be performed via a variety of mechanisms, and are therefore not specified here. Authoring tools would optionally provide schema extensions for tooling, including author, Provider-specificity, etc. We may add a specific instance of such extensions in a later revision of this document, but at present that’s TBD.
-
-One mechanism may be via a source-control repository, where pull-requests to Policy objects are proposed, left open to public commentary, etc., and served as static content via flat files or the endpoints listed above.
-
-Another possibility would be a policy-editing REST API, where drafts of Policy objects are mutable, pending publication. This would be the API for manual policy-creation with GUI tooling. LADOT will propose a specific policy-editing API in the future.
-
-Certain policies could be fully dynamic, e.g. caps could be raised and lowered via algorithm on a day-to-day or even hour-to-hour basis. No-fly-zones could be created in quasi-real-time in response to emergencies or road-closures.
-
-Dynamic caps can also be implemented by replacing the “maximum” integer with a URL to a source for dynamic data. This could be for provider-specific caps that go up and down, or for global caps e.g. “total 500 scooters at the coliseum”. Dynamic data sources would be required to have historical data so that validating prior information, and downloaded dynamic data would have a time-to-live.
-
-<a name="compliance"></a>
-
-## Compliance
-
-A Compliance API will be described in a separate MDS specification. In brief, it will take as inputs the a snapshot of the MDS status at a particular time, the MDS geography data, and these MDS Policy objects and emit Compliance JSON measurements. MDS status can be generated from either Provider or Agency data.  This work is in draft form but is closely informed by this Policy specification.
