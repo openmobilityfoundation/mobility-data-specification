@@ -402,13 +402,13 @@ Method: `GET`
 
 | Field | Type | Required/Optional | Comments |
 | ----- | ---- | ----------------- | ----- |
-| `device_id` | UUID | Required | A unique device ID in UUID format |
-| `vehicle_id` | String | Required | The Vehicle Identification Number visible on the vehicle itself |
+| `device_id` | UUID | Required | A unique device ID in UUID format, should match this device in Provider |
+| `vehicle_id` | String | Required | The Vehicle Identification Number visible on the vehicle itself, should match this device in provider |
 | `vehicle_type` | Enum | Required | see [vehicle types](#vehicle-types) table |
 | `propulsion_type` | Enum[] | Required | Array of [propulsion types](#propulsion-types); allows multiple values |
-| `last_event_time` | [timestamp][ts] | Required | Date/time that last status change occurred at. See [Event Times](#event-times) |
-| `last_event_type` | Enum | Required | See [event types](#event-types) table |
-| `last_event_type_reason` | Enum | Required | Reason for status change, allowable values determined by [`event type`](#event-types) |
+| `last_event_time` | [timestamp][ts] | Required | Date/time when last status change occurred. See [Event Times](#event-times) |
+| `last_event_type` | Enum | Required | Event type of most recent status change. See [event types](#event-types) table |
+| `last_event_type_reason` | Enum | Required | Event type reason of most recent status change, allowable values determined by [`event type`](#event-types) |
 | `last_event_location` | GeoJSON [Point Feature][geo]| Required | Location of veicle's last event |
 | `current_location` | GeoJSON [Point Feature][geo] | Optional | Current loaction of vehicle if different from last event |
 | `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |
