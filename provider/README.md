@@ -392,6 +392,25 @@ Should either side of the requested time range be missing, `/events` shall retur
 
 Should either side of the requested time range be greater than 2 weeks before the time of the request, `/events` shall return a `400 Bad Request` error.
 
+All providers should provide an endpoint that displays the current status of the fleet. Data in this endpoint should reconcile with data from the status changes enpdoint.
+
+Endpoint: `/vehicles`  
+Method: `GET`   
+`data` Payload: `{ "vehicles": [] }`, an array of objects with the following structure
+
+| Field | Type | Required/Optional | Comments |
+| ----- | ---- | ----------------- | ----- |
+| `device_id` | UUID | Required | A unique device ID in UUID format |
+| `vehicle_id` | String | Required | The Vehicle Identification Number visible on the vehicle itself |
+| `vehicle_type` | Enum | Required | see [vehicle types](#vehicle-types) table |
+| `propulsion_type` | Enum[] | Required | Array of [propulsion types](#propulsion-types); allows multiple values |
+| `last_event_time` | [timestamp][ts] | Required | Date/time that last status change occurred at. See [Event Times](#event-times) |
+| `last_event_type` | Enum | Required | See [event types](#event-types) table |
+| `last_event_type_reason` | Enum | Required | Reason for status change, allowable values determined by [`event type`](#event-types) |
+| `last_event_location` | GeoJSON [Point Feature][geo]| Required | Location of veicle's last event |
+| `current_location` | GeoJSON [Point Feature][geo] | Optional | Current loaction of vehicle if different from last event |
+| `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |
+
 [Top][toc]
 
 [general-information/versioning]: /general-information.md#versioning
