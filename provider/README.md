@@ -394,6 +394,8 @@ Should either side of the requested time range be greater than 2 weeks before th
 
 All providers should provide an endpoint that displays the current status of the fleet. Data in this endpoint should reconcile with data from the status changes enpdoint.
 
+### Vehicles
+
 Endpoint: `/vehicles`  
 Method: `GET`   
 `data` Payload: `{ "vehicles": [] }`, an array of objects with the following structure
