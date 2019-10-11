@@ -8,6 +8,8 @@ This specification contains a data standard for *mobility as a service* provider
 * [Trips](#trips)
 * [Status Changes](#status-changes)
 * [Realtime Data](#realtime-data)
+    - [GBFS](#GBFS)
+    - [Events](#events)
 
 ## General Information
 
@@ -226,19 +228,16 @@ Schema: [`trips` schema][trips-schema]
 
 ### Trips Query Parameters
 
-The trips API should allow querying trips with a combination of query parameters.
+The trips API should allow querying trips with the following query parameters. 
 
-* `min_end_time`: filters for trips where `end_time` occurs at or after the given time
-* `max_end_time`: filters for trips where `end_time` occurs before the given time
-* `static_end_time`: An [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date for a static bucket of files representing either a Month, Day, or Hour. Timezone UTC. 
+* `end_time`: An [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date for a static bucket of files representing an Hour. Timezone UTC. 
 
 | Request range | format | expected output | 
 | ------------- | ------ | --------------- | 
-| Month         | YYYY-DD | That month's worth of trips, or if the month is not complete or the file does not exist , an error | 
-| Day           | YYYY-MM-DD | That day's worth of trips, or if the day is not complete or the file does not exist, an error | 
-| Hour          | YYYY-MM-DD:HH | That hour worth of trips, or if the hour is not complete or hte file does not exist, an error. The minimum value of the hour should be 00 and the max 23, as the midnight hour should be denotated as the next day's zero hour. | 
+| Hour          | YYYY-MM-DD:HH | That hour worth of trips, or if the hour is not complete or the file does not exist, an error. The minimum value of the hour should be 00 and the max 23, as the midnight hour should be denoted as the next day's zero hour. | 
 
-The `min_end_time` and `max_end_time` endpoints shall not be used in combination with the `static_end_time` endpoints, rather, the the former is good for real-ish time uses cases, while the latter is best for reconstructing the historical record and backfilling. It is considered permissive to return an incorrect query parameter responses for the `min_end_time`  / `max_end_time` if the range contains timestamps older than one month. 
+For the near-ish real time use cases, please use the [events](#events) endpoint. 
+
 ### Vehicle Types
 
 | `vehicle_type` |
@@ -373,12 +372,16 @@ When multiple query parameters are specified, they should all apply to the retur
 
 ## Realtime Data
 
+### GBFS
+
 All MDS compatible `provider` APIs must expose a public [GBFS](https://github.com/NABSA/gbfs) feed as well. Given that GBFS hasn't fully [evolved to support dockless mobility](https://github.com/NABSA/gbfs/pull/92) yet, we follow the current guidelines in making bike information avaliable to the public. 
 
   - `gbfs.json` is always required and must contain a `feeds` property that lists all published feeds
   - `system_information.json` is always required
   - `free_bike_status.json` is required for MDS
   - `station_information.json` and `station_status.json` don't apply for MDS
+
+### Events
 
 [Top][toc]
 
