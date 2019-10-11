@@ -403,7 +403,7 @@ The events API should allow querying status changes with a combination of query 
 
 When multiple query parameters are specified, they should all apply to the returned status changes. For example, a request with `?start_time=1549800000000&end_time=1549886400000` should only return status changes whose `event_time` falls in the range `[1549800000000, 1549886400000)`.
 
-Should the requested time range be greater than 2 weeks old, the API shall return an error. 
+Should the requested time range be greater than 2 weeks old, the API shall return a 400 bad request error. 
 
 
 [Top][toc]
