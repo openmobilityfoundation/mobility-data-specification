@@ -375,7 +375,36 @@ All MDS compatible `provider` APIs must expose a public [GBFS](https://github.co
 
 ### Events
 
-The events endpoint is a near-ish real time feed of events, designed to give access to as recent as possible series of events from the vehicle feed. It functions similarly to status chan
+The events endpoint is a near-ish real time feed of events, designed to give access to as recent as possible series of events from the vehicle feed. It functions similarly to status changes, but shall not included data older than 2 weeks (that should live in `/status_changes.`)
+
+Unless stated otherwise by the municipality, this endpoint must return only those events with a `event_location` that [intersects](#intersection-operation) with the [municipality boundary](#municipality-boundary).
+
+> Note: As a result of this definition, consumers should query the [trips endpoint](#trips) to infer when vehicles enter or leave the municipality boundary.
+
+The datatype and scheme are the same as `status_changes
+
+Endpoint: `/events`  
+Method: `GET`  
+Schema: [`status_changes` schema][sc-schema]  
+`data` Payload: `{ "status_changes": [] }`, an array of objects with the following structure
+
+### Event Times
+
+Because of the unreliability of device clocks, the Provider is unlikely to know with total confidence what time an event occurred at. However, they are responsible for constructing as accurate a timeline as possible. Most importantly, the order of the timestamps for a particular device's events must reflect the Provider's best understanding of the order in which those events occurred.
+
+### Events Query Parameters
+
+The events API should allow querying status changes with a combination of query parameters.
+
+| Parameter | Type | Comments |
+| ----- | ---- | -------- |
+| `start_time` | [timestamp][ts] | filters for status changes where `event_time` occurs at or after the given time |
+| `end_time` | [timestamp][ts] | filters for status changes where `event_time` occurs before the given time |
+
+When multiple query parameters are specified, they should all apply to the returned status changes. For example, a request with `?start_time=1549800000000&end_time=1549886400000` should only return status changes whose `event_time` falls in the range `[1549800000000, 1549886400000)`.
+
+Should the requested time range be greater than 2 weeks old, the API shall return an error. 
+
 
 [Top][toc]
 
