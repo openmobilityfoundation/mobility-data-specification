@@ -392,13 +392,22 @@ Should either side of the requested time range be missing, `/events` shall retur
 
 Should either side of the requested time range be greater than 2 weeks before the time of the request, `/events` shall return a `400 Bad Request` error.
 
-All providers should provide an endpoint that displays the current status of the fleet. Data in this endpoint should reconcile with data from the status changes enpdoint.
-
 ### Vehicles
+
+All providers should provide an endpoint that displays the current status of the fleet. Data in this endpoint should reconcile with data from the status changes enpdoint.
 
 Endpoint: `/vehicles`  
 Method: `GET`   
-`data` Payload: `{ "vehicles": [] }`, an array of objects with the following structure
+
+The response should contain header information that indicates when it was last updated and when it will be updated again
+
+Field Name          | Required  | Defines
+--------------------| ----------| ----------
+last_updated        | Yes       | Timestamp indicating the last time the data in this feed was updated
+ttl                 | Yes       | Integer representing the number of seconds before the data in this feed will be updated again (0 if the data should always be refreshed)
+
+
+`data` Payload: `{ "last_updated": , "ttl": ,"vehicles": [] }`, an array of objects with the following structure
 
 | Field | Type | Required/Optional | Comments |
 | ----- | ---- | ----------------- | ----- |
