@@ -406,11 +406,12 @@ Field Name          | Required  | Defines
 last_updated        | Yes       | Timestamp indicating the last time the data in this feed was updated
 ttl                 | Yes       | Integer representing the number of seconds before the data in this feed will be updated again (0 if the data should always be refreshed)
 
-
 `data` Payload: `{ "last_updated": , "ttl": ,"vehicles": [] }`, an array of objects with the following structure
 
 | Field | Type | Required/Optional | Comments |
 | ----- | ---- | ----------------- | ----- |
+| `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS |
+| `provider_name` | String | Required | The public-facing name of the Provider |
 | `device_id` | UUID | Required | A unique device ID in UUID format, should match this device in Provider |
 | `vehicle_id` | String | Required | The Vehicle Identification Number visible on the vehicle itself, should match this device in provider |
 | `vehicle_type` | Enum | Required | see [vehicle types](#vehicle-types) table |
