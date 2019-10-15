@@ -396,17 +396,29 @@ Should either side of the requested time range be greater than 2 weeks before th
 
 All providers should provide an endpoint that displays the current status of the fleet. Data in this endpoint should reconcile with data from the status changes enpdoint.
 
-Endpoint: `/vehicles`  
-Method: `GET`   
+In addition to the standard [Provider payload wrapper](#response-format), responses from this endpoint should contain the last update timestamp and amount of time until the next update:
 
-The response should contain header information that indicates when it was last updated and when it will be updated again
+```json
+{
+    "version": "x.y.z",
+    "data": {
+        "vehicles": []
+    },
+    "last_updated": "12345",
+    "ttl": "12345"
+}
+```
+
+Where `last_updated` and `ttl` are defined as follows:
 
 Field Name          | Required  | Defines
 --------------------| ----------| ----------
 last_updated        | Yes       | Timestamp indicating the last time the data in this feed was updated
-ttl                 | Yes       | Integer representing the number of seconds before the data in this feed will be updated again (0 if the data should always be refreshed)
+ttl                 | Yes       | Integer representing the number of milliseconds before the data in this feed will be updated again (0 if the data should always be refreshed)
 
-`data` Payload: `{ "last_updated": , "ttl": ,"vehicles": [] }`, an array of objects with the following structure
+Endpoint: `/vehicles`
+Method: `GET`
+`data` Payload: `{ "vehicles": [] }`, an array of objects with the following structure
 
 | Field | Type | Required/Optional | Comments |
 | ----- | ---- | ----------------- | ----- |
