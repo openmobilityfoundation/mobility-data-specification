@@ -314,7 +314,7 @@
               },
               "associated_ticket": {
                 "type": "string",
-                "description": "An associated ticket inside a 311 or CRM system that a City can tie an event to."
+                "description": "Identifier for an associated ticket inside an Agency-maintained 311 or CRM system."
               }
             },
             "allOf": [
