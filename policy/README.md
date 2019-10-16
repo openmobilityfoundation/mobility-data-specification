@@ -210,7 +210,7 @@ Parameters:
 | `start_date` | timestamp | Optional    | Earliest effective date, default=effective now |
 | `end_date`   | timestamp | Optional    | Latest effective date, default=all future      |
 
-Note: provider_id is an implicit parameter and will be encoded in the authentication key
+Provider_id is an implicit parameter and will be encoded in the authentication mechanism, or an entire list of policies should be produced. 
 
 Returns: List of policy objects effective during the timespan described by greater than or equal to `start_time` and less than or equal to `end_time`, plus a timestamp for `updated` and `version` with the schema version.
 
@@ -227,6 +227,4 @@ Parameters: none
 Returns: One immutable GeoJSON FeatureCollection with an embedded UUID identifier property of `id`
 
 Parameters: none
-
-Note: Intentionally omitted `GET /geographies` until a compelling use-case can be identified.
 
