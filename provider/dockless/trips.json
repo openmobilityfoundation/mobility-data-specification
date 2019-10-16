@@ -369,7 +369,7 @@
                 ],
                 "pattern": "^(https://.*)$"
               },
-              "standard_cost": {
+              "standard_cost_currency": {
                 "$id": "#/properties/data/properties/trips/items/properties/standard_cost",
                 "type": [
                   "integer",
@@ -380,7 +380,7 @@
                   500
                 ]
               },
-              "actual_cost": {
+              "actual_cost_currency": {
                 "$id": "#/properties/data/properties/trips/items/properties/actual_cost",
                 "type": [
                   "integer",
@@ -389,6 +389,19 @@
                 "description": "The actual cost, in cents, paid by the customer of the mobility as a service provider",
                 "examples": [
                   520
+                ]
+              },
+              "currency": {
+                "$id": "#/properties/data/properties/trips/items/properties/currency",
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "description": "An ISO 4217 AlphabeticCurrency Code representing the currency of the payee.",
+                "examples": [
+                  "USD",
+                  "EUR",
+                  "GBP"
                 ]
               }
             }
