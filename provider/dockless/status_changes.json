@@ -311,6 +311,10 @@
                 "$id": "#/properties/data/properties/status_changes/items/properties/associated_trip",
                 "description": "Trip UUID, required if event_type_reason is user_pick_up or user_drop_off",
                 "$ref": "#/definitions/uuid"
+              },
+              "associated_ticket": {
+                "type": "string",
+                "description": "An associated ticket inside a 311 or CRM system that a City can tie an event to."
               }
             },
             "allOf": [
