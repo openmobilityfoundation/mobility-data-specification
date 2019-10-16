@@ -198,7 +198,8 @@ Schema: [`trips` schema][trips-schema]
 | `parking_verification_url` | String | Optional | A URL to a photo (or other evidence) of proper vehicle parking |
 | `standard_cost` | Integer | Optional | The cost, in the currency defined in `currency`, that it would cost to perform that trip in the standard operation of the System |
 | `actual_cost` | Integer | Optional | The actual cost, in the currency defined in `currency`, paid by the customer of the *mobility as a service* provider |
-| `currency` | String | Optonal, required if actual or standard cost is not null | An ISO 4217 AlphabeticCurrency Code representing the currency of the payee | 
+| `currency` | String | Optonal, required if actual or standard cost is not null | An [ISO 4217 Alphabetic Currency Code](https://en.wikipedia.org/wiki/ISO_4217#Active_codes) representing the currency of the payee |
+
 ### Trips Query Parameters
 
 The trips API should allow querying trips with a combination of query parameters.
