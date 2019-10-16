@@ -220,9 +220,9 @@ Schema: [`trips` schema][trips-schema]
 | `end_time` | [timestamp][ts] | Required | |
 | `publication_time` | [timestamp][ts] | Optional | Date/time that trip became available through the trips endpoint |
 | `parking_verification_url` | String | Optional | A URL to a photo (or other evidence) of proper vehicle parking |
-| `standard_cost` | Integer | Optional | The cost, in cents, that it would cost to perform that trip in the standard operation of the System |
-| `actual_cost` | Integer | Optional | The actual cost, in cents, paid by the customer of the *mobility as a service* provider |
-
+| `standard_cost_currency` | Integer | Optional | The cost, in the currency defined in `currency`, that it would cost to perform that trip in the standard operation of the System |
+| `actual_cost_currency` | Integer | Optional | The actual cost, in the currency defined in `currency`, paid by the customer of the *mobility as a service* provider |
+| `currency` | String | Optonal, required if actual or standard cost is not null | An ISO 4217 AlphabeticCurrency Code representing the currency of the payee | 
 ### Trips Query Parameters
 
 The trips API should allow querying trips with a combination of query parameters.
