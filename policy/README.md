@@ -194,7 +194,12 @@ The `updated` field should be set to the time of publishing a revision, so that 
 
 ## REST Endpoints
 
-The provider-facing Policy API consists of the following two endpoints.
+The provider-facing Policy API consists of the following two endpoints. A REST API allows a Agency to 
+
+1) Dynamically adjust caps 
+2) Provide provider specific policies behind some sort of authentication mechanism. 
+3) Adjust other attributes in closer to real time. 
+4) Enumerate when policies are set to change. 
 
 `GET /policies`
 
