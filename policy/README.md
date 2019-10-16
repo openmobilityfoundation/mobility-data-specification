@@ -228,3 +228,10 @@ Returns: One immutable GeoJSON FeatureCollection with an embedded UUID identifie
 
 Parameters: none
 
+
+## Rule Ordering 
+
+Rules, being in a list, are implicitly ordered according to the JSON Specification. Rules are a very specific form of pattern matching; you specify the conditions for which a given rule is 'met', and a vehicle (or series of vehicles) may match with that specific rule or set of rules.
+
+If a vehicle is matched with a rule, then it _will not_ be considered in the subsequent evaluation of rules within a given policy. This allows for expressing complex policies, such as a layer of 'valid' geographies in an earlier rule, with overarching 'invalid' geographies in later rules. 
+
