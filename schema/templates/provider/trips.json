@@ -145,18 +145,18 @@
                 ],
                 "pattern": "^(https://.*)$"
               },
-              "standard_cost_currency": {
+              "standard_cost": {
                 "$id": "#/properties/data/properties/trips/items/properties/standard_cost",
                 "type": ["integer", "null"],
-                "description": "The cost, in cents, that it would cost to perform the trip in the standard operation of the System",
+                "description": "The cost, in the currency defined in `currency`, that it would cost to perform that trip in the standard operation of the System",
                 "examples": [
                   500
                 ]
               },
-              "actual_cost_currency": {
+              "actual_cost": {
                 "$id": "#/properties/data/properties/trips/items/properties/actual_cost",
                 "type": ["integer", "null"],
-                "description": "The actual cost, in cents, paid by the customer of the mobility as a service provider",
+                "description": "The actual cost, in the currency defined in `currency`, paid by the customer of the *mobility as a service* providerim",
                 "examples": [
                   520
                 ]
