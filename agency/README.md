@@ -3,7 +3,7 @@
 This specification contains a collection of RESTful APIs used to specify the digital relationship between *mobility as a service* Providers and the Agencies that regulate them.
 
 * Authors: LADOT
-* Date: 25 Feb 2019	
+* Date: 19 Sep 2019	
 * Version: BETA
 
 ## Table of Contents
@@ -279,6 +279,7 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | `gps.altitude` | Double         | Required if Available | Altitude above mean sea level in meters                      |
 | `gps.heading`  | Double         | Required if Available | Degrees - clockwise starting at 0 degrees at true North      |
 | `gps.speed`    | Float          | Required if Available | Speed in meters / sec                                        |
+| `gps.accuracy` | Float          | Required if Available | Accuracy in meters                                           |
 | `gps.hdop`     | Float          | Required if Available | Horizontal GPS or GNSS accuracy value (see [hdop](https://support.esri.com/en/other-resources/gis-dictionary/term/358112bd-b61c-4081-9679-4fca9e3eb926)) |
 | `gps.satellites` | Integer      | Required if Available | Number of GPS or GNSS satellites
 | `charge`       | Float          | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 1 |
