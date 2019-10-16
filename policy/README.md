@@ -190,8 +190,6 @@ The publishing Agency should establish and communicate to providers how frequent
 
 The `updated` field should be set to the time of publishing a revision, so that it is simple to identify a changed file.
 
-_Note: A simple tool to validate a `policies.json` and `geographies.json` in tandem will be contributed to the Open Mobility Foundation._
-
 <a name="endpoints"></a>
 
 ## REST Endpoints
