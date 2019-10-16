@@ -52,17 +52,17 @@ Policies should be re-fetched whenever (a) a Policy expires (via its `end_date`)
 
 ### Policy Fields
 
-| Name             | Type      | R/O | Description                                                                         |
+| Name             | Type      | Required / Optional | Description                                                                         |
 | ---------------- | --------- | --- | ----------------------------------------------------------------------------------- |
-| `name`           | String    | R   | Name of policy                                                                      |
-| `policy_id`      | UUID      | R   | Unique ID of policy                                                                 |
-| `provider_ids`   | UUID[]    | O   | Providers for whom this policy is applicable (null or absent implies all Providers) |
-| `description`    | String    | R   | Description of policy                                                               |
-| `start_date`     | timestamp | R   | Beginning date/time of policy enforcement                                           |
-| `end_date`       | timestamp | O   | End date/time of policy enforcement                                                 |
-| `published_date` | timestamp | R   | Timestamp that the policy was published                                             |
-| `prev_policies`  | UUID[]    | O   | Unique IDs of prior policies replaced by this one                                   |
-| `rules`          | Rule[]    | R   | List of applicable rule elements (see [“rule fields”](#rule-fields))                |
+| `name`           | String    | Required   | Name of policy                                                                      |
+| `policy_id`      | UUID      | Required   | Unique ID of policy                                                                 |
+| `provider_ids`   | UUID[]    | Optional    | Providers for whom this policy is applicable (null or absent implies all Providers) |
+| `description`    | String    | Required   | Description of policy                                                               |
+| `start_date`     | timestamp | Required   | Beginning date/time of policy enforcement                                           |
+| `end_date`       | timestamp | Optional    | End date/time of policy enforcement                                                 |
+| `published_date` | timestamp | Required   | Timestamp that the policy was published                                             |
+| `prev_policies`  | UUID[]    | Optional    | Unique IDs of prior policies replaced by this one                                   |
+| `rules`          | Rule[]    | Required   | List of applicable rule elements (see [“rule fields”](#rule-fields))                |
 
 If the Agency decides that Provider-specific Policy documents should not be shared with other Providers, e.g.
 punative Policy in response to violations, it will need to filter Policy objects before serving them via this endpoint.
@@ -94,22 +94,22 @@ punative Policy in response to violations, it will need to filter Policy objects
 
 ### Rule Fields
 
-| Name            | Type                        | R/O | Description                                                                                                                                                                                                                                                                                                                                             |
+| Name            | Type                        | Required / Optional | Description                                                                                                                                                                                                                                                                                                                                             |
 | --------------- | --------------------------- | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `name`             | String                      | R   | Name of rule |
-| `rule_type`        | enum                        | R   | Type of policy (see [“rule types”](#rule-types)) |
-| `rule_units`       | enum                        | O   | Measured units of policy (see [“rule units”](#rule-units)) |
-| `geographies`      | UUID[]                      | R   | List of Geography UUIDs (non-overlapping) specifying the covered geography |
-| `statuses`         | { Status: Vehicle Event[] } | R   | Vehicle `statuses` to which this rule applies. Optionally, you may provide specific `event_type`'s for the rule to apply to as a subset of a given status, providing an empty list or null defaults to "all". See [MDS Agency state diagram](https://github.com/CityOfLosAngeles/mobility-data-specification/blob/dev/agency/README.md#vehicle-events). |
-| `vehicle_types`    | VehicleType[]               | O   | Applicable vehicle types, default “all”. |
-| `propulsion_types` | PropulsionType[]            | O   | Applicable vehicle propulsion categories, default “all”. |
-| `minimum`          | integer                     | O   | Minimum value, if applicable (default 0) |
-| `maximum`          | integer                     | O   | Maximum value, if applicable (default unlimited) |
-| `start_time`       | time                        | O   | Beginning time-of-day (hh:mm:ss) when the rule is in effect (default 00:00:00) |
-| `end_time`         | time                        | O   | Ending time-of-day (hh:mm:ss) when the rule is in effect (default 23:59:59) |
-| `days`             | day[]                       | O   | Days `["sun", "mon", "tue", "wed", "thu", "fri", "sat"]` when the rule is in effect (default all) |
-| `messages`         | { string:string }           | O   | Message to rider user, if desired, in various languages, keyed by language tag (see [Messages](#messages)) |
-| `value_url`        | URL                         | O   | URL to an API endpoint that can provide dynamic information for the measured value (see [Value URL](#value-url)) |
+| `name`             | String                      | Required   | Name of rule |
+| `rule_type`        | enum                        | Required   | Type of policy (see [“rule types”](#rule-types)) |
+| `rule_units`       | enum                        | Optional    | Measured units of policy (see [“rule units”](#rule-units)) |
+| `geographies`      | UUID[]                      | Required   | List of Geography UUIDs (non-overlapping) specifying the covered geography |
+| `statuses`         | { Status: Vehicle Event[] } | Required   | Vehicle `statuses` to which this rule applies. Optionally, you may provide specific `event_type`'s for the rule to apply to as a subset of a given status, providing an empty list or null defaults to "all". See [MDS Agency state diagram](https://github.com/CityOfLosAngeles/mobility-data-specification/blob/dev/agency/README.md#vehicle-events). |
+| `vehicle_types`    | VehicleType[]               | Optional    | Applicable vehicle types, default “all”. |
+| `propulsion_types` | PropulsionType[]            | Optional    | Applicable vehicle propulsion categories, default “all”. |
+| `minimum`          | integer                     | Optional    | Minimum value, if applicable (default 0) |
+| `maximum`          | integer                     | Optional    | Maximum value, if applicable (default unlimited) |
+| `start_time`       | time                        | Optional    | Beginning time-of-day (hh:mm:ss) when the rule is in effect (default 00:00:00) |
+| `end_time`         | time                        | Optional    | Ending time-of-day (hh:mm:ss) when the rule is in effect (default 23:59:59) |
+| `days`             | day[]                       | Optional    | Days `["sun", "mon", "tue", "wed", "thu", "fri", "sat"]` when the rule is in effect (default all) |
+| `messages`         | { string:string }           | Optional    | Message to rider user, if desired, in various languages, keyed by language tag (see [Messages](#messages)) |
+| `value_url`        | URL                         | Optional    | URL to an API endpoint that can provide dynamic information for the measured value (see [Value URL](#value-url)) |
 
 ### Order of Operations
 
@@ -142,11 +142,11 @@ There are potential complexities that are as-yet unaddressed, such as the latenc
 
 The payload returned from a GET call to the `value_url` will have the following immutable fields:
 
-| Name        | Type      | R/O | Description                         |
+| Name        | Type      | Required / Optional | Description                         |
 | ----------- | --------- | --- | ----------------------------------- |
-| `value`     | integer   | R   | Value of whatever the rule measures |
-| `timestamp` | timestamp | R   | Timestamp the value was recorded    |
-| `policy_id` | UUID      | R   | Relevant `policy_id` for reference  |
+| `value`     | integer   | Required   | Value of whatever the rule measures |
+| `timestamp` | timestamp | Required   | Timestamp the value was recorded    |
+| `policy_id` | UUID      | Required   | Relevant `policy_id` for reference  |
 
 <a name="file-format"></a>
 
@@ -202,10 +202,10 @@ The provider-facing Policy API consists of the following two endpoints.
 
 Parameters:
 
-| Name         | Type      | R/O | Description                                    |
+| Name         | Type      | Required / Optional | Description                                    |
 | ------------ | --------- | --- | ---------------------------------------------- |
-| `start_date` | timestamp | O   | Earliest effective date, default=effective now |
-| `end_date`   | timestamp | O   | Latest effective date, default=all future      |
+| `start_date` | timestamp | Optional    | Earliest effective date, default=effective now |
+| `end_date`   | timestamp | Optional    | Latest effective date, default=all future      |
 
 Note: provider_id is an implicit parameter and will be encoded in the authentication key
 
