@@ -1,31 +1,17 @@
 # Mobility Data Specification: Policy
 
-This specification contains a collection of RESTful APIs used to specify the digital relationship between _mobility as a service_ Providers and the Agencies that regulate them.
+This specification contains a collection of RESTful APIs used to specify the digital relationship between _mobility as a service_ Providers and the Agencies that regulate them. Specifically, the Policy family of APIs is set to communicate articulate municipality policies such as as caps and geofences in a clear, consistent manner. 
 
-- Authors: LADOT
-- Date: 02 October 2019
-- Version: beta
+- Version: (Under Development). The Policy API Specification is under active development and may have breaking changes in between any version number. 
 
 ## Table of Contents
 
-- [Audience](#audience)
 - [Background](#background)
 - [Distribution](#distribution)
 - [Schema](#schema)
 - [File Format](#file-format)
 - [Endpoints](#endpoints)
 
-<a name="audience"></a>
-
-## Audience
-
-There are three intended audiences of this API:
-
-1. Agencies, as consumers in the form of automated compliance measurement, and as creators of policy
-2. Providers, so that they can measure their compliance status independently
-3. Tooling companies that want to create applications for policy-creation and editing
-
-<a name="background"></a>
 
 ## Background
 
