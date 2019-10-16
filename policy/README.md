@@ -15,7 +15,7 @@ This specification contains a collection of RESTful APIs used to specify the dig
 
 ## Background
 
-The goal of this specification is to enable Agencies to create, revise, and publish machine-readable micromobility policy, as set of rules for individual and collective micromobility device behavior exhibited by both providers and riders. Examples of policies include:
+The goal of this specification is to enable Agencies to create, revise, and publish machine-readable policies, as set of rules for individual and collective device behavior exhibited by both providers of Mobility as a Service and riders / users. Examples of policies include:
 
 - City-wide and localized caps (e.g. “Minimum 500 and maximum 3000 scooters within city boundaries”)
 - Exclusion zones (e.g. “No scooters are permitted in this district on weekends”)
@@ -23,15 +23,15 @@ The goal of this specification is to enable Agencies to create, revise, and publ
 - Speed-limit restrictions (e.g. “15 mph outside of downtown, 10 mph downtown”)
 - Idle-time and disabled-time limitations (e.g. “5 days idle while rentable, 12 hours idle while unrentable, per device”)
 
-A machine-readable format will allow Providers to download policies and compute compliance for policies where it can be determined entirely by data obtained internally. Providers can then continually measure their own compliance against policies without further API calls.
+A machine-readable format will allow Providers to download policies and compute compliance for policies where it can be determined entirely by data obtained internally. 
 
-This initial draft proposes a subset of possible policies for consideration, and should not be taken to be the a comprehensive enumeration of all possible policies.
+We welcome pull requests for any policy types that have not been enumerated in this endpoint. 
 
 <a name="distribution"></a>
 
 ## Distribution
 
-Policies may be published by Agencies or their authorized delegates as JSON objects, served by either flat files or via REST API.  If an Agency wishes to publish Provider-specific policies to only those Providers, the REST option with authentication will be needed.  The flat-file formats as well as definitions for the REST API are described in subsequent sections.
+Policies shall be published by regulatory boides or their authorized delegates as JSON objects, served by either flat files or via REST API. The flat-file formats as well as definitions for the REST API are described in subsequent sections. 
 
 Policies will typically refer to one or more associated geographies. Geography descriptions (e.g. geofences or lists of street segments) should also be maintained by the Agency indefinitely. Policies without specific geographies (global policies) are assumed to apply to the entire region managed by the Agency.
 
@@ -39,9 +39,7 @@ Each policy and geography will have a unique ID (UUID).
 
 Published policies and geographies should be treated as immutable data. Obsoleting or otherwise changing policies is accomplished by publishing additional policies with a field named `prev_policies`, a list of UUID references to the previous policy or policies.
 
-Geographical data will be stored as immutable GeoJSON and read from either `geographies.json` or the `/geographies` endpoint, referenced by UUID. In a future revision of Agency, we will deprecate the existing `/service_areas` endpoint. `/service_areas` currently only handles GeoJSON MultiPolygon and Polygon objects, and Policy documents might prefer Points for locations such as drop-zones. Using `/geographies` is intended to reduce external dependencies and cross-domain security issues. Policy may be used for a variety of enforcement actions, so it's important for the Agency to persist and keep immutable both Policy and Geography data.
-
-Policies should be stored and accessible indefinitely so that the set of active policies at a given time in the past can be retrieved from the `/policies` endpoint.  If using flat-files, storing only currently-active and future policies is acceptable so that the `policies.json` file does not grow without bound. 
+Geographical data will be stored as GeoJSON and read from either `geographies.json` or the `/geographies` endpoint, referenced by UUID. In a future revision of Agency, we will deprecate the existing `/service_areas` endpoint. `/service_areas` currently only handles GeoJSON MultiPolygon and Polygon objects, and Policy documents might prefer Points for locations such as drop-zones. Using `/geographies` is intended to reduce external dependencies and cross-domain security issues. Policy may be used for a variety of enforcement actions, so it's important for the Agency to persist and keep immutable both Policy and Geography data.
 
 Policies should be re-fetched whenever (a) a Policy expires (via its `end_date`), or (b) at an interval specified by the Agency, e.g. "daily at midnight".  Flat files will have an optional "expires" field that will apply to the file as a whole.
 
