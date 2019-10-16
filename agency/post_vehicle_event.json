@@ -194,6 +194,10 @@
               "type": "number",
               "description": "Speed in meters/sec"
             },
+            "accuracy": {
+              "type": "number",
+              "description": "Accuracy in meters"
+            },
             "hdop": {
               "type": "number",
               "description": "Horizontal GPS or GNSS accuracy value"
