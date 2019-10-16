@@ -15,7 +15,7 @@ The following information applies to all `provider` API endpoints. Details on pr
 
 ### Versioning
 
-`provider` APIs must handle requests for specific versions of the specification from clients. 
+`provider` APIs must handle requests for specific versions of the specification from clients.
 
 Versioning must be implemented through the use of a custom media-type, `application/vnd.mds.provider+json`, combined with a required `version` parameter.
 
@@ -29,7 +29,7 @@ Clients must specify the version they are targeting through the `Accept` header.
 Accept: application/vnd.mds.provider+json;version=0.3
 ```
 
-> Since versioning was not added until the 0.3.0 release, if the `Accept` header is `application/json`, `*/*`, or not set in the request, the `provider` API must respond as if version `0.2` was requested.
+> Since versioning was not added until the 0.3.0 release, if the `Accept` header is not set as specified above, the `provider` API must respond as if version `0.2` was requested.
 
 Responses to client requests must indicate the version the response adheres to through the `Content-Type` header. For example:
 
@@ -37,15 +37,15 @@ Responses to client requests must indicate the version the response adheres to t
 Content-Type: application/vnd.mds.provider+json;version=0.3
 ```
 
-> Since versioning was not added until the 0.3.0 release, if the `Content-Type` header is `application/json` or not set in the response, version `0.2` must be assumed.
+> Since versioning was not added until the 0.3.0 release, if the `Content-Type` header is not set as specified above, version `0.2` must be assumed.
 
 If an unsupported or invalid version is requested, the API must respond with a status of `406 Not Acceptable`. In which case, the response should include a body specifying a list of supported versions.
 
 A client can explicitly negotiate headers using the `OPTIONS` method to an MDS endpoint. For example, to check if `trips` supports either version `0.2` or `0.3` with a preference for `0.2`, the client would issue the following request:
 
 ```http
-OPTIONS /trips/ HTTP/1.1 
-Host: provider.example.com 
+OPTIONS /trips/ HTTP/1.1
+Host: provider.example.com
 Accept: application/vnd.mds.provider+json;version=0.2,application/vnd.mds.provider+json;version=0.3;q=0.9
 ```
 
