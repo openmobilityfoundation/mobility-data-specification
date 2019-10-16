@@ -1,0 +1,990 @@
+{
+  "$ref": "#/definitions/Policy",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "The MDS Policy Schema, GET /policies/{id} payload",
+  "definitions": {
+    "CountRule": {
+      "additionalProperties": false,
+      "properties": {
+        "days": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/definitions/DAY_OF_WEEK"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "end_time": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "geographies": {
+          "items": {
+            "$ref": "#/definitions/UUID"
+          },
+          "type": "array"
+        },
+        "maximum": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "messages": {},
+        "minimum": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "rule_id": {
+          "$ref": "#/definitions/UUID"
+        },
+        "rule_type": {
+          "enum": [
+            "count"
+          ],
+          "type": "string"
+        },
+        "start_time": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "statuses": {
+          "additionalProperties": false,
+          "properties": {
+            "available": {
+              "anyOf": [
+                {
+                  "items": {
+                    "enum": [
+                      "service_start",
+                      "trip_end",
+                      "cancel_reservation",
+                      "provider_drop_off"
+                    ],
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "maxItems": 0,
+                  "minItems": 0,
+                  "type": "array"
+                }
+              ]
+            },
+            "elsewhere": {
+              "anyOf": [
+                {
+                  "items": {
+                    "enum": [
+                      "trip_leave"
+                    ],
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "maxItems": 0,
+                  "minItems": 0,
+                  "type": "array"
+                }
+              ]
+            },
+            "inactive": {
+              "anyOf": [
+                {
+                  "items": {
+                    "enum": [
+                      "agency_pick_up",
+                      "deregister"
+                    ],
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "maxItems": 0,
+                  "minItems": 0,
+                  "type": "array"
+                }
+              ]
+            },
+            "removed": {
+              "anyOf": [
+                {
+                  "items": {
+                    "enum": [
+                      "default",
+                      "register",
+                      "provider_pick_up",
+                      "agency_drop_off"
+                    ],
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "maxItems": 0,
+                  "minItems": 0,
+                  "type": "array"
+                }
+              ]
+            },
+            "reserved": {
+              "anyOf": [
+                {
+                  "items": {
+                    "enum": [
+                      "reserve"
+                    ],
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "maxItems": 0,
+                  "minItems": 0,
+                  "type": "array"
+                }
+              ]
+            },
+            "trip": {
+              "anyOf": [
+                {
+                  "items": {
+                    "enum": [
+                      "trip_start",
+                      "trip_enter"
+                    ],
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "maxItems": 0,
+                  "minItems": 0,
+                  "type": "array"
+                }
+              ]
+            },
+            "unavailable": {
+              "anyOf": [
+                {
+                  "items": {
+                    "enum": [
+                      "service_end"
+                    ],
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "maxItems": 0,
+                  "minItems": 0,
+                  "type": "array"
+                }
+              ]
+            }
+          },
+          "type": "object"
+        },
+        "value_url": {
+          "anyOf": [
+            {
+              "additionalProperties": false,
+              "properties": {
+                "hash": {
+                  "type": "string"
+                },
+                "host": {
+                  "type": "string"
+                },
+                "hostname": {
+                  "type": "string"
+                },
+                "href": {
+                  "type": "string"
+                },
+                "origin": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                },
+                "pathname": {
+                  "type": "string"
+                },
+                "port": {
+                  "type": "string"
+                },
+                "protocol": {
+                  "type": "string"
+                },
+                "search": {
+                  "type": "string"
+                },
+                "searchParams": {
+                  "additionalProperties": false,
+                  "type": "object"
+                },
+                "username": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "hash",
+                "host",
+                "hostname",
+                "href",
+                "origin",
+                "password",
+                "pathname",
+                "port",
+                "protocol",
+                "search",
+                "searchParams",
+                "username"
+              ],
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "vehicle_types": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/definitions/VEHICLE_TYPE"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "geographies",
+        "name",
+        "rule_id",
+        "rule_type",
+        "statuses"
+      ],
+      "type": "object"
+    },
+    "DAY_OF_WEEK": {
+      "enum": [
+        "sun",
+        "mon",
+        "tue",
+        "wed",
+        "thu",
+        "fri",
+        "sat"
+      ],
+      "type": "string"
+    },
+    "Policy": {
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "end_date": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "policy_id": {
+          "$ref": "#/definitions/UUID"
+        },
+        "prev_policies": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/definitions/UUID"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "provider_ids": {
+          "items": {
+            "$ref": "#/definitions/UUID"
+          },
+          "type": "array"
+        },
+        "rules": {
+          "items": {
+            "$ref": "#/definitions/Rule"
+          },
+          "type": "array"
+        },
+        "start_date": {
+          "$ref": "#/definitions/Timestamp"
+        }
+      },
+      "required": [
+        "name",
+        "description",
+        "provider_ids",
+        "policy_id",
+        "start_date",
+        "end_date",
+        "prev_policies",
+        "rules"
+      ],
+      "type": "object"
+    },
+    "Rule": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/CountRule"
+        },
+        {
+          "$ref": "#/definitions/TimeRule"
+        },
+        {
+          "$ref": "#/definitions/SpeedRule"
+        }
+      ]
+    },
+    "SpeedRule": {
+      "additionalProperties": false,
+      "properties": {
+        "days": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/definitions/DAY_OF_WEEK"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "end_time": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "geographies": {
+          "items": {
+            "$ref": "#/definitions/UUID"
+          },
+          "type": "array"
+        },
+        "maximum": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "messages": {},
+        "minimum": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "rule_id": {
+          "$ref": "#/definitions/UUID"
+        },
+        "rule_type": {
+          "enum": [
+            "speed"
+          ],
+          "type": "string"
+        },
+        "rule_units": {
+          "enum": [
+            "kph",
+            "mph"
+          ],
+          "type": "string"
+        },
+        "start_time": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "statuses": {
+          "additionalProperties": false,
+          "properties": {
+            "available": {
+              "anyOf": [
+                {
+                  "items": {
+                    "enum": [
+                      "service_start",
+                      "trip_end",
+                      "cancel_reservation",
+                      "provider_drop_off"
+                    ],
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "maxItems": 0,
+                  "minItems": 0,
+                  "type": "array"
+                }
+              ]
+            },
+            "elsewhere": {
+              "anyOf": [
+                {
+                  "items": {
+                    "enum": [
+                      "trip_leave"
+                    ],
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "maxItems": 0,
+                  "minItems": 0,
+                  "type": "array"
+                }
+              ]
+            },
+            "inactive": {
+              "anyOf": [
+                {
+                  "items": {
+                    "enum": [
+                      "agency_pick_up",
+                      "deregister"
+                    ],
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "maxItems": 0,
+                  "minItems": 0,
+                  "type": "array"
+                }
+              ]
+            },
+            "removed": {
+              "anyOf": [
+                {
+                  "items": {
+                    "enum": [
+                      "default",
+                      "register",
+                      "provider_pick_up",
+                      "agency_drop_off"
+                    ],
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "maxItems": 0,
+                  "minItems": 0,
+                  "type": "array"
+                }
+              ]
+            },
+            "reserved": {
+              "anyOf": [
+                {
+                  "items": {
+                    "enum": [
+                      "reserve"
+                    ],
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "maxItems": 0,
+                  "minItems": 0,
+                  "type": "array"
+                }
+              ]
+            },
+            "trip": {
+              "anyOf": [
+                {
+                  "items": {
+                    "enum": [
+                      "trip_start",
+                      "trip_enter"
+                    ],
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "maxItems": 0,
+                  "minItems": 0,
+                  "type": "array"
+                }
+              ]
+            },
+            "unavailable": {
+              "anyOf": [
+                {
+                  "items": {
+                    "enum": [
+                      "service_end"
+                    ],
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "maxItems": 0,
+                  "minItems": 0,
+                  "type": "array"
+                }
+              ]
+            }
+          },
+          "type": "object"
+        },
+        "value_url": {
+          "anyOf": [
+            {
+              "additionalProperties": false,
+              "properties": {
+                "hash": {
+                  "type": "string"
+                },
+                "host": {
+                  "type": "string"
+                },
+                "hostname": {
+                  "type": "string"
+                },
+                "href": {
+                  "type": "string"
+                },
+                "origin": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                },
+                "pathname": {
+                  "type": "string"
+                },
+                "port": {
+                  "type": "string"
+                },
+                "protocol": {
+                  "type": "string"
+                },
+                "search": {
+                  "type": "string"
+                },
+                "searchParams": {
+                  "additionalProperties": false,
+                  "type": "object"
+                },
+                "username": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "hash",
+                "host",
+                "hostname",
+                "href",
+                "origin",
+                "password",
+                "pathname",
+                "port",
+                "protocol",
+                "search",
+                "searchParams",
+                "username"
+              ],
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "vehicle_types": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/definitions/VEHICLE_TYPE"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "geographies",
+        "name",
+        "rule_id",
+        "rule_type",
+        "rule_units",
+        "statuses"
+      ],
+      "type": "object"
+    },
+    "TimeRule": {
+      "additionalProperties": false,
+      "properties": {
+        "days": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/definitions/DAY_OF_WEEK"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "end_time": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "geographies": {
+          "items": {
+            "$ref": "#/definitions/UUID"
+          },
+          "type": "array"
+        },
+        "maximum": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "messages": {},
+        "minimum": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "rule_id": {
+          "$ref": "#/definitions/UUID"
+        },
+        "rule_type": {
+          "enum": [
+            "time"
+          ],
+          "type": "string"
+        },
+        "rule_units": {
+          "enum": [
+            "minutes",
+            "hours"
+          ],
+          "type": "string"
+        },
+        "start_time": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "statuses": {
+          "additionalProperties": false,
+          "properties": {
+            "available": {
+              "anyOf": [
+                {
+                  "items": {
+                    "enum": [
+                      "service_start",
+                      "trip_end",
+                      "cancel_reservation",
+                      "provider_drop_off"
+                    ],
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "maxItems": 0,
+                  "minItems": 0,
+                  "type": "array"
+                }
+              ]
+            },
+            "elsewhere": {
+              "anyOf": [
+                {
+                  "items": {
+                    "enum": [
+                      "trip_leave"
+                    ],
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "maxItems": 0,
+                  "minItems": 0,
+                  "type": "array"
+                }
+              ]
+            },
+            "inactive": {
+              "anyOf": [
+                {
+                  "items": {
+                    "enum": [
+                      "agency_pick_up",
+                      "deregister"
+                    ],
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "maxItems": 0,
+                  "minItems": 0,
+                  "type": "array"
+                }
+              ]
+            },
+            "removed": {
+              "anyOf": [
+                {
+                  "items": {
+                    "enum": [
+                      "default",
+                      "register",
+                      "provider_pick_up",
+                      "agency_drop_off"
+                    ],
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "maxItems": 0,
+                  "minItems": 0,
+                  "type": "array"
+                }
+              ]
+            },
+            "reserved": {
+              "anyOf": [
+                {
+                  "items": {
+                    "enum": [
+                      "reserve"
+                    ],
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "maxItems": 0,
+                  "minItems": 0,
+                  "type": "array"
+                }
+              ]
+            },
+            "trip": {
+              "anyOf": [
+                {
+                  "items": {
+                    "enum": [
+                      "trip_start",
+                      "trip_enter"
+                    ],
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "maxItems": 0,
+                  "minItems": 0,
+                  "type": "array"
+                }
+              ]
+            },
+            "unavailable": {
+              "anyOf": [
+                {
+                  "items": {
+                    "enum": [
+                      "service_end"
+                    ],
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "maxItems": 0,
+                  "minItems": 0,
+                  "type": "array"
+                }
+              ]
+            }
+          },
+          "type": "object"
+        },
+        "value_url": {
+          "anyOf": [
+            {
+              "additionalProperties": false,
+              "properties": {
+                "hash": {
+                  "type": "string"
+                },
+                "host": {
+                  "type": "string"
+                },
+                "hostname": {
+                  "type": "string"
+                },
+                "href": {
+                  "type": "string"
+                },
+                "origin": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                },
+                "pathname": {
+                  "type": "string"
+                },
+                "port": {
+                  "type": "string"
+                },
+                "protocol": {
+                  "type": "string"
+                },
+                "search": {
+                  "type": "string"
+                },
+                "searchParams": {
+                  "additionalProperties": false,
+                  "type": "object"
+                },
+                "username": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "hash",
+                "host",
+                "hostname",
+                "href",
+                "origin",
+                "password",
+                "pathname",
+                "port",
+                "protocol",
+                "search",
+                "searchParams",
+                "username"
+              ],
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "vehicle_types": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/definitions/VEHICLE_TYPE"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "geographies",
+        "name",
+        "rule_id",
+        "rule_type",
+        "rule_units",
+        "statuses"
+      ],
+      "type": "object"
+    },
+    "Timestamp": {
+      "type": "number"
+    },
+    "UUID": {
+      "examples": [
+        "3c9604d6-b5ee-11e8-96f8-529269fb1459"
+      ],
+      "format": "uuid",
+      "pattern": "^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$",
+      "title": "A UUID used to uniquely identifty an object",
+      "type": "string"
+    },
+    "VEHICLE_TYPE": {
+      "enum": [
+        "car",
+        "bicycle",
+        "scooter",
+        "recumbent"
+      ],
+      "type": "string"
+    }
+  }
+}
