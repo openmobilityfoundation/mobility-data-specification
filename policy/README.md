@@ -33,15 +33,16 @@ We welcome pull requests for any policy types that have not been enumerated in t
 
 Policies shall be published by regulatory boides or their authorized delegates as JSON objects, served by either flat files or via REST API. The flat-file formats as well as definitions for the REST API are described in subsequent sections. 
 
-Policies will typically refer to one or more associated geographies. Geography descriptions (e.g. geofences or lists of street segments) should also be maintained by the Agency indefinitely. Policies without specific geographies (global policies) are assumed to apply to the entire region managed by the Agency.
+Policies will typically refer to one or more associated geographies. Geography descriptions (e.g. geofences or lists of street segments) should also be maintained by the Agency indefinitely. Policies must be pubished 
 
 Each policy and geography will have a unique ID (UUID).
 
 Published policies and geographies should be treated as immutable data. Obsoleting or otherwise changing policies is accomplished by publishing additional policies with a field named `prev_policies`, a list of UUID references to the previous policy or policies.
 
-Geographical data will be stored as GeoJSON and read from either `geographies.json` or the `/geographies` endpoint, referenced by UUID. In a future revision of Agency, we will deprecate the existing `/service_areas` endpoint. `/service_areas` currently only handles GeoJSON MultiPolygon and Polygon objects, and Policy documents might prefer Points for locations such as drop-zones. Using `/geographies` is intended to reduce external dependencies and cross-domain security issues. Policy may be used for a variety of enforcement actions, so it's important for the Agency to persist and keep immutable both Policy and Geography data.
+Geographical data will be stored as GeoJSON and read from either `geographies.json` or the `/geographies` endpoint, referenced by UUID. No part of the geographical data should be outside the [municipality boundary](https://github.com/CityOfLosAngeles/mobility-data-specification/tree/master/provider#municipality-boundary). 
 
-Policies should be re-fetched whenever (a) a Policy expires (via its `end_date`), or (b) at an interval specified by the Agency, e.g. "daily at midnight".  Flat files will have an optional "expires" field that will apply to the file as a whole.
+Policies should be re-fetched whenever (a) a Policy expires (via its `end_date`), or (b) at an interval specified by the regulatory body, e.g. "daily at midnight".  Flat files will have an optional "expires" field that will apply to the file as a whole.
+
 
 <a name="schema"></a>
 
