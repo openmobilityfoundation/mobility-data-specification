@@ -300,6 +300,7 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | `type`    |
 | --------- |
 | `bicycle` |
+| `car`     |
 | `scooter` |
 
 ### Propulsion Type
