@@ -325,6 +325,7 @@ Schema: [`status_changes` schema][sc-schema]
 | `event_location` | GeoJSON [Point Feature][geo] | Required | |
 | `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |
 | `associated_trip` | UUID | Required if Applicable | Trip UUID (foreign key to Trips API), required if `event_type_reason` is `user_pick_up` or `user_drop_off`, or for any other status change event that marks the end of a trip. |
+| `associated_ticket` | String | Optional | Identifier for an associated ticket inside an Agency-maintained 311 or CRM system. | 
 
 ### Event Times
 
