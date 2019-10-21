@@ -232,11 +232,11 @@ The trips API should allow querying trips with the following query parameters.
 
 Without an `end_time` query parameter, `/trips` shall return an error. 
 
-* `end_time`: An [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date for a static bucket of files representing an Hour. The response will have all trips whose end time occurred in the hour. For example, if you requested "2019-10-01:07", you should get back all trips that ended between `7:00 <= and < 8:00`. Timezone UTC. 
+* `end_time`: An [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date for a static bucket of files representing an Hour. The response will have all trips whose end time occurred in the hour. For example, if you requested "2019-10-01T07", you should get back all trips that ended between `7:00 <= and < 8:00`. Timezone UTC. 
 
 | Request range | format | expected output | 
 | ------------- | ------ | --------------- | 
-| Hour          | YYYY-MM-DD:HH | That hour worth of trips, or if the hour is not complete or the file does not exist, an error. The minimum value of the hour should be 00 and the max 23, as the midnight hour should be denoted as the next day's zero hour. | 
+| Hour          | YYYY-MM-DDTHH | That hour worth of trips, or if the hour is not complete or the file does not exist, an error. The minimum value of the hour should be 00 and the max 23, as the midnight hour should be denoted as the next day's zero hour. | 
 
 For the near-ish real time use cases, please use the [events](#events) endpoint. 
 
@@ -339,11 +339,11 @@ Because of the unreliability of device clocks, the Provider is unlikely to know 
 
 The status_changes API should allow querying status changes with a combination of query parameters.
 
-* `end_time`: An [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date for a static bucket of files representing a hour. The response will have all status changes whose event time occurred within the hour. For example, if you requested "2019-10-01:07", you should get back all status that happened between `7:00 <= and < 8:00`.Timezone UTC. 
+* `end_time`: An [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date for a static bucket of files representing a hour. The response will have all status changes whose event time occurred within the hour. For example, if you requested "2019-10-01T07", you should get back all status that happened between `7:00 <= and < 8:00`.Timezone UTC. 
 
 | Request range | format | expected output | 
 | ------------- | ------ | --------------- | 
-| Hour          | YYYY-MM-DD:HH | That hour worth of status changes, or if the hour is not complete or the file does not exist, an error. The minimum value of the hour should be 00 and the max 23, as the midnight hour should be denoted as the next day's zero hour. | 
+| Hour          | YYYY-MM-DDTHH | That hour worth of status changes, or if the hour is not complete or the file does not exist, an error. The minimum value of the hour should be 00 and the max 23, as the midnight hour should be denoted as the next day's zero hour. | 
 
 Without an `end_time` query parameter, `/status_changes` shall return an error. 
 
