@@ -343,7 +343,7 @@ The status_changes API should allow querying status changes with a combination o
 
 | Request range | format | expected output | 
 | ------------- | ------ | --------------- | 
-| Hour          | YYYY-MM-DD:HH | That hour worth of status changes, or if the hour is not complete or the file does not exist, an error. The minimum value of the hour should be 00 and the max 23, as the midnight hour should be denotated as the next day's zero hour. | 
+| Hour          | YYYY-MM-DD:HH | That hour worth of status changes, or if the hour is not complete or the file does not exist, an error. The minimum value of the hour should be 00 and the max 23, as the midnight hour should be denoted as the next day's zero hour. | 
 
 Without an `end_time` query parameter, `/status_changes` shall return an error. 
 
@@ -385,7 +385,7 @@ Unless stated otherwise by the municipality, this endpoint must return only thos
 
 > Note: As a result of this definition, consumers should query the [trips endpoint](#trips) to infer when vehicles enter or leave the municipality boundary.
 
-The datatype and scheme are the same as `status_changes
+The datatype and scheme are the same as `status_changes`.
 
 Endpoint: `/events`  
 Method: `GET`  
