@@ -230,6 +230,8 @@ Schema: [`trips` schema][trips-schema]
 
 The trips API should allow querying trips with the following query parameters. 
 
+Without an `end_time` query parameter, `/trips` shall return an error. 
+
 * `end_time`: An [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date for a static bucket of files representing an Hour. Timezone UTC. 
 
 | Request range | format | expected output | 
@@ -342,6 +344,8 @@ The status_changes API should allow querying status changes with a combination o
 | Request range | format | expected output | 
 | ------------- | ------ | --------------- | 
 | Hour          | YYYY-MM-DD:HH | That hour worth of status changes, or if the hour is not complete or the file does not exist, an error. The minimum value of the hour should be 00 and the max 23, as the midnight hour should be denotated as the next day's zero hour. | 
+
+Without an `end_time` query parameter, `/status_changes` shall return an error. 
 
 ### Event Types
 
