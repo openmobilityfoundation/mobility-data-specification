@@ -44,11 +44,52 @@ Geographical data will be stored as GeoJSON and read from either `geographies.js
 Policies should be re-fetched whenever (a) a Policy expires (via its `end_date`), or (b) at an interval specified by the regulatory body, e.g. "daily at midnight".  Flat files will have an optional "expires" field that will apply to the file as a whole.
 
 
-<a name="schema"></a>
-
 ## Schema
 
-<a name="policy-fields"></a>
+### Response Format
+
+The response to a client request must include a valid HTTP status code defined in the [IANA HTTP Status Code Registry](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml). It also must set the `Content-Type` header, as specified in the [Versioning](#Versioning) section.
+
+Response bodies must be a `UTF-8` encoded JSON object and must minimally include the MDS `version` and a `data` payload:
+
+```json
+{
+    "version": "x.y.z",
+    "updated": "1570035222868",
+    "data": {
+        "policies": [{
+            "provider_id": "...",
+            "trip_id": "...",
+        }]
+    }
+}
+```
+
+#### HTTP Response Codes
+
+* **200:** OK: operation successful.
+* **400:** Bad request.
+* **401:** Unauthorized: Invalid, expired, or insufficient scope of token.
+* **404:** Not Found: Object(s) do not exist.
+* **500:** Internal server error.
+
+#### Error Format
+
+```json
+{
+    "error": "...",
+    "error_description": "...",
+    "error_details": [ "...", "..." ]
+}
+```
+
+| Field               | Type     | Field Description      |
+| ------------------- | -------- | ---------------------- |
+| `error`             | String   | Error message string   |
+| `error_description` | String   | Human readable error description (can be localized) |
+| `error_details`     | String[] (optional) | Array of error details |
+
+All response fields must use `lower_case_with_underscores`.
 
 ### Policy Fields
 
@@ -159,7 +200,8 @@ Example `policies.json`
 {
     "version": "0.4.0",
     "updated:" "1570035222868",
-    "policies": [
+    "data": [
+        {"policies": []
         {
             // policy JSON 1
         },
