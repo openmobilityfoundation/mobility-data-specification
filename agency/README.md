@@ -2,8 +2,7 @@
 
 This specification contains a collection of RESTful APIs used to specify the digital relationship between *mobility as a service* Providers and the Agencies that regulate them.
 
-* Authors: LADOT
-* Date: 19 Sep 2019	
+* Date: 19 Sep 2019
 * Version: BETA
 
 ## Table of Contents
@@ -26,7 +25,7 @@ When making requests, the Agency API expects `provider_id` to be part of the cla
 
 ## Timestamps
 
-As with the Provider API, `timestamp` refers to integer milliseconds since Unix epoch. 
+As with the Provider API, `timestamp` refers to integer milliseconds since Unix epoch.
 
 ## Strings
 
@@ -59,8 +58,8 @@ If `device_id` is specified, `GET` will return a single vehicle record, otherwis
         "next": "https://..."
     }
 }
-``` 
-  
+```
+
 A vehicle record is as follows:
 
 | Field         | Type      | Field Description                                                             |
@@ -83,7 +82,7 @@ _No content returned on vehicle not found._
 
 ## Vehicle - Register
 
-The `/vehicles` registration endpoint is used to register a vehicle for use in the Agency jurisdiction. 
+The `/vehicles` registration endpoint is used to register a vehicle for use in the Agency jurisdiction.
 
 Endpoint: `/vehicles`
 Method: `POST`
@@ -119,7 +118,7 @@ _No content returned on success._
 
 ## Vehicle - Update
 
-The `/vehicles` update endpoint is used to update some mutable aspect of a vehicle.  For now, only `vehicle_id`. 
+The `/vehicles` update endpoint is used to update some mutable aspect of a vehicle.  For now, only `vehicle_id`.
 
 Endpoint: `/vehicles/{device_id}`
 Method: `PUT`
