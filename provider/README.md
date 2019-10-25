@@ -8,8 +8,8 @@ This specification contains a data standard for *mobility as a service* provider
 * [Trips](#trips)
 * [Status Changes](#status-changes)
 * [Realtime Data](#realtime-data)
-    - [GBFS](#GBFS)
-    - [Events](#events)
+  - [GBFS](#GBFS)
+  - [Events](#events)
 
 ## General Information
 
@@ -179,6 +179,7 @@ For the purposes of this specification, the intersection of two geographic datat
 [Top][toc]
 
 ### Municipality Boundary
+
 Municipalities requiring MDS Provider API compliance should provide an unambiguous digital source for the municipality boundary. This boundary must be used when determining which data each `provider` API endpoint will include.
 
 The boundary should be defined as a polygon or collection of polygons. The file defining the boundary should be provided in Shapefile or GeoJSON format and hosted online at a published address that all providers and `provider` API consumers can access and download.
@@ -188,6 +189,29 @@ Providers are not required to recalculate the set of historical data that is inc
 ### Timestamps
 
 References to `timestamp` imply integer milliseconds since [Unix epoch](https://en.wikipedia.org/wiki/Unix_time). You can find the implementation of unix timestamp in milliseconds for your programming language [here](https://currentmillis.com/).
+
+### Vehicle Types
+
+The list of allowed `vehicle_type` referenced below is:
+
+| `vehicle_type` |
+|--------------|
+| bicycle      |
+| car          |
+| scooter      |
+
+### Propulsion Types
+
+The list of allowed `propulsion_type` referenced below is:
+
+| `propulsion_type` | Description |
+| ----------------- | ----------------- |
+| human           | Pedal or foot propulsion |
+| electric_assist | Provides power only alongside human propulsion |
+| electric        | Contains throttle mode with a battery-powered motor |
+| combustion      | Contains throttle mode with a gas engine-powered motor |
+
+A device may have one or more values from the `propulsion_type`, depending on the number of modes of operation. For example, a scooter that can be powered by foot or by electric motor would have the `propulsion_type` represented by the array `['human', 'electric']`. A bicycle with pedal-assist would have the `propulsion_type` represented by the array `['human', 'electric_assist']` if it can also be operated as a traditional bicycle.
 
 [Top][toc]
 
@@ -239,25 +263,6 @@ Without an `end_time` query parameter, `/trips` shall return an error.
 | Hour          | YYYY-MM-DDTHH | That hour worth of trips, or if the hour is not complete or the file does not exist, an error. The minimum value of the hour should be 00 and the max 23, as the midnight hour should be denoted as the next day's zero hour. | 
 
 For the near-ish real time use cases, please use the [events](#events) endpoint. 
-
-### Vehicle Types
-
-| `vehicle_type` |
-|--------------|
-| bicycle      |
-| car          |
-| scooter      |
-
-### Propulsion Types
-
-| `propulsion_type` | Description |
-| ----------------- | ----------------- |
-| human           | Pedal or foot propulsion |
-| electric_assist | Provides power only alongside human propulsion |
-| electric        | Contains throttle mode with a battery-powered motor |
-| combustion      | Contains throttle mode with a gas engine-powered motor |
-
-A device may have one or more values from the `propulsion_type`, depending on the number of modes of operation. For example, a scooter that can be powered by foot or by electric motor would have the `propulsion_type` represented by the array `['human', 'electric']`. A bicycle with pedal-assist would have the `propulsion_type` represented by the array `['human', 'electric_assist']` if it can also be operated as a traditional bicycle.
 
 ### Routes
 
