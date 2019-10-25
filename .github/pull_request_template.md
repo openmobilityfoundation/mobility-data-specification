@@ -10,13 +10,13 @@ A breaking change would require consumers or implementors of the API to modify t
  * No, not breaking
  * I'm not sure
 
-### `Provider` or `agency`
+### Impacted Spec
 
-Which API(s) will this pull request impact:
+Which spec(s) will this pull request impact?
 
- * `provider`
  * `agency`
- * both
+ * `policy`
+ * `provider`
 
 ### Additional context
 
