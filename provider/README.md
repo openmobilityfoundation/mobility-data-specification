@@ -346,7 +346,7 @@ The `/status_changes` API should allow querying status changes with the followin
 
 | Parameter | Format | Expected Output |
 | --------------- | ------ | --------------- |
-| `event_time` | `YYYY-MM-DDTHH`, an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) extended datetime representing an UTC hour between 00 and 23. | All status changes with an event time occurring within the hour. For example, requesting `event_time=2019-10-01T07` returns all status changes where `07:00 <= trip.end_time < 08:00` on October 01, 2019 UTC. |
+| `event_time` | `YYYY-MM-DDTHH`, an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) extended datetime representing an UTC hour between 00 and 23. | All status changes with an event time occurring within the hour. For example, requesting `event_time=2019-10-01T07` returns all status changes where `07:00 <= status_change.event_time < 08:00` on October 01, 2019 UTC. |
 
 If the data does not exist or the hour has not completed, `/status_changes` shall return a `404 Not Found` error.
 
@@ -397,7 +397,7 @@ The schema and datatypes are the same as those defined for [`/status_changes`][s
 Endpoint: `/events`  
 Method: `GET`  
 Schema: [`status_changes` schema][sc-schema]  
-`data` Payload: `{ "status_changes": [] }`, an array of objects with the same structure as [`/status_changes`][status]
+`data` Payload: `{ "status_changes": [] }`, an array of objects with the same structure as in [`/status_changes`][status]
 
 ### Event Times
 
