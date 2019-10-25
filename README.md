@@ -4,7 +4,7 @@ The Mobility Data Specification (**MDS**), a project of the [Open Mobility Found
 
 **MDS** helps cities interact with companies who operate dockless scooters, bicycles and carshare in the public right-of-way. MDS is a key piece of digital infrastructure that supports the effective implementation of mobility policies in cities around the world.
 
-**MDS** is an open-source project. It was originally created by the [Los Angeles Department of Transportation](http://ladot.io) (LADOT). In November 2019, stewardship of MDS was transferred to the Open Mobility Foundation. It continues to be used by LADOT and many other municipalities.
+**MDS** is an open-source project. It was originally created by the [Los Angeles Department of Transportation](http://ladot.io) (LADOT). In November 2019, stewardship of MDS and the ownership of this repository was transferred to the Open Mobility Foundation. GitHub automatically redirects any links to this repository in the `CityOfLosAngeles` organization to the `openmobilityfoundation` instead. MDS continues to be used by LADOT and many other municipalities.
 
 **MDS** is currently comprised of two distinct components:
 
