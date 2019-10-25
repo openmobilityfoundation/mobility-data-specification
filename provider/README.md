@@ -252,15 +252,15 @@ Schema: [`trips` schema][trips-schema]
 
 ### Trips Query Parameters
 
-The trips API should allow querying trips with the following query parameters. 
+The `/trips` API should allow querying trips with the following query parameters:
 
-Without an `end_time` query parameter, `/trips` shall return an error. 
+| Parameter | Format | Expected Output |
+| --------------- | ------ | --------------- |
+| `end_time` | `YYYY-MM-DDTHH`, an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) extended datetime representing an UTC hour between 00 and 23. | All trips with an end time occurring within the hour. For example, requesting `end_time=2019-10-01T07` returns all trips where `07:00 <= trip.end_time < 08:00` on October 01, 2019 UTC. |
 
-* `end_time`: An [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date for a static bucket of files representing an Hour. The response will have all trips whose end time occurred in the hour. For example, if you requested "2019-10-01T07", you should get back all trips that ended between `7:00 <= and < 8:00`. Timezone UTC. 
+If the data does not exist or the hour has not completed, `/trips` shall return a `404 Not Found` error.
 
-| Request range | format | expected output | 
-| ------------- | ------ | --------------- | 
-| Hour          | YYYY-MM-DDTHH | That hour worth of trips, or if the hour is not complete or the file does not exist, an error. The minimum value of the hour should be 00 and the max 23, as the midnight hour should be denoted as the next day's zero hour. | 
+Without an `end_time` query parameter, `/trips` shall return a `400 Bad Request` error.
 
 For the near-ish real time use cases, please use the [events](#events) endpoint. 
 
