@@ -261,21 +261,3 @@ if __name__ == '__main__':
     # Write to the `agency` directory.
     with open("../agency/post_vehicle_telemetry.json", "w") as file:
         file.write(json.dumps(post_vehicle_telemetry, indent=2))
-
-    ####################
-    # GET SERVICE AREA #
-    ####################
-
-    # Create the standalone GET service area JSON schema by including the needed definitions
-    get_service_area = get_json_file('./templates/agency/get_service_area.json')
-    get_service_area["definitions"] = {
-            MULTIPOLYGON: multipolygon,
-            "area_type": common["definitions"]["area_type"],
-            "timestamp": common["definitions"]["timestamp"],
-            "uuid": common["definitions"]["uuid"],
-            }
-    # Check that it is a valid schema
-    jsonschema.Draft6Validator.check_schema(get_service_area)
-    # Write to the `agency` directory.
-    with open("../agency/get_service_area.json", "w") as file:
-        file.write(json.dumps(get_service_area, indent=2))

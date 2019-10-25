@@ -27,8 +27,6 @@ A machine-readable format will allow Providers to download policies and compute 
 
 We welcome pull requests for any policy types that have not been enumerated in this endpoint. 
 
-<a name="distribution"></a>
-
 ## Distribution
 
 Policies shall be published by regulatory boides or their authorized delegates as JSON objects, served by either flat files or via REST API. The flat-file formats as well as definitions for the REST API are described in subsequent sections. 
@@ -141,7 +139,7 @@ punative Policy in response to violations, it will need to filter Policy objects
 | `rule_type`        | enum                        | Required   | Type of policy (see [“rule types”](#rule-types)) |
 | `rule_units`       | enum                        | Optional    | Measured units of policy (see [“rule units”](#rule-units)) |
 | `geographies`      | UUID[]                      | Required   | List of Geography UUIDs (non-overlapping) specifying the covered geography |
-| `statuses`         | { Status: Vehicle Event[] } | Required   | Vehicle `statuses` to which this rule applies. Optionally, you may provide specific `event_type`'s for the rule to apply to as a subset of a given status, providing an empty list or null defaults to "all". See [MDS Agency state diagram](https://github.com/CityOfLosAngeles/mobility-data-specification/blob/dev/agency/README.md#vehicle-events). |
+| `statuses`         | { Status: Vehicle Event[] } | Required   | Vehicle `statuses` to which this rule applies. Optionally, you may provide specific `event_type`'s for the rule to apply to as a subset of a given status, providing an empty list or null defaults to "all". |
 | `vehicle_types`    | VehicleType[]               | Optional    | Applicable vehicle types, default “all”. |
 | `propulsion_types` | PropulsionType[]            | Optional    | Applicable vehicle propulsion categories, default “all”. |
 | `minimum`          | integer                     | Optional    | Minimum value, if applicable (default 0) |
