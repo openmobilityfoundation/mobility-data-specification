@@ -8,6 +8,8 @@ This specification contains a data standard for *mobility as a service* provider
 * [Trips](#trips)
 * [Status Changes](#status-changes)
 * [Realtime Data](#realtime-data)
+  - [GBFS](#GBFS)
+  - [Events](#events)
 
 ## General Information
 
@@ -177,6 +179,7 @@ For the purposes of this specification, the intersection of two geographic datat
 [Top][toc]
 
 ### Municipality Boundary
+
 Municipalities requiring MDS Provider API compliance should provide an unambiguous digital source for the municipality boundary. This boundary must be used when determining which data each `provider` API endpoint will include.
 
 The boundary should be defined as a polygon or collection of polygons. The file defining the boundary should be provided in Shapefile or GeoJSON format and hosted online at a published address that all providers and `provider` API consumers can access and download.
@@ -186,6 +189,29 @@ Providers are not required to recalculate the set of historical data that is inc
 ### Timestamps
 
 References to `timestamp` imply integer milliseconds since [Unix epoch](https://en.wikipedia.org/wiki/Unix_time). You can find the implementation of unix timestamp in milliseconds for your programming language [here](https://currentmillis.com/).
+
+### Vehicle Types
+
+The list of allowed `vehicle_type` referenced below is:
+
+| `vehicle_type` |
+|--------------|
+| bicycle      |
+| car          |
+| scooter      |
+
+### Propulsion Types
+
+The list of allowed `propulsion_type` referenced below is:
+
+| `propulsion_type` | Description |
+| ----------------- | ----------------- |
+| human           | Pedal or foot propulsion |
+| electric_assist | Provides power only alongside human propulsion |
+| electric        | Contains throttle mode with a battery-powered motor |
+| combustion      | Contains throttle mode with a gas engine-powered motor |
+
+A device may have one or more values from the `propulsion_type`, depending on the number of modes of operation. For example, a scooter that can be powered by foot or by electric motor would have the `propulsion_type` represented by the array `['human', 'electric']`. A bicycle with pedal-assist would have the `propulsion_type` represented by the array `['human', 'electric_assist']` if it can also be operated as a traditional bicycle.
 
 [Top][toc]
 
@@ -226,35 +252,17 @@ Schema: [`trips` schema][trips-schema]
 
 ### Trips Query Parameters
 
-The trips API should allow querying trips with a combination of query parameters.
+The `/trips` API should allow querying trips with the following query parameters:
 
-| Parameter | Type | Comments |
-| ----- | ---- | -------- |
-| `device_id` | UUID | |
-| `vehicle_id` | UUID | |
-| `min_end_time` | [timestamp][ts] | filters for trips where `end_time` occurs at or after the given time |
-| `max_end_time` | [timestamp][ts] | filters for trips where `end_time` occurs before the given time|
+| Parameter | Format | Expected Output |
+| --------------- | ------ | --------------- |
+| `end_time` | `YYYY-MM-DDTHH`, an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) extended datetime representing an UTC hour between 00 and 23. | All trips with an end time occurring within the hour. For example, requesting `end_time=2019-10-01T07` returns all trips where `07:00 <= trip.end_time < 08:00` on October 01, 2019 UTC. |
 
-When multiple query parameters are specified, they should all apply to the returned trips. For example, a request with `?min_end_time=1549800000000&max_end_time=1549886400000` should only return trips whose end time falls in the range `[1549800000000, 1549886400000)`.
+If the data does not exist or the hour has not completed, `/trips` shall return a `404 Not Found` error.
 
-### Vehicle Types
+Without an `end_time` query parameter, `/trips` shall return a `400 Bad Request` error.
 
-| `vehicle_type` |
-|--------------|
-| bicycle      |
-| car          |
-| scooter      |
-
-### Propulsion Types
-
-| `propulsion_type` | Description |
-| ----------------- | ----------------- |
-| human           | Pedal or foot propulsion |
-| electric_assist | Provides power only alongside human propulsion |
-| electric        | Contains throttle mode with a battery-powered motor |
-| combustion      | Contains throttle mode with a gas engine-powered motor |
-
-A device may have one or more values from the `propulsion_type`, depending on the number of modes of operation. For example, a scooter that can be powered by foot or by electric motor would have the `propulsion_type` represented by the array `['human', 'electric']`. A bicycle with pedal-assist would have the `propulsion_type` represented by the array `['human', 'electric_assist']` if it can also be operated as a traditional bicycle.
+For the near-ish real time use cases, please use the [events](#events) endpoint. 
 
 ### Routes
 
@@ -334,14 +342,15 @@ Because of the unreliability of device clocks, the Provider is unlikely to know 
 
 ### Status Changes Query Parameters
 
-The status_changes API should allow querying status changes with a combination of query parameters.
+The `/status_changes` API should allow querying status changes with the following query parameters:
 
-| Parameter | Type | Comments |
-| ----- | ---- | -------- |
-| `start_time` | [timestamp][ts] | filters for status changes where `event_time` occurs at or after the given time |
-| `end_time` | [timestamp][ts] | filters for status changes where `event_time` occurs before the given time |
+| Parameter | Format | Expected Output |
+| --------------- | ------ | --------------- |
+| `event_time` | `YYYY-MM-DDTHH`, an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) extended datetime representing an UTC hour between 00 and 23. | All status changes with an event time occurring within the hour. For example, requesting `event_time=2019-10-01T07` returns all status changes where `07:00 <= status_change.event_time < 08:00` on October 01, 2019 UTC. |
 
-When multiple query parameters are specified, they should all apply to the returned status changes. For example, a request with `?start_time=1549800000000&end_time=1549886400000` should only return status changes whose `event_time` falls in the range `[1549800000000, 1549886400000)`.
+If the data does not exist or the hour has not completed, `/status_changes` shall return a `404 Not Found` error.
+
+Without an `event_time` query parameter, `/status_changes` shall return a `400 Bad Request` error.
 
 ### Event Types
 
@@ -364,6 +373,8 @@ When multiple query parameters are specified, they should all apply to the retur
 
 ## Realtime Data
 
+### GBFS
+
 All MDS compatible `provider` APIs must expose a public [GBFS](https://github.com/NABSA/gbfs) feed as well. Given that GBFS hasn't fully [evolved to support dockless mobility](https://github.com/NABSA/gbfs/pull/92) yet, we follow the current guidelines in making bike information avaliable to the public. 
 
   - `gbfs.json` is always required and must contain a `feeds` property that lists all published feeds
@@ -371,10 +382,45 @@ All MDS compatible `provider` APIs must expose a public [GBFS](https://github.co
   - `free_bike_status.json` is required for MDS
   - `station_information.json` and `station_status.json` don't apply for MDS
 
+### Events
+
+The `/events` endpoint is a near-ish real-time feed of status changes, designed to give access to as recent as possible series of events.
+
+The `/events` endpoint functions similarly to `/status_changes`, but shall not included data older than 2 weeks (that should live in `/status_changes.`)
+
+Unless stated otherwise by the municipality, this endpoint must return only those events with an `event_location` that [intersects](#intersection-operation) with the [municipality boundary](#municipality-boundary).
+
+> Note: As a result of this definition, consumers should query the [trips endpoint](#trips) to infer when vehicles enter or leave the municipality boundary.
+
+The schema and datatypes are the same as those defined for [`/status_changes`][status].
+
+Endpoint: `/events`  
+Method: `GET`  
+Schema: [`status_changes` schema][sc-schema]  
+`data` Payload: `{ "status_changes": [] }`, an array of objects with the same structure as in [`/status_changes`][status]
+
+### Event Times
+
+Because of the unreliability of device clocks, the Provider is unlikely to know with total confidence what time an event occurred at. However, they are responsible for constructing as accurate a timeline as possible. Most importantly, the order of the timestamps for a particular device's events must reflect the Provider's best understanding of the order in which those events occurred.
+
+### Events Query Parameters
+
+The events API should allow querying with a combination of query parameters:
+
+| Parameter | Type | Expected Output |
+| ----- | ---- | -------- |
+| `start_time` | [timestamp][ts] | status changes where `start_time <= status_change.event_time` |
+| `end_time` | [timestamp][ts] | status changes where `status_change.event_time < end_time` |
+
+Should either side of the requested time range be missing, the API shall return a `400 Bad Request` error.
+
+Should either side of the requested time range be greater than 2 weeks before the time of the request, the API shall return a `400 Bad Request` error.
+
 [Top][toc]
 
 [geo]: #geographic-data
 [sc-schema]: status_changes.json
+[status]: #status-changes
 [toc]: #table-of-contents
 [trips-schema]: trips.json
 [ts]: #timestamps
