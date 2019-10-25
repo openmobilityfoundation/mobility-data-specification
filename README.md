@@ -8,9 +8,9 @@ The Mobility Data Specification (**MDS**), a project of the [Open Mobility Found
 
 **MDS** is currently comprised of two distinct components:
 
-* The [`provider`][provider] API is intended to be implemented by mobility providers. When a municipality queries information from a mobility provider, the Provider API has a historical view of operations in a standard format. It was first released in June 2018. Development takes place under the guidance of the OMF's Provider Services Working Group.
+* The [`provider`][provider] API endpoints are intended to be implemented by mobility providers and consumed by regulatory agencies. When a municipality queries information from a mobility provider, the Provider API has a historical view of operations in a standard format. It was first released in June 2018. Development takes place under the guidance of the OMF's Provider Services Working Group.
 
-* The [`agency`][agency] API is intended to be implemented by regulatory agencies. Providers query the Agency API when events (such as a trip start or vehicle status change) occur in their systems or to retrieve regulatory information. It was first released in April 2019. Development takes place under the guidance of the OMF's City Services Working Group.
+* The [`agency`][agency] API endpoints are intended to be implemented by regulatory agencies and consumed by mobility providers. Providers query the Agency API when events (such as a trip start or vehicle status change) occur in their systems or to retrieve regulatory information. It was first released in April 2019. Development takes place under the guidance of the OMF's City Services Working Group.
 
 Cities can chose how to integrate MDS into their mobility policies. They may chose to use  either `Agency` or `Provider`, both together, or specific end-points from within each API.
 
