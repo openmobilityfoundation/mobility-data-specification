@@ -1,6 +1,6 @@
 # Mobility Data Specification
 
-The Mobility Data Specification (**MDS**), a project of the [Open Mobility Foundation](http://www.openmobilityfoundation.org) (OMF), is a set of APIs focused on dockless e-scooters, bicycles and carshare. Inspired by [GTFS](https://developers.google.com/transit/gtfs/reference/) and [GBFS](https://github.com/NABSA/gbfs) the goals of MDS are to provide a standardized way for municipalities or other regulatory agencies to ingest, compare and analyze data from mobility service providers, and to give municipalities the ability to express regulation in machine-readable formats.
+The Mobility Data Specification (**MDS**), a project of the [Open Mobility Foundation](http://www.openmobilityfoundation.org) (OMF), is a set of Application Programming Interfaces (APIs) focused on dockless e-scooters, bicycles and carshare. Inspired by projects like [GTFS](https://developers.google.com/transit/gtfs/reference/) and [GBFS](https://github.com/NABSA/gbfs), the goals of MDS are to provide a standardized way for municipalities or other regulatory agencies to ingest, compare and analyze data from mobility service providers, and to give municipalities the ability to express regulation in machine-readable formats.
 
 **MDS** helps cities interact with companies who operate dockless scooters, bicycles and carshare in the public right-of-way. MDS is a key piece of digital infrastructure that supports the effective implementation of mobility policies in cities around the world.
 
@@ -12,7 +12,7 @@ The Mobility Data Specification (**MDS**), a project of the [Open Mobility Found
 
 * The [`agency`][agency] API endpoints are intended to be implemented by regulatory agencies and consumed by mobility providers. Providers query the Agency API when events (such as a trip start or vehicle status change) occur in their systems or to retrieve regulatory information. It was first released in April 2019. Development takes place under the guidance of the OMF's City Services Working Group.
 
-Cities can chose how to integrate MDS into their mobility policies. They may chose to use  either `Agency` or `Provider`, both together, or specific end-points from within each API.
+MDS is designed to be a modular kit-of-parts. Regulatory agencies can use the components of the API that are appropriate for their needs. An agency may choose to use only `agency` or `provider`, or may select specific elements (endpoints) from each to help them implement their policy goals.
 
 ## Learn More / Get Involved / Contributing
 To stay up to date on MDS releases, meetings, and events, please **subscribe to the [mds-announce](https://groups.google.com/a/groups.openmobilityfoundation.org/forum/#!forum/mds-announce) mailing list.**
