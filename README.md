@@ -26,20 +26,20 @@ Working Group | Mailing List | Description
 Provider Services | [mds-provider-services](https://groups.google.com/a/groups.openmobilityfoundation.org/forum/#!forum/mds-provider-services) | Manages the [`provider`][provider] API within MDS.
 City Services | [mds-city-services](https://groups.google.com/a/groups.openmobilityfoundation.org/forum/#!forum/mds-city-services) | Manages the [`agency`][agency] API within MDS, as well as the [`mds-core`](https://github.com/openmobilityfoundation/mds-core) reference implementation.
 
-You can view info about past releases and planning calls in the [wiki](https://github.com/CityOfLosAngeles/mobility-data-specification/wiki).
+You can view info about past releases and planning calls in the [wiki](https://github.com/openmobilityfoundation/mobility-data-specification/wiki).
 
 
 For questions about MDS please contact [info@openmobilityfoundation.org](mailto:info@openmobilityfoundation.org). Media inquiries to [media@openmobilityfoundation.org](mailto:media@openmobilityfoundation.org)
 
 ## Versions
 
-The specification will be versioned using Git tags and [semantic versioning](https://semver.org/). See prior [releases](https://github.com/CityOfLosAngeles/mobility-data-specification/releases) and the [Release Guidelines](ReleaseGuidelines.md) for more information.
+The specification will be versioned using Git tags and [semantic versioning](https://semver.org/). See prior [releases](https://github.com/openmobilityfoundation/mobility-data-specification/releases) and the [Release Guidelines](ReleaseGuidelines.md) for more information.
 
 Information about the latest release and all releases are below. Please note, you may be viewing a development copy of the Mobility Data Specification based on the current branch. Info about the latest release and all releases is below.
 
-* [Latest Release](https://github.com/CityOfLosAngeles/mobility-data-specification/tree/master)
+* [Latest Release](https://github.com/openmobilityfoundation/mobility-data-specification/tree/master)
 
-* [All Releases](https://github.com/CityOfLosAngeles/mobility-data-specification/releases)
+* [All Releases](https://github.com/openmobilityfoundation/mobility-data-specification/releases)
 
 ## Cities Using MDS
 
@@ -49,7 +49,7 @@ More than 80 cities and public agencies around the world use MDS, and it has bee
 * Santa Monica: The rules and guidelines for the Santa Monica Shared Mobility Pilot Program can be found at https://www.smgov.net/sharedmobility.
 * Austin: The rules and guidelines for Austin's Micromobility Program can be found at https://austintexas.gov/micromobility.
 * Ulm: A draft of the guidelines can be found at [the city's GitHub presence](https://github.com/stadtulm/mds-zonen).
-* _[add your City here by opening a pull request](https://github.com/CityofLosAngeles/mobility-data-specification/compare)_
+* _[add your City here by opening a pull request](https://github.com/openmobilityfoundation/mobility-data-specification/compare)_
 
 ## Use Cases
 Some examples of how cities are using MDS in practice:
