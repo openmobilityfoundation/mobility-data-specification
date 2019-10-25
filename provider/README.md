@@ -342,15 +342,15 @@ Because of the unreliability of device clocks, the Provider is unlikely to know 
 
 ### Status Changes Query Parameters
 
-The status_changes API should allow querying status changes with a combination of query parameters.
+The `/status_changes` API should allow querying status changes with the following query parameters:
 
-* `end_time`: An [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date for a static bucket of files representing a hour. The response will have all status changes whose event time occurred within the hour. For example, if you requested "2019-10-01T07", you should get back all status that happened between `7:00 <= and < 8:00`.Timezone UTC. 
+| Parameter | Format | Expected Output |
+| --------------- | ------ | --------------- |
+| `event_time` | `YYYY-MM-DDTHH`, an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) extended datetime representing an UTC hour between 00 and 23. | All status changes with an event time occurring within the hour. For example, requesting `event_time=2019-10-01T07` returns all status changes where `07:00 <= trip.end_time < 08:00` on October 01, 2019 UTC. |
 
-| Request range | format | expected output | 
-| ------------- | ------ | --------------- | 
-| Hour          | YYYY-MM-DDTHH | That hour worth of status changes, or if the hour is not complete or the file does not exist, an error. The minimum value of the hour should be 00 and the max 23, as the midnight hour should be denoted as the next day's zero hour. | 
+If the data does not exist or the hour has not completed, `/status_changes` shall return a `404 Not Found` error.
 
-Without an `end_time` query parameter, `/status_changes` shall return an error. 
+Without an `event_time` query parameter, `/status_changes` shall return a `400 Bad Request` error.
 
 ### Event Types
 
