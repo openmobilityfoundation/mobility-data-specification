@@ -17,7 +17,7 @@ Cities can chose how to integrate MDS into their mobility policies. They may cho
 ## Learn More / Get Involved / Contributing
 To stay up to date on MDS releases, meetings, and events, please **subscribe to the [mds-announce](https://groups.google.com/a/groups.openmobilityfoundation.org/forum/#!forum/mds-announce) mailing list.**
 
-The Mobility Data Specification is an open source project with all development taking place on GitHub. Comments and ideas can be shared by [creating an issue](https://github.com/openmobilityfoundation/mobility-data-specification/issues), and specific changes can be suggested by [opening a pull request]((https://github.com/openmobilityfoundation/mobility-data-specification/pulls).
+The Mobility Data Specification is an open source project with all development taking place on GitHub. Comments and ideas can be shared by [creating an issue](https://github.com/openmobilityfoundation/mobility-data-specification/issues), and specific changes can be suggested by [opening a pull request]((https://github.com/openmobilityfoundation/mobility-data-specification/pulls). Before contributing, please review our [CONTRIBUTING page](CONTRIBUTING.md) to understand guidelines and policies for participation and our [CODE OF CONDUCT page](CODE_OF_CONDUCT.md).
 
 You can also get involved in development by joining an OMF working group. The working groups maintain the OMF GitHub repositories and work through issues and pull requests. Each working group has its own mailing list for non-technical discussion and planning:
 
@@ -28,7 +28,6 @@ City Services | [mds-city-services](https://groups.google.com/a/groups.openmobil
 
 You can view info about past releases and planning calls in the [wiki](https://github.com/CityOfLosAngeles/mobility-data-specification/wiki).
 
-To understand the contributing guidelines review the [CONTRIBUTING page.](CONTRIBUTING.md)
 
 For questions about MDS please contact [info@openmobilityfoundation.org](mailto:info@openmobilityfoundation.org). Media inquiries to [media@openmobilityfoundation.org](mailto:media@openmobilityfoundation.org)
 
