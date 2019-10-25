@@ -407,12 +407,12 @@ Because of the unreliability of device clocks, the Provider is unlikely to know 
 
 The events API should allow querying with a combination of query parameters:
 
-| Parameter | Type | Comments |
+| Parameter | Type | Expected Output |
 | ----- | ---- | -------- |
-| `start_time` | [timestamp][ts] | filters for status changes where `event_time` occurs at or after the given time |
-| `end_time` | [timestamp][ts] | filters for status changes where `event_time` occurs before the given time |
+| `start_time` | [timestamp][ts] | status changes where `start_time <= status_change.event_time` |
+| `end_time` | [timestamp][ts] | status changes where `status_change.event_time < end_time` |
 
-When multiple query parameters are specified, they should all apply to the returned status changes. For example, a request with `?start_time=1549800000000&end_time=1549886400000` should only return status changes where `1549800000000 <= status_change.event_time < 1549886400000`.
+Should either side of the requested time range be missing, the API shall return a `400 Bad Request` error.
 
 Should either side of the requested time range be greater than 2 weeks before the time of the request, the API shall return a `400 Bad Request` error.
 
