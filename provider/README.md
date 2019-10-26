@@ -414,9 +414,9 @@ The events API should allow querying with a combination of query parameters:
 | `start_time` | [timestamp][ts] | status changes where `start_time <= status_change.event_time` |
 | `end_time` | [timestamp][ts] | status changes where `status_change.event_time < end_time` |
 
-Should either side of the requested time range be missing, the API shall return a `400 Bad Request` error.
+Should either side of the requested time range be missing, `/events` shall return a `400 Bad Request` error.
 
-Should either side of the requested time range be greater than 2 weeks before the time of the request, the API shall return a `400 Bad Request` error.
+Should either side of the requested time range be greater than 2 weeks before the time of the request, `/events` shall return a `400 Bad Request` error.
 
 [Top][toc]
 
