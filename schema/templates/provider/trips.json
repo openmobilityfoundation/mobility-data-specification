@@ -163,9 +163,8 @@
               },
               "currency": {
                 "$id": "#/properties/data/properties/trips/items/properties/currency",
-                "type": ["string"
-                          , "null"],
-                "description": "An ISO 4217 AlphabeticCurrency Code representing the currency of the payee.",
+                "type": ["string", "null"],
+                "description": "An ISO 4217 Alphabetic Currency Code representing the currency of the payee. If null, USD cents is implied.",
                 "examples": [
                     "USD", "EUR", "GBP"
                 ]

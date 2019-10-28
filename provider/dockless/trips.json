@@ -398,7 +398,7 @@
                   "string",
                   "null"
                 ],
-                "description": "An ISO 4217 AlphabeticCurrency Code representing the currency of the payee.",
+                "description": "An ISO 4217 Alphabetic Currency Code representing the currency of the payee. If null, USD cents is implied.",
                 "examples": [
                   "USD",
                   "EUR",
