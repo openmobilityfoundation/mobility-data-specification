@@ -144,10 +144,10 @@ This Policy allows scooters and bikes can be in the public right-of-way for up t
       "geographies": [
         "12b3fcf5-22af-4b0d-a169-ac7ac903d3b9"
       ],
-      "statuses": [
-        "unavailable",
-        "trip"
-      ],
+      "statuses": {
+        "unavailable": [],
+        "trip": []
+      },
       "vehicle_types": [
         "bicycle",
         "scooter"
