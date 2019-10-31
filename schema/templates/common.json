@@ -9,9 +9,9 @@
       "type": "string",
       "title": "The MDS Provider version this data represents",
       "examples": [
-        "0.3.0"
+        "0.4.0"
       ],
-      "pattern": "^0\\.3\\.[0-9]+$"
+      "pattern": "^0\\.4\\.[0-9]+$"
     },
     "uuid": {
       "$id": "#/definitions/uuid",
@@ -48,6 +48,7 @@
         "inactive",
         "removed",
         "reserved",
+        "trip",
         "unavailable"
       ]
     },
@@ -57,6 +58,7 @@
       "description": "The type of vehicle",
       "enum": [
         "bicycle",
+        "car",
         "scooter"
       ]
     },
@@ -236,6 +238,10 @@
             "speed": {
               "type": "number",
               "description": "Speed in meters/sec"
+            },
+	      "accuracy": {
+              "type": "number",
+              "description": "Accuracy in meters"
             },
             "hdop": {
               "type": "number",

@@ -148,7 +148,7 @@
               "standard_cost": {
                 "$id": "#/properties/data/properties/trips/items/properties/standard_cost",
                 "type": ["integer", "null"],
-                "description": "The cost, in cents, that it would cost to perform the trip in the standard operation of the System",
+                "description": "The cost, in the currency defined in `currency`, that it would cost to perform that trip in the standard operation of the System. If no currency is given, USD cents is implied.",
                 "examples": [
                   500
                 ]
@@ -156,9 +156,17 @@
               "actual_cost": {
                 "$id": "#/properties/data/properties/trips/items/properties/actual_cost",
                 "type": ["integer", "null"],
-                "description": "The actual cost, in cents, paid by the customer of the mobility as a service provider",
+                "description": "The actual cost, in the currency defined in `currency`, paid by the customer of the *mobility as a service* provider. If no currency is given, USD cents is implied.",
                 "examples": [
                   520
+                ]
+              },
+              "currency": {
+                "$id": "#/properties/data/properties/trips/items/properties/currency",
+                "type": ["string", "null"],
+                "description": "An ISO 4217 Alphabetic Currency Code representing the currency of the payee. If null, USD cents is implied.",
+                "examples": [
+                    "USD", "EUR", "GBP"
                 ]
               }
             }

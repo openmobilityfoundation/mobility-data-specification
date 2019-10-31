@@ -1,8 +1,8 @@
 # Mobility Data Specification
 
-The Mobility Data Specification (**MDS**) is a set of data specifications and data sharing requirements focused on dockless e-scooters and bicycles. Inspired by [GTFS](https://developers.google.com/transit/gtfs/reference/) and [GBFS](https://github.com/NABSA/gbfs) the goals of the MDS are to provide API and data standards for municipalities to help ingest, compare and analyze *mobility as a service* provider data. 
+The Mobility Data Specification (**MDS**) is a set of data specifications and data sharing requirements focused on dockless e-scooters, bicycles and carshare. Inspired by [GTFS](https://developers.google.com/transit/gtfs/reference/) and [GBFS](https://github.com/NABSA/gbfs) the goals of the MDS are to provide API and data standards for municipalities to help ingest, compare and analyze *mobility as a service* provider data. 
 
-The **MDS** helps the City ingest and analyze information from for-profit companies who operate dockless scooters and bicycles in the public right-of-way. MDS is a key piece of digital infrastructure that helps cities and regulators such as Los Angeles Department of Transportation (LADOT) understand how dockless mobility operate.
+The **MDS** helps the City ingest and analyze information from for-profit companies who operate dockless scooters, bicycles and carshare in the public right-of-way. MDS is a key piece of digital infrastructure that helps cities and regulators such as Los Angeles Department of Transportation (LADOT) understand how dockless mobility operate.
 
 Mobility providers are required to share data with LADOT as part of the City of Los Angeles' Dockless Mobility Permit. Standardizing data collection between different providers improves cooperation, innovation, and efficiency of the City's transportation network.
 
@@ -45,16 +45,16 @@ The Mobility Data Specification is an Open Source project. Comments can be made 
 [Add your City here by opening a pull request](https://github.com/CityofLosAngeles/mobility-data-specification/compare)
 
 ## Use Cases
-MDS enables cities to 
+MDS enables cities to:
 
-- To verify how many scooters are operating.
-- To verify whether scooters are being deployed equitably across neighborhoods. 
-- To determine whether scooters are dropped off outside of a service area. 
-- To determine whether scooters are being parked in safe and appropriate parking areas.
-- To ensure compliance with Device Caps, Operating Regulations. 
-- To ensure inform and help manage 311 / Service Request style operations. 
-- To inform future capital investments such as dockless vehicle drop zones or furniture zones.
-- To inform policy making – number of scooters, distribution, etc.
+- Verify how many scooters are operating.
+- Verify whether scooters are being deployed equitably across neighborhoods. 
+- Determine whether scooters are dropped off outside of a service area. 
+- Determine whether scooters are being parked in safe and appropriate parking areas.
+- Ensure compliance with Device Caps, Operating Regulations. 
+- Ensure inform and help manage 311 / Service Request style operations. 
+- Inform future capital investments such as dockless vehicle drop zones or furniture zones.
+- Inform policy making – number of scooters, distribution, etc.
 - Develop ways to communicate dynamic information on unplanned events, such as emergency road closures, water main breaks, etc. to mobility providers to help them keep their users and contractors informed for better route planning and re-balancing efforts.
 - Much More! 
 

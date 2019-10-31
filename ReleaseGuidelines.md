@@ -55,7 +55,7 @@ The sections below define the release process itself, including timeline, roles,
 >**It is our intent to maintain a level of coordination between the technical direction of `agency` and `provider`. As such, proposed changes to either API will be reviewed to ensure they do not create unnecessary duplicative functionality, introduce confusion about which API should be used for a given purpose, or prevent the reconciliation of data between the two APIs (for example: using data from `provider` to cross-validate data received via `agency`).**
 
 ### Project Meetings
-* Web conference and in person work sessions will posted to the [google calendar XXXXX](). Meetings generally occur monthly.
+* Web conference and in person work sessions will posted to the [MDS-Announce mailing list](https://groups.google.com/forum/#!forum/mds-announce). Meetings generally occur monthly.
 * The meeting organizer can use the [meeting template](https://github.com/CityOfLosAngeles/mobility-data-specification/wiki/Web-Conference-Template) to prepare for project meetings. Use the [template markup code](https://github.com/CityOfLosAngeles/mobility-data-specification/wiki/Web-Conference-Template/_edit) to create the next scheduled wiki meeting page before the meeting. Include the how to join the meeting and agenda details. Posting the agenda before the meeting has the added benefit that project contributors can propose agenda items.
 
 ### Goals
