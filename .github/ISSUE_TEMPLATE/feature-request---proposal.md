@@ -23,13 +23,13 @@ A breaking change would require consumers or implementors of the API to modify t
  * No, not breaking
  * I'm not sure
 
-### `Provider` or `agency`
+### Impacted Spec
 
-For which API is this feature being requested:
+For which spec is this feature being requested?
 
- * `provider`
  * `agency`
- * both
+ * `policy`
+ * `provider`
 
 ### Describe alternatives you've considered
 
