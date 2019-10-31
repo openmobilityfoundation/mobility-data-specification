@@ -32,7 +32,7 @@ Policies typically refer to one or more associated geographies. Each policy and 
 
 Published policies and geographies should be treated as immutable data. Obsoleting or otherwise changing a policy is accomplished by publishing a new policy with a field named `prev_policies`, a list of UUID references to the policy or policies superseded by the new policy.
 
-Geographical data shall be represented as GeoJSON `Feature` objects. No part of the geographical data should be outside the [municipality boundary](https://github.com/CityOfLosAngeles/mobility-data-specification/tree/master/provider#municipality-boundary).
+Geographical data shall be represented as GeoJSON `Feature` objects. No part of the geographical data should be outside the [municipality boundary](../provider/README.md#municipality-boundary).
 
 Policies should be re-fetched whenever:
 
@@ -50,7 +50,7 @@ Among other use-cases, configuring a REST API allows an Agency to:
 3) Adjust other attributes in closer to real time
 4) Enumerate when policies are set to change
 
-Responses must set the `Content-Type` header, as specified in the [Provider versioning](https://github.com/CityOfLosAngeles/mobility-data-specification/tree/master/provider#versioning) section.
+Responses must set the `Content-Type` header, as specified in the [Provider versioning](../provider/README.md#versioning) section.
 
 #### HTTP Response Codes
 
