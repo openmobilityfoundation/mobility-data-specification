@@ -2,7 +2,7 @@
 
 > Release 2019-10-31
 
-The 0.4.0 release represents a major step forward in the Mobility Data Specification. The `provider` endpoints have been refactored allow static file backed API servers which should improve uptime, reliability and the ability to backfill what is now growing to years of data. There is a new `policy` API endpoint, designed to be implemented by Agencies, that allows for clearer communication of geofencing, vehicle caps and more. A full list of changes is below. Many thanks to all the contributors who helped on this release. 
+The 0.4.0 release represents a major step forward in the Mobility Data Specification. The `provider` endpoints have been refactored to allow static file backed API servers which should improve uptime, reliability and the ability to backfill what is now growing to years of data. There is a new `policy` API endpoint, designed to be implemented by Agencies, that allows for clearer communication of geofencing, vehicle caps and more. A full list of changes is below. Many thanks to all the contributors who helped on this release. 
 
 **CHANGES**
 *_Provider_*
