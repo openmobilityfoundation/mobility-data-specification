@@ -56,11 +56,11 @@ Responses must set the `Content-Type` header, as specified in the [Provider vers
 
 The response to a client request must include a valid HTTP status code defined in the [IANA HTTP Status Code Registry](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml)
 
-* **200:** OK: operation successful.
-* **400:** Bad request.
-* **401:** Unauthorized: Invalid, expired, or insufficient scope of token.
-* **404:** Not Found: Object(s) do not exist.
-* **500:** Internal server error.
+- **200:** OK: operation successful.
+- **400:** Bad request.
+- **401:** Unauthorized: Invalid, expired, or insufficient scope of token.
+- **404:** Not Found: Object(s) do not exist.
+- **500:** Internal server error.
 
 #### Error Responses
 
@@ -84,7 +84,7 @@ Endpoint: `/policies/{id}`
 Method: `GET`  
 `data` Payload: `{ "policies": [] }`, an array of objects with the structure [outlined below](#policy).
 
-##### Query Parameters:
+##### Query Parameters
 
 | Name         | Type      | Required / Optional | Description                                    |
 | ------------ | --------- | --- | ---------------------------------------------- |
@@ -104,7 +104,7 @@ Endpoint: `/geographies/{id}`
 Method: `GET`  
 `data` Payload: `{ geographies: [] }`, an array of GeoJSON `Feature` objects.
 
-##### Query Parameters:
+##### Query Parameters
 
 | Name         | Type      | Required / Optional | Description                                    |
 | ------------ | --------- | --- | ---------------------------------------------- |
@@ -114,8 +114,8 @@ Method: `GET`
 
 To use flat files, policies shall be represented in two (2) files:
 
-* `policies.json`
-* `geographies.json`
+- `policies.json`
+- `geographies.json`
 
 The files shall be structured like the output of the [REST endpoints](#rest-endpoints) above.
 
@@ -207,7 +207,7 @@ An individual `Rule` object is defined by the following fields:
 | `name`             | String                      | Required   | Name of rule |
 | `rule_type`        | enum                        | Required   | Type of policy (see [Rule Types](#rule-types)) |
 | `geographies`      | UUID[]                      | Required   | List of Geography UUIDs (non-overlapping) specifying the covered geography |
-| `statuses`         | { Status: Vehicle Event[] } | Required   | Vehicle `statuses` to which this rule applies. Optionally, you may provide specific `event_type`'s for the rule to apply to as a subset of a given status. An empty list or `null`/absent defaults to "all". |
+| `statuses`         | `{ status: vehicle event[] }` | Required   | Vehicle `statuses` to which this rule applies, either from [Provider](../provider/README.md#event-types) or [Agency](../agency/README.md#vehicle-events). Optionally provide a list of specific `event_type`'s as a subset of a given status for the rule to apply to. An empty list or `null`/absent defaults to "all". |
 | `rule_units`       | enum                        | Optional   | Measured units of policy (see [Rule Units](#rule-units)) |
 | `vehicle_types`    | `vehicle_type[]`            | Optional   | Applicable vehicle types, default "all". |
 | `propulsion_types` | `propulsion_type[]`         | Optional   | Applicable vehicle propulsion types, default "all". |
