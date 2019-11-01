@@ -4,10 +4,10 @@
 * @openmobilityfoundation/omf-admin
 
 ## Provider Services Working Group
-/provider/* @openmobilityfoundation/provider-services-wg-maintainers
+/provider/* @openmobilityfoundation/provider-services-wg-maintainers @openmobilityfoundation/omf-admin
 
 ## City Services Working Group Specific, also JSON Schema
-/agency/*  @openmobilityfoundation/city-services-wg-maintainers
+/agency/*  @openmobilityfoundation/city-services-wg-maintainers @openmobilityfoundation/omf-admin
 
 ## schema is changed by provider and city services working group
-/schema/*  @openmobilityfoundation/provider-services-wg-maintainers @openmobilityfoundation/city-services-wg-maintainers
+/schema/*  @openmobilityfoundation/provider-services-wg-maintainers @openmobilityfoundation/city-services-wg-maintainers @openmobilityfoundation/omf-admin
