@@ -1,18 +1,20 @@
 # Mobility Data Specification
 
-The Mobility Data Specification (**MDS**) is a set of data specifications and data sharing requirements focused on dockless e-scooters, bicycles and carshare. Inspired by [GTFS](https://developers.google.com/transit/gtfs/reference/) and [GBFS](https://github.com/NABSA/gbfs) the goals of the MDS are to provide API and data standards for municipalities to help ingest, compare and analyze *mobility as a service* provider data. 
+The Mobility Data Specification (**MDS**) is a set of data specifications and data sharing requirements focused on dockless e-scooters, bicycles and carshare. Inspired by [GTFS](https://developers.google.com/transit/gtfs/reference/) and [GBFS](https://github.com/NABSA/gbfs) the goals of the MDS are to provide API and data standards for municipalities to help ingest, compare and analyze *mobility as a service* provider data.
 
 The **MDS** helps the City ingest and analyze information from for-profit companies who operate dockless scooters, bicycles and carshare in the public right-of-way. MDS is a key piece of digital infrastructure that helps cities and regulators such as Los Angeles Department of Transportation (LADOT) understand how dockless mobility operate.
 
 Mobility providers are required to share data with LADOT as part of the City of Los Angeles' Dockless Mobility Permit. Standardizing data collection between different providers improves cooperation, innovation, and efficiency of the City's transportation network.
 
-**MDS** is currently comprised of two distinct components:
+**MDS** is currently comprised of three distinct components:
 
 * The [`provider`][provider] Application Program Interface (API) was first released May 2018 to be implemented by mobility providers. When a municipality queries information from a mobility provider, the Provider API has a historical view of operations in a standard format.
 
 * The [`agency`][agency] API was first released in April 2019 to be implemented by regulatory agencies. The first implementation went live in Febuary 2019. Providers query the Agency API when an event occurs, like a trip starting or ending.
 
-Cities and regulators can choose best how to implement *Agency* and *Provider* either separately, concurrently, or by endpoint.
+* The [`policy`][policy] specification was first released in October 2019 to be implemented by regulatory agencies. Providers query Policy endpoints to obtain machine-readable regulatory rules that can be used to evaluate compliance with Agency policy.
+
+Cities and regulators can choose how best to implement *Agency*, *Provider*, and/or *Policy* either separately, concurrently, or by endpoint.
 
 ## Learn More / Get Involved / Contributing
 
@@ -81,7 +83,8 @@ MDS enables cities to:
 
 * [`django-mds`](https://github.com/polyconseil/django-mds) - Python/Django open source server for the [`agency`][agency] API, developed by BlueSystems.
 
-Please open a pull request if you create open source or private tools for implementing or working with MDS data. 
+Please open a pull request if you create open source or private tools for implementing or working with MDS data.
 
 [agency]: /agency/README.md
 [provider]: /provider/README.md
+[policy]: /policy/README.md
