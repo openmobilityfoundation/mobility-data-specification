@@ -26,7 +26,7 @@ You can also get involved in development by joining an OMF working group. The wo
 Working Group | Mailing List | Description
 --- | --- | ---
 Provider Services | [mds-provider-services](https://groups.google.com/a/groups.openmobilityfoundation.org/forum/#!forum/mds-provider-services) | Manages the [`provider`][provider] API within MDS.
-City Services | [mds-city-services](https://groups.google.com/a/groups.openmobilityfoundation.org/forum/#!forum/mds-city-services) | Manages the [`agency`][agency] API within MDS, as well as the [`mds-core`](https://github.com/openmobilityfoundation/mds-core) reference implementation.
+City Services | [mds-city-services](https://groups.google.com/a/groups.openmobilityfoundation.org/forum/#!forum/mds-city-services) | Manages the [`agency`][agency] and [`policy`][policy] API within MDS, as well as the [`mds-core`](https://github.com/openmobilityfoundation/mds-core) reference implementation.
 
 You can view info about past releases and planning calls in the [wiki](https://github.com/openmobilityfoundation/mobility-data-specification/wiki).
 
