@@ -19,7 +19,7 @@ Cities and regulators can choose how best to implement *Agency*, *Provider*, and
 ## Learn More / Get Involved / Contributing
 
 * To stay up to date on MDS releases and planning calls, please subscribe to the [MDS-Announce](https://groups.google.com/forum/#!forum/mds-announce) mailing list. 
-* You can view info about past releases and planning calls in the [wiki](https://github.com/CityOfLosAngeles/mobility-data-specification/wiki). 
+* You can view info about past releases and planning calls in the [wiki](https://github.com/openmobilityfoundation/mobility-data-specification/wiki). 
 * To understand the contributing guidelines review the [CONTRIBUTING page.](CONTRIBUTING.md) 
 * To learn more about MDS and other related projects, including LADOT's Technology Action Plan, visit [ladot.io.](https://ladot.io/)
 
@@ -27,13 +27,13 @@ For questions about MDS please contact [ladot.innovation@lacity.org](mailto:lado
 
 ## Versions
 
-The specification will be versioned using Git tags and [semantic versioning](https://semver.org/). See prior [releases](https://github.com/CityOfLosAngeles/mobility-data-specification/releases) and the [Release Guidelines](ReleaseGuidelines.md) for more information.
+The specification will be versioned using Git tags and [semantic versioning](https://semver.org/). See prior [releases](https://github.com/openmobilityfoundation/mobility-data-specification/releases) and the [Release Guidelines](ReleaseGuidelines.md) for more information.
 
 Information about the latest release and all releases are below. Please note, you may be viewing a development copy of the Mobility Data Specification based on the current branch. Info about the latest release and all releases is below.
 
-* [Latest Release](https://github.com/CityOfLosAngeles/mobility-data-specification/tree/master)
+* [Latest Release](https://github.com/openmobilityfoundation/mobility-data-specification/tree/master)
 
-* [All Releases](https://github.com/CityOfLosAngeles/mobility-data-specification/releases)
+* [All Releases](https://github.com/openmobilityfoundation/mobility-data-specification/releases)
 
 ## Cities Using MDS 
 
@@ -44,7 +44,7 @@ The Mobility Data Specification is an Open Source project. Comments can be made 
 * Austin: The rules and guidelines for Austin's Micromobility Program can be found at https://austintexas.gov/micromobility.
 * Ulm: A draft of the guidelines can be found at [the city's GitHub presence](https://github.com/stadtulm/mds-zonen).
 
-[Add your City here by opening a pull request](https://github.com/CityofLosAngeles/mobility-data-specification/compare)
+[Add your City here by opening a pull request](https://github.com/openmobilityfoundation/mobility-data-specification/compare)
 
 ## Use Cases
 MDS enables cities to:
