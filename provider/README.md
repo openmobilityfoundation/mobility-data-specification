@@ -199,7 +199,7 @@ The list of allowed `vehicle_type` referenced below is:
 | `vehicle_type` |
 |--------------|
 | bicycle      |
-| car          |
+| carshare     |
 | scooter      |
 
 ### Propulsion Types

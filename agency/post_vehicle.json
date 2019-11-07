@@ -25,7 +25,7 @@
       "description": "The type of vehicle",
       "enum": [
         "bicycle",
-        "car",
+        "carshare",
         "scooter"
       ]
     },

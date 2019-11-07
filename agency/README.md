@@ -264,11 +264,11 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 
 ### Vehicle Type
 
-| `type`    |
-| --------- |
-| `bicycle` |
-| `car`     |
-| `scooter` |
+| `type`     |
+| ---------- |
+| `bicycle`  |
+| `carshare` |
+| `scooter`  |
 
 ### Propulsion Type
 
