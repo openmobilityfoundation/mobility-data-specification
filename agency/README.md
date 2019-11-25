@@ -269,6 +269,7 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | `bicycle` |
 | `car`     |
 | `scooter` |
+| `moped`   |
 
 ### Propulsion Type
 

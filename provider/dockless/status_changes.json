@@ -172,7 +172,8 @@
       "enum": [
         "bicycle",
         "car",
-        "scooter"
+        "scooter",
+        "moped"
       ]
     },
     "version": {
