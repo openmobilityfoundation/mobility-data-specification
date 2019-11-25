@@ -59,7 +59,8 @@
       "enum": [
         "bicycle",
         "car",
-        "scooter"
+        "scooter",
+        "moped"
       ]
     },
     "vehicle_event": {

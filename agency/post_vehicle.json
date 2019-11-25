@@ -26,7 +26,8 @@
       "enum": [
         "bicycle",
         "car",
-        "scooter"
+        "scooter",
+        "moped"
       ]
     },
     "uuid": {
