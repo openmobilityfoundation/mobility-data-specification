@@ -246,11 +246,11 @@ The following steps **must** be followed for **every** release of MDS:
 
 1. Publish a [new Release in GitHub][mds-releases-new] for the tag you just pushed. Copy in the [release notes](ReleaseNotes.md) created earlier.
 
-1. Post a release announcement to [`mds-announce`](mailto:mds-announce@googlegroups.com), copying the [release notes](ReleaseNotes.md) created earlier and linking to the [GitHub release][mds-releases].
+1. Post a release announcement to [`mds-announce`](mailto:mds-announce@groups.openmobilityfoundation.org), copying the [release notes](ReleaseNotes.md) created earlier and linking to the [GitHub release][mds-releases].
 
     ```email
-    From:    mds-announce@googlegroups.com  
-    To:      mds-announce@googlegroups.com  
+    From:    mds-announce@groups.openmobilityfoundation.org 
+    To:      mds-announce@groups.openmobilityfoundation.org  
     Subject: MDS 1.2.3 Release  
 
     MDS 1.2.3 has been released.
@@ -260,7 +260,7 @@ The following steps **must** be followed for **every** release of MDS:
     <link to GitHub release>
     ```
 
-[mds-announce]: https://groups.google.com/forum/#!forum/mds-announce
+[mds-announce]: https://groups.google.com/a/groups.openmobilityfoundation.org/forum/#!forum/mds-announce
 [mds-dev]: https://github.com/openmobilityfoundation/mobility-data-specification/tree/dev
 [mds-master]: https://github.com/openmobilityfoundation/mobility-data-specification/tree/master
 [mds-milestones]: https://github.com/openmobilityfoundation/mobility-data-specification/milestones
