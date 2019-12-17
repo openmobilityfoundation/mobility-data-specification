@@ -1,0 +1,99 @@
+{
+  "$id": "https://raw.githubusercontent.com/CityofLosAngeles/mobility-data-specification/master/agency/get_vehicle.json",
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "title": "The MDS Agency Schema, GET vehicle payload",
+  "type": "object",
+  "definitions": {},
+  "required": [
+    "device_id",
+    "provider_id",
+    "vehicle_id",
+    "type",
+    "propulsion",
+    "year",
+    "mfgr",
+    "model",
+    "status",
+    "prev_event",
+    "updated"
+  ],
+  "properties": {
+    "device_id": {
+      "$id": "#/properties/device_id",
+      "description": "Provided by Operator to uniquely identify a vehicle",
+      "$ref": "#/definitions/uuid"
+    },
+    "provider_id": {
+      "$id": "#/properties/provider_id",
+      "description": "Issued by City and tracked",
+      "$ref": "#/definitions/uuid"
+    },
+    "vehicle_id": {
+      "$id": "#/properties/vehicle_id",
+      "type": "string",
+      "maxLength": 255,
+      "description": "The Vehicle Identification Number visible on the vehicle itself",
+      "default": "",
+      "examples": [
+        "ABC123"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "type": {
+      "$id": "#/properties/type",
+      "$ref": "#/definitions/vehicle_type",
+      "description": "The type of vehicle"
+    },
+    "propulsion": {
+      "$id": "#/properties/propulsion",
+      "description": "The type of propulsion; allows multiple values",
+      "$ref": "#/definitions/propulsion_type"
+    },
+    "year": {
+      "$id": "#/properties/year",
+      "type": "integer",
+      "description": "The year the vehicle was manufactured",
+      "default": 1970,
+      "examples": [
+        2018
+      ]
+    },
+    "mfgr": {
+      "$id": "#/properties/mfgr",
+      "type": "string",
+      "maxLength": 255,
+      "description": "The vehicle manufacturer",
+      "default": "",
+      "examples": [
+        "ABC123"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "model": {
+      "$id": "#/properties/model",
+      "type": "string",
+      "maxLength": 255,
+      "description": "The vehicle model",
+      "default": "",
+      "examples": [
+        "ABC123"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "status": {
+      "$id": "#/properties/status",
+      "description": "Current vehicle status",
+      "$ref": "#/definitions/vehicle_status"
+    },
+    "prev_event": {
+      "$id": "#/properties/prev_event",
+      "description": "Last vehicle event",
+      "$ref": "#/definitions/vehicle_event"
+    },
+    "updated": {
+      "$id": "#/properties/updated",
+      "$ref": "#/definitions/timestamp"
+    }
+  },
+  "additionalProperties": false
+}

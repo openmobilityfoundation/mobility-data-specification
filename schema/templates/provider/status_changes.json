@@ -82,9 +82,14 @@
                 "description": "The time the event occurred, expressed as a Unix Timestamp",
                 "$ref": "#/definitions/timestamp"
               },
+              "publication_time": {
+                "$id": "#/properties/data/properties/status_changes/items/properties/publication_time",
+                "description": "The time the event became available through the status changes endpoint, expressed as a Unix Timestamp",
+                "$ref": "#/definitions/timestamp"
+              },
               "event_location": {
                 "$id": "#/properties/data/properties/status_changes/items/properties/event_location",
-                "description": "The GPS coordinates of where the event occurred",
+                "description": "The GPS or GNSS coordinates of where the event occurred",
                 "$ref": "#/definitions/MDS_Feature_Point"
               },
               "event_type": {
@@ -107,6 +112,10 @@
                 "$id": "#/properties/data/properties/status_changes/items/properties/associated_trip",
                 "description": "Trip UUID, required if event_type_reason is user_pick_up or user_drop_off",
                 "$ref": "#/definitions/uuid"
+              },
+              "associated_ticket": {
+                "type": "string",
+                "description": "Identifier for an associated ticket inside an Agency-maintained 311 or CRM system."
               }
             },
             "allOf": [
@@ -123,7 +132,8 @@
                           "service_start",
                           "user_drop_off",
                           "rebalance_drop_off",
-                          "maintenance_drop_off"
+                          "maintenance_drop_off",
+                          "agency_drop_off"
                         ]
                       }
                     }
@@ -157,7 +167,8 @@
                         "enum": [
                           "service_end",
                           "rebalance_pick_up",
-                          "maintenance_pick_up"
+                          "maintenance_pick_up",
+                          "agency_pick_up"
                         ]
                       }
                     }
@@ -166,7 +177,7 @@
               },
               {
                 "description": "conditionally require associated_trip when applicable",
-                "oneOf": [
+                "anyOf": [
                   {
                     "not": {
                       "properties": {

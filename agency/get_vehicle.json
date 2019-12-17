@@ -1,0 +1,301 @@
+{
+  "$id": "https://raw.githubusercontent.com/CityofLosAngeles/mobility-data-specification/master/agency/get_vehicle.json",
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "title": "The MDS Agency Schema, GET vehicle payload",
+  "type": "object",
+  "definitions": {
+    "propulsion_type": {
+      "$id": "#/definitions/propulsion_type",
+      "type": "array",
+      "description": "The type of propulsion; allows multiple values",
+      "items": {
+        "type": "string",
+        "enum": [
+          "combustion",
+          "electric",
+          "electric_assist",
+          "human"
+        ]
+      },
+      "minItems": 1
+    },
+    "vehicle_type": {
+      "$id": "#/definitions/vehicle_type",
+      "type": "string",
+      "description": "The type of vehicle",
+      "enum": [
+        "bicycle",
+        "car",
+        "scooter"
+      ]
+    },
+    "vehicle_status": {
+      "$id": "#/definitions/vehicle_status",
+      "type": "string",
+      "description": "The status of a vehicle",
+      "enum": [
+        "available",
+        "elsewhere",
+        "inactive",
+        "removed",
+        "reserved",
+        "trip",
+        "unavailable"
+      ]
+    },
+    "vehicle_event": {
+      "$id": "#/definitions/vehicle_event",
+      "type": "string",
+      "description": "A status event for a vehicle",
+      "oneOf": [
+        {
+          "properties": {
+            "event_type": {
+              "enum": [
+                "register"
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "event_type": {
+              "enum": [
+                "service_start"
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "event_type": {
+              "enum": [
+                "service_end"
+              ]
+            },
+            "event_type_reason": {
+              "enum": [
+                "low_battery",
+                "maintenance",
+                "compliance",
+                "off_hours"
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "event_type": {
+              "enum": [
+                "provider_drop_off"
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "event_type": {
+              "enum": [
+                "provider_pick_up"
+              ]
+            },
+            "event_type_reason": {
+              "enum": [
+                "rebalance",
+                "maintenance",
+                "charge",
+                "compliance"
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "event_type": {
+              "enum": [
+                "city_pick_up"
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "event_type": {
+              "enum": [
+                "reserve"
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "event_type": {
+              "enum": [
+                "cancel_reservation"
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "event_type": {
+              "enum": [
+                "trip_start"
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "event_type": {
+              "enum": [
+                "trip_enter"
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "event_type": {
+              "enum": [
+                "trip_leave"
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "event_type": {
+              "enum": [
+                "trip_end"
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "event_type": {
+              "enum": [
+                "deregister"
+              ]
+            },
+            "event_type_reason": {
+              "enum": [
+                "missing"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "timestamp": {
+      "$id": "#/definitions/timestamp",
+      "title": "Integer milliseconds since Unix epoch",
+      "type": "number",
+      "multipleOf": 1.0,
+      "minimum": 0
+    },
+    "uuid": {
+      "$id": "#/definitions/uuid",
+      "type": "string",
+      "title": "A UUID used to uniquely identifty an object",
+      "default": "",
+      "examples": [
+        "3c9604d6-b5ee-11e8-96f8-529269fb1459"
+      ],
+      "pattern": "^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$"
+    }
+  },
+  "required": [
+    "device_id",
+    "provider_id",
+    "vehicle_id",
+    "type",
+    "propulsion",
+    "year",
+    "mfgr",
+    "model",
+    "status",
+    "prev_event",
+    "updated"
+  ],
+  "properties": {
+    "device_id": {
+      "$id": "#/properties/device_id",
+      "description": "Provided by Operator to uniquely identify a vehicle",
+      "$ref": "#/definitions/uuid"
+    },
+    "provider_id": {
+      "$id": "#/properties/provider_id",
+      "description": "Issued by City and tracked",
+      "$ref": "#/definitions/uuid"
+    },
+    "vehicle_id": {
+      "$id": "#/properties/vehicle_id",
+      "type": "string",
+      "maxLength": 255,
+      "description": "The Vehicle Identification Number visible on the vehicle itself",
+      "default": "",
+      "examples": [
+        "ABC123"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "type": {
+      "$id": "#/properties/type",
+      "$ref": "#/definitions/vehicle_type",
+      "description": "The type of vehicle"
+    },
+    "propulsion": {
+      "$id": "#/properties/propulsion",
+      "description": "The type of propulsion; allows multiple values",
+      "$ref": "#/definitions/propulsion_type"
+    },
+    "year": {
+      "$id": "#/properties/year",
+      "type": "integer",
+      "description": "The year the vehicle was manufactured",
+      "default": 1970,
+      "examples": [
+        2018
+      ]
+    },
+    "mfgr": {
+      "$id": "#/properties/mfgr",
+      "type": "string",
+      "maxLength": 255,
+      "description": "The vehicle manufacturer",
+      "default": "",
+      "examples": [
+        "ABC123"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "model": {
+      "$id": "#/properties/model",
+      "type": "string",
+      "maxLength": 255,
+      "description": "The vehicle model",
+      "default": "",
+      "examples": [
+        "ABC123"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "status": {
+      "$id": "#/properties/status",
+      "description": "Current vehicle status",
+      "$ref": "#/definitions/vehicle_status"
+    },
+    "prev_event": {
+      "$id": "#/properties/prev_event",
+      "description": "Last vehicle event",
+      "$ref": "#/definitions/vehicle_event"
+    },
+    "updated": {
+      "$id": "#/properties/updated",
+      "$ref": "#/definitions/timestamp"
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,23 @@
+{
+  "$id": "https://raw.githubusercontent.com/CityofLosAngeles/mobility-data-specification/master/agency/post_vehicle_event.json",
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "title": "The MDS Agency Schema, POST vehicle status body",
+  "type": "object",
+  "definitions": {},
+  "required": [
+    "event_type",
+    "telemetry"
+  ],
+  "properties": {
+    "event_type": {
+      "$ref": "#/definitions/vehicle_event"
+    },
+    "telemetry": {
+      "$ref": "#/definitions/telemetry"
+    },
+    "trip_id": {
+      "$ref": "#/definitions/uuid"
+    }
+  },
+  "additionalProperties": false
+}

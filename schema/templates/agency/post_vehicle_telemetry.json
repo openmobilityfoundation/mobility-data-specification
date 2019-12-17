@@ -1,0 +1,19 @@
+{
+  "$id": "https://raw.githubusercontent.com/CityofLosAngeles/mobility-data-specification/master/agency/post_vehicle_telemetry.json",
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "title": "The MDS Agency Schema, POST vehicle telemetry body",
+  "type": "object",
+  "definitions": {},
+  "required": [
+    "data"
+  ],
+  "properties": {
+    "data": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/telemetry"
+      }
+    }
+  },
+  "additionalProperties": false
+}

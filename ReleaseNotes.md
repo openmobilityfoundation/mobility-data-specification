@@ -1,3 +1,79 @@
+## 0.4.0 
+
+> Release 2019-10-31
+
+The 0.4.0 release represents a major step forward in the Mobility Data Specification. The `provider` endpoints have been refactored to allow static file backed API servers which should improve uptime, reliability and the ability to backfill what is now growing to years of data. There is a new `policy` API endpoint, designed to be implemented by Agencies, that allows for clearer communication of geofencing, vehicle caps and more. A full list of changes is below. Many thanks to all the contributors who helped on this release. 
+
+**CHANGES**
+*_Provider_*
+* [Improved Handling of Cost Data](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/388)
+* [Allow static file storage backed API Endpoints](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/357)
+* [Cleanup Provider README](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/395)
+* [Legacy Version Header Cleanup](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/314)
+* [Internationalization of Currency data](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/379)
+* [Specify Types for Query Params](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/352)
+* [Clarify the definition of Municipal Boundary](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/369)
+* [Update Status Change JSON Schema to include Associated Trip properly](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/353)
+
+*_Agency_*
+* [Add Accuracy Field for GPS Telemetry Data](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/360)
+* [String Limit to 255 Characters](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/361)
+* [Remove SLA from /telemetry](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/371)
+* [Update State Machine Diagram](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/363)
+
+*_Misc_* 
+* [New Policy API Endpoint](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/382)
+* [Improved README for Schema Directory](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/398)
+* [Add Car Vehicle Type](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/219)
+* [Unify Error Responses between Provider / Agency](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/368)
+* [Imrovements to Release Process](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/372)
+
+## 0.3.2 
+
+> Released 2019-06-13
+
+This release is a series of non breaking and minor changes for provider, along with JSON Schema for agency. 
+
+**CHANGES** 
+
+*_Provider_*
+* [Add an optional recorded field to provider](https://github.com/CityOfLosAngeles/mobility-data-specification/issues/307)
+* [Ordering Definitions](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/301)
+* [406 response - version negiotation](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/327)
+
+*_Agency_*
+[JSON Schema for Agency](https://github.com/CityOfLosAngeles/mobility-data-specification/issues/169)
+
+*_Misc_*
+[Schema Folder Cleanup](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/328)
+[Global GNSS Support](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/316)
+## 0.3.1
+
+> Released 2019-04-30
+
+This release represents a series of non-breaking changes and clarifications for provider, along with a number of agency bugfixes / changes. 
+
+**CHANGES**
+
+*_Provider_*
+* MDS Schema version fix.
+* [New release process](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/264). Thanks @jfh for documenting, all for participating 
+* [Additional documentation around what is considered Breaking / Non-Breaking](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/295). Thanks @rf-
+* [OPTIONS for version negotiation](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/293). Thanks @billdirks
+* [Add Agency Drop off / pick up](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/291). Thanks @margodawes 
+* [Explicitly allow associated_trip for any event type](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/297)
+
+*_Agency_*
+* Change from UUIDv4 to just UUID. Thanks @karcass
+* Change Error Messages for State Machine validation. 
+* Update Pagination Rules 
+* Add Unregistered event. 
+* [Add Event Diagram](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/258). Thanks @whereissean
+* [Removing 412 Responses](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/258)
+* Add deregister and decomissioned events. Thanks @dirkdk 
+* [Remove 5 second Telemetry requirement](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/261)
+* [Improve failure and error handling around Telemetry Data](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/290)
+
 ## 0.3.0 
 
 > Released 2019-02-15

@@ -9,6 +9,7 @@ import jsonschema
 import requests
 
 POINT = "Point"
+MULTIPOLYGON = "MultiPolygon"
 MDS_FEATURE_POINT = "MDS_Feature_Point"
 MDS_FEATURECOLLECTION_ROUTE = "MDS_FeatureCollection_Route"
 
@@ -24,7 +25,32 @@ def get_point_schema():
     # Modify some metadata
     point.pop("$schema")
     point["$id"] = get_definition(POINT)
+    # enforce lat/lon bounds
+    point["properties"]["coordinates"]["maxItems"] = 2
+    point["properties"]["coordinates"]["items"] = [
+        {
+          "type": "number",
+          "minimum": -180.0,
+          "maximum": 180.0
+        },
+        {
+           "type": "number",
+           "minimum": -90.0,
+           "maximum": 90.0
+        }
+    ]
     return point
+
+def get_multipolygon_schema():
+    """
+    Get the canonical schema for a GeoJSON MultiPolygon.
+    """
+    mp = requests.get("http://geojson.org/schema/MultiPolygon.json")
+    multipolygon = mp.json()
+    # Modify some metadata
+    multipolygon.pop("$schema")
+    multipolygon["$id"] = get_definition(MULTIPOLYGON)
+    return multipolygon
 
 def get_feature_schema(id=None, title=None, geometry=None, properties=None, required=None):
     """
@@ -97,8 +123,9 @@ def get_json_file(path):
 
 if __name__ == '__main__':
     # Load common data
-    common = get_json_file('common.json')
+    common = get_json_file('./templates/common.json')
     point = get_point_schema()
+    multipolygon = get_multipolygon_schema()
     # Craft the MDS specific types
     mds_feature_point = get_feature_schema(
         id = get_definition(MDS_FEATURE_POINT),
@@ -118,8 +145,12 @@ if __name__ == '__main__':
     )
 
 
+    #########
+    # TRIPS #
+    #########
+
     # Create the standalone trips JSON schema by including the needed definitions
-    trips = get_json_file('provider/trips.json')
+    trips = get_json_file('./templates/provider/trips.json')
     trips["definitions"] = {
             POINT: point,
             MDS_FEATURE_POINT: mds_feature_point,
@@ -135,12 +166,16 @@ if __name__ == '__main__':
     # Check that it is a valid schema
     jsonschema.Draft6Validator.check_schema(trips)
     # Write to the `provider` directory.
-    with open("../provider/trips.json", "w") as tripfile:
+    with open("../provider/dockless/trips.json", "w") as tripfile:
         tripfile.write(json.dumps(trips, indent=2))
 
 
+    ##################
+    # STATUS CHANGES #
+    ##################
+
     # Create the standalone status_changes JSON schema by including the needed definitions
-    status_changes = get_json_file('provider/status_changes.json')
+    status_changes = get_json_file('./templates/provider/status_changes.json')
     status_changes["definitions"] = {
             POINT: point,
             MDS_FEATURE_POINT: mds_feature_point,
@@ -155,5 +190,74 @@ if __name__ == '__main__':
     # Check that it is a valid schema
     jsonschema.Draft6Validator.check_schema(status_changes)
     # Write to the `provider` directory.
-    with open("../provider/status_changes.json", "w") as statusfile:
+    with open("../provider/dockless/status_changes.json", "w") as statusfile:
         statusfile.write(json.dumps(status_changes, indent=2))
+
+    ###############
+    # GET VEHICLE #
+    ###############
+
+    # Create the standalone GET vehicle JSON schema by including the needed definitions
+    get_vehicle = get_json_file('./templates/agency/get_vehicle.json')
+    get_vehicle["definitions"] = {
+            "propulsion_type": common["definitions"]["propulsion_type"],
+            "vehicle_type": common["definitions"]["vehicle_type"],
+            "vehicle_status": common["definitions"]["vehicle_status"],
+            "vehicle_event": common["definitions"]["vehicle_event"],
+            "timestamp": common["definitions"]["timestamp"],
+            "uuid": common["definitions"]["uuid"],
+            }
+    # Check that it is a valid schema
+    jsonschema.Draft6Validator.check_schema(get_vehicle)
+    # Write to the `agency` directory.
+    with open("../agency/get_vehicle.json", "w") as file:
+        file.write(json.dumps(get_vehicle, indent=2))
+
+    ################
+    # POST VEHICLE #
+    ################
+
+    # Create the standalone POST vehicle JSON schema by including the needed definitions
+    post_vehicle = get_json_file('./templates/agency/post_vehicle.json')
+    post_vehicle["definitions"] = {
+            "propulsion_type": common["definitions"]["propulsion_type"],
+            "vehicle_type": common["definitions"]["vehicle_type"],
+            "uuid": common["definitions"]["uuid"],
+            }
+    # Check that it is a valid schema
+    jsonschema.Draft6Validator.check_schema(post_vehicle)
+    # Write to the `agency` directory.
+    with open("../agency/post_vehicle.json", "w") as file:
+        file.write(json.dumps(post_vehicle, indent=2))
+
+    ######################
+    # POST VEHICLE EVENT #
+    ######################
+
+    # Create the standalone POST vehicle event JSON schema by including the needed definitions
+    post_vehicle_event = get_json_file('./templates/agency/post_vehicle_event.json')
+    post_vehicle_event["definitions"] = {
+            "vehicle_event": common["definitions"]["vehicle_event"],
+            "telemetry": common["definitions"]["telemetry"],
+            "uuid": common["definitions"]["uuid"],
+            }
+    # Check that it is a valid schema
+    jsonschema.Draft6Validator.check_schema(post_vehicle_event)
+    # Write to the `agency` directory.
+    with open("../agency/post_vehicle_event.json", "w") as file:
+        file.write(json.dumps(post_vehicle_event, indent=2))
+
+    ##########################
+    # POST VEHICLE TELEMETRY #
+    ##########################
+
+    # Create the standalone POST vehicle telemetry JSON schema by including the needed definitions
+    post_vehicle_telemetry = get_json_file('./templates/agency/post_vehicle_telemetry.json')
+    post_vehicle_telemetry["definitions"] = {
+            "telemetry": common["definitions"]["telemetry"],
+            }
+    # Check that it is a valid schema
+    jsonschema.Draft6Validator.check_schema(post_vehicle_telemetry)
+    # Write to the `agency` directory.
+    with open("../agency/post_vehicle_telemetry.json", "w") as file:
+        file.write(json.dumps(post_vehicle_telemetry, indent=2))

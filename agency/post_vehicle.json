@@ -1,0 +1,109 @@
+{
+  "$id": "https://raw.githubusercontent.com/CityofLosAngeles/mobility-data-specification/master/agency/post_vehicle.json",
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "title": "The MDS Agency Schema, register vehicle body",
+  "type": "object",
+  "definitions": {
+    "propulsion_type": {
+      "$id": "#/definitions/propulsion_type",
+      "type": "array",
+      "description": "The type of propulsion; allows multiple values",
+      "items": {
+        "type": "string",
+        "enum": [
+          "combustion",
+          "electric",
+          "electric_assist",
+          "human"
+        ]
+      },
+      "minItems": 1
+    },
+    "vehicle_type": {
+      "$id": "#/definitions/vehicle_type",
+      "type": "string",
+      "description": "The type of vehicle",
+      "enum": [
+        "bicycle",
+        "car",
+        "scooter"
+      ]
+    },
+    "uuid": {
+      "$id": "#/definitions/uuid",
+      "type": "string",
+      "title": "A UUID used to uniquely identifty an object",
+      "default": "",
+      "examples": [
+        "3c9604d6-b5ee-11e8-96f8-529269fb1459"
+      ],
+      "pattern": "^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$"
+    }
+  },
+  "required": [
+    "device_id",
+    "vehicle_id",
+    "type",
+    "propulsion"
+  ],
+  "properties": {
+    "device_id": {
+      "$id": "#/properties/device_id",
+      "description": "Provided by Operator to uniquely identify a vehicle",
+      "$ref": "#/definitions/uuid"
+    },
+    "vehicle_id": {
+      "$id": "#/properties/vehicle_id",
+      "type": "string",
+      "maxLength": 255,
+      "description": "The Vehicle Identification Number visible on the vehicle itself",
+      "default": "",
+      "examples": [
+        "ABC123"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "type": {
+      "$id": "#/properties/type",
+      "$ref": "#/definitions/vehicle_type",
+      "description": "The type of vehicle"
+    },
+    "propulsion": {
+      "$id": "#/properties/propulsion",
+      "description": "The type of propulsion; allows multiple values",
+      "$ref": "#/definitions/propulsion_type"
+    },
+    "year": {
+      "$id": "#/properties/year",
+      "type": "integer",
+      "description": "The year the vehicle was manufactured",
+      "default": 1970,
+      "examples": [
+        2018
+      ]
+    },
+    "mfgr": {
+      "$id": "#/properties/mfgr",
+      "type": "string",
+      "maxLength": 255,
+      "description": "The vehicle manufacturer",
+      "default": "",
+      "examples": [
+        "ABC123"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "model": {
+      "$id": "#/properties/model",
+      "type": "string",
+      "maxLength": 255,
+      "description": "The vehicle model",
+      "default": "",
+      "examples": [
+        "ABC123"
+      ],
+      "pattern": "^(.*)$"
+    }
+  },
+  "additionalProperties": false
+}
