@@ -137,6 +137,15 @@
           "properties": {
             "event_type": {
               "enum": [
+                "lost"
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "event_type": {
+              "enum": [
                 "deregister"
               ]
             },
@@ -214,7 +223,7 @@
         },
         "charge": {
           "type": "number",
-          "description": "Fraction of charge of the vehicle (required if applicable",
+          "description": "Fraction of charge of the vehicle (required if applicable)",
           "minimum": 0,
           "maximum": 1
         }
