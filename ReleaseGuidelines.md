@@ -56,7 +56,7 @@ The sections below define the release process itself, including timeline, roles,
 
 ### Project Meetings
 * Web conference and in person work sessions will posted to the [MDS-Announce mailing list](https://groups.google.com/forum/#!forum/mds-announce). Meetings generally occur monthly.
-* The meeting organizer can use the [meeting template](https://github.com/CityOfLosAngeles/mobility-data-specification/wiki/Web-Conference-Template) to prepare for project meetings. Use the [template markup code](https://github.com/CityOfLosAngeles/mobility-data-specification/wiki/Web-Conference-Template/_edit) to create the next scheduled wiki meeting page before the meeting. Include the how to join the meeting and agenda details. Posting the agenda before the meeting has the added benefit that project contributors can propose agenda items.
+* The meeting organizer can use the [meeting template](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/Web-Conference-Template) to prepare for project meetings. Use the [template markup code](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/Web-Conference-Template/_edit) to create the next scheduled wiki meeting page before the meeting. Include the how to join the meeting and agenda details. Posting the agenda before the meeting has the added benefit that project contributors can propose agenda items.
 
 ### Goals
 
@@ -197,16 +197,16 @@ The following steps **must** be followed for **every** release of MDS:
 
     High level summary of the release.
 
-    * Specific change referencing a PR [#555](https://github.com/CityofLosAngeles/mobility-data-specification/pull/555)
+    * Specific change referencing a PR [#555](https://github.com/openmobilityfoundation/mobility-data-specification/pull/555)
 
-    * Another change summary referencing a PR [#777](https://github.com/CityofLosAngeles/mobility-data-specification/pull/777)
+    * Another change summary referencing a PR [#777](https://github.com/openmobilityfoundation/mobility-data-specification/pull/777)
     ```
 
     The description of this PR should include a link to a GitHub compare page showing the changes that will be included in the release. This URL depends on the type of release:
 
-    * For a PATCH release like 0.4.2, compare the previous version in the series to the current state of the release branch: https://github.com/CityOfLosAngeles/mobility-data-specification/compare/0.4.1...0.4.x
+    * For a PATCH release like 0.4.2, compare the previous version in the series to the current state of the release branch: https://github.com/openmobilityfoundation/mobility-data-specification/compare/0.4.1...0.4.x
 
-    * For a MINOR release like 0.5.0, compare the last release in the previous series to the current state of `dev`: https://github.com/CityOfLosAngeles/mobility-data-specification/compare/master...dev
+    * For a MINOR release like 0.5.0, compare the last release in the previous series to the current state of `dev`: https://github.com/openmobilityfoundation/mobility-data-specification/compare/master...dev
 
     In the case of a new MINOR version, allow a minimum of 24 hours for community discussion and review of the current state of the release.
 
@@ -246,11 +246,11 @@ The following steps **must** be followed for **every** release of MDS:
 
 1. Publish a [new Release in GitHub][mds-releases-new] for the tag you just pushed. Copy in the [release notes](ReleaseNotes.md) created earlier.
 
-1. Post a release announcement to [`mds-announce`](mailto:mds-announce@googlegroups.com), copying the [release notes](ReleaseNotes.md) created earlier and linking to the [GitHub release][mds-releases].
+1. Post a release announcement to [`mds-announce`](mailto:mds-announce@groups.openmobilityfoundation.org), copying the [release notes](ReleaseNotes.md) created earlier and linking to the [GitHub release][mds-releases].
 
     ```email
-    From:    mds-announce@googlegroups.com  
-    To:      mds-announce@googlegroups.com  
+    From:    mds-announce@groups.openmobilityfoundation.org 
+    To:      mds-announce@groups.openmobilityfoundation.org  
     Subject: MDS 1.2.3 Release  
 
     MDS 1.2.3 has been released.
@@ -260,14 +260,14 @@ The following steps **must** be followed for **every** release of MDS:
     <link to GitHub release>
     ```
 
-[mds-announce]: https://groups.google.com/forum/#!forum/mds-announce
-[mds-dev]: https://github.com/CityOfLosAngeles/mobility-data-specification/tree/dev
-[mds-master]: https://github.com/CityOfLosAngeles/mobility-data-specification/tree/master
-[mds-milestones]: https://github.com/CityOfLosAngeles/mobility-data-specification/milestones
-[mds-pr]: https://github.com/CityofLosAngeles/mobility-data-specification/pulls
-[mds-pr-new]: https://github.com/CityOfLosAngeles/mobility-data-specification/compare
-[mds-releases]: https://github.com/CityOfLosAngeles/mobility-data-specification/releases
-[mds-releases-new]: https://github.com/CityOfLosAngeles/mobility-data-specification/releases/new
-[mds-schema-common]: https://github.com/CityOfLosAngeles/mobility-data-specification/blob/master/generate_schema/common.json
-[mds-tags]: https://github.com/CityOfLosAngeles/mobility-data-specification/tags
+[mds-announce]: https://groups.google.com/a/groups.openmobilityfoundation.org/forum/#!forum/mds-announce
+[mds-dev]: https://github.com/openmobilityfoundation/mobility-data-specification/tree/dev
+[mds-master]: https://github.com/openmobilityfoundation/mobility-data-specification/tree/master
+[mds-milestones]: https://github.com/openmobilityfoundation/mobility-data-specification/milestones
+[mds-pr]: https://github.com/openmobilityfoundation/mobility-data-specification/pulls
+[mds-pr-new]: https://github.com/openmobilityfoundation/mobility-data-specification/compare
+[mds-releases]: https://github.com/openmobilityfoundation/mobility-data-specification/releases
+[mds-releases-new]: https://github.com/openmobilityfoundation/mobility-data-specification/releases/new
+[mds-schema-common]: https://github.com/openmobilityfoundation/mobility-data-specification/blob/master/generate_schema/common.json
+[mds-tags]: https://github.com/openmobilityfoundation/mobility-data-specification/tags
 [semver]: https://semver.org/

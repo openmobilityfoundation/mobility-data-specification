@@ -51,6 +51,7 @@ More than 80 cities and public agencies around the world use MDS, and it has bee
 * Santa Monica: The rules and guidelines for the Santa Monica Shared Mobility Pilot Program can be found at https://www.smgov.net/sharedmobility.
 * Austin: The rules and guidelines for Austin's Micromobility Program can be found at https://austintexas.gov/micromobility.
 * Ulm: A draft of the guidelines can be found at [the city's GitHub presence](https://github.com/stadtulm/mds-zonen).
+
 * _[add your City here by opening a pull request](https://github.com/openmobilityfoundation/mobility-data-specification/compare)_
 
 ## Use Cases
