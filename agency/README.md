@@ -232,6 +232,117 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | `gps.satellites` | Integer      | Required if Available | Number of GPS or GNSS satellites
 | `charge`       | Float          | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 1 |
 
+## Stops
+
+The `/stops` endpoint allows an agency to register Stops.
+
+Endpoint: `/stops`
+Method: `POST`
+
+| Field               | Type                                                                              | Required/Optional | Description                                                                                                                                          |
+|---------------------|-----------------------------------------------------------------------------------|-------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
+| stop_id             | UUID                                                                              | Required          | Unique ID for stop                                                                                                                                   |
+| stop_name           | String                                                                            | Required          | Name of stop                                                                                                                                         |
+| lat                 | Double                                                                            | Required          | Latitude of the location                                                                                                                             |
+| lng                 | Double                                                                            | Required          | Longitude of the location                                                                                                                            |
+| capacity            | {vehicle_type: number}                                                            | Required          | Number of total spots per vehicle_type                                                                                                               |
+| geography_id        | UUID                                                                              | Optional          | Pointer to the Geography that represents the stop geospatially                                                                                       |
+| region_id           | string                                                                            | Optional          | ID of the region where station is located, see [GBFS Station Information](https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_informationjson) |
+| short_name          | String                                                                            | Optional          | Abbreviated stop name                                                                                                                                |
+| address             | String                                                                            | Optional          | Postal address (useful for directions)                                                                                                               |
+| post_code           | String                                                                            | Optional          | Postal code (e.g. `10036`)                                                                                                                           |
+| rental_methods      | [Enum](https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_informationjson) | Optional          | Payment methods accepted at stop, see [GBFS Rental Methods](https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_informationjson)               |
+| timezone            | String                                                                            | Optional          | Timezone stop is located in                                                                                                                          |
+| cross_street        | String                                                                            | Optional          | Cross street of where the station is located.                                                                                                        |
+| wheelchair_boarding | Boolean                                                                           | Optional          | Is this stop handicap accessible?                                                                                                                    |
+| parent_stop         | UUID                                                                              | Optional          | Describe a basic hierarchy of stops (e.g.a stop inside of a greater stop)                                                                            |
+
+Endpoint: `/stops`
+Method: `PUT`
+
+| Field               | Type                   | Required/Optional | Description                                                             |
+|---------------------|------------------------|-------------------|-------------------------------------------------------------------------|
+| stop_id             | UUID                   | Required          | Unique ID for stop                                                      |
+| num_spots_available | {vehicle_type: number} | Optional          | How many spots are free to be populated with vehicles at this stop?     |
+| num_spots_disabled  | {vehicle_type: number} | Optional          | How many docks are disabled and unable to accept vehicles at this stop? |
+
+Endpoint: `/stops/{stop_id}`
+Method: `GET`
+
+| Field                  | Type                                                                              | Required/Optional | Description                                                                                                                                          |
+|------------------------|-----------------------------------------------------------------------------------|-------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
+| stop_id                | UUID                                                                              | Required          | Unique ID for stop                                                                                                                                   |
+| stop_name              | String                                                                            | Required          | Name of stop                                                                                                                                         |
+| lat                    | Double                                                                            | Required          | Latitude of the location                                                                                                                             |
+| lng                    | Double                                                                            | Required          | Longitude of the location                                                                                                                            |
+| capacity               | {vehicle_type: number}                                                            | Required          | Number of total spots per vehicle_type                                                                                                               |
+| num_vehicles_available | {vehicle_type: number}                                                            | Required          | How many vehicles are available per vehicle_type at this stop?                                                                                       |
+| num_vehicles_disabled  | {vehicle_type: number}                                                            | Required          | How many vehicles are unavailable/reserved per vehicle_type at this stop?                                                                            |
+| geography_id           | UUID                                                                              | Optional          | Pointer to the Geography that represents the stop geospatially                                                                                       |
+| region_id              | string                                                                            | Optional          | ID of the region where station is located, see [GBFS Station Information](https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_informationjson) |
+| short_name             | String                                                                            | Optional          | Abbreviated stop name                                                                                                                                |
+| address                | String                                                                            | Optional          | Postal address (useful for directions)                                                                                                               |
+| post_code              | String                                                                            | Optional          | Postal code (e.g. `10036`)                                                                                                                           |
+| rental_methods         | [Enum](https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_informationjson) | Optional          | Payment methods accepted at stop, see [GBFS Rental Methods](https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_informationjson)               |
+| cross_street           | String                                                                            | Optional          | Cross street of where the station is located.                                                                                                        |
+| num_spots_available    | {vehicle_type: number}                                                            | Optional          | How many spots are free to be populated with vehicles at this stop?                                                                                  |
+| num_spots_disabled     | {vehicle_type: number}                                                            | Optional          | How many docks are disabled and unable to accept vehicles at this stop?                                                                              |
+| wheelchair_boarding    | Boolean                                                                           | Optional          | Is this stop handicap accessible?                                                                                                                    |
+| parent_stop            | UUID                                                                              | Optional          | Describe a basic hierarchy of stops (e.g.a stop inside of a greater stop)                                                                            |
+
+### GBFS Compatibility
+
+Some of the fields in the `Stops` definition are using notions which are currently not in MDS, such as `rental_methods`. These fields are included for compatibility with GBFS.
+
+## Enum Definitions
+
+### Area Types
+
+| `type`               | Description                                                                                                                                                                                                                                                                                           |
+| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `unrestricted`       | Areas where vehicles may be picked up/dropped off. A provider's unrestricted area shall be contained completely inside the agency's unrestricted area for the provider in question, but it need not cover the entire agency unrestricted area. See the provider version of the service areas endpoint |
+| `restricted`         | Areas where vehicle pick-up/drop-off is not allowed                                                                                                                                                                                                                                                   |
+| `preferred_pick_up`  | Areas where users are encouraged to pick up vehicles                                                                                                                                                                                                                                                  |
+| `preferred_drop_off` | Areas where users are encouraged to drop off vehicles                                                                                                                                                                                                                                                 |
+
+### Vehicle Type
+
+| `type`    |
+| --------- |
+| `bicycle` |
+| `car`     |
+| `scooter` |
+
+### Propulsion Type
+
+| `propulsion`      | Description                                            |
+| ----------------- | ------------------------------------------------------ |
+| `human`           | Pedal or foot propulsion                               |
+| `electric_assist` | Provides power only alongside human propulsion         |
+| `electric`        | Contains throttle mode with a battery-powered motor    |
+| `combustion`      | Contains throttle mode with a gas engine-powered motor |
+
+A vehicle may have one or more values from the `propulsion`, depending on the number of modes of operation. For example, a scooter that can be powered by foot or by electric motor would have the `propulsion` represented by the array `['human', 'electric']`. A bicycle with pedal-assist would have the `propulsion` represented by the array `['human', 'electric_assist']` if it can also be operated as a traditional bicycle.
+
+## Responses
+
+
+* **200:** OK: operation successful.
+* **201:** Created: `POST` operations, new object created
+* **400:** Bad request.
+* **401:** Unauthorized: Invalid, expired, or insufficient scope of token.
+* **404:** Not Found: Object does not exist, returned on `GET` or `POST` operations if the object does not exist.
+* **409:** Conflict: `POST` operations when an object already exists and an update is not possible.
+* **500:** Internal server error: In this case, the answer may contain a `text/plain` body with an error message for troubleshooting.
+
+### Error Message Format
+
+| Field               | Type     | Field Description      |
+| ------------------- | -------- | ---------------------- |
+| `error`             | String   | Error message string   |
+| `error_description` | String   | Human readable error description (can be localized) |
+| `error_details`     | String[] | Array of error details |
+
 [Top][toc]
 
 [general]: /general-information.md
