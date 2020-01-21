@@ -327,7 +327,6 @@ Should either side of the requested time range be missing, `/events` shall retur
 
 Should either side of the requested time range be greater than 2 weeks before the time of the request, `/events` shall return a `400 Bad Request` error.
 
-
 ### Stops
 
 Stop information should be updated on a near-realtime basis by providers who operate _docked_ mobility devices in a given municipality.
@@ -356,8 +355,8 @@ Method: `GET`
 | wheelchair_boarding    | Boolean                                                                           | Optional          | Is this stop handicap accessible?                                                                                                      |
 | parent_stop            | UUID                                                                              | Optional          | Describe a basic hierarchy of stops (e.g.a stop inside of a greater stop)                                                              |
 
-
 ### GBFS Compatibility
+
 Some of the fields in the `Stops` definition are using notions which are currently not in MDS, such as `rental_methods`. These fields are included for compatibility with GBFS.
 
 [Top][toc]
