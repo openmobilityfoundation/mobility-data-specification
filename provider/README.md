@@ -346,7 +346,6 @@ Method: `GET`
 | num_vehicles_disabled  | {vehicle_type: number} | Required          | How many vehicles are unavailable/reserved per vehicle_type at this stop?                                                                            |
 | geography_id           | UUID                   | Optional          | Pointer to the Geography that represents the Stop geospatially                                                                                       |
 | region_id              | string                 | Optional          | ID of the region where station is located, see [GBFS Station Information](https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_informationjson) |
-
 | short_name             | String                                                                            | Optional          | Abbreviated stop name                                                                                                                  |
 | address                | String                                                                            | Optional          | Postal address (useful for directions)                                                                                                 |
 | post_code              | String                                                                            | Optional          | Postal code (e.g. `10036`)                                                                                                             |
