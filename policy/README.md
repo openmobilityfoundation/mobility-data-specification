@@ -62,6 +62,10 @@ The response to a client request must include a valid HTTP status code defined i
 - **404:** Not Found: Object(s) do not exist.
 - **500:** Internal server error.
 
+#### Timestamps
+
+As with the Provider API, `timestamp` refers to integer milliseconds since Unix epoch.
+
 #### Error Responses
 
 ```json
@@ -89,8 +93,8 @@ Method: `GET`
 | Name         | Type      | Required / Optional | Description                                    |
 | ------------ | --------- | --- | ---------------------------------------------- |
 | `id`         | UUID      | Optional    | If provided, returns one policy object with the matching UUID; default is to return all policy objects.                       |
-| `start_date` | timestamp | Optional    | Earliest effective date; default is policies effective as of the request time |
-| `end_date`   | timestamp | Optional    | Latest effective date; default is all policies effective in the future    |
+| `start_date` | [timestamp][ts] | Optional    | Earliest effective date; default is policies effective as of the request time |
+| `end_date`   | [timestamp][ts] | Optional    | Latest effective date; default is all policies effective in the future    |
 
 `start_date` and `end_date` are only considered when no `id` parameter is provided.
 
@@ -128,8 +132,8 @@ The `updated` field in the payload wrapper should be set to the time of publishi
 ```json
 {
     "version": "0.4.0",
-    "updated": "1570035222868",
-    "end_date": "1570035222868",
+    "updated": 1570035222868,
+    "end_date": 1570035222868,
     "data": {
         "policies": [
             {
@@ -150,7 +154,7 @@ The optional `end_date` field applies to all policies represented in the file.
 ```json
 {
     "version": "0.4.0",
-    "updated": "1570035222868",
+    "updated": 1570035222868,
     "data": {
         "geographies": [
             {
@@ -170,12 +174,12 @@ The optional `end_date` field applies to all policies represented in the file.
 
 All response fields must use `lower_case_with_underscores`.
 
-Response bodies must be a `UTF-8` encoded JSON object and must minimally include the MDS `version`, a timestamp indicating the last time the data was `updated`, and a `data` payload:
+Response bodies must be a `UTF-8` encoded JSON object and must minimally include the MDS `version`, a [timestamp][ts] indicating the last time the data was `updated`, and a `data` payload:
 
 ```json
 {
     "version": "x.y.z",
-    "updated": "1570035222868",
+    "updated": 1570035222868,
     "data": {
         // endpoint/file specific payload
     }
@@ -186,17 +190,17 @@ Response bodies must be a `UTF-8` encoded JSON object and must minimally include
 
 An individual `Policy` object is defined by the following fields:
 
-| Name             | Type      | Required / Optional | Description                                                                         |
-| ---------------- | --------- | --- | ----------------------------------------------------------------------------------- |
-| `name`           | String    | Required   | Name of policy                                                                      |
-| `policy_id`      | UUID      | Required   | Unique ID of policy                                                                 |
-| `provider_ids`   | UUID[]    | Optional    | Providers for whom this policy is applicable; empty arrays and `null`/absent implies all Providers |
-| `description`    | String    | Required   | Description of policy                                                               |
-| `start_date`     | timestamp | Required   | Beginning date/time of policy enforcement                                           |
-| `end_date`       | timestamp | Optional    | End date/time of policy enforcement                                                 |
-| `published_date` | timestamp | Required   | Timestamp that the policy was published                                             |
-| `prev_policies`  | UUID[]    | Optional    | Unique IDs of prior policies replaced by this one                                   |
-| `rules`          | Rule[]    | Required   | List of applicable [Rule](#rules) objects |
+| Name             | Type            | Required / Optional | Description                                                                |
+| ---------------- | --------------- | ---------- | ----------------------------------------------------------------------------------- |
+| `name`           | String          | Required   | Name of policy                                                                      |
+| `policy_id`      | UUID            | Required   | Unique ID of policy                                                                 |
+| `provider_ids`   | UUID[]          | Optional   | Providers for whom this policy is applicable; empty arrays and `null`/absent implies all Providers |
+| `description`    | String          | Required   | Description of policy                                                               |
+| `start_date`     | [timestamp][ts] | Required   | Beginning date/time of policy enforcement                                           |
+| `end_date`       | [timestamp][ts] | Optional   | End date/time of policy enforcement                                                 |
+| `published_date` | [timestamp][ts] | Required   | Timestamp that the policy was published                                             |
+| `prev_policies`  | UUID[]          | Optional   | Unique IDs of prior policies replaced by this one                                   |
+| `rules`          | Rule[]          | Required   | List of applicable [Rule](#rules) objects |
 
 ### Rules
 
@@ -263,11 +267,11 @@ In this case, compliance is not computable from the information available to a s
 
 The payload returned from a `GET` request to the `value_url` will have the following immutable fields:
 
-| Name        | Type      | Required / Optional | Description                         |
-| ----------- | --------- | --- | ----------------------------------- |
-| `value`     | integer   | Required   | Value of whatever the rule measures |
-| `timestamp` | timestamp | Required   | Timestamp the value was recorded    |
-| `policy_id` | UUID      | Required   | Relevant `policy_id` for reference  |
+| Name        | Type            | Required / Optional | Description                |
+| ----------- | --------------- | ---------- | ----------------------------------- |
+| `value`     | integer         | Required   | Value of whatever the rule measures |
+| `timestamp` | [timestamp][ts] | Required   | Timestamp the value was recorded    |
+| `policy_id` | UUID            | Required   | Relevant `policy_id` for reference  |
 
 ### Order of Operations
 
@@ -280,3 +284,5 @@ If a vehicle is matched with a rule, then it _will not_ be considered in the sub
 The internal mechanics of ordering are up to the Policy editing and hosting software.
 
 [Top](#table-of-contents)
+
+[ts]: #timestamps
