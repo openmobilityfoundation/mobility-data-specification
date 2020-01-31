@@ -113,7 +113,7 @@ MDS defines [JSON Schema](https://json-schema.org/) files for [`trips`][trips-sc
 
 ### Pagination
 
-The `/trips` and `/status_changes` APIs should not use pagination.
+The `/trips` and `/status_changes` APIs must not use pagination.
 If providers choose to use pagination for the `/events` endpoint the pagination
 must comply with the [JSON API](http://jsonapi.org/format/#fetching-pagination)
 specification.
