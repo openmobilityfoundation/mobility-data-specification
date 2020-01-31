@@ -113,7 +113,10 @@ MDS defines [JSON Schema](https://json-schema.org/) files for [`trips`][trips-sc
 
 ### Pagination
 
-`provider` APIs may decide to paginate the data payload. If so, pagination must comply with the [JSON API](http://jsonapi.org/format/#fetching-pagination) specification.
+The `/trips` and `/status_changes` APIs should not use pagination.
+If providers choose to use pagination for the `/events` endpoint the pagination
+must comply with the [JSON API](http://jsonapi.org/format/#fetching-pagination)
+specification.
 
 The following keys must be used for pagination links:
 
