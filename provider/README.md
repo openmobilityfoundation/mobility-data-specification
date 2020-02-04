@@ -225,6 +225,13 @@ If the currency field is null, USD cents is implied.
 
 [Top][toc]
 
+
+### Station ID
+
+A station is where a vehicle may be picked up and/or returned. Each station must have a UUID that is unique within the Provider's system. This is not to be confused with the station ID that may be found from a [GBFS](https://github.com/NABSA/gbfs/) endpoint.
+
+[Top][toc]
+
 ## Trips
 
 A trip represents a journey taken by a *mobility as a service* customer with a geo-tagged start and stop point.
@@ -259,6 +266,8 @@ Schema: [`trips` schema][trips-schema]
 | `standard_cost` | Integer | Optional | The cost, in the currency defined in `currency`, that it would cost to perform that trip in the standard operation of the System (see [Costs & Currencies](#costs--currencies)) |
 | `actual_cost` | Integer | Optional | The actual cost, in the currency defined in `currency`, paid by the customer of the *mobility as a service* provider (see [Costs & Currencies](#costs--currencies)) |
 | `currency` | String | Optional, USD cents is implied if null.| An [ISO 4217 Alphabetic Currency Code](https://en.wikipedia.org/wiki/ISO_4217#Active_codes) representing the currency of the payee (see [Costs & Currencies](#costs--currencies)) |
+| `station_start` | UUID | Required if Applicable | If a trip originates from a station, the [station id](#station-id) of the station |
+| `station_end` | UUID | Required if Applicable | If a trip ends at a station, the [station id](#station-id) of the station |
 
 ### Trips Query Parameters
 
@@ -342,6 +351,7 @@ Schema: [`status_changes` schema][sc-schema]
 | `event_time` | [timestamp][ts] | Required | Date/time that event occurred at. See [Event Times](#event-times) |
 | `publication_time` | [timestamp][ts] | Optional | Date/time that event became available through the status changes endpoint |
 | `event_location` | GeoJSON [Point Feature][geo] | Required | |
+| `event_station_id` | UUID | Required if Applicable | If the event occurs at a station, the [station id](#station-id) of the station |
 | `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |
 | `associated_trip` | UUID | Required if Applicable | Trip UUID (foreign key to Trips API), required if `event_type_reason` is `user_pick_up` or `user_drop_off`, or for any other status change event that marks the end of a trip. |
 | `associated_ticket` | String | Optional | Identifier for an associated ticket inside an Agency-maintained 311 or CRM system. | 
