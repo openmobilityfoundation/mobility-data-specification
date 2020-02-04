@@ -7,6 +7,7 @@ This specification contains a data standard for *mobility as a service* provider
 * [General Information](#general-information)
 * [Trips](#trips)
 * [Status Changes](#status-changes)
+* [Stations](#stations)
 * [Realtime Data](#realtime-data)
   - [GBFS](#GBFS)
   - [Events](#events)
@@ -232,6 +233,37 @@ A station is where a vehicle may be picked up and/or returned. Each station must
 
 [Top][toc]
 
+### Vehicle
+
+This model should be compatible with the proposed [`/vehicles` endpoint](https://github.com/openmobilityfoundation/mobility-data-specification/pull/376). Its main purpose for now is to represent a vehicle that is at a [station](#stations).
+
+| Field | Type | Required/Optional | Comments |
+| ----- | ---- | ----------------- | -------- |
+| provider_id | UUID  | Required | A UUID for the Provider, unique within MDS |
+| device_id | UUID | | A unique device ID in UUID format, should match this device in Provider |
+| vehicle_id | String | | The Vehicle Identification Number visible on the vehicle itself, should match this device in Provider |
+| vehicle_type | Enum | Required | See [vehicle types](#vehicle-types) table |
+| propulsion_type | Enum[] | Required | Array of [propulsion types](#propulsion-types); allows multiple values |
+
+[Top][toc]
+
+### Dock
+
+A dock can represents a space to park a singular vehicle, e.g. a dock for a bicycle or a parking space for a car. It is the complement to a [vehicle](#vehicle).
+
+| Field | Type | Required/Optional | Comments |
+| ----- | ---- | ----------------- | -------- |
+| vehicle_types | Enum[] | Required | Array of [vehicle types](#vehicle-types) that may occupy the dock |
+| propulsion_types | Enum[] | Required | Array of [propulsion types](#propulsion-types) that may be at the dock |
+| working | Boolean | Required | If true, denotes that the space may either accept or rent out vehicles. If false, the space can do neither |
+| vehicle_present | Boolean | Required | |
+
+To clarify, if a dock has a state of `working: false` and `vehicle_present: true` one could infer that either the vehicle has been taken out of service at the dock, or that the dock is jammed.
+
+An empty dock a user is able to return a vehicle to would have the state `working: true` and `vehicle_present: false`.
+
+[Top][toc]
+
 ## Trips
 
 A trip represents a journey taken by a *mobility as a service* customer with a geo-tagged start and stop point.
@@ -388,6 +420,61 @@ Without an `event_time` query parameter, `/status_changes` shall return a `400 B
 | | | `rebalance_pick_up` | Device removed from street and will be placed at another location to rebalance service |
 | | | `maintenance_pick_up` | Device removed from street so it can be worked on |
 | | | `agency_pick_up` | The administrative agency (ie, DOT) removes a device using an admin code or similar |
+
+[Top][toc]
+
+## Stations
+
+A Station represents a station in a point in time, a “station state” to be verbose. Most commonly, this is a docked-bikeshare station, but we aim to let this support scooter corrals, or even parking spots for cars.
+
+This API allows a user to query the historical (and potentially realtime) state of a provider's system of stations. Providers should provide data on their entire system on a daily cadence at the very least. Then, coupled with the `/station_status_changes` endpoint below, one could "fast-forward" to any other point in the day to derive the state of the system then.
+
+Endpoint: `/stations`  
+Method: `GET`  
+Schema: To Be Generated  
+`data` Payload: `{ "stations": [] }`, an array of objects with the following structure  
+
+| Field | Type | Required/Optional | Comments |
+| ----- | ---- | ----------------- | ----- |
+| `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS |
+| `provider_name` | String | Required  | The public-facing name of the Provider |
+| `station_id` | UUID | Required | A station ID unique to the provider's system |
+| `gbfs_station_id` | String | Optional | If provided, should match the station_id in the GBFS endpoints |
+| `name` | String | Required | Public name of the station |
+| `location` | GeoJSON [Point Feature][geo] | Required | |
+| `status` | Enum | Required | See [station statuses](#station-statuses) table |
+| `reported_at` | [timestamp][ts] | Required | Timestamp when the state of the station was captured |
+| `vehicle_types` | Enum[] | Required | Array of [vehicle types](#vehicle-types) the station supports; allows multiple values |
+| `propulsion_types` | Enum[] | Required | Array of [propulsion types](#propulsion-types) the station supports; allows multiple values |
+| `vehicles` | Vehicles[] | Required | Array of [vehicles](#vehicle) at the station. Will be empty if no vehicles are at the station |
+| `docks` | Docks[] | Optional | Array of [docks](#dock) at the station. If this field is null, it is assumed that the number of docks is irrelevant (i.e. a warehouse where users can return or take as many vehicles as needed) |
+
+Folks familiar with [GBFS](https://github.com/NABSA/gbfs) will recognise some similarities, but keep in mind this is a “station state”, so it includes information on the vehicles and docks at a specific point in time as denoted by the `reported_at` field.
+
+### Stations Query Parameters
+
+The `/stations` API should allow querying stations with a combination of query parameters:
+
+| Parameter | Format | Expected Output |
+| --------- | ------ | --------------- |
+| `timestamp` | [timestamp][ts] | The most recent state of each station as of the specified time |
+| `station_ids` | Comma-separated string | All stations whose `station_id` is in the list of station IDs |
+
+If `timestamp` is omitted, or in the future, the endpoint will return the most recent state of the stations. If `timestamp` is in the past, the state of the stations should be the most recent state up until the specified time. For example: if stations have `reported_at: 10` and `reported_at: 20`, and `timestamp=17` was supplied, the endpoint would return the state from `reported_at: 10`.
+
+Unless the `station_ids` filter is explicitly requested, the response is expected to return one `station` object per station in the system, thus returning the entire system.
+
+### Station Statuses
+
+| `status` | Description |
+| -------- | ----------- |
+| `open` | The station is open and available to rent out or accept vehicles |
+| `closed` | The station is closed. Either because of operating hours, repairs, or a seasonal closure |
+| `decommissioned` | The station is permanently closed and will be removed from the system |
+
+Some GBFS [station_status](https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_statusjson) states such as `is_installed`, `is_renting`, or `is_returning` are purposefully omitted since they are more relevant for bikeshare riders than planners analysing historical data, but we're open to discussion of their inclusion if it helps users of MDS.
+
+If docked-bikeshare stations are closed be cause of a [Canadian winter](https://github.com/NABSA/gbfs/pull/202#issuecomment-565586255), we expect the status to just be `closed`.
 
 [Top][toc]
 
