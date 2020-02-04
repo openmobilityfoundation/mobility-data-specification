@@ -8,6 +8,7 @@ This specification contains a data standard for *mobility as a service* provider
 * [Trips](#trips)
 * [Status Changes](#status-changes)
 * [Stations](#stations)
+* [Station Status Changes](#station-status-changes)
 * [Realtime Data](#realtime-data)
   - [GBFS](#GBFS)
   - [Events](#events)
@@ -475,6 +476,71 @@ Unless the `station_ids` filter is explicitly requested, the response is expecte
 Some GBFS [station_status](https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_statusjson) states such as `is_installed`, `is_renting`, or `is_returning` are purposefully omitted since they are more relevant for bikeshare riders than planners analysing historical data, but we're open to discussion of their inclusion if it helps users of MDS.
 
 If docked-bikeshare stations are closed be cause of a [Canadian winter](https://github.com/NABSA/gbfs/pull/202#issuecomment-565586255), we expect the status to just be `closed`.
+
+[Top][toc]
+
+## Station Status Changes
+
+The above `/stations` endpoint provides "snapshots" of every station in the system at least once a day, at the very least. If a user wanted the state of a station at a point in time other than what the `/stations` endpoint provides, they would use this one, which gives them a stream of station status changes.
+
+A `station_status_change` represents the state of the station _after_ an event listed in the `change_type_reason` field. Otherwise, is the same as a `stations` object.
+
+Endpoint: `/stations_status_changes`  
+Method: `GET`  
+Schema: To Be Generated  
+`data` Payload: `{ "station_status_changes": [] }`, an array of objects with the following structure  
+
+| Field | Type | Required/Optional | Comments |
+| ----- | ---- | ----------------- | ----- |
+| `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS |
+| `provider_name` | String | Required  | The public-facing name of the Provider |
+| `station_id` | UUID | Required | A station ID unique to the provider's system |
+| `gbfs_station_id` | String | Optional | If provided, should match the station_id in the GBFS endpoints |
+| `name` | String | Required | Public name of the station |
+| `location` | GeoJSON [Point Feature][geo] | Required | |
+| `status` | Enum | Required | See [station statuses](#station-statuses) table |
+| `change_type_reason` | Enum | Required | See [station change type reasons](#station-change-type-reasons) table |
+| `reported_at` | [timestamp][ts] | Required | Timestamp when the state of the station was captured |
+| `vehicle_types` | Enum[] | Required | Array of [vehicle types](#vehicle-types) the station supports; allows multiple values |
+| `propulsion_types` | Enum[] | Required | Array of [propulsion types](#propulsion-types) the station supports; allows multiple values |
+| `vehicles` | Vehicles[] | Required | Array of [vehicles](#vehicle) at the station. Will be empty if no vehicles are at the station |
+| `docks` | Docks[] | Optional | Array of [docks](#dock) at the station. If this field is null, it is assumed that the number of docks is irrelevant (i.e. a warehouse where users can return or take as many vehicles as needed) |
+
+People may attempt to draw some parallels with the GBFS [station_information](https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_informationjson) and [station_status](https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_statusjson) endpoints, but here the two new MDS endpoints return objects that are not so different from one another. The difference is that one endpoint is guaranteed to provide the state for once a day; whereas the other returns state changes that have happened.
+
+### Station Status Changes Query Parameters
+
+The `/station_status_changes` API should allow querying stations status changes with a combination of query parameters:
+
+| Parameter | Format | Expected Output |
+| --------- | ------ | --------------- |
+| `start_time`  | [timestamp][ts] | station status changes where `start_time <= station_status_status_change.reported_at` |
+| `end_time`    | [timestamp][ts] | station status changes where `station_status_status_change.reported_at < end_time` |
+| `station_ids` | Comma-separate list | All station states whose `station_id` is in the list of station IDs |
+
+Both `start_time` and `end_time` are required. If either is omitted, the `/station_status_changes` endpoint should return a `400: Bad Request` response.
+
+Unlike the `/stations` endpoint, it is possible for the `/station_status_changes` endpoint to return empty responses if no changes occurred during the specified time range.
+
+### Station Change Type Reasons
+
+| `change_type_reason` | Description |
+| -------------------- | ----------- |
+| `service_start` | The station is open |
+| `service_end` | The station is closed |
+| `maintenance` | The station is undergoing repairs, potentially changing some fields |
+| `vehicle_drop_off` | A vehicle was returned by a user, so the `vehicles` and `docks` fields are updated |
+| `vehicle_pick_up` | A vehicle was picked up by a user, so the `vehicles` and `docks` fields are updated |
+| `vehicle_provider_drop_off` | A vehicle or more was/were dropped off up by the provider, so the `vehicles` and `docks` fields are updated |
+| `vehicle_provider_pick_up` | A vehicle or more was/were picked up by the provider, so the `vehicles` and `docks` fields are updated |
+| `vehicle_fueling` | A vehicle is now unavailable because it needs to be refueled |
+| `vehicle_maintenance` | A vehicle is now unavailable because it needs to be repaired |
+| `vehicle_unavailable` | A vehicle is now unavailable for other reasons |
+| `vehicle_type_added` | The station offers a new vehicle type, changing the `vehicle_types` field and count fields |
+| `vehicle_type_removed` | A vehicle type has been removed from the station, changing the `vehicle_types` field and count fields     |
+| `decommissioning` | The station is slated to be removed |
+
+We encourage providers to comment on any common change type reasons that are missing.
 
 [Top][toc]
 
