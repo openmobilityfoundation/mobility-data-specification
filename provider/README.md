@@ -378,6 +378,7 @@ Without an `event_time` query parameter, `/status_changes` shall return a `400 B
 | | | `rebalance_pick_up` | Device removed from street and will be placed at another location to rebalance service |
 | | | `maintenance_pick_up` | Device removed from street so it can be worked on |
 | | | `agency_pick_up` | The administrative agency (ie, DOT) removes a device using an admin code or similar |
+| `missing` | A vehicle's status is unknown. | `lost` |  A vehicle is missing but not yet deactivated from the fleet. |
 
 [Top][toc]
 
