@@ -315,4 +315,5 @@ A vehicle may have one or more values from the `propulsion`, depending on the nu
 
 [Top][toc]
 
+[toc]: #table-of-contents
 [provider/versioning]: /provider/README.md#versioning
