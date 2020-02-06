@@ -29,6 +29,8 @@ The following information applies to all `agency` API endpoints. Details on prov
 
 Versioning must be implemented as specified in the [`Provider API versioning section`][Provider/versioning].
 
+Since versioning was not added until the 0.4.1 release, if the Accept header is not set as specified above, the Agency API must respond as if version 0.3 was requested.
+
 ## Authorization
 
 When making requests, the Agency API expects `provider_id` to be part of the claims in a [JWT](https://jwt.io/)  `access_token` in the `Authorization` header, in the form `Authorization: Bearer <access_token>`. The token issuance, expiration and revocation policies are at the discretion of the Agency.
