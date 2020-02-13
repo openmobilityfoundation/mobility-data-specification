@@ -180,9 +180,9 @@ Unless stated otherwise by the municipality, the trips endpoint must return all 
 | `route` | GeoJSON `FeatureCollection` | Required | See [Routes](#routes) detail below |
 | `accuracy` | Integer | Required | The approximate level of accuracy, in meters, of `Points` within `route` |
 | `start_time` | [timestamp][ts] | Required | |
-| `start_stop_id` | UUID | Required (*docked*), Optional (*dockless*) | Identifier for a stop see [Stops](LINKTBD). |
+| `start_stop_id` | UUID | Required (*docked*), N/A (*dockless*) | Identifier for a stop see [Stops](LINKTBD). |
 | `end_time` | [timestamp][ts] | Required | |
-| `end_stop_id` | UUID | Required (*docked*), Optional (*dockless*) | Identifier for a stop see [Stops](LINKTBD). |
+| `end_stop_id` | UUID | Required (*docked*), N/A (*dockless*) | Identifier for a stop see [Stops](LINKTBD). |
 | `publication_time` | [timestamp][ts] | Optional | Date/time that trip became available through the trips endpoint |
 | `parking_verification_url` | String | Optional | A URL to a photo (or other evidence) of proper vehicle parking |
 | `standard_cost` | Integer | Optional | The cost, in the currency defined in `currency`, that it would cost to perform that trip in the standard operation of the System (see [Costs & Currencies][costs-and-currencies]) |
