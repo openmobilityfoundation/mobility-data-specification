@@ -180,7 +180,9 @@ Unless stated otherwise by the municipality, the trips endpoint must return all 
 | `route` | GeoJSON `FeatureCollection` | Required | See [Routes](#routes) detail below |
 | `accuracy` | Integer | Required | The approximate level of accuracy, in meters, of `Points` within `route` |
 | `start_time` | [timestamp][ts] | Required | |
+| `start_stop_id` | UUID | Required (*docked*), Optional (*dockless*) | Identifier for a stop see [Stops](LINKTBD). |
 | `end_time` | [timestamp][ts] | Required | |
+| `end_stop_id` | UUID | Required (*docked*), Optional (*dockless*) | Identifier for a stop see [Stops](LINKTBD). |
 | `publication_time` | [timestamp][ts] | Optional | Date/time that trip became available through the trips endpoint |
 | `parking_verification_url` | String | Optional | A URL to a photo (or other evidence) of proper vehicle parking |
 | `standard_cost` | Integer | Optional | The cost, in the currency defined in `currency`, that it would cost to perform that trip in the standard operation of the System (see [Costs & Currencies][costs-and-currencies]) |
@@ -272,7 +274,8 @@ Unless stated otherwise by the municipality, this endpoint must return only thos
 | `event_location` | GeoJSON [Point Feature][geo] | Required | |
 | `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |
 | `trip_id` | UUID | Required if Applicable | Trip UUID (foreign key to Trips API), required if `event_types` contains `trip_start`, `trip_end`, `trip_cancel`, `trip_enter_jurisdiction`, or `trip_leave_jurisdiction` |
-| `associated_ticket` | String | Optional | Identifier for an associated ticket inside an Agency-maintained 311 or CRM system |
+| `associated_ticket` | String | Optional | Identifier for an associated ticket inside an Agency-maintained 311 or CRM system. |
+| `stop_id` | UUID | Conditionally Required (*docked*), N/A (*dockless*) | Identifier for a stop see [Stops](LINKTBD). Required for `trip_start` and `trip_end` events for a *docked* mobility provider. |
 
 ### Status Changes Query Parameters
 
