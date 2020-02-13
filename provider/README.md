@@ -275,7 +275,7 @@ Unless stated otherwise by the municipality, this endpoint must return only thos
 | `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |
 | `trip_id` | UUID | Required if Applicable | Trip UUID (foreign key to Trips API), required if `event_types` contains `trip_start`, `trip_end`, `trip_cancel`, `trip_enter_jurisdiction`, or `trip_leave_jurisdiction` |
 | `associated_ticket` | String | Optional | Identifier for an associated ticket inside an Agency-maintained 311 or CRM system. |
-| `stop_id` | UUID | Conditionally Required (*docked*), N/A (*dockless*) | Identifier for a stop see [Stops](LINKTBD). Required for `trip_start` and `trip_end` events for a *docked* mobility provider. |
+| `stop_id` | UUID | Conditionally Required (*docked*), N/A (*dockless*) | Identifier for a stop see [Stops](LINKTBD). Required for `trip` events for a *docked* mobility provider. |
 
 ### Status Changes Query Parameters
 
