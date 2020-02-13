@@ -180,9 +180,7 @@ Unless stated otherwise by the municipality, the trips endpoint must return all 
 | `route` | GeoJSON `FeatureCollection` | Required | See [Routes](#routes) detail below |
 | `accuracy` | Integer | Required | The approximate level of accuracy, in meters, of `Points` within `route` |
 | `start_time` | [timestamp][ts] | Required | |
-| `start_stop_id` | UUID | Required (*docked*), N/A (*dockless*) | Identifier for a stop see [Stops](LINKTBD). |
 | `end_time` | [timestamp][ts] | Required | |
-| `end_stop_id` | UUID | Required (*docked*), N/A (*dockless*) | Identifier for a stop see [Stops](LINKTBD). |
 | `publication_time` | [timestamp][ts] | Optional | Date/time that trip became available through the trips endpoint |
 | `parking_verification_url` | String | Optional | A URL to a photo (or other evidence) of proper vehicle parking |
 | `standard_cost` | Integer | Optional | The cost, in the currency defined in `currency`, that it would cost to perform that trip in the standard operation of the System (see [Costs & Currencies][costs-and-currencies]) |
@@ -209,13 +207,16 @@ To represent a route, MDS `provider` APIs must create a GeoJSON [`FeatureCollect
 
 Routes must include at least 2 points: the start point and end point. Routes must include all possible GPS or GNSS samples collected by a Provider. Providers may round the latitude and longitude to the level of precision representing the maximum accuracy of the specific measurement. For example, [a-GPS][agps] is accurate to 5 decimal places, [differential GPS][dgps] is generally accurate to 6 decimal places. Providers may round those readings to the appropriate number for their systems.
 
+*Docked* mobility providers must include a `stop_id` in the first and last Feature of each `route` by embedding the `stop_id` property in the Feature's `proprerties` object.
+
 ```js
 "route": {
     "type": "FeatureCollection",
     "features": [{
         "type": "Feature",
         "properties": {
-            "timestamp": 1529968782421
+            "timestamp": 1529968782421,
+            "stop_id": "95084833-6a3f-4770-9919-de1ab4b8989b", // REQUIRED for docked mobility providers, N/A for dockless
         },
         "geometry": {
             "type": "Point",
@@ -228,7 +229,8 @@ Routes must include at least 2 points: the start point and end point. Routes mus
     {
         "type": "Feature",
         "properties": {
-            "timestamp": 1531007628377
+            "timestamp": 1531007628377,
+            "stop_id": "b813cde2-a41c-4ae3-b409-72ff221e003d" // REQUIRED for docked mobility providers, N/A for dockless
         },
         "geometry": {
             "type": "Point",
@@ -275,7 +277,7 @@ Unless stated otherwise by the municipality, this endpoint must return only thos
 | `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |
 | `trip_id` | UUID | Required if Applicable | Trip UUID (foreign key to Trips API), required if `event_types` contains `trip_start`, `trip_end`, `trip_cancel`, `trip_enter_jurisdiction`, or `trip_leave_jurisdiction` |
 | `associated_ticket` | String | Optional | Identifier for an associated ticket inside an Agency-maintained 311 or CRM system. |
-| `stop_id` | UUID | Conditionally Required (*docked*), N/A (*dockless*) | Identifier for a stop see [Stops](LINKTBD). Required for `reserved` events with a `user_pick_up` event_type_reason, and `available` events with a `user_drop_off` event_type_reason for a *docked* mobility provider. |
+| `stop_id` | UUID | Conditionally Required (*docked*), N/A (*dockless*) | Identifier for a stop see [Stops](LINKTBD). Required for `trip_start` and `trip_end` events for a *docked* mobility provider. |
 
 ### Status Changes Query Parameters
 
