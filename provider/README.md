@@ -394,7 +394,7 @@ Should either side of the requested time range be greater than 2 weeks before th
 
 ### Vehicles
 
-All providers should provide an endpoint that displays the current status of the fleet. Data in this endpoint should reconcile with data from the status changes enpdoint.
+All providers should provide an endpoint that displays the current status of a providers vehicles on the PROW. Only vehicles that are currently in available, unavailable, or reserved states should be returned in this payload. Data in this endpoint should reconcile with data from the status changes enpdoint. This data should be refreshed at most every 5 minutes.
 
 In addition to the standard [Provider payload wrapper](#response-format), responses from this endpoint should contain the last update timestamp and amount of time until the next update:
 
@@ -414,7 +414,7 @@ Where `last_updated` and `ttl` are defined as follows:
 Field Name          | Required  | Defines
 --------------------| ----------| ----------
 last_updated        | Yes       | Timestamp indicating the last time the data in this feed was updated
-ttl                 | Yes       | Integer representing the number of milliseconds before the data in this feed will be updated again (0 if the data should always be refreshed)
+ttl                 | Yes       | Integer representing the number of milliseconds before the data in this feed will be updated again (0 if the data should always be refreshed).
 
 Endpoint: `/vehicles`
 Method: `GET`
