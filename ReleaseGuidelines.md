@@ -46,6 +46,7 @@ At this early stage, MDS will be moving relatively quickly with an eye toward st
 
 For now, MDS will maintain *two concurrent (MINOR) versions* (e.g. if `0.3.0` were the current version, the `0.2.x` series would continue to receive maintenance in addition to `0.3.x`).
 
+As of Jan 2020, the officially supported MDS versions are: 0.4.0, 0.3.2, 0.3.1, and 0.3.0. Refer to the [MDS release schedule for more details](https://github.com/openmobilityfoundation/mobility-data-specification/wiki#mds-release-schedule).
 
 ## Release Process
 The sections below define the release process itself, including timeline, roles, and communication best practices.
