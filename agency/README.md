@@ -27,9 +27,7 @@ The following information applies to all `agency` API endpoints. Details on prov
 
 `agency` APIs must handle requests for specific versions of the specification from clients.
 
-Versioning must be implemented as specified in the [`Provider API versioning section`][Provider/versioning].
-
-Since versioning was not added until the 0.4.1 release, if the Accept header is not set as specified above, the Agency API must respond as if version 0.3 was requested.
+Versioning must be implemented as specified in the [`General information versioning section`][general-information/versioning].
 
 ## Authorization
 
@@ -316,4 +314,4 @@ A vehicle may have one or more values from the `propulsion`, depending on the nu
 [Top][toc]
 
 [toc]: #table-of-contents
-[provider/versioning]: /provider/README.md#versioning
+[general-information/versioning]: /general-information.md#versioning
