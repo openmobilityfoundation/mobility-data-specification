@@ -25,7 +25,7 @@ Accept: application/vnd.mds.provider+json;version=0.3
 > Since versioning was not available from the start, the following APIs provide a fallback version if the `Accept` header is not set as specified above:
 > - The `provider` API must respond as if version `0.2` was requested.
 > - The `agency` API must respond as if version `0.3` was requested.
-> - The `policy` API must respond as if version `0.3` was requested.
+> - The `policy` API must respond as if version `0.4` was requested.
 
 If an unsupported or invalid version is requested, the API must respond with a status of `406 Not Acceptable`. If this occurs, a client can explicitly negotiate available versions.
 
