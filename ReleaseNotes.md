@@ -6,27 +6,27 @@ The 0.4.0 release represents a major step forward in the Mobility Data Specifica
 
 **CHANGES**
 *_Provider_*
-* [Improved Handling of Cost Data](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/388)
-* [Allow static file storage backed API Endpoints](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/357)
-* [Cleanup Provider README](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/395)
-* [Legacy Version Header Cleanup](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/314)
-* [Internationalization of Currency data](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/379)
-* [Specify Types for Query Params](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/352)
-* [Clarify the definition of Municipal Boundary](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/369)
-* [Update Status Change JSON Schema to include Associated Trip properly](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/353)
+* [Improved Handling of Cost Data](https://github.com/openmobilityfoundation/mobility-data-specification/pull/388)
+* [Allow static file storage backed API Endpoints](https://github.com/openmobilityfoundation/mobility-data-specification/pull/357)
+* [Cleanup Provider README](https://github.com/openmobilityfoundation/mobility-data-specification/pull/395)
+* [Legacy Version Header Cleanup](https://github.com/openmobilityfoundation/mobility-data-specification/pull/314)
+* [Internationalization of Currency data](https://github.com/openmobilityfoundation/mobility-data-specification/pull/379)
+* [Specify Types for Query Params](https://github.com/openmobilityfoundation/mobility-data-specification/pull/352)
+* [Clarify the definition of Municipal Boundary](https://github.com/openmobilityfoundation/mobility-data-specification/pull/369)
+* [Update Status Change JSON Schema to include Associated Trip properly](https://github.com/openmobilityfoundation/mobility-data-specification/pull/353)
 
 *_Agency_*
-* [Add Accuracy Field for GPS Telemetry Data](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/360)
-* [String Limit to 255 Characters](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/361)
-* [Remove SLA from /telemetry](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/371)
-* [Update State Machine Diagram](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/363)
+* [Add Accuracy Field for GPS Telemetry Data](https://github.com/openmobilityfoundation/mobility-data-specification/pull/360)
+* [String Limit to 255 Characters](https://github.com/openmobilityfoundation/mobility-data-specification/pull/361)
+* [Remove SLA from /telemetry](https://github.com/openmobilityfoundation/mobility-data-specification/pull/371)
+* [Update State Machine Diagram](https://github.com/openmobilityfoundation/mobility-data-specification/pull/363)
 
 *_Misc_* 
-* [New Policy API Endpoint](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/382)
-* [Improved README for Schema Directory](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/398)
-* [Add Car Vehicle Type](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/219)
-* [Unify Error Responses between Provider / Agency](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/368)
-* [Imrovements to Release Process](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/372)
+* [New Policy API Endpoint](https://github.com/openmobilityfoundation/mobility-data-specification/pull/382)
+* [Improved README for Schema Directory](https://github.com/openmobilityfoundation/mobility-data-specification/pull/398)
+* [Add Car Vehicle Type](https://github.com/openmobilityfoundation/mobility-data-specification/pull/219)
+* [Unify Error Responses between Provider / Agency](https://github.com/openmobilityfoundation/mobility-data-specification/pull/368)
+* [Improvements to Release Process](https://github.com/openmobilityfoundation/mobility-data-specification/pull/372)
 
 ## 0.3.2 
 
@@ -37,16 +37,16 @@ This release is a series of non breaking and minor changes for provider, along w
 **CHANGES** 
 
 *_Provider_*
-* [Add an optional recorded field to provider](https://github.com/CityOfLosAngeles/mobility-data-specification/issues/307)
-* [Ordering Definitions](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/301)
-* [406 response - version negiotation](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/327)
+* [Add an optional recorded field to provider](https://github.com/openmobilityfoundation/mobility-data-specification/issues/307)
+* [Ordering Definitions](https://github.com/openmobilityfoundation/mobility-data-specification/pull/301)
+* [406 response - version negiotation](https://github.com/openmobilityfoundation/mobility-data-specification/pull/327)
 
 *_Agency_*
-[JSON Schema for Agency](https://github.com/CityOfLosAngeles/mobility-data-specification/issues/169)
+[JSON Schema for Agency](https://github.com/openmobilityfoundation/mobility-data-specification/issues/169)
 
 *_Misc_*
-[Schema Folder Cleanup](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/328)
-[Global GNSS Support](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/316)
+[Schema Folder Cleanup](https://github.com/openmobilityfoundation/mobility-data-specification/pull/328)
+[Global GNSS Support](https://github.com/openmobilityfoundation/mobility-data-specification/pull/316)
 ## 0.3.1
 
 > Released 2019-04-30
@@ -57,22 +57,22 @@ This release represents a series of non-breaking changes and clarifications for 
 
 *_Provider_*
 * MDS Schema version fix.
-* [New release process](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/264). Thanks @jfh for documenting, all for participating 
-* [Additional documentation around what is considered Breaking / Non-Breaking](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/295). Thanks @rf-
-* [OPTIONS for version negotiation](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/293). Thanks @billdirks
-* [Add Agency Drop off / pick up](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/291). Thanks @margodawes 
-* [Explicitly allow associated_trip for any event type](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/297)
+* [New release process](https://github.com/openmobilityfoundation/mobility-data-specification/pull/264). Thanks @jfh for documenting, all for participating 
+* [Additional documentation around what is considered Breaking / Non-Breaking](https://github.com/openmobilityfoundation/mobility-data-specification/pull/295). Thanks @rf-
+* [OPTIONS for version negotiation](https://github.com/openmobilityfoundation/mobility-data-specification/pull/293). Thanks @billdirks
+* [Add Agency Drop off / pick up](https://github.com/openmobilityfoundation/mobility-data-specification/pull/291). Thanks @margodawes 
+* [Explicitly allow associated_trip for any event type](https://github.com/openmobilityfoundation/mobility-data-specification/pull/297)
 
 *_Agency_*
 * Change from UUIDv4 to just UUID. Thanks @karcass
 * Change Error Messages for State Machine validation. 
 * Update Pagination Rules 
 * Add Unregistered event. 
-* [Add Event Diagram](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/258). Thanks @whereissean
-* [Removing 412 Responses](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/258)
+* [Add Event Diagram](https://github.com/openmobilityfoundation/mobility-data-specification/pull/258). Thanks @whereissean
+* [Removing 412 Responses](https://github.com/openmobilityfoundation/mobility-data-specification/pull/258)
 * Add deregister and decomissioned events. Thanks @dirkdk 
-* [Remove 5 second Telemetry requirement](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/261)
-* [Improve failure and error handling around Telemetry Data](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/290)
+* [Remove 5 second Telemetry requirement](https://github.com/openmobilityfoundation/mobility-data-specification/pull/261)
+* [Improve failure and error handling around Telemetry Data](https://github.com/openmobilityfoundation/mobility-data-specification/pull/290)
 
 ## 0.3.0 
 
@@ -114,11 +114,11 @@ Thanks to all contributors.
 
 > Released 2018-10-15
 
-This release backports two features from [`0.2.0`](https://github.com/CityOfLosAngeles/mobility-data-specification/releases/tag/0.2.0):
+This release backports two features from [`0.2.0`](https://github.com/openmobilityfoundation/mobility-data-specification/releases/tag/0.2.0):
 
-* Clarifying Location Types as GeoJSON [#94](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/94)
+* Clarifying Location Types as GeoJSON [#94](https://github.com/openmobilityfoundation/mobility-data-specification/pull/94)
 
-* Adding `electric-assist` as a propulsion type [#48](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/48)
+* Adding `electric-assist` as a propulsion type [#48](https://github.com/openmobilityfoundation/mobility-data-specification/pull/48)
 
 This makes MDS `0.1.x` series more usable for Mobility Providers.
 
@@ -128,17 +128,17 @@ This makes MDS `0.1.x` series more usable for Mobility Providers.
 
 This release includes a number of enhancements and clarifications to the [`provider`][provider] spec:
 
-* Introduce JSON Schema for Trips and Status Changes [#53](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/53)
+* Introduce JSON Schema for Trips and Status Changes [#53](https://github.com/openmobilityfoundation/mobility-data-specification/pull/53)
 
-* Clarify query params for API endpoints [#64](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/64)
+* Clarify query params for API endpoints [#64](https://github.com/openmobilityfoundation/mobility-data-specification/pull/64)
 
-* Clarify API authentication method [#81](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/81)
+* Clarify API authentication method [#81](https://github.com/openmobilityfoundation/mobility-data-specification/pull/81)
 
-* Clarify location formatting [#94](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/94)
+* Clarify location formatting [#94](https://github.com/openmobilityfoundation/mobility-data-specification/pull/94)
 
-* Clarify timestamp formatting [#93](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/93)
+* Clarify timestamp formatting [#93](https://github.com/openmobilityfoundation/mobility-data-specification/pull/93)
 
-* Clarify the `associated_trips` field in Status Changes [#96](https://github.com/CityOfLosAngeles/mobility-data-specification/pull/96)
+* Clarify the `associated_trips` field in Status Changes [#96](https://github.com/openmobilityfoundation/mobility-data-specification/pull/96)
 
 ## 0.1.0
 
@@ -148,4 +148,4 @@ This release includes a number of enhancements and clarifications to the [`provi
 
 * MDS is under active development. As such, pre-`1.0` versions may introduce breaking changes until things stabilize. Every effort will be made to ensure that any breaking change is well documented and that appropriate workarounds are suggested.
 
-[provider]: https://github.com/CityOfLosAngeles/mobility-data-specification/tree/master/provider
+[provider]: https://github.com/openmobilityfoundation/mobility-data-specification/tree/master/provider
