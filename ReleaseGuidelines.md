@@ -95,7 +95,7 @@ Contributors will provide feedback on proposals. Where possible, discussion will
 
 These weeks will start with an web conference work session for all contributors to review and discuss current proposals. Goal is to achieve consensus where possible, or to clearly articulate areas of disagreement where not. Minor changes may be accepted at this stage if they bring contributors to consensus.
 
-At the conclusion of week 11, the working group steering committees will review all items for which consensus was not reached and provide agree on a final release plan. Any remaining approved pull requests will be merged, and a maintainers or working group steering committees will open a pull request containing release notes for the proposed release.
+During this period, the working group steering committees will review all items for which consensus was not reached and decide on a final release plan. Any remaining approved pull requests will be merged, and a maintainers or working group steering committees will open a pull request containing release notes for the proposed release.
 
 **week 12 - release**
 
@@ -115,7 +115,7 @@ The process for full OMF approval is detailed in Section 5.4 of the OMF bylaws, 
 
 1. Upon approval by the Board of Directors, the release will become an official deliverable of the OMF and will be marked as such in GitHub and on the OMF web site.
 
-While it is the intent of the OMF to have concerns, questions, and issues addressed during the regular working group release process, it is possible that the Technology Council or Board of Directors may request modifications to a release candidate/WGAD prior to official approval. If this situation occurs, the release candidate will be sent back to the working group(s) for additional changes after which it can be resubmitted to the Technology Council and Board of Directors. 
+While it is the intent of the OMF to have concerns, questions, and issues addressed during the regular working group release process, it is possible that the Technology Council or Board of Directors may request modifications to a release candidate/WGAD prior to official approval. If this situation occurs, the release candidate will be sent back to the working group(s) for additional changes after which it can be resubmitted to the Technology Council and Board of Directors.
 
 ### Communication and Workflow
 The release announcements and process schedule will be communicated via [`mds-announce`][mds-announce] Google Group. People wishing to stay informed should join the group for updates. Timing of web conference and in person work sessions will be communicated via mds-announce as well.
