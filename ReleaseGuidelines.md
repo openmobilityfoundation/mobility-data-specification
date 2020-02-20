@@ -10,6 +10,7 @@ MDS will see regular updates and new [releases][mds-releases]. This document des
   * [Project Meetings](#project-meetings)
   * [Roles](#roles)
   * [Schedule](#schedule)
+  * [Approval by the Open Mobility Foundation](#approval-by-the-open-mobility-foundation)
   * [Communication and Workflow](#communication-and-workflow)
 * [Branch Mechanics](#branch-mechanics)
 * [Checklist](#release-checklist)
@@ -71,33 +72,50 @@ The sections below define the release process itself, including timeline, roles,
 * _Regular review of release process to ensure it is serving the needs of the community._
 
 ### Roles
+
 * **contributors** - Anyone making pull requests, opening issues, or engaging in technical discussion around implementation of features.
 * **maintainers** - Project maintainers have commit privileges in the main MDS repository and are responsible for implementing changes such as merging of pull requests and the creation of release branches.
-* **release partner** - Review changes when consensus cannot be reached and make final release inclusion recommendations to maintainers for approval.
+* **working group steering committees** - Review changes when consensus cannot be reached and make final release decision about what changes should be included in a release.
 
-As of March 2019, LADOT and the City of Santa Monica are the project maintainers and Remix is the release partner.
+See the [MDS wiki](https://github.com/openmobilityfoundation/mobility-data-specification/wiki) for additional information on the working groups.
 
 ### Schedule
 
-MDS operates on a six-week release cycle for both major updates (0.x) and patches (0.x.y). In general, major updates (0.x) are expected no more than once per quarter. The release cycle is broken down as follows:
+MDS operates on an approximately twelve-week release cycle for both major updates (0.x) and patches (0.x.y). In general, major updates (0.x) are expected no more than twice per year. The release cycle is broken down as follows:
 
-**week 1 - proposals**
+**weeks 1-3 - proposals**
 
 Contributors submit proposals for inclusion in the release cycle in the form of pull requests and issues tagged. If known, note what release you intended a proposal for in its description. Maintainers will tag appropriate pull requests and issues with the Milestone for the upcoming release. Proposals should come with enough explanation to allow all stakeholders to understand intent and implementation strategy.
 
-**weeks 2-4 - consensus building, refinement, and implementation**
+**weeks 4-9 - consensus building, refinement, and implementation**
 
-Contributors will provide feedback on proposals. Where possible, discussion will happen via GitHub. Weekly calls will support dialog around more complex or controversial issues. By the end of week 4, all active proposals must be in the form of a pull request. Proposals can be withdrawn or split apart for inclusion in future releases.
+Contributors will provide feedback on proposals. Where possible, discussion will happen via GitHub. Weekly calls will support dialog around more complex or controversial issues. By the end of week 9, all active proposals must be in the form of a pull request. Proposals can be withdrawn or split apart for inclusion in future releases.
 
-**week 5 - decision making**
+**week 10-11 - decision making**
 
-The week will start with an in-person/web conference work session for all contributors to review and discuss current proposals. Goal is to achieve consensus where possible, or to clearly articulate areas of disagreement where not. Minor changes may be accepted at this stage if they bring contributors to consensus.
+These weeks will start with an web conference work session for all contributors to review and discuss current proposals. Goal is to achieve consensus where possible, or to clearly articulate areas of disagreement where not. Minor changes may be accepted at this stage if they bring contributors to consensus.
 
-At the conclusion of week 5, the release partner will review all items for which consensus was not reached and provide a recommended release plan to maintainers for approval. Any remaining approved pull requests will be merged, and a maintainer or release partner will open a pull request containing release notes for the proposed release.
+At the conclusion of week 11, the working group steering committees will review all items for which consensus was not reached and provide agree on a final release plan. Any remaining approved pull requests will be merged, and a maintainers or working group steering committees will open a pull request containing release notes for the proposed release.
 
-**week 6 - release**
+**week 12 - release**
 
 Documentation will be updated, release notes will be merged, a tag will be created and `master` updated to point to it, and the new version will be formally released. See [Release Checklist](#release-checklist) for details about the release process.
+
+### Approval by the Open Mobility Foundation
+
+Once a release is finalized by the working groups it will be considered a "release candidate" until it has been approved as an official deliverable by the Open Mobility Foundation. The OMF bylaws refer to this as a "Working Group Approved Deliverable (WGAD)."
+
+The process for full OMF approval is detailed in Section 5.4 of the OMF bylaws, the latest version of which can be found [here](https://www.openmobilityfoundation.org/resources/). In summary:
+
+1. The release candidate/WGAD will be provided to the OMF Technology Council for review and comment at least 75 days prior to the desired date of board approval.
+
+1. The Technology Council will issue a report and/or recommendation for the Board of Directors within 60 days.
+
+1. The Board of Directors will have a minimum of 30 days to review the Technology Council recommendation before taking a vote on the release candidate/WGAD.
+
+1. Upon approval by the Board of Directors, the release will become an official deliverable of the OMF and will be marked as such in GitHub and on the OMF web site.
+
+While it is the intent of the OMF to have concerns, questions, and issues addressed during the regular working group release process, it is possible that the Technology Council or Board of Directors may request modifications to a release candidate/WGAD prior to official approval. If this situation occurs, the release candidate will be sent back to the working group(s) for additional changes after which it can be resubmitted to the Technology Council and Board of Directors. 
 
 ### Communication and Workflow
 The release announcements and process schedule will be communicated via [`mds-announce`][mds-announce] Google Group. People wishing to stay informed should join the group for updates. Timing of web conference and in person work sessions will be communicated via mds-announce as well.
@@ -249,7 +267,7 @@ The following steps **must** be followed for **every** release of MDS:
 1. Post a release announcement to [`mds-announce`](mailto:mds-announce@groups.openmobilityfoundation.org), copying the [release notes](ReleaseNotes.md) created earlier and linking to the [GitHub release][mds-releases].
 
     ```email
-    From:    mds-announce@groups.openmobilityfoundation.org 
+    From:    mds-announce@groups.openmobilityfoundation.org
     To:      mds-announce@groups.openmobilityfoundation.org  
     Subject: MDS 1.2.3 Release  
 
