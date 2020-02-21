@@ -8,8 +8,8 @@ This specification contains a data standard for *mobility as a service* provider
 * [Trips](#trips)
 * [Status Changes](#status-changes)
 * [Realtime Data](#realtime-data)
-  - [GBFS](#GBFS)
-  - [Events](#events)
+  * [GBFS](#GBFS)
+  * [Events](#events)
 
 ## General Information
 
@@ -125,7 +125,7 @@ The following keys must be used for pagination links:
 * `prev`: url to the previous page of data
 * `next`: url to the next page of data
 
-At a minimum, paginated payloads must include a `next` key, which must be set to `null` to indicate the last page of data. 
+At a minimum, paginated payloads must include a `next` key, which must be set to `null` to indicate the last page of data.
 
 ```json
 {
@@ -178,7 +178,8 @@ represented as a GeoJSON [`Feature`](https://tools.ietf.org/html/rfc7946#section
 
 For the purposes of this specification, the intersection of two geographic datatypes is defined according to the [`ST_Intersects` PostGIS operation](https://postgis.net/docs/ST_Intersects.html)
 
-> If a geometry or geography shares any portion of space then they intersect. For geography -- tolerance is 0.00001 meters (so any points that are close are considered to intersect).<br>
+> If a geometry or geography shares any portion of space then they intersect. For geography -- tolerance is 0.00001 meters (so any points that are close are considered to intersect).
+>
 > Overlaps, Touches, Within all imply spatial intersection. If any of the aforementioned returns true, then the geometries also spatially intersect. Disjoint implies false for spatial intersection.
 
 [Top][toc]
@@ -242,7 +243,6 @@ Method: `GET`
 Schema: [`trips` schema][trips-schema]  
 `data` Payload: `{ "trips": [] }`, an array of objects with the following structure  
 
-
 | Field | Type    | Required/Optional | Comments |
 | ----- | -------- | ----------------- | ----- |
 | `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS |
@@ -276,7 +276,7 @@ If the data does not exist or the hour has not completed, `/trips` shall return 
 
 Without an `end_time` query parameter, `/trips` shall return a `400 Bad Request` error.
 
-For the near-ish real time use cases, please use the [events](#events) endpoint. 
+For the near-ish real time use cases, please use the [events](#events) endpoint.
 
 ### Routes
 
@@ -348,7 +348,7 @@ Schema: [`status_changes` schema][sc-schema]
 | `event_location` | GeoJSON [Point Feature][geo] | Required | |
 | `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |
 | `associated_trip` | UUID | Required if Applicable | Trip UUID (foreign key to Trips API), required if `event_type_reason` is `user_pick_up` or `user_drop_off`, or for any other status change event that marks the end of a trip. |
-| `associated_ticket` | String | Optional | Identifier for an associated ticket inside an Agency-maintained 311 or CRM system. | 
+| `associated_ticket` | String | Optional | Identifier for an associated ticket inside an Agency-maintained 311 or CRM system. |
 
 ### Event Times
 
@@ -389,12 +389,12 @@ Without an `event_time` query parameter, `/status_changes` shall return a `400 B
 
 ### GBFS
 
-All MDS compatible `provider` APIs must expose a public [GBFS](https://github.com/NABSA/gbfs) feed as well. Given that GBFS hasn't fully [evolved to support dockless mobility](https://github.com/NABSA/gbfs/pull/92) yet, we follow the current guidelines in making bike information avaliable to the public. 
+All MDS compatible `provider` APIs must expose a public [GBFS](https://github.com/NABSA/gbfs) feed as well. Given that GBFS hasn't fully [evolved to support dockless mobility](https://github.com/NABSA/gbfs/pull/92) yet, we follow the current guidelines in making bike information avaliable to the public.
 
-  - `gbfs.json` is always required and must contain a `feeds` property that lists all published feeds
-  - `system_information.json` is always required
-  - `free_bike_status.json` is required for MDS
-  - `station_information.json` and `station_status.json` don't apply for MDS
+* `gbfs.json` is always required and must contain a `feeds` property that lists all published feeds
+* `system_information.json` is always required
+* `free_bike_status.json` is required for MDS
+* `station_information.json` and `station_status.json` don't apply for MDS
 
 ### Events
 
@@ -413,11 +413,11 @@ Method: `GET`
 Schema: [`status_changes` schema][sc-schema]  
 `data` Payload: `{ "status_changes": [] }`, an array of objects with the same structure as in [`/status_changes`][status]
 
-### Event Times
+#### Event Times
 
 Because of the unreliability of device clocks, the Provider is unlikely to know with total confidence what time an event occurred at. However, they are responsible for constructing as accurate a timeline as possible. Most importantly, the order of the timestamps for a particular device's events must reflect the Provider's best understanding of the order in which those events occurred.
 
-### Events Query Parameters
+#### Events Query Parameters
 
 The events API should allow querying with a combination of query parameters:
 
