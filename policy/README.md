@@ -205,6 +205,7 @@ An individual `Rule` object is defined by the following fields:
 | Name            | Type                        | Required / Optional | Description                               |
 | --------------- | --------------------------- | ------------------- | ----------------------------------------- |
 | `name`             | String                      | Required   | Name of rule |
+| `rule_id`          | UUID                        | Required   | Unique ID of the rule |
 | `rule_type`        | enum                        | Required   | Type of policy (see [Rule Types](#rule-types)) |
 | `geographies`      | UUID[]                      | Required   | List of Geography UUIDs (non-overlapping) specifying the covered geography |
 | `statuses`         | `{ status: vehicle event[] }` | Required   | Vehicle `statuses` to which this rule applies, either from [Provider](../provider/README.md#event-types) or [Agency](../agency/README.md#vehicle-events). Optionally provide a list of specific `event_type`'s as a subset of a given status for the rule to apply to. An empty list or `null`/absent defaults to "all". |

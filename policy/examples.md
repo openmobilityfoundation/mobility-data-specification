@@ -123,6 +123,7 @@ This Policy allows scooters and bikes can be in the public right-of-way for up t
   "prev_policies": null,
   "rules": [{
       "name": "Greater LA (rentable)",
+      "rule_id": "e1942f2d-e5c7-46c4-94c7-293d4e481ed0",
       "rule_type": "time",
       "rule_units": "hours",
       "geographies": [
@@ -139,6 +140,7 @@ This Policy allows scooters and bikes can be in the public right-of-way for up t
       "maximum": 72
   }, {
       "name": "Greater LA (non-rentable)",
+      "rule_id": "a7eb28b9-969e-4c52-b18c-4243a96f7143",
       "rule_type": "time",
       "rule_units": "hours",
       "geographies": [
@@ -174,6 +176,7 @@ This Policy sets a 15 MPH speed limit in greater LA, and a 10 MPH speed limit in
   "prev_policies": null,
   "rules": [{
       "name": "Greater LA",
+      "rule_id": "529b6cd7-0e0d-4439-babf-c5908a664ecf",
       "rule_type": "speed",
       "rule_units": "mph",
       "geographies": [
@@ -189,6 +192,7 @@ This Policy sets a 15 MPH speed limit in greater LA, and a 10 MPH speed limit in
       "maximum": 15
   }, {
       "name": "Venice Beach on weekend afternoons",
+      "rule_id": "d4c0f42f-3f79-4eb4-850a-430b9701d5cf",
       "rule_type": "speed",
       "rule_units": "mph",
       "geographies": [
