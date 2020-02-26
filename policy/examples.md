@@ -152,7 +152,7 @@ This Policy allows scooters and bikes can be in the public right-of-way for up t
         "bicycle",
         "scooter"
       ],
-      "limit": 24
+      "maximum": 24
   }]
 }
 ```
