@@ -99,7 +99,7 @@ During this period, the working group steering committees will review all items 
 
 #### Week 12: Release
 
-Documentation will be updated, release notes will be merged, a tag will be created and `master` updated to point to it, and the new version will be formally released. See [Release Checklist](#release-checklist) for details about the release process.
+Documentation will be updated, release notes will be merged and a tag will be created to point to it. At this point the new version will be formally considered a release candidate and begin the Open Mobility Foundation approval process described below.  See [Release Checklist](#release-checklist) for details about the release process.
 
 ### Approval by the Open Mobility Foundation
 
