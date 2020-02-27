@@ -394,7 +394,7 @@ Should either side of the requested time range be greater than 2 weeks before th
 
 ### Vehicles
 
-All providers should provide an endpoint that displays the current status of a providers vehicles on the PROW. Only vehicles that are currently in available, unavailable, or reserved states should be returned in this payload. Data in this endpoint should reconcile with data from the status changes enpdoint. This data should be refreshed at most every 5 minutes.
+The `/vehicles` endpoint returns the current status of vehicles on the PROW. Only vehicles that are currently in available, unavailable, or reserved states should be returned in this payload. Data in this endpoint should reconcile with data from the `/status_changes` enpdoint. The data returned by this endpoint should be as close to realtime as possible, but in no case should it be more than 5 minutes out-of-date.
 
 In addition to the standard [Provider payload wrapper](#response-format), responses from this endpoint should contain the last update timestamp and amount of time until the next update:
 
