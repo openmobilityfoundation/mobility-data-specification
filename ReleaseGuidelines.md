@@ -117,6 +117,7 @@ The process for full OMF approval is detailed in Section 5.4 of the OMF bylaws, 
 
 While it is the intent of the OMF to have concerns, questions, and issues addressed during the regular working group release process, it is possible that the Technology Council or Board of Directors may request modifications to a release candidate/WGAD prior to official approval. If this situation occurs, the release candidate will be sent back to the working group(s) for additional changes after which it can be resubmitted to the Technology Council and Board of Directors.
 
+The OMF recommends that regulatory agencies do not formally adopt or require any versions of the spec that have not been fully approved by the OMF Board of Directors. However, release candidates/WGADs are considered stable enough to allow API producers and consumers to begin developing against in anticipation of formal approval.
 ### Communication and Workflow
 
 The release announcements and process schedule will be communicated via [MDS-Announce mailing list][mds-announce]. People wishing to stay informed should join the group for updates. Timing of web conference and in person work sessions will be communicated via MDS-Announce as well.
