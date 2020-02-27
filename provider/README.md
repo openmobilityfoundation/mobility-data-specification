@@ -434,7 +434,7 @@ ttl                 | Yes       | Integer representing the number of millisecond
 | `last_event_type` | Enum | Required | Event type of most recent status change. See [event types](#event-types) table |
 | `last_event_type_reason` | Enum | Required | Event type reason of most recent status change, allowable values determined by [`event type`](#event-types) |
 | `last_event_location` | GeoJSON [Point Feature][geo]| Required | Location of vehicle's last event |
-| `current_location` | GeoJSON [Point Feature][geo] | Required | Current location of vehicle if different from last event, and the vehicle is not currently on a trip |
+| `current_location` | GeoJSON [Point Feature][geo] | Required if Applicable | Current location of vehicle if different from last event, and the vehicle is not currently on a trip |
 | `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |
 
 [Top][toc]
