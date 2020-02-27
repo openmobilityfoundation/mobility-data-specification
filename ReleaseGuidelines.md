@@ -46,7 +46,7 @@ At this early stage, MDS will be moving relatively quickly with an eye toward st
 
 For now, MDS will maintain *two concurrent (MINOR) versions* (e.g. if `0.3.0` were the current version, the `0.2.x` series would continue to receive maintenance in addition to `0.3.x`).
 
-Refer to the list of [Supported Releases](https://github.com/openmobilityfoundation/mobility-data-specification/wiki#supported-releases) for more details.
+Refer to the list of [Supported Releases](https://github.com/openmobilityfoundation/mobility-data-specification/wiki#supported-mds-releases) for more details.
 
 ## Release Process
 The sections below define the release process itself, including timeline, roles, and communication best practices.
