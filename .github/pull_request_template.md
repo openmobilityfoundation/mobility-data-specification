@@ -2,7 +2,7 @@
 
 Thank you for your contribution!
 
-*For most Pull Requests, the target branch should be [**`dev`**](https://github.com/openmobilityfoundation/mobility-data-specification/tree/dev)*. Please ensure you are targetting `dev` to avoid complications and help make the Review process as smooth as possible.
+*For most Pull Requests, the target branch should be [**`dev`**](https://github.com/openmobilityfoundation/mobility-data-specification/tree/dev). Please ensure you are targeting **`dev`** to avoid complications and help make the Review process as smooth as possible.*
 
 ## Explain pull request
 
