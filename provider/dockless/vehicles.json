@@ -359,23 +359,6 @@
                     ]
                   }
                 }
-              },
-              {
-                "properties": {
-                  "last_event_type": {
-                    "enum": [
-                      "removed"
-                    ]
-                  },
-                  "last_event_type_reason": {
-                    "enum": [
-                      "service_end",
-                      "rebalance_pick_up",
-                      "maintenance_pick_up",
-                      "agency_pick_up"
-                    ]
-                  }
-                }
               }
             ]
           }
