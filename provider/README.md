@@ -416,9 +416,10 @@ Field Name          | Required  | Defines
 last_updated        | Yes       | Timestamp indicating the last time the data in this feed was updated
 ttl                 | Yes       | Integer representing the number of milliseconds before the data in this feed will be updated again (0 if the data should always be refreshed).
 
-Endpoint: `/vehicles`
-Method: `GET`
-`data` Payload: `{ "vehicles": [] }`, an array of objects with the following structure
+**Endpoint:** `/vehicles`  
+**Method:** `GET`  
+**Required/Optional:** Optional starting with `0.4.1`, moving to Required in a future version (`0.5.0`+)  
+**`data` Payload:** `{ "vehicles": [] }`, an array of objects with the following structure
 
 | Field | Type | Required/Optional | Comments |
 | ----- | ---- | ----------------- | ----- |
