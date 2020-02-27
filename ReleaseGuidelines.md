@@ -113,7 +113,7 @@ The process for full OMF approval is detailed in Section 5.4 of the OMF bylaws, 
 
 1. The Board of Directors will have a minimum of 30 days to review the Technology Council recommendation before taking a vote on the release candidate/WGAD.
 
-1. Upon approval by the Board of Directors, the release will become an official deliverable of the OMF and will be marked as such in GitHub and on the OMF web site.
+1. Upon approval by the Board of Directors, the release will become an official deliverable of the OMF. It will be marked as such in GitHub and on the OMF web site, and it will be merged into the `master` branch on GitHub.
 
 While it is the intent of the OMF to have concerns, questions, and issues addressed during the regular working group release process, it is possible that the Technology Council or Board of Directors may request modifications to a release candidate/WGAD prior to official approval. If this situation occurs, the release candidate will be sent back to the working group(s) for additional changes after which it can be resubmitted to the Technology Council and Board of Directors.
 
