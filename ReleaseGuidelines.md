@@ -47,13 +47,14 @@ At this early stage, MDS will be moving relatively quickly with an eye toward st
 
 For now, MDS will maintain *two concurrent (MINOR) versions* (e.g. if `0.3.0` were the current version, the `0.2.x` series would continue to receive maintenance in addition to `0.3.x`).
 
-
 ## Release Process
+
 The sections below define the release process itself, including timeline, roles, and communication best practices.
 
-
 ### Project Meetings
-* Web conference work sessions will posted to the [MDS-Announce mailing list](https://groups.google.com/a/groups.openmobilityfoundation.org/forum/#!forum/mds-announce) and on the [MDS wiki](https://github.com/openmobilityfoundation/mobility-data-specification/wiki). Each working group typically meets every two weeks.
+
+* Web conference work sessions will posted to the [MDS-Announce mailing list][mds-announce] and on the [MDS wiki](https://github.com/openmobilityfoundation/mobility-data-specification/wiki). Each working group typically meets every two weeks.
+
 * The meeting organizer can use the [meeting template](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/Web-Conference-Template) to prepare for project meetings. Use the [template markup code](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/Web-Conference-Template/_edit) to create the next scheduled wiki meeting page before the meeting. Include the how to join the meeting and agenda details. Posting the agenda before the meeting has the added benefit that project contributors can propose agenda items.
 
 ### Goals
@@ -71,7 +72,9 @@ The sections below define the release process itself, including timeline, roles,
 ### Roles
 
 * **contributors** - Anyone making pull requests, opening issues, or engaging in technical discussion around implementation of features.
+
 * **maintainers** - Project maintainers have commit privileges in the main MDS repository and are responsible for implementing changes such as merging of pull requests and the creation of release branches.
+
 * **working group steering committees** - Review changes when consensus cannot be reached and make final release decision about what changes should be included in a release.
 
 See the [MDS wiki](https://github.com/openmobilityfoundation/mobility-data-specification/wiki) for additional information on the working groups.
@@ -80,21 +83,21 @@ See the [MDS wiki](https://github.com/openmobilityfoundation/mobility-data-speci
 
 MDS operates on an approximately twelve-week release cycle for both major updates (0.x) and patches (0.x.y). In general, major updates (0.x) are expected no more than twice per year. The release cycle is broken down as follows:
 
-**weeks 1-3 - proposals**
+#### Weeks 1-3: Proposals
 
 Contributors submit proposals for inclusion in the release cycle in the form of pull requests and issues tagged. If known, note what release you intended a proposal for in its description. Maintainers will tag appropriate pull requests and issues with the Milestone for the upcoming release. Proposals should come with enough explanation to allow all stakeholders to understand intent and implementation strategy.
 
-**weeks 4-9 - consensus building, refinement, and implementation**
+#### Weeks 4-9: Consensus building, refinement, and implementation
 
 Contributors will provide feedback on proposals. Where possible, discussion will happen via GitHub. Weekly calls will support dialog around more complex or controversial issues. By the end of week 9, all active proposals must be in the form of a pull request. Proposals can be withdrawn or split apart for inclusion in future releases.
 
-**week 10-11 - decision making**
+##### Weeks 10-11: Decision making
 
 These weeks will start with an web conference work session for all contributors to review and discuss current proposals. Goal is to achieve consensus where possible, or to clearly articulate areas of disagreement where not. Minor changes may be accepted at this stage if they bring contributors to consensus.
 
 During this period, the working group steering committees will review all items for which consensus was not reached and decide on a final release plan. Any remaining approved pull requests will be merged, and a maintainers or working group steering committees will open a pull request containing release notes for the proposed release.
 
-**week 12 - release**
+#### Week 12: Release
 
 Documentation will be updated, release notes will be merged, a tag will be created and `master` updated to point to it, and the new version will be formally released. See [Release Checklist](#release-checklist) for details about the release process.
 
@@ -115,7 +118,8 @@ The process for full OMF approval is detailed in Section 5.4 of the OMF bylaws, 
 While it is the intent of the OMF to have concerns, questions, and issues addressed during the regular working group release process, it is possible that the Technology Council or Board of Directors may request modifications to a release candidate/WGAD prior to official approval. If this situation occurs, the release candidate will be sent back to the working group(s) for additional changes after which it can be resubmitted to the Technology Council and Board of Directors.
 
 ### Communication and Workflow
-The release announcements and process schedule will be communicated via [`mds-announce`][mds-announce] Google Group. People wishing to stay informed should join the group for updates. Timing of web conference and in person work sessions will be communicated via mds-announce as well.
+
+The release announcements and process schedule will be communicated via [MDS-Announce mailing list][mds-announce]. People wishing to stay informed should join the group for updates. Timing of web conference and in person work sessions will be communicated via MDS-Announce as well.
 
 The following best practices are intended to create clarity around each release cycle:
 
@@ -186,7 +190,6 @@ When non-breaking changes are merged to `dev`, it's generally necessary for a ma
   ```
 
   Next, create a PR with the release branch (in this case, `0.3.x`) as its `base`. Once that PR has been approved, merge the PR into the release branch as usual.
-
 
 ## Release Checklist
 
