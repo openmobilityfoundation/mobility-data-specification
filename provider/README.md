@@ -200,10 +200,11 @@ The trips endpoint allows a user to query historical trip data.
 
 Unless stated otherwise by the municipality, the trips endpoint must return all trips with a `route` which [intersects](#intersection-operation) with the [municipality boundary](#municipality-boundary).
 
-Endpoint: `/trips`  
-Method: `GET`  
-Schema: [`trips` schema][trips-schema]  
-`data` Payload: `{ "trips": [] }`, an array of objects with the following structure  
+**Endpoint:** `/trips`  
+**Method:** `GET`  
+**Required/Optional:** Required  
+**Schema:** [`trips` schema][trips-schema]  
+**`data` Payload:** `{ "trips": [] }`, an array of objects with the following structure  
 
 | Field | Type    | Required/Optional | Comments |
 | ----- | -------- | ----------------- | ----- |
@@ -290,10 +291,11 @@ Unless stated otherwise by the municipality, this endpoint must return only thos
 
 > Note: As a result of this definition, consumers should query the [trips endpoint](#trips) to infer when vehicles enter or leave the municipality boundary.
 
-Endpoint: `/status_changes`  
-Method: `GET`  
-Schema: [`status_changes` schema][sc-schema]  
-`data` Payload: `{ "status_changes": [] }`, an array of objects with the following structure
+**Endpoint:** `/status_changes`  
+**Method:** `GET`  
+**Required/Optional:** Required  
+**Schema:** [`status_changes` schema][sc-schema]  
+**`data` Payload:** `{ "status_changes": [] }`, an array of objects with the following structure
 
 | Field | Type | Required/Optional | Comments |
 | ----- | ---- | ----------------- | ----- |
@@ -370,10 +372,11 @@ Unless stated otherwise by the municipality, this endpoint must return only thos
 
 The schema and datatypes are the same as those defined for [`/status_changes`][status].
 
-Endpoint: `/events`  
-Method: `GET`  
-Schema: [`status_changes` schema][sc-schema]  
-`data` Payload: `{ "status_changes": [] }`, an array of objects with the same structure as in [`/status_changes`][status]
+**Endpoint:** `/events`  
+**Method:** `GET`  
+**Required/Optional:** Optional starting with `0.4.0`, moving to Required in a future version (`0.5.0`+)  
+**Schema:** [`status_changes` schema][sc-schema]  
+**`data` Payload:** `{ "status_changes": [] }`, an array of objects with the same structure as in [`/status_changes`][status]
 
 #### Event Times
 
