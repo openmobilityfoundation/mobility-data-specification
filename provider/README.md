@@ -10,6 +10,7 @@ This specification contains a data standard for *mobility as a service* provider
 * [Realtime Data](#realtime-data)
   * [GBFS](#GBFS)
   * [Events](#events)
+  * [Vehicles](#vehicles)
 
 ## General Information
 
