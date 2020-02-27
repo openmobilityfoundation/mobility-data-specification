@@ -420,6 +420,7 @@ ttl                 | Yes       | Integer representing the number of millisecond
 **Endpoint:** `/vehicles`  
 **Method:** `GET`  
 **Required/Optional:** Optional starting with `0.4.1`, moving to Required in a future version (`0.5.0`+)  
+**Schema:** [`vehicles` schema][vehicles-schema]  
 **`data` Payload:** `{ "vehicles": [] }`, an array of objects with the following structure
 
 | Field | Type | Required/Optional | Comments |
@@ -441,8 +442,9 @@ ttl                 | Yes       | Integer representing the number of millisecond
 
 [general-information/versioning]: /general-information.md#versioning
 [geo]: #geographic-data
-[sc-schema]: status_changes.json
+[sc-schema]: dockless/status_changes.json
 [status]: #status-changes
 [toc]: #table-of-contents
-[trips-schema]: trips.json
+[trips-schema]: dockless/trips.json
 [ts]: #timestamps
+[vehicles-schema]: dockless/vehicles.json
