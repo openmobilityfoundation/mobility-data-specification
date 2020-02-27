@@ -115,6 +115,7 @@ The process for full OMF approval is detailed in Section 5.4 of the OMF bylaws, 
 
 1. Upon approval by the Board of Directors, the release will become an official deliverable of the OMF. It will be marked as such in GitHub and on the OMF web site, and it will be merged into the `master` branch on GitHub.
 
+The approval status and anticipated timeline will be reflected in the [MDS wiki](https://github.com/openmobilityfoundation/mobility-data-specification/wiki).
 While it is the intent of the OMF to have concerns, questions, and issues addressed during the regular working group release process, it is possible that the Technology Council or Board of Directors may request modifications to a release candidate/WGAD prior to official approval. If this situation occurs, the release candidate will be sent back to the working group(s) for additional changes after which it can be resubmitted to the Technology Council and Board of Directors.
 
 The OMF recommends that regulatory agencies do not formally adopt or require any versions of the spec that have not been fully approved by the OMF Board of Directors. However, release candidates/WGADs are considered stable enough to allow API producers and consumers to begin developing against in anticipation of formal approval.
