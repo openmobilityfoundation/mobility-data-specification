@@ -10,6 +10,7 @@ This specification contains a data standard for *mobility as a service* provider
 * [Realtime Data](#realtime-data)
   * [GBFS](#GBFS)
   * [Events](#events)
+  * [Vehicles](#vehicles)
 
 ## General Information
 
@@ -395,12 +396,58 @@ Should either side of the requested time range be missing, `/events` shall retur
 
 Should either side of the requested time range be greater than 2 weeks before the time of the request, `/events` shall return a `400 Bad Request` error.
 
+### Vehicles
+
+The `/vehicles` endpoint returns the current status of vehicles on the PROW. Only vehicles that are currently in available, unavailable, or reserved states should be returned in this payload. Data in this endpoint should reconcile with data from the `/status_changes` enpdoint. The data returned by this endpoint should be as close to realtime as possible, but in no case should it be more than 5 minutes out-of-date.
+
+In addition to the standard [Provider payload wrapper](#response-format), responses from this endpoint should contain the last update timestamp and amount of time until the next update:
+
+```json
+{
+    "version": "x.y.z",
+    "data": {
+        "vehicles": []
+    },
+    "last_updated": "12345",
+    "ttl": "12345"
+}
+```
+
+Where `last_updated` and `ttl` are defined as follows:
+
+Field Name          | Required  | Defines
+--------------------| ----------| ----------
+last_updated        | Yes       | Timestamp indicating the last time the data in this feed was updated
+ttl                 | Yes       | Integer representing the number of milliseconds before the data in this feed will be updated again (0 if the data should always be refreshed).
+
+**Endpoint:** `/vehicles`  
+**Method:** `GET`  
+**Required/Optional:** Optional starting with `0.4.1`, moving to Required in a future version (`0.5.0`+)  
+**Schema:** [`vehicles` schema][vehicles-schema]  
+**`data` Payload:** `{ "vehicles": [] }`, an array of objects with the following structure
+
+| Field | Type | Required/Optional | Comments |
+| ----- | ---- | ----------------- | ----- |
+| `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS |
+| `provider_name` | String | Required | The public-facing name of the Provider |
+| `device_id` | UUID | Required | A unique device ID in UUID format, should match this device in Provider |
+| `vehicle_id` | String | Required | The Vehicle Identification Number visible on the vehicle itself, should match this device in provider |
+| `vehicle_type` | Enum | Required | see [vehicle types](#vehicle-types) table |
+| `propulsion_type` | Enum[] | Required | Array of [propulsion types](#propulsion-types); allows multiple values |
+| `last_event_time` | [timestamp][ts] | Required | Date/time when last status change occurred. See [Event Times](#event-times) |
+| `last_event_type` | Enum | Required | Event type of most recent status change. See [event types](#event-types) table |
+| `last_event_type_reason` | Enum | Required | Event type reason of most recent status change, allowable values determined by [`event type`](#event-types) |
+| `last_event_location` | GeoJSON [Point Feature][geo]| Required | Location of vehicle's last event |
+| `current_location` | GeoJSON [Point Feature][geo] | Required if Applicable | Current location of vehicle if different from last event, and the vehicle is not currently on a trip |
+| `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |
+
 [Top][toc]
 
 [general-information/versioning]: /general-information.md#versioning
 [geo]: #geographic-data
-[sc-schema]: status_changes.json
+[sc-schema]: dockless/status_changes.json
 [status]: #status-changes
 [toc]: #table-of-contents
-[trips-schema]: trips.json
+[trips-schema]: dockless/trips.json
 [ts]: #timestamps
+[vehicles-schema]: dockless/vehicles.json

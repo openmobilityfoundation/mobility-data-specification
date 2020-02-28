@@ -144,118 +144,126 @@ if __name__ == '__main__':
         features = { "items": { "$ref": get_definition(MDS_FEATURE_POINT) }, "minItems": 2 }
     )
 
+    # Provider Schemas #
 
-    #########
-    # TRIPS #
-    #########
+    ## /trips Schema ##
 
     # Create the standalone trips JSON schema by including the needed definitions
     trips = get_json_file('./templates/provider/trips.json')
     trips["definitions"] = {
-            POINT: point,
-            MDS_FEATURE_POINT: mds_feature_point,
-            MDS_FEATURECOLLECTION_ROUTE: mds_feature_collection_route,
-            "links": common["definitions"]["links"],
-            "propulsion_type": common["definitions"]["propulsion_type"],
-            "timestamp": common["definitions"]["timestamp"],
-            "vehicle_type": common["definitions"]["vehicle_type"],
-            "version": common["definitions"]["version"],
-            "uuid": common["definitions"]["uuid"],
-            }
-
+        POINT: point,
+        MDS_FEATURE_POINT: mds_feature_point,
+        MDS_FEATURECOLLECTION_ROUTE: mds_feature_collection_route,
+        "links": common["definitions"]["links"],
+        "propulsion_type": common["definitions"]["propulsion_type"],
+        "timestamp": common["definitions"]["timestamp"],
+        "vehicle_type": common["definitions"]["vehicle_type"],
+        "version": common["definitions"]["version"],
+        "uuid": common["definitions"]["uuid"],
+    }
     # Check that it is a valid schema
     jsonschema.Draft6Validator.check_schema(trips)
     # Write to the `provider` directory.
     with open("../provider/dockless/trips.json", "w") as tripfile:
         tripfile.write(json.dumps(trips, indent=2))
 
-
-    ##################
-    # STATUS CHANGES #
-    ##################
+    ## /status_changes Schema ##
 
     # Create the standalone status_changes JSON schema by including the needed definitions
     status_changes = get_json_file('./templates/provider/status_changes.json')
     status_changes["definitions"] = {
-            POINT: point,
-            MDS_FEATURE_POINT: mds_feature_point,
-            "links": common["definitions"]["links"],
-            "propulsion_type": common["definitions"]["propulsion_type"],
-            "timestamp": common["definitions"]["timestamp"],
-            "vehicle_type": common["definitions"]["vehicle_type"],
-            "version": common["definitions"]["version"],
-            "uuid": common["definitions"]["uuid"],
-            }
-
+        POINT: point,
+        MDS_FEATURE_POINT: mds_feature_point,
+        "links": common["definitions"]["links"],
+        "propulsion_type": common["definitions"]["propulsion_type"],
+        "timestamp": common["definitions"]["timestamp"],
+        "vehicle_type": common["definitions"]["vehicle_type"],
+        "version": common["definitions"]["version"],
+        "uuid": common["definitions"]["uuid"],
+    }
     # Check that it is a valid schema
     jsonschema.Draft6Validator.check_schema(status_changes)
     # Write to the `provider` directory.
     with open("../provider/dockless/status_changes.json", "w") as statusfile:
         statusfile.write(json.dumps(status_changes, indent=2))
 
-    ###############
-    # GET VEHICLE #
-    ###############
+    ## /vehicles Schema ##
+
+    # Create the standalone vehicles JSON schema by including the needed definitions
+    vehicles = get_json_file('./templates/provider/vehicles.json')
+    vehicles["definitions"] = {
+        POINT: point,
+        MDS_FEATURE_POINT: mds_feature_point,
+        "links": common["definitions"]["links"],
+        "propulsion_type": common["definitions"]["propulsion_type"],
+        "timestamp": common["definitions"]["timestamp"],
+        "vehicle_type": common["definitions"]["vehicle_type"],
+        "version": common["definitions"]["version"],
+        "uuid": common["definitions"]["uuid"],
+    }
+    # Check that it is a valid schema
+    jsonschema.Draft6Validator.check_schema(vehicles)
+    # Write to the `provider` directory.
+    with open("../provider/dockless/vehicles.json", "w") as statusfile:
+        statusfile.write(json.dumps(vehicles, indent=2))
+
+    # Agency Schemas #
+
+    ## GET VEHICLE ##
 
     # Create the standalone GET vehicle JSON schema by including the needed definitions
     get_vehicle = get_json_file('./templates/agency/get_vehicle.json')
     get_vehicle["definitions"] = {
-            "propulsion_type": common["definitions"]["propulsion_type"],
-            "vehicle_type": common["definitions"]["vehicle_type"],
-            "vehicle_status": common["definitions"]["vehicle_status"],
-            "vehicle_event": common["definitions"]["vehicle_event"],
-            "timestamp": common["definitions"]["timestamp"],
-            "uuid": common["definitions"]["uuid"],
-            }
+        "propulsion_type": common["definitions"]["propulsion_type"],
+        "vehicle_type": common["definitions"]["vehicle_type"],
+        "vehicle_status": common["definitions"]["vehicle_status"],
+        "vehicle_event": common["definitions"]["vehicle_event"],
+        "timestamp": common["definitions"]["timestamp"],
+        "uuid": common["definitions"]["uuid"],
+    }
     # Check that it is a valid schema
     jsonschema.Draft6Validator.check_schema(get_vehicle)
     # Write to the `agency` directory.
     with open("../agency/get_vehicle.json", "w") as file:
         file.write(json.dumps(get_vehicle, indent=2))
 
-    ################
-    # POST VEHICLE #
-    ################
+    ## POST VEHICLE ##
 
     # Create the standalone POST vehicle JSON schema by including the needed definitions
     post_vehicle = get_json_file('./templates/agency/post_vehicle.json')
     post_vehicle["definitions"] = {
-            "propulsion_type": common["definitions"]["propulsion_type"],
-            "vehicle_type": common["definitions"]["vehicle_type"],
-            "uuid": common["definitions"]["uuid"],
-            }
+        "propulsion_type": common["definitions"]["propulsion_type"],
+        "vehicle_type": common["definitions"]["vehicle_type"],
+        "uuid": common["definitions"]["uuid"],
+    }
     # Check that it is a valid schema
     jsonschema.Draft6Validator.check_schema(post_vehicle)
     # Write to the `agency` directory.
     with open("../agency/post_vehicle.json", "w") as file:
         file.write(json.dumps(post_vehicle, indent=2))
 
-    ######################
-    # POST VEHICLE EVENT #
-    ######################
+    ## POST VEHICLE EVENT ##
 
     # Create the standalone POST vehicle event JSON schema by including the needed definitions
     post_vehicle_event = get_json_file('./templates/agency/post_vehicle_event.json')
     post_vehicle_event["definitions"] = {
-            "vehicle_event": common["definitions"]["vehicle_event"],
-            "telemetry": common["definitions"]["telemetry"],
-            "uuid": common["definitions"]["uuid"],
-            }
+        "vehicle_event": common["definitions"]["vehicle_event"],
+        "telemetry": common["definitions"]["telemetry"],
+        "uuid": common["definitions"]["uuid"],
+    }
     # Check that it is a valid schema
     jsonschema.Draft6Validator.check_schema(post_vehicle_event)
     # Write to the `agency` directory.
     with open("../agency/post_vehicle_event.json", "w") as file:
         file.write(json.dumps(post_vehicle_event, indent=2))
 
-    ##########################
-    # POST VEHICLE TELEMETRY #
-    ##########################
+    ## POST VEHICLE TELEMETRY ##
 
     # Create the standalone POST vehicle telemetry JSON schema by including the needed definitions
     post_vehicle_telemetry = get_json_file('./templates/agency/post_vehicle_telemetry.json')
     post_vehicle_telemetry["definitions"] = {
-            "telemetry": common["definitions"]["telemetry"],
-            }
+        "telemetry": common["definitions"]["telemetry"],
+    }
     # Check that it is a valid schema
     jsonschema.Draft6Validator.check_schema(post_vehicle_telemetry)
     # Write to the `agency` directory.

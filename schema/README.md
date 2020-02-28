@@ -5,7 +5,9 @@ This directory contains the templates and code that _generate_ the official JSON
 ## Updating the Schemas
 
 1. Edit the appropriate file(s) inside the the `templates` directory.
+
 1. At a command prompt within this `schema` directory run:
+
     ```bash
     python generate_schemas.py
     ```
