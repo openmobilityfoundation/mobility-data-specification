@@ -24,11 +24,11 @@
         "status_changes": {
           "$id": "#/properties/data/properties/status_changes",
           "type": "array",
-          "title": "The status_changes Schema",
+          "title": "The status_changes payload",
           "items": {
             "$id": "#/properties/data/properties/status_changes/items",
             "type": "object",
-            "title": "The Items Schema",
+            "title": "The status_change item schema",
             "required": [
               "provider_name",
               "provider_id",

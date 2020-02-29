@@ -218,11 +218,11 @@
         "vehicles": {
           "$id": "#/properties/data/properties/vehicles",
           "type": "array",
-          "title": "The vehicles Schema",
+          "title": "The vehicles payload",
           "items": {
             "$id": "#/properties/data/properties/vehicles/items",
             "type": "object",
-            "title": "The vehicles items Schema",
+            "title": "The vehicle item schema",
             "required": [
               "provider_name",
               "provider_id",

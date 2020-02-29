@@ -24,11 +24,11 @@
         "trips": {
           "$id": "#/properties/data/properties/trips",
           "type": "array",
-          "title": "The Trips Schema",
+          "title": "The trips payload",
           "items": {
             "$id": "#/properties/data/properties/trips/items",
             "type": "object",
-            "title": "The Trip Schema",
+            "title": "The trip item schema",
             "required": [
               "provider_name",
               "provider_id",
