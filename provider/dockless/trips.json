@@ -410,10 +410,6 @@
           }
         }
       }
-    },
-    "links": {
-      "$id": "#properties/links",
-      "$ref": "#/definitions/links"
     }
   },
   "additionalProperties": false
