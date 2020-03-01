@@ -4,11 +4,22 @@ This specification describes the digital relationship between _mobility as a ser
 
 ## Table of Contents
 
+- [General Information](#general-information)
 - [Background](#background)
 - [Distribution](#distribution)
   - [REST Endpoints](#rest-endpoints)
   - [Flat Files](#flat-files)
 - [Schema](#schema)
+
+## General information
+
+The following information applies to all `policy` API endpoints.
+
+### Versioning
+
+`policy` APIs must handle requests for specific versions of the specification from clients.
+
+Versioning must be implemented as specified in the [`General information versioning section`][general-information/versioning].
 
 ## Background
 
@@ -205,6 +216,7 @@ An individual `Rule` object is defined by the following fields:
 | Name            | Type                        | Required / Optional | Description                               |
 | --------------- | --------------------------- | ------------------- | ----------------------------------------- |
 | `name`             | String                      | Required   | Name of rule |
+| `rule_id`          | UUID                        | Required   | Unique ID of the rule |
 | `rule_type`        | enum                        | Required   | Type of policy (see [Rule Types](#rule-types)) |
 | `geographies`      | UUID[]                      | Required   | List of Geography UUIDs (non-overlapping) specifying the covered geography |
 | `statuses`         | `{ status: vehicle event[] }` | Required   | Vehicle `statuses` to which this rule applies, either from [Provider](../provider/README.md#event-types) or [Agency](../agency/README.md#vehicle-events). Optionally provide a list of specific `event_type`'s as a subset of a given status for the rule to apply to. An empty list or `null`/absent defaults to "all". |
@@ -280,3 +292,5 @@ If a vehicle is matched with a rule, then it _will not_ be considered in the sub
 The internal mechanics of ordering are up to the Policy editing and hosting software.
 
 [Top](#table-of-contents)
+
+[general-information/versioning]: /general-information.md#versioning

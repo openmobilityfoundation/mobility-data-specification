@@ -142,7 +142,8 @@
             },
             "event_type_reason": {
               "enum": [
-                "missing"
+                "missing",
+                "decommissioned"
               ]
             }
           }

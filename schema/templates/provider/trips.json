@@ -1,5 +1,5 @@
 {
-  "$id": "https://raw.githubusercontent.com/openmobilityfoundation/mobility-data-specification/master/provider/trips.json",
+  "$id": "https://raw.githubusercontent.com/openmobilityfoundation/mobility-data-specification/master/provider/dockless/trips.json",
   "$schema": "http://json-schema.org/draft-06/schema#",
   "title": "The MDS Provider Schema, trips payload",
   "type": "object",
@@ -24,11 +24,11 @@
         "trips": {
           "$id": "#/properties/data/properties/trips",
           "type": "array",
-          "title": "The Trips Schema",
+          "title": "The trips payload",
           "items": {
             "$id": "#/properties/data/properties/trips/items",
             "type": "object",
-            "title": "The Trip Schema",
+            "title": "The trip item schema",
             "required": [
               "provider_name",
               "provider_id",
@@ -173,10 +173,6 @@
           }
         }
       }
-    },
-    "links": {
-      "$id": "#properties/links",
-      "$ref": "#/definitions/links"
     }
   },
   "additionalProperties": false
