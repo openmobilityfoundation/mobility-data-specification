@@ -1,11 +1,53 @@
-## 0.4.0 
+## 0.4.1
+
+> Release Candidate submitted 2020-03-01
+
+0.4.1 is the first release of the Mobility Data Specification under the guidance and stewardship of the Open Mobility Foundation.
+As such, this release includes a number of administrative and documentation changes, including to the licensing and release process.
+This release also brings a number of language clarifications from 0.4.0 and new features across the various APIs, including the much anticipated /vehicles endpoint in Provider.
+
+### CHANGES
+
+*_MDS_*
+
+* [MDS officially transferred from LADOT to OMF](https://github.com/openmobilityfoundation/mobility-data-specification/issues/386):
+  * [Update license from CC0 to CC-BY](https://github.com/openmobilityfoundation/mobility-data-specification/pull/390)
+  * [Updates to various documentation to support code transfer from LADOT to OMF](https://github.com/openmobilityfoundation/mobility-data-specification/pull/391)
+  * [Switch CODEOWNERS to use OMF teams](https://github.com/openmobilityfoundation/mobility-data-specification/pull/404)
+  * [Add documentation around currently Supported MDS versions](https://github.com/openmobilityfoundation/mobility-data-specification/pull/449)
+  * [Add documentation around Understanding MDS APIs](https://github.com/openmobilityfoundation/mobility-data-specification/pull/452)
+  * [ReleaseGuidelines updates to reflect OMF process and 12 week dev cycle](https://github.com/openmobilityfoundation/mobility-data-specification/pull/453)
+* [Added "moped" vehicle type](https://github.com/openmobilityfoundation/mobility-data-specification/pull/416)
+
+*_Provider_*
+
+* [Mention ambiguity for event_type reserved](https://github.com/openmobilityfoundation/mobility-data-specification/pull/439)
+* [Clarify no pagination on /trips and /status_changes](https://github.com/openmobilityfoundation/mobility-data-specification/pull/424)
+* [Make required/optional endpoints more explicit](https://github.com/openmobilityfoundation/mobility-data-specification/pull/456)
+* [Adding a /vehicles endpoint](https://github.com/openmobilityfoundation/mobility-data-specification/pull/376)
+* [JSON Schema fixes/updates](https://github.com/openmobilityfoundation/mobility-data-specification/pull/458)
+
+*_Agency_*
+
+* [Add decommissioned event type reason](https://github.com/openmobilityfoundation/mobility-data-specification/pull/408)
+* [Add versioning](https://github.com/openmobilityfoundation/mobility-data-specification/pull/444)
+
+*_Policy_*
+
+* [Update documentation to use correct field name](https://github.com/openmobilityfoundation/mobility-data-specification/pull/412)
+* [Add missing rule_id](https://github.com/openmobilityfoundation/mobility-data-specification/pull/409)
+* [Add versioning](https://github.com/openmobilityfoundation/mobility-data-specification/pull/444)
+
+## 0.4.0
 
 > Release 2019-10-31
 
-The 0.4.0 release represents a major step forward in the Mobility Data Specification. The `provider` endpoints have been refactored to allow static file backed API servers which should improve uptime, reliability and the ability to backfill what is now growing to years of data. There is a new `policy` API endpoint, designed to be implemented by Agencies, that allows for clearer communication of geofencing, vehicle caps and more. A full list of changes is below. Many thanks to all the contributors who helped on this release. 
+The 0.4.0 release represents a major step forward in the Mobility Data Specification. The `provider` endpoints have been refactored to allow static file backed API servers which should improve uptime, reliability and the ability to backfill what is now growing to years of data. There is a new `policy` API endpoint, designed to be implemented by Agencies, that allows for clearer communication of geofencing, vehicle caps and more. A full list of changes is below. Many thanks to all the contributors who helped on this release.
 
-**CHANGES**
+### CHANGES
+
 *_Provider_*
+
 * [Improved Handling of Cost Data](https://github.com/openmobilityfoundation/mobility-data-specification/pull/388)
 * [Allow static file storage backed API Endpoints](https://github.com/openmobilityfoundation/mobility-data-specification/pull/357)
 * [Cleanup Provider README](https://github.com/openmobilityfoundation/mobility-data-specification/pull/395)
@@ -16,99 +58,107 @@ The 0.4.0 release represents a major step forward in the Mobility Data Specifica
 * [Update Status Change JSON Schema to include Associated Trip properly](https://github.com/openmobilityfoundation/mobility-data-specification/pull/353)
 
 *_Agency_*
+
 * [Add Accuracy Field for GPS Telemetry Data](https://github.com/openmobilityfoundation/mobility-data-specification/pull/360)
 * [String Limit to 255 Characters](https://github.com/openmobilityfoundation/mobility-data-specification/pull/361)
 * [Remove SLA from /telemetry](https://github.com/openmobilityfoundation/mobility-data-specification/pull/371)
 * [Update State Machine Diagram](https://github.com/openmobilityfoundation/mobility-data-specification/pull/363)
 
-*_Misc_* 
+*_Misc_*
+
 * [New Policy API Endpoint](https://github.com/openmobilityfoundation/mobility-data-specification/pull/382)
 * [Improved README for Schema Directory](https://github.com/openmobilityfoundation/mobility-data-specification/pull/398)
 * [Add Car Vehicle Type](https://github.com/openmobilityfoundation/mobility-data-specification/pull/219)
 * [Unify Error Responses between Provider / Agency](https://github.com/openmobilityfoundation/mobility-data-specification/pull/368)
 * [Improvements to Release Process](https://github.com/openmobilityfoundation/mobility-data-specification/pull/372)
 
-## 0.3.2 
+## 0.3.2
 
 > Released 2019-06-13
 
-This release is a series of non breaking and minor changes for provider, along with JSON Schema for agency. 
+This release is a series of non breaking and minor changes for provider, along with JSON Schema for agency.
 
-**CHANGES** 
+### CHANGES
 
 *_Provider_*
+
 * [Add an optional recorded field to provider](https://github.com/openmobilityfoundation/mobility-data-specification/issues/307)
 * [Ordering Definitions](https://github.com/openmobilityfoundation/mobility-data-specification/pull/301)
 * [406 response - version negiotation](https://github.com/openmobilityfoundation/mobility-data-specification/pull/327)
 
 *_Agency_*
-[JSON Schema for Agency](https://github.com/openmobilityfoundation/mobility-data-specification/issues/169)
+
+* [JSON Schema for Agency](https://github.com/openmobilityfoundation/mobility-data-specification/issues/169)
 
 *_Misc_*
-[Schema Folder Cleanup](https://github.com/openmobilityfoundation/mobility-data-specification/pull/328)
-[Global GNSS Support](https://github.com/openmobilityfoundation/mobility-data-specification/pull/316)
+
+* [Schema Folder Cleanup](https://github.com/openmobilityfoundation/mobility-data-specification/pull/328)
+* [Global GNSS Support](https://github.com/openmobilityfoundation/mobility-data-specification/pull/316)
+
 ## 0.3.1
 
 > Released 2019-04-30
 
-This release represents a series of non-breaking changes and clarifications for provider, along with a number of agency bugfixes / changes. 
+This release represents a series of non-breaking changes and clarifications for provider, along with a number of agency bugfixes / changes.
 
-**CHANGES**
+### CHANGES
 
 *_Provider_*
+
 * MDS Schema version fix.
-* [New release process](https://github.com/openmobilityfoundation/mobility-data-specification/pull/264). Thanks @jfh for documenting, all for participating 
+* [New release process](https://github.com/openmobilityfoundation/mobility-data-specification/pull/264). Thanks @jfh for documenting, all for participating
 * [Additional documentation around what is considered Breaking / Non-Breaking](https://github.com/openmobilityfoundation/mobility-data-specification/pull/295). Thanks @rf-
 * [OPTIONS for version negotiation](https://github.com/openmobilityfoundation/mobility-data-specification/pull/293). Thanks @billdirks
-* [Add Agency Drop off / pick up](https://github.com/openmobilityfoundation/mobility-data-specification/pull/291). Thanks @margodawes 
+* [Add Agency Drop off / pick up](https://github.com/openmobilityfoundation/mobility-data-specification/pull/291). Thanks @margodawes
 * [Explicitly allow associated_trip for any event type](https://github.com/openmobilityfoundation/mobility-data-specification/pull/297)
 
 *_Agency_*
+
 * Change from UUIDv4 to just UUID. Thanks @karcass
-* Change Error Messages for State Machine validation. 
-* Update Pagination Rules 
-* Add Unregistered event. 
+* Change Error Messages for State Machine validation.
+* Update Pagination Rules
+* Add Unregistered event.
 * [Add Event Diagram](https://github.com/openmobilityfoundation/mobility-data-specification/pull/258). Thanks @whereissean
 * [Removing 412 Responses](https://github.com/openmobilityfoundation/mobility-data-specification/pull/258)
-* Add deregister and decomissioned events. Thanks @dirkdk 
+* Add deregister and decomissioned events. Thanks @dirkdk
 * [Remove 5 second Telemetry requirement](https://github.com/openmobilityfoundation/mobility-data-specification/pull/261)
 * [Improve failure and error handling around Telemetry Data](https://github.com/openmobilityfoundation/mobility-data-specification/pull/290)
 
-## 0.3.0 
+## 0.3.0
 
 > Released 2019-02-15
 
-This release is the first minor version release of MDS with breaking changes for deployed provider API instances. 
+This release is the first minor version release of MDS with breaking changes for deployed provider API instances.
 
-**CHANGES** 
+### CHANGES
 
-* Improved Time Based Filtering Query Parameters. #139. Thanks @babldev 
-* Changes in Service Area for Agency API. 
+* Improved Time Based Filtering Query Parameters. #139. Thanks @babldev
+* Changes in Service Area for Agency API.
 * Switch timestamps to Integer milliseconds since Epoch rather then seconds. #179
 * Removed unused bbox query parameter. #183
 * Add GBFS discovery URL to `/providers.csv`. #205. Thanks @asadowns
 * Associated Trips -> Associated Trip, no longer an array. #88, #202, #217. Thanks @black-tea, @oderby
-* Version Requirements and documentation. #152, #216, and #114 
-* Agency API refactors to support launch of ladot.io sandbox. #193, #194. Thanks @toddapetersen, @sebdiem, @cttengsfmta. 
-* Clarification on Service Starts, Service Ends and Municipal Boundaries. #211, #226 
-* Documentation on how to implement truncate to save on payload size. 
+* Version Requirements and documentation. #152, #216, and #114
+* Agency API refactors to support launch of ladot.io sandbox. #193, #194. Thanks @toddapetersen, @sebdiem, @cttengsfmta.
+* Clarification on Service Starts, Service Ends and Municipal Boundaries. #211, #226
+* Documentation on how to implement truncate to save on payload size.
 
 ## 0.2.1
 
 > Released 2018-12-03
 
-This release is the first patch release of MDS 0.2. 
+This release is the first patch release of MDS 0.2.
 
-We did not chose to include the `timestamp` change, as discussed in issue #104, because it is breaking. Early versions of this branch included that change. The change will be made in MDS 0.3.0. 
+We did not chose to include the `timestamp` change, as discussed in issue #104, because it is breaking. Early versions of this branch included that change. The change will be made in MDS 0.3.0.
 
-**CHANGES**
+### CHANGES
 
-* Release Guidelines. Ref  #147 #129 
-* Many Validator Fixes/Null Fixes. Ref #166 #165 #128 
-* Many Clarifications / Cleanup to make the spec easier to read. 
-* JSON Schema is now much closer to the written spec, fails on Null if required, doesn't fail if field is not required. 
+* Release Guidelines. Ref  #147 #129
+* Many Validator Fixes/Null Fixes. Ref #166 #165 #128
+* Many Clarifications / Cleanup to make the spec easier to read.
+* JSON Schema is now much closer to the written spec, fails on Null if required, doesn't fail if field is not required.
 
-Thanks to all contributors. 
+Thanks to all contributors.
 
 ## 0.1.1
 
