@@ -367,7 +367,7 @@
       "additionalProperties": false
     },
     "links": {
-      "$id": "#properties/links",
+      "$id": "#/properties/links",
       "$ref": "#/definitions/links"
     },
     "last_updated": {

@@ -204,8 +204,8 @@ if __name__ == '__main__':
     # Check that it is a valid schema
     jsonschema.Draft6Validator.check_schema(vehicles)
     # Write to the `provider` directory.
-    with open("../provider/dockless/vehicles.json", "w") as statusfile:
-        statusfile.write(json.dumps(vehicles, indent=2))
+    with open("../provider/dockless/vehicles.json", "w") as vehiclesfile:
+        vehiclesfile.write(json.dumps(vehicles, indent=2))
 
     # Agency Schemas #
 
