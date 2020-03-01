@@ -187,6 +187,25 @@ if __name__ == '__main__':
     with open("../provider/dockless/status_changes.json", "w") as statusfile:
         statusfile.write(json.dumps(status_changes, indent=2))
 
+    ## /events Schema ##
+
+    # /events is the same as status_changes, but allows paging
+    events = dict(status_changes)
+    events["$id"] = events["$id"].replace("status_changes", "events")
+    events["title"] = "The MDS Provider Schema, events payload"
+    events["definitions"] = {
+        "links": common["definitions"]["links"]
+    }
+    events["properties"]["links"] = {
+        "$id": "#/properties/links",
+        "$ref": "#/definitions/links"
+    }
+    # Check that it is a valid schema
+    jsonschema.Draft6Validator.check_schema(events)
+    # Write to the `provider` directory.
+    with open("../provider/dockless/events.json", "w") as eventsfile:
+        eventsfile.write(json.dumps(events, indent=2))
+
     ## /vehicles Schema ##
 
     # Create the standalone vehicles JSON schema by including the needed definitions
