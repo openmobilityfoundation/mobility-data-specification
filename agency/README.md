@@ -72,19 +72,19 @@ If `device_id` is specified, `GET` will return a single vehicle record, otherwis
 
 A vehicle record is as follows:
 
-| Field         | Type      | Field Description                                                             |
-| ------------- | --------- | ----------------------------------------------------------------------------- |
-| `device_id`   | UUID      | Provided by Operator to uniquely identify a vehicle                           |
-| `provider_id` | UUID      | Issued by City and [tracked](../providers.csv)                                |
-| `vehicle_id`  | String    | Vehicle Identification Number (vehicle_id) visible on vehicle                 |
-| `type`        | Enum      | [Vehicle Type](#vehicle-type)                                                 |
-| `propulsion`  | Enum[]    | Array of [Propulsion Type](#propulsion-type); allows multiple values          |
-| `year`        | Integer   | Year Manufactured                                                             |
-| `mfgr`        | String    | Vehicle Manufacturer                                                          |
-| `model`       | String    | Vehicle Model                                                                 |
-| `status`      | Enum      | Current vehicle status. See [Vehicle Status](#vehicle-events)                 |
-| `prev_event`  | Enum      | Last [Vehicle Event](#vehicle-events)                                         |
-| `updated`     | Timestamp | Date of last event update                                                     |
+| Field         | Type      | Required/Optional     | Field Description                                                             |
+| ------------- | --------- | --------------------- | ----------------------------------------------------------------------------- |
+| `device_id`   | UUID      | Required              | Provided by Operator to uniquely identify a vehicle                           |
+| `provider_id` | UUID      | Required              | Issued by City and [tracked](../providers.csv)                                |
+| `vehicle_id`  | String    | Required              | Vehicle Identification Number (vehicle_id) visible on vehicle                 |
+| `type`        | Enum      | Required              | [Vehicle Type](#vehicle-type)                                                 |
+| `propulsion`  | Enum[]    | Required              | Array of [Propulsion Type](#propulsion-type); allows multiple values          |
+| `year`        | Integer   | Required if Available | Year Manufactured                                                             |
+| `mfgr`        | String    | Required if Available | Vehicle Manufacturer                                                          |
+| `model`       | String    | Required if Available | Vehicle Model                                                                 |
+| `status`      | Enum      | Required if Available | Current vehicle status. See [Vehicle Status](#vehicle-events)                 |
+| `prev_event`  | Enum      | Required if Available | Last [Vehicle Event](#vehicle-events)                                         |
+| `updated`     | Timestamp | Required if Available | Date of last event update                                                     |
 
 404 Failure Response:
 
