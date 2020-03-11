@@ -139,7 +139,7 @@ Body Params:
 | ------------ | ------- | ----------------- | -------------------------------------------------------------------- |
 | `vehicle_id` | String  | Required          | Vehicle Identification Number (vehicle_id) visible on vehicle               |
 
-201 Success Response:
+200 Success Response:
 
 _No content returned on success._
 
