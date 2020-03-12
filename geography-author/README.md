@@ -1,7 +1,6 @@
 # Mobility Data Specification: Geography Author
 
-This specification contains a collection of RESTful APIs used to define how to create, update, delete, publish, and read
-a Geography or collection thereof.
+This specification contains a collection of RESTful APIs used to define how to create, update, delete, publish, and read Geographies and GeographyMetadata.
 
 - Authors: LADOT
 - Date: 21 February 2020
