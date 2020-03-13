@@ -5,7 +5,7 @@ This document contains specifications that are shared between the various MDS AP
 ## Table of Contents
 
 * [Versioning](#versioning)
-* [Beta Features](#betafeatures)
+* [Beta Features](#beta-features)
 
 ## Versioning
 
@@ -47,10 +47,10 @@ Content-Type: application/vnd.mds.provider+json;version=0.3
 The client can use the returned value verbatim as a version request in the `Accept` header.
 
 ## Beta Features
-In some cases, features within MDS may be marked as "BETA." These are typically newly established endpoints or fields. Because beta features are new, they may not be fully mature and proven in real-world operation. The design of beta features may have undiscovered gaps, ambiguities, or inconsistencies. Implementations of those features are also likely new as well and are more likely to contain bugs or other problems. Beta features are likely to evolve more rapidly than other parts of the specification.
+In some cases, features within MDS may be marked as "beta." These are typically recently added endpoints or fields. Because beta features are new, they may not yet be fully mature and proven in real-world operation. The design of beta features may have undiscovered gaps, ambiguities, or inconsistencies. Implementations of those features are typically also quite new and are more likely to contain bugs or other flaws. Beta features are likely to evolve more rapidly than other parts of the specification.
 
-Despite this, MDS users are encouraged to use beta features. New features can only become proven and trusted through use and the learning that comes with it. Users should be thoughtful about the role of beta features in their operations. Beta features are suitable for enabling new tools and analysis, but may not be appropriate for mission-critical regulatory decisions where certainty and reliability are essential.
+Despite this, MDS users are highly encouraged to use beta features. New features can only become proven and trusted through implementation, use, and the learning that comes with it. Users should be thoughtful about the role of beta features in their operations. Beta features may be suitable for enabling some new tools and analysis, but may not be appropriate for mission-critical applications or regulatory decisions where certainty and reliability are essential.
 
-Users of beta features are strongly encouraged to share their experiences, learnings, and challenges with the broader MDS community via GitHub issues or pull requests. This will help the  community make the improvements that allow beta features to become proven, stable parts of the specification.
+Users of beta features are strongly encouraged to share their experiences, learnings, and challenges with the broader MDS community via GitHub issues or pull requests. This will inform the refinements that transform beta features into fully proven, stable parts of the specification.
 
 [Top](#table-of-contents)
