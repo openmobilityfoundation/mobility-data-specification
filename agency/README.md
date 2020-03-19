@@ -101,7 +101,8 @@ Body Params:
 
 | Field        | Type    | Required/Optional | Field Description                                                    |
 | ------------ | ------- | ----------------- | -------------------------------------------------------------------- |
-| `device_id`  | UUID     | Required          | Provided by Operator to uniquely identify a vehicle                 |
+| `device_id`  | UUID    | Required          | Provided by Operator to uniquely identify a vehicle                  |
+| `provider_id`| UUID    | Required          | Operator to which the vehicle belongs                                |
 | `vehicle_id` | String  | Required          | Vehicle Identification Number (vehicle_id) visible on vehicle        |
 | `type`       | Enum    | Required          | [Vehicle Type](#vehicle-type)                                        |
 | `propulsion` | Enum[]  | Required          | Array of [Propulsion Type](#propulsion-type); allows multiple values |
