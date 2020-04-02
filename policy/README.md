@@ -167,6 +167,25 @@ The optional `end_date` field applies to all policies represented in the file.
 [Top](#table-of-contents)
 
 ## Schema
+<a name="geography-fields"></a>
+
+### Geography Fields
+
+| Name                     | Type                       | R/O | Description                                                                     |
+| ------------------------ | -------------------------- | --- | ------------------------------------------------------------------------------- |
+| `name`                   | String                     | R   | Name of Geography                                                               |
+| `geography_id`           | UUID                       | R   | UUID of Geography                                                               |
+| `geography_json`         | GeoJSON<FeatureCollection> | R   | GeoJSON FeatureCollection representation of geography                           |
+| `description`            | String                     | O   | Description of Geography                                                        |
+| `publish_date`           | timestamp                  | O   | Date Geography was made immutable (if applicable)                               |
+| `effective_date`         | timestamp                  | O   | Date of Geography's first use in an active policy (if applicable)               |
+| `previous_geography_ids` | UUID[]                     | O   | Logically connected previous geographies. e.g. Venice Beach bounds are updated  |
+
+
+<a name="policy-fields"></a>
+ 
+### Policy Fields
+
 
 All response fields must use `lower_case_with_underscores`.
 
