@@ -86,11 +86,10 @@ The response to a client request must include a valid HTTP status code defined i
 
 #### Policies
 
-Endpoint: `/policies/{id}`  
-Method: `GET`  
-`data` Payload: `{ "policies": [] }`, an array of objects with the structure [outlined below](#policy).
+#### GET `/policies/`  
+`data` Payload: `{ "policies": [] }`, an array of Policy objects.
 
-##### Query Parameters
+Parameters
 
 | Name         | Type      | Required / Optional | Description                                    |
 | ------------ | --------- | --- | ---------------------------------------------- |
@@ -103,14 +102,6 @@ Method: `GET`
 Policies will be returned in order of effective date (see schema below), with pagination as in the `agency` and `provider` specs.
 
 `provider_id` is an implicit parameter and will be encoded in the authentication mechanism, or a complete list of policies should be produced. If the Agency decides that Provider-specific policy documents should not be shared with other Providers (e.g. punitive policy in response to violations), an Agency should filter policy objects before serving them via this endpoint.
-
-Response codes:
-
-- 200 - success
-- 401 - unauthorized
-- 404 - not found
-- 500 - server error
-
 
 ### Flat Files
 
