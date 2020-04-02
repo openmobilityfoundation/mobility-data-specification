@@ -12,7 +12,7 @@ This specification describes the digital relationship between _mobility as a ser
 
 ## Background
 
-The goal of this specification is to enable Agencies to create, revise, and publish machine-readable policies, as sets of rules for individual and collective device behavior exhibited by both _mobility as a service_ Providers and riders / users. Examples of policies include:
+The goal of this specification is to enable Agencies to publish machine-readable policies, as sets of rules for individual and collective device behavior exhibited by both _mobility as a service_ Providers and riders / users. Examples of policies include:
 
 - City-wide and localized caps (e.g. "Minimum 500 and maximum 3000 scooters within city boundaries")
 - Exclusion zones (e.g. "No scooters are permitted in this district on weekends")
@@ -21,6 +21,12 @@ The goal of this specification is to enable Agencies to create, revise, and publ
 - Idle-time and disabled-time limitations (e.g. "5 days idle while rentable, 12 hours idle while unrentable, per device")
 
 The machine-readable format allows Providers to obtain policies and compute compliance where it can be determined entirely by data obtained internally.
+
+Policies will typically be linked to one or more associated geographies. Geography descriptions (e.g. geofences or lists of street segments) must also be maintained by the Agency indefinitely. Policies without specific geographies (global policies) are assumed to apply to the entire service area managed by the Agency. 
+
+Geographical data will be stored as immutable GeoJSON, referenced by UUID. See the Geography and Geography Author specs for information on the Geography schema, and how Agencies are expected to create and maintain Geographies and serve them to Providers. In a future revision of Agency, we will deprecate the existing `/service_areas` endpoint. `/service_areas` currently only handles GeoJSON MultiPolygon and Polygon objects, and Policy documents might prefer Points for locations such as drop-zones. Policy may be used for a variety of enforcement actions, so it's important for the Agency to persist and keep immutable both Policy and Geography data.
+
+
 
 [Top](#table-of-contents)
 
@@ -98,17 +104,13 @@ Policies will be returned in order of effective date (see schema below), with pa
 
 `provider_id` is an implicit parameter and will be encoded in the authentication mechanism, or a complete list of policies should be produced. If the Agency decides that Provider-specific policy documents should not be shared with other Providers (e.g. punitive policy in response to violations), an Agency should filter policy objects before serving them via this endpoint.
 
-#### Geographies
+Response codes:
 
-Endpoint: `/geographies/{id}`  
-Method: `GET`  
-`data` Payload: `{ geographies: [] }`, an array of GeoJSON `Feature` objects.
+- 200 - success
+- 401 - unauthorized
+- 404 - not found
+- 500 - server error
 
-##### Query Parameters
-
-| Name         | Type      | Required / Optional | Description                                    |
-| ------------ | --------- | --- | ---------------------------------------------- |
-| `id`         | UUID      | Optional    | If provided, returns one geography object with the matching UUID; default is to return all geography objects.               |
 
 ### Flat Files
 
@@ -167,20 +169,6 @@ The optional `end_date` field applies to all policies represented in the file.
 [Top](#table-of-contents)
 
 ## Schema
-<a name="geography-fields"></a>
-
-### Geography Fields
-
-| Name                     | Type                       | R/O | Description                                                                     |
-| ------------------------ | -------------------------- | --- | ------------------------------------------------------------------------------- |
-| `name`                   | String                     | R   | Name of Geography                                                               |
-| `geography_id`           | UUID                       | R   | UUID of Geography                                                               |
-| `geography_json`         | GeoJSON<FeatureCollection> | R   | GeoJSON FeatureCollection representation of geography                           |
-| `description`            | String                     | O   | Description of Geography                                                        |
-| `publish_date`           | timestamp                  | O   | Date Geography was made immutable (if applicable)                               |
-| `effective_date`         | timestamp                  | O   | Date of Geography's first use in an active policy (if applicable)               |
-| `previous_geography_ids` | UUID[]                     | O   | Logically connected previous geographies. e.g. Venice Beach bounds are updated  |
-
 
 <a name="policy-fields"></a>
  
