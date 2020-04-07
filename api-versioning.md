@@ -1,12 +1,4 @@
-# Mobility Data Specification: **General information**
-
-This document contains specifications that are shared between the various MDS APIs such as `agency`, `provider` and `policy`.
-
-## Table of Contents
-
-* [Versioning](#versioning)
-
-## Versioning
+# API Versioning
 
 MDS APIs must handle requests for specific versions of the specification from clients.
 
