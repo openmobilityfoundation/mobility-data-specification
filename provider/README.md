@@ -273,10 +273,14 @@ Unless stated otherwise by the municipality, this endpoint must return only thos
 | `event_types` | Enum[] | Required | [Vehicle event(s)][vehicle-events] for state change, allowable values determined by `vehicle_state` |
 | `event_time` | [timestamp][ts] | Required | Date/time that event occurred at. See [Event Times][event-times] |
 | `publication_time` | [timestamp][ts] | Optional | Date/time that event became available through the status changes endpoint |
-| `event_location` | GeoJSON [Point Feature][geo] | Required | |
+| `event_location` | GeoJSON [Point Feature][geo] | Required | See [event_locations](#event-locations)|
 | `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |
 | `trip_id` | UUID | Required if Applicable | Trip UUID (foreign key to Trips API), required if `event_types` contains `trip_start`, `trip_end`, `trip_cancel`, `trip_enter_jurisdiction`, or `trip_leave_jurisdiction` |
 | `associated_ticket` | String | Optional | Identifier for an associated ticket inside an Agency-maintained 311 or CRM system. |
+
+### Event Locations
+
+*Docked* mobility providers must include a `stop_id` in the Point Feature of each `event_location` that occurs at a `Stop` by embedding the `stop_id` property in the Feature's `properties` object.
 
 ### Status Changes Query Parameters
 
