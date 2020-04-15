@@ -12,6 +12,8 @@ The agency-facing Policy Author API consists of the following endpoints. The end
 
 ### Policy Endpoints
 
+Responses must set the `Content-Type` header, as specified in the [Provider versioning](../provider/README.md#versioning) section. They must also specify the API version in the JSON-formatted response body, under the `version` key.
+
 #### Schema
 
 See Policy API.
