@@ -95,6 +95,8 @@ _Note: A simple tool to validate `geographies.json` will be contributed to the O
 
 ## REST Endpoints
 
+Responses must set the `Content-Type` header, as specified in the [Provider versioning](../provider/README.md#versioning) section. They must also specify the API version in the JSON-formatted response body, under the `version` key.
+
 The Geography Author API consists of the following endpoints:
 
 ### GET /geographies/:geography_id
