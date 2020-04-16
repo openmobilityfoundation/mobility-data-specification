@@ -14,31 +14,30 @@ This specification details the purpose, use cases, and schema for jurisdictions.
 
 While MDS provides a specification for a machine-readable format to describe a geofence, a plain geography is not always enough for all use cases. It is useful to be able to designate a particular geography as one that describes some region over which an agency has legal authority. For example, the geographical boundaries of a county might form a jurisdiction of interest for a county transportation agency. 
 
-An agency might have multiple jurisdictions that fall within its authority. For example, the Denver Regional Council of Governments is a coalition formed of five counties that coordinates on transportation issues.
+An agency might have multiple jurisdictions that fall within its authority. For example, the city of London is divided into multiple boroughs that could each form a jurisdiction. This would make it easier to see which boroughs are most popular for trips. 
 
 [Top](#table-of-contents)
 
 ## Distribution
 
-Policies shall be published by regulatory bodies or their authorized delegates as JSON objects. These JSON objects shall be served by either [flat files](#flat-files) or via [REST API endpoints](#rest-endpoints). In either case, policy data shall follow the [schema](#schema) outlined below.
-
-Policies typically refer to one or more associated geographies. Each policy and geography shall have a unique ID (UUID).
-
-Published policies and geographies should be treated as immutable data. Obsoleting or otherwise changing a policy is accomplished by publishing a new policy with a field named `prev_policies`, a list of UUID references to the policy or policies superseded by the new policy.
-
-Geographical data shall be represented as GeoJSON `Feature` objects. No part of the geographical data should be outside the [municipality boundary](../provider/README.md#municipality-boundary).
-
-Policies should be re-fetched whenever:
-
-1) a policy expires (via its `end_date`), or
-2) at an interval specified by the regulatory body, e.g. "daily at midnight".
-
-Flat files have an optional `end_date` field that will apply to the file as a whole.
+Jurisdictions should be served by agencies through a REST API.
 
 ### REST Endpoints
 
+All response fields must use `lower_case_with_underscores`.
 
-Responses must set the `Content-Type` header, as specified in the [Provider versioning](../provider/README.md#versioning) section.
+Responses must set the `Content-Type` header, as specified in the [Provider versioning](../provider/README.md#versioning) section. They must also specify the API version in the JSON-formatted response body, under the `version` key.
+
+
+```json
+{
+    "version": "x.y.z",
+    "data": {
+        // endpoint/file specific payload
+    }
+}
+
+Response bodies must be a `UTF-8` encoded JSON object.
 
 #### HTTP Response Codes
 
@@ -50,23 +49,8 @@ The response to a client request must include a valid HTTP status code defined i
 - **404:** Not Found: Object(s) do not exist.
 - **500:** Internal server error.
 
-#### Error Responses
 
-```json
-{
-    "error": "...",
-    "error_description": "...",
-    "error_details": [ "...", "..." ]
-}
-```
-
-| Field               | Type     | Field Description      |
-| ------------------- | -------- | ---------------------- |
-| `error`             | String   | Error message string   |
-| `error_description` | String   | Human readable error description (can be localized) |
-| `error_details`     | String[] (optional) | Array of error details |
-
-#### Policies
+#### Jurisdiction Endpoints
 
 Endpoint: `/policies/{id}`  
 Method: `GET`  
@@ -86,185 +70,100 @@ Policies will be returned in order of effective date (see schema below), with pa
 
 `provider_id` is an implicit parameter and will be encoded in the authentication mechanism, or a complete list of policies should be produced. If the Agency decides that Provider-specific policy documents should not be shared with other Providers (e.g. punitive policy in response to violations), an Agency should filter policy objects before serving them via this endpoint.
 
-#### Geographies
-
-Endpoint: `/geographies/{id}`  
-Method: `GET`  
-`data` Payload: `{ geographies: [] }`, an array of GeoJSON `Feature` objects.
-
-##### Query Parameters
-
-| Name         | Type      | Required / Optional | Description                                    |
-| ------------ | --------- | --- | ---------------------------------------------- |
-| `id`         | UUID      | Optional    | If provided, returns one geography object with the matching UUID; default is to return all geography objects.               |
-
-### Flat Files
-
-To use flat files, policies shall be represented in two (2) files:
-
-- `policies.json`
-- `geographies.json`
-
-The files shall be structured like the output of the [REST endpoints](#rest-endpoints) above.
-
-The publishing Agency should establish and communicate to providers how frequently these files should be polled.
-
-The `updated` field in the payload wrapper should be set to the time of publishing a revision, so that it is simple to identify a changed file.
-
-#### Example `policies.json`
-
-```json
-{
-    "version": "0.4.0",
-    "updated": "1570035222868",
-    "end_date": "1570035222868",
-    "data": {
-        "policies": [
-            {
-                // policy JSON 1
-            },
-            {
-                // policy JSON 2
-            }
-        ]
-    }
-}
-```
-
-The optional `end_date` field applies to all policies represented in the file.
-
-#### Example `geographies.json`
-
-```json
-{
-    "version": "0.4.0",
-    "updated": "1570035222868",
-    "data": {
-        "geographies": [
-            {
-                // GeoJSON Feature 1
-            },
-            {
-                // GeoJSON Feature 2
-            }
-        ]
-    }
-}
-```
 
 [Top](#table-of-contents)
 
 ## Schema
 
-All response fields must use `lower_case_with_underscores`.
+A jurisdiction optionally contains a reference to a geography object. This reference may change over time. 
 
-Response bodies must be a `UTF-8` encoded JSON object and must minimally include the MDS `version`, a timestamp indicating the last time the data was `updated`, and a `data` payload:
+When a jurisdiction is updated, the old version should remain in the back-end for archival purposes.
 
-```json
-{
-    "version": "x.y.z",
-    "updated": "1570035222868",
-    "data": {
-        // endpoint/file specific payload
-    }
-}
-```
 
-### Policy
-
-An individual `Policy` object is defined by the following fields:
+An individual `Jurisdiction` object is defined by the following fields:
 
 | Name             | Type      | Required / Optional | Description                                                                         |
 | ---------------- | --------- | --- | ----------------------------------------------------------------------------------- |
-| `name`           | String    | Required   | Name of policy                                                                      |
-| `policy_id`      | UUID      | Required   | Unique ID of policy                                                                 |
-| `provider_ids`   | UUID[]    | Optional    | Providers for whom this policy is applicable; empty arrays and `null`/absent implies all Providers |
+| `jurisdiction_id`| UUID      | Required   | Unique ID of jurisdiction
+| `agency_key`     | String    | Required   | Key of associated agency, unique to the Organization (ex. miami-city)
+| `agency_name`    | String    | Optional   | Human-readable agency name for display purposes |
 | `description`    | String    | Required   | Description of policy                                                               |
-| `start_date`     | timestamp | Required   | Beginning date/time of policy enforcement                                           |
-| `end_date`       | timestamp | Optional    | End date/time of policy enforcement                                                 |
-| `published_date` | timestamp | Required   | Timestamp that the policy was published                                             |
-| `prev_policies`  | UUID[]    | Optional    | Unique IDs of prior policies replaced by this one                                   |
-| `rules`          | Rule[]    | Required   | List of applicable [Rule](#rules) objects |
+| `geography_id`   | UUID      | Optional   | The unique ID of the geography covered by this jurisdiction
+| `timestamp`      | timestamp | Required   | Creation or update time of a jurisdiction.                                                 |
 
-### Rules
+Formatted in JSON, a jurisdiction object should look like this:
 
-An individual `Rule` object is defined by the following fields:
-
-| Name            | Type                        | Required / Optional | Description                               |
-| --------------- | --------------------------- | ------------------- | ----------------------------------------- |
-| `name`             | String                      | Required   | Name of rule |
-| `rule_type`        | enum                        | Required   | Type of policy (see [Rule Types](#rule-types)) |
-| `geographies`      | UUID[]                      | Required   | List of Geography UUIDs (non-overlapping) specifying the covered geography |
-| `statuses`         | `{ status: vehicle event[] }` | Required   | Vehicle `statuses` to which this rule applies, either from [Provider](../provider/README.md#event-types) or [Agency](../agency/README.md#vehicle-events). Optionally provide a list of specific `event_type`'s as a subset of a given status for the rule to apply to. An empty list or `null`/absent defaults to "all". |
-| `rule_units`       | enum                        | Optional   | Measured units of policy (see [Rule Units](#rule-units)) |
-| `vehicle_types`    | `vehicle_type[]`            | Optional   | Applicable vehicle types, default "all". |
-| `propulsion_types` | `propulsion_type[]`         | Optional   | Applicable vehicle propulsion types, default "all". |
-| `minimum`          | integer                     | Optional   | Minimum value, if applicable (default 0) |
-| `maximum`          | integer                     | Optional   | Maximum value, if applicable (default unlimited) |
-| `start_time`       | ISO 8601 time `hh:mm:ss`              | Optional   | Beginning time-of-day when the rule is in effect (default 00:00:00). |
-| `end_time`         | ISO 8601 time `hh:mm:ss`              | Optional   | Ending time-of-day when the rule is in effect (default 23:59:59). |
-| `days`             | day[]                       | Optional   | Days `["sun", "mon", "tue", "wed", "thu", "fri", "sat"]` when the rule is in effect (default all) |
-| `messages`         | `{ string:string }`         | Optional   | Message to rider user, if desired, in various languages, keyed by language tag (see [Messages](#messages)) |
-| `value_url`        | URL                         | Optional   | URL to an API endpoint that can provide dynamic information for the measured value (see [Value URL](#value-url)) |
-
-### Rule Types
-
-| Name    | Description                                                                                                   |
-| ------- | ------------------------------------------------------------------------------------------------------------- |
-| `count` | Fleet counts based on regions. Rule `max`/`min` refers to number of devices.                                  |
-| `time`  | Individual limitations on time spent in one or more vehicle-states. Rule `max`/`min` refers to increments of time in [Rule Units](#rule-units). |
-| `speed` | Global or local speed limits. Rule `max`/`min` refers to speed in [Rule Units](#rule-units).                  |
-| `user`  | Information for users, e.g. about helmet laws. Generally can't be enforced via events and telemetry.          |
-
-### Rule Units
-
-| Name      | Description         |
-| --------- | ------------------- |
-| `seconds` | Seconds             |
-| `minutes` | Minutes             |
-| `hours`   | Hours               |
-| `mph`     | Miles per hour      |
-| `kph`     | Kilometers per hour |
-
-### Messages
-
-Some Policies as established by the Agency may benefit from rider communication. This optional field contains a map of languages to messages, to be shown to the user.
-
-Language identifier values will be per [BCP 47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt).
-
-Example for a decreased speed-limit rule for Venice Beach on weekends:
-
-```json
-"messages": {
-    "en-US": "Remember to stay under 10 MPH on Venice Beach on weekends!",
-    "es-US": "¡Recuerda mantener por debajo 10 millas por hora en Venice Beach los fines de semana!"
-},
+```
+{
+  jurisdiction_id: UUID
+  agency_key: string
+  agency_name: string
+  geography_id: UUID
+  timestamp: Timestamp
+}
 ```
 
-### Value URL
+## Endpoints
 
-An Agency may wish to provide dynamic or global rules, e.g.
+### GET /jurisdictions
 
-> "Within 300 yards of the stadium, 1000 total extra scooters may be deployed, across all Provider(s)."
+Gets all of an agency's jurisdictions.
 
-In this case, compliance is not computable from the information available to a single Provider. The Agency may provide an endpoint to get the current count of vehicles in the service-area, so that individual Providers could decide whether adding some number to those present is allowed.
+Parameters:
+| Name         | Type      | R/O | Description                                    |
+| ------------ | --------- | --- | ---------------------------------------------- |
+| `effective`   | Timestamp | O   | See the state of the jurisdictions at that point in time.      |
 
-The payload returned from a `GET` request to the `value_url` will have the following immutable fields:
+Response codes:
+- 200 - success
+- 403 - unauthorized
+- 500 - server error
 
-| Name        | Type      | Required / Optional | Description                         |
-| ----------- | --------- | --- | ----------------------------------- |
-| `value`     | integer   | Required   | Value of whatever the rule measures |
-| `timestamp` | timestamp | Required   | Timestamp the value was recorded    |
-| `policy_id` | UUID      | Required   | Relevant `policy_id` for reference  |
+### GET /jurisdictions/:jurisdiction_id
 
-### Order of Operations
+Gets a single jurisdictions.
 
-Rules, being in a list, are ordered **most specific** to **most general**. E.g. an "earlier" rule (lower list index) would take precedence over a "later" rule (higher list index).
+Parameters:
+| Name         | Type      | R/O | Description                                    |
+| ------------ | --------- | --- | ---------------------------------------------- |
+| `effective`   | Timestamp | O   | See the version of the jurisdiction that was in effect at that point in time.      |
 
-Rules are a form of pattern matching; conditions under which a given rule is "met" are specified, and a vehicle (or series of vehicles) may match with that rule or set of rules.
+Response codes:
+- 200 - Success
+- 403 - Unauthorized
+- 500 - Server error
 
-If a vehicle is matched with a rule, then it _will not_ be considered in the subsequent evaluation of rules within a given policy. This allows for expressing complex policies, such as a layer of "valid" geographies in an earlier rule, with overarching "invalid" geographies in later rules.
+### POST /jurisdictions/
 
-The internal mechanics of ordering are up to the Policy editing and hosting software.
+Create one or many jurisdictions. The jurisdiction(s) desired must be formatted in JSON and submitted in the request body.
+
+Response codes:
+- 201 - Success
+- 400 - Validation error. E.g. the submitted `jurisdiction_id` was not a UUID.
+- 403 - Unauthorized
+- 409 - Conflict error. E.g. the backend already has a jurisdiction with the same `agency_key` as the POSTed jurisdiction.
+- 403 - unauthorized
+- 500 - server error
+
+### PUT /jurisdictions/:jurisdiction_id
+
+Edit a jurisdiction. The response body must contain the entire jurisdiction object with the desired changes.
+
+Response codes:
+- 201 - Success
+- 400 - Validation error
+- 403 - Unauthorized
+- 404 - Jurisdiction not found
+- 500 - Server error
+
+### DELETE /jurisdictions/:jurisdiction_id
+
+Delete a jurisdiction.
+
+Response codes:
+- 200 - Success
+- 403 - Unauthorized
+- 404 - Jurisdiction not found
+- 500 - Server error
 
 [Top](#table-of-contents)
