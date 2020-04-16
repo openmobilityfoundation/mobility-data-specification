@@ -85,7 +85,7 @@ An individual `Jurisdiction` object is defined by the following fields:
 | Name             | Type      | Required / Optional | Description                                                                         |
 | ---------------- | --------- | --- | ----------------------------------------------------------------------------------- |
 | `jurisdiction_id`| UUID      | Required   | Unique ID of jurisdiction
-| `agency_key`     | String    | Required   | A unique string key for the jurisdiction.
+| `agency_key`     | String    | Required   | A unique string key for the jurisdiction. Allows for easier management of jurisdiction-based access control.
 | `agency_name`    | String    | Optional   | Human-readable agency name for display purposes |
 | `description`    | String    | Required   | Description of policy                                                               |
 | `geography_id`   | UUID      | Optional   | The unique ID of the geography covered by this jurisdiction
