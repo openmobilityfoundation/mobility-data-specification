@@ -254,9 +254,9 @@ Note that all rates are in the `currency` defined in the [Policy](#policy)
 | `hours`               | Hours               |
 | `mph`                 | Miles per hour      |
 | `kph`                 | Kilometers per hour |
-| `rate per event`      |  Rate applied once when the vehicle enters a matching status.   |        
-| `rate per minute`     |  Rate applied for each minute while the vehicle is in the matching status.   |       
-| `rate per day`        |  Rate applied once per day if the vehicle is in the matching status at any point.   |        
+| `rate_per_event`      |  Rate applied once when the vehicle enters a matching status.   |        
+| `rate_per_minute`     |  Rate applied for each minute while the vehicle is in the matching status.   |       
+| `rate_per_day`        |  Rate applied once per day if the vehicle is in the matching status at any point.   |        
 
 ### Messages
 
