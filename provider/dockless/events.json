@@ -1,9 +1,69 @@
 {
-  "$id": "https://raw.githubusercontent.com/CityofLosAngeles/mobility-data-specification/master/provider/status_changes.json",
+  "$id": "https://raw.githubusercontent.com/openmobilityfoundation/mobility-data-specification/master/provider/dockless/events.json",
   "$schema": "http://json-schema.org/draft-06/schema#",
-  "title": "The MDS Provider Schema, status_change payload",
+  "title": "The MDS Provider Schema, events payload",
   "type": "object",
-  "definitions": {},
+  "definitions": {
+    "links": {
+      "$id": "#/definitions/links",
+      "type": "object",
+      "required": [
+        "next"
+      ],
+      "properties": {
+        "first": {
+          "$id": "#/definitions/links/first",
+          "type": [
+            "null",
+            "string"
+          ],
+          "title": "The URL to the first page of data",
+          "examples": [
+            "https://data.provider.co/trips/first"
+          ],
+          "format": "uri"
+        },
+        "last": {
+          "$id": "#/definitions/links/last",
+          "type": [
+            "null",
+            "string"
+          ],
+          "title": "The URL to the last page of data",
+          "examples": [
+            "https://data.provider.co/trips/last"
+          ],
+          "format": "uri"
+        },
+        "prev": {
+          "$id": "#/definitions/links/prev",
+          "type": [
+            "null",
+            "string"
+          ],
+          "title": "The URL to the previous page of data",
+          "examples": [
+            "https://data.provider.co/trips/prev"
+          ],
+          "format": "uri"
+        },
+        "next": {
+          "$id": "#/definitions/links/next",
+          "type": [
+            "null",
+            "string"
+          ],
+          "title": "The URL to the next page of data",
+          "examples": [
+            "https://data.provider.co/trips/next"
+          ],
+          "format": "uri",
+          "pattern": "^(.*)$"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
   "required": [
     "version",
     "data"
@@ -24,11 +84,11 @@
         "status_changes": {
           "$id": "#/properties/data/properties/status_changes",
           "type": "array",
-          "title": "The status_changes Schema",
+          "title": "The status_changes payload",
           "items": {
             "$id": "#/properties/data/properties/status_changes/items",
             "type": "object",
-            "title": "The Items Schema",
+            "title": "The status_change item schema",
             "required": [
               "provider_name",
               "provider_id",
@@ -46,7 +106,9 @@
                 "$id": "#/properties/data/properties/status_changes/items/properties/provider_name",
                 "type": "string",
                 "description": "The public-facing name of the Provider",
-                "examples": ["Provider Name"],
+                "examples": [
+                  "Provider Name"
+                ],
                 "pattern": "^(.*)$"
               },
               "provider_id": {
@@ -64,7 +126,9 @@
                 "type": "string",
                 "description": "The Vehicle Identification Number visible on the vehicle itself",
                 "default": "",
-                "examples": ["ABC123"],
+                "examples": [
+                  "ABC123"
+                ],
                 "pattern": "^(.*)$"
               },
               "vehicle_type": {
@@ -82,9 +146,14 @@
                 "description": "The time the event occurred, expressed as a Unix Timestamp",
                 "$ref": "#/definitions/timestamp"
               },
+              "publication_time": {
+                "$id": "#/properties/data/properties/status_changes/items/properties/publication_time",
+                "description": "The time the event became available through the status changes endpoint, expressed as a Unix Timestamp",
+                "$ref": "#/definitions/timestamp"
+              },
               "event_location": {
                 "$id": "#/properties/data/properties/status_changes/items/properties/event_location",
-                "description": "The GPS coordinates of where the event occurred",
+                "description": "The GPS or GNSS coordinates of where the event occurred",
                 "$ref": "#/definitions/MDS_Feature_Point"
               },
               "event_type": {
@@ -97,9 +166,14 @@
               },
               "battery_pct": {
                 "$id": "#/properties/data/properties/status_changes/items/properties/battery_pct",
-                "type": ["number", "null"],
+                "type": [
+                  "number",
+                  "null"
+                ],
                 "description": "Percent charge of device battery, expressed between 0 and 1",
-                "examples": [0.89],
+                "examples": [
+                  0.89
+                ],
                 "minimum": 0,
                 "maximum": 1
               },
@@ -107,6 +181,10 @@
                 "$id": "#/properties/data/properties/status_changes/items/properties/associated_trip",
                 "description": "Trip UUID, required if event_type_reason is user_pick_up or user_drop_off",
                 "$ref": "#/definitions/uuid"
+              },
+              "associated_ticket": {
+                "type": "string",
+                "description": "Identifier for an associated ticket inside an Agency-maintained 311 or CRM system."
               }
             },
             "allOf": [
@@ -116,7 +194,9 @@
                   {
                     "properties": {
                       "event_type": {
-                        "enum": ["available"]
+                        "enum": [
+                          "available"
+                        ]
                       },
                       "event_type_reason": {
                         "enum": [
@@ -132,27 +212,38 @@
                   {
                     "properties": {
                       "event_type": {
-                        "enum": ["reserved"]
+                        "enum": [
+                          "reserved"
+                        ]
                       },
                       "event_type_reason": {
-                        "enum": ["user_pick_up"]
+                        "enum": [
+                          "user_pick_up"
+                        ]
                       }
                     }
                   },
                   {
                     "properties": {
                       "event_type": {
-                        "enum": ["unavailable"]
+                        "enum": [
+                          "unavailable"
+                        ]
                       },
                       "event_type_reason": {
-                        "enum": ["low_battery", "maintenance"]
+                        "enum": [
+                          "low_battery",
+                          "maintenance"
+                        ]
                       }
                     }
                   },
                   {
                     "properties": {
                       "event_type": {
-                        "enum": ["removed"]
+                        "enum": [
+                          "removed"
+                        ]
                       },
                       "event_type_reason": {
                         "enum": [
@@ -168,18 +259,23 @@
               },
               {
                 "description": "conditionally require associated_trip when applicable",
-                "oneOf": [
+                "anyOf": [
                   {
                     "not": {
                       "properties": {
                         "event_type_reason": {
-                          "enum": ["user_pick_up", "user_drop_off"]
+                          "enum": [
+                            "user_pick_up",
+                            "user_drop_off"
+                          ]
                         }
                       }
                     }
                   },
                   {
-                    "required": ["associated_trip"]
+                    "required": [
+                      "associated_trip"
+                    ]
                   }
                 ]
               }
@@ -190,7 +286,7 @@
       "additionalProperties": false
     },
     "links": {
-      "$id": "#properties/links",
+      "$id": "#/properties/links",
       "$ref": "#/definitions/links"
     }
   },

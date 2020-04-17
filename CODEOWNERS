@@ -1,8 +1,14 @@
-## Below is the MDS CODEOWNERS file, which dictates who is required for review on any given file. 
+## Below is the MDS CODEOWNERS file, which dictates who is required for review on any given file.
 
-## All MDS approvals 
-* @hunterowens @thekaveman @cityoflosangeles/transportation
+## All MDS approvals
+* @openmobilityfoundation/omf-admin
 
+## Provider Services Working Group
+/provider/* @openmobilityfoundation/provider-maintainers @openmobilityfoundation/omf-admin
 
-## Agency Specific 
-/agency/* @cityoflosangeles/ellis-associates
+## City Services Working Group Specific, also JSON Schema
+/agency/* @openmobilityfoundation/city-services-maintainers @openmobilityfoundation/omf-admin
+/policy/* @openmobilityfoundation/city-services-maintainers @openmobilityfoundation/omf-admin
+
+## schema is changed by provider and city services working group
+/schema/* @openmobilityfoundation/provider-maintainers @openmobilityfoundation/city-services-maintainers @openmobilityfoundation/omf-admin

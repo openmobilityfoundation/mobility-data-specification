@@ -1,5 +1,5 @@
 {
-  "$id": "https://raw.githubusercontent.com/CityofLosAngeles/mobility-data-specification/master/provider/trips.json",
+  "$id": "https://raw.githubusercontent.com/openmobilityfoundation/mobility-data-specification/master/provider/dockless/trips.json",
   "$schema": "http://json-schema.org/draft-06/schema#",
   "title": "The MDS Provider Schema, trips payload",
   "type": "object",
@@ -24,11 +24,11 @@
         "trips": {
           "$id": "#/properties/data/properties/trips",
           "type": "array",
-          "title": "The Trips Schema",
+          "title": "The trips payload",
           "items": {
             "$id": "#/properties/data/properties/trips/items",
             "type": "object",
-            "title": "The Trip Schema",
+            "title": "The trip item schema",
             "required": [
               "provider_name",
               "provider_id",
@@ -131,6 +131,11 @@
                 "description": "The time the trip ended, expressed as a Unix Timestamp",
                 "$ref": "#/definitions/timestamp"
               },
+              "publication_time": {
+                "$id": "#/properties/data/properties/trips/items/properties/publication_time",
+                "description": "The time the trip became available through the trips endpoint, expressed as a Unix Timestamp",
+                "$ref": "#/definitions/timestamp"
+              },
               "parking_verification_url": {
                 "$id": "#/properties/data/properties/trips/items/properties/parking_verification_url",
                 "type": ["string", "null"],
@@ -143,7 +148,7 @@
               "standard_cost": {
                 "$id": "#/properties/data/properties/trips/items/properties/standard_cost",
                 "type": ["integer", "null"],
-                "description": "The cost, in cents, that it would cost to perform the trip in the standard operation of the System",
+                "description": "The cost, in the currency defined in `currency`, that it would cost to perform that trip in the standard operation of the System. If no currency is given, USD cents is implied.",
                 "examples": [
                   500
                 ]
@@ -151,19 +156,23 @@
               "actual_cost": {
                 "$id": "#/properties/data/properties/trips/items/properties/actual_cost",
                 "type": ["integer", "null"],
-                "description": "The actual cost, in cents, paid by the customer of the mobility as a service provider",
+                "description": "The actual cost, in the currency defined in `currency`, paid by the customer of the *mobility as a service* provider. If no currency is given, USD cents is implied.",
                 "examples": [
                   520
+                ]
+              },
+              "currency": {
+                "$id": "#/properties/data/properties/trips/items/properties/currency",
+                "type": ["string", "null"],
+                "description": "An ISO 4217 Alphabetic Currency Code representing the currency of the payee. If null, USD cents is implied.",
+                "examples": [
+                    "USD", "EUR", "GBP"
                 ]
               }
             }
           }
         }
       }
-    },
-    "links": {
-      "$id": "#properties/links",
-      "$ref": "#/definitions/links"
     }
   },
   "additionalProperties": false

@@ -2,23 +2,32 @@
 
 This specification contains a collection of RESTful APIs used to specify the digital relationship between *mobility as a service* Providers and the Agencies that regulate them.
 
-* Authors: LADOT
-* Date: 25 Feb 2019	
+* Date: 19 Sep 2019
 * Version: BETA
 
 ## Table of Contents
 
+* [General Information](#general-information)
 * [Authorization](#authorization)
 * [Timestamps](#timestamps)
 * [Vehicles](#vehicles)
 * [Vehicle - Register](#vehicle---register)
 * [Vehicle - Event](#vehicle---event)
 * [Vehicles - Update Telemetry](#vehicles---telemetry)
-* [Service Areas](#service-areas)
 * [Vehicle Events](#vehicle-events)
 * [Telemetry Data](#telemetry-data)
 * [Enum definitions](#enum-definitions)
 * [Responses](#responses)
+
+## General information
+
+The following information applies to all `agency` API endpoints. Details on providing authorization to endpoints is specified in the [Authorization](#authorization) section.
+
+### Versioning
+
+`agency` APIs must handle requests for specific versions of the specification from clients.
+
+Versioning must be implemented as specified in the [`General information versioning section`][general-information/versioning].
 
 ## Authorization
 
@@ -26,7 +35,11 @@ When making requests, the Agency API expects `provider_id` to be part of the cla
 
 ## Timestamps
 
-As with the Provider API, `timestamp` refers to integer milliseconds since Unix epoch. 
+As with the Provider API, `timestamp` refers to integer milliseconds since Unix epoch.
+
+## Strings
+
+All String fields, such as `vehicle_id`, are limited to a maximum of 255 characters.
 
 ## Vehicles
 
@@ -55,8 +68,8 @@ If `device_id` is specified, `GET` will return a single vehicle record, otherwis
         "next": "https://..."
     }
 }
-``` 
-  
+```
+
 A vehicle record is as follows:
 
 | Field         | Type      | Field Description                                                             |
@@ -79,7 +92,7 @@ _No content returned on vehicle not found._
 
 ## Vehicle - Register
 
-The `/vehicles` registration endpoint is used to register a vehicle for use in the Agency jurisdiction. 
+The `/vehicles` registration endpoint is used to register a vehicle for use in the Agency jurisdiction.
 
 Endpoint: `/vehicles`
 Method: `POST`
@@ -115,7 +128,7 @@ _No content returned on success._
 
 ## Vehicle - Update
 
-The `/vehicles` update endpoint is used to update some mutable aspect of a vehicle.  For now, only `vehicle_id`. 
+The `/vehicles` update endpoint is used to update some mutable aspect of a vehicle.  For now, only `vehicle_id`.
 
 Endpoint: `/vehicles/{device_id}`
 Method: `PUT`
@@ -183,9 +196,6 @@ Body Params:
 
 The vehicle `/telemetry` endpoint allows a Provider to send vehicle telemetry data in a batch for any number of vehicles in the fleet.
 
-The Update Telemetry endpoint (/telemetry) shall be called for the specific trip within 24 hrs after the vehicle trip is over.   
-For any given trip, data reported via the (/telemetry) endpoint shall contain temporal and location data for every 300 ft (91 meters) while vehicle is in motion and 30 seconds while at rest. For Mobility Service Providers who do not calculate distance in real-time, a periodic rate of 14 seconds can be used while vehicle is in motion.
-
 Endpoint: `/vehicles/telemetry`
 Method: `POST`
 
@@ -200,7 +210,7 @@ Body Params:
 | Field     | Type                           | Field Description                                                                                       |
 | --------- | ------------------------------ | ------------------------------------------------------------------------------------------------------- |
 | `result`  | String                         | Responds with number of successfully written telemetry data points and total number of provided points. |
-| `failures | [Telemetry](#telemetry-data)[] | Array of failed telemetry for zero or more vehicles (empty if all successful).                          |
+| `failures` | [Telemetry](#telemetry-data)[] | Array of failed telemetry for zero or more vehicles (empty if all successful).                          |
 
 400 Failure Response:
 
@@ -209,37 +219,6 @@ Body Params:
 | `bad_param`     | A validation error occurred.         | Array of parameters with errors |
 | `invalid_data`  | None of the provided data was valid. |                                 |
 | `missing_param` | A required parameter is missing.     | Array of missing parameters     |
-
-## Service Areas
-
-The `/service_areas` endpoint gets the list of service areas available to the Provider or a single area.
-
-Endpoint: `/service_areas/{service_area_id}`
-Method: `GET`
-
-Path Params:
-
-| Field             | Type | Required/Optional | Field Description                                                                                                                     |
-| ----------------- | ---- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `service_area_id` | UUID | Optional          | If provided, retrieve a specific service area (e.g. a retired or old service area). If omitted, will return all active service areas. |
-
-Query Params:
-
-| Parameter     | Type   | Required/Optional | Description                                                                                                                                                                |
-| ------------- | ------ | ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `bbox`        | String | Optional          | The bounding box upper, left, lower and right coordinates in WGS84 degrees. All geometries overlapping this rectangle will be returned. The format is: `lat,long;lat,long` |
-
-200 Success Response:
-
-| Field              | Types                               | Required/Optional | Field Description                                                                           |
-| ------------------ | ----------------------------------- | ----------------- | ------------------------------------------------------------------------------------------- |
-| `service_area_id`  | UUID                                 | Required          | UUID issued by city                                                                       |
-| `start_date`       | Timestamp                            | Required          | Date at which this service area became effective                                            |
-| `end_date`         | Timestamp                            | Optional          | If exists, Date at which this service area was replaced.                                    |
-| `area`             | MultiPolygon                         | Required          | GeoJson [MultiPolygon](https://tools.ietf.org/html/rfc7946#section-3.1.7) in WGS84 degrees. |
-| `prev_area`        | UUID                                 | Optional          | If exists, the UUID of the prior service area.                                              |
-| `replacement_area` | UUID                                 | Optional          | If exists, the UUID of the service area that replaced this one                              |
-| `type`             | Enum                                 | Required          | See [area types](#area-types)                                                         |
 
 ## Vehicle Events
 
@@ -266,20 +245,21 @@ The diagram below shows the expected events and related `status` transitions for
 
 ## Telemetry Data
 
-A standard point of vehicle telemetry. References to latitude and longitude imply coordinates encoded in the [WGS 84 (EPSG:4326)](https://en.wikipedia.org/wiki/World_Geodetic_System) standard GPS projection expressed as [Decimal Degrees](https://en.wikipedia.org/wiki/Decimal_degrees).
+A standard point of vehicle telemetry. References to latitude and longitude imply coordinates encoded in the [WGS 84 (EPSG:4326)](https://en.wikipedia.org/wiki/World_Geodetic_System) standard GPS or GNSS projection expressed as [Decimal Degrees](https://en.wikipedia.org/wiki/Decimal_degrees).
 
 | Field          | Type           | Required/Optional     | Field Description                                            |
 | -------------- | -------------- | --------------------- | ------------------------------------------------------------ |
 | `device_id`    | UUID           | Required              | ID used in [Register](#vehicle-register)                     |
-| `timestamp`    | Timestamp      | Required              | Date/time that event occurred. Based on GPS clock            |
+| `timestamp`    | Timestamp      | Required              | Date/time that event occurred. Based on GPS or GNSS clock            |
 | `gps`          | Object         | Required              | Telemetry position data                                      |
 | `gps.lat`      | Double         | Required              | Latitude of the location                                     |
 | `gps.lng`      | Double         | Required              | Longitude of the location                                    |
 | `gps.altitude` | Double         | Required if Available | Altitude above mean sea level in meters                      |
 | `gps.heading`  | Double         | Required if Available | Degrees - clockwise starting at 0 degrees at true North      |
 | `gps.speed`    | Float          | Required if Available | Speed in meters / sec                                        |
-| `gps.hdop`     | Float          | Required if Available | Horizontal GPS accuracy value (see [hdop](https://support.esri.com/en/other-resources/gis-dictionary/term/358112bd-b61c-4081-9679-4fca9e3eb926)) |
-| `gps.satellites` | Integer      | Required if Available | Number of GPS satellites
+| `gps.accuracy` | Float          | Required if Available | Accuracy in meters                                           |
+| `gps.hdop`     | Float          | Required if Available | Horizontal GPS or GNSS accuracy value (see [hdop](https://support.esri.com/en/other-resources/gis-dictionary/term/358112bd-b61c-4081-9679-4fca9e3eb926)) |
+| `gps.satellites` | Integer      | Required if Available | Number of GPS or GNSS satellites
 | `charge`       | Float          | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 1 |
 
 ## Enum Definitions
@@ -298,7 +278,9 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | `type`    |
 | --------- |
 | `bicycle` |
+| `car`     |
 | `scooter` |
+| `moped`   |
 
 ### Propulsion Type
 
@@ -329,3 +311,8 @@ A vehicle may have one or more values from the `propulsion`, depending on the nu
 | `error`             | String   | Error message string   |
 | `error_description` | String   | Human readable error description (can be localized) |
 | `error_details`     | String[] | Array of error details |
+
+[Top][toc]
+
+[toc]: #table-of-contents
+[general-information/versioning]: /general-information.md#versioning

@@ -1,0 +1,91 @@
+{
+  "$id": "https://raw.githubusercontent.com/openmobilityfoundation/mobility-data-specification/master/agency/post_vehicle_telemetry.json",
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "title": "The MDS Agency Schema, POST vehicle telemetry body",
+  "type": "object",
+  "definitions": {
+    "telemetry": {
+      "$id": "#/definitions/telemetry",
+      "type": "object",
+      "description": "A vehicle telemetry datum",
+      "required": [
+        "device_id",
+        "timestamp",
+        "gps"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "device_id": {
+          "$ref": "#/definitions/uuid"
+        },
+        "timestamp": {
+          "$ref": "#/definitions/timestamp"
+        },
+        "gps": {
+          "type": "object",
+          "required": [
+            "lat",
+            "lng"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "lat": {
+              "type": "number",
+              "description": "Latitude of the location",
+              "minimum": -90,
+              "maximum": 90
+            },
+            "lng": {
+              "type": "number",
+              "description": "Longitude of the location",
+              "minimum": -180,
+              "maximum": 180
+            },
+            "altitude": {
+              "type": "number",
+              "description": "Altitude above mean sea level in meters"
+            },
+            "heading": {
+              "type": "number",
+              "description": "Degrees clockwise from true north"
+            },
+            "speed": {
+              "type": "number",
+              "description": "Speed in meters/sec"
+            },
+            "accuracy": {
+              "type": "number",
+              "description": "Accuracy in meters"
+            },
+            "hdop": {
+              "type": "number",
+              "description": "Horizontal GPS or GNSS accuracy value"
+            },
+            "satellites": {
+              "type": "integer",
+              "description": "Number of GPS or GNSS satellites"
+            }
+          }
+        },
+        "charge": {
+          "type": "number",
+          "description": "Fraction of charge of the vehicle (required if applicable",
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "properties": {
+    "data": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/telemetry"
+      }
+    }
+  },
+  "additionalProperties": false
+}

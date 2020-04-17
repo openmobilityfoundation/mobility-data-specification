@@ -1,0 +1,251 @@
+{
+  "$id": "https://raw.githubusercontent.com/openmobilityfoundation/mobility-data-specification/master/agency/post_vehicle_event.json",
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "title": "The MDS Agency Schema, POST vehicle status body",
+  "type": "object",
+  "definitions": {
+    "vehicle_event": {
+      "$id": "#/definitions/vehicle_event",
+      "type": "string",
+      "description": "A status event for a vehicle",
+      "oneOf": [
+        {
+          "properties": {
+            "event_type": {
+              "enum": [
+                "register"
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "event_type": {
+              "enum": [
+                "service_start"
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "event_type": {
+              "enum": [
+                "service_end"
+              ]
+            },
+            "event_type_reason": {
+              "enum": [
+                "low_battery",
+                "maintenance",
+                "compliance",
+                "off_hours"
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "event_type": {
+              "enum": [
+                "provider_drop_off"
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "event_type": {
+              "enum": [
+                "provider_pick_up"
+              ]
+            },
+            "event_type_reason": {
+              "enum": [
+                "rebalance",
+                "maintenance",
+                "charge",
+                "compliance"
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "event_type": {
+              "enum": [
+                "city_pick_up"
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "event_type": {
+              "enum": [
+                "reserve"
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "event_type": {
+              "enum": [
+                "cancel_reservation"
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "event_type": {
+              "enum": [
+                "trip_start"
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "event_type": {
+              "enum": [
+                "trip_enter"
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "event_type": {
+              "enum": [
+                "trip_leave"
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "event_type": {
+              "enum": [
+                "trip_end"
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "event_type": {
+              "enum": [
+                "deregister"
+              ]
+            },
+            "event_type_reason": {
+              "enum": [
+                "missing",
+                "decommissioned"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "telemetry": {
+      "$id": "#/definitions/telemetry",
+      "type": "object",
+      "description": "A vehicle telemetry datum",
+      "required": [
+        "device_id",
+        "timestamp",
+        "gps"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "device_id": {
+          "$ref": "#/definitions/uuid"
+        },
+        "timestamp": {
+          "$ref": "#/definitions/timestamp"
+        },
+        "gps": {
+          "type": "object",
+          "required": [
+            "lat",
+            "lng"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "lat": {
+              "type": "number",
+              "description": "Latitude of the location",
+              "minimum": -90,
+              "maximum": 90
+            },
+            "lng": {
+              "type": "number",
+              "description": "Longitude of the location",
+              "minimum": -180,
+              "maximum": 180
+            },
+            "altitude": {
+              "type": "number",
+              "description": "Altitude above mean sea level in meters"
+            },
+            "heading": {
+              "type": "number",
+              "description": "Degrees clockwise from true north"
+            },
+            "speed": {
+              "type": "number",
+              "description": "Speed in meters/sec"
+            },
+            "accuracy": {
+              "type": "number",
+              "description": "Accuracy in meters"
+            },
+            "hdop": {
+              "type": "number",
+              "description": "Horizontal GPS or GNSS accuracy value"
+            },
+            "satellites": {
+              "type": "integer",
+              "description": "Number of GPS or GNSS satellites"
+            }
+          }
+        },
+        "charge": {
+          "type": "number",
+          "description": "Fraction of charge of the vehicle (required if applicable",
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    },
+    "uuid": {
+      "$id": "#/definitions/uuid",
+      "type": "string",
+      "title": "A UUID used to uniquely identifty an object",
+      "default": "",
+      "examples": [
+        "3c9604d6-b5ee-11e8-96f8-529269fb1459"
+      ],
+      "pattern": "^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$"
+    }
+  },
+  "required": [
+    "event_type",
+    "telemetry"
+  ],
+  "properties": {
+    "event_type": {
+      "$ref": "#/definitions/vehicle_event"
+    },
+    "telemetry": {
+      "$ref": "#/definitions/telemetry"
+    },
+    "trip_id": {
+      "$ref": "#/definitions/uuid"
+    }
+  },
+  "additionalProperties": false
+}
