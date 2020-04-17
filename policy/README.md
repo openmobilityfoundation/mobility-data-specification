@@ -30,6 +30,7 @@ The goal of this specification is to enable Agencies to create, revise, and publ
 - Cap allowances (e.g. "Up to 500 additional scooters are permitted near train stations")
 - Speed-limit restrictions (e.g. "15 mph outside of downtown, 10 mph downtown")
 - Idle-time and disabled-time limitations (e.g. "5 days idle while rentable, 12 hours idle while unrentable, per device")
+- Trip surcharges and subsidies (e.g. "A $.25 cents applied when a trip ends downtown")
 
 The machine-readable format allows Providers to obtain policies and compute compliance where it can be determined entirely by data obtained internally.
 
@@ -203,6 +204,7 @@ An individual `Policy` object is defined by the following fields:
 | `policy_id`      | UUID      | Required   | Unique ID of policy                                                                 |
 | `provider_ids`   | UUID[]    | Optional    | Providers for whom this policy is applicable; empty arrays and `null`/absent implies all Providers |
 | `description`    | String    | Required   | Description of policy                                                               |
+| `currency`       | String    | Optional   | An ISO 4217 Alphabetic Currency Code representing the [currency](../provider#costs--currencies) of all Rules of [type](#rule-types) `rate`.|
 | `start_date`     | timestamp | Required   | Beginning date/time of policy enforcement                                           |
 | `end_date`       | timestamp | Optional    | End date/time of policy enforcement                                                 |
 | `published_date` | timestamp | Required   | Timestamp that the policy was published                                             |
@@ -225,6 +227,7 @@ An individual `Rule` object is defined by the following fields:
 | `propulsion_types` | `propulsion_type[]`         | Optional   | Applicable vehicle propulsion types, default "all". |
 | `minimum`          | integer                     | Optional   | Minimum value, if applicable (default 0) |
 | `maximum`          | integer                     | Optional   | Maximum value, if applicable (default unlimited) |
+| `rate_amount`             | integer                     | Optional   | The amount of a rate applied when this rule applies, if applicable (default zero). A positive integer rate amount represents a fee, while a negative integer represents a subsidy. Rate amounts are given in the `currency` defined in the [Policy](#policy). |
 | `start_time`       | ISO 8601 time `hh:mm:ss`              | Optional   | Beginning time-of-day when the rule is in effect (default 00:00:00). |
 | `end_time`         | ISO 8601 time `hh:mm:ss`              | Optional   | Ending time-of-day when the rule is in effect (default 23:59:59). |
 | `days`             | day[]                       | Optional   | Days `["sun", "mon", "tue", "wed", "thu", "fri", "sat"]` when the rule is in effect (default all) |
@@ -238,17 +241,22 @@ An individual `Rule` object is defined by the following fields:
 | `count` | Fleet counts based on regions. Rule `max`/`min` refers to number of devices.                                  |
 | `time`  | Individual limitations on time spent in one or more vehicle-states. Rule `max`/`min` refers to increments of time in [Rule Units](#rule-units). |
 | `speed` | Global or local speed limits. Rule `max`/`min` refers to speed in [Rule Units](#rule-units).                  |
+| `rate`  | Fees or subsidies based on regions and time spent in one or more vehicle-states. Rule `rate_amount` refers to the rate in [Rule Units](#rule-units).      |
 | `user`  | Information for users, e.g. about helmet laws. Generally can't be enforced via events and telemetry.          |
 
 ### Rule Units
+Note that all rate in the `currency` defined in the [Policy](#policy)
 
 | Name      | Description         |
 | --------- | ------------------- |
-| `seconds` | Seconds             |
-| `minutes` | Minutes             |
-| `hours`   | Hours               |
-| `mph`     | Miles per hour      |
-| `kph`     | Kilometers per hour |
+| `seconds`             | Seconds             |
+| `minutes`             | Minutes             |
+| `hours`               | Hours               |
+| `mph`                 | Miles per hour      |
+| `kph`                 | Kilometers per hour |
+| `rate per event`      |  Rate applied once when the vehicle enters a matching status.   |        
+| `rate per minute`     |  Rate applied for each minute while the vehicle is in the matching status.   |       
+| `rate per day`        |  Rate applied once per day if the vehicle is in the matching status at any point.   |        
 
 ### Messages
 
