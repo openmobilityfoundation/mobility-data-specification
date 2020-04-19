@@ -249,9 +249,10 @@ An individual `Rule` object is defined by the following fields:
 
 | Name      | Description         |
 | --------- | ------------------- |
-| `once`      |  Rule is applied exactly one time to vehicles entering a matching status from a non-matching status.   |        
-| `per_time_unit`        | Rule is applied once for time_unit to vehicle entering in or remainining in a matching status. Requires a time_unit to be specified using `rule_units`.  | 
-| `each_time_unit`     |  Rule is applied for each time_unit to vehicles in the matching status. Requires a time_unit to be specified using `rule_units`.  |
+| `once`      |  Rate is applied to vehicles entering a matching status from a non-matching status.   |     
+| `each_time_unit`     |  Rate is applied to vehicles entering or remaining in a matching status, unless it has already been applied in time_unit. Requires a `time_unit` to be specified using `rule_units`.  |  
+| `per_time_unit`        | Rate is applied once for full time_unit that vehicles remain in a matching status. Requires a `time_unit` to be specified using `rule_units`.  | 
+
 
 
 ### Rule Units
