@@ -245,16 +245,6 @@ An individual `Rule` object is defined by the following fields:
 | `rate`  | Fees or subsidies based on regions and time spent in one or more vehicle-states. Rule `rate_amount` refers to the rate in [Rule Units](#rule-units).      |
 | `user`  | Information for users, e.g. about helmet laws. Generally can't be enforced via events and telemetry.          |
 
-### Rate Recurrences
-
-| Name      | Description         |
-| --------- | ------------------- |
-| `once`      |  Rate is applied to vehicles entering a matching status from a non-matching status.   |     
-| `each_time_unit`     |  Rate is applied to vehicles entering or remaining in a matching status, unless it has already been applied in time_unit. Requires a `time_unit` to be specified using `rule_units`.  |  
-| `per_time_unit`        | Rate is applied once for full time_unit that vehicles remain in a matching status. Requires a `time_unit` to be specified using `rule_units`.  | 
-
-
-
 ### Rule Units
 
 | Name      | Description         |
@@ -265,6 +255,14 @@ An individual `Rule` object is defined by the following fields:
 | `days`               | Days                |
 | `mph`                 | Miles per hour      |
 | `kph`                 | Kilometers per hour |
+
+### Rate Recurrences
+
+| Name      | Description         |
+| --------- | ------------------- |
+| `once`      |  Rate is applied once to vehicles entering a matching status from a non-matching status.   |     
+| `each_time_unit`     |  During each time_unit, rate is applied once to vehicles entering or remaining in a matching status. Requires a `time_unit` to be specified using `rule_units`.  |  
+| `per_complete_time_unit`        | Rate is applied once per complete time_unit that vehicles remain in a matching status. Requires a `time_unit` to be specified using `rule_units`.  | 
 
 ### Messages
 
