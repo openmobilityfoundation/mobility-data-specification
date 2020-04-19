@@ -228,6 +228,7 @@ An individual `Rule` object is defined by the following fields:
 | `minimum`          | integer                     | Optional   | Minimum value, if applicable (default 0) |
 | `maximum`          | integer                     | Optional   | Maximum value, if applicable (default unlimited) |
 | `rate_amount`             | integer                     | Optional   | The amount of a rate applied when this rule applies, if applicable (default zero). A positive integer rate amount represents a fee, while a negative integer represents a subsidy. Rate amounts are given in the `currency` defined in the [Policy](#policy). |
+| `rate_recurrence`       | enum                        | Optional   | Recurrence of the rate (see [Rate Recurrences](#rate-recurrences)) |
 | `start_time`       | ISO 8601 time `hh:mm:ss`              | Optional   | Beginning time-of-day when the rule is in effect (default 00:00:00). |
 | `end_time`         | ISO 8601 time `hh:mm:ss`              | Optional   | Ending time-of-day when the rule is in effect (default 23:59:59). |
 | `days`             | day[]                       | Optional   | Days `["sun", "mon", "tue", "wed", "thu", "fri", "sat"]` when the rule is in effect (default all) |
@@ -244,20 +245,25 @@ An individual `Rule` object is defined by the following fields:
 | `rate`  | Fees or subsidies based on regions and time spent in one or more vehicle-states. Rule `rate_amount` refers to the rate in [Rule Units](#rule-units).      |
 | `user`  | Information for users, e.g. about helmet laws. Generally can't be enforced via events and telemetry.          |
 
+### Rate Recurrences
+
+| Name      | Description         |
+| --------- | ------------------- |
+| `once`      |  Rule is applied exactly one time to vehicles entering a matching status from a non-matching status.   |        
+| `per_time_unit`        | Rule is applied once for time_unit to vehicle entering in or remainining in a matching status. Requires a time_unit to be specified using `rule_units`.  | 
+| `each_time_unit`     |  Rule is applied for each time_unit to vehicles in the matching status. Requires a time_unit to be specified using `rule_units`.  |
+
+
 ### Rule Units
-Note that all rates are in the `currency` defined in the [Policy](#policy)
 
 | Name      | Description         |
 | --------- | ------------------- |
 | `seconds`             | Seconds             |
 | `minutes`             | Minutes             |
 | `hours`               | Hours               |
+| `days`               | Days                |
 | `mph`                 | Miles per hour      |
 | `kph`                 | Kilometers per hour |
-| `rate_per_event`      |  Rate applied once when the vehicle enters a matching status.   |        
-| `rate_per_minute`     |  Rate applied for each minute while the vehicle is in the matching status.   |
-| `rate_per_hour`     |  Rate applied for each hour while the vehicle is in the matching status.   |       
-| `rate_per_day`        |  Rate applied once per day if the vehicle is in the matching status at any point.   |        
 
 ### Messages
 
