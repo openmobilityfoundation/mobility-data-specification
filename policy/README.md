@@ -257,7 +257,7 @@ An individual `Rule` object is defined by the following fields:
 | `kph`                 | Kilometers per hour |
 
 ### Rate Recurrences
-Rate recurrences specify when a rate is applied – either once, or periodically according to a `time_unit` specified using [Rule Units](#rule-units). Note that a `time_unit` refers to a unit of time as measured in local time for the juristiction – a day begins at midnight local time, an hour begins at the top of the hour, etc.
+Rate recurrences specify when a rate is applied – either once, or periodically according to a `time_unit` specified using [Rule Units](#rule-units). A `time_unit` refers to a unit of time as measured in local time for the juristiction – a day begins at midnight local time, an hour begins at the top of the hour, etc.
 
 | Name      | Description         |
 | --------- | ------------------- |
