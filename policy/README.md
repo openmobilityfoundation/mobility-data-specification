@@ -262,8 +262,8 @@ Rate recurrences specify when a rate is applied – either once, or periodicall
 | Name      | Description         |
 | --------- | ------------------- |
 | `once`      |  Rate is applied once to vehicles entering a matching status from a non-matching status.   |     
-| `each_time_unit`     |  During each time_unit, rate is applied once to vehicles entering or remaining in a matching status. Requires a `time_unit` to be specified using `rule_units`.  |  
-| `per_complete_time_unit`        | Rate is applied once per complete time_unit that vehicles remain in a matching status. Requires a `time_unit` to be specified using `rule_units`.  | 
+| `each_time_unit`     |  During each `time_unit`, rate is applied once to vehicles entering or remaining in a matching status. Requires a `time_unit` to be specified using `rule_units`.  |  
+| `per_complete_time_unit`        | Rate is applied once per complete `time_unit` that vehicles remain in a matching status. Requires a `time_unit` to be specified using `rule_units`.  | 
 
 ### Messages
 
