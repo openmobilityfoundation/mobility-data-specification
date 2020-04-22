@@ -8,7 +8,9 @@ This file presents a series of [Policy object](./README.md#policy) examples for 
 - [Provider Cap](#provider-cap)
 - [Idle Time](#idle-time)
 - [Speed Limits](#speed-limits)
-- [Fees and Subsidies](#fees-and-subsidies)
+- [Per Trip Fees](#per-trip-fees)
+- [Vehicle Right of Way Fees](#vehicle-right-of-way-fees)
+- [Metered Parking Fees](#metered-parking-fees)
 
 ## Prohibited Zone
 
