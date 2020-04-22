@@ -8,6 +8,7 @@ This file presents a series of [Policy object](./README.md#policy) examples for 
 - [Provider Cap](#provider-cap)
 - [Idle Time](#idle-time)
 - [Speed Limits](#speed-limits)
+- [Fees and Subsidies](#fees-and-subsidies)
 
 ## Prohibited Zone
 
@@ -219,5 +220,102 @@ This Policy sets a 15 MPH speed limit in greater LA, and a 10 MPH speed limit in
   }]
 }
 ```
+[Top](#table-of-contents)
+
+## Per Trip Fees
+This policy sets a 25 cent per-trip fee that is applied for trips that start in the municipal boundary.
+
+
+```json
+{
+      "policy_id": "d2567b3c-3071-48a6-bbeb-3424721dbd12",
+      "published_date": 1586736000000,
+      "name": "Trip Fees",
+      "start_date": 1586822400000,
+      "end_date": 1587427200000,
+      "prev_policies": null,
+      "rules": [{
+    		  "name": "City Wide Trip Fee",
+    		  "rule_type": "rate",
+    		  "rate_amount": 25,
+    		  "rate_recurrence": "once",
+    		  "geography": MUNICIPAL_BOUNDARY_GEOGRAPHY,
+    		  "statuses": {
+    		        "trip": ["trip_start"]
+    		   }
+    		}]
+    }
+```
+
+
+## Vehicle Right of Way Fees
+This policy sets a Right-of-Way fee that is charged once a day for vehicles deployed in a given area. It charges a 25 cents per day for vehicles deployed downtown, and 5 cents per day for vehicles deployed in a historically underserved neighborhood. In the case where a vehicle is deployed twice in both areas in the same day, the higher fee would apply (because it appears first in the rules).
+
+```json
+{
+      "policy_id": "4137a47c-836a-11ea-bc55-0242ac130003",
+      "published_date": 1586736000000,
+      "name": "Right of Way Fees",
+      "start_date": 1586822400000,
+      "end_date": 1587427200000,
+      "prev_policies": null,
+      "rules": [
+    			{
+    			  "name": "Downtown Right of Way Fee",
+    			  "rule_type": "rate",
+    			  "rate_amount": 25,
+    			  "rate_recurrence": "each_time_unit",
+    			  "rule_units": "days",
+    			  "geography": DOWNTOWN_GEOGRAPHY,
+    			  "statuses": {
+    			        "available": ["service_start"]
+    			   }
+    			},
+    			{
+    			  "name": "Decreased Right of Way Fee",
+    			  "rule_type": "rate",
+    			  "rate_amount": 5,
+    			  "rate_recurrence": "each_time_unit",
+    			  "rule_units": "days",
+    			  "geography": HISTORICALLY_UNDERSERVED_NEIGHBORHOOD_GEOGRAPHY,
+    			  "statuses": {
+    			        "available": ["service_start"]
+    			   }
+    			}
+    		]
+    }
+```
+
+## Metered Parking Fees
+This policy sets a 10 cent per hour metered parking charge that is applied while a vehicle is parked in a congested area during rush hour.
+
+```json
+{
+      "policy_id": "6a3dd008-836a-11ea-bc55-0242ac130003",
+      "published_date": 1586736000000,
+      "name": "Parking Fees",
+      "start_date": 1586822400000,
+      "end_date": 1587427200000,
+      "prev_policies": null,
+      "rules": [{
+    		  "name": "Downtown Peak-Hour Parking Fee",
+    		  "rule_type": "rate",
+    		  "rate_amount": 10,
+    		  "rate_recurrence": "per_complete_time_unit",
+    		  "rule_units": "hours",
+    		  "geography": INNER_CITY_GEOGRAPHY,
+    		  "days": ["mon","tue","wed","thu","fri"],
+    		  "start_time": "7:00:00",
+    		  "end_time": "8:30:00",
+    		  "statuses": {
+    		        "available": [],
+    		        "unavailable": [],
+    		   }
+    		}]
+    }
+```
+
+
+
 
 [Top](#table-of-contents)
