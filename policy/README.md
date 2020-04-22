@@ -30,7 +30,7 @@ The goal of this specification is to enable Agencies to create, revise, and publ
 - Cap allowances (e.g. "Up to 500 additional scooters are permitted near train stations")
 - Speed-limit restrictions (e.g. "15 mph outside of downtown, 10 mph downtown")
 - Idle-time and disabled-time limitations (e.g. "5 days idle while rentable, 12 hours idle while unrentable, per device")
-- Trip surcharges and subsidies (e.g. "A 25 cent fee applied when a trip ends downtown")
+- Trip fees and subsidies (e.g. "A 25 cent fee applied when a trip ends downtown")
 
 The machine-readable format allows Providers to obtain policies and compute compliance where it can be determined entirely by data obtained internally.
 
