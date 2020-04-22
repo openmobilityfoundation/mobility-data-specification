@@ -248,7 +248,7 @@ This policy sets a 25 cent per-trip fee that is applied for trips that start in 
     		}]
     }
 ```
-
+[Top](#table-of-contents)
 
 ## Vehicle Right of Way Fees
 This policy sets a Right-of-Way fee that is charged once a day for vehicles deployed in a given area. It charges a 25 cents per day for vehicles deployed downtown, and 5 cents per day for vehicles deployed in a historically underserved neighborhood. In the case where a vehicle is deployed twice in both areas in the same day, the higher fee would apply (because it appears first in the rules).
@@ -287,6 +287,7 @@ This policy sets a Right-of-Way fee that is charged once a day for vehicles depl
     		]
     }
 ```
+[Top](#table-of-contents)
 
 ## Metered Parking Fees
 This policy sets a 10 cent per hour metered parking charge that is applied while a vehicle is parked in a congested area during rush hour.
@@ -316,8 +317,4 @@ This policy sets a 10 cent per hour metered parking charge that is applied while
     		}]
     }
 ```
-
-
-
-
 [Top](#table-of-contents)
