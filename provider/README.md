@@ -398,7 +398,7 @@ Should either side of the requested time range be greater than 2 weeks before th
 
 ### Vehicles
 
-The `/vehicles` endpoint returns the current status of vehicles on the PROW. Only vehicles that are currently in available, unavailable, or reserved states should be returned in this payload. Data in this endpoint should reconcile with data from the `/status_changes` enpdoint. The data returned by this endpoint should be as close to realtime as possible, but in no case should it be more than 5 minutes out-of-date. As with all MDS APIs, `/vehicles` is intended for use by regulators, not by the general public. It does not replace the role of a [GBFS](https://github.com/NABSA/gbfs) feed in enabling consumer-facing applications.
+The `/vehicles` endpoint returns the current status of vehicles on the PROW. Only vehicles that are currently in available, unavailable, or reserved states should be returned in this payload. Data in this endpoint should reconcile with data from the `/status_changes` enpdoint. The data returned by this endpoint should be as close to realtime as possible, but in no case should it be more than 5 minutes out-of-date. As with other MDS APIs, `/vehicles` is intended for use by regulators, not by the general public. It does not replace the role of a [GBFS](https://github.com/NABSA/gbfs) feed in enabling consumer-facing applications.
 
 In addition to the standard [Provider payload wrapper](#response-format), responses from this endpoint should contain the last update timestamp and amount of time until the next update:
 
