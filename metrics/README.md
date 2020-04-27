@@ -151,7 +151,8 @@ POST /metrics
     "metrics": ["dockless.utilization","trips"],
         "start_date": "2019-10-21T00:00-07",
         "interval": "P1D",
-        "interval_count": "7"
+        "interval_count": "7",
+        "dimensions": ["vehicle_type"]
 }]
 
 {
@@ -164,7 +165,7 @@ POST /metrics
       "dockless.utilization",
       "trips"
     ],
-    "dimensions": [],
+    "dimensions": ["vehicle_type"],
     "filters": []
   },
   "columnHeaders": [
