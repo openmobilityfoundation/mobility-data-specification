@@ -1,6 +1,6 @@
 # MDS Metrics API
 
-An API for requesting **historical** calculated metrics and aggregation of MDS data. 
+An API for requesting **historical** calculated [metrics](core_metrics.md) and aggregations of MDS data. 
 
 Objectives:
 - Cities need a number of clearly defined best practice metrics for operating, measuring, and managing emerging micro mobility programs using MDS data.
