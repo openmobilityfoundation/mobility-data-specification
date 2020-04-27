@@ -62,13 +62,13 @@ GET /metrics
     ],
     "max_intervals": 10000,
     "supported_dimensions": [
-      "provider",
-      "mode",
+      "provider_id",
+      "vehicle_type",
       "geo.council_districts"
     ],
     "supported_filters": [
-      "provider",
-      "mode",
+      "provider_id",
+      "vehicle_type",
       "geo.council_districts"
     ]
   }
