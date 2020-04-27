@@ -39,8 +39,8 @@ None.
 | `supported_metrics.since`    | datetime   | Yes      | Earliest supported start date for fetching metrics.  Minute (MM) must be divisible by minimum `interval`.    |
 | `supported_metrics.interval` | duration[] | Yes      | A list of interval durations in ascending order.  Minimum (first) interval duration is the default. |
 | `max_intervals`              | integer    | Yes      | Maximum number intervals that can be returned.                                |
-| `supported_dimensions`       | string[]   | Yes      | List of supported dimensions. [See dimensions.](core_metrics.md)                  |
-| `supported_filters`          | string[]   | Yes      | List of supported filters for metrics. [See filters.](core_metrics.md)               |
+| `supported_dimensions`       | string[]   | Yes      | List of supported dimensions. [See dimensions.](core_metrics.md#dimensions)                  |
+| `supported_filters`          | string[]   | Yes      | List of supported filters for metrics. [See filters.](core_metrics.md#filters)               |
 
 ### Example
 ```
