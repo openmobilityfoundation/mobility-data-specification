@@ -115,7 +115,7 @@ Supports querying one or more metrics with the following parameters.
 | `rows`                      | string[[]] | Yes      | Array of row arrays containing the dimension and metric values. |
 
 ### Example
-```json
+```
 # Response schema
 {
   "id": string,
