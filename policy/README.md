@@ -22,9 +22,9 @@ The goal of this specification is to enable Agencies to publish machine-readable
 
 The machine-readable format allows Providers to obtain policies and compute compliance where it can be determined entirely by data obtained internally.
 
-Policies will typically be linked to one or more associated geographies. Geography descriptions (e.g. geofences or lists of street segments) must also be maintained by the Agency indefinitely. Policies without specific geographies (global policies) are assumed to apply to the entire service area managed by the Agency. 
+Policies will typically be linked to one or more associated geographies. Geography descriptions (e.g. geofences or lists of street segments) must also be maintained by the Agency indefinitely. Policies without specific geographies (global policies) are assumed to apply to all jurisdictions managed by the Agency. 
 
-Geographical data will be stored as immutable GeoJSON, referenced by UUID. See the Geography and Geography Author specs for information on the Geography schema, and how Agencies are expected to create and maintain Geographies and serve them to Providers. In a future revision of Agency, we will deprecate the existing `/service_areas` endpoint. `/service_areas` currently only handles GeoJSON MultiPolygon and Polygon objects, and Policy documents might prefer Points for locations such as drop-zones. Policy may be used for a variety of enforcement actions, so it's important for the Agency to persist and keep immutable both Policy and Geography data.
+Geographical data will be stored as immutable GeoJSON FeatureCollections (see https://tools.ietf.org/html/rfc7946 for details on what a FeatureCollection is), referenced by UUID. See the Geography and Geography Author specs for information on the Geography schema, and how Agencies are expected to create and maintain Geographies and serve them to Providers. Policies are not confined to describing their effects over a geographic area. They might prefer Points for locations such as drop-zones. Policy may be used for a variety of enforcement actions, so it's important for the Agency to persist and keep immutable both Policy and Geography data.
 
 
 

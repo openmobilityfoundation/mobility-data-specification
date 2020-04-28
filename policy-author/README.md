@@ -29,7 +29,7 @@ A note: the `get_published` and `get_unpublished` parameters only make sense in 
 Parameters:
 | Name         | Type      | R/O | Description                                    |
 | ------------ | --------- | --- | ---------------------------------------------- |
-| `id`         | UUID      | Optional    | If provided, returns one policy object with the matching UUID; default is to return all policy objects.                       |
+| `policy_id`         | UUID      | Optional    | If provided, returns one policy object with the matching UUID; default is to return all policy objects.                       |
 | `get_published` | string | O   | If set to the string 'true', returns metadata of published policies. |
 | `get_unpublished`   | string | O   | If set to the string 'true', returns metadata of unpublished policies.      |
 
@@ -47,8 +47,6 @@ Create a new unpublished (mutable) Policy
 
 Payload: a new Policy object, without a `policy_id`
 
-; a failure explanation on failure
-
 Response codes:
 
 - 201 - Created. Returns: the Policy object on success, including a `policy_id` and a `version` indicating the current API version.
@@ -56,7 +54,7 @@ Response codes:
 - 401 - Unauthorized (if any auth issue)
 - 500 - Server error (hopefully doesn’t happen)
 
-### PUT /policies/{id}
+### PUT /policies/{policy_id}
 
 Update an existing Policy. Must be unpublished.
 
@@ -71,7 +69,7 @@ Response codes:
 - 409 - conflict (if immutable)
 - 500 - server error
 
-### POST /policies/{id}/publish
+### POST /policies/{policy_id}/publish
 
 Publish (make immutable) a Policy. Must be unpublished.
 
@@ -101,7 +99,7 @@ Response codes:
 - 500 - server error
 
 
-### GET /policies/{id}/meta
+### GET /policies/{policy_id}/meta
 
 Get metadata for a specific policy.
 
@@ -112,7 +110,7 @@ Response codes:
 - 500 - server error
 
 
-### PUT /policies/{id}/meta
+### PUT /policies/{policy_id}/meta
 Edit metadata for a specific policy. Takes a PolicyMetadata object in the request body.
 
 Response codes:
