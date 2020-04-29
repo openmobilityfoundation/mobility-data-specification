@@ -20,10 +20,9 @@ This specification contains a collection of RESTful APIs used to define how to c
 
 ## Background
 
-The main intended clients of this API are the Policy, Policy Author, and Jurisdiction services. A Policy object may require
-a geofence to function properly. A Jurisdiction is by definition a collection of Geography objects.
+The main intended consumers of Geography objects are the Policy, Policy Author, and Jurisdiction services. A Policy object may require a geofence to function properly. A Jurisdiction is by definition a collection of Geography objects. These services may read and write Geography objects through making calls to an implementation of the following REST API, but it is not necessary to do so.
 
-Geographical data will be stored as GeoJSON and read from either `geographies.json` or the `/geographies` endpoint, referenced by UUID. 
+Geographical data will be stored as a GeoJSON FeatureCollection and read from either `geographies.json` or the `/geographies` endpoint, referenced by UUID. 
 
 A Geography may also have an associated GeographyMetadata. To link a Geography to a GeographyMetadata, both objects must have the same UUID.
 
@@ -48,7 +47,7 @@ Since an unpublished Geography may not be ready for viewing by a broader audienc
 | `name`           | String    | R   | Name of geography                                                                      |
 | `description`    | String    | O   | Detailed description of geography                                                                      |
 | `geography_id`   | UUID      | R   | Unique ID of geography                                                                 |
-| `geography_json`   | UUID      | R   | The GeoJSON that defines the geographical coordinates.
+| `geography_json`   | UUID      | R   | The GeoJSON FeatureCollection that defines the geographical coordinates.
 | `effective_date`   | timestamp | O   | `start_date` for first published policy that uses this geo.  Server should set this when policies are published.  This may be used on the client to distinguish between “logical” geographies that have the same name. E.g. if a policy publishes a geography on 5/1/2020, and then another policy is published which references that same geography is published on 4/1/2020, the effective_date will be set to 4/1/2020.
 | `publish_date`   | timestamp | R   | Timestamp that the policy was published, i.e. made immutable                                             |
 | `prev_geographies`  | UUID[]    | O   | Unique IDs of prior geographies replaced by this one                                   |
