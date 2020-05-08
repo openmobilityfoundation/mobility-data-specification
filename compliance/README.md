@@ -51,10 +51,10 @@ Note: If a request comes from a Provider, the provider_id will be passed in the 
 
 Parameters:
 
-| Name          | Type | R/O | Description                   |
-|---------------|------|-----|-------------------------------|
-| `provider_id` | UUID | O   | If not provided in the JWT.   |
-| `end_date`    | UUID | O   | Take snapshot at a given time |
+| Name          | Type      | R/O | Description                   |
+|---------------|-----------|-----|-------------------------------|
+| `provider_id` | UUID      | O   | If not provided in the JWT.   |
+| `end_date`    | Timestamp | O   | Take snapshot at a given time |
 
 Returns: list of [Snapshot Response](#snapshot-response)
 
