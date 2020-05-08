@@ -52,7 +52,7 @@ Note: If a request comes from a Provider, the provider_id will be passed in the 
 Parameters:
 
 | Name          | Type | R/O | Description                   |
-| ------------- | ---- | --- | ----------------------------- |
+|---------------|------|-----|-------------------------------|
 | `provider_id` | UUID | O   | If not provided in the JWT.   |
 | `end_date`    | UUID | O   | Take snapshot at a given time |
 
@@ -70,7 +70,7 @@ Returns number of vehicles across all providers in the public right-of-way for a
 Parameters:
 
 | Name        | Type      | R/O | Description                       |
-| ----------- | --------- | --- | --------------------------------- |
+|-------------|-----------|-----|-----------------------------------|
 | `timestamp` | Timestamp | O   | Time of measurement (default=now) |
 
 Returns: a [Count Response](#count-response)
@@ -88,7 +88,7 @@ Responses:
 ### Count Response
 
 | Name        | Type      | R/O | Description                                                                                  |
-| ----------- | --------- | --- | -------------------------------------------------------------------------------------------- |
+|-------------|-----------|-----|----------------------------------------------------------------------------------------------|
 | `policy`    | Policy    | R   | The full Policy which contains the requested Rule. See [Policy](../policy/README.md#schema). |
 | `count`     | int       | R   | Number of devices matching the rule                                                          |
 | `timestamp` | Timestamp | R   | Time of measurement                                                                          |
@@ -97,20 +97,21 @@ Responses:
 
 ### Snapshot Response
 
-| Name         | Type         | R/O | Description                              |
-| ------------ | ------------ | --- | ---------------------------------------- |
-| `policy`     | Policy       | R   | See [Policy](../policy/README.md#schema) |
-| `compliance` | Compliance[] | R   | List of Compliance objects               |
-| `timestamp`  | Timestamp    | R   | Time of measurement                      |
+| Name                    | Type                               | R/O | Description                                                                                                                           |
+|-------------------------|------------------------------------|-----|---------------------------------------------------------------------------------------------------------------------------------------|
+| `policy`                | Policy                             | R   | See [Policy](../policy/README.md#schema)                                                                                              |
+| `compliance`            | Compliance[]                       | R   | List of Compliance objects                                                                                                            |
+| `timestamp`             | Timestamp                          | R   | Time of measurement                                                                                                                   |
+| `vehicles_in_violation` | (device_id: UUID, rule_id: UUID)[] | R   | Vehicles which overflowed during evaluation (could not fit into a rule's bucket), and the corresponding rule_id of their first match. |
+| `total_violations`      | Number                             | R   | Number of vehicles which are in violation of the policy (overflowed).                                                                 |
 
 ### Compliance
 
-| Name                    | Type                               | R/O | Description                                                                                                                           |
-| ----------------------- | ---------------------------------- | --- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `rule`                  | Rule                               | R   | See [Rule](../policy/README.md#schema)                                                                                                |
-| `matches`               | Match[]                            | R   | List of matches for the rule                                                                                                          |
-| `vehicles_in_violation` | (device_id: UUID, rule_id: UUID)[] | R   | Vehicles which overflowed during evaluation (could not fit into a rule's bucket), and the corresponding rule_id of their first match. |
-| `total_violations`      | Number                             | R   | Number of vehicles which are in violation of the policy (overflowed).                                                                 |
+| Name      | Type    | R/O | Description                            |
+|-----------|---------|-----|----------------------------------------|
+| `rule`    | Rule    | R   | See [Rule](../policy/README.md#schema) |
+| `matches` | Match[] | R   | List of matches for the rule           |
+
 
 ### Match
 
@@ -119,14 +120,14 @@ CountMatch | TimeMatch | SpeedMatch
 ### TimeMatch and SpeedMatch
 
 | Name           | Type   | R/O | Description                                  |
-| -------------- | ------ | --- | -------------------------------------------- |
+|----------------|--------|-----|----------------------------------------------|
 | `measured`     | number | R   | Measured value for this geography            |
 | `geography_id` | UUID   | R   | Specific geography associated with the match |
 
 ### CountMatch
 
 | Name           | Type   | R/O | Description                                  |
-| -------------- | ------ | --- | -------------------------------------------- |
+|----------------|--------|-----|----------------------------------------------|
 | `measured`     | number | R   | Measured value for this geography            |
 | `geography_id` | UUID   | R   | Specific geography associated with the match |
 
