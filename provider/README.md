@@ -70,7 +70,7 @@ All response fields must use `lower_case_with_underscores`.
 
 #### JSON Schema
 
-MDS defines [JSON Schema](https://json-schema.org/) files for [`trips`][trips-schema] and [`status_changes`][sc-schema].
+MDS defines [JSON Schema](https://json-schema.org/) files for [`trips`][trips-schema], [`status_changes`][sc-schema], [`events`][events-schema], and [`vehicles`][vehicles-schema].
 
 `provider` API responses must validate against their respective schema files. The schema files always take precedence over the language and examples in this and other supporting documentation meant for *human* consumption.
 
