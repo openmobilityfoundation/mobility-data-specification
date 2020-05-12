@@ -15,7 +15,9 @@ This specification contains a data standard for *mobility as a service* provider
 
 The following information applies to all `provider` API endpoints. Details on providing authorization to endpoints is specified in the [auth](auth.md) document.
 
-Currently, the provider API is implemented for dockless scooter and bikeshare. To implement another mode, add it to the `schema/generate_schema.py` file and this README and submit a pull request.
+Currently, the provider API is implemented for dockless scooter, bikeshare, and carshare. To implement another mode, add it to the `schema/generate_schema.py` file and this README and submit a pull request.
+
+This specification uses data types including timestamps, UUIDs, and vehicle state definitions as described in the MDS [Shared Definitions](#../shared/README.md) document.
 
 ### Versioning
 
@@ -142,12 +144,6 @@ At a minimum, paginated payloads must include a `next` key, which must be set to
 }
 ```
 
-### UUIDs for Devices
-
-MDS defines the *device* as the unit that transmits GPS or GNSS signals for a particular vehicle. A given device must have a UUID (`device_id` below) that is unique within the Provider's fleet.
-
-Additionally, `device_id` must remain constant for the device's lifetime of service, regardless of the vehicle components that house the device.
-
 ### Geographic Data
 
 References to geographic datatypes (Point, MultiPolygon, etc.) imply coordinates encoded in the [WGS 84 (EPSG:4326)](https://en.wikipedia.org/wiki/World_Geodetic_System) standard GPS or GNSS projection expressed as [Decimal Degrees](https://en.wikipedia.org/wiki/Decimal_degrees).
@@ -182,46 +178,15 @@ For the purposes of this specification, the intersection of two geographic datat
 
 ### Municipality Boundary
 
-Municipalities requiring MDS Provider API compliance should provide an unambiguous digital source for the municipality boundary. This boundary must be used when determining which data each `provider` API endpoint will include.
+Municipalities requiring MDS Provider API compliance should provide an unambiguous digital source for the municipality boundary. This boundary must be used when determining which data each `provider` API endpoint will include.  
 
-The boundary should be defined as a polygon or collection of polygons. The file defining the boundary should be provided in Shapefile or GeoJSON format and hosted online at a published address that all providers and `provider` API consumers can access and download.
+The boundary should be defined as a polygon or collection of polygons. The file defining the boundary should be provided in Shapefile or GeoJSON format and hosted online at a published address that all providers and `provider` API consumers can access and download.The boundary description can be sent as a reference to an object via the Geography API, or a reference to a Geography via the Jurisdiction API.  
 
 Providers are not required to recalculate the set of historical data that is included when the municipality boundary changes. All new data must use the updated municipality boundary.
 
-### Timestamps
+### Timestamps, Vehicle Types, Propulsion Types, UUIDs, Costs & Currencies
 
-References to `timestamp` imply integer milliseconds since [Unix epoch](https://en.wikipedia.org/wiki/Unix_time). You can find the implementation of unix timestamp in milliseconds for your programming language [here](https://currentmillis.com/).
-
-### Vehicle Types
-
-The list of allowed `vehicle_type` referenced below is:
-
-| `vehicle_type` |
-|--------------|
-| bicycle      |
-| car          |
-| scooter      |
-
-### Propulsion Types
-
-The list of allowed `propulsion_type` referenced below is:
-
-| `propulsion_type` | Description |
-| ----------------- | ----------------- |
-| human           | Pedal or foot propulsion |
-| electric_assist | Provides power only alongside human propulsion |
-| electric        | Contains throttle mode with a battery-powered motor |
-| combustion      | Contains throttle mode with a gas engine-powered motor |
-
-A device may have one or more values from the `propulsion_type`, depending on the number of modes of operation. For example, a scooter that can be powered by foot or by electric motor would have the `propulsion_type` represented by the array `['human', 'electric']`. A bicycle with pedal-assist would have the `propulsion_type` represented by the array `['human', 'electric_assist']` if it can also be operated as a traditional bicycle.
-
-[Top][toc]
-
-### Costs & currencies
-
-Fields specifying a monetary cost use a currency as specified in [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217#Active_codes). All costs should be given as integers in the currency's smallest unit. As an example, to represent $1 USD, specify an amount of `100` (100 cents).
-
-If the currency field is null, USD cents is implied.
+Please refer to the MDS [Shared Definitions](#../shared/README.md) document.
 
 [Top][toc]
 
@@ -245,8 +210,8 @@ Schema: [`trips` schema][trips-schema]
 | `provider_name` | String | Required | The public-facing name of the Provider |
 | `device_id` | UUID | Required | A unique device ID in UUID format |
 | `vehicle_id` | String | Required | The Vehicle Identification Number visible on the vehicle itself |
-| `vehicle_type` | Enum | Required | See [vehicle types](#vehicle-types) table |
-| `propulsion_type` | Enum[] | Required | Array of [propulsion types](#propulsion-types); allows multiple values |
+| `vehicle_type` | Enum | Required | See [vehicle types](../shared/README.md#vehicle-types) table |
+| `propulsion_type` | Enum[] | Required | Array of [propulsion types](../shared/README.md#propulsion-types); allows multiple values |
 | `trip_id` | UUID | Required | A unique ID for each trip |
 | `trip_duration` | Integer | Required | Time, in Seconds |
 | `trip_distance` | Integer | Required | Trip Distance, in Meters |
@@ -256,9 +221,9 @@ Schema: [`trips` schema][trips-schema]
 | `end_time` | [timestamp][ts] | Required | |
 | `publication_time` | [timestamp][ts] | Optional | Date/time that trip became available through the trips endpoint |
 | `parking_verification_url` | String | Optional | A URL to a photo (or other evidence) of proper vehicle parking |
-| `standard_cost` | Integer | Optional | The cost, in the currency defined in `currency`, that it would cost to perform that trip in the standard operation of the System (see [Costs & Currencies](#costs--currencies)) |
-| `actual_cost` | Integer | Optional | The actual cost, in the currency defined in `currency`, paid by the customer of the *mobility as a service* provider (see [Costs & Currencies](#costs--currencies)) |
-| `currency` | String | Optional, USD cents is implied if null.| An [ISO 4217 Alphabetic Currency Code](https://en.wikipedia.org/wiki/ISO_4217#Active_codes) representing the currency of the payee (see [Costs & Currencies](#costs--currencies)) |
+| `standard_cost` | Integer | Optional | The cost, in the currency defined in `currency`, that it would cost to perform that trip in the standard operation of the System (see [Costs & Currencies](../shared/README.md#costs--currencies)) |
+| `actual_cost` | Integer | Optional | The actual cost, in the currency defined in `currency`, paid by the customer of the *mobility as a service* provider (see [Costs & Currencies](../shared/README.md#costs--currencies)) |
+| `currency` | String | Optional, USD cents is implied if null.| An [ISO 4217 Alphabetic Currency Code](https://en.wikipedia.org/wiki/ISO_4217#Active_codes) representing the currency of the payee (see [Costs & Currencies](../shared/README.md#costs--currencies)) |
 
 ### Trips Query Parameters
 
@@ -335,15 +300,15 @@ Schema: [`status_changes` schema][sc-schema]
 | `provider_name` | String | Required | The public-facing name of the Provider |
 | `device_id` | UUID | Required | A unique device ID in UUID format |
 | `vehicle_id` | String | Required | The Vehicle Identification Number visible on the vehicle itself |
-| `vehicle_type` | Enum | Required | see [vehicle types](#vehicle-types) table |
-| `propulsion_type` | Enum[] | Required | Array of [propulsion types](#propulsion-types); allows multiple values |
-| `event_type` | Enum | Required | See [event types](#event-types) table |
-| `event_type_reason` | Enum | Required | Reason for status change, allowable values determined by [`event type`](#event-types) |
-| `event_time` | [timestamp][ts] | Required | Date/time that event occurred at. See [Event Times](#event-times) |
+| `vehicle_type` | Enum | Required | see [vehicle types](../shared/README.md#vehicle-types) table |
+| `propulsion_type` | Enum[] | Required | Array of [propulsion types](../shared/README.md#propulsion-types); allows multiple values |
+| `vehicle_state` | Enum | Required | See [vehicle state](../shared/README.md#vehicle-state) table |
+| `event_type` | Enum | Required | Reason for state change, allowable values determined by [`event-type`](../shared/README.md#event-types) |
+| `event_time` | [timestamp][ts] | Required | Date/time that event occurred at. See [timestamps](../shared/README.md#timestamps) |
 | `publication_time` | [timestamp][ts] | Optional | Date/time that event became available through the status changes endpoint |
 | `event_location` | GeoJSON [Point Feature][geo] | Required | |
 | `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |
-| `associated_trip` | UUID | Required if Applicable | Trip UUID (foreign key to Trips API), required if `event_type_reason` is `user_pick_up` or `user_drop_off`, or for any other status change event that marks the end of a trip. |
+| `associated_trip` | UUID | Required if Applicable | Trip UUID (foreign key to Trips API), required if `event_type` is `trip_start` or `trip_end`, or for any other status change event that marks the end of a trip. |
 | `associated_ticket` | String | Optional | Identifier for an associated ticket inside an Agency-maintained 311 or CRM system. | 
 
 ### Event Times

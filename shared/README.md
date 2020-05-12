@@ -10,6 +10,7 @@ This specification contains a collection of definitions, data types, and vehicle
 * [Timestamps](#timestamps)
 * [Strings](#strings)
 * [UUIDs](#uuids)
+* [Devices](#devices)
 * [Vehicle Types](#vehicle-types)
 * [Propulsion Types](#propulsion-types)
 * [Vehicle States](#vehicle-states)
@@ -29,6 +30,12 @@ All String fields, such as `vehicle_id`, are limited to a maximum of 255 charact
 Object identifiers are described via Universally Unique Identifiers [(UUIDs)](https://en.wikipedia.org/wiki/Universally_unique_identifier).  For example, the `device_id` field used to uniquely identify a vehicle is a UUID.
 
 MDS uses Version 1 UUIDs.
+
+## Devices
+
+MDS defines the *device* as the unit that transmits GPS or GNSS signals for a particular vehicle. A given device must have a UUID (`device_id` below) that is unique within the Provider's fleet.
+
+Additionally, `device_id` must remain constant for the device's lifetime of service, regardless of the vehicle components that house the device.
 
 ## Vehicle Types
 

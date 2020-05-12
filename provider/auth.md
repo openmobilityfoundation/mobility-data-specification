@@ -34,6 +34,6 @@ If an MDS `provider` implements this auth scheme, it **MAY** choose to specify t
 
 ## Endpoint Authentication Requirements  
 
-The `/trips` and `/status_changes` endpoints may or may not require authentication, it is up to the implementing provider to decide if they want historical information available with or without authentication. 
+The `/trips` and `/status_changes` endpoints must require authentication.
 
 As of MDS 0.3.0, `gbfs.json` is required. The required GBFS endpoints should be made available publicly. See [#realtime-data](https://github.com/CityOfLosAngeles/mobility-data-specification/tree/master/provider#realtime-data) for more information about how to implement GBFS for dockless systems. 
