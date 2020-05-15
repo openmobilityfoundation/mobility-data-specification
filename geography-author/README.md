@@ -22,8 +22,6 @@ This specification contains a collection of RESTful APIs used to define how to c
 
 The Geography Author service is intended to define the write endpoints relevant to Geographies. Read-only endpoints are covered in the Geography service. This service is also intended to provide a specification for managing GeographyMetadata. For more background information, see the Geography spec.
 
-A Geography is mutable up until the point it is published, at which point, it becomes immutable. 
-
 <a name="scoping"></a>
 
 ## Scoping and how it relates to Geography status
@@ -94,49 +92,24 @@ Responses must set the `Content-Type` header, as specified in the [Provider vers
 
 The Geography Author API consists of the following endpoints:
 
-### GET /geographies/:geography_id
-
-Parameters:
-
-None.
-
-Returns: A single Geography.  
-
-Response codes:
-- 200 - success
-- 401 - unauthorized
-- 404 - no geography found
-- 403 - user is attempting to read an unpublished geography, but only has the `geographies:read:published` scope.
-
-
-### GET /geographies
-Parameters:
-
-| Name         | Type      | R/O | Description                                    |
-| ------------ | --------- | --- | ---------------------------------------------- |
-| `get_published` | string | O   | Filter for published geographies.  |
-| `get_unpublished`   | string | O   | Filter for unpublished geographies      |
-| `summary`   | string | O   | Return geographies, minus the GeoJSON in each geography object     |
-
-Returns: All geography objects, unless either `get_published` or `get_unpublished` was supplied. If both parameters have been supplied, that is an invalid query. If a user does not supply `get_unpublished` but has only the `geographies:read:published` scope, unpublished geographies will be silently filtered out. If a user explicitly requests unpublished geographies without the `geographies:read:unpublished` scope, a 403 will be thrown. 
-Response codes:
-- 200 - success
-- 400 - bad query (most likely both `get_published` and `get_unpublished` were both set)
-- 401 - unauthorized
-- 404 - no geography found
-- 403 - user is attempting to read an unpublished geography, but only has the `geographies:read:published` scope.
-
 
 ### POST /geographies
 To create a geography, POST a Geography in the request body to `/geographies`.
 
 Response codes:
-- 200 - success
+- 201 - success
 - 401 - unauthorized
 - 409 - a Geography with the same UUID already exists on the server`
 
 ### PUT /geographies/:geography_id
-To edit a geography, PUT a Geography in the request body to this endpoint.
+#### Path Parameters
+
+| Name          | Type                                                          | R/O | Description                                         |
+| ------------- | ------------------------------------------------------------- | --- | --------------------------------------------------- |
+| geography_id | [UUID](../common/DataDefinitions.md#unique-identifiers-uuids) | R   | Unique identifier for a single specific Geography. |
+
+#### Body Parameters
+Submit a Geography object in the body of the request.
 
 Response codes:
 - 201 - success
@@ -145,6 +118,12 @@ Response codes:
 
 ### DELETE /geographies/:geography_id
 This will automatically delete any associated metadata as well.
+#### Path Parameters
+
+| Name          | Type                                                          | R/O | Description                                         |
+| ------------- | ------------------------------------------------------------- | --- | --------------------------------------------------- |
+| geography_id | [UUID](../common/DataDefinitions.md#unique-identifiers-uuids) | R   | Unique identifier for a single specific Geography. |
+
 
 Response codes:
 - 200 - success
@@ -152,6 +131,11 @@ Response codes:
 - 404 - no Geography with this UUID was found on the server
 
 ### PUT /geographies/:geography_id/publish
+#### Path Parameters
+
+| Name          | Type                                                          | R/O | Description                                         |
+| ------------- | ------------------------------------------------------------- | --- | --------------------------------------------------- |
+| geography_id | [UUID](../common/DataDefinitions.md#unique-identifiers-uuids) | R   | Unique identifier for a single specific Geography. |
 
 Response codes:
 - 201 - success
@@ -159,6 +143,24 @@ Response codes:
 - 404 - no Geography with this UUID was found on the server
 
 ### GET /geographies/:geography_id/meta
+Returns a GeographyMetadata object.
+
+#### Path Parameters
+
+| Name          | Type                                                          | R/O | Description                                         |
+| ------------- | ------------------------------------------------------------- | --- | --------------------------------------------------- |
+| geography_id | [UUID](../common/DataDefinitions.md#unique-identifiers-uuids) | R   | Unique identifier for a single specific Geography. |
+
+Response body format:
+```js
+{
+  version: '0.1.0',
+  geography_metadata: {
+    geography_id: UUID,
+    geography_metadata: JSON
+  } 
+}
+```
 
 Response codes:
 - 200 - success
@@ -168,7 +170,8 @@ Response codes:
 
 ### GET /geographies/meta
 This behaves just like `GET /geographies`.
-Parameters:
+
+#### Query String Parameters
 
 | Name         | Type      | R/O | Description                                    |
 | ------------ | --------- | --- | ---------------------------------------------- |
