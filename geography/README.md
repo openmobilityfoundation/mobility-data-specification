@@ -1,6 +1,6 @@
 # Mobility Data Specification: Geography Author
 
-This specification contains a collection of RESTful APIs used to read Geographies and GeographyMetadata.
+This specification contains a collection of RESTful APIs used to read Geographies.
 
 - Authors: LADOT
 - Date: 21 February 2020
@@ -25,7 +25,7 @@ a geofence to function properly. A Jurisdiction is by definition a collection of
 
 Geographical data will be stored as GeoJSON and read from either `geographies.json` or the `/geographies` endpoint, referenced by UUID. 
 
-A Geography may also have an associated GeographyMetadata. To link a Geography to a GeographyMetadata, both objects must have the same UUID.
+A Geography may also have an associated GeographyMetadata. To link a Geography to a GeographyMetadata, both objects must have the same UUID. Metadata may be read and written through the companion GeographyAuthor service.
 
 <a name="scoping"></a>
 
@@ -51,15 +51,6 @@ Since an unpublished Geography may not be ready for viewing by a broader audienc
 | `publish_date`   | timestamp | R   | Timestamp that the policy was published, i.e. made immutable                                             |
 | `prev_geographies`  | UUID[]    | O   | Unique IDs of prior geographies replaced by this one                                   |
 
-
-<a name="geography-metadata-fields"></a>
-
-### GeographyMetadata Fields
-
-| Name             | Type      | R/O | Description                                                                         |
-| ---------------- | --------- | --- | ----------------------------------------------------------------------------------- |
-| `geography_id`   | UUID      | R   | Unique ID of geography                                                                 |
-| `geography_metadata`   | JSON    | R   | An JSON blob that stores arbitrary data about the geography referenced. Keys must be strings.
 
 <a name="file-format"></a>
 
