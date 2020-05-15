@@ -420,7 +420,6 @@ GET /audit/trips/{audit_trip_id}
       event_type_reason: string,
       telemetry_timestamp: Timestamp,
       trip_id: UUID,
-      service_area_id: UUID,
       recorded: Timestamp,
     }[],
     telemetry: {
