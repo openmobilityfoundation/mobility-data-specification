@@ -99,11 +99,29 @@ The Geography Author API consists of the following endpoints:
 
 ### GET /geographies/:geography_id
 
-Parameters:
+#### Path Parameters
 
-None.
+| Name          | Type                                                          | R/O | Description                                         |
+| ------------- | ------------------------------------------------------------- | --- | --------------------------------------------------- |
+| geography_id | [UUID](../common/DataDefinitions.md#unique-identifiers-uuids) | R   | Unique identifier for a single specific Geography. |
 
 Returns: A single Geography.  
+
+Response body:
+```js
+{
+  version: '0.1.0',
+  geography: {
+    geography_id: UUID,
+    geography_json: GeoJSON FeatureCollection,
+    prev_geographies: UUID[],
+    name: string,
+    publish_date: [Timestamp](../common/DataDefinitions.md#timestamps)
+    effective_date: Timestamp
+    description: string
+  } 
+}
+```
 
 Response codes:
 - 200 - success
@@ -111,9 +129,8 @@ Response codes:
 - 404 - no geography found
 - 403 - user is attempting to read an unpublished geography, but only has the `geographies:read:published` scope.
 
-
 ### GET /geographies
-Parameters:
+#### Query String Parameters
 
 | Name         | Type      | R/O | Description                                    |
 | ------------ | --------- | --- | ---------------------------------------------- |
@@ -122,33 +139,20 @@ Parameters:
 | `summary`   | string | O   | Return geographies, minus the GeoJSON in each geography object     |
 
 Returns: All geography objects, unless either `get_published` or `get_unpublished` was supplied. If both parameters have been supplied, that is an invalid query. If a user does not supply `get_unpublished` but has only the `geographies:read:published` scope, unpublished geographies will be silently filtered out. If a user explicitly requests unpublished geographies without the `geographies:read:unpublished` scope, a 403 will be thrown. 
+
+Response body:
+```js
+{
+  version: '0.1.0',
+  geographies: {
+    Geography[]
+  } 
+}
+```
+
 Response codes:
 - 200 - success
 - 400 - bad query (most likely both `get_published` and `get_unpublished` were both set)
 - 401 - unauthorized
 - 404 - no geography found
 - 403 - user is attempting to read an unpublished geography, but only has the `geographies:read:published` scope.
-
-### GET /geographies/:geography_id/meta
-
-Response codes:
-- 200 - success
-- 401 - unauthorized
-- 403 - user lacking `geographies:read:unpublished` attempted to read an unpublished Geography's metadata
-- 404 - no Geography with this UUID was found on the server
-
-### GET /geographies/meta
-This behaves just like `GET /geographies`.
-Parameters:
-
-| Name         | Type      | R/O | Description                                    |
-| ------------ | --------- | --- | ---------------------------------------------- |
-| `get_published` | string | O   | Filter for published geography's metadata.  |
-| `get_unpublished`   | string | O   | Filter for unpublished geography's metadata      |
-
-Response codes:
-- 200 - success
-- 400 - bad query (most likely both `get_published` and `get_unpublished` were both set)
-- 401 - unauthorized
-- 403 - user lacking `geographies:read:unpublished` attempted to read an unpublished Geography's metadata
-- 404 - no Geography with this UUID was found on the server
