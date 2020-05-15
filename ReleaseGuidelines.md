@@ -97,7 +97,7 @@ Contributors submit proposals for inclusion in the release cycle in the form of 
 
 Contributors will provide feedback on proposals. Where possible, discussion will happen via GitHub. Weekly calls will support dialog around more complex or controversial issues. By the end of week 9, all active proposals must be in the form of a pull request. Proposals can be withdrawn or split apart for inclusion in future releases.
 
-##### Weeks 10-11: Decision making
+#### Weeks 10-11: Decision making
 
 These weeks will start with an web conference work session for all contributors to review and discuss current proposals. Goal is to achieve consensus where possible, or to clearly articulate areas of disagreement where not. Minor changes may be accepted at this stage if they bring contributors to consensus.
 
