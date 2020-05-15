@@ -2,12 +2,12 @@
 
 This specification contains a collection of RESTful APIs used to specify the digital relationship between *mobility as a service* Providers and the Agencies that regulate them.
 
-* Authors: LADOT
-* Date: 19 Sep 2019	
+* Date: 19 Sep 2019
 * Version: BETA
 
 ## Table of Contents
 
+* [General Information](#general-information)
 * [Authorization](#authorization)
 * [Timestamps](#timestamps)
 * [Vehicles](#vehicles)
@@ -19,13 +19,23 @@ This specification contains a collection of RESTful APIs used to specify the dig
 * [Enum definitions](#enum-definitions)
 * [Responses](#responses)
 
+## General information
+
+The following information applies to all `agency` API endpoints. Details on providing authorization to endpoints is specified in the [Authorization](#authorization) section.
+
+### Versioning
+
+`agency` APIs must handle requests for specific versions of the specification from clients.
+
+Versioning must be implemented as specified in the [`General information versioning section`][general-information/versioning].
+
 ## Authorization
 
 When making requests, the Agency API expects `provider_id` to be part of the claims in a [JWT](https://jwt.io/)  `access_token` in the `Authorization` header, in the form `Authorization: Bearer <access_token>`. The token issuance, expiration and revocation policies are at the discretion of the Agency.
 
 ## Timestamps
 
-As with the Provider API, `timestamp` refers to integer milliseconds since Unix epoch. 
+As with the Provider API, `timestamp` refers to integer milliseconds since Unix epoch.
 
 ## Strings
 
@@ -58,8 +68,8 @@ If `device_id` is specified, `GET` will return a single vehicle record, otherwis
         "next": "https://..."
     }
 }
-``` 
-  
+```
+
 A vehicle record is as follows:
 
 | Field         | Type      | Field Description                                                             |
@@ -82,7 +92,7 @@ _No content returned on vehicle not found._
 
 ## Vehicle - Register
 
-The `/vehicles` registration endpoint is used to register a vehicle for use in the Agency jurisdiction. 
+The `/vehicles` registration endpoint is used to register a vehicle for use in the Agency jurisdiction.
 
 Endpoint: `/vehicles`
 Method: `POST`
@@ -118,7 +128,7 @@ _No content returned on success._
 
 ## Vehicle - Update
 
-The `/vehicles` update endpoint is used to update some mutable aspect of a vehicle.  For now, only `vehicle_id`. 
+The `/vehicles` update endpoint is used to update some mutable aspect of a vehicle.  For now, only `vehicle_id`.
 
 Endpoint: `/vehicles/{device_id}`
 Method: `PUT`
@@ -270,6 +280,7 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | `bicycle` |
 | `car`     |
 | `scooter` |
+| `moped`   |
 
 ### Propulsion Type
 
@@ -300,3 +311,8 @@ A vehicle may have one or more values from the `propulsion`, depending on the nu
 | `error`             | String   | Error message string   |
 | `error_description` | String   | Human readable error description (can be localized) |
 | `error_details`     | String[] | Array of error details |
+
+[Top][toc]
+
+[toc]: #table-of-contents
+[general-information/versioning]: /general-information.md#versioning

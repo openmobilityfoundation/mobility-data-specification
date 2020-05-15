@@ -1,7 +1,7 @@
 {
-  "$id": "https://raw.githubusercontent.com/openmobilityfoundation/mobility-data-specification/master/provider/dockless/status_changes.json",
+  "$id": "https://raw.githubusercontent.com/openmobilityfoundation/mobility-data-specification/master/provider/dockless/vehicles.json",
   "$schema": "http://json-schema.org/draft-06/schema#",
-  "title": "The MDS Provider Schema, status_change payload",
+  "title": "The MDS Provider Schema, vehicles payload",
   "type": "object",
   "definitions": {
     "Point": {
@@ -198,7 +198,9 @@
   },
   "required": [
     "version",
-    "data"
+    "data",
+    "last_updated",
+    "ttl"
   ],
   "properties": {
     "version": {
@@ -210,17 +212,17 @@
       "type": "object",
       "title": "The page of data",
       "required": [
-        "status_changes"
+        "vehicles"
       ],
       "properties": {
-        "status_changes": {
-          "$id": "#/properties/data/properties/status_changes",
+        "vehicles": {
+          "$id": "#/properties/data/properties/vehicles",
           "type": "array",
-          "title": "The status_changes payload",
+          "title": "The vehicles payload",
           "items": {
-            "$id": "#/properties/data/properties/status_changes/items",
+            "$id": "#/properties/data/properties/vehicles/items",
             "type": "object",
-            "title": "The status_change item schema",
+            "title": "The vehicle item schema",
             "required": [
               "provider_name",
               "provider_id",
@@ -228,14 +230,14 @@
               "vehicle_id",
               "vehicle_type",
               "propulsion_type",
-              "event_type",
-              "event_type_reason",
-              "event_time",
-              "event_location"
+              "last_event_time",
+              "last_event_type",
+              "last_event_type_reason",
+              "last_event_location"
             ],
             "properties": {
               "provider_name": {
-                "$id": "#/properties/data/properties/status_changes/items/properties/provider_name",
+                "$id": "#/properties/data/properties/vehicles/items/properties/provider_name",
                 "type": "string",
                 "description": "The public-facing name of the Provider",
                 "examples": [
@@ -244,17 +246,17 @@
                 "pattern": "^(.*)$"
               },
               "provider_id": {
-                "$id": "#/properties/data/properties/status_changes/items/properties/provider_id",
+                "$id": "#/properties/data/properties/vehicles/items/properties/provider_id",
                 "description": "The UUID for the Provider, unique within MDS",
                 "$ref": "#/definitions/uuid"
               },
               "device_id": {
-                "$id": "#/properties/data/properties/status_changes/items/properties/device_id",
+                "$id": "#/properties/data/properties/vehicles/items/properties/device_id",
                 "description": "A unique device ID in UUID format",
                 "$ref": "#/definitions/uuid"
               },
               "vehicle_id": {
-                "$id": "#/properties/data/properties/status_changes/items/properties/vehicle_id",
+                "$id": "#/properties/data/properties/vehicles/items/properties/vehicle_id",
                 "type": "string",
                 "description": "The Vehicle Identification Number visible on the vehicle itself",
                 "default": "",
@@ -264,40 +266,40 @@
                 "pattern": "^(.*)$"
               },
               "vehicle_type": {
-                "$id": "#/properties/data/properties/status_changes/items/properties/vehicle_type",
+                "$id": "#/properties/data/properties/vehicles/items/properties/vehicle_type",
                 "$ref": "#/definitions/vehicle_type",
                 "description": "The type of vehicle"
               },
               "propulsion_type": {
-                "$id": "#/properties/data/properties/status_changes/items/properties/propulsion_type",
+                "$id": "#/properties/data/properties/vehicles/items/properties/propulsion_type",
                 "description": "The type of propulsion; allows multiple values",
                 "$ref": "#/definitions/propulsion_type"
               },
-              "event_time": {
-                "$id": "#/properties/data/properties/status_changes/items/properties/event_time",
-                "description": "The time the event occurred, expressed as a Unix Timestamp",
+              "last_event_time": {
+                "$id": "#/properties/data/properties/vehicles/items/properties/last_event_time",
+                "description": "The time the most recent status change event occurred, expressed as a Unix Timestamp",
                 "$ref": "#/definitions/timestamp"
               },
-              "publication_time": {
-                "$id": "#/properties/data/properties/status_changes/items/properties/publication_time",
-                "description": "The time the event became available through the status changes endpoint, expressed as a Unix Timestamp",
-                "$ref": "#/definitions/timestamp"
-              },
-              "event_location": {
-                "$id": "#/properties/data/properties/status_changes/items/properties/event_location",
-                "description": "The GPS or GNSS coordinates of where the event occurred",
-                "$ref": "#/definitions/MDS_Feature_Point"
-              },
-              "event_type": {
+              "last_event_type": {
                 "type": "string",
                 "description": "The type of the event"
               },
-              "event_type_reason": {
+              "last_event_type_reason": {
                 "type": "string",
                 "description": "The reason for the event"
               },
+              "last_event_location": {
+                "$id": "#/properties/data/properties/vehicles/items/properties/last_event_location",
+                "description": "Location of the vehicle's last status change event",
+                "$ref": "#/definitions/MDS_Feature_Point"
+              },
+              "current_location": {
+                "$id": "#/properties/data/properties/vehicles/items/properties/current_location",
+                "description": "Current location of vehicle if different from last event, and the vehicle is not currently on a trip",
+                "$ref": "#/definitions/MDS_Feature_Point"
+              },
               "battery_pct": {
-                "$id": "#/properties/data/properties/status_changes/items/properties/battery_pct",
+                "$id": "#/properties/data/properties/vehicles/items/properties/battery_pct",
                 "type": [
                   "number",
                   "null"
@@ -308,114 +310,77 @@
                 ],
                 "minimum": 0,
                 "maximum": 1
-              },
-              "associated_trip": {
-                "$id": "#/properties/data/properties/status_changes/items/properties/associated_trip",
-                "description": "Trip UUID, required if event_type_reason is user_pick_up or user_drop_off",
-                "$ref": "#/definitions/uuid"
-              },
-              "associated_ticket": {
-                "type": "string",
-                "description": "Identifier for an associated ticket inside an Agency-maintained 311 or CRM system."
               }
             },
-            "allOf": [
+            "oneOf": [
               {
-                "description": "valid event_type and event_type_reason combinations",
-                "oneOf": [
-                  {
-                    "properties": {
-                      "event_type": {
-                        "enum": [
-                          "available"
-                        ]
-                      },
-                      "event_type_reason": {
-                        "enum": [
-                          "service_start",
-                          "user_drop_off",
-                          "rebalance_drop_off",
-                          "maintenance_drop_off",
-                          "agency_drop_off"
-                        ]
-                      }
-                    }
+                "properties": {
+                  "last_event_type": {
+                    "enum": [
+                      "available"
+                    ]
                   },
-                  {
-                    "properties": {
-                      "event_type": {
-                        "enum": [
-                          "reserved"
-                        ]
-                      },
-                      "event_type_reason": {
-                        "enum": [
-                          "user_pick_up"
-                        ]
-                      }
-                    }
-                  },
-                  {
-                    "properties": {
-                      "event_type": {
-                        "enum": [
-                          "unavailable"
-                        ]
-                      },
-                      "event_type_reason": {
-                        "enum": [
-                          "low_battery",
-                          "maintenance"
-                        ]
-                      }
-                    }
-                  },
-                  {
-                    "properties": {
-                      "event_type": {
-                        "enum": [
-                          "removed"
-                        ]
-                      },
-                      "event_type_reason": {
-                        "enum": [
-                          "service_end",
-                          "rebalance_pick_up",
-                          "maintenance_pick_up",
-                          "agency_pick_up"
-                        ]
-                      }
-                    }
-                  }
-                ]
-              },
-              {
-                "description": "conditionally require associated_trip when applicable",
-                "anyOf": [
-                  {
-                    "not": {
-                      "properties": {
-                        "event_type_reason": {
-                          "enum": [
-                            "user_pick_up",
-                            "user_drop_off"
-                          ]
-                        }
-                      }
-                    }
-                  },
-                  {
-                    "required": [
-                      "associated_trip"
+                  "last_event_type_reason": {
+                    "enum": [
+                      "service_start",
+                      "user_drop_off",
+                      "rebalance_drop_off",
+                      "maintenance_drop_off",
+                      "agency_drop_off"
                     ]
                   }
-                ]
+                }
+              },
+              {
+                "properties": {
+                  "last_event_type": {
+                    "enum": [
+                      "reserved"
+                    ]
+                  },
+                  "last_event_type_reason": {
+                    "enum": [
+                      "user_pick_up"
+                    ]
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "last_event_type": {
+                    "enum": [
+                      "unavailable"
+                    ]
+                  },
+                  "last_event_type_reason": {
+                    "enum": [
+                      "low_battery",
+                      "maintenance"
+                    ]
+                  }
+                }
               }
             ]
           }
         }
       },
       "additionalProperties": false
+    },
+    "links": {
+      "$id": "#/properties/links",
+      "$ref": "#/definitions/links"
+    },
+    "last_updated": {
+      "$id": "#/properties/last_updated",
+      "description": "Timestamp indicating the last time the data in this feed was updated",
+      "$ref": "#/definitions/timestamp"
+    },
+    "ttl": {
+      "$id": "#/properties/ttl",
+      "type": "integer",
+      "title": "Integer representing the number of milliseconds before the data in this feed will be updated again (0 if the data should always be refreshed)",
+      "minimum": 0,
+      "maximum": 300000
     }
   },
   "additionalProperties": false

@@ -1,5 +1,5 @@
 {
-  "$id": "https://raw.githubusercontent.com/CityofLosAngeles/mobility-data-specification/master/agency/post_vehicle.json",
+  "$id": "https://raw.githubusercontent.com/openmobilityfoundation/mobility-data-specification/master/agency/post_vehicle.json",
   "$schema": "http://json-schema.org/draft-06/schema#",
   "title": "The MDS Agency Schema, register vehicle body",
   "type": "object",
@@ -26,7 +26,8 @@
       "enum": [
         "bicycle",
         "car",
-        "scooter"
+        "scooter",
+        "moped"
       ]
     },
     "uuid": {
