@@ -1,6 +1,6 @@
 ## 0.4.1
 
-> Release Candidate submitted 2020-03-01
+> Released 2020-05-15
 
 0.4.1 is the first release of the Mobility Data Specification under the guidance and stewardship of the Open Mobility Foundation.
 As such, this release includes a number of administrative and documentation changes, including to the licensing and release process.
