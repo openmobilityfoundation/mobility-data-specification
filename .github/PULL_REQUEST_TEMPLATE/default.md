@@ -1,3 +1,10 @@
+---
+name: Default
+about: Suggest changes to MDS
+title: <Insert Title>
+
+---
+
 # MDS Pull Request
 
 Thank you for your contribution!
