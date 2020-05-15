@@ -23,7 +23,7 @@ This specification contains a collection of RESTful APIs used to read Geographie
 The main intended clients of this API are the Policy, Policy Author, and Jurisdiction services. A Policy object may require
 a geofence to function properly. A Jurisdiction is by definition a collection of Geography objects.
 
-Geographical data will be stored as GeoJSON and read from either `geographies.json` or the `/geographies` endpoint, referenced by UUID. A Geography is mutable up until the point it is published, at which point, it becomes immutable. 
+Geographical data will be stored as GeoJSON and read from either `geographies.json` or the `/geographies` endpoint, referenced by UUID. A Geography is mutable up until the point it is published, at which point, it becomes immutable. Since the Geography service is intended to serve only read-only endpoints, publishing must be done through a call to the Geography Author service or some other means on the backend.
 
 A Geography may also have an associated GeographyMetadata. To link a Geography to a GeographyMetadata, both objects must have the same UUID. Metadata may be read and written through the companion GeographyAuthor service.
 
