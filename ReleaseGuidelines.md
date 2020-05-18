@@ -272,6 +272,8 @@ The following steps describe how to make an approved [Release Candidate][prepare
 
 1. Ensure OMF review has been completed and approval granted.
 
+1. Ensure the [Milestone][mds-milestones] for this release is at `100%`.
+
 1. In the release branch created earlier, update the ReleaseNotes.md with the new date of the release:
 
     ```diff
