@@ -10,12 +10,12 @@ This specification contains a collection of definitions, data types, and vehicle
 * [Timestamps](#timestamps)
 * [Strings](#strings)
 * [UUIDs](#uuids)
+* [Costs and Currencies](#costs-and-currencies)
 * [Devices](#devices)
 * [Vehicle Types](#vehicle-types)
 * [Propulsion Types](#propulsion-types)
 * [Vehicle States](#vehicle-states)
 * [Vehicle Events](#vehicle-events)
-* [Costs and Currencies](#costs-and-currencies)
 
 ## Timestamps
 
@@ -30,6 +30,12 @@ All String fields, such as `vehicle_id`, are limited to a maximum of 255 charact
 Object identifiers are described via Universally Unique Identifiers [(UUIDs)](https://en.wikipedia.org/wiki/Universally_unique_identifier).  For example, the `device_id` field used to uniquely identify a vehicle is a UUID.
 
 MDS uses Version 1 UUIDs.
+
+## Costs and currencies
+
+Fields specifying a monetary cost use a currency as specified in [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217#Active_codes). All costs should be given as integers in the currency's smallest unit. As an example, to represent $1 USD, specify an amount of `100` (100 cents).
+
+If the currency field is null, USD cents is implied.
 
 ## Devices
 
@@ -84,34 +90,38 @@ Note that to handle out-of-order events, the validity of the prior-state is not 
 
 | `vehicle_state` | `event_type` | Valid prior `vehicle_state` values | Description |
 | --- | --- | --- | --- |
-| `available` | `battery_charged` | `unavailable` | The vehicle became available because its battery is now charged. |
-| `available` | `on_hours` | `unavailable` | The vehicle has entered operating hours (per the regulator or per the provider) |
-| `available` | `provider_drop_off` | `removed` | The vehicle was placed in the PROW by the provider |
-| `available` | `agency_drop_off` | `removed` | The vehicle was placed in the PROW by a city or county |
-| `available` | `maintenance` | `unavailable` | The vehicle was previously in need of maintenance |
-| `available` | `trip_end` | `trip` | A trip has ended, and the vehicle is again available for rent |
-| `available` | `reservation_cancel` | `reserved` | A reservation was canceled and the vehicle returned to service |
-| `available` | `trip_cancel` | `trip` | A trip was initiated, then canceled prior to moving any distance |
-| `available` | `unspecified` | `unavailable`, `unknown`, `removed`, `reserved`, `elsewhere` | The vehicle became available, but the provider cannot definitively (yet) specify the reason.  Generally, regulator Service-Level Agreements will limit the amount of time a vehicle's last event type may be `unspecified`. |
-| `reserved` | `reservation_start` | `available` | The vehicle was reserved for use by a customer |
-| `trip` | `trip_start` | `available`, `reserved` | A customer initiated a trip with this vehicle |
-| `trip` | `trip_enter_jurisdiction` | `elsewhere` | A vehicle on a trip entered the jurisdiction |
-| `elsewhere` | `trip_leave_jurisdiction` | `trip` | A vehicle on a trip left the jurisdiction |
-| `unavailable` | `low_battery` | `available` | The vehicle's battery is below some rentability threshold |
-| `unavailable` | `maintenance` | `available` | The vehicle requires some non-charge-related maintenance |
-| `unavailable` | `off_hours` | `available` | The vehicle has exited operating hours (per the regulator or per the Provider) |
-| `unavailable` | `unspecified` | `available` | The vehicle became unavailable, but he Provider cannot definitively (yet) specify the reason. |
-| `removed` | `rebalance_pick_up` | `available`, `unavailable`, `elsewhere` | The provider picked up the vehicle for rebalancing purposes |
-| `removed` | `maintenance_pick_up` | `available`, `unavailable`, `elsewhere` | The provider picked up the vehicle to service it |
-| `removed` | `agency_pick_up` | any | An agency picked up the vehicle for some reason, e.g. illegal placement |
-| `removed` | `compliance_pick_up` | `available`, `unavailable`, `elsewhere` | The provider picked up the vehicle because it was placed in a non-compliant location |
-| `removed` | `decommissioned` | `available`, `unavailable`, `removed`, `elsewhere`, `unknown`| The provider has removed the vehicle from its fleet |
-| `removed` | `unspecified` | `unknown`, `unavailable`, `available`, `elsewhere` | The vehicle was removed, but the provider cannot definitively (yet) specify the reason |
-| `unknown` | `missing` | any | The vehicle is not at its last reported GPS location, or that location is wildly in error |
-| `unknown` | `out_of_comms` | any | The vehicle is unable to transmit its GPS location |
+| `available`   | `battery_charged`    | `unavailable` | The vehicle became available because its battery is now charged. |
+| `available`   | `on_hours`           | `unavailable` | The vehicle has entered operating hours (per the regulator or per the provider) |
+| `available`   | `provider_drop_off`  | `removed`, `elsewhere`, `unknown` | The vehicle was placed in the PROW by the provider |
+| `available`   | `agency_drop_off`    | `removed`, `elsewhere`, `unknown` | The vehicle was placed in the PROW by a city or county |
+| `available`   | `maintenance`        | `unavailable` | The vehicle was previously in need of maintenance |
+| `available`   | `trip_end`           | `trip` | A trip has ended, and the vehicle is again available for rent |
+| `available`   | `reservation_cancel` | `reserved` | A reservation was canceled and the vehicle returned to service |
+| `available`   | `trip_cancel`        | `trip` | A trip was initiated, then canceled prior to moving any distance |
+| `available`   | `unspecified`        | `unavailable`, `unknown`, `removed`, `reserved`, `elsewhere` | The vehicle became available, but the provider cannot definitively (yet) specify the reason.  Generally, regulator Service-Level Agreements will limit the amount of time a vehicle's last event type may be `unspecified`. |
+| `reserved`    | `reservation_start`  | `available` | The vehicle was reserved for use by a customer |
+| `trip`        | `trip_start`         | `available`, `reserved` | A customer initiated a trip with this vehicle |
+| `trip`        | `trip_enter_jurisdiction` | `elsewhere` | A vehicle on a trip entered the jurisdiction |
+| `elsewhere`   | `trip_leave_jurisdiction` | `trip` | A vehicle on a trip left the jurisdiction |
+| `unavailable` | `low_battery`        | `available` | The vehicle's battery is below some rentability threshold |
+| `unavailable` | `maintenance`        | `available` | The vehicle requires some non-charge-related maintenance |
+| `unavailable` | `off_hours`          | `available` | The vehicle has exited operating hours (per the regulator or per the Provider) |
+| `unavailable` | `unspecified`        | `available` | The vehicle became unavailable, but he Provider cannot definitively (yet) specify the reason. |
+| `removed`     | `rebalance_pick_up`  | `available`, `unavailable`, `elsewhere` | The provider picked up the vehicle for rebalancing purposes |
+| `removed`     | `maintenance_pick_up` | `available`, `unavailable`, `elsewhere` | The provider picked up the vehicle to service it |
+| `removed`     | `agency_pick_up`     | any | An agency picked up the vehicle for some reason, e.g. illegal placement |
+| `removed`     | `compliance_pick_up` | `available`, `unavailable`, `elsewhere` | The provider picked up the vehicle because it was placed in a non-compliant location |
+| `removed`     | `decommissioned`     | `available`, `unavailable`, `removed`, `elsewhere`, `unknown`| The provider has removed the vehicle from its fleet |
+| `removed`     | `unspecified`        | `unknown`, `unavailable`, `available`, `elsewhere` | The vehicle was removed, but the provider cannot definitively (yet) specify the reason |
+| `unknown`     | `missing`            | any | The vehicle is not at its last reported GPS location, or that location is wildly in error |
+| `unknown`     | `out_of_comms`       | any | The vehicle is unable to transmit its GPS location |
 
-## Costs and currencies
+NOTES: 
 
-Fields specifying a monetary cost use a currency as specified in [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217#Active_codes). All costs should be given as integers in the currency's smallest unit. As an example, to represent $1 USD, specify an amount of `100` (100 cents).
+`trip` vs. `in_trip` vs. `on_trip`?
 
-If the currency field is null, USD cents is implied.
+`unavailable` vs `non_operational`?
+
+Should we try to handle "unlicensed movements"?
+
+What's the best way to return from `unknown`? 

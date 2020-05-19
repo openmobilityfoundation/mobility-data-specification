@@ -25,9 +25,7 @@ This specification uses data types including timestamps, UUIDs, and vehicle stat
 
 Versioning must be implemented through the use of a custom media-type, `application/vnd.mds.provider+json`, combined with a required `version` parameter.
 
-The version parameter specifies the dot-separated combination of major and minor versions from a published version of the specification. For example, the media-type for version `0.2.1` would be specified as `application/vnd.mds.provider+json;version=0.2`
-
-> Note: Normally breaking changes are covered by different major versions in semver notation. However, as this specification is still pre-1.0.0, changes in minor versions may include breaking changes, and therefore are included in the version string.
+The version parameter specifies the dot-separated combination of major and minor versions from a published version of the specification. For example, the media-type for version `0.4.1` would be specified as `application/vnd.mds.provider+json;version=0.4`
 
 Clients must specify the version they are targeting through the `Accept` header. For example:
 
@@ -40,7 +38,7 @@ Accept: application/vnd.mds.provider+json;version=0.3
 Responses to client requests must indicate the version the response adheres to through the `Content-Type` header. For example:
 
 ```http
-Content-Type: application/vnd.mds.provider+json;version=0.3
+Content-Type: application/vnd.mds.provider+json;version=0.4
 ```
 
 > Since versioning was not added until the 0.3.0 release, if the `Content-Type` header is not set as specified above, version `0.2` must be assumed.
@@ -303,7 +301,7 @@ Schema: [`status_changes` schema][sc-schema]
 | `vehicle_type` | Enum | Required | see [vehicle types](../shared/README.md#vehicle-types) table |
 | `propulsion_type` | Enum[] | Required | Array of [propulsion types](../shared/README.md#propulsion-types); allows multiple values |
 | `vehicle_state` | Enum | Required | See [vehicle state](../shared/README.md#vehicle-state) table |
-| `event_type` | Enum | Required | Reason for state change, allowable values determined by [`event-type`](../shared/README.md#event-types) |
+| `event_type` | Enum[] | Required | Reason(s) for state change, allowable values determined by [`event-type`](../shared/README.md#event-types) |
 | `event_time` | [timestamp][ts] | Required | Date/time that event occurred at. See [timestamps](../shared/README.md#timestamps) |
 | `publication_time` | [timestamp][ts] | Optional | Date/time that event became available through the status changes endpoint |
 | `event_location` | GeoJSON [Point Feature][geo] | Required | |
@@ -326,25 +324,6 @@ The `/status_changes` API should allow querying status changes with the followin
 If the data does not exist or the hour has not completed, `/status_changes` shall return a `404 Not Found` error.
 
 Without an `event_time` query parameter, `/status_changes` shall return a `400 Bad Request` error.
-
-### Event Types
-
-| `event_type` | Description | `event_type_reason` | Description |
-| ---------- | ---------------------- | ------- | ------------------ |
-| `available` | A device becomes available for customer use | `service_start` | Device introduced into service at the beginning of the day (if program does not operate 24/7) |
-| | | `user_drop_off` | User ends reservation |
-| | | `rebalance_drop_off` | Device moved for rebalancing |
-| | | `maintenance_drop_off` | Device introduced into service after being removed for maintenance |
-| | | `agency_drop_off` | The administrative agency (ie, DOT) drops a device into the PROW using an admin code or similar | 
-| `reserved` | A customer reserves a device (even if trip has not started yet) | `user_pick_up` | Customer reserves device |
-| `unavailable` | A device is on the street but becomes unavailable for customer use | `maintenance` | A device is no longer available due to equipment issues |
-| | | `low_battery` | A device is no longer available due to insufficient battery |
-| `removed` | A device is removed from the street and unavailable for customer use | `service_end` | Device removed from street because service has ended for the day (if program does not operate 24/7) |
-| | | `rebalance_pick_up` | Device removed from street and will be placed at another location to rebalance service |
-| | | `maintenance_pick_up` | Device removed from street so it can be worked on |
-| | | `agency_pick_up` | The administrative agency (ie, DOT) removes a device using an admin code or similar |
-
-[Top][toc]
 
 ## Realtime Data
 
