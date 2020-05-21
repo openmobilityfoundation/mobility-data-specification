@@ -310,7 +310,8 @@ Unless stated otherwise by the municipality, this endpoint must return only thos
 | `event_type_reason` | Enum | Required | Reason for status change, allowable values determined by [`event type`](#event-types) |
 | `event_time` | [timestamp][ts] | Required | Date/time that event occurred at. See [Event Times](#event-times) |
 | `publication_time` | [timestamp][ts] | Optional | Date/time that event became available through the status changes endpoint |
-| `event_location` | GeoJSON [Point Feature][geo] | Required | |
+| `event_location` | GeoJSON [Point Feature][geo] | Optional | A location is required unless `event_type_reason` is `user_pick_up` |
+| `event_geographies` | UUID[] | Required | Array of Geography UUIDs consisting of every Geography that contains the location of the status change. |
 | `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |
 | `associated_trip` | UUID | Required if Applicable | Trip UUID (foreign key to Trips API), required if `event_type_reason` is `user_pick_up` or `user_drop_off`, or for any other status change event that marks the end of a trip. |
 | `associated_ticket` | String | Optional | Identifier for an associated ticket inside an Agency-maintained 311 or CRM system. |
@@ -341,6 +342,8 @@ Without an `event_time` query parameter, `/status_changes` shall return a `400 B
 | | | `maintenance_drop_off` | Device introduced into service after being removed for maintenance |
 | | | `agency_drop_off` | The administrative agency (ie, DOT) drops a device into the PROW using an admin code or similar |
 | `reserved` | A customer reserves a device (even if trip has not started yet) | `user_pick_up` | Customer reserves device. Note that this event_type is deemed ambiguous right now: it can mean reserved as in possession, or reserved as in future hold. This issue will be remedied in a future version with an extra event_type. For now, different providers have implemented this in either way. |
+| | | `enter_geography ` | Device enters one or more Geographies managed by Policy during an active trip. |
+| | | `leave_geography ` | Device leaves one or more Geographies managed by Policy during an active trip. |
 | `unavailable` | A device is on the street but becomes unavailable for customer use | `maintenance` | A device is no longer available due to equipment issues |
 | | | `low_battery` | A device is no longer available due to insufficient battery |
 | `removed` | A device is removed from the street and unavailable for customer use | `service_end` | Device removed from street because service has ended for the day (if program does not operate 24/7) |
