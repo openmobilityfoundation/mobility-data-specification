@@ -173,8 +173,8 @@ Body Params:
 | ----------- | ----------------------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
 | `event_type` | Enum                         | Required          | see [Vehicle Events](#vehicle-events)                                                                                                           |
 | `event_type_reason` | Enum                  | Required if Available | see [Vehicle Events](#vehicle-events)                                                                                                           |
-| `timestamp`  | Timestamp                    | Optional          | Date of last event update                                                     |
-| `telemetry`  | [Telemetry](#telemetry-data) | Required          | Single point of telemetry. Required unless `status` is `trip`.                             |
+| `timestamp`  | Timestamp                    | Required          | Date of last event update                                                     |
+| `telemetry`  | [Telemetry](#telemetry-data) | Optional          | Single point of telemetry. Required unless `status` is `trip`.                             |
 | `event_geographies`  | UUID[] | Required          | Array of Geography UUIDs consisting of every Geography that contains the location of the event.                            |
 | `trip_id`    | UUID                         | Optional          | UUID provided by Operator to uniquely identify the trip. Required for `trip_start`, `trip_end`, `trip_enter`, and `trip_leave` event types |
 
