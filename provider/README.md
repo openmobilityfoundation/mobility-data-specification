@@ -70,7 +70,7 @@ All response fields must use `lower_case_with_underscores`.
 
 #### JSON Schema
 
-MDS defines [JSON Schema](https://json-schema.org/) files for [`trips`][trips-schema] and [`status_changes`][sc-schema].
+MDS defines [JSON Schema](https://json-schema.org/) files for [`trips`][trips-schema], [`status_changes`][sc-schema], [`events`][events-schema], and [`vehicles`][vehicles-schema].
 
 `provider` API responses must validate against their respective schema files. The schema files always take precedence over the language and examples in this and other supporting documentation meant for *human* consumption.
 
@@ -203,7 +203,7 @@ Unless stated otherwise by the municipality, the trips endpoint must return all 
 
 **Endpoint:** `/trips`  
 **Method:** `GET`  
-**Required/Optional:** Required  
+**[Beta feature](/general-information.md#beta-features):** No  
 **Schema:** [`trips` schema][trips-schema]  
 **`data` Payload:** `{ "trips": [] }`, an array of objects with the following structure  
 
@@ -294,7 +294,7 @@ Unless stated otherwise by the municipality, this endpoint must return only thos
 
 **Endpoint:** `/status_changes`  
 **Method:** `GET`  
-**Required/Optional:** Required  
+**[Beta feature](/general-information.md#beta-features):** No  
 **Schema:** [`status_changes` schema][sc-schema]  
 **`data` Payload:** `{ "status_changes": [] }`, an array of objects with the following structure
 
@@ -375,7 +375,7 @@ The schema and datatypes are the same as those defined for [`/status_changes`][s
 
 **Endpoint:** `/events`  
 **Method:** `GET`  
-**Required/Optional:** Optional starting with `0.4.0`, moving to Required in a future version (`0.5.0`+)  
+**[Beta feature](/general-information.md#beta-features):** Yes (as of 0.4.0)  
 **Schema:** [`events` schema][events-schema]  
 **`data` Payload:** `{ "status_changes": [] }`, an array of objects with the same structure as in [`/status_changes`][status]
 
@@ -398,7 +398,7 @@ Should either side of the requested time range be greater than 2 weeks before th
 
 ### Vehicles
 
-The `/vehicles` endpoint returns the current status of vehicles on the PROW. Only vehicles that are currently in available, unavailable, or reserved states should be returned in this payload. Data in this endpoint should reconcile with data from the `/status_changes` enpdoint. The data returned by this endpoint should be as close to realtime as possible, but in no case should it be more than 5 minutes out-of-date.
+The `/vehicles` endpoint returns the current status of vehicles on the PROW. Only vehicles that are currently in available, unavailable, or reserved states should be returned in this payload. Data in this endpoint should reconcile with data from the `/status_changes` enpdoint. The data returned by this endpoint should be as close to realtime as possible, but in no case should it be more than 5 minutes out-of-date. As with other MDS APIs, `/vehicles` is intended for use by regulators, not by the general public. It does not replace the role of a [GBFS](https://github.com/NABSA/gbfs) feed in enabling consumer-facing applications.
 
 In addition to the standard [Provider payload wrapper](#response-format), responses from this endpoint should contain the last update timestamp and amount of time until the next update:
 
@@ -422,7 +422,7 @@ ttl                 | Yes       | Integer representing the number of millisecond
 
 **Endpoint:** `/vehicles`  
 **Method:** `GET`  
-**Required/Optional:** Optional starting with `0.4.1`, moving to Required in a future version (`0.5.0`+)  
+**[Beta feature](/general-information.md#beta-features):** Yes (as of 0.4.1)  
 **Schema:** [`vehicles` schema][vehicles-schema]  
 **`data` Payload:** `{ "vehicles": [] }`, an array of objects with the following structure
 

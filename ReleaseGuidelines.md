@@ -97,7 +97,7 @@ Contributors submit proposals for inclusion in the release cycle in the form of 
 
 Contributors will provide feedback on proposals. Where possible, discussion will happen via GitHub. Weekly calls will support dialog around more complex or controversial issues. By the end of week 9, all active proposals must be in the form of a pull request. Proposals can be withdrawn or split apart for inclusion in future releases.
 
-##### Weeks 10-11: Decision making
+#### Weeks 10-11: Decision making
 
 These weeks will start with an web conference work session for all contributors to review and discuss current proposals. Goal is to achieve consensus where possible, or to clearly articulate areas of disagreement where not. Minor changes may be accepted at this stage if they bring contributors to consensus.
 
@@ -228,7 +228,7 @@ The following steps outline the process to prepare a Release Candidate of MDS. T
     This is a pre-release: Check
     ```
 
-1. [Open an Issue][mds-issue-new] to start the Release Candidate review process, using the `Release Candidate review` template. Fill in the appropriate Release Candidate version/URL.
+1. [Open a Pull Request][mds-pr-rc] from the release branch to `dev`. This ensures any changes to the Release Candidate during the review process make their way back into `dev`. This pull request is where review comments and feedback will be collected.
 
 1. Post an announcement to the [MDS-announce Mailing List][mds-announce], copying the [release notes](ReleaseNotes.md) created earlier and linking to the [GitHub release][mds-releases] and Release Candidate review Issue:
 
@@ -270,7 +270,9 @@ Repeat as-needed for subsequent Release Candidates.
 
 The following steps describe how to make an approved [Release Candidate][prepare-rc] an official release of MDS:
 
-1. Ensure OMF review has been completed and the Issue created during the Release Candidate process has been closed.
+1. Ensure OMF review has been completed and approval granted.
+
+1. Ensure the [Milestone][mds-milestones] for this release is at `100%`.
 
 1. In the release branch created earlier, update the ReleaseNotes.md with the new date of the release:
 
@@ -283,9 +285,9 @@ The following steps describe how to make an approved [Release Candidate][prepare
     etc...
     ```
 
-1. [Open a Pull Request][mds-pr-new] from the release branch to `dev`. This ensures any changes to the Release Candidate during the review process make their way back into `dev`. Merge this PR.
+1. Merge the Pull Request created during the Release Candidate process to `dev`.
 
-1. [Open a Pull Request][mds-pr-new] from the release branch to `master`. Merge this PR to make the release official.
+1. [Open a Pull Request][mds-pr-final] from the release branch to `master`. Merge this PR to make the release official.
 
 1. Create a tag in `master` for the new version. For example for `0.5.0`:
 
@@ -372,6 +374,8 @@ In rare cases, a hotfix for a prior release may be required out-of-phase with th
 [mds-milestones]: https://github.com/openmobilityfoundation/mobility-data-specification/milestones
 [mds-pr]: https://github.com/openmobilityfoundation/mobility-data-specification/pulls
 [mds-pr-new]: https://github.com/openmobilityfoundation/mobility-data-specification/compare
+[mds-pr-rc]: https://github.com/openmobilityfoundation/mobility-data-specification/compare?template=release-candidate.md
+[mds-pr-final]: https://github.com/openmobilityfoundation/mobility-data-specification/compare?template=release-final.md
 [mds-releases]: https://github.com/openmobilityfoundation/mobility-data-specification/releases
 [mds-releases-new]: https://github.com/openmobilityfoundation/mobility-data-specification/releases/new
 [mds-schema-common]: https://github.com/openmobilityfoundation/mobility-data-specification/blob/master/schema/templates/common.json
