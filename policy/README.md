@@ -1,6 +1,6 @@
 # Mobility Data Specification: Policy
 
-This specification describes the digital relationship between _mobility as a service_ Providers and the Agencies that regulate them. The Policy specification is meant to communicate municipality policies (such as as device caps and geofences) in a clear, consistent manner.
+This specification describes the digital relationship between _mobility as a service_ Providers and the Agencies that regulate them. The Policy specification is meant to define communicate municipality policies (such as as vehicle deployment caps and speed limits) in a clear, consistent manner.
 
 ## Table of Contents
 
@@ -32,7 +32,7 @@ Policies typically refer to one or more associated geographies. Each policy and 
 
 Published policies and geographies should be treated as immutable data. Obsoleting or otherwise changing a policy is accomplished by publishing a new policy with a field named `prev_policies`, a list of UUID references to the policy or policies superseded by the new policy.
 
-Geographical data shall be represented as GeoJSON `Feature` objects. No part of the geographical data should be outside the [municipality boundary](../provider/README.md#municipality-boundary).
+Geographical data shall be represented as GeoJSON `Feature` objects. No part of the geographical data should be outside the [municipality boundary][muni-boundary].
 
 Policies should be re-fetched whenever:
 
@@ -50,11 +50,11 @@ Among other use-cases, configuring a REST API allows an Agency to:
 3) Adjust other attributes in closer to real time
 4) Enumerate when policies are set to change
 
-Responses must set the `Content-Type` header, as specified in the [Provider versioning](../provider/README.md#versioning) section.
+Responses must set the `Content-Type` header, as specified in the [Provider versioning][versioning] section.
 
 #### HTTP Response Codes
 
-The response to a client request must include a valid HTTP status code defined in the [IANA HTTP Status Code Registry](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml)
+The response to a client request must include a valid HTTP status code defined in the [IANA HTTP Status Code Registry][iana]
 
 - **200:** OK: operation successful.
 - **400:** Bad request.
@@ -207,16 +207,16 @@ An individual `Rule` object is defined by the following fields:
 | `name`             | String                      | Required   | Name of rule |
 | `rule_type`        | enum                        | Required   | Type of policy (see [Rule Types](#rule-types)) |
 | `geographies`      | UUID[]                      | Required   | List of Geography UUIDs (non-overlapping) specifying the covered geography |
-| `statuses`         | `{ status: vehicle event[] }` | Required   | Vehicle `statuses` to which this rule applies, either from [Provider](../provider/README.md#event-types) or [Agency](../agency/README.md#vehicle-events). Optionally provide a list of specific `event_type`'s as a subset of a given status for the rule to apply to. An empty list or `null`/absent defaults to "all". |
+| `states`           | `{ state: event[] }`        | Required   | [Vehicle state][vehicle-states] to which this rule applies.  Optionally provide a list of specific [vehicle events][#vehicle-events] as a subset of a given status for the rule to apply to. An empty list or `null`/absent defaults to "all". |
 | `rule_units`       | enum                        | Optional   | Measured units of policy (see [Rule Units](#rule-units)) |
 | `vehicle_types`    | `vehicle_type[]`            | Optional   | Applicable vehicle types, default "all". |
-| `propulsion_types` | `propulsion_type[]`         | Optional   | Applicable vehicle propulsion types, default "all". |
+| `propulsion_types` | `propulsion_type[]`         | Optional   | Applicable vehicle [propulsion types][propulsion-types], default "all". |
 | `minimum`          | integer                     | Optional   | Minimum value, if applicable (default 0) |
 | `maximum`          | integer                     | Optional   | Maximum value, if applicable (default unlimited) |
 | `start_time`       | ISO 8601 time `hh:mm:ss`              | Optional   | Beginning time-of-day when the rule is in effect (default 00:00:00). |
 | `end_time`         | ISO 8601 time `hh:mm:ss`              | Optional   | Ending time-of-day when the rule is in effect (default 23:59:59). |
 | `days`             | day[]                       | Optional   | Days `["sun", "mon", "tue", "wed", "thu", "fri", "sat"]` when the rule is in effect (default all) |
-| `messages`         | `{ string:string }`         | Optional   | Message to rider user, if desired, in various languages, keyed by language tag (see [Messages](#messages)) |
+| `messages`         | `{ String:String }`         | Optional   | Message to rider user, if desired, in various languages, keyed by language tag (see [Messages](#messages)) |
 | `value_url`        | URL                         | Optional   | URL to an API endpoint that can provide dynamic information for the measured value (see [Value URL](#value-url)) |
 
 ### Rule Types
@@ -280,3 +280,11 @@ If a vehicle is matched with a rule, then it _will not_ be considered in the sub
 The internal mechanics of ordering are up to the Policy editing and hosting software.
 
 [Top](#table-of-contents)
+
+[iana]: https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
+[muni-boundary]: ../provider/README.md#municipality-boundary
+[versioning]: ../provider/README.md#versioning
+[vehicle-types]: ../shared/README.md#vehicle-types
+[vehicle-states]: ../shared/README.md#vehicle-states
+[vehicle-events]: ../shared/README.md#vehicle-events
+[propulsion-types]: ../shared/README.md#propulsion-types
