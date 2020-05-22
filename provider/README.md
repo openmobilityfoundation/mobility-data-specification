@@ -199,7 +199,7 @@ A trip represents a journey taken by a *mobility as a service* customer with a g
 
 The trips endpoint allows a user to query historical trip data.
 
-Unless stated otherwise by the municipality, the trips endpoint must return all trips with a `route` which [intersects](#intersection-operation) with the [municipality boundary](#municipality-boundary).
+Unless stated otherwise by the municipality, the `route` (if provided) of the trips endpoint must [intersect](#intersection-operation) with the [municipality boundary](#municipality-boundary).
 
 **Endpoint:** `/trips`  
 **Method:** `GET`  
@@ -218,10 +218,10 @@ Unless stated otherwise by the municipality, the trips endpoint must return all 
 | `trip_id` | UUID | Required | A unique ID for each trip |
 | `trip_duration` | Integer | Required | Time, in Seconds |
 | `trip_distance` | Integer | Required | Trip Distance, in Meters |
-| `route` | GeoJSON `FeatureCollection` | Required | See [Routes](#routes) detail below |
 | `accuracy` | Integer | Required | The approximate level of accuracy, in meters, of `Points` within `route` |
 | `start_time` | [timestamp][ts] | Required | |
 | `end_time` | [timestamp][ts] | Required | |
+| `route` | GeoJSON `FeatureCollection` | Optional | See [Routes](#routes) detail below |
 | `publication_time` | [timestamp][ts] | Optional | Date/time that trip became available through the trips endpoint |
 | `parking_verification_url` | String | Optional | A URL to a photo (or other evidence) of proper vehicle parking |
 | `standard_cost` | Integer | Optional | The cost, in the currency defined in `currency`, that it would cost to perform that trip in the standard operation of the System (see [Costs & Currencies](#costs--currencies)) |
@@ -247,6 +247,8 @@ For the near-ish real time use cases, please use the [events](#events) endpoint.
 To represent a route, MDS `provider` APIs must create a GeoJSON [`FeatureCollection`](https://tools.ietf.org/html/rfc7946#section-3.3), which includes every [observed point][geo] in the route, even those which occur outside the [municipality boundary](#municipality-boundary).
 
 Routes must include at least 2 points: the start point and end point. Routes must include all possible GPS or GNSS samples collected by a Provider. Providers may round the latitude and longitude to the level of precision representing the maximum accuracy of the specific measurement. For example, [a-GPS](https://en.wikipedia.org/wiki/Assisted_GPS) is accurate to 5 decimal places, [differential GPS](https://en.wikipedia.org/wiki/Differential_GPS) is generally accurate to 6 decimal places. Providers may round those readings to the appropriate number for their systems.
+
+Routes are optional, as they may contain sensitive information and local policies could forbid their availability.
 
 ```js
 "route": {
