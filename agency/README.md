@@ -15,13 +15,21 @@ This specification contains a collection of RESTful APIs used to specify the dig
 * [Vehicles Telemetry](#vehicles---telemetry)
 * [Telemetry Data](#telemetry-data)
 
-## General Information
+## General information
+
+This specification uses data types including timestamps, UUIDs, and vehicle state definitions as described in the MDS [Shared Definitions](#../shared/README.md) document.
+
+### Versioning
+
+`agency` APIs must handle requests for specific versions of the specification from clients.
+
+Versioning must be implemented as specified in the [`General information versioning section`][general-information/versioning].
+
+### Authorization
 
 The following information applies to all `agency` API endpoints. 
 
 Currently, the `agency` API is implemented for dockless scooter, bikeshare, and carshare. To implement another mode, add it to the `schema/generate_schema.py` file and this README and submit a pull request.
-
-This specification uses data types including timestamps, UUIDs, and vehicle state definitions as described in the MDS [Shared Definitions](#../shared/README.md) document.
 
 ### Responses
 
@@ -242,7 +250,28 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | `gps.satellites` | Integer      | Required if Available | Number of GPS or GNSS satellites
 | `charge`       | Float          | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 1 |
 
+## Responses
+
+* **200:** OK: operation successful.
+* **201:** Created: `POST` operations, new object created
+* **400:** Bad request.
+* **401:** Unauthorized: Invalid, expired, or insufficient scope of token.
+* **404:** Not Found: Object does not exist, returned on `GET` or `POST` operations if the object does not exist.
+* **409:** Conflict: `POST` operations when an object already exists and an update is not possible.
+* **500:** Internal server error: In this case, the answer may contain a `text/plain` body with an error message for troubleshooting.
+
+### Error Message Format
+
+| Field               | Type     | Field Description      |
+| ------------------- | -------- | ---------------------- |
+| `error`             | String   | Error message string   |
+| `error_description` | String   | Human readable error description (can be localized) |
+| `error_details`     | String[] | Array of error details |
+
+[Top][toc]
+
 [toc]: #table-of-contents
+[general-information/versioning]: /general-information.md#versioning
 [vehicle-types]: ../shared/README.md#vehicle-types
 [vehicle-states]: ../shared/README.md#vehicle-states
 [vehicle-events]: ../shared/README.md#vehicle-events

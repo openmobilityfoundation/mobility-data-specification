@@ -52,19 +52,18 @@ The list of allowed `vehicle_type` values in MDS is:
 | bicycle      | Anything with pedals, including recumbents; can include powered assist |
 | car          | Any automobile |
 | scooter      | Any motorized mobility device intended for one rider |
+| moped        | A motorcycle/bicycle hybrid that can be powered or pedaled |
 
 ## Propulsion Types
 
-The list of allowed `propulsion_type` values in MDS is:
+| `propulsion`      | Description                                            |
+| ----------------- | ------------------------------------------------------ |
+| `human`           | Pedal or foot propulsion                               |
+| `electric_assist` | Provides power only alongside human propulsion         |
+| `electric`        | Contains throttle mode with a battery-powered motor    |
+| `combustion`      | Contains throttle mode with a gas engine-powered motor |
 
-| `propulsion_type` | Description |
-| ----------------- | ----------------- |
-| human           | Pedal or foot propulsion |
-| electric_assist | Provides power only alongside human propulsion |
-| electric        | Contains throttle mode with a battery-powered motor |
-| combustion      | Contains throttle mode with a gas engine-powered motor |
-
-A device may have one or more values from the `propulsion_type`, depending on the number of modes of operation. For example, a scooter that can be powered by foot or by electric motor would have the `propulsion_type` represented by the array `['human', 'electric']`. A bicycle with pedal-assist would have the `propulsion_type` represented by the array `['human', 'electric_assist']` if it can also be operated as a traditional bicycle.
+A vehicle may have one or more values from the `propulsion`, depending on the number of modes of operation. For example, a scooter that can be powered by foot or by electric motor would have the `propulsion` represented by the array `['human', 'electric']`. A bicycle with pedal-assist would have the `propulsion` represented by the array `['human', 'electric_assist']` if it can also be operated as a traditional bicycle.
 
 ## Vehicle States
 
