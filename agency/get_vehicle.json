@@ -1,5 +1,5 @@
 {
-  "$id": "https://raw.githubusercontent.com/CityofLosAngeles/mobility-data-specification/master/agency/get_vehicle.json",
+  "$id": "https://raw.githubusercontent.com/openmobilityfoundation/mobility-data-specification/master/agency/get_vehicle.json",
   "$schema": "http://json-schema.org/draft-06/schema#",
   "title": "The MDS Agency Schema, GET vehicle payload",
   "type": "object",
@@ -26,7 +26,8 @@
       "enum": [
         "bicycle",
         "car",
-        "scooter"
+        "scooter",
+        "moped"
       ]
     },
     "vehicle_status": {
@@ -181,7 +182,8 @@
             },
             "event_type_reason": {
               "enum": [
-                "missing"
+                "missing",
+                "decommissioned"
               ]
             }
           }

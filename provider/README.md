@@ -8,58 +8,21 @@ This specification contains a data standard for *mobility as a service* provider
 * [Trips](#trips)
 * [Status Changes](#status-changes)
 * [Realtime Data](#realtime-data)
-  - [GBFS](#GBFS)
-  - [Events](#events)
+  * [GBFS](#GBFS)
+  * [Events](#events)
+  * [Vehicles](#vehicles)
 
 ## General Information
 
 The following information applies to all `provider` API endpoints. Details on providing authorization to endpoints is specified in the [auth](auth.md) document.
 
-Currently, the provider API is implemented for dockless scooter and bikeshare. To implement another mode, add it to the `schema/generate_schema.py` file and this README and submit a pull request.
+Currently, the provider API is implemented for shared dockless scooters, bikes, cars and mopeds. To implement another mode, please submit a PR.
 
 ### Versioning
 
 `provider` APIs must handle requests for specific versions of the specification from clients.
 
-Versioning must be implemented through the use of a custom media-type, `application/vnd.mds.provider+json`, combined with a required `version` parameter.
-
-The version parameter specifies the dot-separated combination of major and minor versions from a published version of the specification. For example, the media-type for version `0.2.1` would be specified as `application/vnd.mds.provider+json;version=0.2`
-
-> Note: Normally breaking changes are covered by different major versions in semver notation. However, as this specification is still pre-1.0.0, changes in minor versions may include breaking changes, and therefore are included in the version string.
-
-Clients must specify the version they are targeting through the `Accept` header. For example:
-
-```http
-Accept: application/vnd.mds.provider+json;version=0.3
-```
-
-> Since versioning was not added until the 0.3.0 release, if the `Accept` header is not set as specified above, the `provider` API must respond as if version `0.2` was requested.
-
-Responses to client requests must indicate the version the response adheres to through the `Content-Type` header. For example:
-
-```http
-Content-Type: application/vnd.mds.provider+json;version=0.3
-```
-
-> Since versioning was not added until the 0.3.0 release, if the `Content-Type` header is not set as specified above, version `0.2` must be assumed.
-
-If an unsupported or invalid version is requested, the API must respond with a status of `406 Not Acceptable`. If this occurs, a client can explicitly negotiate available versions.
-
-A client negotiates available versions using the `OPTIONS` method to an MDS endpoint. For example, to check if `trips` supports either version `0.2` or `0.3` with a preference for `0.2`, the client would issue the following request:
-
-```http
-OPTIONS /trips/ HTTP/1.1
-Host: provider.example.com
-Accept: application/vnd.mds.provider+json;version=0.2,application/vnd.mds.provider+json;version=0.3;q=0.9
-```
-
-The response will include the most preferred supported version in the `Content-Type` header. For example, if only `0.3` is supported:
-
-```http
-Content-Type: application/vnd.mds.provider+json;version=0.3
-```
-
-The client can use the returned value verbatim as a version request in the `Accept` header.
+Versioning must be implemented as specified in the [`General information versioning section`][general-information/versioning].
 
 ### Response Format
 
@@ -107,13 +70,16 @@ All response fields must use `lower_case_with_underscores`.
 
 #### JSON Schema
 
-MDS defines [JSON Schema](https://json-schema.org/) files for [`trips`][trips-schema] and [`status_changes`][sc-schema].
+MDS defines [JSON Schema](https://json-schema.org/) files for [`trips`][trips-schema], [`status_changes`][sc-schema], [`events`][events-schema], and [`vehicles`][vehicles-schema].
 
 `provider` API responses must validate against their respective schema files. The schema files always take precedence over the language and examples in this and other supporting documentation meant for *human* consumption.
 
 ### Pagination
 
-`provider` APIs may decide to paginate the data payload. If so, pagination must comply with the [JSON API](http://jsonapi.org/format/#fetching-pagination) specification.
+The `/trips` and `/status_changes` endpoints must not use pagination.
+
+If providers choose to use pagination for either of the `/events` or `/vehicles` endpoints, the pagination
+must comply with the [JSON API](http://jsonapi.org/format/#fetching-pagination) specification.
 
 The following keys must be used for pagination links:
 
@@ -122,7 +88,7 @@ The following keys must be used for pagination links:
 * `prev`: url to the previous page of data
 * `next`: url to the next page of data
 
-At a minimum, paginated payloads must include a `next` key, which must be set to `null` to indicate the last page of data. 
+At a minimum, paginated payloads must include a `next` key, which must be set to `null` to indicate the last page of data.
 
 ```json
 {
@@ -175,7 +141,8 @@ represented as a GeoJSON [`Feature`](https://tools.ietf.org/html/rfc7946#section
 
 For the purposes of this specification, the intersection of two geographic datatypes is defined according to the [`ST_Intersects` PostGIS operation](https://postgis.net/docs/ST_Intersects.html)
 
-> If a geometry or geography shares any portion of space then they intersect. For geography -- tolerance is 0.00001 meters (so any points that are close are considered to intersect).<br>
+> If a geometry or geography shares any portion of space then they intersect. For geography -- tolerance is 0.00001 meters (so any points that are close are considered to intersect).
+>
 > Overlaps, Touches, Within all imply spatial intersection. If any of the aforementioned returns true, then the geometries also spatially intersect. Disjoint implies false for spatial intersection.
 
 [Top][toc]
@@ -201,6 +168,7 @@ The list of allowed `vehicle_type` referenced below is:
 | bicycle      |
 | car          |
 | scooter      |
+| moped        |
 
 ### Propulsion Types
 
@@ -233,11 +201,11 @@ The trips endpoint allows a user to query historical trip data.
 
 Unless stated otherwise by the municipality, the trips endpoint must return all trips with a `route` which [intersects](#intersection-operation) with the [municipality boundary](#municipality-boundary).
 
-Endpoint: `/trips`  
-Method: `GET`  
-Schema: [`trips` schema][trips-schema]  
-`data` Payload: `{ "trips": [] }`, an array of objects with the following structure  
-
+**Endpoint:** `/trips`  
+**Method:** `GET`  
+**[Beta feature](/general-information.md#beta-features):** No  
+**Schema:** [`trips` schema][trips-schema]  
+**`data` Payload:** `{ "trips": [] }`, an array of objects with the following structure  
 
 | Field | Type    | Required/Optional | Comments |
 | ----- | -------- | ----------------- | ----- |
@@ -272,7 +240,7 @@ If the data does not exist or the hour has not completed, `/trips` shall return 
 
 Without an `end_time` query parameter, `/trips` shall return a `400 Bad Request` error.
 
-For the near-ish real time use cases, please use the [events](#events) endpoint. 
+For the near-ish real time use cases, please use the [events](#events) endpoint.
 
 ### Routes
 
@@ -324,10 +292,11 @@ Unless stated otherwise by the municipality, this endpoint must return only thos
 
 > Note: As a result of this definition, consumers should query the [trips endpoint](#trips) to infer when vehicles enter or leave the municipality boundary.
 
-Endpoint: `/status_changes`  
-Method: `GET`  
-Schema: [`status_changes` schema][sc-schema]  
-`data` Payload: `{ "status_changes": [] }`, an array of objects with the following structure
+**Endpoint:** `/status_changes`  
+**Method:** `GET`  
+**[Beta feature](/general-information.md#beta-features):** No  
+**Schema:** [`status_changes` schema][sc-schema]  
+**`data` Payload:** `{ "status_changes": [] }`, an array of objects with the following structure
 
 | Field | Type | Required/Optional | Comments |
 | ----- | ---- | ----------------- | ----- |
@@ -344,7 +313,7 @@ Schema: [`status_changes` schema][sc-schema]
 | `event_location` | GeoJSON [Point Feature][geo] | Required | |
 | `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |
 | `associated_trip` | UUID | Required if Applicable | Trip UUID (foreign key to Trips API), required if `event_type_reason` is `user_pick_up` or `user_drop_off`, or for any other status change event that marks the end of a trip. |
-| `associated_ticket` | String | Optional | Identifier for an associated ticket inside an Agency-maintained 311 or CRM system. | 
+| `associated_ticket` | String | Optional | Identifier for an associated ticket inside an Agency-maintained 311 or CRM system. |
 
 ### Event Times
 
@@ -370,8 +339,8 @@ Without an `event_time` query parameter, `/status_changes` shall return a `400 B
 | | | `user_drop_off` | User ends reservation |
 | | | `rebalance_drop_off` | Device moved for rebalancing |
 | | | `maintenance_drop_off` | Device introduced into service after being removed for maintenance |
-| | | `agency_drop_off` | The administrative agency (ie, DOT) drops a device into the PROW using an admin code or similar | 
-| `reserved` | A customer reserves a device (even if trip has not started yet) | `user_pick_up` | Customer reserves device |
+| | | `agency_drop_off` | The administrative agency (ie, DOT) drops a device into the PROW using an admin code or similar |
+| `reserved` | A customer reserves a device (even if trip has not started yet) | `user_pick_up` | Customer reserves device. Note that this event_type is deemed ambiguous right now: it can mean reserved as in possession, or reserved as in future hold. This issue will be remedied in a future version with an extra event_type. For now, different providers have implemented this in either way. |
 | `unavailable` | A device is on the street but becomes unavailable for customer use | `maintenance` | A device is no longer available due to equipment issues |
 | | | `low_battery` | A device is no longer available due to insufficient battery |
 | `removed` | A device is removed from the street and unavailable for customer use | `service_end` | Device removed from street because service has ended for the day (if program does not operate 24/7) |
@@ -385,12 +354,12 @@ Without an `event_time` query parameter, `/status_changes` shall return a `400 B
 
 ### GBFS
 
-All MDS compatible `provider` APIs must expose a public [GBFS](https://github.com/NABSA/gbfs) feed as well. Given that GBFS hasn't fully [evolved to support dockless mobility](https://github.com/NABSA/gbfs/pull/92) yet, we follow the current guidelines in making bike information avaliable to the public. 
+All MDS compatible `provider` APIs must expose a public [GBFS](https://github.com/NABSA/gbfs) feed as well. Given that GBFS hasn't fully [evolved to support dockless mobility](https://github.com/NABSA/gbfs/pull/92) yet, we follow the current guidelines in making bike information avaliable to the public.
 
-  - `gbfs.json` is always required and must contain a `feeds` property that lists all published feeds
-  - `system_information.json` is always required
-  - `free_bike_status.json` is required for MDS
-  - `station_information.json` and `station_status.json` don't apply for MDS
+* `gbfs.json` is always required and must contain a `feeds` property that lists all published feeds
+* `system_information.json` is always required
+* `free_bike_status.json` is required for MDS
+* `station_information.json` and `station_status.json` don't apply for MDS
 
 ### Events
 
@@ -404,16 +373,17 @@ Unless stated otherwise by the municipality, this endpoint must return only thos
 
 The schema and datatypes are the same as those defined for [`/status_changes`][status].
 
-Endpoint: `/events`  
-Method: `GET`  
-Schema: [`status_changes` schema][sc-schema]  
-`data` Payload: `{ "status_changes": [] }`, an array of objects with the same structure as in [`/status_changes`][status]
+**Endpoint:** `/events`  
+**Method:** `GET`  
+**[Beta feature](/general-information.md#beta-features):** Yes (as of 0.4.0)  
+**Schema:** [`events` schema][events-schema]  
+**`data` Payload:** `{ "status_changes": [] }`, an array of objects with the same structure as in [`/status_changes`][status]
 
-### Event Times
+#### Event Times
 
 Because of the unreliability of device clocks, the Provider is unlikely to know with total confidence what time an event occurred at. However, they are responsible for constructing as accurate a timeline as possible. Most importantly, the order of the timestamps for a particular device's events must reflect the Provider's best understanding of the order in which those events occurred.
 
-### Events Query Parameters
+#### Events Query Parameters
 
 The events API should allow querying with a combination of query parameters:
 
@@ -426,11 +396,59 @@ Should either side of the requested time range be missing, `/events` shall retur
 
 Should either side of the requested time range be greater than 2 weeks before the time of the request, `/events` shall return a `400 Bad Request` error.
 
+### Vehicles
+
+The `/vehicles` endpoint returns the current status of vehicles on the PROW. Only vehicles that are currently in available, unavailable, or reserved states should be returned in this payload. Data in this endpoint should reconcile with data from the `/status_changes` enpdoint. The data returned by this endpoint should be as close to realtime as possible, but in no case should it be more than 5 minutes out-of-date. As with other MDS APIs, `/vehicles` is intended for use by regulators, not by the general public. It does not replace the role of a [GBFS](https://github.com/NABSA/gbfs) feed in enabling consumer-facing applications.
+
+In addition to the standard [Provider payload wrapper](#response-format), responses from this endpoint should contain the last update timestamp and amount of time until the next update:
+
+```json
+{
+    "version": "x.y.z",
+    "data": {
+        "vehicles": []
+    },
+    "last_updated": "12345",
+    "ttl": "12345"
+}
+```
+
+Where `last_updated` and `ttl` are defined as follows:
+
+Field Name          | Required  | Defines
+--------------------| ----------| ----------
+last_updated        | Yes       | Timestamp indicating the last time the data in this feed was updated
+ttl                 | Yes       | Integer representing the number of milliseconds before the data in this feed will be updated again (0 if the data should always be refreshed).
+
+**Endpoint:** `/vehicles`  
+**Method:** `GET`  
+**[Beta feature](/general-information.md#beta-features):** Yes (as of 0.4.1)  
+**Schema:** [`vehicles` schema][vehicles-schema]  
+**`data` Payload:** `{ "vehicles": [] }`, an array of objects with the following structure
+
+| Field | Type | Required/Optional | Comments |
+| ----- | ---- | ----------------- | ----- |
+| `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS |
+| `provider_name` | String | Required | The public-facing name of the Provider |
+| `device_id` | UUID | Required | A unique device ID in UUID format, should match this device in Provider |
+| `vehicle_id` | String | Required | The Vehicle Identification Number visible on the vehicle itself, should match this device in provider |
+| `vehicle_type` | Enum | Required | see [vehicle types](#vehicle-types) table |
+| `propulsion_type` | Enum[] | Required | Array of [propulsion types](#propulsion-types); allows multiple values |
+| `last_event_time` | [timestamp][ts] | Required | Date/time when last status change occurred. See [Event Times](#event-times) |
+| `last_event_type` | Enum | Required | Event type of most recent status change. See [event types](#event-types) table |
+| `last_event_type_reason` | Enum | Required | Event type reason of most recent status change, allowable values determined by [`event type`](#event-types) |
+| `last_event_location` | GeoJSON [Point Feature][geo]| Required | Location of vehicle's last event |
+| `current_location` | GeoJSON [Point Feature][geo] | Required if Applicable | Current location of vehicle if different from last event, and the vehicle is not currently on a trip |
+| `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |
+
 [Top][toc]
 
+[general-information/versioning]: /general-information.md#versioning
 [geo]: #geographic-data
-[sc-schema]: status_changes.json
+[events-schema]: dockless/events.json
+[sc-schema]: dockless/status_changes.json
 [status]: #status-changes
 [toc]: #table-of-contents
-[trips-schema]: trips.json
+[trips-schema]: dockless/trips.json
 [ts]: #timestamps
+[vehicles-schema]: dockless/vehicles.json

@@ -7,6 +7,7 @@ This specification contains a collection of RESTful APIs used to specify the dig
 
 ## Table of Contents
 
+* [General Information](#general-information)
 * [Authorization](#authorization)
 * [Timestamps](#timestamps)
 * [Vehicles](#vehicles)
@@ -17,6 +18,16 @@ This specification contains a collection of RESTful APIs used to specify the dig
 * [Telemetry Data](#telemetry-data)
 * [Enum definitions](#enum-definitions)
 * [Responses](#responses)
+
+## General information
+
+The following information applies to all `agency` API endpoints. Details on providing authorization to endpoints is specified in the [Authorization](#authorization) section.
+
+### Versioning
+
+`agency` APIs must handle requests for specific versions of the specification from clients.
+
+Versioning must be implemented as specified in the [`General information versioning section`][general-information/versioning].
 
 ## Authorization
 
@@ -269,6 +280,7 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | `bicycle` |
 | `car`     |
 | `scooter` |
+| `moped`   |
 
 ### Propulsion Type
 
@@ -299,3 +311,8 @@ A vehicle may have one or more values from the `propulsion`, depending on the nu
 | `error`             | String   | Error message string   |
 | `error_description` | String   | Human readable error description (can be localized) |
 | `error_details`     | String[] | Array of error details |
+
+[Top][toc]
+
+[toc]: #table-of-contents
+[general-information/versioning]: /general-information.md#versioning
