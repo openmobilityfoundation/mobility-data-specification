@@ -32,15 +32,15 @@ None.
 
 ### Response
 
-| Name                           | Type       | Required | Comments                                                                                                  |
-| ------------------------------ | ---------- | -------- | --------------------------------------------------------------------------------------------------------- |
-| `supported_metrics`            | []         | Yes      | List of supported metrics.                                                                                |
-| `supported_metrics[].name`     | string[]   | Yes      | List of supported metric names. [See metric names](core_metrics.md)                                       |
-| `supported_metrics[].since`    | datetime   | Yes      | Earliest supported start date for fetching metrics.  Minute (MM) must be divisible by minimum `interval`. |
-| `supported_metrics[].interval` | duration[] | Yes      | A list of interval durations in ascending order.  Minimum (first) interval duration is the default.       |
-| `max_intervals`                | integer    | Yes      | Maximum number intervals that can be returned.                                                            |
-| `supported_dimensions`         | string[]   | Yes      | List of supported dimensions. [See dimensions.](core_metrics.md#dimensions)                               |
-| `supported_filters`            | string[]   | Yes      | List of supported filters for metrics. [See filters.](core_metrics.md#filters)                            |
+| Name                        | Type               | Required | Comments                                                                                                  |
+| --------------------------- | ------------------ | -------- | --------------------------------------------------------------------------------------------------------- |
+| `supported_metrics`         | supported_metric[] | Yes      | List of supported metrics.                                                                                |
+| `supported_metric.name`     | string[]           | Yes      | List of supported metric names. [See metric names](core_metrics.md)                                       |
+| `supported_metric.since`    | datetime           | Yes      | Earliest supported start date for fetching metrics.  Minute (MM) must be divisible by minimum `interval`. |
+| `supported_metric.interval` | duration[]         | Yes      | A list of interval durations in ascending order.  Minimum (first) interval duration is the default.       |
+| `max_intervals`             | integer            | Yes      | Maximum number intervals that can be returned.                                                            |
+| `supported_dimensions`      | string[]           | Yes      | List of supported dimensions. [See dimensions.](core_metrics.md#dimensions)                               |
+| `supported_filters`         | string[]           | Yes      | List of supported filters for metrics. [See filters.](core_metrics.md#filters)                            |
 
 ### Response Schema
 ```js
@@ -102,33 +102,33 @@ Supports querying one or more metrics with the following parameters.
 
 ### Parameters
 
-| Name              | Type     | Required | Comments                                                                            |
-| ----------------- | -------- | -------- | ----------------------------------------------------------------------------------- |
-| `metrics`         | string[] | Yes      | list of metrics to return. [See metric names](core_metrics.md)                      |
-| `start_date`      | datetime | Yes      | Start date to fetch metrics.  Minute (MM) must be divisible the specified interval. |
-| `interval`        | duration | Yes      | Duration for metrics intervals.                                                     |
-| `interval_count`  | integer  | No       | Number of intervals to return. Default = 1                                          |
-| `dimensions`      | string[] | No       | List of dimension names. [See dimensions.](#dimensions)                             |
-| `filters`         | filter[] | No       | Filters for metrics to return of format. [See filters.](#filters)                   |
-| `filter[].name`   | string   | No       | Name of filter (e.g. 'vehicle_type')                                                |
-| `filter[].values` | string[] | No       | List of values to filter for (e.g ['car', 'moped'])                                 |
+| Name             | Type     | Required | Comments                                                                            |
+| ---------------- | -------- | -------- | ----------------------------------------------------------------------------------- |
+| `metrics`        | string[] | Yes      | list of metrics to return. [See metric names](core_metrics.md)                      |
+| `start_date`     | datetime | Yes      | Start date to fetch metrics.  Minute (MM) must be divisible the specified interval. |
+| `interval`       | duration | Yes      | Duration for metrics intervals.                                                     |
+| `interval_count` | integer  | No       | Number of intervals to return. Default = 1                                          |
+| `dimensions`     | string[] | No       | List of dimension names. [See dimensions.](#dimensions)                             |
+| `filters`        | filter[] | No       | Filters for metrics to return of format. [See filters.](#filters)                   |
+| `filter.name`    | string   | No       | Name of filter (e.g. 'vehicle_type')                                                |
+| `filter.values`  | string[] | No       | List of values to filter for (e.g ['car', 'moped'])                                 |
 
 ### Response
 
-| Name                    | Type       | Required | Comments                                                        |
-| ----------------------- | ---------- | -------- | --------------------------------------------------------------- |
-| `id`                    | uuid       | Yes      | Unique id for query                                             |
-| `query.metrics`         | string[]   | Yes      | List of metrics to return.                                      |
-| `query.start_date`      | datetime   | Yes      | Start date for fetched metrics.                                 |
-| `query.interval`        | duration   | Yes      | Duration for metrics intervals.                                 |
-| `query.interval_count`  | integer    | Yes      | Number of intervals to return.                                  |
-| `query.dimensions`      | string[]   | No       | List of dimensions.                                             |
-| `query.filters`         | filter[]   | No       | Filters for metric calculation.                                 |
-| `columns`               | []         | Yes      | Array of column information                                     |
-| `columns[].name`        | string     | Yes      | Name of metric or dimension column.                             |
-| `columns[].column_type` | string     | Yes      | ‘metric’ or ‘dimension’                                         |
-| `columns[].data_type`   | string     | Yes      | Data type of column.                                            |
-| `rows`                  | string[][] | Yes      | Array of row arrays containing the dimension and metric values. |
+| Name                   | Type       | Required | Comments                                                        |
+| ---------------------- | ---------- | -------- | --------------------------------------------------------------- |
+| `id`                   | uuid       | Yes      | Unique id for query                                             |
+| `query.metrics`        | string[]   | Yes      | List of metrics to return.                                      |
+| `query.start_date`     | datetime   | Yes      | Start date for fetched metrics.                                 |
+| `query.interval`       | duration   | Yes      | Duration for metrics intervals.                                 |
+| `query.interval_count` | integer    | Yes      | Number of intervals to return.                                  |
+| `query.dimensions`     | string[]   | No       | List of dimensions.                                             |
+| `query.filters`        | filter[]   | No       | Filters for metric calculation.                                 |
+| `columns`              | column[]   | Yes      | Array of column information                                     |
+| `column.name`          | string     | Yes      | Name of metric or dimension column.                             |
+| `column.column_type`   | string     | Yes      | ‘metric’ or ‘dimension’                                         |
+| `column.data_type`     | string     | Yes      | Data type of column.                                            |
+| `rows`                 | values[][] | Yes      | Array of row arrays containing the dimension and metric values. |
 
 ### Response Schema
 ```js
