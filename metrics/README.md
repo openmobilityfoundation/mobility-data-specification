@@ -43,7 +43,7 @@ None.
 | `supported_filters`            | string[]   | Yes      | List of supported filters for metrics. [See filters.](core_metrics.md#filters)                            |
 
 ### Response Schema
-```json
+```js
 {
   "supported_metrics": [
     {
@@ -60,7 +60,7 @@ None.
 
 ### Example
 #### Request
-```json
+```js
 GET /metrics
 ```
 #### Response
@@ -131,7 +131,7 @@ Supports querying one or more metrics with the following parameters.
 | `rows`                  | string[][] | Yes      | Array of row arrays containing the dimension and metric values. |
 
 ### Response Schema
-```json
+```js
 {
   "id": string,
   "query": {
@@ -162,7 +162,7 @@ Supports querying one or more metrics with the following parameters.
 
 ### Example
 #### Request
-```json
+```js
 POST /metrics
 {
   "metrics": ["dockless.utilization","trips"],
