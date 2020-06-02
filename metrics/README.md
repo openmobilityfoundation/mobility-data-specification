@@ -32,20 +32,20 @@ None.
 
 ### Response
 
-| Name                        | Type               | Required | Comments                                                                                                  |
-| --------------------------- | ------------------ | -------- | --------------------------------------------------------------------------------------------------------- |
-| `supported_metrics`         | supported_metric[] | Yes      | List of supported metrics.                                                                                |
-| `supported_metric.name`     | string[]           | Yes      | List of supported metric names. [See metric names](core_metrics.md)                                       |
-| `supported_metric.since`    | datetime           | Yes      | Earliest supported start date for fetching metrics.  Minute (MM) must be divisible by minimum `interval`. |
-| `supported_metric.interval` | duration[]         | Yes      | A list of interval durations in ascending order.  Minimum (first) interval duration is the default.       |
-| `max_intervals`             | integer            | Yes      | Maximum number intervals that can be returned.                                                            |
-| `supported_dimensions`      | string[]           | Yes      | List of supported dimensions. [See dimensions.](core_metrics.md#dimensions)                               |
-| `supported_filters`         | string[]           | Yes      | List of supported filters for metrics. [See filters.](core_metrics.md#filters)                            |
+| Name              | Type       | Required | Comments                                                                                                  |
+| ----------------- | ---------- | -------- | --------------------------------------------------------------------------------------------------------- |
+| `metrics`         | metric[]   | Yes      | List of supported metrics.                                                                                |
+| `metric.name`     | string[]   | Yes      | List of supported metric names. [See metric names](core_metrics.md)                                       |
+| `metric.since`    | datetime   | Yes      | Earliest supported start date for fetching metrics.  Minute (MM) must be divisible by minimum `interval`. |
+| `metric.interval` | duration[] | Yes      | A list of interval durations in ascending order.  Minimum (first) interval duration is the default.       |
+| `max_intervals`   | integer    | Yes      | Maximum number intervals that can be returned.                                                            |
+| `dimensions`      | string[]   | Yes      | List of supported dimensions. [See dimensions.](core_metrics.md#dimensions)                               |
+| `filters`         | string[]   | Yes      | List of supported filters for metrics. [See filters.](core_metrics.md#filters)                            |
 
 ### Response Schema
 ```js
 {
-  "supported_metrics": [
+  "metrics": [
     {
       "name": [string],
       "since": datetime,
@@ -53,8 +53,8 @@ None.
     }
   ],
   "max_intervals": number,
-  "supported_dimensions": [string],
-  "supported_filters": [string]
+  "dimensions": [string],
+  "filters": [string]
 }
 ```
 
@@ -66,7 +66,7 @@ GET /metrics
 #### Response
 ```json
 {
-  "supported_metrics": [
+  "metrics": [
     {
       "name": ["dockless.utilization"],
       "since": "2019-01-01T00:00-07",
@@ -79,12 +79,12 @@ GET /metrics
     }
   ],
   "max_intervals": 10000,
-  "supported_dimensions": [
+  "dimensions": [
     "provider_id",
     "vehicle_type",
     "geography_id"
   ],
-  "supported_filters": [
+  "filters": [
     "provider_id",
     "vehicle_type",
     "geography_id"
