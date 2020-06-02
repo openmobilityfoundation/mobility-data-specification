@@ -96,38 +96,6 @@ Response codes:
 - 404 - not found
 - 500 - Server error
 
-### POST /Jurisdictions/
-
-Create one or many Jurisdictions. The Jurisdiction(s) desired must be formatted in JSON and submitted in the request body.
-
-Response codes:
-- 201 - Success
-- 400 - Validation error. E.g. the submitted `jurisdiction_id` was not a UUID.
-- 403 - Unauthorized
-- 409 - Conflict error. E.g. the backend already has a Jurisdiction with the same `agency_key` as the POSTed Jurisdiction.
-- 500 - server error
-
-### PUT /Jurisdictions/:jurisdiction_id
-
-Edit a Jurisdiction. The response body must contain the entire Jurisdiction object with the desired changes.
-
-Response codes:
-- 201 - Success
-- 400 - Validation error
-- 403 - Unauthorized
-- 404 - Jurisdiction not found
-- 500 - Server error
-
-### DELETE /Jurisdictions/:jurisdiction_id
-
-Delete a Jurisdiction.
-
-Response codes:
-- 200 - Success
-- 403 - Unauthorized
-- 404 - Jurisdiction not found
-- 500 - Server error
-
 [Flat files](#flat-files)
 To use flat files, Jurisdictions shall be represented in the following file:
 
