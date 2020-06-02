@@ -18,17 +18,17 @@ The following information applies to all `provider` API endpoints. Details on pr
 
 Currently, the provider API is implemented for shared dockless scooters, bikes, cars and mopeds. To implement another mode, please submit a PR.
 
-This specification uses data types including timestamps, UUIDs, and vehicle state definitions as described in the MDS [Shared Definitions](#../shared/README.md) document.
+This specification uses data types including timestamps, UUIDs, and vehicle state definitions as described in the MDS [General Information][general-information] document.
 
 ### Versioning
 
 `provider` APIs must handle requests for specific versions of the specification from clients.
 
-Versioning must be implemented as specified in the [`General information versioning section`][general-information/versioning].
+Versioning must be implemented as specified in the [`General information versioning section`][versioning].
 
 ### Response Format
 
-The response to a client request must include a valid HTTP status code defined in the [IANA HTTP Status Code Registry](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml). It also must set the `Content-Type` header, as specified in the [Versioning](#Versioning) section.
+The response to a client request must include a valid HTTP status code defined in the [IANA HTTP Status Code Registry](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml). It also must set the `Content-Type` header, as specified in the [Versioning][versioning] section.
 
 Response bodies must be a `UTF-8` encoded JSON object and must minimally include the MDS `version` and a `data` payload:
 
@@ -147,13 +147,13 @@ For the purposes of this specification, the intersection of two geographic datat
 
 Municipalities requiring MDS Provider API compliance should provide an unambiguous digital source for the municipality boundary. This boundary must be used when determining which data each `provider` API endpoint will include.  
 
-The boundary should be defined as a polygon or collection of polygons. The file defining the boundary should be provided in Shapefile or GeoJSON format and hosted online at a published address that all providers and `provider` API consumers can access and download.The boundary description can be sent as a reference to an object via the Geography API, or a reference to a Geography via the Jurisdiction API.  
+The boundary should be defined as a polygon or collection of polygons. The file defining the boundary should be provided in Shapefile or GeoJSON format and hosted online at a published address that all providers and `provider` API consumers can access and download. The boundary description can be sent as a reference to an object via the Geography API, or a reference to a Geography via the Jurisdiction API.  
 
 Providers are not required to recalculate the set of historical data that is included when the municipality boundary changes. All new data must use the updated municipality boundary.
 
 ### Timestamps, Vehicle Types, Propulsion Types, UUIDs, Costs & Currencies
 
-Please refer to the MDS [Shared Definitions](#../shared/README.md) document.
+Please refer to the MDS [General Information][general-information] document.
 
 [Top][toc]
 
@@ -188,9 +188,9 @@ Unless stated otherwise by the municipality, the trips endpoint must return all 
 | `end_time` | [timestamp][ts] | Required | |
 | `publication_time` | [timestamp][ts] | Optional | Date/time that trip became available through the trips endpoint |
 | `parking_verification_url` | String | Optional | A URL to a photo (or other evidence) of proper vehicle parking |
-| `standard_cost` | Integer | Optional | The cost, in the currency defined in `currency`, that it would cost to perform that trip in the standard operation of the System (see [Costs & Currencies](../shared/README.md#costs--currencies)) |
-| `actual_cost` | Integer | Optional | The actual cost, in the currency defined in `currency`, paid by the customer of the *mobility as a service* provider (see [Costs & Currencies](../shared/README.md#costs--currencies)) |
-| `currency` | String | Optional, USD cents is implied if null.| An [ISO 4217 Alphabetic Currency Code](https://en.wikipedia.org/wiki/ISO_4217#Active_codes) representing the currency of the payee (see [Costs & Currencies](../shared/README.md#costs--currencies)) |
+| `standard_cost` | Integer | Optional | The cost, in the currency defined in `currency`, that it would cost to perform that trip in the standard operation of the System (see [Costs & Currencies][costs-and-currencies]) |
+| `actual_cost` | Integer | Optional | The actual cost, in the currency defined in `currency`, paid by the customer of the *mobility as a service* provider (see [Costs & Currencies][costs-and-currencies]) |
+| `currency` | String | Optional, USD cents is implied if null.| An [ISO 4217 Alphabetic Currency Code](https://en.wikipedia.org/wiki/ISO_4217#Active_codes) representing the currency of the payee (see [Costs & Currencies][costs-and-currencies]) |
 
 ### Trips Query Parameters
 
@@ -320,7 +320,7 @@ The schema and datatypes are the same as those defined for [`/status_changes`][s
 
 **Endpoint:** `/events`  
 **Method:** `GET`  
-**[Beta feature](/general-information.md#beta-features):** Yes (as of 0.4.0)  
+**[Beta feature][beta]:** Yes (as of 0.4.0)  
 **Schema:** [`events` schema][events-schema]  
 **`data` Payload:** `{ "status_changes": [] }`, an array of objects with the same structure as in [`/status_changes`][status]
 
@@ -367,7 +367,7 @@ ttl                 | Yes       | Integer representing the number of millisecond
 
 **Endpoint:** `/vehicles`  
 **Method:** `GET`  
-**[Beta feature](/general-information.md#beta-features):** Yes (as of 0.4.1)  
+**[Beta feature][beta]:** Yes (as of 0.4.1)  
 **Schema:** [`vehicles` schema][vehicles-schema]  
 **`data` Payload:** `{ "vehicles": [] }`, an array of objects with the following structure
 
@@ -377,23 +377,29 @@ ttl                 | Yes       | Integer representing the number of millisecond
 | `provider_name` | String | Required | The public-facing name of the Provider |
 | `device_id` | UUID | Required | A unique device ID in UUID format, should match this device in Provider |
 | `vehicle_id` | String | Required | The Vehicle Identification Number visible on the vehicle itself, should match this device in provider |
-| `vehicle_type` | Enum | Required | see [vehicle types](#vehicle-types) table |
-| `propulsion_type` | Enum[] | Required | Array of [propulsion types](#propulsion-types); allows multiple values |
-| `last_event_time` | [timestamp][ts] | Required | Date/time when last status change occurred. See [Event Times](#event-times) |
-| `last_event_type` | Enum | Required | Event type of most recent status change. See [event types](#event-types) table |
-| `last_event_type_reason` | Enum | Required | Event type reason of most recent status change, allowable values determined by [`event type`](#event-types) |
+| `vehicle_type` | Enum | Required | see [vehicle types][vehicle-types] table |
+| `propulsion_type` | Enum[] | Required | Array of [propulsion types][propulsion-types]; allows multiple values |
+| `last_event_time` | [timestamp][timestamps] | Required | Date/time when last state change occurred. See [Event Times](#event-times) |
+| `last_vehicle_state` | Enum | Required | Event type of most recent state change. See [vehicle states][vehicle-states] table |
+| `last_vehicle_events` | Enum[] | Required | Event type reason(s) of most recent state change, allowable values determined by [`event type`](#event-types) |
 | `last_event_location` | GeoJSON [Point Feature][geo]| Required | Location of vehicle's last event |
 | `current_location` | GeoJSON [Point Feature][geo] | Required if Applicable | Current location of vehicle if different from last event, and the vehicle is not currently on a trip |
 | `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |
 
 [Top][toc]
 
-[general-information/versioning]: /general-information.md#versioning
+[toc]: #table-of-contents
 [geo]: #geographic-data
+[status]: #status-changes
+[timestamps]: /general-information.md#timestamps
+[beta]: /general-information.md#beta
+[versioning]: /general-information.md#versioning
+[vehicle-types]: /general-information.md#vehicle-types
+[vehicle-states]: /general-information.md#vehicle-states
+[vehicle-events]: /general-information.md#vehicle-events
+[propulsion-types]: /general-information.md#propulsion-types
+[costs-and-currencies]: /general-information.md#costs-and-currencies
 [events-schema]: dockless/events.json
 [sc-schema]: dockless/status_changes.json
-[status]: #status-changes
-[toc]: #table-of-contents
 [trips-schema]: dockless/trips.json
-[ts]: #timestamps
 [vehicles-schema]: dockless/vehicles.json

@@ -19,7 +19,7 @@ The following information applies to all `policy` API endpoints.
 
 `policy` APIs must handle requests for specific versions of the specification from clients.
 
-Versioning must be implemented as specified in the [`General information versioning section`][general-information/versioning].
+Versioning must be implemented as specified in the [`General information versioning section`][versioning].
 
 ## Background
 
@@ -33,7 +33,7 @@ The goal of this specification is to enable Agencies to create, revise, and publ
 
 The machine-readable format allows Providers to obtain policies and compute compliance where it can be determined entirely by data obtained internally.
 
-[Top](#table-of-contents)
+[Top][toc]
 
 ## Distribution
 
@@ -109,18 +109,6 @@ Policies will be returned in order of effective date (see schema below), with pa
 
 `provider_id` is an implicit parameter and will be encoded in the authentication mechanism, or a complete list of policies should be produced. If the Agency decides that Provider-specific policy documents should not be shared with other Providers (e.g. punitive policy in response to violations), an Agency should filter policy objects before serving them via this endpoint.
 
-#### Geographies
-
-Endpoint: `/geographies/{id}`  
-Method: `GET`  
-`data` Payload: `{ geographies: [] }`, an array of GeoJSON `Feature` objects.
-
-##### Query Parameters
-
-| Name         | Type      | Required / Optional | Description                                    |
-| ------------ | --------- | --- | ---------------------------------------------- |
-| `id`         | UUID      | Optional    | If provided, returns one geography object with the matching UUID; default is to return all geography objects.               |
-
 ### Flat Files
 
 To use flat files, policies shall be represented in two (2) files:
@@ -175,7 +163,7 @@ The optional `end_date` field applies to all policies represented in the file.
 }
 ```
 
-[Top](#table-of-contents)
+[Top][toc]
 
 ## Schema
 
@@ -291,13 +279,15 @@ If a vehicle is matched with a rule, then it _will not_ be considered in the sub
 
 The internal mechanics of ordering are up to the Policy editing and hosting software.
 
-[Top](#table-of-contents)
+[Top][toc]
 
+[toc]: #table-of-contents
 [iana]: https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
 [muni-boundary]: ../provider/README.md#municipality-boundary
-[versioning]: ../provider/README.md#versioning
-[vehicle-types]: ../shared/README.md#vehicle-types
-[vehicle-states]: ../shared/README.md#vehicle-states
-[vehicle-events]: ../shared/README.md#vehicle-events
-[propulsion-types]: ../shared/README.md#propulsion-types
-[general-information/versioning]: /general-information.md#versioning
+[timestamps]: /general-information.md#timestamps
+[beta]: /general-information.md#beta
+[versioning]: /general-information.md#versioning
+[vehicle-types]: /general-information.md#vehicle-types
+[vehicle-states]: /general-information.md#vehicle-states
+[vehicle-events]: /general-information.md#vehicle-events
+[propulsion-types]: /general-information.md#propulsion-types
