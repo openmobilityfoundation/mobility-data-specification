@@ -1,6 +1,6 @@
 # Mobility Data Specification: **General information**
 
-This document contains specifications that are shared between the various MDS APIs such as `agency`, `provider` and `policy`.
+This document contains specifications that are shared between the various MDS APIs such as [`agency`][agency], [`policy`][policy], and [`provider`][provider].
 
 ## Table of Contents
 
@@ -221,4 +221,7 @@ The client can use the returned value verbatim as a version request in the `Acce
 
 [Top][toc]
 
+[agency]: /agency/README.md
+[policy]: /policy/README.md
+[provider]: /provider/README.md
 [toc]: #table-of-contents
