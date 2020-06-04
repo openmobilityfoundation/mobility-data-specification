@@ -145,7 +145,7 @@ In a multi-jurisdiction environment, the status of a vehicle is per-jurisdiction
 | `available`   | yes | Available for rental via the Provider's app. In PROW. |
 | `unavailable` | yes | Not available for rent.  Examples include: vehicle has low battery, or currently outside legal operating hours. |
 | `reserved`    | yes | Reserved via Provider's app, waiting to be picked up by a rider. |
-| `trip`        | yes | In posession of renter.  May or may not be in motion. |
+| `trip`        | yes | In possession of renter.  May or may not be in motion. |
 | `elsewhere`   | no | Outside of regulator's jurisdiction, and thus not subject to cap-counts or other regulations. Example: a vehicle that started a trip in L.A. has transitioned to Santa Monica.  |
 | `unknown`     | unknown | Provider has lost contact with the vehicle and its disposition is unknown.  Examples include: taken into a private residence, thrown in river. |
 
