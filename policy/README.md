@@ -19,7 +19,7 @@ The following information applies to all `policy` API endpoints.
 
 `policy` APIs must handle requests for specific versions of the specification from clients.
 
-Versioning must be implemented as specified in the [`General information versioning section`][versioning].
+Versioning must be implemented as specified in the [Versioning section][versioning].
 
 ## Background
 
@@ -63,31 +63,11 @@ Among other use-cases, configuring a REST API allows an Agency to:
 
 Responses must set the `Content-Type` header, as specified in the [Provider versioning][versioning] section.
 
-#### HTTP Response Codes
+#### Responses and Error Messages
 
-The response to a client request must include a valid HTTP status code defined in the [IANA HTTP Status Code Registry][iana]
+The response to a client request must include a valid HTTP status code defined in the [IANA HTTP Status Code Registry][iana].
 
-- **200:** OK: operation successful.
-- **400:** Bad request.
-- **401:** Unauthorized: Invalid, expired, or insufficient scope of token.
-- **404:** Not Found: Object(s) do not exist.
-- **500:** Internal server error.
-
-#### Error Responses
-
-```json
-{
-    "error": "...",
-    "error_description": "...",
-    "error_details": [ "...", "..." ]
-}
-```
-
-| Field               | Type     | Field Description      |
-| ------------------- | -------- | ---------------------- |
-| `error`             | String   | Error message string   |
-| `error_description` | String   | Human readable error description (can be localized) |
-| `error_details`     | String[] (optional) | Array of error details |
+See the [Responses section][responses] for information on valid MDS response codes and the [Error Messages section][error-messages] for information on formatting error messages.
 
 #### Policies
 
@@ -281,13 +261,13 @@ The internal mechanics of ordering are up to the Policy editing and hosting soft
 
 [Top][toc]
 
-[toc]: #table-of-contents
+[beta]: /general-information.md#beta
 [iana]: https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
 [muni-boundary]: ../provider/README.md#municipality-boundary
-[timestamps]: /general-information.md#timestamps
-[beta]: /general-information.md#beta
-[versioning]: /general-information.md#versioning
-[vehicle-types]: /general-information.md#vehicle-types
-[vehicle-states]: /general-information.md#vehicle-states
-[vehicle-events]: /general-information.md#vehicle-events
 [propulsion-types]: /general-information.md#propulsion-types
+[timestamps]: /general-information.md#timestamps
+[toc]: #table-of-contents
+[vehicle-events]: /general-information.md#vehicle-state-events
+[vehicle-states]: /general-information.md#vehicle-states
+[vehicle-types]: /general-information.md#vehicle-types
+[versioning]: /general-information.md#versioning

@@ -23,15 +23,11 @@ This specification uses data types including timestamps, UUIDs, and vehicle stat
 
 `agency` APIs must handle requests for specific versions of the specification from clients.
 
-Versioning must be implemented as specified in the [`General information versioning section`][versioning].
+Versioning must be implemented as specified in the [Versioning section][versioning].
 
-### Responses
+### Responses and Error Messages
 
-See [responses][responses]
-
-### Error Message Format
-
-See [error message format][error-message-format]
+See the [Responses][responses] and [Error Messages][error-messages] sections.
 
 ### Authorization
 
@@ -54,10 +50,10 @@ Path Params:
 
 If `device_id` is specified, `GET` will return a single vehicle record, otherwise it will be a list of vehicle records with pagination details per the [JSON API](https://jsonapi.org/format/#fetching-pagination) spec:
 
-```
+```json
 {
-	"vehicles": [ ... ]
- 	"links": {
+    "vehicles": [ ... ]
+    "links": {
         "first": "https://...",
         "last": "https://...",
         "prev": "https://...",
@@ -240,9 +236,9 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 [general]: /general-information.md
 [versioning]: /general-information.md#versioning
 [responses]: /general-information.md#responses
-[error-message-format]: /general-information.md#error-message-format
+[error-messages]: /general-information.md#error-messages
 [vehicle-types]: /general-information.md#vehicle-types
 [vehicle-states]: /general-information.md#vehicle-states
-[vehicle-events]: /general-information.md#vehicle-events
+[vehicle-events]: /general-information.md#vehicle-state-events
 [propulsion-types]: /general-information.md#propulsion-types
 [hdop]: https://support.esri.com/en/other-resources/gis-dictionary/term/358112bd-b61c-4081-9679-4fca9e3eb926
