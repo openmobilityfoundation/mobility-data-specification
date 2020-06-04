@@ -161,11 +161,11 @@ Note that to handle out-of-order events, the validity of the prior-state shall n
 | any | `unknown`     | `missing`            | The vehicle is not at its last reported GPS location, or that location is wildly in error |
 | any | `unknown`     | `out_of_comms`       | The vehicle is unable to transmit its GPS location |
 
-NOTES: 
+NOTES:
 
 Should we try to handle "unlicensed movements"?
 
-What's the best way to return from `unknown`? 
+What's the best way to return from `unknown`?
 
 [Top][toc]
 
@@ -197,9 +197,10 @@ Accept: application/vnd.mds+json;version=0.3
 ```
 
 > Since versioning was not available from the start, the following APIs provide a fallback version if the `Accept` header is not set as specified above:
-> - The `provider` API must respond as if version `0.2` was requested.
-> - The `agency` API must respond as if version `0.3` was requested.
-> - The `policy` API must respond as if version `0.4` was requested.
+>
+> * The `provider` API must respond as if version `0.2` was requested.
+> * The `agency` API must respond as if version `0.3` was requested.
+> * The `policy` API must respond as if version `0.4` was requested.
 
 If an unsupported or invalid version is requested, the API must respond with a status of `406 Not Acceptable`. If this occurs, a client can explicitly negotiate available versions.
 
