@@ -153,7 +153,7 @@ In a multi-jurisdiction environment, the status of a vehicle is per-jurisdiction
 
 This is the list of `vehicle_state` and `event_type` pairings that constitute the valid transitions of the vehicle state machine.
 
-Note that to handle out-of-order events, the validity of the prior-state is not enforced at the time of ingest via Provider or Agency.  Events received out-of-order may result in transient incorrect vehicle states.
+Note that to handle out-of-order events, the validity of the prior-state shall not be enforced at the time of ingest via Provider or Agency.  Events received out-of-order may result in transient incorrect vehicle states.
 
 | Valid prior `vehicle_state` values | `vehicle_state` | `event_type` |  Description |
 | --- | --- | --- | --- |
