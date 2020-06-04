@@ -137,17 +137,17 @@ A vehicle may have one or more values from the `propulsion`, depending on the nu
 
 This table describes the list of vehicle conditions that may be used by regulators to assess the disposition of individual vehicles and fleets of vehicles.  Some of these states describe vehicles in the Public Right-of-Way (PROW), and others represent vehicles that are not.  One state (`unknown`) implies that PROW status is unknown.
 
-In a multi-jurisdiction environment, the status of a vehicle is per-jurisdiction.  For example, a vehicle may be in the `trip` status for a county that contains five cities, and also in the `trip` status for one of those cities, but `elsewhere` for the other four cities.  In such a condition, generally a Provider would send the device data to the over-arching jurisdiction (the county) and the vehicle state with respect to each city would be determined by the Agency managing the jurisdictions.
+In a multi-jurisdiction environment, the status of a vehicle is per-jurisdiction.  For example, a vehicle may be in the `on_trip` status for a county that contains five cities, and also in the `on_trip` status for one of those cities, but `elsewhere` for the other four cities.  In such a condition, generally a Provider would send the device data to the over-arching jurisdiction (the county) and the vehicle state with respect to each city would be determined by the Agency managing the jurisdictions.
 
 | `vehicle_state` | In PROW? | Description |
 | --- | --- | --- |
-| `removed`     | no | Examples include: at the Provider's warehouse, in a Provider's truck, or destroyed and in a landfill. |
-| `available`   | yes | Available for rental via the Provider's app. In PROW. |
-| `unavailable` | yes | Not available for rent.  Examples include: vehicle has low battery, or currently outside legal operating hours. |
-| `reserved`    | yes | Reserved via Provider's app, waiting to be picked up by a rider. |
-| `trip`        | yes | In possession of renter.  May or may not be in motion. |
-| `elsewhere`   | no | Outside of regulator's jurisdiction, and thus not subject to cap-counts or other regulations. Example: a vehicle that started a trip in L.A. has transitioned to Santa Monica.  |
-| `unknown`     | unknown | Provider has lost contact with the vehicle and its disposition is unknown.  Examples include: taken into a private residence, thrown in river. |
+| `removed`         | no | Examples include: at the Provider's warehouse, in a Provider's truck, or destroyed and in a landfill. |
+| `available`       | yes | Available for rental via the Provider's app. In PROW. |
+| `non_operational` | yes | Not available for rent.  Examples include: vehicle has low battery, or currently outside legal operating hours. |
+| `reserved`        | yes | Reserved via Provider's app, waiting to be picked up by a rider. |
+| `on_trip`         | yes | In possession of renter.  May or may not be in motion. |
+| `elsewhere`       | no | Outside of regulator's jurisdiction, and thus not subject to cap-counts or other regulations. Example: a vehicle that started a trip in L.A. has transitioned to Santa Monica.  |
+| `unknown`         | unknown | Provider has lost contact with the vehicle and its disposition is unknown.  Examples include: taken into a private residence, thrown in river. |
 
 ## Vehicle Events
 
@@ -157,37 +157,35 @@ Note that to handle out-of-order events, the validity of the prior-state shall n
 
 | Valid prior `vehicle_state` values | `vehicle_state` | `event_type` |  Description |
 | --- | --- | --- | --- |
-| `unavailable` | `available`   | `battery_charged`    | The vehicle became available because its battery is now charged. |
-| `unavailable` | `available`   | `on_hours`           | The vehicle has entered operating hours (per the regulator or per the provider) |
+| `non_operational` | `available`   | `battery_charged`    | The vehicle became available because its battery is now charged. |
+| `non_operational` | `available`   | `on_hours`           | The vehicle has entered operating hours (per the regulator or per the provider) |
 | `removed`, `elsewhere`, `unknown` | `available`   | `provider_drop_off`  | The vehicle was placed in the PROW by the provider |
 | `removed`, `elsewhere`, `unknown` | `available`   | `agency_drop_off`    | The vehicle was placed in the PROW by a city or county |
-| `unavailable` | `available`   | `maintenance`        | The vehicle was previously in need of maintenance |
-| `trip` | `available`   | `trip_end`           | A trip has ended, and the vehicle is again available for rent |
+| `non_operational` | `available`   | `maintenance`        | The vehicle was previously in need of maintenance |
+| `on_trip` | `available`   | `trip_end`           | A trip has ended, and the vehicle is again available for rent |
 | `reserved` | `available`   | `reservation_cancel` | A reservation was canceled and the vehicle returned to service |
-| `trip` | `available`   | `trip_cancel`        | A trip was initiated, then canceled prior to moving any distance |
-| `unavailable`, `unknown`, `removed`, `reserved`, `elsewhere` | `available`   | `unspecified`        | The vehicle became available, but the provider cannot definitively (yet) specify the reason.  Generally, regulator Service-Level Agreements will limit the amount of time a vehicle's last event type may be `unspecified`. |
+| `on_trip` | `available`   | `trip_cancel`        | A trip was initiated, then canceled prior to moving any distance |
+| `non_operational` | `available` | `system_resume`          | The vehicle is available because e.g. weather suspension or temporary regulations ended |
+| `non_operational`, `unknown`, `removed`, `reserved`, `elsewhere` | `available`   | `unspecified`        | The vehicle became available, but the provider cannot definitively (yet) specify the reason.  Generally, regulator Service-Level Agreements will limit the amount of time a vehicle's last event type may be `unspecified`. |
 | `available` | `reserved`    | `reservation_start`  | The vehicle was reserved for use by a customer |
-| `available`, `reserved` | `trip`        | `trip_start`         | A customer initiated a trip with this vehicle |
-| `elsewhere` | `trip`        | `trip_enter_jurisdiction` | A vehicle on a trip entered the jurisdiction |
-| `trip` | `elsewhere`   | `trip_leave_jurisdiction` | A vehicle on a trip left the jurisdiction |
-| `available` | `unavailable` | `low_battery`        | The vehicle's battery is below some rentability threshold |
-| `available` | `unavailable` | `maintenance`        | The vehicle requires some non-charge-related maintenance |
-| `available` | `unavailable` | `off_hours`          | The vehicle has exited operating hours (per the regulator or per the Provider) |
-| `available` | `unavailable` | `unspecified`        | The vehicle became unavailable, but he Provider cannot definitively (yet) specify the reason. |
-| `available`, `unavailable`, `elsewhere` | `removed`     | `rebalance_pick_up`  | The provider picked up the vehicle for rebalancing purposes |
-| `available`, `unavailable`, `elsewhere` | `removed`     | `maintenance_pick_up` | The provider picked up the vehicle to service it |
+| `available`, `reserved` | `on_trip`        | `trip_start`         | A customer initiated a trip with this vehicle |
+| `elsewhere` | `on_trip`        | `trip_enter_jurisdiction` | A vehicle on a trip entered the jurisdiction |
+| `on_trip` | `elsewhere`   | `trip_leave_jurisdiction` | A vehicle on a trip left the jurisdiction |
+| `available` | `non_operational` | `low_battery`        | The vehicle's battery is below some rentability threshold |
+| `available` | `non_operational` | `maintenance`        | The vehicle requires some non-charge-related maintenance |
+| `available` | `non_operational` | `off_hours`          | The vehicle has exited operating hours (per the regulator or per the Provider) |
+| `available` | `non_operational` | `system_suspend`          | The vehicle is not available because of e.g. weather or temporary regulations |
+| `available` | `non_operational` | `unspecified`        | The vehicle became unavailable, but he Provider cannot definitively (yet) specify the reason. |
+| `available`, `non_operational`, `elsewhere` | `removed`     | `rebalance_pick_up`  | The provider picked up the vehicle for rebalancing purposes |
+| `available`, `non_operational`, `elsewhere` | `removed`     | `maintenance_pick_up` | The provider picked up the vehicle to service it |
 | any | `removed`     | `agency_pick_up`     | An agency picked up the vehicle for some reason, e.g. illegal placement |
-| `available`, `unavailable`, `elsewhere` | `removed`     | `compliance_pick_up` | The provider picked up the vehicle because it was placed in a non-compliant location |
-| `available`, `unavailable`, `removed`, `elsewhere`, `unknown` | `removed`     | `decommissioned`     | The provider has removed the vehicle from its fleet |
-| `unknown`, `unavailable`, `available`, `elsewhere` | `removed`     | `unspecified`        | The vehicle was removed, but the provider cannot definitively (yet) specify the reason |
+| `available`, `non_operational`, `elsewhere` | `removed`     | `compliance_pick_up` | The provider picked up the vehicle because it was placed in a non-compliant location |
+| `available`, `non_operational`, `removed`, `elsewhere`, `unknown` | `removed`     | `decommissioned`     | The provider has removed the vehicle from its fleet |
+| `unknown`, `non_operational`, `available`, `elsewhere` | `removed`     | `unspecified`        | The vehicle was removed, but the provider cannot definitively (yet) specify the reason |
 | any | `unknown`     | `missing`            | The vehicle is not at its last reported GPS location, or that location is wildly in error |
 | any | `unknown`     | `out_of_comms`       | The vehicle is unable to transmit its GPS location |
 
 NOTES: 
-
-`trip` vs. `in_trip` vs. `on_trip`?
-
-`unavailable` vs `non_operational`?
 
 Should we try to handle "unlicensed movements"?
 
