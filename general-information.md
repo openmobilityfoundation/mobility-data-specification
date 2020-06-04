@@ -140,7 +140,7 @@ This table describes the list of vehicle conditions that may be used by regulato
 In a multi-jurisdiction environment, the status of a vehicle is per-jurisdiction.  For example, a vehicle may be in the `trip` status for a county that contains five cities, and also in the `trip` status for one of those cities, but `elsewhere` for the other four cities.  In such a condition, generally a Provider would send the device data to the over-arching jurisdiction (the county) and the vehicle state with respect to each city would be determined by the Agency managing the jurisdictions.
 
 | `vehicle_state` | In PROW? | Description |
-| --- | --- |
+| --- | --- | --- |
 | `removed`     | no | Examples include: at the Provider's warehouse, in a Provider's truck, or destroyed and in a landfill. |
 | `available`   | yes | Available for rental via the Provider's app. In PROW. |
 | `unavailable` | yes | Not available for rent.  Examples include: vehicle has low battery, or currently outside legal operating hours. |
