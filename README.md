@@ -37,7 +37,7 @@ For questions about MDS please contact [info@openmobilityfoundation.org](mailto:
 
 ## Versions
 
-The specification will be versioned using Git tags and [semantic versioning](https://semver.org/). See prior [releases](https://github.com/openmobilityfoundation/mobility-data-specification/releases) and the [Release Guidelines](ReleaseGuidelines.md) for more information.
+The specification will be versioned using Git tags and [semantic versioning](https://semver.org/). See prior [releases](https://github.com/openmobilityfoundation/mobility-data-specification/releases) and the [Release Guidelines](https://github.com/openmobilityfoundation/governance/blob/master/technical/ReleaseGuidelines.md) for more information.
 
 Information about the latest release and all releases are below. Please note, you may be viewing a development copy of the Mobility Data Specification based on the current branch. Info about the latest release and all releases is below.
 
