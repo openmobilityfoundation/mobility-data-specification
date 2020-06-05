@@ -129,6 +129,8 @@ In a multi-jurisdiction environment, the status of a vehicle is per-jurisdiction
 
 This is the list of `vehicle_state` and `event_type` pairings that constitute the valid transitions of the vehicle state machine.
 
+The state-transition table below describes how the `vehicle_state` changes in response to each `event_type`.  Most events will have a single `event_type`.  However, if a single event has more than one ordered `event_type` entry, the intermediate `vehicle_state` value(s) are discarded.  For example, if an event contains [`trip_end`, `service_end`] then the vehicle transitions from `on_trip` through `available` to `non_operational` per the state machine, but the vehicle is never "in" the `available` state.  
+
 Note that to handle out-of-order events, the validity of the prior-state shall not be enforced at the time of ingest via Provider or Agency.  Events received out-of-order may result in transient incorrect vehicle states.
 
 | Valid prior `vehicle_state` values | `vehicle_state` | `event_type` |  Description |
