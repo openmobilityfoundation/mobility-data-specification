@@ -1,3 +1,28 @@
+## 1.0.0
+
+> Release Date TBD
+
+The 1.0.0 release reconciles many parts of the MDS specifiction and adds some new features requested by the community.
+
+### CHANGES
+
+*_MDS_*
+
+* [Added "moped" vehicle type](https://github.com/openmobilityfoundation/mobility-data-specification/pull/416)
+
+*_Provider_*
+
+* [Mention ambiguity for event_type reserved](https://github.com/openmobilityfoundation/mobility-data-specification/pull/439)
+
+*_Agency_*
+
+* [Add decommissioned event type reason](https://github.com/openmobilityfoundation/mobility-data-specification/pull/408)
+
+*_Policy_*
+
+* [Update documentation to use correct field name](https://github.com/openmobilityfoundation/mobility-data-specification/pull/412)
+
+
 ## 0.4.1
 
 > Released 2020-05-15
