@@ -2,9 +2,11 @@
 
 > Release Date TBD
 
-The 1.0.0 release reconciles many parts of the MDS specifiction and adds some new features requested by the community.
+The 1.0.0 release reconciles many parts of the MDS specifiction and adds features and updates requested by the community.
 
 ### CHANGES
+
+See the PRs tagged with [Milestone 1.0.0](https://github.com/openmobilityfoundation/mobility-data-specification/milestone/9) for a working list.
 
 *_MDS_*
 
