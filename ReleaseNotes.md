@@ -8,7 +8,7 @@ The 1.0.0 release reconciles many parts of the MDS specifiction and adds feature
 
 See the PRs tagged with [Milestone 1.0.0](https://github.com/openmobilityfoundation/mobility-data-specification/milestone/9) for a working list.
 
-Here is what is currently under consideration. Items may be removed, added or changed before the Release Candidate is created.
+_Here is what is currently under consideration. Items may be removed, added or changed before the Release Candidate is created._
 
 *_MDS_*
 
@@ -33,7 +33,7 @@ Here is what is currently under consideration. Items may be removed, added or ch
 
 *_Policy_*
 
-* [Add Rates (fees + subsidies](https://github.com/openmobilityfoundation/mobility-data-specification/pull/484)
+* [Add Rates (fees + subsidies)](https://github.com/openmobilityfoundation/mobility-data-specification/pull/484)
 * [Rearrange Speed Limit Example](https://github.com/openmobilityfoundation/mobility-data-specification/pull/482)
 
 
