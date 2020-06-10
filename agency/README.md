@@ -255,8 +255,10 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 
 The `/stops` endpoint allows an agency to register Stops.
 
-Endpoint: `/stops`
-Method: `POST`
+**Endpoint:** `/stops`  
+**Method:** `POST`  
+**[Beta feature](/general-information.md#beta-features):** Yes (as of 1.0.0)  
+
 
 | Field               | Type                                                                              | Required/Optional | Description                                                                                                                                          |
 |---------------------|-----------------------------------------------------------------------------------|-------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -276,17 +278,21 @@ Method: `POST`
 | wheelchair_boarding | Boolean                                                                           | Optional          | Is this stop handicap accessible?                                                                                                                    |
 | parent_stop         | UUID                                                                              | Optional          | Describe a basic hierarchy of stops (e.g.a stop inside of a greater stop)                                                                            |
 
-Endpoint: `/stops`
-Method: `PUT`
+**Endpoint:** `/stops`  
+**Method:** `PUT`  
+**[Beta feature](/general-information.md#beta-features):** Yes (as of 1.0.0)  
 
 | Field               | Type                   | Required/Optional | Description                                                             |
 |---------------------|------------------------|-------------------|-------------------------------------------------------------------------|
 | stop_id             | UUID                   | Required          | Unique ID for stop                                                      |
+| status              | Enum                   | Required          | Status of the Stop. See [Stop Statuses](#stop-statuses) table.          |
 | num_spots_available | {vehicle_type: number} | Optional          | How many spots are free to be populated with vehicles at this stop?     |
 | num_spots_disabled  | {vehicle_type: number} | Optional          | How many docks are disabled and unable to accept vehicles at this stop? |
 
-Endpoint: `/stops/{stop_id}`
-Method: `GET`
+**Endpoint:** `/stops/:stop_id`  
+**Method:** `GET`  
+**[Beta feature](/general-information.md#beta-features):** Yes (as of 1.0.0)  
+**`data` Payload:** `{ "stops": [] }`, an array of objects with the following structure
 
 | Field                  | Type                                                                              | Required/Optional | Description                                                                                                                                          |
 |------------------------|-----------------------------------------------------------------------------------|-------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -294,10 +300,11 @@ Method: `GET`
 | stop_name              | String                                                                            | Required          | Name of stop                                                                                                                                         |
 | lat                    | Double                                                                            | Required          | Latitude of the location                                                                                                                             |
 | lng                    | Double                                                                            | Required          | Longitude of the location                                                                                                                            |
+| status                 | Enum                                                                              | Required          | Status of the Stop. See [Stop Statuses](#stop-statuses) table.                                                                                       |
 | capacity               | {vehicle_type: number}                                                            | Required          | Number of total spots per vehicle_type                                                                                                               |
 | num_vehicles_available | {vehicle_type: number}                                                            | Required          | How many vehicles are available per vehicle_type at this stop?                                                                                       |
 | num_vehicles_disabled  | {vehicle_type: number}                                                            | Required          | How many vehicles are unavailable/reserved per vehicle_type at this stop?                                                                            |
-| geography_id           | UUID                                                                              | Optional          | Pointer to the Geography that represents the stop geospatially                                                                                       |
+| geography_id           | UUID                                                                              | Optional          | Pointer to the Geography that represents the Stop geospatially                                                                                       |
 | region_id              | string                                                                            | Optional          | ID of the region where station is located, see [GBFS Station Information](https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_informationjson) |
 | short_name             | String                                                                            | Optional          | Abbreviated stop name                                                                                                                                |
 | address                | String                                                                            | Optional          | Postal address (useful for directions)                                                                                                               |
@@ -306,8 +313,17 @@ Method: `GET`
 | cross_street           | String                                                                            | Optional          | Cross street of where the station is located.                                                                                                        |
 | num_spots_available    | {vehicle_type: number}                                                            | Optional          | How many spots are free to be populated with vehicles at this stop?                                                                                  |
 | num_spots_disabled     | {vehicle_type: number}                                                            | Optional          | How many docks are disabled and unable to accept vehicles at this stop?                                                                              |
-| wheelchair_boarding    | Boolean                                                                           | Optional          | Is this stop handicap accessible?                                                                                                                    |
-| parent_stop            | UUID                                                                              | Optional          | Describe a basic hierarchy of stops (e.g.a stop inside of a greater stop)                                                                            |
+| parent_stop            | UUID                                                                              | Optional          | Describe a basic hierarchy of stops (e.g.a stop inside of a greater stop)                                                               |
+
+In the case that a `stop_id` query parameter is specified, the `stops` array returned will only have one entry. In the case that no `stop_id` query parameter is specified, all stops will be returned.
+
+#### Stop Statuses
+
+| `status`         | Description                                                                              |
+| ---------------- | ---------------------------------------------------------------------------------------- |
+| `open`           | The station is open and available to rent out or accept vehicles                         |
+| `closed`         | The station is closed. Either because of operating hours, repairs, or a seasonal closure |
+| `decommissioned` | The station is permanently closed and will be removed from the system                    |                                                                           |
 
 ### GBFS Compatibility
 Some of the fields in the `Stops` definition are using notions which are currently not in MDS, such as `rental_methods`. These fields are included for compatibility with GBFS.
