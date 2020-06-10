@@ -12,6 +12,7 @@ This specification contains a collection of RESTful APIs used to specify the dig
 * [Timestamps](#timestamps)
 * [Vehicles](#vehicles)
 * [Vehicle - Register](#vehicle---register)
+* [Vehicle - Update](#vehicle---update)
 * [Vehicle - Event](#vehicle---event)
 * [Vehicles - Update Telemetry](#vehicles---telemetry)
 * [Vehicle Events](#vehicle-events)
