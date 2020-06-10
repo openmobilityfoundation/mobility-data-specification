@@ -8,21 +8,33 @@ The 1.0.0 release reconciles many parts of the MDS specifiction and adds feature
 
 See the PRs tagged with [Milestone 1.0.0](https://github.com/openmobilityfoundation/mobility-data-specification/milestone/9) for a working list.
 
+Here is what is currently under consideration. Items may be removed, added or changed before the Release Candidate is created.
+
 *_MDS_*
 
-* [Added "moped" vehicle type](https://github.com/openmobilityfoundation/mobility-data-specification/pull/416)
+* [Reconcile the Provider and Agency language differences](https://github.com/openmobilityfoundation/mobility-data-specification/pull/506)
+* [Add Audit API](https://github.com/openmobilityfoundation/mobility-data-specification/pull/483) (under consideration)
+* Adding Docked/Stops. Stops history for a later release. Beta - Active PRs [#427](https://github.com/openmobilityfoundation/mobility-data-specification/pull/427) [#430](https://github.com/openmobilityfoundation/mobility-data-specification/pull/430) [#442](https://github.com/openmobilityfoundation/mobility-data-specification/pull/442) [#441](https://github.com/openmobilityfoundation/mobility-data-specification/pull/441)
+   
+* Minor Updates 
+  * Update [Austin](https://github.com/openmobilityfoundation/mobility-data-specification/pull/488), [Louisville](https://github.com/openmobilityfoundation/mobility-data-specification/pull/515) links
+  * [Add link to State of Practice](https://github.com/openmobilityfoundation/mobility-data-specification/pull/477)
+  * [Update GBFS references and links](https://github.com/openmobilityfoundation/mobility-data-specification/pull/508)
+  * Move [Code of Conduct](https://github.com/openmobilityfoundation/mobility-data-specification/pull/514), [Contributing Guide](https://github.com/openmobilityfoundation/mobility-data-specification/pull/513), and [Release Guidelines](https://github.com/openmobilityfoundation/mobility-data-specification/pull/512) to new [Governace repo](https://github.com/openmobilityfoundation/governance)
+   * [Update providers.csv to add Lava](https://github.com/openmobilityfoundation/mobility-data-specification/pull/464)
 
 *_Provider_*
 
-* [Mention ambiguity for event_type reserved](https://github.com/openmobilityfoundation/mobility-data-specification/pull/439)
+* [...](...)
 
 *_Agency_*
 
-* [Add decommissioned event type reason](https://github.com/openmobilityfoundation/mobility-data-specification/pull/408)
+* [Add link to Table of Contents](https://github.com/openmobilityfoundation/mobility-data-specification/pull/470)
 
 *_Policy_*
 
-* [Update documentation to use correct field name](https://github.com/openmobilityfoundation/mobility-data-specification/pull/412)
+* [Add Rates (fees + subsidies](https://github.com/openmobilityfoundation/mobility-data-specification/pull/484)
+* [Rearrange Speed Limit Example](https://github.com/openmobilityfoundation/mobility-data-specification/pull/482)
 
 
 ## 0.4.1
