@@ -150,6 +150,15 @@ Please refer to the MDS [General Information][general-information] document.
 
 [Top][toc]
 
+### Near-RT Data Requirements
+
+All near-RT endpoints must contain `last_updated` and `ttl` properties in the top-level of the response body. These properties are defined as:
+
+Field Name          | Required  | Defines
+--------------------| ----------| ----------
+last_updated        | Yes       | Timestamp indicating the last time the data in this feed was updated
+ttl                 | Yes       | Integer representing the number of milliseconds before the data in this feed will be updated again (0 if the data should always be refreshed).
+
 ## Trips
 
 A trip represents a journey taken by a *mobility as a service* customer with a geo-tagged start and stop point.
@@ -331,8 +340,23 @@ Should either side of the requested time range be greater than 2 weeks before th
 
 Stop information should be updated on a near-realtime basis by providers who operate _docked_ mobility devices in a given municipality.
 
-Endpoint: `/stops/{stop_id}`
-Method: `GET`
+In addition to the standard [Provider payload wrapper](#response-format), responses from this endpoint should contain the last update timestamp and amount of time until the next update in accordance with the [Near RT Data Requirements](#near-rt-data-requirements):
+
+```json
+{
+    "version": "x.y.z",
+    "data": {
+        "stops": []
+    },
+    "last_updated": "12345",
+    "ttl": "12345"
+}
+```
+
+**Endpoint:** `/stops/:stop_id`  
+**Method:** `GET`  
+**[Beta feature](/general-information.md#beta-features):** Yes (as of 1.0.0)  
+**`data` Payload:** `{ "stops": [] }`, an array of objects with the following structure
 
 | Field                  | Type                   | Required/Optional | Description                                                                                                                                          |
 |------------------------|------------------------|-------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -355,6 +379,8 @@ Method: `GET`
 | wheelchair_boarding    | Boolean                                                                           | Optional          | Is this stop handicap accessible?                                                                                                      |
 | parent_stop            | UUID                                                                              | Optional          | Describe a basic hierarchy of stops (e.g.a stop inside of a greater stop)                                                              |
 
+In the case that a `stop_id` query parameter is specified, the `stops` array returned will only have one entry. In the case that no `stop_id` query parameter is specified, all stops will be returned.
+
 ### GBFS Compatibility
 
 Some of the fields in the `Stops` definition are using notions which are currently not in MDS, such as `rental_methods`. These fields are included for compatibility with GBFS.
@@ -365,7 +391,7 @@ Some of the fields in the `Stops` definition are using notions which are current
 
 The `/vehicles` endpoint returns the current status of vehicles on the PROW. Only vehicles that are currently in available, unavailable, or reserved states should be returned in this payload. Data in this endpoint should reconcile with data from the `/status_changes` enpdoint. The data returned by this endpoint should be as close to realtime as possible, but in no case should it be more than 5 minutes out-of-date. As with other MDS APIs, `/vehicles` is intended for use by regulators, not by the general public. It does not replace the role of a [GBFS][gbfs] feed in enabling consumer-facing applications.
 
-In addition to the standard [Provider payload wrapper](#response-format), responses from this endpoint should contain the last update timestamp and amount of time until the next update:
+In addition to the standard [Provider payload wrapper](#response-format), responses from this endpoint should contain the last update timestamp and amount of time until the next update in accordance with the [Near RT Data Requirements](#near-rt-data-requirements):
 
 ```json
 {
@@ -377,13 +403,6 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
     "ttl": "12345"
 }
 ```
-
-Where `last_updated` and `ttl` are defined as follows:
-
-Field Name          | Required  | Defines
---------------------| ----------| ----------
-last_updated        | Yes       | Timestamp indicating the last time the data in this feed was updated
-ttl                 | Yes       | Integer representing the number of milliseconds before the data in this feed will be updated again (0 if the data should always be refreshed).
 
 **Endpoint:** `/vehicles`  
 **Method:** `GET`  
