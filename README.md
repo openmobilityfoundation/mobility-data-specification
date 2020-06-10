@@ -92,8 +92,7 @@ Some examples of how cities are using MDS in practice:
 ### City of Austin
 * [`transportation-dockless-dataviz`](https://github.com/cityofaustin/transportation-dockless-dataviz) - A hexbin origin/destintation web map of dockless trips using jQuery & Mapbox GL JS. See [http://dockless.austintexas.io/](http://dockless.austintexas.io/).
 * [`transportation-dockless-api`](https://github.com/cityofaustin/transportation-dockless-api) - Python Sanic-based API that provides an interface for retrieving anonymized and aggregated trip data. This API supplies data to our interactive [Dockless Mobility Explorer](https://dockless.austintexas.io). The source database for the API is our [Dockless Vehicle Trips](https://data.austintexas.gov/Transportation-and-Mobility/Dockless-Vehicle-Trips/7d8e-dm7r) dataset.
-* [`transportation-dockless-processing`](https://github.com/cityofaustin/transportation-dockless-processing) - Python scripts for dockless mobility data ETL.
-* [`mds-provider-client`](https://github.com/cityofaustin/mds-provider-client) - A forked Python client from [`CityofSantaMonica/mds-provider`](https://github.com/cityofsantamonica/mds-provider).
+* [`atd-mds`](https://github.com/cityofaustin/atd-mds) An MDS provider client and ETL framework.
 
 ### City of Louisville
 * [`Dockless-Open-Data`](https://github.com/louisvillemetro-innovation/Dockless-Open-Data) - Convert MDS trip data to anonymized open data. See [https://data.louisvilleky.gov/](https://data.louisvilleky.gov/dataset/dockless-vehicles) for open data.
