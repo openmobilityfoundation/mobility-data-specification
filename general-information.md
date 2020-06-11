@@ -129,7 +129,7 @@ In a multi-jurisdiction environment, the status of a vehicle is per-jurisdiction
 
 This is the list of `vehicle_state` and `event_type` pairings that constitute the valid transitions of the vehicle state machine.
 
-The state-transition table below describes how the `vehicle_state` changes in response to each `event_type`.  Most events will have a single `event_type`.  However, if a single event has more than one ordered `event_type` entry, the intermediate `vehicle_state` value(s) are discarded.  For example, if an event contains [`trip_end`, `service_end`] then the vehicle transitions from `on_trip` through `available` to `non_operational` per the state machine, but the vehicle is never "in" the `available` state.  
+The state-transition table below describes how the `vehicle_state` changes in response to each `event_type`.  Most events will have a single `event_type`.  However, if a single event has more than one ordered `event_type` entry, the intermediate `vehicle_state` value(s) are discarded.  For example, if an event contains [`trip_end`, `battery_low`] then the vehicle transitions from `on_trip` through `available` to `non_operational` per the state machine, but the vehicle is never "in" the `available` state.  
 
 Note that to handle out-of-order events, the validity of the prior-state shall not be enforced at the time of ingest via Provider or Agency.  Events received out-of-order may result in transient incorrect vehicle states.
 
@@ -149,7 +149,7 @@ Note that to handle out-of-order events, the validity of the prior-state shall n
 | `available`, `reserved` | `on_trip`        | `trip_start`         | A customer initiated a trip with this vehicle |
 | `elsewhere` | `on_trip`        | `trip_enter_jurisdiction` | A vehicle on a trip entered the jurisdiction |
 | `on_trip` | `elsewhere`   | `trip_leave_jurisdiction` | A vehicle on a trip left the jurisdiction |
-| `available` | `non_operational` | `low_battery`        | The vehicle's battery is below some rentability threshold |
+| `available` | `non_operational` | `battery_low`        | The vehicle's battery is below some rentability threshold |
 | `available` | `non_operational` | `maintenance`        | The vehicle requires some non-charge-related maintenance |
 | `available` | `non_operational` | `off_hours`          | The vehicle has exited operating hours (per the regulator or per the Provider) |
 | `available` | `non_operational` | `system_suspend`          | The vehicle is not available because of e.g. weather or temporary regulations |
