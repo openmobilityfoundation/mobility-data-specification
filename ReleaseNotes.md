@@ -30,6 +30,9 @@ _Here is what is currently under consideration. Items may be removed, added or c
 *_Agency_*
 
 * [Add link to Table of Contents](https://github.com/openmobilityfoundation/mobility-data-specification/pull/470)
+* [Vehicle register: add provider_id field](https://github.com/openmobilityfoundation/mobility-data-specification/pull/469)
+* [Clarify vehicle endpoint requirements](https://github.com/openmobilityfoundation/mobility-data-specification/pull/465)
+* [Vehicle response code should be 200](https://github.com/openmobilityfoundation/mobility-data-specification/pull/467)
 
 *_Policy_*
 
