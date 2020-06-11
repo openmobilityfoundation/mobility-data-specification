@@ -89,6 +89,18 @@ Policies will be returned in order of effective date (see schema below), with pa
 
 `provider_id` is an implicit parameter and will be encoded in the authentication mechanism, or a complete list of policies should be produced. If the Agency decides that Provider-specific policy documents should not be shared with other Providers (e.g. punitive policy in response to violations), an Agency should filter policy objects before serving them via this endpoint.
 
+#### Geographies
+
+Endpoint: `/geographies/{id}`  
+Method: `GET`  
+`data` Payload: `{ geographies: [] }`, an array of GeoJSON `Feature` objects.
+
+##### Query Parameters
+
+| Name         | Type      | Required / Optional | Description                                    |
+| ------------ | --------- | --- | ---------------------------------------------- |
+| `id`         | UUID      | Optional    | If provided, returns one geography object with the matching UUID; default is to return all geography objects.               |
+
 ### Flat Files
 
 To use flat files, policies shall be represented in two (2) files:
