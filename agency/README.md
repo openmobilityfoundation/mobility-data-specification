@@ -102,10 +102,11 @@ Body Params:
 
 | Field        | Type    | Required/Optional | Field Description                                                    |
 | ------------ | ------- | ----------------- | -------------------------------------------------------------------- |
-| `device_id`  | UUID     | Required          | Provided by Operator to uniquely identify a vehicle                 |
+| `device_id`  | UUID    | Required          | Provided by Operator to uniquely identify a vehicle                  |
 | `vehicle_id` | String  | Required          | Vehicle Identification Number (vehicle_id) visible on vehicle        |
 | `type`       | Enum    | Required          | [Vehicle Type](#vehicle-type)                                        |
 | `propulsion` | Enum[]  | Required          | Array of [Propulsion Type](#propulsion-type); allows multiple values |
+| `provider_id`| UUID    | Optional          | Provider to which the vehicle belongs if different from the authenticated provider |
 | `year`       | Integer | Optional          | Year Manufactured                                                    |
 | `mfgr`       | String  | Optional          | Vehicle Manufacturer                                                 |
 | `model`      | String  | Optional          | Vehicle Model                                                        |
