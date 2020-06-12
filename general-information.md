@@ -144,16 +144,21 @@ Note that to handle out-of-order events, the validity of the prior-state shall n
 | `reserved` | `available`   | `reservation_cancel` | A reservation was canceled and the vehicle returned to service |
 | `on_trip` | `available`   | `trip_cancel`        | A trip was initiated, then canceled prior to moving any distance |
 | `non_operational` | `available` | `system_resume`          | The vehicle is available because e.g. weather suspension or temporary regulations ended |
+| `unknown` | `available`   | `comms_restored`        | The vehicle transmitted status information after a period of being out of communication. |
 | `non_operational`, `unknown`, `removed`, `reserved`, `elsewhere` | `available`   | `unspecified`        | The vehicle became available, but the provider cannot definitively (yet) specify the reason.  Generally, regulator Service-Level Agreements will limit the amount of time a vehicle's last event type may be `unspecified`. |
 | `available` | `reserved`    | `reservation_start`  | The vehicle was reserved for use by a customer |
+| `unknown` | `reserved`   | `comms_restored`        | The vehicle transmitted status information after a period of being out of communication. |
 | `available`, `reserved` | `on_trip`        | `trip_start`         | A customer initiated a trip with this vehicle |
 | `elsewhere` | `on_trip`        | `trip_enter_jurisdiction` | A vehicle on a trip entered the jurisdiction |
+| `unknown` | `on_trip`   | `comms_restored`        | The vehicle transmitted status information after a period of being out of communication. |
 | `on_trip` | `elsewhere`   | `trip_leave_jurisdiction` | A vehicle on a trip left the jurisdiction |
+| `unknown` | `elsewhere`   | `comms_restored` | The vehicle transmitted status information after a period of being out of communication. |
 | `available` | `non_operational` | `battery_low`        | The vehicle's battery is below some rentability threshold |
 | `available` | `non_operational` | `maintenance`        | The vehicle requires some non-charge-related maintenance |
 | `available` | `non_operational` | `off_hours`          | The vehicle has exited operating hours (per the regulator or per the Provider) |
 | `available` | `non_operational` | `system_suspend`          | The vehicle is not available because of e.g. weather or temporary regulations |
 | `available` | `non_operational` | `unspecified`        | The vehicle became unavailable, but he Provider cannot definitively (yet) specify the reason. |
+| `unknown` | `non_operational`   | `comms_restored`        | The vehicle transmitted status information after a period of being out of communication |
 | `available`, `non_operational`, `elsewhere` | `removed`     | `rebalance_pick_up`  | The provider picked up the vehicle for rebalancing purposes |
 | `available`, `non_operational`, `elsewhere` | `removed`     | `maintenance_pick_up` | The provider picked up the vehicle to service it |
 | `available`, `non_operational`, `elsewhere`, `unknown` | `removed`     | `agency_pick_up`     | An agency picked up the vehicle for some reason, e.g. illegal placement |
@@ -161,7 +166,7 @@ Note that to handle out-of-order events, the validity of the prior-state shall n
 | `available`, `non_operational`, `removed`, `elsewhere`, `unknown` | `removed`     | `decommissioned`     | The provider has removed the vehicle from its fleet |
 | `unknown`, `non_operational`, `available`, `elsewhere` | `removed`     | `unspecified`        | The vehicle was removed, but the provider cannot definitively (yet) specify the reason |
 | `available`, `reserved`, `on_trip`, `non_operational`, `elsewhere` | `unknown`     | `missing`            | The vehicle is not at its last reported GPS location, or that location is wildly in error |
-| `available`, `reserved`, `on_trip`, `non_operational`, `elsewhere` | `unknown`     | `out_of_comms`       | The vehicle is unable to transmit its GPS location |
+| `available`, `reserved`, `on_trip`, `non_operational`, `elsewhere` | `unknown`     | `comms_lost`       | The vehicle is unable to transmit its GPS location or other status information |
 
 NOTES:
 
