@@ -241,7 +241,7 @@ The `/stops` endpoint allows an agency to register Stops.
 **Endpoint:** `/stops`  
 **Method:** `POST`  
 **[Beta feature](/general-information.md#beta-features):** Yes (as of 1.0.0)  
-**Request Body**: An array of [Stops](../general-information.md/#stop)                                                                           |
+**Request Body**: An array of [Stops](../general-information.md/#stop)
 
 **Endpoint:** `/stops`  
 **Method:** `PUT`  
