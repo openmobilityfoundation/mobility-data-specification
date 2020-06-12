@@ -219,23 +219,7 @@ Accept: application/vnd.mds+json;version=0.3
 > * The `agency` API must respond as if version `0.3` was requested.
 > * The `policy` API must respond as if version `0.4` was requested.
 
-If an unsupported or invalid version is requested, the API must respond with a status of `406 Not Acceptable`. If this occurs, a client can explicitly negotiate available versions.
-
-A client negotiates available versions using the `OPTIONS` method to an MDS endpoint. For example, to check if `trips` supports either version `0.2` or `0.3` with a preference for `0.2`, the client would issue the following request:
-
-```http
-OPTIONS /trips/ HTTP/1.1
-Host: provider.example.com
-Accept: application/vnd.mds+json;version=0.2,application/vnd.mds+json;version=0.3;q=0.9
-```
-
-The response will include the most preferred supported version in the `Content-Type` header. For example, if only `0.3` is supported:
-
-```http
-Content-Type: application/vnd.mds+json;version=0.3
-```
-
-The client can use the returned value verbatim as a version request in the `Accept` header.
+If an unsupported or invalid version is requested, the API must respond with a status of `406 Not Acceptable`.
 
 [Top][toc]
 
