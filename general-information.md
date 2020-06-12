@@ -160,8 +160,8 @@ Note that to handle out-of-order events, the validity of the prior-state shall n
 | `available`, `non_operational`, `elsewhere` | `removed`     | `compliance_pick_up` | The provider picked up the vehicle because it was placed in a non-compliant location |
 | `available`, `non_operational`, `removed`, `elsewhere`, `unknown` | `removed`     | `decommissioned`     | The provider has removed the vehicle from its fleet |
 | `unknown`, `non_operational`, `available`, `elsewhere` | `removed`     | `unspecified`        | The vehicle was removed, but the provider cannot definitively (yet) specify the reason |
-| any | `unknown`     | `missing`            | The vehicle is not at its last reported GPS location, or that location is wildly in error |
-| any | `unknown`     | `out_of_comms`       | The vehicle is unable to transmit its GPS location |
+| `available`, `reserved`, `on_trip`, `non_operational`, `elsewhere` | `unknown`     | `missing`            | The vehicle is not at its last reported GPS location, or that location is wildly in error |
+| `available`, `reserved`, `on_trip`, `non_operational`, `elsewhere` | `unknown`     | `out_of_comms`       | The vehicle is unable to transmit its GPS location |
 
 NOTES:
 
