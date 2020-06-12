@@ -339,7 +339,7 @@ Without an `event_time` query parameter, `/status_changes` shall return a `400 B
 | | | `user_drop_off` | User ends reservation |
 | | | `rebalance_drop_off` | Device moved for rebalancing |
 | | | `maintenance_drop_off` | Device introduced into service after being removed for maintenance |
-| | | `agency_drop_off` | The administrative agency (ie, DOT) drops a device into the PROW using an admin code or similar |
+| | | `agency_drop_off` | The administrative agency (ie, DOT) drops a device into the Public Right of Way (PROW)  using an admin code or similar |
 | `reserved` | A customer reserves a device (even if trip has not started yet) | `user_pick_up` | Customer reserves device. Note that this event_type is deemed ambiguous right now: it can mean reserved as in possession, or reserved as in future hold. This issue will be remedied in a future version with an extra event_type. For now, different providers have implemented this in either way. |
 | `unavailable` | A device is on the street but becomes unavailable for customer use | `maintenance` | A device is no longer available due to equipment issues |
 | | | `low_battery` | A device is no longer available due to insufficient battery |
