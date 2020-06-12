@@ -12,6 +12,7 @@ This document contains specifications that are shared between the various MDS AP
 * [Responses](#responses)
   * [Error Messages](#error-messages)
 * [Strings](#strings)
+* [Stops](#stops)
 * [Timestamps](#timestamps)
 * [UUIDs](#uuids)
 * [Vehicle States](#vehicle-states)
@@ -43,10 +44,10 @@ If the currency field is null, USD cents is implied.
 
 Defining terminology and abbreviations used throughout MDS.
 
-- **API** - Application Programming Interface - A function or set of functions that allow one software application to access or communicate with features of a different software application or service. 
-- **API Endpoint** - A point at which an API connects with a software application or service.
-- **DOT** - Department of Transportation, usually a city-run agency.
-- **PROW** - Public Right of Way - the physical infrastructure reserved for transportation purposes, examples include sidewalks, curbs, bike lanes, transit lanes and stations, traffic lanes and signals, and public parking.
+* **API** - Application Programming Interface - A function or set of functions that allow one software application to access or communicate with features of a different software application or service.
+* **API Endpoint** - A point at which an API connects with a software application or service.
+* **DOT** - Department of Transportation, usually a city-run agency.
+* **PROW** - Public Right of Way - the physical infrastructure reserved for transportation purposes, examples include sidewalks, curbs, bike lanes, transit lanes and stations, traffic lanes and signals, and public parking.
 
 [Top][toc]
 
@@ -104,6 +105,44 @@ A vehicle may have one or more values from the `propulsion`, depending on the nu
 All String fields, such as `vehicle_id`, are limited to a maximum of 255 characters.
 
 [Top][toc]
+
+## Stops
+
+| Field                  | Type                                                                              | Required/Optional | Description                                                                                                                                          |
+|------------------------|-----------------------------------------------------------------------------------|-------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
+| stop_id                | UUID                                                                              | Required          | Unique ID for stop                                                                                                                                   |
+| stop_name              | String                                                                            | Required          | Name of stop                                                                                                                                         |
+| lat                    | Double                                                                            | Required          | Latitude of the location                                                                                                                             |
+| lng                    | Double                                                                            | Required          | Longitude of the location                                                                                                                            |
+| status                 | Enum                                                                              | Required          | Status of the Stop. See [Stop Statuses](#stop-statuses) table.                                                                                       |
+| capacity               | {vehicle_type: number}                                                            | Required          | Number of total spots per vehicle_type                                                                                                               |
+| num_vehicles_available | {vehicle_type: number}                                                            | Required          | How many vehicles are available per vehicle_type at this stop?                                                                                       |
+| num_vehicles_disabled  | {vehicle_type: number}                                                            | Required          | How many vehicles are unavailable/reserved per vehicle_type at this stop?                                                                            |
+| geography_id           | UUID                                                                              | Optional          | Pointer to the Geography that represents the Stop geospatially                                                                                       |
+| region_id              | string                                                                            | Optional          | ID of the region where station is located, see [GBFS Station Information](https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_informationjson) |
+| short_name             | String                                                                            | Optional          | Abbreviated stop name                                                                                                                                |
+| address                | String                                                                            | Optional          | Postal address (useful for directions)                                                                                                               |
+| post_code              | String                                                                            | Optional          | Postal code (e.g. `10036`)                                                                                                                           |
+| rental_methods         | [Enum](https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_informationjson) | Optional          | Payment methods accepted at stop, see [GBFS Rental Methods](https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_informationjson)               |
+| cross_street           | String                                                                            | Optional          | Cross street of where the station is located.                                                                                                        |
+| num_spots_available    | {vehicle_type: number}                                                            | Optional          | How many spots are free to be populated with vehicles at this stop?                                                                                  |
+| num_spots_disabled     | {vehicle_type: number}                                                            | Optional          | How many docks are disabled and unable to accept vehicles at this stop?                                                                              |
+| parent_stop            | UUID                                                                              | Optional          | Describe a basic hierarchy of stops (e.g.a stop inside of a greater stop)                                                                            |
+| vehicle_ids            | UUID[]                                                                            | Optional          | List of device_ids for vehicles which are currently at this stop                                                                                     |
+
+### Stop Statuses
+
+| `status`         | Description                                                                              |
+|------------------|------------------------------------------------------------------------------------------|
+| `open`           | The station is open and available to rent out or accept vehicles                         |
+| `closed`         | The station is closed. Either because of operating hours, repairs, or a seasonal closure |
+| `decommissioned` | The station is permanently closed and will be removed from the system                    |
+
+### GBFS Compatibility
+
+Some of the fields in the `Stops` definition are using notions which are currently not in MDS, such as `rental_methods`. These fields are included for compatibility with GBFS.
+
+[Top](#table-of-contents)
 
 ## Timestamps
 
@@ -182,7 +221,6 @@ Note that to handle out-of-order events, the validity of the prior-state shall n
 
 The *State Machine Diagram* shows how the `vehicle_state` and `event_type` relate to each other and how vehicles can transition between states. See [Google Slides](https://docs.google.com/presentation/d/1Ar2-ju8YlddSsTATvQw4YjsSa5108XtidtnJNk-UAfA/edit) for the source file.
 ![MDS State Machine Diagram](/MDS-state-machine-diagram.svg)
-
 
 [Top][toc]
 
