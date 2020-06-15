@@ -47,14 +47,28 @@ Information about the latest release and all releases are below. Please note, yo
 
 ## Cities Using MDS
 
-More than 80 cities and public agencies around the world use MDS, and it has been implemented by most major mobility providers. Below are links to some specific agency programs/policies:
+More than 90 cities and public agencies around the world use MDS, and it has been implemented by most major mobility providers. Below are links to some of the specific agency programs/policies:
 
-* Los Angeles: The rules and guidelines for the Los Angeles Dockless Bikeshare Systems / Pilot Program can be found on [Council Clerk Connect](https://cityclerk.lacity.org/lacityclerkconnect/index.cfm?fa=ccfi.viewrecord&cfnumber=17-1125) along with supporting info on [ladot.io](https://ladot.io/programs/dockless/).
-* Santa Monica: The rules and guidelines for the Santa Monica Shared Mobility Pilot Program can be found at https://www.smgov.net/sharedmobility.
-* Austin: The rules and guidelines for Austin's Micromobility Program can be found at https://austintexas.gov/micromobility.
-* Ulm: A draft of the guidelines can be found at [the city's GitHub presence](https://github.com/stadtulm/mds-zonen).
+* **Arlington, VA**: [Shared Micro-Mobility Devices](https://transportation.arlingtonva.us/scooters-and-dockless-bikeshare/) page and [permit application](https://arlingtonva.s3.amazonaws.com/wp-content/uploads/sites/19/2019/12/Micro-Mobility_Permit_Final_191203.pdf).
+* **Austin, TX**: The rules and guidelines for Austin's Micromobility Program can be found at https://austintexas.gov/micromobility.
+* **Chicago, IL**: [E-Scooter Share Pilot Program](https://www.chicago.gov/city/en/depts/cdot/supp_info/escooter-share-pilot-project.html) information.
+* **Detroit, MI**: See the Public Works [Scooter Page[(https://detroitmi.gov/departments/department-public-works/complete-streets/scooters) and the [Dockless Scooters Interpretation](http://www.detroitmi.gov/Portals/0/docs/DPW/Dockless%20Scooters%20Memo%20of%20Interpretation_Final%20Version%207%2020%2018_1.pdf)
+* **Kansas City, MO**: [Scooter and e-Bike Pilot Program](https://www.kcmo.gov/programs-initiatives/scooters-and-ebikes) document.
+* **Kelowna, Canada**: [Bikeshare Permit Program](https://www.kelowna.ca/roads-transportation/active-transportation/cycling/bikeshare-permit-program) and operator application.
+* **Los Angeles, CA**: The rules and guidelines for the Los Angeles Dockless Bikeshare Systems / Pilot Program can be found on [Council Clerk Connect](https://cityclerk.lacity.org/lacityclerkconnect/index.cfm?fa=ccfi.viewrecord&cfnumber=17-1125) along with supporting info on [ladot.io](https://ladot.lacity.org/projects/transportation-services/shared-mobility/micromobility).
+* **Louisville, KY**: City [Dockless Vehicle Policy](https://data.louisvilleky.gov/dataset/dockless-vehicles/resource/541f050d-b868-428e-9601-c48a04eba17c) and [Public Works Guideance](https://louisvilleky.gov/government/public-works/dockless-find-and-ride-vehicles).
+* **Nashville, TN**: [Mobility Devices Bill](https://www.nashville.gov/Metro-Clerk/Legislative/Ordinances/Details/7d2cf076-b12c-4645-a118-b530577c5ee8/2015-2019/BL2018-1202.aspx).
+* **Miami, FL**: [Miami Scooter Program](https://www.miamigov.com/Services/Transportation/Miami-Scooter-Pilot-Program?BestBetMatch=scooters|d13b95b2-5146-4b00-9e3e-a80c73739a64|4f05f368-ecaa-4a93-b749-7ad6c4867c1f|en-US).
+* **Philadelphia, PA**: [Dockless Bike Share Pilot](http://www.phillyotis.com/portfolio-item/dockless-bike-share-pilot/) and regulations.
+* **Pittsburgh, PA**: The city's [Bike+ Master Plan](https://pittsburghpa.gov/domi/bikeplan) includes multiple modes.
+* **San Francisco, CA**: [SFMTA Policy Document](https://www.sfmta.com/sites/default/files/reports-and-documents/2018/05/powered_scooter_share_program_permit_application.pdf) and [Guideance Page](https://www.sfmta.com/projects/powered-scooter-share-permit-and-pilot-program). 
+* **San Jose, CA**: [Shared Micro-mobility Permit Administrative Regulations](https://www.sanjoseca.gov/home/showdocument?id=38091).
+* **Santa Monica, CA**: The rules and guidelines are on the Santa Monica [Shared Mobility Pilot Program page](https://www.smgov.net/Departments/PCD/Transportation/Shared-Mobility-Services/).
+* **Ulm, Germany**: A draft of the guidelines can be found at [the city's GitHub presence](https://github.com/stadtulm/mds-zonen).
 
 * _[add your City here by opening a pull request](https://github.com/openmobilityfoundation/mobility-data-specification/compare)_
+
+Other cities include Baltimore, Bellevue, Charlotte, Oakland, and Seattle, via the [NACTO Guidelines for Regulating Shared Micromobility](https://nacto.org/wp-content/uploads/2019/09/NACTO_Shared_Micromobility_Guidelines_Web.pdf), page 48.
 
 ## Use Cases
 Some examples of how cities are using MDS in practice:
