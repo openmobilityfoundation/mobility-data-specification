@@ -13,7 +13,6 @@ _Here is what is currently under consideration. Items may be removed, added or c
 *_MDS_*
 
 * [Reconcile the Provider and Agency language differences](https://github.com/openmobilityfoundation/mobility-data-specification/pull/506)
-* [Add Audit API](https://github.com/openmobilityfoundation/mobility-data-specification/pull/483) (under consideration)
 * Adding Docked/Stops. Stops history for a later release. Beta - Active PRs [#427](https://github.com/openmobilityfoundation/mobility-data-specification/pull/427) [#430](https://github.com/openmobilityfoundation/mobility-data-specification/pull/430) [#442](https://github.com/openmobilityfoundation/mobility-data-specification/pull/442) [#441](https://github.com/openmobilityfoundation/mobility-data-specification/pull/441)
    
 * Minor Updates 
@@ -22,6 +21,7 @@ _Here is what is currently under consideration. Items may be removed, added or c
   * [Update GBFS references and links](https://github.com/openmobilityfoundation/mobility-data-specification/pull/508)
   * Move [Code of Conduct](https://github.com/openmobilityfoundation/mobility-data-specification/pull/514), [Contributing Guide](https://github.com/openmobilityfoundation/mobility-data-specification/pull/513), and [Release Guidelines](https://github.com/openmobilityfoundation/mobility-data-specification/pull/512) to new [Governace repo](https://github.com/openmobilityfoundation/governance)
    * [Update providers.csv to add Lava](https://github.com/openmobilityfoundation/mobility-data-specification/pull/464)
+   * [Update cities using MDS](https://github.com/openmobilityfoundation/mobility-data-specification/pull/520)
 
 *_Provider_*
 
