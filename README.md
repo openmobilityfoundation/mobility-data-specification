@@ -52,7 +52,7 @@ More than 90 cities and public agencies around the world use MDS, and it has bee
 * **Arlington, VA**: [Shared Micro-Mobility Devices](https://transportation.arlingtonva.us/scooters-and-dockless-bikeshare/) page and [permit application](https://arlingtonva.s3.amazonaws.com/wp-content/uploads/sites/19/2019/12/Micro-Mobility_Permit_Final_191203.pdf).
 * **Atlanta, GA**: [Administrative Regulations
 for Shareable Dockless Mobility Device Permit Holders](https://www.atlantaga.gov/home/showdocument?id=44650) from [Department of City Planning](https://www.atlantaga.gov/government/departments/city-planning).
-* **Austin, TX**: The rules and guidelines for Austin's Micromobility Program can be found at https://austintexas.gov/micromobility.
+* **Austin, TX**: The rules and guidelines for Austin's Micromobility Program can be found on Austin's [Shared Mobility Program](https://austintexas.gov/department/shared-mobility-services) website.
 * **Chicago, IL**: [E-Scooter Share Pilot Program](https://www.chicago.gov/city/en/depts/cdot/supp_info/escooter-share-pilot-project.html) information.
 * **Denver, CO**: [Dockless Mobility Vehicle Pilot Permit Program](https://www.denvergov.org/content/denvergov/en/transportation-infrastructure/programs-services/dockless-mobility.html) in the [Department of Transportation & Infrastructure](https://www.denvergov.org/content/denvergov/en/transportation-infrastructure.html).
 * **Detroit, MI**: See the Public Works [Scooter Page[(https://detroitmi.gov/departments/department-public-works/complete-streets/scooters) and the [Dockless Scooters Interpretation](http://www.detroitmi.gov/Portals/0/docs/DPW/Dockless%20Scooters%20Memo%20of%20Interpretation_Final%20Version%207%2020%2018_1.pdf)
