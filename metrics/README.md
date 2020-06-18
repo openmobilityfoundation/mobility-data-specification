@@ -68,12 +68,12 @@ GET /metrics
 {
   "metrics": [
     {
-      "name": ["dockless.utilization"],
+      "name": ["dockless.utilization.avg"],
       "since": "2019-01-01T00:00-07",
       "intervals": ["PT1H"]
     },
     {
-      "name": ["vehicles.available.avg", "trips"],
+      "name": ["vehicles.available.count", "trips.count"],
       "since": "2018-01-01T00:00-07",
       "intervals": ["PT15M", "PT1H", "P1D"]
     }
@@ -165,7 +165,7 @@ Supports querying one or more metrics with the following parameters.
 ```js
 POST /metrics
 {
-  "metrics": ["dockless.utilization","trips"],
+  "metrics": ["dockless.utilization.avg","trips.count"],
   "start_date": "2019-10-21T00:00-07",
   "interval": "P1D",
   "interval_count": 7,
@@ -181,8 +181,8 @@ POST /metrics
     "interval_count": 7,
     "interval": "P1D",
     "metrics": [
-      "dockless.utilization",
-      "trips"
+      "dockless.utilization.avg",
+      "trips.count"
     ],
     "dimensions": ["vehicle_type"],
     "filters": []
@@ -199,12 +199,12 @@ POST /metrics
       "data_type": "string"
     },
     {
-      "name": "vehicle.utilization",
+      "name": "dockless.utilization.avg",
       "column_type": "metric",
       "data_type": "float"
     },
     {
-      "name": "trips",
+      "name": "trips.count",
       "column_type": "metric",
       "data_type": "integer"
     }
