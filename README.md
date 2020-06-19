@@ -43,7 +43,7 @@ The specification will be versioned using Git tags and [semantic versioning](htt
 
 Information about the latest release and all releases are below. Please note, you may be viewing a development copy of the Mobility Data Specification based on the current branch. Info about the latest release and all releases is below.
 
-* [Latest Release](https://github.com/openmobilityfoundation/mobility-data-specification/tree/master)
+* [Latest Release](https://github.com/openmobilityfoundation/mobility-data-specification/tree/main)
 
 * [All Releases](https://github.com/openmobilityfoundation/mobility-data-specification/releases)
 
