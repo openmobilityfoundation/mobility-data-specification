@@ -1,7 +1,7 @@
 {
   "$id": "https://raw.githubusercontent.com/openmobilityfoundation/mobility-data-specification/main/provider/dockless/vehicles.json",
   "$schema": "http://json-schema.org/draft-06/schema#",
-  "title": "The MDS Provider Schema, vehicles payload",
+  "title": "Schema for MDS Provider vehicles payloads",
   "type": "object",
   "definitions": {
     "Point": {
@@ -84,6 +84,69 @@
         }
       }
     },
+    "propulsion_type": {
+      "$id": "#/definitions/propulsion_type",
+      "type": "array",
+      "description": "The type of propulsion; allows multiple values",
+      "items": {
+        "type": "string",
+        "enum": [
+          "combustion",
+          "electric",
+          "electric_assist",
+          "human"
+        ]
+      },
+      "minItems": 1
+    },
+    "string": {
+      "$id": "#/definitions/string",
+      "type": "string",
+      "description": "A length-limited string type",
+      "maxLength": 255,
+      "default": "",
+      "examples": [
+        "ABC123"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "timestamp": {
+      "$id": "#/definitions/timestamp",
+      "title": "Integer milliseconds since Unix epoch",
+      "type": "number",
+      "multipleOf": 1.0,
+      "minimum": 0
+    },
+    "uuid": {
+      "$id": "#/definitions/uuid",
+      "type": "string",
+      "title": "A UUID used to uniquely identifty an object",
+      "default": "",
+      "examples": [
+        "3c9604d6-b5ee-11e8-96f8-529269fb1459"
+      ],
+      "pattern": "^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$"
+    },
+    "vehicle_type": {
+      "$id": "#/definitions/vehicle_type",
+      "type": "string",
+      "description": "The type of vehicle",
+      "enum": [
+        "bicycle",
+        "car",
+        "scooter",
+        "moped"
+      ]
+    },
+    "version": {
+      "$id": "#/definitions/version",
+      "type": "string",
+      "title": "The MDS Provider version this data represents",
+      "examples": [
+        "0.4.0"
+      ],
+      "pattern": "^0\\.4\\.[0-9]+$"
+    },
     "links": {
       "$id": "#/definitions/links",
       "type": "object",
@@ -143,74 +206,25 @@
       },
       "additionalProperties": false
     },
-    "propulsion_type": {
-      "$id": "#/definitions/propulsion_type",
-      "type": "array",
-      "description": "The type of propulsion; allows multiple values",
-      "items": {
-        "type": "string",
-        "enum": [
-          "combustion",
-          "electric",
-          "electric_assist",
-          "human"
-        ]
-      },
-      "minItems": 1
-    },
-    "timestamp": {
-      "$id": "#/definitions/timestamp",
-      "title": "Integer milliseconds since Unix epoch",
-      "type": "number",
-      "multipleOf": 1.0,
-      "minimum": 0
-    },
-    "vehicle_type": {
-      "$id": "#/definitions/vehicle_type",
-      "type": "string",
-      "description": "The type of vehicle",
-      "enum": [
-        "bicycle",
-        "car",
-        "scooter",
-        "moped"
-      ]
-    },
-    "version": {
-      "$id": "#/definitions/version",
-      "type": "string",
-      "title": "The MDS Provider version this data represents",
-      "examples": [
-        "0.4.0"
-      ],
-      "pattern": "^0\\.4\\.[0-9]+$"
-    },
-    "uuid": {
-      "$id": "#/definitions/uuid",
-      "type": "string",
-      "title": "A UUID used to uniquely identifty an object",
-      "default": "",
-      "examples": [
-        "3c9604d6-b5ee-11e8-96f8-529269fb1459"
-      ],
-      "pattern": "^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$"
+    "ttl": {
+      "$id": "#/definitions/ttl",
+      "type": "integer",
+      "title": "Integer milliseconds until next data update (0 if the data is always refreshed)",
+      "minimum": 0,
+      "maximum": 300000
     }
   },
   "required": [
-    "version",
     "data",
+    "version",
     "last_updated",
     "ttl"
   ],
   "properties": {
-    "version": {
-      "$id": "#/properties/version",
-      "$ref": "#/definitions/version"
-    },
     "data": {
       "$id": "#/properties/data",
       "type": "object",
-      "title": "The page of data",
+      "description": "The data records in this payload",
       "required": [
         "vehicles"
       ],
@@ -237,54 +251,47 @@
             ],
             "properties": {
               "provider_name": {
-                "$id": "#/properties/data/properties/vehicles/items/properties/provider_name",
-                "type": "string",
-                "description": "The public-facing name of the Provider",
-                "examples": [
-                  "Provider Name"
-                ],
-                "pattern": "^(.*)$"
+                "$id": "#/definitions/vehicle/properties/provider_name",
+                "$ref": "#/definitions/string",
+                "description": "The public-facing name of the Provider"
               },
               "provider_id": {
-                "$id": "#/properties/data/properties/vehicles/items/properties/provider_id",
-                "description": "The UUID for the Provider, unique within MDS",
-                "$ref": "#/definitions/uuid"
+                "$id": "#/definitions/vehicle/properties/provider_id",
+                "$ref": "#/definitions/uuid",
+                "description": "The UUID for the Provider, unique within MDS"
               },
               "device_id": {
-                "$id": "#/properties/data/properties/vehicles/items/properties/device_id",
-                "description": "A unique device ID in UUID format",
-                "$ref": "#/definitions/uuid"
+                "$id": "#/definitions/vehicle/properties/device_id",
+                "$ref": "#/definitions/uuid",
+                "description": "A unique device ID in UUID format"
               },
               "vehicle_id": {
-                "$id": "#/properties/data/properties/vehicles/items/properties/vehicle_id",
-                "type": "string",
-                "description": "The Vehicle Identification Number visible on the vehicle itself",
-                "default": "",
-                "examples": [
-                  "ABC123"
-                ],
-                "pattern": "^(.*)$"
+                "$id": "#/definitions/vehicle/properties/vehicle_id",
+                "$ref": "#/definitions/string",
+                "description": "The Vehicle Identification Number visible on the vehicle itself"
               },
               "vehicle_type": {
-                "$id": "#/properties/data/properties/vehicles/items/properties/vehicle_type",
+                "$id": "#/definitions/vehicle/properties/vehicle_type",
                 "$ref": "#/definitions/vehicle_type",
                 "description": "The type of vehicle"
               },
               "propulsion_type": {
-                "$id": "#/properties/data/properties/vehicles/items/properties/propulsion_type",
-                "description": "The type of propulsion; allows multiple values",
-                "$ref": "#/definitions/propulsion_type"
+                "$id": "#/definitions/vehicle/properties/propulsion_type",
+                "$ref": "#/definitions/propulsion_type",
+                "description": "The type of propulsion; allows multiple values"
               },
               "last_event_time": {
                 "$id": "#/properties/data/properties/vehicles/items/properties/last_event_time",
-                "description": "The time the most recent status change event occurred, expressed as a Unix Timestamp",
-                "$ref": "#/definitions/timestamp"
+                "$ref": "#/definitions/timestamp",
+                "description": "The time the most recent status change event occurred, expressed as a Unix Timestamp"
               },
               "last_event_type": {
+                "$id": "#/properties/data/properties/vehicles/items/properties/last_event_type",
                 "type": "string",
                 "description": "The type of the event"
               },
               "last_event_type_reason": {
+                "$id": "#/properties/data/properties/vehicles/items/properties/last_event_type_reason",
                 "type": "string",
                 "description": "The reason for the event"
               },
@@ -366,21 +373,21 @@
       },
       "additionalProperties": false
     },
+    "version": {
+      "$id": "#/properties/version",
+      "$ref": "#/definitions/version"
+    },
     "links": {
       "$id": "#/properties/links",
       "$ref": "#/definitions/links"
     },
     "last_updated": {
       "$id": "#/properties/last_updated",
-      "description": "Timestamp indicating the last time the data in this feed was updated",
       "$ref": "#/definitions/timestamp"
     },
     "ttl": {
       "$id": "#/properties/ttl",
-      "type": "integer",
-      "title": "Integer representing the number of milliseconds before the data in this feed will be updated again (0 if the data should always be refreshed)",
-      "minimum": 0,
-      "maximum": 300000
+      "$ref": "#/definitions/ttl"
     }
   },
   "additionalProperties": false

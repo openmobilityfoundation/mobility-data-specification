@@ -18,7 +18,7 @@
     "links": {
       "$id": "#/definitions/links",
       "type": "object",
-      "required":[
+      "required": [
         "next"
       ],
       "properties": {
@@ -89,6 +89,17 @@
       },
       "minItems": 1
     },
+    "string": {
+      "$id": "#/definitions/string",
+      "type": "string",
+      "description": "A length-limited string type",
+      "maxLength": 255,
+      "default": "",
+      "examples": [
+        "ABC123"
+      ],
+      "pattern": "^(.*)$"
+    },
     "telemetry": {
       "$id": "#/definitions/telemetry",
       "type": "object",
@@ -138,7 +149,7 @@
               "type": "number",
               "description": "Speed in meters/sec"
             },
-	      "accuracy": {
+            "accuracy": {
               "type": "number",
               "description": "Accuracy in meters"
             },
@@ -167,6 +178,13 @@
       "multipleOf": 1.0,
       "minimum": 0
     },
+    "ttl": {
+      "$id": "#/definitions/ttl",
+      "type": "integer",
+      "title": "Integer milliseconds until next data update (0 if the data is always refreshed)",
+      "minimum": 0,
+      "maximum": 300000
+    },
     "uuid": {
       "$id": "#/definitions/uuid",
       "type": "string",
@@ -177,6 +195,52 @@
       ],
       "pattern": "^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$"
     },
+    "vehicle": {
+      "$id": "#/definitions/vehicle",
+      "type": "object",
+      "title": "The common schema for Provider vehicle information",
+      "required": [
+        "provider_name",
+        "provider_id",
+        "device_id",
+        "vehicle_id",
+        "vehicle_type",
+        "propulsion_type"
+      ],
+      "properties": {
+        "provider_name": {
+          "$id": "#/definitions/vehicle/properties/provider_name",
+          "$ref": "#/definitions/string",
+          "description": "The public-facing name of the Provider"
+        },
+        "provider_id": {
+          "$id": "#/definitions/vehicle/properties/provider_id",
+          "$ref": "#/definitions/uuid",
+          "description": "The UUID for the Provider, unique within MDS"
+        },
+        "device_id": {
+          "$id": "#/definitions/vehicle/properties/device_id",
+          "$ref": "#/definitions/uuid",
+          "description": "A unique device ID in UUID format"
+        },
+        "vehicle_id": {
+          "$id": "#/definitions/vehicle/properties/vehicle_id",
+          "$ref": "#/definitions/string",
+          "description": "The Vehicle Identification Number visible on the vehicle itself"
+        },
+        "vehicle_type": {
+          "$id": "#/definitions/vehicle/properties/vehicle_type",
+          "$ref": "#/definitions/vehicle_type",
+          "description": "The type of vehicle"
+        },
+        "propulsion_type": {
+          "$id": "#/definitions/vehicle/properties/propulsion_type",
+          "$ref": "#/definitions/propulsion_type",
+          "description": "The type of propulsion; allows multiple values"
+        }
+      },
+      "additionalProperties": false
+    },
     "vehicle_event": {
       "$id": "#/definitions/vehicle_event",
       "type": "string",
@@ -185,21 +249,27 @@
         {
           "properties": {
             "event_type": {
-              "enum": ["register"]
+              "enum": [
+                "register"
+              ]
             }
           }
         },
         {
           "properties": {
             "event_type": {
-              "enum": ["service_start"]
+              "enum": [
+                "service_start"
+              ]
             }
           }
         },
         {
           "properties": {
             "event_type": {
-              "enum": ["service_end"]
+              "enum": [
+                "service_end"
+              ]
             },
             "event_type_reason": {
               "enum": [
@@ -214,14 +284,18 @@
         {
           "properties": {
             "event_type": {
-              "enum": ["provider_drop_off"]
+              "enum": [
+                "provider_drop_off"
+              ]
             }
           }
         },
         {
           "properties": {
             "event_type": {
-              "enum": ["provider_pick_up"]
+              "enum": [
+                "provider_pick_up"
+              ]
             },
             "event_type_reason": {
               "enum": [
@@ -236,59 +310,78 @@
         {
           "properties": {
             "event_type": {
-              "enum": ["city_pick_up"]
+              "enum": [
+                "city_pick_up"
+              ]
             }
           }
         },
         {
           "properties": {
             "event_type": {
-              "enum": ["reserve"]
+              "enum": [
+                "reserve"
+              ]
             }
           }
         },
         {
           "properties": {
             "event_type": {
-              "enum": ["cancel_reservation"]
+              "enum": [
+                "cancel_reservation"
+              ]
             }
           }
         },
         {
           "properties": {
             "event_type": {
-              "enum": ["trip_start"]
+              "enum": [
+                "trip_start"
+              ]
             }
           }
         },
         {
           "properties": {
             "event_type": {
-              "enum": ["trip_enter"]
+              "enum": [
+                "trip_enter"
+              ]
             }
           }
         },
         {
           "properties": {
             "event_type": {
-              "enum": ["trip_leave"]
+              "enum": [
+                "trip_leave"
+              ]
             }
           }
         },
         {
           "properties": {
             "event_type": {
-              "enum": ["trip_end"]
+              "enum": [
+                "trip_end"
+              ]
             }
           }
         },
         {
           "properties": {
             "event_type": {
-              "enum": ["deregister"]
+              "enum": [
+                "deregister"
+              ]
             },
             "event_type_reason": {
-              "enum": ["missing", "decommissioned"]
+              "enum": [
+                "missing",
+                "decommissioned"
+              ]
             }
           }
         }
