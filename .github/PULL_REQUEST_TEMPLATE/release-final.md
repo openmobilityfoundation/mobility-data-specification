@@ -15,4 +15,4 @@ This pull request will make the release official in `main`.
 
 ### Action Item
 
-Merge this pull request following the [Release Guidelines](https://github.com/openmobilityfoundation/governance/blob/main/technical/ReleaseGuidelines.md).
+Merge this pull request following the [Release Guidelines](https://github.com/openmobilityfoundation/governance/blob/main/technical/ReleaseGuidelines.md#making-a-release).
