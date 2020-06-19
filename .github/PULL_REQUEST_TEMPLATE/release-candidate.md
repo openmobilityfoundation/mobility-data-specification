@@ -15,4 +15,4 @@ Please use this pull request to track Technology Council and OMF Board feedback 
 
 ### Action Item
 
-This pull request will be merged by an OMF maintainer after OMF Board Approval following the [Release Guidelines](https://github.com/openmobilityfoundation/mobility-data-specification/blob/master/ReleaseGuidelines.md#making-a-release).
+This pull request will be merged by an OMF maintainer after OMF Board Approval following the [Release Guidelines](https://github.com/openmobilityfoundation/mobility-data-specification/blob/main/ReleaseGuidelines.md#making-a-release).
