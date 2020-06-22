@@ -1,5 +1,5 @@
 {
-  "$id": "https://raw.githubusercontent.com/openmobilityfoundation/mobility-data-specification/master/agency/post_vehicle_event.json",
+  "$id": "https://raw.githubusercontent.com/openmobilityfoundation/mobility-data-specification/main/agency/post_vehicle_event.json",
   "$schema": "http://json-schema.org/draft-06/schema#",
   "title": "The MDS Agency Schema, POST vehicle status body",
   "type": "object",
