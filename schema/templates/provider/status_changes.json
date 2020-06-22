@@ -1,5 +1,5 @@
 {
-  "$id": "https://raw.githubusercontent.com/openmobilityfoundation/mobility-data-specification/master/provider/dockless/status_changes.json",
+  "$id": "https://raw.githubusercontent.com/openmobilityfoundation/mobility-data-specification/main/provider/dockless/status_changes.json",
   "$schema": "http://json-schema.org/draft-06/schema#",
   "title": "The MDS Provider Schema, status_change payload",
   "type": "object",
