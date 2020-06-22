@@ -1,5 +1,5 @@
 {
-  "$id": "https://raw.githubusercontent.com/openmobilityfoundation/mobility-data-specification/master/provider/dockless/trips.json",
+  "$id": "https://raw.githubusercontent.com/openmobilityfoundation/mobility-data-specification/main/provider/dockless/trips.json",
   "$schema": "http://json-schema.org/draft-06/schema#",
   "title": "The MDS Provider Schema, trips payload",
   "type": "object",
