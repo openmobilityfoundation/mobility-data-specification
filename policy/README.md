@@ -23,7 +23,7 @@ Versioning must be implemented as specified in the [`General information version
 
 ## Background
 
-The goal of this specification is to enable Agencies to create, revise, and publish machine-readable policies, as sets of rules for individual and collective device behavior exhibited by both _mobility as a service_ Providers and riders / users. Examples of policies include:
+The goal of this specification is to enable Agencies to publish machine-readable policies, as sets of rules for individual and collective device behavior exhibited by both _mobility as a service_ Providers and riders / users. Examples of policies include:
 
 - City-wide and localized caps (e.g. "Minimum 500 and maximum 3000 scooters within city boundaries")
 - Exclusion zones (e.g. "No scooters are permitted in this district on weekends")
@@ -32,6 +32,12 @@ The goal of this specification is to enable Agencies to create, revise, and publ
 - Idle-time and disabled-time limitations (e.g. "5 days idle while rentable, 12 hours idle while unrentable, per device")
 
 The machine-readable format allows Providers to obtain policies and compute compliance where it can be determined entirely by data obtained internally.
+
+Policies will typically be linked to one or more associated geographies. Geography descriptions (e.g. geofences or lists of street segments) must also be maintained by the Agency indefinitely. Policies without specific geographies (global policies) are assumed to apply to all jurisdictions managed by the Agency. 
+
+Geographical data will be stored as immutable GeoJSON FeatureCollections (see https://tools.ietf.org/html/rfc7946 for details on what a FeatureCollection is), referenced by UUID. See the Geography and Geography Author specs for information on the Geography schema, and how Agencies are expected to create and maintain Geographies and serve them to Providers. Policies are not confined to describing their effects over a geographic area. They might prefer Points for locations such as drop-zones. Policy may be used for a variety of enforcement actions, so it's important for the Agency to persist and keep immutable both Policy and Geography data.
+
+
 
 [Top](#table-of-contents)
 
@@ -95,11 +101,10 @@ As with the Provider API, `timestamp` refers to integer milliseconds since Unix 
 
 #### Policies
 
-Endpoint: `/policies/{id}`  
-Method: `GET`  
-`data` Payload: `{ "policies": [] }`, an array of objects with the structure [outlined below](#policy).
+#### GET `/policies/`  
+`data` Payload: `{ "policies": [] }`, an array of Policy objects.
 
-##### Query Parameters
+Parameters
 
 | Name         | Type      | Required / Optional | Description                                    |
 | ------------ | --------- | --- | ---------------------------------------------- |
@@ -112,18 +117,6 @@ Method: `GET`
 Policies will be returned in order of effective date (see schema below), with pagination as in the `agency` and `provider` specs.
 
 `provider_id` is an implicit parameter and will be encoded in the authentication mechanism, or a complete list of policies should be produced. If the Agency decides that Provider-specific policy documents should not be shared with other Providers (e.g. punitive policy in response to violations), an Agency should filter policy objects before serving them via this endpoint.
-
-#### Geographies
-
-Endpoint: `/geographies/{id}`  
-Method: `GET`  
-`data` Payload: `{ geographies: [] }`, an array of GeoJSON `Feature` objects.
-
-##### Query Parameters
-
-| Name         | Type      | Required / Optional | Description                                    |
-| ------------ | --------- | --- | ---------------------------------------------- |
-| `id`         | UUID      | Optional    | If provided, returns one geography object with the matching UUID; default is to return all geography objects.               |
 
 ### Flat Files
 
@@ -182,6 +175,11 @@ The optional `end_date` field applies to all policies represented in the file.
 [Top](#table-of-contents)
 
 ## Schema
+
+<a name="policy-fields"></a>
+ 
+### Policy Fields
+
 
 All response fields must use `lower_case_with_underscores`.
 
