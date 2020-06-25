@@ -64,7 +64,6 @@ If `device_id` is specified, `GET` will return a single vehicle record, otherwis
 
 A vehicle record is as follows:
 
-<<<<<<< HEAD
 | Field         | Type      | Field Description                                                             |
 | ------------- | --------- | ----------------------------------------------------------------------------- |
 | `device_id`   | UUID      | Provided by Operator to uniquely identify a vehicle                           |
@@ -78,21 +77,6 @@ A vehicle record is as follows:
 | `state`       | Enum      | Current vehicle state. See [Vehicle State][vehicle-states]                    |
 | `prev_event`  | Enum      | Last [Vehicle Event][vehicle-event]                                           |
 | `updated`     | Timestamp | Date of last event update                                                     |
-=======
-| Field         | Type      | Required/Optional     | Field Description                                                             |
-| ------------- | --------- | --------------------- | ----------------------------------------------------------------------------- |
-| `device_id`   | UUID      | Required              | Provided by Operator to uniquely identify a vehicle                           |
-| `provider_id` | UUID      | Required              | Issued by City and [tracked](../providers.csv)                                |
-| `vehicle_id`  | String    | Required              | Vehicle Identification Number (vehicle_id) visible on vehicle                 |
-| `type`        | Enum      | Required              | [Vehicle Type](#vehicle-type)                                                 |
-| `propulsion`  | Enum[]    | Required              | Array of [Propulsion Type](#propulsion-type); allows multiple values          |
-| `year`        | Integer   | Required if Available | Year Manufactured                                                             |
-| `mfgr`        | String    | Required if Available | Vehicle Manufacturer                                                          |
-| `model`       | String    | Required if Available | Vehicle Model                                                                 |
-| `status`      | Enum      | Required if Available | Current vehicle status. See [Vehicle Status](#vehicle-events)                 |
-| `prev_event`  | Enum      | Required if Available | Last [Vehicle Event](#vehicle-events)                                         |
-| `updated`     | Timestamp | Required if Available | Date of last event update                                                     |
->>>>>>> dev
 
 404 Failure Response:
 
@@ -111,14 +95,9 @@ Body Params:
 | ------------ | ------- | ----------------- | -------------------------------------------------------------------- |
 | `device_id`  | UUID    | Required          | Provided by Operator to uniquely identify a vehicle                  |
 | `vehicle_id` | String  | Required          | Vehicle Identification Number (vehicle_id) visible on vehicle        |
-<<<<<<< HEAD
 | `type`       | Enum    | Required          | [Vehicle Type][vehicle-types]                                        |
 | `propulsion` | Enum[]  | Required          | Array of [Propulsion Type][propulsion-types]; allows multiple values |
-=======
-| `type`       | Enum    | Required          | [Vehicle Type](#vehicle-type)                                        |
-| `propulsion` | Enum[]  | Required          | Array of [Propulsion Type](#propulsion-type); allows multiple values |
 | `provider_id`| UUID    | Optional          | Provider to which the vehicle belongs if different from the authenticated provider |
->>>>>>> dev
 | `year`       | Integer | Optional          | Year Manufactured                                                    |
 | `mfgr`       | String  | Optional          | Vehicle Manufacturer                                                 |
 | `model`      | String  | Optional          | Vehicle Model                                                        |

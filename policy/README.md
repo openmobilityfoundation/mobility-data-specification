@@ -271,7 +271,6 @@ If a vehicle is matched with a rule, then it _will not_ be considered in the sub
 
 The internal mechanics of ordering are up to the Policy editing and hosting software.
 
-<<<<<<< HEAD
 [Top][toc]
 
 [beta]: /general-information.md#beta
@@ -284,9 +283,3 @@ The internal mechanics of ordering are up to the Policy editing and hosting soft
 [vehicle-states]: /general-information.md#vehicle-states
 [vehicle-types]: /general-information.md#vehicle-types
 [versioning]: /general-information.md#versioning
-=======
-[Top](#table-of-contents)
-
-[general-information/versioning]: /general-information.md#versioning
-[ts]: #timestamps
->>>>>>> dev
