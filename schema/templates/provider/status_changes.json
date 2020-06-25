@@ -53,10 +53,10 @@
           "minimum": 0,
           "maximum": 1
         },
-        "associated_trip": {
-          "$id": "#/properties/data/properties/status_changes/items/properties/associated_trip",
+        "trip_id": {
+          "$id": "#/properties/data/properties/status_changes/items/properties/trip_id",
           "$ref": "#/definitions/uuid",
-          "description": "Trip UUID, required if event_type is user_pick_up or user_drop_off"
+          "description": "Trip UUID (foreign key to Trips API), required if event_types contains trip_start, trip_end, trip_cancel, trip_enter_jurisdiction, or trip_leave_jurisdiction"
         },
         "associated_ticket": {
           "$id": "#/properties/data/properties/status_changes/items/properties/associated_ticket",
@@ -64,99 +64,7 @@
           "description": "Identifier for an associated ticket inside an Agency-maintained 311 or CRM system."
         }
       },
-      "allOf": [
-        {
-          "description": "valid event_type and event_type_reason combinations",
-          "oneOf": [
-            {
-              "properties": {
-                "event_type": {
-                  "enum": [
-                    "available"
-                  ]
-                },
-                "event_type_reason": {
-                  "enum": [
-                    "service_start",
-                    "user_drop_off",
-                    "rebalance_drop_off",
-                    "maintenance_drop_off",
-                    "agency_drop_off"
-                  ]
-                }
-              }
-            },
-            {
-              "properties": {
-                "event_type": {
-                  "enum": [
-                    "reserved"
-                  ]
-                },
-                "event_type_reason": {
-                  "enum": [
-                    "user_pick_up"
-                  ]
-                }
-              }
-            },
-            {
-              "properties": {
-                "event_type": {
-                  "enum": [
-                    "unavailable"
-                  ]
-                },
-                "event_type_reason": {
-                  "enum": [
-                    "low_battery",
-                    "maintenance"
-                  ]
-                }
-              }
-            },
-            {
-              "properties": {
-                "event_type": {
-                  "enum": [
-                    "removed"
-                  ]
-                },
-                "event_type_reason": {
-                  "enum": [
-                    "service_end",
-                    "rebalance_pick_up",
-                    "maintenance_pick_up",
-                    "agency_pick_up"
-                  ]
-                }
-              }
-            }
-          ]
-        },
-        {
-          "description": "conditionally require associated_trip when applicable",
-          "anyOf": [
-            {
-              "not": {
-                "properties": {
-                  "event_type_reason": {
-                    "enum": [
-                      "user_pick_up",
-                      "user_drop_off"
-                    ]
-                  }
-                }
-              }
-            },
-            {
-              "required": [
-                "associated_trip"
-              ]
-            }
-          ]
-        }
-      ]
+      "allOf": []
     }
   }
 }

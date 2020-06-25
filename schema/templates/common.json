@@ -74,8 +74,8 @@
       },
       "additionalProperties": false
     },
-    "propulsion_type": {
-      "$id": "#/definitions/propulsion_type",
+    "propulsion_types": {
+      "$id": "#/definitions/propulsion_types",
       "type": "array",
       "description": "The type of propulsion; allows multiple values",
       "items": {
@@ -87,6 +87,7 @@
           "human"
         ]
       },
+      "uniqueItems": true,
       "minItems": 1
     },
     "string": {
@@ -178,6 +179,33 @@
       "multipleOf": 1.0,
       "minimum": 0
     },
+    "trip_id_reference": {
+      "description": "Conditionally require a trip_id reference",
+      "anyOf": [
+        {
+          "not": {
+            "properties": {
+              "event_types": {
+                "contains": {
+                  "enum": [
+                      "trip_cancel",
+                      "trip_end",
+                      "trip_enter_jurisdiction",
+                      "trip_leave_jurisdiction",
+                      "trip_start"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "required": [
+            "trip_id"
+          ]
+        }
+      ]
+    },
     "ttl": {
       "$id": "#/definitions/ttl",
       "type": "integer",
@@ -205,7 +233,7 @@
         "device_id",
         "vehicle_id",
         "vehicle_type",
-        "propulsion_type"
+        "propulsion_types"
       ],
       "properties": {
         "provider_name": {
@@ -233,9 +261,9 @@
           "$ref": "#/definitions/vehicle_type",
           "description": "The type of vehicle"
         },
-        "propulsion_type": {
-          "$id": "#/definitions/vehicle/properties/propulsion_type",
-          "$ref": "#/definitions/propulsion_type",
+        "propulsion_types": {
+          "$id": "#/definitions/vehicle/properties/propulsion_types",
+          "$ref": "#/definitions/propulsion_types",
           "description": "The type of propulsion; allows multiple values"
         }
       },

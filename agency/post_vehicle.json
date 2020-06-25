@@ -19,6 +19,17 @@
       },
       "minItems": 1
     },
+    "string": {
+      "$id": "#/definitions/string",
+      "type": "string",
+      "description": "A length-limited string type",
+      "maxLength": 255,
+      "default": "",
+      "examples": [
+        "ABC123"
+      ],
+      "pattern": "^(.*)$"
+    },
     "vehicle_type": {
       "$id": "#/definitions/vehicle_type",
       "type": "string",
@@ -50,19 +61,13 @@
   "properties": {
     "device_id": {
       "$id": "#/properties/device_id",
-      "description": "Provided by Operator to uniquely identify a vehicle",
-      "$ref": "#/definitions/uuid"
+      "$ref": "#/definitions/uuid",
+      "description": "Provided by Operator to uniquely identify a vehicle"
     },
     "vehicle_id": {
       "$id": "#/properties/vehicle_id",
-      "type": "string",
-      "maxLength": 255,
-      "description": "The Vehicle Identification Number visible on the vehicle itself",
-      "default": "",
-      "examples": [
-        "ABC123"
-      ],
-      "pattern": "^(.*)$"
+      "$ref": "#/definitions/string",
+      "description": "The Vehicle Identification Number visible on the vehicle itself"
     },
     "type": {
       "$id": "#/properties/type",
@@ -71,8 +76,8 @@
     },
     "propulsion": {
       "$id": "#/properties/propulsion",
-      "description": "The type of propulsion; allows multiple values",
-      "$ref": "#/definitions/propulsion_type"
+      "$ref": "#/definitions/propulsion_type",
+      "description": "The type of propulsion; allows multiple values"
     },
     "year": {
       "$id": "#/properties/year",
@@ -85,25 +90,13 @@
     },
     "mfgr": {
       "$id": "#/properties/mfgr",
-      "type": "string",
-      "maxLength": 255,
-      "description": "The vehicle manufacturer",
-      "default": "",
-      "examples": [
-        "ABC123"
-      ],
-      "pattern": "^(.*)$"
+      "$ref": "#/definitions/string",
+      "description": "The vehicle manufacturer"
     },
     "model": {
       "$id": "#/properties/model",
-      "type": "string",
-      "maxLength": 255,
-      "description": "The vehicle model",
-      "default": "",
-      "examples": [
-        "ABC123"
-      ],
-      "pattern": "^(.*)$"
+      "$ref": "#/definitions/string",
+      "description": "The vehicle model"
     }
   },
   "additionalProperties": false
