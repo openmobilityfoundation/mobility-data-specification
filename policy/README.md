@@ -242,7 +242,7 @@ An individual `Rule` object is defined by the following fields:
 | `count` | Fleet counts based on regions. Rule `max`/`min` refers to number of devices.                                  |
 | `time`  | Individual limitations on time spent in one or more vehicle-states. Rule `max`/`min` refers to increments of time in [Rule Units](#rule-units). |
 | `speed` | Global or local speed limits. Rule `max`/`min` refers to speed in [Rule Units](#rule-units).                  |
-| `rate`  | Fees or subsidies based on regions and time spent in one or more vehicle-states. Rule `rate_amount` refers to the rate charged according to the [Rate Recurrence](#rate_recurrence).      |
+| `rate`  | **[Beta feature](/general-information.md#beta-features):** Yes (as of 1.0.0). Fees or subsidies based on regions and time spent in one or more vehicle-states. Rule `rate_amount` refers to the rate charged according to the [Rate Recurrence](#rate_recurrence). Agencies and Providers must agree on terms of use prior to utilizing the `rate` rule type.     |
 | `user`  | Information for users, e.g. about helmet laws. Generally can't be enforced via events and telemetry.          |
 
 ### Rule Units
