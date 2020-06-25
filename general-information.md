@@ -168,11 +168,8 @@ Note that to handle out-of-order events, the validity of the prior-state shall n
 | `available`, `reserved`, `on_trip`, `non_operational`, `elsewhere` | `unknown`     | `missing`            | The vehicle is not at its last reported GPS location, or that location is wildly in error |
 | `available`, `reserved`, `on_trip`, `non_operational`, `elsewhere` | `unknown`     | `comms_lost`       | The vehicle is unable to transmit its GPS location or other status information |
 
-NOTES:
-
-Should we try to handle "unlicensed movements"?
-
-What's the best way to return from `unknown`?
+The *State Machine Diagram* shows how the `vehicle_state` and `event_type` relate to each other and how vehicles can transition between states:
+![MDS State Machine Diagram](https://raw.githubusercontent.com/schnuerle/mobility-data-specification/ms-state-diagram/MDS-state-machine-diagram.svg)
 
 [Top][toc]
 
