@@ -1,6 +1,6 @@
 # Mobility Data Specification: Policy
 
-This specification describes the digital relationship between _mobility as a service_ Providers and the Agencies that regulate them. The Policy specification is meant to define communicate municipality policies (such as as vehicle deployment caps and speed limits) in a clear, consistent manner.
+This specification describes the digital relationship between _mobility as a service_ Providers and the Agencies that regulate them. The Policy specification is meant to communicate municipal policies (such as as vehicle deployment caps and speed limits) in a clear, consistent manner.
 
 ## Table of Contents
 
