@@ -205,11 +205,12 @@ Body Params:
 | ------------- | ------------------------------ | ----------------- | -------------------------------------------------------------------------------------- |
 | `data`        | [Telemetry](#telemetry-data)[] | Required          | Array of telemetry for one or more vehicles.                                           |
 
-201 Success Response:
+200 Success Response:
 
-| Field     | Type                           | Field Description                                                                                       |
-| --------- | ------------------------------ | ------------------------------------------------------------------------------------------------------- |
-| `result`  | String                         | Responds with number of successfully written telemetry data points and total number of provided points. Format to use: `{success}/{total}`, both amounts as integers. |
+| Field      | Type                           | Field Description                                                                                       |
+| ---------- | ------------------------------ | ------------------------------------------------------------------------------------------------------- |
+| `success`  | Integer                        | Number of successfully written telemetry data points.                                                   |
+| `total`    | Integer                        | Ttotal number of provided points.                                                                       |
 | `failures` | [Telemetry](#telemetry-data)[] | Array of failed telemetry for zero or more vehicles (empty if all successful).                          |
 
 400 Failure Response:
