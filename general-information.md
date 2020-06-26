@@ -120,11 +120,11 @@ All String fields, such as `vehicle_id`, are limited to a maximum of 255 charact
 | num_vehicles_disabled  | {vehicle_type: number}                                                            | Required          | How many vehicles are unavailable/reserved per vehicle_type at this stop?                                                                            |
 | managed_by             | UUID                                                                              | Optional          | `provider_id` for the provider which manages this stop. null/undefined if city managed.                                                              |
 | geography_id           | UUID                                                                              | Optional          | Pointer to the Geography that represents the Stop geospatially                                                                                       |
-| region_id              | string                                                                            | Optional          | ID of the region where station is located, see [GBFS Station Information](https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_informationjson) |
+| region_id              | string                                                                            | Optional          | ID of the region where station is located, see [GBFS Station Information][gbfs-station-info] |
 | short_name             | String                                                                            | Optional          | Abbreviated stop name                                                                                                                                |
 | address                | String                                                                            | Optional          | Postal address (useful for directions)                                                                                                               |
 | post_code              | String                                                                            | Optional          | Postal code (e.g. `10036`)                                                                                                                           |
-| rental_methods         | [Enum](https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_informationjson) | Optional          | Payment methods accepted at stop, see [GBFS Rental Methods](https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_informationjson)               |
+| rental_methods         | [Enum][gbfs-station-info] | Optional          | Payment methods accepted at stop, see [GBFS Rental Methods][gbfs-station-info]               |
 | cross_street           | String                                                                            | Optional          | Cross street of where the station is located.                                                                                                        |
 | num_spots_available    | {vehicle_type: number}                                                            | Optional          | How many spots are free to be populated with vehicles at this stop?                                                                                  |
 | num_spots_disabled     | {vehicle_type: number}                                                            | Optional          | How many docks are disabled and unable to accept vehicles at this stop?                                                                              |
@@ -135,9 +135,9 @@ All String fields, such as `vehicle_id`, are limited to a maximum of 255 charact
 
 | Field        | Type    | Required/Optional | Description                                                                       |
 |--------------|---------|-------------------|-----------------------------------------------------------------------------------|
-| is_installed | Boolean | Required          | See [GBFS](https://github.com/NABSA/gbfs/blob/v2.1-RC/gbfs.md#station_statusjson) |
-| is_renting   | Boolean | Required          | See [GBFS](https://github.com/NABSA/gbfs/blob/v2.1-RC/gbfs.md#station_statusjson) |
-| is_returning | Boolean | Required          | See [GBFS](https://github.com/NABSA/gbfs/blob/v2.1-RC/gbfs.md#station_statusjson) |
+| is_installed | Boolean | Required          | See GBFS [station_status.json][gbfs-station-status] |
+| is_renting   | Boolean | Required          | See GBFS [station_status.json][gbfs-station-status] |
+| is_returning | Boolean | Required          | See GBFS [station_status.json][gbfs-station-status] |
 
 ### GBFS Compatibility
 
@@ -279,6 +279,8 @@ The client can use the returned value verbatim as a version request in the `Acce
 [Top][toc]
 
 [agency]: /agency/README.md
+[gbfs-station-info]: https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_informationjson
+[gbfs-station-status]: https://github.com/NABSA/gbfs/blob/v2.1-RC/gbfs.md#station_statusjson
 [policy]: /policy/README.md
 [provider]: /provider/README.md
 [toc]: #table-of-contents
