@@ -241,24 +241,24 @@ The `/stops` endpoint allows an agency to register Stops.
 **Endpoint:** `/stops`  
 **Method:** `POST`  
 **[Beta feature](/general-information.md#beta-features):** Yes (as of 1.0.0)  
-**Request Body**: An array of [Stops](../general-information.md/#stop)
+**Request Body**: An array of [Stops](/general-information.md#stop)
 
 **Endpoint:** `/stops`  
 **Method:** `PUT`  
 **[Beta feature](/general-information.md#beta-features):** Yes (as of 1.0.0)  
-**Request Body**: An array of subsets of [Stop](../general-information.md/#stop) information, where the permitted subset fields are defined as:
+**Request Body**: An array of subsets of [Stop](/general-information.md#stop) information, where the permitted subset fields are defined as:
 | Field               | Required/Optional | Description                                 |
 |---------------------|-------------------|---------------------------------------------|
-| stop_id             | Required          |See [Stops](../general-information.md/#stop) |
-| status              | Optional          |See [Stops](../general-information.md/#stop) |
-| num_spots_disabled  | Optional          |See [Stops](../general-information.md/#stop) |
+| stop_id             | Required          |See [Stops](/general-information.md#stop) |
+| status              | Optional          |See [Stops](/general-information.md#stop) |
+| num_spots_disabled  | Optional          |See [Stops](/general-information.md#stop) |
 
 TBD -- Are there additional fields that should be permitted to update with a PUT?
 
 **Endpoint:** `/stops/:stop_id`  
 **Method:** `GET`  
 **[Beta feature](/general-information.md#beta-features):** Yes (as of 1.0.0)  
-**`data` Payload:** `{ "stops": [] }`, an array of [Stops](../general-information.md/#stop)
+**`data` Payload:** `{ "stops": [] }`, an array of [Stops](/general-information.md#stop)
 
 In the case that a `stop_id` query parameter is specified, the `stops` array returned will only have one entry. In the case that no `stop_id` query parameter is specified, all stops will be returned.
 

@@ -356,7 +356,7 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 **Endpoint:** `/stops/:stop_id`  
 **Method:** `GET`  
 **[Beta feature](/general-information.md#beta-features):** Yes (as of 1.0.0)  
-**`data` Payload:** `{ "stops": [] }`, an array of [Stops](../general-information.md/#stop)
+**`data` Payload:** `{ "stops": [] }`, an array of [Stops](/general-information.md#stop)
 
 In the case that a `stop_id` query parameter is specified, the `stops` array returned will only have one entry. In the case that no `stop_id` query parameter is specified, all stops will be returned.
 
