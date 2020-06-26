@@ -232,7 +232,7 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | `gps.hdop`     | Float          | Required if Available | Horizontal GPS or GNSS accuracy value (see [hdop][hdop]) |
 | `gps.satellites` | Integer      | Required if Available | Number of GPS or GNSS satellites
 | `charge`       | Float          | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 1 |
-| `stop_id`      | UUID           | Required if Applicable | Stop that the vehicle is currently located at. Only applicable for _docked_ Micromobility. See [Stops](../general-information.md#stops) |
+| `stop_id`      | UUID           | Required if Applicable | Stop that the vehicle is currently located at. Only applicable for _docked_ Micromobility. See [Stops][stops] |
 
 ## Stops
 
@@ -240,84 +240,38 @@ The `/stops` endpoint allows an agency to register Stops.
 
 **Endpoint:** `/stops`  
 **Method:** `POST`  
-**[Beta feature](/general-information.md#beta-features):** Yes (as of 1.0.0)  
-**Request Body**: An array of [Stops](/general-information.md#stop)
+**[Beta feature][beta]:** Yes (as of 1.0.0)  
+**Request Body**: An array of [Stops][stops]
 
 **Endpoint:** `/stops`  
 **Method:** `PUT`  
-**[Beta feature](/general-information.md#beta-features):** Yes (as of 1.0.0)  
-**Request Body**: An array of subsets of [Stop](/general-information.md#stop) information, where the permitted subset fields are defined as:
+**[Beta feature][beta]:** Yes (as of 1.0.0)  
+**Request Body**: An array of subsets of [Stop][stops] information, where the permitted subset fields are defined as:
+
 | Field               | Required/Optional | Description                                 |
 |---------------------|-------------------|---------------------------------------------|
-| stop_id             | Required          |See [Stops](/general-information.md#stop) |
-| status              | Optional          |See [Stops](/general-information.md#stop) |
-| num_spots_disabled  | Optional          |See [Stops](/general-information.md#stop) |
+| stop_id             | Required          |See [Stops][stops] |
+| status              | Optional          |See [Stops][stops] |
+| num_spots_disabled  | Optional          |See [Stops][stops] |
 
 TBD -- Are there additional fields that should be permitted to update with a PUT?
 
 **Endpoint:** `/stops/:stop_id`  
 **Method:** `GET`  
-**[Beta feature](/general-information.md#beta-features):** Yes (as of 1.0.0)  
-**`data` Payload:** `{ "stops": [] }`, an array of [Stops](/general-information.md#stop)
+**[Beta feature][beta]:** Yes (as of 1.0.0)  
+**`data` Payload:** `{ "stops": [] }`, an array of [Stops][stops]
 
 In the case that a `stop_id` query parameter is specified, the `stops` array returned will only have one entry. In the case that no `stop_id` query parameter is specified, all stops will be returned.
 
-## Enum Definitions
-
-### Area Types
-
-| `type`               | Description                                                                                                                                                                                                                                                                                           |
-| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `unrestricted`       | Areas where vehicles may be picked up/dropped off. A provider's unrestricted area shall be contained completely inside the agency's unrestricted area for the provider in question, but it need not cover the entire agency unrestricted area. See the provider version of the service areas endpoint |
-| `restricted`         | Areas where vehicle pick-up/drop-off is not allowed                                                                                                                                                                                                                                                   |
-| `preferred_pick_up`  | Areas where users are encouraged to pick up vehicles                                                                                                                                                                                                                                                  |
-| `preferred_drop_off` | Areas where users are encouraged to drop off vehicles                                                                                                                                                                                                                                                 |
-
-### Vehicle Type
-
-| `type`    |
-| --------- |
-| `bicycle` |
-| `car`     |
-| `scooter` |
-
-### Propulsion Type
-
-| `propulsion`      | Description                                            |
-| ----------------- | ------------------------------------------------------ |
-| `human`           | Pedal or foot propulsion                               |
-| `electric_assist` | Provides power only alongside human propulsion         |
-| `electric`        | Contains throttle mode with a battery-powered motor    |
-| `combustion`      | Contains throttle mode with a gas engine-powered motor |
-
-A vehicle may have one or more values from the `propulsion`, depending on the number of modes of operation. For example, a scooter that can be powered by foot or by electric motor would have the `propulsion` represented by the array `['human', 'electric']`. A bicycle with pedal-assist would have the `propulsion` represented by the array `['human', 'electric_assist']` if it can also be operated as a traditional bicycle.
-
-## Responses
-
-
-* **200:** OK: operation successful.
-* **201:** Created: `POST` operations, new object created
-* **400:** Bad request.
-* **401:** Unauthorized: Invalid, expired, or insufficient scope of token.
-* **404:** Not Found: Object does not exist, returned on `GET` or `POST` operations if the object does not exist.
-* **409:** Conflict: `POST` operations when an object already exists and an update is not possible.
-* **500:** Internal server error: In this case, the answer may contain a `text/plain` body with an error message for troubleshooting.
-
-### Error Message Format
-
-| Field               | Type     | Field Description      |
-| ------------------- | -------- | ---------------------- |
-| `error`             | String   | Error message string   |
-| `error_description` | String   | Human readable error description (can be localized) |
-| `error_details`     | String[] | Array of error details |
-
 [Top][toc]
 
+[beta]: /general-information.md#beta-features
 [general]: /general-information.md
 [error-messages]: /general-information.md#error-messages
 [hdop]: https://support.esri.com/en/other-resources/gis-dictionary/term/358112bd-b61c-4081-9679-4fca9e3eb926
 [propulsion-types]: /general-information.md#propulsion-types
 [responses]: /general-information.md#responses
+[stops]: /general-information#stops
 [toc]: #table-of-contents
 [ts]: /general-information.md#timestamps
 [vehicle-types]: /general-information.md#vehicle-types
