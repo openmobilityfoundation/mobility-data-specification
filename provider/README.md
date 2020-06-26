@@ -310,7 +310,7 @@ The schema and datatypes are the same as those defined for [`/status_changes`][s
 
 **Endpoint:** `/events`  
 **Method:** `GET`  
-**[Beta feature][beta]:** Yes (as of 0.4.0)  
+**[Beta feature][beta]:** No (as of 1.0.0)  
 **Schema:** [`events` schema][events-schema]  
 **`data` Payload:** `{ "status_changes": [] }`, an array of objects with the same structure as in [`/status_changes`][status]
 
