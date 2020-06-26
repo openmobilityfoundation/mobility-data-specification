@@ -6,6 +6,7 @@ This document contains specifications that are shared between the various MDS AP
 
 * [Beta Features](#beta-features)
 * [Costs and Currencies](#costs-and-currencies)
+* [Definitions](#definitions)
 * [Devices](#devices)
 * [Propulsion Types](#propulsion-types)
 * [Responses](#responses)
@@ -35,6 +36,17 @@ Working Groups and their Steering Committees are expected to review beta designa
 Fields specifying a monetary cost use a currency as specified in [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217#Active_codes). All costs should be given as integers in the currency's smallest unit. As an example, to represent $1 USD, specify an amount of `100` (100 cents).
 
 If the currency field is null, USD cents is implied.
+
+[Top][toc]
+
+## Definitions
+
+Defining terminology and abbreviations used throughout MDS.
+
+- **API** - Application Programming Interface - A function or set of functions that allow one software application to access or communicate with features of a different software application or service. 
+- **API Endpoint** - A point at which an API connects with a software application or service.
+- **DOT** - Department of Transportation, usually a city-run agency.
+- **PROW** - Public Right of Way - the physical infrastructure reserved for transportation purposes, examples include sidewalks, curbs, bike lanes, transit lanes and stations, traffic lanes and signals, and public parking.
 
 [Top][toc]
 

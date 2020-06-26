@@ -277,7 +277,7 @@ The internal mechanics of ordering are up to the Policy editing and hosting soft
 [iana]: https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
 [muni-boundary]: ../provider/README.md#municipality-boundary
 [propulsion-types]: /general-information.md#propulsion-types
-[timestamps]: /general-information.md#timestamps
+[ts]: /general-information.md#timestamps
 [toc]: #table-of-contents
 [vehicle-events]: /general-information.md#vehicle-state-events
 [vehicle-states]: /general-information.md#vehicle-states

@@ -30,10 +30,9 @@ You can also get involved in development by joining an OMF working group. The wo
 Working Group | Mailing List | Description
 --- | --- | ---
 Provider Services | [mds-provider-services](https://groups.google.com/a/groups.openmobilityfoundation.org/forum/#!forum/mds-provider-services) | Manages the [`provider`][provider] API within MDS.
-City Services | [mds-city-services](https://groups.google.com/a/groups.openmobilityfoundation.org/forum/#!forum/mds-city-services) | Manages the [`agency`][agency] and [`policy`][policy] APIs within MDS, as well as the [`mds-core`](https://github.com/openmobilityfoundation/mds-core) reference implementation.
+City Services | [mds-city-services](https://groups.google.com/a/groups.openmobilityfoundation.org/forum/#!forum/mds-city-services) | Manages the [`agency`][agency] and [`policy`][policy] APIs within MDS, as well as the [`mds-core`](https://github.com/openmobilityfoundation/mds-core) and [`mds-compliance-mobile`](https://github.com/openmobilityfoundation/mds-compliance-mobile) reference implementations.
 
 You can view info about past releases and planning calls in the [wiki](https://github.com/openmobilityfoundation/mobility-data-specification/wiki).
-
 
 For questions about MDS please contact [info@openmobilityfoundation.org](mailto:info@openmobilityfoundation.org). Media inquiries to [media@openmobilityfoundation.org](mailto:media@openmobilityfoundation.org)
 
@@ -77,7 +76,7 @@ Some examples of how cities are using MDS in practice:
 
 ### Open Mobility Foundation
 * [`mds-core`](https://github.com/openmobilityfoundation/mds-core) - A reference implementation of an MDS Agency Server, built using PostgresQL, TypeScript, NodeJS.
-* [`mds-compliance-mobile`](`https://github.com/openmobilityfoundation/mds-compliance-mobile`) - A mobile app for performing in-the-field data validation and compliance monitoring.
+* [`mds-compliance-mobile`](https://github.com/openmobilityfoundation/mds-compliance-mobile) - A mobile app for performing in-the-field data validation and compliance monitoring.
 
 ### City of Los Angeles
 * [`mds-dev`](https://github.com/cityoflosangeles/mds-dev) - Code to do cap checking, fake data generation and more with provider data.

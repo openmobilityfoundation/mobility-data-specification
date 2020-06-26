@@ -76,7 +76,7 @@ A vehicle record is as follows:
 | `model`       | String    | Vehicle Model                                                                 |
 | `state`       | Enum      | Current vehicle state. See [Vehicle State][vehicle-states]                    |
 | `prev_event`  | Enum      | Last [Vehicle Event][vehicle-event]                                           |
-| `updated`     | Timestamp | Date of last event update                                                     |
+| `updated`     | [timestamp][ts] | Date of last event update                                                     |
 
 404 Failure Response:
 
@@ -166,7 +166,7 @@ Body Params:
 | -----------     | ----------------------------- | -------- | -------------------------------------------------------------------------------- |
 | `vehicle_state` | Enum                          | Required | see [Vehicle States][vehicle-states] |
 | `event_types`   | Enum[]                        | Required | see [Vehicle Events][vehicle-events] |
-| `timestamp`     | Timestamp                     | Required | Date of last event update |
+| `timestamp`     | [timestamp][ts]                     | Required | Date of last event update |
 | `telemetry`     | [Telemetry](#telemetry-data)  | Required | Single point of telemetry |
 | `trip_id`       | UUID                          | Optional | UUID provided by Operator to uniquely identify the trip. Required for `trip_start`, `trip_end`, `trip_enter`, and `trip_leave` event types |
 
@@ -220,7 +220,7 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | Field          | Type           | Required/Optional     | Field Description                                            |
 | -------------- | -------------- | --------------------- | ------------------------------------------------------------ |
 | `device_id`    | UUID           | Required              | ID used in [Register](#vehicle-register)                     |
-| `timestamp`    | Timestamp      | Required              | Date/time that event occurred. Based on GPS or GNSS clock            |
+| `timestamp`    | [timestamp][ts]      | Required              | Date/time that event occurred. Based on GPS or GNSS clock            |
 | `gps`          | Object         | Required              | Telemetry position data                                      |
 | `gps.lat`      | Double         | Required              | Latitude of the location                                     |
 | `gps.lng`      | Double         | Required              | Longitude of the location                                    |
@@ -234,13 +234,14 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 
 [Top][toc]
 
-[toc]: #table-of-contents
 [general]: /general-information.md
-[versioning]: /general-information.md#versioning
-[responses]: /general-information.md#responses
 [error-messages]: /general-information.md#error-messages
+[hdop]: https://support.esri.com/en/other-resources/gis-dictionary/term/358112bd-b61c-4081-9679-4fca9e3eb926
+[propulsion-types]: /general-information.md#propulsion-types
+[responses]: /general-information.md#responses
+[toc]: #table-of-contents
+[ts]: /general-information.md#timestamps
 [vehicle-types]: /general-information.md#vehicle-types
 [vehicle-states]: /general-information.md#vehicle-states
 [vehicle-events]: /general-information.md#vehicle-state-events
-[propulsion-types]: /general-information.md#propulsion-types
-[hdop]: https://support.esri.com/en/other-resources/gis-dictionary/term/358112bd-b61c-4081-9679-4fca9e3eb926
+[versioning]: /general-information.md#versioning
