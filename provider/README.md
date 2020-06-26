@@ -9,7 +9,9 @@ This specification contains a data standard for *mobility as a service* provider
 * [Status Changes][status]
 * [Realtime Data](#realtime-data)
   * [GBFS](#GBFS)
+  * [Data Latency Requirements][data-latency]
   * [Events][events]
+  * [Stops][stops]
   * [Vehicles][vehicles]
 
 ## General Information
@@ -149,15 +151,6 @@ Because of the unreliability of device clocks, the Provider is unlikely to know 
 Please refer to the MDS [General Information][general-information] document.
 
 [Top][toc]
-
-### Near-RT Data Requirements
-
-All near-RT endpoints must contain `last_updated` and `ttl` properties in the top-level of the response body. These properties are defined as:
-
-Field Name          | Required  | Defines
---------------------| ----------| ----------
-last_updated        | Yes       | Timestamp indicating the last time the data in this feed was updated
-ttl                 | Yes       | Integer representing the number of milliseconds before the data in this feed will be updated again (0 if the data should always be refreshed).
 
 ## Trips
 
@@ -305,9 +298,20 @@ GBFS 2.0 includes some changes that may make it less useful for regulatory purpo
 
 [Top][toc]
 
+### Data Latency Requirements
+
+The data returned by a near-realtime endpoint should be as close to realtime as possible, but in no case should it be more than 5 minutes out-of-date. Near-realtime endpoints must contain `last_updated` and `ttl` properties in the top-level of the response body. These properties are defined as:
+
+Field Name          | Required  | Defines
+--------------------| ----------| ----------
+last_updated        | Yes       | Timestamp indicating the last time the data in this feed was updated
+ttl                 | Yes       | Integer representing the number of milliseconds before the data in this feed will be updated again (0 if the data should always be refreshed).
+
+[Top][toc]
+
 ### Events
 
-The `/events` endpoint is a near-ish real-time feed of status changes, designed to give access to as recent as possible series of events.
+The `/events` endpoint is a near-realtime feed of status changes, designed to give access to as recent as possible series of events.
 
 The `/events` endpoint functions similarly to `/status_changes`, but shall not included data older than 2 weeks (that should live in `/status_changes.`)
 
@@ -340,7 +344,7 @@ Should either side of the requested time range be greater than 2 weeks before th
 
 Stop information should be updated on a near-realtime basis by providers who operate _docked_ mobility devices in a given municipality.
 
-In addition to the standard [Provider payload wrapper](#response-format), responses from this endpoint should contain the last update timestamp and amount of time until the next update in accordance with the [Near RT Data Requirements](#near-rt-data-requirements):
+In addition to the standard [Provider payload wrapper](#response-format), responses from this endpoint should contain the last update timestamp and amount of time until the next update in accordance with the [Data Latency Requirements][data-latency]:
 
 ```json
 {
@@ -355,7 +359,7 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 
 **Endpoint:** `/stops/:stop_id`  
 **Method:** `GET`  
-**[Beta feature](/general-information.md#beta-features):** Yes (as of 1.0.0)  
+**[Beta feature][beta]:** Yes (as of 1.0.0)  
 **`data` Payload:** `{ "stops": [] }`, an array of [Stops](/general-information.md#stop)
 
 In the case that a `stop_id` query parameter is specified, the `stops` array returned will only have one entry. In the case that no `stop_id` query parameter is specified, all stops will be returned.
@@ -364,9 +368,9 @@ In the case that a `stop_id` query parameter is specified, the `stops` array ret
 
 ### Vehicles
 
-The `/vehicles` endpoint returns the current status of vehicles on the PROW. Only vehicles that are currently in available, unavailable, or reserved states should be returned in this payload. Data in this endpoint should reconcile with data from the `/status_changes` enpdoint. The data returned by this endpoint should be as close to realtime as possible, but in no case should it be more than 5 minutes out-of-date. As with other MDS APIs, `/vehicles` is intended for use by regulators, not by the general public. It does not replace the role of a [GBFS][gbfs] feed in enabling consumer-facing applications.
+The `/vehicles` endpoint returns the current status of vehicles on the PROW. Only vehicles that are currently in available, unavailable, or reserved states should be returned in this payload. Data in this endpoint should reconcile with data from the `/status_changes` enpdoint. As with other MDS APIs, `/vehicles` is intended for use by regulators, not by the general public. It does not replace the role of a [GBFS][gbfs] feed in enabling consumer-facing applications.
 
-In addition to the standard [Provider payload wrapper](#response-format), responses from this endpoint should contain the last update timestamp and amount of time until the next update in accordance with the [Near RT Data Requirements](#near-rt-data-requirements):
+In addition to the standard [Provider payload wrapper](#response-format), responses from this endpoint should contain the last update timestamp and amount of time until the next update in accordance with the [Data Latency Requirements][data-latency]:
 
 ```json
 {
@@ -405,6 +409,7 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 [agps]: https://en.wikipedia.org/wiki/Assisted_GPS
 [beta]: /general-information.md#beta
 [costs-and-currencies]: /general-information.md#costs-and-currencies
+[data-latency]: #data-latency-requirements
 [decimal-degrees]: https://en.wikipedia.org/wiki/Decimal_degrees
 [dgps]: https://en.wikipedia.org/wiki/Differential_GPS
 [events]: #events
@@ -426,6 +431,7 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 [responses]: /general-information.md#responses
 [status]: #status-changes
 [status-schema]: dockless/status_changes.json
+[stops]: #stops
 [st-intersects]: https://postgis.net/docs/ST_Intersects.html
 [toc]: #table-of-contents
 [trips]: #trips
