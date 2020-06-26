@@ -6,7 +6,7 @@ This document contains specifications that are shared between the various MDS AP
 
 * [Beta Features](#beta-features)
 * [Costs and Currencies](#costs-and-currencies)
-* [Definitions](#defintions)
+* [Definitions](#definitions)
 * [Devices](#devices)
 * [Propulsion Types](#propulsion-types)
 * [Responses](#responses)
