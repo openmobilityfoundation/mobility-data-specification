@@ -13,6 +13,7 @@ _Here is what is currently under consideration. Items may be removed, added or c
 *_MDS_*
 
 * [Reconcile the Provider and Agency language differences](https://github.com/openmobilityfoundation/mobility-data-specification/pull/506)
+  * [New State Machine Diagram](https://github.com/openmobilityfoundation/mobility-data-specification/pull/530)
 * Adding Docked/Stops. Stops history for a later release. Beta - Active PRs [#427](https://github.com/openmobilityfoundation/mobility-data-specification/pull/427) [#430](https://github.com/openmobilityfoundation/mobility-data-specification/pull/430) [#442](https://github.com/openmobilityfoundation/mobility-data-specification/pull/442) [#441](https://github.com/openmobilityfoundation/mobility-data-specification/pull/441)
    
 * Minor Updates 
@@ -33,6 +34,7 @@ _Here is what is currently under consideration. Items may be removed, added or c
 * [Vehicle register: add provider_id field](https://github.com/openmobilityfoundation/mobility-data-specification/pull/469)
 * [Clarify vehicle endpoint requirements](https://github.com/openmobilityfoundation/mobility-data-specification/pull/465)
 * [Vehicle response code should be 200](https://github.com/openmobilityfoundation/mobility-data-specification/pull/467)
+* [Clarify telemetry success response](https://github.com/openmobilityfoundation/mobility-data-specification/pull/461)
 
 *_Policy_*
 
