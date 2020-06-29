@@ -4,8 +4,8 @@
   "title": "The MDS Agency Schema, register vehicle body",
   "type": "object",
   "definitions": {
-    "propulsion_type": {
-      "$id": "#/definitions/propulsion_type",
+    "propulsion_types": {
+      "$id": "#/definitions/propulsion_types",
       "type": "array",
       "description": "The type of propulsion; allows multiple values",
       "items": {
@@ -17,7 +17,19 @@
           "human"
         ]
       },
+      "uniqueItems": true,
       "minItems": 1
+    },
+    "string": {
+      "$id": "#/definitions/string",
+      "type": "string",
+      "description": "A length-limited string type",
+      "maxLength": 255,
+      "default": "",
+      "examples": [
+        "ABC123"
+      ],
+      "pattern": "^(.*)$"
     },
     "vehicle_type": {
       "$id": "#/definitions/vehicle_type",
@@ -27,13 +39,14 @@
         "bicycle",
         "car",
         "scooter",
-        "moped"
+        "moped",
+        "other"
       ]
     },
     "uuid": {
       "$id": "#/definitions/uuid",
       "type": "string",
-      "title": "A UUID used to uniquely identifty an object",
+      "description": "A UUID used to uniquely identifty an object",
       "default": "",
       "examples": [
         "3c9604d6-b5ee-11e8-96f8-529269fb1459"
@@ -44,35 +57,34 @@
   "required": [
     "device_id",
     "vehicle_id",
-    "type",
-    "propulsion"
+    "vehicle_type",
+    "propulsion_types"
   ],
   "properties": {
+    "provider_id": {
+      "$id": "#/definitions/vehicle/properties/provider_id",
+      "$ref": "#/definitions/uuid",
+      "description": "The UUID for the Provider, unique within MDS"
+    },
     "device_id": {
-      "$id": "#/properties/device_id",
-      "description": "Provided by Operator to uniquely identify a vehicle",
-      "$ref": "#/definitions/uuid"
+      "$id": "#/definitions/vehicle/properties/device_id",
+      "$ref": "#/definitions/uuid",
+      "description": "A unique device ID in UUID format"
     },
     "vehicle_id": {
-      "$id": "#/properties/vehicle_id",
-      "type": "string",
-      "maxLength": 255,
-      "description": "The Vehicle Identification Number visible on the vehicle itself",
-      "default": "",
-      "examples": [
-        "ABC123"
-      ],
-      "pattern": "^(.*)$"
+      "$id": "#/definitions/vehicle/properties/vehicle_id",
+      "$ref": "#/definitions/string",
+      "description": "The Vehicle Identification Number visible on the vehicle itself"
     },
-    "type": {
-      "$id": "#/properties/type",
+    "vehicle_type": {
+      "$id": "#/definitions/vehicle/properties/vehicle_type",
       "$ref": "#/definitions/vehicle_type",
       "description": "The type of vehicle"
     },
-    "propulsion": {
-      "$id": "#/properties/propulsion",
-      "description": "The type of propulsion; allows multiple values",
-      "$ref": "#/definitions/propulsion_type"
+    "propulsion_types": {
+      "$id": "#/definitions/vehicle/properties/propulsion_types",
+      "$ref": "#/definitions/propulsion_types",
+      "description": "The type of propulsion; allows multiple values"
     },
     "year": {
       "$id": "#/properties/year",
@@ -85,25 +97,13 @@
     },
     "mfgr": {
       "$id": "#/properties/mfgr",
-      "type": "string",
-      "maxLength": 255,
-      "description": "The vehicle manufacturer",
-      "default": "",
-      "examples": [
-        "ABC123"
-      ],
-      "pattern": "^(.*)$"
+      "$ref": "#/definitions/string",
+      "description": "The vehicle manufacturer"
     },
     "model": {
       "$id": "#/properties/model",
-      "type": "string",
-      "maxLength": 255,
-      "description": "The vehicle model",
-      "default": "",
-      "examples": [
-        "ABC123"
-      ],
-      "pattern": "^(.*)$"
+      "$ref": "#/definitions/string",
+      "description": "The vehicle model"
     }
   },
   "additionalProperties": false

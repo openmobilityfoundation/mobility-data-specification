@@ -173,7 +173,7 @@ Unless stated otherwise by the municipality, the trips endpoint must return all 
 | `device_id` | UUID | Required | A unique device ID in UUID format |
 | `vehicle_id` | String | Required | The Vehicle Identification Number visible on the vehicle itself |
 | `vehicle_type` | Enum | Required | See [vehicle types][vehicle-types] table |
-| `propulsion_type` | Enum[] | Required | Array of [propulsion types][propulsion-types]; allows multiple values |
+| `propulsion_types` | Enum[] | Required | Array of [propulsion types][propulsion-types]; allows multiple values |
 | `trip_id` | UUID | Required | A unique ID for each trip |
 | `trip_duration` | Integer | Required | Time, in Seconds |
 | `trip_distance` | Integer | Required | Trip Distance, in Meters |
@@ -264,15 +264,15 @@ Unless stated otherwise by the municipality, this endpoint must return only thos
 | `device_id` | UUID | Required | A unique device ID in UUID format |
 | `vehicle_id` | String | Required | The Vehicle Identification Number visible on the vehicle itself |
 | `vehicle_type` | Enum | Required | see [vehicle types][vehicle-types] table |
-| `propulsion_type` | Enum[] | Required | Array of [propulsion types][propulsion-types]; allows multiple values |
+| `propulsion_types` | Enum[] | Required | Array of [propulsion types][propulsion-types]; allows multiple values |
 | `vehicle_state` | Enum | Required | See [vehicle state][vehicle-states] table |
-| `event_type` | Enum[] | Required | [Vehicle event(s)][vehicle-events] for state change, allowable values determined by `vehicle_state`. |
+| `event_types` | Enum[] | Required | [Vehicle event(s)][vehicle-events] for state change, allowable values determined by `vehicle_state` |
 | `event_time` | [timestamp][ts] | Required | Date/time that event occurred at. See [Event Times][event-times] |
 | `publication_time` | [timestamp][ts] | Optional | Date/time that event became available through the status changes endpoint |
 | `event_location` | GeoJSON [Point Feature][geo] | Required | |
 | `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |
-| `associated_trip` | UUID | Required if Applicable | Trip UUID (foreign key to Trips API), required if `event_type` is `trip_start` or `trip_end`, or for any other status change event that marks the end of a trip. |
-| `associated_ticket` | String | Optional | Identifier for an associated ticket inside an Agency-maintained 311 or CRM system. |
+| `trip_id` | UUID | Required if Applicable | Trip UUID (foreign key to Trips API), required if `event_types` contains `trip_start`, `trip_end`, `trip_cancel`, `trip_enter_jurisdiction`, or `trip_leave_jurisdiction` |
+| `associated_ticket` | String | Optional | Identifier for an associated ticket inside an Agency-maintained 311 or CRM system |
 
 ### Status Changes Query Parameters
 
@@ -396,10 +396,10 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 | `device_id` | UUID | Required | A unique device ID in UUID format, should match this device in Provider |
 | `vehicle_id` | String | Required | The Vehicle Identification Number visible on the vehicle itself, should match this device in provider |
 | `vehicle_type` | Enum | Required | see [vehicle types][vehicle-types] table |
-| `propulsion_type` | Enum[] | Required | Array of [propulsion types][propulsion-types]; allows multiple values |
+| `propulsion_types` | Enum[] | Required | Array of [propulsion types][propulsion-types]; allows multiple values |
 | `last_event_time` | [timestamp][ts] | Required | Date/time when last state change occurred. See [Event Times][event-times] |
-| `last_vehicle_state` | Enum | Required | Vehicle state of most recent state change. See [vehicle states][vehicle-states] table |
-| `last_vehicle_events` | Enum[] | Required | [Vehicle event(s)][vehicle-events] of most recent state change, allowable values determined by `last_vehicle_state`. |
+| `last_vehicle_state` | Enum | Required | [Vehicle state][vehicle-states] of most recent state change. |
+| `last_event_types` | Enum[] | Required | [Vehicle event(s)][vehicle-events] of most recent state change, allowable values determined by `last_vehicle_state`. |
 | `last_event_location` | GeoJSON [Point Feature][geo]| Required | Location of vehicle's last event |
 | `current_location` | GeoJSON [Point Feature][geo] | Required if Applicable | Current location of vehicle if different from last event, and the vehicle is not currently on a trip |
 | `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |
@@ -413,7 +413,7 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 [decimal-degrees]: https://en.wikipedia.org/wiki/Decimal_degrees
 [dgps]: https://en.wikipedia.org/wiki/Differential_GPS
 [events]: #events
-[events-schema]: dockless/events.json
+[events-schema]: events.json
 [event-times]: #event-times
 [gbfs]: https://github.com/NABSA/gbfs
 [general-information]: /general-information.md
@@ -430,17 +430,17 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 [propulsion-types]: /general-information.md#propulsion-types
 [responses]: /general-information.md#responses
 [status]: #status-changes
-[status-schema]: dockless/status_changes.json
+[status-schema]: status_changes.json
 [stops]: #stops
 [st-intersects]: https://postgis.net/docs/ST_Intersects.html
 [toc]: #table-of-contents
 [trips]: #trips
-[trips-schema]: dockless/trips.json
+[trips-schema]: trips.json
 [ts]: /general-information.md#timestamps
 [vehicles]: #vehicles
 [vehicle-types]: /general-information.md#vehicle-types
 [vehicle-states]: /general-information.md#vehicle-states
 [vehicle-events]: /general-information.md#vehicle-state-events
-[vehicles-schema]: dockless/vehicles.json
+[vehicles-schema]: vehicles.json
 [versioning]: /general-information.md#versioning
 [wgs84]: https://en.wikipedia.org/wiki/World_Geodetic_System
