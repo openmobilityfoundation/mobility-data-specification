@@ -386,29 +386,10 @@
                   {
                     "properties": {
                       "vehicle_state": {
-                        "enum": [
-                          "available"
-                        ]
+                        "const": "available"
                       },
                       "event_types": {
-                        "items": {
-                          "not": {
-                            "enum": [
-                              "agency_drop_off",
-                              "battery_charged",
-                              "comms_restored",
-                              "maintenance",
-                              "on_hours",
-                              "provider_drop_off",
-                              "reservation_cancel",
-                              "system_resume",
-                              "trip_cancel",
-                              "trip_end",
-                              "unspecified"
-                            ]
-                          }
-                        },
-                        "additionalItems": {
+                        "contains": {
                           "enum": [
                             "agency_drop_off",
                             "battery_charged",
@@ -429,20 +410,10 @@
                   {
                     "properties": {
                       "vehicle_state": {
-                        "enum": [
-                          "elsewhere"
-                        ]
+                        "const": "elsewhere"
                       },
                       "event_types": {
-                        "items": {
-                          "not": {
-                            "enum": [
-                              "comms_restored",
-                              "trip_leave_jurisdiction"
-                            ]
-                          }
-                        },
-                        "additionalItems": {
+                        "contains": {
                           "enum": [
                             "comms_restored",
                             "trip_leave_jurisdiction"
@@ -454,24 +425,10 @@
                   {
                     "properties": {
                       "vehicle_state": {
-                        "enum": [
-                          "non_operational"
-                        ]
+                        "const": "non_operational"
                       },
                       "event_types": {
-                        "items": {
-                          "not": {
-                            "enum": [
-                              "battery_low",
-                              "comms_restored",
-                              "maintenance",
-                              "off_hours",
-                              "system_suspend",
-                              "unspecified"
-                            ]
-                          }
-                        },
-                        "additionalItems": {
+                        "contains": {
                           "enum": [
                             "battery_low",
                             "comms_restored",
@@ -487,21 +444,10 @@
                   {
                     "properties": {
                       "vehicle_state": {
-                        "enum": [
-                          "on_trip"
-                        ]
+                        "const": "on_trip"
                       },
                       "event_types": {
-                        "items": {
-                          "not": {
-                            "enum": [
-                              "comms_restored",
-                              "trip_enter_jurisdiction",
-                              "trip_start"
-                            ]
-                          }
-                        },
-                        "additionalItems": {
+                        "contains": {
                           "enum": [
                             "comms_restored",
                             "trip_enter_jurisdiction",
@@ -514,24 +460,10 @@
                   {
                     "properties": {
                       "vehicle_state": {
-                        "enum": [
-                          "removed"
-                        ]
+                        "const": "removed"
                       },
                       "event_types": {
-                        "items": {
-                          "not": {
-                            "enum": [
-                              "agency_pick_up",
-                              "compliance_pick_up",
-                              "decommissioned",
-                              "maintenance_pick_up",
-                              "rebalance_pick_up",
-                              "unspecified"
-                            ]
-                          }
-                        },
-                        "additionalItems": {
+                        "contains": {
                           "enum": [
                             "agency_pick_up",
                             "compliance_pick_up",
@@ -547,20 +479,10 @@
                   {
                     "properties": {
                       "vehicle_state": {
-                        "enum": [
-                          "reserved"
-                        ]
+                        "const": "reserved"
                       },
                       "event_types": {
-                        "items": {
-                          "not": {
-                            "enum": [
-                              "comms_restored",
-                              "reservation_start"
-                            ]
-                          }
-                        },
-                        "additionalItems": {
+                        "contains": {
                           "enum": [
                             "comms_restored",
                             "reservation_start"
@@ -572,21 +494,10 @@
                   {
                     "properties": {
                       "vehicle_state": {
-                        "enum": [
-                          "unknown"
-                        ]
+                        "const": "unknown"
                       },
                       "event_types": {
-                        "items": {
-                          "not": {
-                            "enum": [
-                              "comms_lost",
-                              "missing",
-                              "unspecified"
-                            ]
-                          }
-                        },
-                        "additionalItems": {
+                        "contains": {
                           "enum": [
                             "comms_lost",
                             "missing",
