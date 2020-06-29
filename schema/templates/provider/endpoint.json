@@ -1,5 +1,5 @@
 {
-  "$id": "https://raw.githubusercontent.com/openmobilityfoundation/mobility-data-specification/main/provider/dockless/endpoint.json",
+  "$id": "https://raw.githubusercontent.com/openmobilityfoundation/mobility-data-specification/main/provider/endpoint.json",
   "$schema": "http://json-schema.org/draft-06/schema#",
   "title": "Schema for MDS Provider endpoint payloads",
   "type": "object",

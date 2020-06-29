@@ -465,28 +465,29 @@ def write_provider_schemas(common_definitions):
     Create each of the Provider endpoint schema files in the appropriate directory.
     """
     print("\nStarting to generate Provider JSON Schemas...\n")
+    directory = "../provider"
 
     # /trips
     trips = provider_trips_schema(common_definitions)
-    with open("../provider/dockless/trips.json", "w") as schemafile:
+    with open(f"{directory}/trips.json", "w") as schemafile:
         schemafile.write(json.dumps(trips, indent=2))
         print("Wrote trips.json")
 
     # /status_changes
     status_changes = provider_status_changes_schema(common_definitions)
-    with open("../provider/dockless/status_changes.json", "w") as schemafile:
+    with open(f"{directory}/status_changes.json", "w") as schemafile:
         schemafile.write(json.dumps(status_changes, indent=2))
         print("Wrote status_changes.json")
 
     # /events
     events = provider_events_schema(common_definitions)
-    with open("../provider/dockless/events.json", "w") as schemafile:
+    with open(f"{directory}/events.json", "w") as schemafile:
         schemafile.write(json.dumps(events, indent=2))
         print("Wrote events.json")
 
     # /vehicles
     vehicles = provider_vehicles_schema(common_definitions)
-    with open("../provider/dockless/vehicles.json", "w") as schemafile:
+    with open(f"{directory}/vehicles.json", "w") as schemafile:
         schemafile.write(json.dumps(vehicles, indent=2))
         print("Wrote vehicles.json")
 

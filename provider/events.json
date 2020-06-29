@@ -1,7 +1,7 @@
 {
-  "$id": "https://raw.githubusercontent.com/openmobilityfoundation/mobility-data-specification/main/provider/dockless/status_changes.json",
+  "$id": "https://raw.githubusercontent.com/openmobilityfoundation/mobility-data-specification/main/provider/events.json",
   "$schema": "http://json-schema.org/draft-06/schema#",
-  "title": "Schema for MDS Provider status_changes payloads",
+  "title": "Schema for MDS Provider events payloads",
   "type": "object",
   "definitions": {
     "Point": {
@@ -204,6 +204,65 @@
       "items": {
         "$ref": "#/definitions/vehicle_event"
       }
+    },
+    "links": {
+      "$id": "#/definitions/links",
+      "type": "object",
+      "required": [
+        "next"
+      ],
+      "properties": {
+        "first": {
+          "$id": "#/definitions/links/first",
+          "type": [
+            "null",
+            "string"
+          ],
+          "title": "The URL to the first page of data",
+          "examples": [
+            "https://data.provider.co/trips/first"
+          ],
+          "format": "uri"
+        },
+        "last": {
+          "$id": "#/definitions/links/last",
+          "type": [
+            "null",
+            "string"
+          ],
+          "title": "The URL to the last page of data",
+          "examples": [
+            "https://data.provider.co/trips/last"
+          ],
+          "format": "uri"
+        },
+        "prev": {
+          "$id": "#/definitions/links/prev",
+          "type": [
+            "null",
+            "string"
+          ],
+          "title": "The URL to the previous page of data",
+          "examples": [
+            "https://data.provider.co/trips/prev"
+          ],
+          "format": "uri"
+        },
+        "next": {
+          "$id": "#/definitions/links/next",
+          "type": [
+            "null",
+            "string"
+          ],
+          "title": "The URL to the next page of data",
+          "examples": [
+            "https://data.provider.co/trips/next"
+          ],
+          "format": "uri",
+          "pattern": "^(.*)$"
+        }
+      },
+      "additionalProperties": false
     }
   },
   "required": [
@@ -575,6 +634,10 @@
     "version": {
       "$id": "#/properties/version",
       "$ref": "#/definitions/version"
+    },
+    "links": {
+      "$id": "#/properties/links",
+      "$ref": "#/definitions/links"
     }
   },
   "additionalProperties": false
