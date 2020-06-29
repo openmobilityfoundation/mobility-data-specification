@@ -111,7 +111,7 @@ All String fields, such as `vehicle_id`, are limited to a maximum of 255 charact
 | Field                  | Type                                                        | Required/Optional | Description                                                                                  |
 |------------------------|-------------------------------------------------------------|-------------------|----------------------------------------------------------------------------------------------|
 | stop_id                | UUID                                                        | Required          | Unique ID for stop                                                                           |
-| stop_name              | String                                                      | Required          | Name of stop                                                                                 |
+| name              | String                                                      | Required          | Name of stop                                                                                 |
 | last_reported          | Timestamp                                                   | Required          | Date/Time that the stop was last updated                                                     |
 | location               | GeoJSON [Point Feature](provider/README.md#geographic-data) | Required          | Location of the Stop                                                                         |
 | status                 | [Stop Status](#stop-status)                                 | Required          | Object representing the status of the Stop. See [Stop Status](#stop-status).                 |
