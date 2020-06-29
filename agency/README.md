@@ -8,38 +8,30 @@ This specification contains a collection of RESTful APIs used to specify the dig
 ## Table of Contents
 
 * [General Information](#general-information)
-* [Authorization](#authorization)
-* [Timestamps](#timestamps)
 * [Vehicles](#vehicles)
-* [Vehicle - Register](#vehicle---register)
-* [Vehicle - Event](#vehicle---event)
-* [Vehicles - Update Telemetry](#vehicles---telemetry)
-* [Vehicle Events](#vehicle-events)
+* [Vehicle Registration](#vehicle---register)
+* [Vehicle Update](#vehicle---update)
+* [Vehicle Events](#vehicle---event)
+* [Vehicles Telemetry](#vehicles---telemetry)
 * [Telemetry Data](#telemetry-data)
-* [Enum definitions](#enum-definitions)
-* [Responses](#responses)
 
 ## General information
 
-The following information applies to all `agency` API endpoints. Details on providing authorization to endpoints is specified in the [Authorization](#authorization) section.
+This specification uses data types including timestamps, UUIDs, and vehicle state definitions as described in the MDS [General Information][general] document.
 
 ### Versioning
 
 `agency` APIs must handle requests for specific versions of the specification from clients.
 
-Versioning must be implemented as specified in the [`General information versioning section`][general-information/versioning].
+Versioning must be implemented as specified in the [Versioning section][versioning].
 
-## Authorization
+### Responses and Error Messages
+
+See the [Responses][responses] and [Error Messages][error-messages] sections.
+
+### Authorization
 
 When making requests, the Agency API expects `provider_id` to be part of the claims in a [JWT](https://jwt.io/)  `access_token` in the `Authorization` header, in the form `Authorization: Bearer <access_token>`. The token issuance, expiration and revocation policies are at the discretion of the Agency.
-
-## Timestamps
-
-As with the Provider API, `timestamp` refers to integer milliseconds since Unix epoch.
-
-## Strings
-
-All String fields, such as `vehicle_id`, are limited to a maximum of 255 characters.
 
 ## Vehicles
 
@@ -52,16 +44,16 @@ Path Params:
 
 | Param        | Type | Required/Optional | Description                                 |
 | ------------ | ---- | ----------------- | ------------------------------------------- |
-| `device_id` | UUID  | Optional          | If provided, retrieve the specified vehicle |
+| `device_id`  | UUID | Optional          | If provided, retrieve the specified vehicle |
 
 200 Success Response:
 
 If `device_id` is specified, `GET` will return a single vehicle record, otherwise it will be a list of vehicle records with pagination details per the [JSON API](https://jsonapi.org/format/#fetching-pagination) spec:
 
-```
+```json
 {
-	"vehicles": [ ... ]
- 	"links": {
+    "vehicles": [ ... ]
+    "links": {
         "first": "https://...",
         "last": "https://...",
         "prev": "https://...",
@@ -75,22 +67,22 @@ A vehicle record is as follows:
 | Field         | Type      | Field Description                                                             |
 | ------------- | --------- | ----------------------------------------------------------------------------- |
 | `device_id`   | UUID      | Provided by Operator to uniquely identify a vehicle                           |
-| `provider_id` | UUID      | Issued by City and [tracked](../providers.csv)                                |
+| `provider_id` | UUID      | Issued by Agency and [tracked](../providers.csv)                              |
 | `vehicle_id`  | String    | Vehicle Identification Number (vehicle_id) visible on vehicle                 |
-| `type`        | Enum      | [Vehicle Type](#vehicle-type)                                                 |
-| `propulsion`  | Enum[]    | Array of [Propulsion Type](#propulsion-type); allows multiple values          |
+| `type`        | Enum      | [Vehicle Type][vehicle-types]                                                 |
+| `propulsion`  | Enum[]    | Array of [Propulsion Type][propulsion-types]; allows multiple values          |
 | `year`        | Integer   | Year Manufactured                                                             |
 | `mfgr`        | String    | Vehicle Manufacturer                                                          |
 | `model`       | String    | Vehicle Model                                                                 |
-| `status`      | Enum      | Current vehicle status. See [Vehicle Status](#vehicle-events)                 |
-| `prev_event`  | Enum      | Last [Vehicle Event](#vehicle-events)                                         |
-| `updated`     | Timestamp | Date of last event update                                                     |
+| `state`       | Enum      | Current vehicle state. See [Vehicle State][vehicle-states]                    |
+| `prev_event`  | Enum      | Last [Vehicle Event][vehicle-event]                                           |
+| `updated`     | [timestamp][ts] | Date of last event update                                                     |
 
 404 Failure Response:
 
 _No content returned on vehicle not found._
 
-## Vehicle - Register
+## Vehicle Registration
 
 The `/vehicles` registration endpoint is used to register a vehicle for use in the Agency jurisdiction.
 
@@ -101,10 +93,11 @@ Body Params:
 
 | Field        | Type    | Required/Optional | Field Description                                                    |
 | ------------ | ------- | ----------------- | -------------------------------------------------------------------- |
-| `device_id`  | UUID     | Required          | Provided by Operator to uniquely identify a vehicle                 |
+| `device_id`  | UUID    | Required          | Provided by Operator to uniquely identify a vehicle                  |
 | `vehicle_id` | String  | Required          | Vehicle Identification Number (vehicle_id) visible on vehicle        |
-| `type`       | Enum    | Required          | [Vehicle Type](#vehicle-type)                                        |
-| `propulsion` | Enum[]  | Required          | Array of [Propulsion Type](#propulsion-type); allows multiple values |
+| `type`       | Enum    | Required          | [Vehicle Type][vehicle-types]                                        |
+| `propulsion` | Enum[]  | Required          | Array of [Propulsion Type][propulsion-types]; allows multiple values |
+| `provider_id`| UUID    | Optional          | Provider to which the vehicle belongs if different from the authenticated provider |
 | `year`       | Integer | Optional          | Year Manufactured                                                    |
 | `mfgr`       | String  | Optional          | Vehicle Manufacturer                                                 |
 | `model`      | String  | Optional          | Vehicle Model                                                        |
@@ -139,7 +132,7 @@ Body Params:
 | ------------ | ------- | ----------------- | -------------------------------------------------------------------- |
 | `vehicle_id` | String  | Required          | Vehicle Identification Number (vehicle_id) visible on vehicle               |
 
-201 Success Response:
+200 Success Response:
 
 _No content returned on success._
 
@@ -169,21 +162,20 @@ Path Params:
 
 Body Params:
 
-| Field       | Type                          | Required/Optional | Field Description                                                                                                                          |
-| ----------- | ----------------------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| `event_type` | Enum                         | Required          | see [Vehicle Events](#vehicle-events)                                                                                                           |
-| `event_type_reason` | Enum                  | Required if Available | see [Vehicle Events](#vehicle-events)                                                                                                           |
-| `timestamp`  | Timestamp                    | Required          | Date of last event update                                                     |
-| `telemetry`  | [Telemetry](#telemetry-data) | Optional          | Single point of telemetry. Required unless `status` is `trip`.                             |
-| `event_geographies`  | UUID[] | Required          | Array of Geography UUIDs consisting of every Geography that contains the location of the event.                            |
-| `trip_id`    | UUID                         | Optional          | UUID provided by Operator to uniquely identify the trip. Required for `trip_start`, `trip_end`, `trip_enter`, and `trip_leave` event types |
+| Field           | Type                          | Required/Optional | Field Description |
+| -----------     | ----------------------------- | -------- | -------------------------------------------------------------------------------- |
+| `vehicle_state` | Enum                          | Required | see [Vehicle States][vehicle-states] |
+| `event_types`   | Enum[]                        | Required | see [Vehicle Events][vehicle-events] |
+| `timestamp`     | [timestamp][ts]                     | Required | Date of last event update |
+| `telemetry`     | [Telemetry](#telemetry-data)  | Optional | Single point of telemetry. Required unless `status` is `trip`. |
+| `event_geographies`  | UUID[] | Required          | Array of Geography UUIDs consisting of every Geography that contains the location of the event. |
+| `trip_id`       | UUID                          | Optional | UUID provided by Operator to uniquely identify the trip. Required for `trip_start`, `trip_end`, `trip_enter`, and `trip_leave` event types |
 
 201 Success Response:
 
 | Field        | Type | Field Description                                                             |
 | ------------ | ---- | ----------------------------------------------------------------------------- |
 | `device_id`  | UUID | UUID provided by Operator to uniquely identify a vehicle                      |
-| `status`     | Enum | Vehicle status based on posted `event_type`. See [Vehicle Status](#vehicle-events) |
 
 400 Failure Response:
 
@@ -206,11 +198,12 @@ Body Params:
 | ------------- | ------------------------------ | ----------------- | -------------------------------------------------------------------------------------- |
 | `data`        | [Telemetry](#telemetry-data)[] | Required          | Array of telemetry for one or more vehicles.                                           |
 
-201 Success Response:
+200 Success Response:
 
-| Field     | Type                           | Field Description                                                                                       |
-| --------- | ------------------------------ | ------------------------------------------------------------------------------------------------------- |
-| `result`  | String                         | Responds with number of successfully written telemetry data points and total number of provided points. |
+| Field      | Type                           | Field Description                                                                                       |
+| ---------- | ------------------------------ | ------------------------------------------------------------------------------------------------------- |
+| `success`  | Integer                        | Number of successfully written telemetry data points.                                                   |
+| `total`    | Integer                        | Ttotal number of provided points.                                                                       |
 | `failures` | [Telemetry](#telemetry-data)[] | Array of failed telemetry for zero or more vehicles (empty if all successful).                          |
 
 400 Failure Response:
@@ -221,31 +214,6 @@ Body Params:
 | `invalid_data`  | None of the provided data was valid. |                                 |
 | `missing_param` | A required parameter is missing.     | Array of missing parameters     |
 
-## Vehicle Events
-
-List of valid vehicle events and the resulting vehicle status if the event is sucessful.  Note that to handle out-of-order events, the validity of the initial-status is not enforced.  Events received out-of-order may result in transient incorrect vehicle states.
-
-| `event_type`         | `event_type_reason`                                     | description                                                                                    | valid initial `status`                             | `status` on success | status_description                                                      |
-| -------------------- | ------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | -------------------------------------------------- | ------------------- | ----------------------------------------------------------------------- |
-| `register`           |                                                         | Default state for a newly registered vehicle                                                   | `inactive`                                         | `removed`           | A vehicle is in the active fleet but not yet available for customer use |
-| `service_start`      |                                                         | Vehicle introduced into service at the beginning of the day (if program does not operate 24/7) | `unavailable`                                      | `available`         | Vehicle is on the street and available for customer use.                |
-| `service_end`        | `low_battery`, `maintenance`, `compliance`, `off_hours` | A vehicle is no longer available due to `event_type_reason`                                         | `available`                                        | `unavailable`       |                                                                         |
-| `provider_drop_off`  |                                                         | Vehicle moved for rebalancing                                                                  | `removed`, `elsewhere`                             | `available`         |                                                                         |
-| `provider_pick_up`   | `rebalance`, `maintenance`, `charge`, `compliance`      | Vehicle removed from street and will be placed at another location to rebalance service        | `available`, `unavailable`, `elsewhere`            | `removed`           |                                                                         |
-| `city_pick_up`       |                                                         | Vehicle removed by city                                                                        | `available`, `unavailable`                         | `removed`           |                                                                         |
-| `reserve`            |                                                         | Customer reserves vehicle                                                                      | `available`                                        | `reserved`          | Vehicle is reserved or in use.                                          |
-| `cancel_reservation` |                                                         | Customer cancels reservation                                                                   | `reserved`                                         | `available`         |                                                                         |
-| `trip_start`         |                                                         | Customer starts a trip                                                                         | `available`, `reserved`                            | `trip`              |                                                                         |
-| `trip_enter_municipal_area`         |                                                         | Customer enters the municipal area managed by agency during an active trip.                        | `removed`, `elsewhere`                             | `trip`              |                                                                         |
-| `trip_leave_municipal_area`         |                                                         | Customer leaves the municipal area managed by agency during an active trip.                        | `trip`                                             | `elsewhere`         |                                                                         |
-| `trip_enter_geography`         |                                                         | Customer enters one or more Geographies managed by Policy during an active trip.                        | `trip`                                             | `trip `         |                                                                         |
-| `trip_leave_geography`         |                                                         | Customer leaves one or more Geographies managed by Policy during an active trip.                        | `trip`                                             | `trip `         |                                                                         |
-| `trip_end`           |                                                         | Customer ends trip and reservation                                                             | `trip`                                             | `available`         |                                                                         |
-| `deregister`         | `missing`, `decommissioned`                             | A vehicle is deregistered                                                                      | `available`, `unavailable`, `removed`, `elsewhere` | `inactive`          | A vehicle is deactivated from the fleet.                                |
-
-The diagram below shows the expected events and related `status` transitions for a vehicle:
-![Event State Diagram](images/MDS_agency_event_state.png?raw=true "MDS Event State Diagram")
-
 ## Telemetry Data
 
 A standard point of vehicle telemetry. References to latitude and longitude imply coordinates encoded in the [WGS 84 (EPSG:4326)](https://en.wikipedia.org/wiki/World_Geodetic_System) standard GPS or GNSS projection expressed as [Decimal Degrees](https://en.wikipedia.org/wiki/Decimal_degrees).
@@ -253,7 +221,7 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | Field          | Type           | Required/Optional     | Field Description                                            |
 | -------------- | -------------- | --------------------- | ------------------------------------------------------------ |
 | `device_id`    | UUID           | Required              | ID used in [Register](#vehicle-register)                     |
-| `timestamp`    | Timestamp      | Required              | Date/time that event occurred. Based on GPS or GNSS clock            |
+| `timestamp`    | [timestamp][ts]      | Required              | Date/time that event occurred. Based on GPS or GNSS clock            |
 | `gps`          | Object         | Required              | Telemetry position data                                      |
 | `gps.lat`      | Double         | Required              | Latitude of the location                                     |
 | `gps.lng`      | Double         | Required              | Longitude of the location                                    |
@@ -261,61 +229,20 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | `gps.heading`  | Double         | Required if Available | Degrees - clockwise starting at 0 degrees at true North      |
 | `gps.speed`    | Float          | Required if Available | Speed in meters / sec                                        |
 | `gps.accuracy` | Float          | Required if Available | Accuracy in meters                                           |
-| `gps.hdop`     | Float          | Required if Available | Horizontal GPS or GNSS accuracy value (see [hdop](https://support.esri.com/en/other-resources/gis-dictionary/term/358112bd-b61c-4081-9679-4fca9e3eb926)) |
+| `gps.hdop`     | Float          | Required if Available | Horizontal GPS or GNSS accuracy value (see [hdop][hdop]) |
 | `gps.satellites` | Integer      | Required if Available | Number of GPS or GNSS satellites
 | `charge`       | Float          | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 1 |
 
-## Enum Definitions
-
-### Area Types
-
-| `type`               | Description                                                                                                                                                                                                                                                                                           |
-| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `unrestricted`       | Areas where vehicles may be picked up/dropped off. A provider's unrestricted area shall be contained completely inside the agency's unrestricted area for the provider in question, but it need not cover the entire agency unrestricted area. See the provider version of the service areas endpoint |
-| `restricted`         | Areas where vehicle pick-up/drop-off is not allowed                                                                                                                                                                                                                                                   |
-| `preferred_pick_up`  | Areas where users are encouraged to pick up vehicles                                                                                                                                                                                                                                                  |
-| `preferred_drop_off` | Areas where users are encouraged to drop off vehicles                                                                                                                                                                                                                                                 |
-
-### Vehicle Type
-
-| `type`    |
-| --------- |
-| `bicycle` |
-| `car`     |
-| `scooter` |
-| `moped`   |
-
-### Propulsion Type
-
-| `propulsion`      | Description                                            |
-| ----------------- | ------------------------------------------------------ |
-| `human`           | Pedal or foot propulsion                               |
-| `electric_assist` | Provides power only alongside human propulsion         |
-| `electric`        | Contains throttle mode with a battery-powered motor    |
-| `combustion`      | Contains throttle mode with a gas engine-powered motor |
-
-A vehicle may have one or more values from the `propulsion`, depending on the number of modes of operation. For example, a scooter that can be powered by foot or by electric motor would have the `propulsion` represented by the array `['human', 'electric']`. A bicycle with pedal-assist would have the `propulsion` represented by the array `['human', 'electric_assist']` if it can also be operated as a traditional bicycle.
-
-## Responses
-
-
-* **200:** OK: operation successful.
-* **201:** Created: `POST` operations, new object created
-* **400:** Bad request.
-* **401:** Unauthorized: Invalid, expired, or insufficient scope of token.
-* **404:** Not Found: Object does not exist, returned on `GET` or `POST` operations if the object does not exist.
-* **409:** Conflict: `POST` operations when an object already exists and an update is not possible.
-* **500:** Internal server error: In this case, the answer may contain a `text/plain` body with an error message for troubleshooting.
-
-### Error Message Format
-
-| Field               | Type     | Field Description      |
-| ------------------- | -------- | ---------------------- |
-| `error`             | String   | Error message string   |
-| `error_description` | String   | Human readable error description (can be localized) |
-| `error_details`     | String[] | Array of error details |
-
 [Top][toc]
 
+[general]: /general-information.md
+[error-messages]: /general-information.md#error-messages
+[hdop]: https://support.esri.com/en/other-resources/gis-dictionary/term/358112bd-b61c-4081-9679-4fca9e3eb926
+[propulsion-types]: /general-information.md#propulsion-types
+[responses]: /general-information.md#responses
 [toc]: #table-of-contents
-[general-information/versioning]: /general-information.md#versioning
+[ts]: /general-information.md#timestamps
+[vehicle-types]: /general-information.md#vehicle-types
+[vehicle-states]: /general-information.md#vehicle-states
+[vehicle-events]: /general-information.md#vehicle-state-events
+[versioning]: /general-information.md#versioning
