@@ -129,7 +129,7 @@ All String fields, such as `vehicle_id`, are limited to a maximum of 255 charact
 | num_spaces_available   | {vehicle_type: number}                                      | Optional          | How many spaces are free to be populated with vehicles at this stop?                         |
 | num_spaces_disabled    | {vehicle_type: number}                                      | Optional          | How many spaces are disabled and unable to accept vehicles at this stop?                     |
 | parent_stop            | UUID                                                        | Optional          | Describe a basic hierarchy of stops (e.g.a stop inside of a greater stop)                    |
-| vehicles               | UUID[]                                                      | Optional          | List of device_ids for vehicles which are currently at this stop                             |
+| devices               | UUID[]                                                      | Optional          | List of device_ids for vehicles which are currently at this stop                             |
 
 ### Stop Status
 
