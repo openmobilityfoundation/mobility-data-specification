@@ -133,8 +133,8 @@ All String fields, such as `vehicle_id`, are limited to a maximum of 255 charact
 
 ### Stop Status
 
-| Field        | Type    | Required/Optional | Description                                                                       |
-|--------------|---------|-------------------|-----------------------------------------------------------------------------------|
+| Field        | Type    | Required/Optional | Description                                         |
+|--------------|---------|-------------------|-----------------------------------------------------|
 | is_installed | Boolean | Required          | See GBFS [station_status.json][gbfs-station-status] |
 | is_renting   | Boolean | Required          | See GBFS [station_status.json][gbfs-station-status] |
 | is_returning | Boolean | Required          | See GBFS [station_status.json][gbfs-station-status] |
