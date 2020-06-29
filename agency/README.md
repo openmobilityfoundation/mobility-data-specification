@@ -254,8 +254,6 @@ The `/stops` endpoint allows an agency to register Stops.
 | status              | Optional          |See [Stops][stops] |
 | num_spots_disabled  | Optional          |See [Stops][stops] |
 
-TBD -- Are there additional fields that should be permitted to update with a PUT?
-
 **Endpoint:** `/stops/:stop_id`  
 **Method:** `GET`  
 **[Beta feature][beta]:** Yes (as of 1.0.0)  
