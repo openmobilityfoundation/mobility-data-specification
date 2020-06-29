@@ -254,6 +254,19 @@ An individual `Rule` object is defined by the following fields:
 | `mph`     | Miles per hour      |
 | `kph`     | Kilometers per hour |
 
+### Geography
+| Name             | Type      | Required / Optional | Description                                                                         |
+| ---------------- | --------- | --- | ----------------------------------------------------------------------------------- |
+| `name`           | String    | R   | Name of geography                                                                      |
+| `description`    | String    | O   | Detailed description of geography                                                                      |
+| `geography_id`   | UUID      | R   | Unique ID of geography                                                                 |
+| `geography_json`   | UUID      | R   | The GeoJSON that defines the geographical coordinates.
+| `effective_date`   | [timestamp][ts] | O   | `start_date` for first published policy that uses this geo.  Server should set this when policies are published.  This may be used on the client to distinguish between “logical” geographies that have the same name. E.g. if a policy publishes a geography on 5/1/2020, and then another policy is published which references that same geography is published on 4/1/2020, the effective_date will be set to 4/1/2020.
+| `publish_date`   | [timestamp][ts] | R   | Timestamp that the policy was published, i.e. made immutable                                             |
+| `prev_geographies`  | UUID[]    | O   | Unique IDs of prior geographies replaced by this one                                   |
+
+
+
 ### Messages
 
 Some Policies as established by the Agency may benefit from rider communication. This optional field contains a map of languages to messages, to be shown to the user.
@@ -294,19 +307,6 @@ Rules are a form of pattern matching; conditions under which a given rule is "me
 If a vehicle is matched with a rule, then it _will not_ be considered in the subsequent evaluation of rules within a given policy. This allows for expressing complex policies, such as a layer of "valid" geographies in an earlier rule, with overarching "invalid" geographies in later rules.
 
 The internal mechanics of ordering are up to the Policy editing and hosting software.
-
-<a name="geography-fields"></a>
-### Geography
-| Name             | Type      | R/O | Description                                                                         |
-| ---------------- | --------- | --- | ----------------------------------------------------------------------------------- |
-| `name`           | String    | R   | Name of geography                                                                      |
-| `description`    | String    | O   | Detailed description of geography                                                                      |
-| `geography_id`   | UUID      | R   | Unique ID of geography                                                                 |
-| `geography_json`   | UUID      | R   | The GeoJSON that defines the geographical coordinates.
-| `effective_date`   | [timestamp][ts] | O   | `start_date` for first published policy that uses this geo.  Server should set this when policies are published.  This may be used on the client to distinguish between “logical” geographies that have the same name. E.g. if a policy publishes a geography on 5/1/2020, and then another policy is published which references that same geography is published on 4/1/2020, the effective_date will be set to 4/1/2020.
-| `publish_date`   | [timestamp][ts] | R   | Timestamp that the policy was published, i.e. made immutable                                             |
-| `prev_geographies`  | UUID[]    | O   | Unique IDs of prior geographies replaced by this one                                   |
-
 
 
 [Top](#table-of-contents)
