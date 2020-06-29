@@ -1,5 +1,5 @@
 {
-  "$id": "https://raw.githubusercontent.com/openmobilityfoundation/mobility-data-specification/master/schema/templates/common.json",
+  "$id": "https://raw.githubusercontent.com/openmobilityfoundation/mobility-data-specification/main/schema/templates/common.json",
   "$schema": "http://json-schema.org/draft-06/schema#",
   "title": "The MDS Provider Schema, common definitions",
   "type": "object",
@@ -174,7 +174,7 @@
               "enum": ["deregister"]
             },
             "event_type_reason": {
-              "enum": ["missing"]
+              "enum": ["missing", "decommissioned"]
             }
           }
         }
