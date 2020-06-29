@@ -175,22 +175,6 @@ This Policy sets a 15 MPH speed limit in greater LA, and a 10 MPH speed limit in
   "published_date": 1552678594428,
   "prev_policies": null,
   "rules": [{
-      "name": "Greater LA",
-      "rule_id": "529b6cd7-0e0d-4439-babf-c5908a664ecf",
-      "rule_type": "speed",
-      "rule_units": "mph",
-      "geographies": [
-        "b4bcc213-4888-48ce-a33d-4dd6c3384bda"
-      ],
-      "statuses": {
-        "trip": []
-      },
-      "vehicle_types": [
-        "bicycle",
-        "scooter"
-      ],
-      "maximum": 15
-  }, {
       "name": "Venice Beach on weekend afternoons",
       "rule_id": "d4c0f42f-3f79-4eb4-850a-430b9701d5cf",
       "rule_type": "speed",
@@ -216,6 +200,22 @@ This Policy sets a 15 MPH speed limit in greater LA, and a 10 MPH speed limit in
           "en-US": "Remember to stay under 10 MPH on Venice Beach on weekends!",
           "es-US": "¡Recuerda permanecer menos de 10 millas por hora en Venice Beach los fines de semana!"
       }
+  }, {
+      "name": "Greater LA",
+      "rule_id": "529b6cd7-0e0d-4439-babf-c5908a664ecf",
+      "rule_type": "speed",
+      "rule_units": "mph",
+      "geographies": [
+        "b4bcc213-4888-48ce-a33d-4dd6c3384bda"
+      ],
+      "statuses": {
+        "trip": []
+      },
+      "vehicle_types": [
+        "bicycle",
+        "scooter"
+      ],
+      "maximum": 15
   }]
 }
 ```

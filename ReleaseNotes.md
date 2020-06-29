@@ -198,4 +198,4 @@ This release includes a number of enhancements and clarifications to the [`provi
 
 * MDS is under active development. As such, pre-`1.0` versions may introduce breaking changes until things stabilize. Every effort will be made to ensure that any breaking change is well documented and that appropriate workarounds are suggested.
 
-[provider]: https://github.com/openmobilityfoundation/mobility-data-specification/tree/master/provider
+[provider]: https://github.com/openmobilityfoundation/mobility-data-specification/tree/main/provider
