@@ -21,7 +21,7 @@ _Here is what is currently under consideration. Items may be removed, added or c
   * [Add link to State of Practice](https://github.com/openmobilityfoundation/mobility-data-specification/pull/477)
   * [Update GBFS references and links](https://github.com/openmobilityfoundation/mobility-data-specification/pull/508)
   * Move [Code of Conduct](https://github.com/openmobilityfoundation/mobility-data-specification/pull/514), [Contributing Guide](https://github.com/openmobilityfoundation/mobility-data-specification/pull/513), and [Release Guidelines](https://github.com/openmobilityfoundation/mobility-data-specification/pull/512) to new [Governace repo](https://github.com/openmobilityfoundation/governance)
-   * [Update providers.csv to add Lava](https://github.com/openmobilityfoundation/mobility-data-specification/pull/464)
+   * [Update providers.csv to add Superpedestrian](https://github.com/openmobilityfoundation/mobility-data-specification/pull/535)
    * [Update cities using MDS](https://github.com/openmobilityfoundation/mobility-data-specification/pull/520)
 
 *_Provider_*
