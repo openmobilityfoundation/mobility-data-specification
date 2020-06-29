@@ -53,7 +53,7 @@ More than 90 cities and public agencies around the world use MDS, and it has bee
 
 * **Arlington, VA**: [Shared Micro-Mobility Devices](https://transportation.arlingtonva.us/scooters-and-dockless-bikeshare/) page and [permit application](https://arlingtonva.s3.amazonaws.com/wp-content/uploads/sites/19/2019/12/Micro-Mobility_Permit_Final_191203.pdf).
 * **Atlanta, GA**: [Administrative Regulations
-for Shareable Dockless Mobility Device Permit Holders](https://www.atlantaga.gov/home/showdocument?id=44650) from [Department of City Planning](https://www.atlantaga.gov/government/departments/city-planning).
+for Shareable Dockless Mobility Device Permit Holders](https://www.atlantaga.gov/home/showdocument?id=46315) from [Department of City Planning](https://www.atlantaga.gov/government/departments/city-planning).
 * **Austin, TX**: The rules and guidelines for Austin's Micromobility Program can be found on Austin's [Shared Mobility Program](https://austintexas.gov/department/shared-mobility-services) website.
 * **Calgary, Canada**: Programs for a [Dockless Bike Share Pilot](https://www.calgary.ca/transportation/tp/cycling/cycling-strategy/bike-share-system.html?redirect=/bikeshare) and a [hared electric scooter pilot](https://www.calgary.ca/transportation/tp/cycling/cycling-strategy/shared-electric-scooter-pilot.html) that require [MDS in the application](https://www.calgary.ca/content/dam/www/transportation/tp/documents/cycling/cycling_strategy/framework-for-dockless-bike-share-permit-phase-2.pdf) and programs.
 * **Chicago, IL**: [E-Scooter Share Pilot Program](https://www.chicago.gov/city/en/depts/cdot/supp_info/escooter-share-pilot-project.html) information.
