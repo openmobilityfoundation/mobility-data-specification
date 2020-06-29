@@ -231,6 +231,7 @@ An individual `Rule` object is defined by the following fields:
 | `kph`     | Kilometers per hour |
 
 ### Geography
+
 | Name             | Type      | Required / Optional | Description                                                                         |
 | ---------------- | --------- | --- | ----------------------------------------------------------------------------------- |
 | `name`           | String    | R   | Name of geography                                                                      |
