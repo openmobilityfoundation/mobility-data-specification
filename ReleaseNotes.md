@@ -41,7 +41,7 @@ _Here is what is currently under consideration. Items may be removed, added or c
 
 * [Add Rates (fees + subsidies)](https://github.com/openmobilityfoundation/mobility-data-specification/pull/484)
 * [Rearrange Speed Limit Example](https://github.com/openmobilityfoundation/mobility-data-specification/pull/482)
-
+* [Added Geography schema](https://github.com/openmobilityfoundation/mobility-data-specification/pull/533)
 
 ## 0.4.1
 
