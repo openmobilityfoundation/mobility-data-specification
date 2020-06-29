@@ -207,7 +207,7 @@ To represent a route, MDS `provider` APIs must create a GeoJSON [`FeatureCollect
 
 Routes must include at least 2 points: the start point and end point. Routes must include all possible GPS or GNSS samples collected by a Provider. Providers may round the latitude and longitude to the level of precision representing the maximum accuracy of the specific measurement. For example, [a-GPS][agps] is accurate to 5 decimal places, [differential GPS][dgps] is generally accurate to 6 decimal places. Providers may round those readings to the appropriate number for their systems.
 
-*Docked* mobility providers must include a `stop_id` in the first and last Feature of each `route` by embedding the `stop_id` property in the Feature's `properties` object, as all trips for docked vehicles should originate/end at [Stops](/general-information.md#stop).
+*Docked* mobility providers must include a `stop_id` in the first and last Feature of each `route` by embedding the `stop_id` property in the Feature's `properties` object, as all trips for docked vehicles should originate/end at [Stops](/general-information.md#stops).
 
 ```js
 "route": {
@@ -280,7 +280,7 @@ Unless stated otherwise by the municipality, this endpoint must return only thos
 
 ### Event Locations
 
-*Docked* mobility providers must include a `stop_id` in the Point Feature of each `event_location` that occurs at a [Stop](/general-information.md#stop) by embedding the `stop_id` property in the Feature's `properties` object.
+*Docked* mobility providers must include a `stop_id` in the Point Feature of each `event_location` that occurs at a [Stop](/general-information.md#stops) by embedding the `stop_id` property in the Feature's `properties` object.
 
 ### Status Changes Query Parameters
 
