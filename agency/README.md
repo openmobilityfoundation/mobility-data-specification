@@ -14,6 +14,7 @@ This specification contains a collection of RESTful APIs used to specify the dig
 * [Vehicle Events](#vehicle---event)
 * [Vehicles Telemetry](#vehicles---telemetry)
 * [Telemetry Data](#telemetry-data)
+* [Stops](#stops)
 
 ## General information
 
@@ -231,14 +232,44 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | `gps.hdop`     | Float          | Required if Available | Horizontal GPS or GNSS accuracy value (see [hdop][hdop]) |
 | `gps.satellites` | Integer      | Required if Available | Number of GPS or GNSS satellites
 | `charge`       | Float          | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 1 |
+| `stop_id`      | UUID           | Required if Applicable | Stop that the vehicle is currently located at. Only applicable for _docked_ Micromobility. See [Stops][stops] |
+
+## Stops
+
+The `/stops` endpoint allows an agency to register Stops.
+
+**Endpoint:** `/stops`  
+**Method:** `POST`  
+**[Beta feature][beta]:** Yes (as of 1.0.0)  
+**Request Body**: An array of [Stops][stops]
+
+**Endpoint:** `/stops`  
+**Method:** `PUT`  
+**[Beta feature][beta]:** Yes (as of 1.0.0)  
+**Request Body**: An array of subsets of [Stop][stops] information, where the permitted subset fields are defined as:
+
+| Field               | Required/Optional | Description                                 |
+|---------------------|-------------------|---------------------------------------------|
+| stop_id             | Required          |See [Stops][stops] |
+| status              | Optional          |See [Stops][stops] |
+| num_spots_disabled  | Optional          |See [Stops][stops] |
+
+**Endpoint:** `/stops/:stop_id`  
+**Method:** `GET`  
+**[Beta feature][beta]:** Yes (as of 1.0.0)  
+**`data` Payload:** `{ "stops": [] }`, an array of [Stops][stops]
+
+In the case that a `stop_id` query parameter is specified, the `stops` array returned will only have one entry. In the case that no `stop_id` query parameter is specified, all stops will be returned.
 
 [Top][toc]
 
+[beta]: /general-information.md#beta-features
 [general]: /general-information.md
 [error-messages]: /general-information.md#error-messages
 [hdop]: https://support.esri.com/en/other-resources/gis-dictionary/term/358112bd-b61c-4081-9679-4fca9e3eb926
 [propulsion-types]: /general-information.md#propulsion-types
 [responses]: /general-information.md#responses
+[stops]: /general-information#stops
 [toc]: #table-of-contents
 [ts]: /general-information.md#timestamps
 [vehicle-types]: /general-information.md#vehicle-types
