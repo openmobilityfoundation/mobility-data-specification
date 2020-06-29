@@ -1,6 +1,6 @@
 # Mobility Data Specification: Policy
 
-This specification describes the digital relationship between _mobility as a service_ Providers and the Agencies that regulate them. The Policy specification is meant to communicate municipality policies (such as as device caps and geofences) in a clear, consistent manner.
+This specification describes the digital relationship between _mobility as a service_ Providers and the Agencies that regulate them. The Policy specification is meant to communicate municipal policies (such as as vehicle deployment caps and speed limits) in a clear, consistent manner.
 
 ## Table of Contents
 
@@ -19,7 +19,7 @@ The following information applies to all `policy` API endpoints.
 
 `policy` APIs must handle requests for specific versions of the specification from clients.
 
-Versioning must be implemented as specified in the [`General information versioning section`][general-information/versioning].
+Versioning must be implemented as specified in the [Versioning section][versioning].
 
 ## Background
 
@@ -33,7 +33,7 @@ The goal of this specification is to enable Agencies to create, revise, and publ
 
 The machine-readable format allows Providers to obtain policies and compute compliance where it can be determined entirely by data obtained internally.
 
-[Top](#table-of-contents)
+[Top][toc]
 
 ## Distribution
 
@@ -43,7 +43,7 @@ Policies typically refer to one or more associated geographies. Each policy and 
 
 Published policies and geographies should be treated as immutable data. Obsoleting or otherwise changing a policy is accomplished by publishing a new policy with a field named `prev_policies`, a list of UUID references to the policy or policies superseded by the new policy.
 
-Geographical data shall be represented as GeoJSON `Feature` objects. No part of the geographical data should be outside the [municipality boundary](../provider/README.md#municipality-boundary).
+Geographical data shall be represented as GeoJSON `Feature` objects. No part of the geographical data should be outside the [municipality boundary][muni-boundary].
 
 Policies should be re-fetched whenever:
 
@@ -61,37 +61,13 @@ Among other use-cases, configuring a REST API allows an Agency to:
 3) Adjust other attributes in closer to real time
 4) Enumerate when policies are set to change
 
-Responses must set the `Content-Type` header, as specified in the [Provider versioning](../provider/README.md#versioning) section.
+Responses must set the `Content-Type` header, as specified in the [Provider versioning][versioning] section.
 
-#### HTTP Response Codes
+#### Responses and Error Messages
 
-The response to a client request must include a valid HTTP status code defined in the [IANA HTTP Status Code Registry](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml)
+The response to a client request must include a valid HTTP status code defined in the [IANA HTTP Status Code Registry][iana].
 
-- **200:** OK: operation successful.
-- **400:** Bad request.
-- **401:** Unauthorized: Invalid, expired, or insufficient scope of token.
-- **404:** Not Found: Object(s) do not exist.
-- **500:** Internal server error.
-
-#### Timestamps
-
-As with the Provider API, `timestamp` refers to integer milliseconds since Unix epoch.
-
-#### Error Responses
-
-```json
-{
-    "error": "...",
-    "error_description": "...",
-    "error_details": [ "...", "..." ]
-}
-```
-
-| Field               | Type     | Field Description      |
-| ------------------- | -------- | ---------------------- |
-| `error`             | String   | Error message string   |
-| `error_description` | String   | Human readable error description (can be localized) |
-| `error_details`     | String[] (optional) | Array of error details |
+See the [Responses section][responses] for information on valid MDS response codes and the [Error Messages section][error-messages] for information on formatting error messages.
 
 #### Policies
 
@@ -117,7 +93,7 @@ Policies will be returned in order of effective date (see schema below), with pa
 
 Endpoint: `/geographies/{id}`  
 Method: `GET`  
-`data` Payload: `{ geographies: [] }`, an array of GeoJSON `Feature` objects.
+`data` Payload: `{ geographies: [] }`, an array of GeoJSON `Feature` objects that follow the schema [outlined here](#geography).
 
 ##### Query Parameters
 
@@ -179,7 +155,7 @@ The optional `end_date` field applies to all policies represented in the file.
 }
 ```
 
-[Top](#table-of-contents)
+[Top][toc]
 
 ## Schema
 
@@ -223,16 +199,16 @@ An individual `Rule` object is defined by the following fields:
 | `rule_id`          | UUID                        | Required   | Unique ID of the rule |
 | `rule_type`        | enum                        | Required   | Type of policy (see [Rule Types](#rule-types)) |
 | `geographies`      | UUID[]                      | Required   | List of Geography UUIDs (non-overlapping) specifying the covered geography |
-| `statuses`         | `{ status: vehicle event[] }` | Required   | Vehicle `statuses` to which this rule applies, either from [Provider](../provider/README.md#event-types) or [Agency](../agency/README.md#vehicle-events). Optionally provide a list of specific `event_type`'s as a subset of a given status for the rule to apply to. An empty list or `null`/absent defaults to "all". |
+| `states`           | `{ state: event[] }`        | Required   | [Vehicle state][vehicle-states] to which this rule applies.  Optionally provide a list of specific [vehicle events][#vehicle-events] as a subset of a given status for the rule to apply to. An empty list or `null`/absent defaults to "all". |
 | `rule_units`       | enum                        | Optional   | Measured units of policy (see [Rule Units](#rule-units)) |
 | `vehicle_types`    | `vehicle_type[]`            | Optional   | Applicable vehicle types, default "all". |
-| `propulsion_types` | `propulsion_type[]`         | Optional   | Applicable vehicle propulsion types, default "all". |
+| `propulsion_types` | `propulsion_type[]`         | Optional   | Applicable vehicle [propulsion types][propulsion-types], default "all". |
 | `minimum`          | integer                     | Optional   | Minimum value, if applicable (default 0) |
 | `maximum`          | integer                     | Optional   | Maximum value, if applicable (default unlimited) |
 | `start_time`       | ISO 8601 time `hh:mm:ss`              | Optional   | Beginning time-of-day when the rule is in effect (default 00:00:00). |
 | `end_time`         | ISO 8601 time `hh:mm:ss`              | Optional   | Ending time-of-day when the rule is in effect (default 23:59:59). |
 | `days`             | day[]                       | Optional   | Days `["sun", "mon", "tue", "wed", "thu", "fri", "sat"]` when the rule is in effect (default all) |
-| `messages`         | `{ string:string }`         | Optional   | Message to rider user, if desired, in various languages, keyed by language tag (see [Messages](#messages)) |
+| `messages`         | `{ String:String }`         | Optional   | Message to rider user, if desired, in various languages, keyed by language tag (see [Messages](#messages)) |
 | `value_url`        | URL                         | Optional   | URL to an API endpoint that can provide dynamic information for the measured value (see [Value URL](#value-url)) |
 
 ### Rule Types
@@ -264,7 +240,6 @@ An individual `Rule` object is defined by the following fields:
 | `effective_date`   | [timestamp][ts] | O   | `start_date` for first published policy that uses this geo.  Server should set this when policies are published.  This may be used on the client to distinguish between “logical” geographies that have the same name. E.g. if a policy publishes a geography on 5/1/2020, and then another policy is published which references that same geography is published on 4/1/2020, the effective_date will be set to 4/1/2020.
 | `publish_date`   | [timestamp][ts] | R   | Timestamp that the policy was published, i.e. made immutable                                             |
 | `prev_geographies`  | UUID[]    | O   | Unique IDs of prior geographies replaced by this one                                   |
-
 
 
 ### Messages
@@ -308,8 +283,15 @@ If a vehicle is matched with a rule, then it _will not_ be considered in the sub
 
 The internal mechanics of ordering are up to the Policy editing and hosting software.
 
+[Top][toc]
 
-[Top](#table-of-contents)
-
-[general-information/versioning]: /general-information.md#versioning
-[ts]: #timestamps
+[beta]: /general-information.md#beta
+[iana]: https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
+[muni-boundary]: ../provider/README.md#municipality-boundary
+[propulsion-types]: /general-information.md#propulsion-types
+[ts]: /general-information.md#timestamps
+[toc]: #table-of-contents
+[vehicle-events]: /general-information.md#vehicle-state-events
+[vehicle-states]: /general-information.md#vehicle-states
+[vehicle-types]: /general-information.md#vehicle-types
+[versioning]: /general-information.md#versioning
