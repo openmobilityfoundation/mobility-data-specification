@@ -84,8 +84,8 @@
         }
       }
     },
-    "propulsion_type": {
-      "$id": "#/definitions/propulsion_type",
+    "propulsion_types": {
+      "$id": "#/definitions/propulsion_types",
       "type": "array",
       "description": "The type of propulsion; allows multiple values",
       "items": {
@@ -97,6 +97,7 @@
           "human"
         ]
       },
+      "uniqueItems": true,
       "minItems": 1
     },
     "string": {
@@ -112,15 +113,15 @@
     },
     "timestamp": {
       "$id": "#/definitions/timestamp",
-      "title": "Integer milliseconds since Unix epoch",
       "type": "number",
+      "description": "Integer milliseconds since Unix epoch",
       "multipleOf": 1.0,
       "minimum": 0
     },
     "uuid": {
       "$id": "#/definitions/uuid",
       "type": "string",
-      "title": "A UUID used to uniquely identifty an object",
+      "description": "A UUID used to uniquely identifty an object",
       "default": "",
       "examples": [
         "3c9604d6-b5ee-11e8-96f8-529269fb1459"
@@ -135,17 +136,18 @@
         "bicycle",
         "car",
         "scooter",
-        "moped"
+        "moped",
+        "other"
       ]
     },
     "version": {
       "$id": "#/definitions/version",
       "type": "string",
-      "title": "The MDS Provider version this data represents",
+      "description": "The version of MDS this data represents",
       "examples": [
-        "0.4.0"
+        "1.0.0"
       ],
-      "pattern": "^0\\.4\\.[0-9]+$"
+      "pattern": "^1\\.1\\.[0-9]+$"
     },
     "links": {
       "$id": "#/definitions/links",
@@ -209,9 +211,65 @@
     "ttl": {
       "$id": "#/definitions/ttl",
       "type": "integer",
-      "title": "Integer milliseconds until next data update (0 if the data is always refreshed)",
+      "description": "Integer milliseconds until next data update (0 if the data is always refreshed)",
       "minimum": 0,
       "maximum": 300000
+    },
+    "vehicle_state": {
+      "$id": "#/definitions/vehicle_state",
+      "type": "string",
+      "description": "The state of a vehicle",
+      "enum": [
+        "available",
+        "elsewhere",
+        "non_operational",
+        "on_trip",
+        "removed",
+        "reserved",
+        "unknown"
+      ]
+    },
+    "vehicle_event": {
+      "$id": "#/definitions/vehicle_event",
+      "type": "string",
+      "description": "An event that changes a vehicle's state",
+      "enum": [
+        "agency_drop_off",
+        "agency_pick_up",
+        "battery_charged",
+        "battery_low",
+        "comms_lost",
+        "comms_restored",
+        "compliance_pick_up",
+        "decommissioned",
+        "maintenance",
+        "maintenance_pick_up",
+        "missing",
+        "off_hours",
+        "on_hours",
+        "provider_drop_off",
+        "rebalance_pick_up",
+        "reservation_cancel",
+        "reservation_start",
+        "system_resume",
+        "system_suspend",
+        "trip_cancel",
+        "trip_end",
+        "trip_enter_jurisdiction",
+        "trip_leave_jurisdiction",
+        "trip_start",
+        "unspecified"
+      ]
+    },
+    "vehicle_events": {
+      "$id": "#/definitions/vehicle_events",
+      "type": "array",
+      "description": "Array of events indicating a change to a vehicle's state",
+      "uniqueItems": true,
+      "minItems": 1,
+      "items": {
+        "$ref": "#/definitions/vehicle_event"
+      }
     }
   },
   "required": [
@@ -243,10 +301,10 @@
               "device_id",
               "vehicle_id",
               "vehicle_type",
-              "propulsion_type",
+              "propulsion_types",
               "last_event_time",
-              "last_event_type",
-              "last_event_type_reason",
+              "last_vehicle_state",
+              "last_event_types",
               "last_event_location"
             ],
             "properties": {
@@ -275,9 +333,9 @@
                 "$ref": "#/definitions/vehicle_type",
                 "description": "The type of vehicle"
               },
-              "propulsion_type": {
-                "$id": "#/definitions/vehicle/properties/propulsion_type",
-                "$ref": "#/definitions/propulsion_type",
+              "propulsion_types": {
+                "$id": "#/definitions/vehicle/properties/propulsion_types",
+                "$ref": "#/definitions/propulsion_types",
                 "description": "The type of propulsion; allows multiple values"
               },
               "last_event_time": {
@@ -285,25 +343,25 @@
                 "$ref": "#/definitions/timestamp",
                 "description": "The time the most recent status change event occurred, expressed as a Unix Timestamp"
               },
-              "last_event_type": {
-                "$id": "#/properties/data/properties/vehicles/items/properties/last_event_type",
-                "type": "string",
-                "description": "The type of the event"
+              "last_vehicle_state": {
+                "$id": "#/properties/data/properties/vehicles/items/properties/last_vehicle_state",
+                "$ref": "#/definitions/vehicle_state",
+                "description": "The last known state of the vehicle"
               },
-              "last_event_type_reason": {
-                "$id": "#/properties/data/properties/vehicles/items/properties/last_event_type_reason",
-                "type": "string",
-                "description": "The reason for the event"
+              "last_event_types": {
+                "$id": "#/properties/data/properties/vehicles/items/properties/last_event_types",
+                "$ref": "#/definitions/vehicle_events",
+                "description": "The most recent event(s) that caused a change in the vehicle's state"
               },
               "last_event_location": {
                 "$id": "#/properties/data/properties/vehicles/items/properties/last_event_location",
-                "description": "Location of the vehicle's last status change event",
-                "$ref": "#/definitions/MDS_Feature_Point"
+                "$ref": "#/definitions/MDS_Feature_Point",
+                "description": "Location of the vehicle's last status change event"
               },
               "current_location": {
                 "$id": "#/properties/data/properties/vehicles/items/properties/current_location",
-                "description": "Current location of vehicle if different from last event, and the vehicle is not currently on a trip",
-                "$ref": "#/definitions/MDS_Feature_Point"
+                "$ref": "#/definitions/MDS_Feature_Point",
+                "description": "Current location of vehicle if different from last event, and the vehicle is not currently on a trip"
               },
               "battery_pct": {
                 "$id": "#/properties/data/properties/vehicles/items/properties/battery_pct",
@@ -319,53 +377,236 @@
                 "maximum": 1
               }
             },
-            "oneOf": [
+            "allOf": [
               {
+                "description": "Valid last_vehicle_state values for this endpoint",
                 "properties": {
-                  "last_event_type": {
+                  "last_vehicle_state": {
                     "enum": [
-                      "available"
-                    ]
-                  },
-                  "last_event_type_reason": {
-                    "enum": [
-                      "service_start",
-                      "user_drop_off",
-                      "rebalance_drop_off",
-                      "maintenance_drop_off",
-                      "agency_drop_off"
-                    ]
-                  }
-                }
-              },
-              {
-                "properties": {
-                  "last_event_type": {
-                    "enum": [
+                      "available",
+                      "non_operational",
                       "reserved"
                     ]
-                  },
-                  "last_event_type_reason": {
-                    "enum": [
-                      "user_pick_up"
-                    ]
                   }
                 }
               },
               {
-                "properties": {
-                  "last_event_type": {
-                    "enum": [
-                      "unavailable"
-                    ]
+                "description": "valid vehicle_state and vehicle_events combinations",
+                "oneOf": [
+                  {
+                    "properties": {
+                      "last_vehicle_state": {
+                        "enum": [
+                          "available"
+                        ]
+                      },
+                      "last_event_types": {
+                        "items": {
+                          "not": {
+                            "enum": [
+                              "agency_drop_off",
+                              "battery_charged",
+                              "comms_restored",
+                              "maintenance",
+                              "on_hours",
+                              "provider_drop_off",
+                              "reservation_cancel",
+                              "system_resume",
+                              "trip_cancel",
+                              "trip_end",
+                              "unspecified"
+                            ]
+                          }
+                        },
+                        "additionalItems": {
+                          "enum": [
+                            "agency_drop_off",
+                            "battery_charged",
+                            "comms_restored",
+                            "maintenance",
+                            "on_hours",
+                            "provider_drop_off",
+                            "reservation_cancel",
+                            "system_resume",
+                            "trip_cancel",
+                            "trip_end",
+                            "unspecified"
+                          ]
+                        }
+                      }
+                    }
                   },
-                  "last_event_type_reason": {
-                    "enum": [
-                      "low_battery",
-                      "maintenance"
-                    ]
+                  {
+                    "properties": {
+                      "last_vehicle_state": {
+                        "enum": [
+                          "elsewhere"
+                        ]
+                      },
+                      "last_event_types": {
+                        "items": {
+                          "not": {
+                            "enum": [
+                              "comms_restored",
+                              "trip_leave_jurisdiction"
+                            ]
+                          }
+                        },
+                        "additionalItems": {
+                          "enum": [
+                            "comms_restored",
+                            "trip_leave_jurisdiction"
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "properties": {
+                      "last_vehicle_state": {
+                        "enum": [
+                          "non_operational"
+                        ]
+                      },
+                      "last_event_types": {
+                        "items": {
+                          "not": {
+                            "enum": [
+                              "battery_low",
+                              "comms_restored",
+                              "maintenance",
+                              "off_hours",
+                              "system_suspend",
+                              "unspecified"
+                            ]
+                          }
+                        },
+                        "additionalItems": {
+                          "enum": [
+                            "battery_low",
+                            "comms_restored",
+                            "maintenance",
+                            "off_hours",
+                            "system_suspend",
+                            "unspecified"
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "properties": {
+                      "last_vehicle_state": {
+                        "enum": [
+                          "on_trip"
+                        ]
+                      },
+                      "last_event_types": {
+                        "items": {
+                          "not": {
+                            "enum": [
+                              "comms_restored",
+                              "trip_enter_jurisdiction",
+                              "trip_start"
+                            ]
+                          }
+                        },
+                        "additionalItems": {
+                          "enum": [
+                            "comms_restored",
+                            "trip_enter_jurisdiction",
+                            "trip_start"
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "properties": {
+                      "last_vehicle_state": {
+                        "enum": [
+                          "removed"
+                        ]
+                      },
+                      "last_event_types": {
+                        "items": {
+                          "not": {
+                            "enum": [
+                              "agency_pick_up",
+                              "compliance_pick_up",
+                              "decommissioned",
+                              "maintenance_pick_up",
+                              "rebalance_pick_up",
+                              "unspecified"
+                            ]
+                          }
+                        },
+                        "additionalItems": {
+                          "enum": [
+                            "agency_pick_up",
+                            "compliance_pick_up",
+                            "decommissioned",
+                            "maintenance_pick_up",
+                            "rebalance_pick_up",
+                            "unspecified"
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "properties": {
+                      "last_vehicle_state": {
+                        "enum": [
+                          "reserved"
+                        ]
+                      },
+                      "last_event_types": {
+                        "items": {
+                          "not": {
+                            "enum": [
+                              "comms_restored",
+                              "reservation_start"
+                            ]
+                          }
+                        },
+                        "additionalItems": {
+                          "enum": [
+                            "comms_restored",
+                            "reservation_start"
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "properties": {
+                      "last_vehicle_state": {
+                        "enum": [
+                          "unknown"
+                        ]
+                      },
+                      "last_event_types": {
+                        "items": {
+                          "not": {
+                            "enum": [
+                              "comms_lost",
+                              "missing",
+                              "unspecified"
+                            ]
+                          }
+                        },
+                        "additionalItems": {
+                          "enum": [
+                            "comms_lost",
+                            "missing",
+                            "unspecified"
+                          ]
+                        }
+                      }
+                    }
                   }
-                }
+                ]
               }
             ]
           }

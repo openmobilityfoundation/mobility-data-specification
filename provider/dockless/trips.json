@@ -84,8 +84,8 @@
         }
       }
     },
-    "propulsion_type": {
-      "$id": "#/definitions/propulsion_type",
+    "propulsion_types": {
+      "$id": "#/definitions/propulsion_types",
       "type": "array",
       "description": "The type of propulsion; allows multiple values",
       "items": {
@@ -97,6 +97,7 @@
           "human"
         ]
       },
+      "uniqueItems": true,
       "minItems": 1
     },
     "string": {
@@ -112,15 +113,15 @@
     },
     "timestamp": {
       "$id": "#/definitions/timestamp",
-      "title": "Integer milliseconds since Unix epoch",
       "type": "number",
+      "description": "Integer milliseconds since Unix epoch",
       "multipleOf": 1.0,
       "minimum": 0
     },
     "uuid": {
       "$id": "#/definitions/uuid",
       "type": "string",
-      "title": "A UUID used to uniquely identifty an object",
+      "description": "A UUID used to uniquely identifty an object",
       "default": "",
       "examples": [
         "3c9604d6-b5ee-11e8-96f8-529269fb1459"
@@ -135,17 +136,18 @@
         "bicycle",
         "car",
         "scooter",
-        "moped"
+        "moped",
+        "other"
       ]
     },
     "version": {
       "$id": "#/definitions/version",
       "type": "string",
-      "title": "The MDS Provider version this data represents",
+      "description": "The version of MDS this data represents",
       "examples": [
-        "0.4.0"
+        "1.0.0"
       ],
-      "pattern": "^0\\.4\\.[0-9]+$"
+      "pattern": "^1\\.1\\.[0-9]+$"
     },
     "MDS_FeatureCollection_Route": {
       "$id": "#/definitions/MDS_FeatureCollection_Route",
@@ -207,7 +209,7 @@
               "device_id",
               "vehicle_id",
               "vehicle_type",
-              "propulsion_type",
+              "propulsion_types",
               "trip_id",
               "trip_duration",
               "trip_distance",
@@ -242,9 +244,9 @@
                 "$ref": "#/definitions/vehicle_type",
                 "description": "The type of vehicle"
               },
-              "propulsion_type": {
-                "$id": "#/definitions/vehicle/properties/propulsion_type",
-                "$ref": "#/definitions/propulsion_type",
+              "propulsion_types": {
+                "$id": "#/definitions/vehicle/properties/propulsion_types",
+                "$ref": "#/definitions/propulsion_types",
                 "description": "The type of propulsion; allows multiple values"
               },
               "trip_id": {
