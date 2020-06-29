@@ -264,7 +264,7 @@ If an unsupported or invalid version is requested, the API must respond with a s
 
 [agency]: /agency/README.md
 [gbfs-station-info]: https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_informationjson
-[gbfs-station-status]: https://github.com/NABSA/gbfs/blob/v2.1-RC/gbfs.md#station_statusjson
+[gbfs-station-status]: https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_statusjson
 [policy]: /policy/README.md
 [provider]: /provider/README.md
 [toc]: #table-of-contents
