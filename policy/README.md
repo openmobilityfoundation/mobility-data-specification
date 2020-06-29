@@ -94,7 +94,7 @@ Policies will be returned in order of effective date (see schema below), with pa
 
 Endpoint: `/geographies/{id}`  
 Method: `GET`  
-`data` Payload: `{ geographies: [] }`, an array of GeoJSON `Feature` objects.
+`data` Payload: `{ geographies: [] }`, an array of GeoJSON `Feature` objects that follow the schema [outlined here](#geography).
 
 ##### Query Parameters
 
@@ -236,7 +236,20 @@ An individual `Rule` object is defined by the following fields:
 | `mph`     | Miles per hour      |
 | `kph`     | Kilometers per hour |
 
+### Geography
+
+| Name             | Type      | Required / Optional | Description                                                                         |
+| ---------------- | --------- | --- | ----------------------------------------------------------------------------------- |
+| `name`           | String    | Required   | Name of geography                                                                      |
+| `description`    | String    | Optional   | Detailed description of geography                                                                      |
+| `geography_id`   | UUID      | Required   | Unique ID of geography                                                                 |
+| `geography_json`   | UUID      | Required   | The GeoJSON that defines the geographical coordinates.
+| `effective_date`   | [timestamp][ts] | Optional   | `start_date` for first published policy that uses this geo.  Server should set this when policies are published.  This may be used on the client to distinguish between “logical” geographies that have the same name. E.g. if a policy publishes a geography on 5/1/2020, and then another policy is published which references that same geography is published on 4/1/2020, the effective_date will be set to 4/1/2020.
+| `publish_date`   | [timestamp][ts] | Required   | Timestamp that the policy was published, i.e. made immutable                                             |
+| `prev_geographies`  | UUID[]    | Optional   | Unique IDs of prior geographies replaced by this one                                   |
+
 ### Rate Recurrences
+
 Rate recurrences specify when a rate is applied – either once, or periodically according to a `time_unit` specified using [Rule Units](#rule-units). A `time_unit` refers to a unit of time as measured in local time for the juristiction – a day begins at midnight local time, an hour begins at the top of the hour, etc.
 
 | Name      | Description         |
