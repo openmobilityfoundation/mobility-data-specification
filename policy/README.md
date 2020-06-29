@@ -113,7 +113,7 @@ Policies will be returned in order of effective date (see schema below), with pa
 
 Endpoint: `/geographies/{id}`  
 Method: `GET`  
-`data` Payload: `{ geographies: [] }`, an array of GeoJSON `Feature` objects.
+`data` Payload: `{ geographies: geojson_feature_array, municipality_boundary: geography_id }`, where `geojson_feature_array` is an array of GeoJSON `Feature` objects and `geography_id` is the ID of the Geography that represents the [Municipality Boundary](https://github.com/openmobilityfoundation/mobility-data-specification/tree/main/provider#municipality-boundary).
 
 ##### Query Parameters
 
@@ -165,12 +165,21 @@ The optional `end_date` field applies to all policies represented in the file.
     "data": {
         "geographies": [
             {
-                // GeoJSON Feature 1
+                "type": "Feature",
+                "id": "310cc9c0-6f1b-481c-8c67-7b0fa79c6f9f",
+                "geometry": {
+                    // GeoJSON Geometry 1
+                }
             },
             {
-                // GeoJSON Feature 2
+                "type": "Feature",
+                "id": "b905c641-bb8f-48d2-8a40-57cc143f945f",
+                "geometry": {
+                    // GeoJSON Geometry 2
+                },
             }
-        ]
+        ],
+        "municipality_boundary":  "b905c641-bb8f-48d2-8a40-57cc143f945f"
     }
 }
 ```
