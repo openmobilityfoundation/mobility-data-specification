@@ -108,7 +108,7 @@ All String fields, such as `vehicle_id`, are limited to a maximum of 255 charact
 
 ## Stops
 
-**Stops** describe vehicle trip end locations in a pre-designated physical place. They can vary from docking stations with our without charging, corrals with lock-to railings, or suggested parking areas marked with spray paint.  **Stops** are used in both [Provider](/provider#stops) (including routes and event locations) and [Agency](/agency#stops) (including telemetry data).
+**Stops** describe vehicle trip end locations in a pre-designated physical place. They can vary from docking stations with or without charging, corrals with lock-to railings, or suggested parking areas marked with spray paint.  **Stops** are used in both [Provider](/provider#stops) (including routes and event locations) and [Agency](/agency#stops) (including telemetry data).
 
 | Field                  | Type                                                        | Required/Optional | Description                                                                                  |
 |------------------------|-------------------------------------------------------------|-------------------|----------------------------------------------------------------------------------------------|
