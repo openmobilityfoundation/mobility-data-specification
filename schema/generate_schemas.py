@@ -5,6 +5,7 @@ USAGE:
     python generate_schemas.py [--agency] [--provider]
 """
 
+import copy
 import json
 import jsonschema
 import requests
@@ -20,6 +21,55 @@ def load_json(path):
         return data
 
 
+def vehicle_model(common_definitions, provider_name=True, provider_id=True):
+    """
+    Extract a deep-copy of the common vehicle model definition to allow for customization.
+    """
+    vehicle = copy.deepcopy(common_definitions["vehicle"])
+
+    if not provider_name:
+        vehicle["required"].remove("provider_name")
+        del vehicle["properties"]["provider_name"]
+
+    if not provider_id:
+        vehicle["required"].remove("provider_id")
+        del vehicle["properties"]["provider_id"]
+
+    return vehicle
+
+
+def vehicle_state_machine(common_definitions, vehicle_state=None, vehicle_events=None):
+    """
+    Return a tuple (definitions, transitions) with the common vehicle state schema.
+        * defitions is the common definitions for vehicle state fields
+        * transitions is the rule for valid state/event combinations
+
+    Optionally pass field names for the vehicle_state and vehicle_events schemas
+    to override those in transitions.
+    """
+    state_machine_defs = {
+        "vehicle_state": common_definitions["vehicle_state"],
+        "vehicle_event": common_definitions["vehicle_event"],
+        "vehicle_events": common_definitions["vehicle_events"],
+    }
+
+    transitions = copy.deepcopy(common_definitions["vehicle_state_transitions"])
+
+    if vehicle_state:
+        for option in transitions["oneOf"]:
+            state = option["properties"]["vehicle_state"]
+            del option["properties"]["vehicle_state"]
+            option["properties"][vehicle_state] = state
+
+    if vehicle_events:
+        for option in transitions["oneOf"]:
+            events = option["properties"]["vehicle_events"]
+            del option["properties"]["vehicle_events"]
+            option["properties"][vehicle_events] = events
+
+    return (state_machine_defs, transitions)
+
+
 def agency_get_vehicle_schema(common_definitions):
     """
     Create the schema for the Agency GET /vehicles endpoint.
@@ -29,18 +79,18 @@ def agency_get_vehicle_schema(common_definitions):
     schema["definitions"] = {
         "propulsion_types": common_definitions["propulsion_types"],
         "string": common_definitions["string"],
-        "vehicle_state": common_definitions["vehicle_state"],
-        "vehicle_events": common_definitions["vehicle_events"],
         "vehicle_type": common_definitions["vehicle_type"],
         "timestamp": common_definitions["timestamp"],
         "uuid": common_definitions["uuid"]
     }
 
-    # merge common vehicle information, with Agency tweaks
-    vehicle = dict(common_definitions["vehicle"])
-    vehicle["required"].remove("provider_name")
-    del vehicle["properties"]["provider_name"]
+    # merge the state machine definitions and transition combinations rule
+    state_machine_defs, transitions = vehicle_state_machine(common_definitions, "state", "prev_events")
+    schema["definitions"].update(state_machine_defs)
+    schema["allOf"].append(transitions)
 
+    # merge common vehicle information, with Agency tweaks
+    vehicle = vehicle_model(common_definitions, provider_name=False)
     schema["required"] = vehicle["required"] + schema["required"]
     schema["properties"] = { **vehicle["properties"], **schema["properties"] }
 
@@ -64,10 +114,8 @@ def agency_post_vehicle_schema(common_definitions):
     }
 
     # merge common vehicle information, with Agency tweaks
-    vehicle = dict(common_definitions["vehicle"])
-    vehicle["required"].remove("provider_name")
+    vehicle = vehicle_model(common_definitions, provider_name=False)
     vehicle["required"].remove("provider_id")
-    del vehicle["properties"]["provider_name"]
 
     schema["required"] = vehicle["required"] + schema["required"]
     schema["properties"] = { **vehicle["properties"], **schema["properties"] }
@@ -85,11 +133,14 @@ def agency_post_vehicle_event_schema(common_definitions):
     # load schema template and insert definitions
     schema = load_json("./templates/agency/post_vehicle_event.json")
     schema["definitions"] = {
-        "vehicle_state": common_definitions["vehicle_state"],
-        "vehicle_events": common_definitions["vehicle_events"],
         "telemetry": common_definitions["telemetry"],
         "timestamp": common_definitions["timestamp"],
     }
+
+    # merge the state machine definitions and transition combinations rule
+    state_machine_defs, transitions = vehicle_state_machine(common_definitions, "vehicle_state", "event_types")
+    schema["definitions"].update(state_machine_defs)
+    schema["allOf"].append(transitions)
 
     # add the conditionally-required trip_id rule
     trip_id_ref = common_definitions["trip_id_reference"]
@@ -298,9 +349,10 @@ def provider_schema(endpoint, common_definitions, extra_definitions={}):
     # merge endpoint-specific schema with standard vehicle info
     endpoint_schema = load_json(f"./templates/provider/{endpoint}.json")
     items = endpoint_schema[endpoint]["items"]
-    vehicle_schema = dict(common_definitions["vehicle"])
-    items["required"] = vehicle_schema["required"] + items["required"]
-    items["properties"] = { **vehicle_schema["properties"], **items["properties"] }
+
+    vehicle = vehicle_model(common_definitions)
+    items["required"] = vehicle["required"] + items["required"]
+    items["properties"] = { **vehicle["properties"], **items["properties"] }
 
     # merge this endpoint-specific schema into the endpoint template
     data_schema = schema["properties"]["data"]
@@ -340,6 +392,11 @@ def provider_status_changes_schema(common_definitions):
     schema = provider_schema("status_changes", common_definitions)
     items = schema["properties"]["data"]["properties"]["status_changes"]["items"]
 
+    # merge the state machine definitions and transition combinations rule
+    state_machine_defs, transitions = vehicle_state_machine(common_definitions, "vehicle_state", "event_types")
+    schema["definitions"].update(state_machine_defs)
+    items["allOf"].append(transitions)
+
     trip_id_ref = common_definitions["trip_id_reference"]
     items["allOf"].append(trip_id_ref)
 
@@ -356,9 +413,10 @@ def provider_events_schema(common_definitions):
     links_prop, links_def = property_definition("links", common_definitions)
 
     # events is the same as status_changes, but allows paging
-    schema = provider_schema("status_changes", common_definitions, links_def)
+    schema = provider_status_changes_schema(common_definitions)
     schema["$id"] = schema["$id"].replace("status_changes", "events")
     schema["title"] = schema["title"].replace("status_changes", "events")
+    schema["definitions"].update(links_def)
     schema["properties"].update(links_prop)
 
     # verify schema validity
@@ -384,11 +442,17 @@ def provider_vehicles_schema(common_definitions):
     definitions.update(defn)
     properties.update(prop)
 
+    state_machine_defs, transitions = vehicle_state_machine(common_definitions, "last_vehicle_state", "last_event_types")
+    definitions.update(state_machine_defs)
+
     schema = provider_schema("vehicles", common_definitions, definitions)
 
     # update list of required and properties object
     schema["required"].extend(["last_updated", "ttl"])
     schema["properties"].update(properties)
+
+    # add state machine transition rules
+    schema["properties"]["data"]["properties"]["vehicles"]["items"]["allOf"].append(transitions)
 
     # verify schema validity
     jsonschema.Draft6Validator.check_schema(schema)

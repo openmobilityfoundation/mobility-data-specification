@@ -9,8 +9,8 @@
       "title": "The status_change item schema",
       "additionalProperties": false,
       "required": [
-        "event_type",
-        "event_type_reason",
+        "vehicle_state",
+        "event_types",
         "event_time",
         "event_location"
       ],
@@ -30,15 +30,15 @@
           "$ref": "#/definitions/MDS_Feature_Point",
           "description": "The GPS or GNSS coordinates of where the event occurred"
         },
-        "event_type": {
-          "$id": "#/properties/data/properties/status_changes/items/properties/event_type",
-          "type": "string",
-          "description": "The type of the event"
+        "vehicle_state": {
+          "$id": "#/properties/data/properties/status_changes/items/properties/vehicle_state",
+          "$ref": "#/definitions/vehicle_state",
+          "description": "The state of the vehicle"
         },
-        "event_type_reason": {
-          "$id": "#/properties/data/properties/status_changes/items/properties/event_type_reason",
-          "type": "string",
-          "description": "The reason for the event"
+        "event_types": {
+          "$id": "#/properties/data/properties/status_changes/items/properties/event_types",
+          "$ref": "#/definitions/vehicle_events",
+          "description": "The event(s) that caused a change in the vehicle's state"
         },
         "battery_pct": {
           "$id": "#/properties/data/properties/status_changes/items/properties/battery_pct",

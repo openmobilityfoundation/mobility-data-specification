@@ -9,8 +9,8 @@
       "title": "The vehicle item schema",
       "required": [
         "last_event_time",
-        "last_event_type",
-        "last_event_type_reason",
+        "last_vehicle_state",
+        "last_event_types",
         "last_event_location"
       ],
       "properties": {
@@ -19,25 +19,25 @@
           "$ref": "#/definitions/timestamp",
           "description": "The time the most recent status change event occurred, expressed as a Unix Timestamp"
         },
-        "last_event_type": {
-          "$id": "#/properties/data/properties/vehicles/items/properties/last_event_type",
-          "type": "string",
-          "description": "The type of the event"
+        "last_vehicle_state": {
+          "$id": "#/properties/data/properties/vehicles/items/properties/last_vehicle_state",
+          "$ref": "#/definitions/vehicle_state",
+          "description": "The last known state of the vehicle"
         },
-        "last_event_type_reason": {
-          "$id": "#/properties/data/properties/vehicles/items/properties/last_event_type_reason",
-          "type": "string",
-          "description": "The reason for the event"
+        "last_event_types": {
+          "$id": "#/properties/data/properties/vehicles/items/properties/last_event_types",
+          "$ref": "#/definitions/vehicle_events",
+          "description": "The most recent event(s) that caused a change in the vehicle's state"
         },
         "last_event_location": {
           "$id": "#/properties/data/properties/vehicles/items/properties/last_event_location",
-          "description": "Location of the vehicle's last status change event",
-          "$ref": "#/definitions/MDS_Feature_Point"
+          "$ref": "#/definitions/MDS_Feature_Point",
+          "description": "Location of the vehicle's last status change event"
         },
         "current_location": {
           "$id": "#/properties/data/properties/vehicles/items/properties/current_location",
-          "description": "Current location of vehicle if different from last event, and the vehicle is not currently on a trip",
-          "$ref": "#/definitions/MDS_Feature_Point"
+          "$ref": "#/definitions/MDS_Feature_Point",
+          "description": "Current location of vehicle if different from last event, and the vehicle is not currently on a trip"
         },
         "battery_pct": {
           "$id": "#/properties/data/properties/vehicles/items/properties/battery_pct",
@@ -53,50 +53,15 @@
           "maximum": 1
         }
       },
-      "oneOf": [
+      "allOf": [
         {
+          "description": "Valid last_vehicle_state values for this endpoint",
           "properties": {
-            "last_event_type": {
+            "last_vehicle_state": {
               "enum": [
-                "available"
-              ]
-            },
-            "last_event_type_reason": {
-              "enum": [
-                "service_start",
-                "user_drop_off",
-                "rebalance_drop_off",
-                "maintenance_drop_off",
-                "agency_drop_off"
-              ]
-            }
-          }
-        },
-        {
-          "properties": {
-            "last_event_type": {
-              "enum": [
+                "available",
+                "non_operational",
                 "reserved"
-              ]
-            },
-            "last_event_type_reason": {
-              "enum": [
-                "user_pick_up"
-              ]
-            }
-          }
-        },
-        {
-          "properties": {
-            "last_event_type": {
-              "enum": [
-                "unavailable"
-              ]
-            },
-            "last_event_type_reason": {
-              "enum": [
-                "low_battery",
-                "maintenance"
               ]
             }
           }

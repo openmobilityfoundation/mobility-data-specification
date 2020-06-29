@@ -266,7 +266,7 @@ Unless stated otherwise by the municipality, this endpoint must return only thos
 | `vehicle_type` | Enum | Required | see [vehicle types][vehicle-types] table |
 | `propulsion_types` | Enum[] | Required | Array of [propulsion types][propulsion-types]; allows multiple values |
 | `vehicle_state` | Enum | Required | See [vehicle state][vehicle-states] table |
-| `event_type` | Enum[] | Required | [Vehicle event(s)][vehicle-events] for state change, allowable values determined by `vehicle_state`. |
+| `event_types` | Enum[] | Required | [Vehicle event(s)][vehicle-events] for state change, allowable values determined by `vehicle_state` |
 | `event_time` | [timestamp][ts] | Required | Date/time that event occurred at. See [Event Times][event-times] |
 | `publication_time` | [timestamp][ts] | Optional | Date/time that event became available through the status changes endpoint |
 | `event_location` | GeoJSON [Point Feature][geo] | Required | |
@@ -398,8 +398,8 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 | `vehicle_type` | Enum | Required | see [vehicle types][vehicle-types] table |
 | `propulsion_types` | Enum[] | Required | Array of [propulsion types][propulsion-types]; allows multiple values |
 | `last_event_time` | [timestamp][ts] | Required | Date/time when last state change occurred. See [Event Times][event-times] |
-| `last_vehicle_state` | Enum | Required | Vehicle state of most recent state change. See [vehicle states][vehicle-states] table |
-| `last_vehicle_events` | Enum[] | Required | [Vehicle event(s)][vehicle-events] of most recent state change, allowable values determined by `last_vehicle_state`. |
+| `last_vehicle_state` | Enum | Required | [Vehicle state][vehicle-states] of most recent state change. |
+| `last_event_types` | Enum[] | Required | [Vehicle event(s)][vehicle-events] of most recent state change, allowable values determined by `last_vehicle_state`. |
 | `last_event_location` | GeoJSON [Point Feature][geo]| Required | Location of vehicle's last event |
 | `current_location` | GeoJSON [Point Feature][geo] | Required if Applicable | Current location of vehicle if different from last event, and the vehicle is not currently on a trip |
 | `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |

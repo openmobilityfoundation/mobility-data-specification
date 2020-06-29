@@ -8,8 +8,8 @@
     "year",
     "mfgr",
     "model",
-    "status",
-    "prev_event",
+    "state",
+    "prev_events",
     "updated"
   ],
   "properties": {
@@ -32,14 +32,14 @@
       "$ref": "#/definitions/string",
       "description": "The vehicle model"
     },
-    "status": {
-      "$id": "#/properties/status",
-      "$ref": "#/definitions/vehicle_status",
-      "description": "Current vehicle status"
+    "state": {
+      "$id": "#/properties/state",
+      "$ref": "#/definitions/vehicle_state",
+      "description": "Current vehicle state"
     },
-    "prev_event": {
-      "$id": "#/properties/prev_event",
-      "$ref": "#/definitions/vehicle_event",
+    "prev_events": {
+      "$id": "#/properties/prev_events",
+      "$ref": "#/definitions/vehicle_events",
       "description": "Last vehicle event"
     },
     "updated": {
@@ -47,5 +47,6 @@
       "$ref": "#/definitions/timestamp"
     }
   },
-  "additionalProperties": false
+  "additionalProperties": false,
+  "allOf": []
 }

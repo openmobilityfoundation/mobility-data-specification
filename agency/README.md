@@ -76,7 +76,7 @@ A vehicle record is as follows:
 | `mfgr`        | String    | Vehicle Manufacturer                                                          |
 | `model`       | String    | Vehicle Model                                                                 |
 | `state`       | Enum      | Current vehicle state. See [Vehicle State][vehicle-states]                    |
-| `prev_event`  | Enum      | Last [Vehicle Event][vehicle-event]                                           |
+| `prev_events`  | Enum[]      | Last [Vehicle Event][vehicle-event]                                           |
 | `updated`     | [timestamp][ts] | Date of last event update                                                     |
 
 404 Failure Response:
