@@ -207,7 +207,7 @@ To represent a route, MDS `provider` APIs must create a GeoJSON [`FeatureCollect
 
 Routes must include at least 2 points: the start point and end point. Routes must include all possible GPS or GNSS samples collected by a Provider. Providers may round the latitude and longitude to the level of precision representing the maximum accuracy of the specific measurement. For example, [a-GPS][agps] is accurate to 5 decimal places, [differential GPS][dgps] is generally accurate to 6 decimal places. Providers may round those readings to the appropriate number for their systems.
 
-*Docked* mobility providers must include a `stop_id` in the first and last Feature of each `route` by embedding the `stop_id` property in the Feature's `proprerties` object.
+*Docked* mobility providers must include a `stop_id` in the first and last Feature of each `route` by embedding the `stop_id` property in the Feature's `properties` object.
 
 ```js
 "route": {
@@ -216,7 +216,7 @@ Routes must include at least 2 points: the start point and end point. Routes mus
         "type": "Feature",
         "properties": {
             "timestamp": 1529968782421,
-            "stop_id": "95084833-6a3f-4770-9919-de1ab4b8989b", // REQUIRED for docked mobility providers, N/A for dockless
+            "stop_id": "95084833-6a3f-4770-9919-de1ab4b8989b", // REQUIRED for docked mobility providers, optional for dockless
         },
         "geometry": {
             "type": "Point",
@@ -230,7 +230,7 @@ Routes must include at least 2 points: the start point and end point. Routes mus
         "type": "Feature",
         "properties": {
             "timestamp": 1531007628377,
-            "stop_id": "b813cde2-a41c-4ae3-b409-72ff221e003d" // REQUIRED for docked mobility providers, N/A for dockless
+            "stop_id": "b813cde2-a41c-4ae3-b409-72ff221e003d" // REQUIRED for docked mobility providers, optional for dockless
         },
         "geometry": {
             "type": "Point",
