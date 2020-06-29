@@ -147,7 +147,7 @@
       "examples": [
         "1.0.0"
       ],
-      "pattern": "^1\\.1\\.[0-9]+$"
+      "pattern": "^1\\.0\\.[0-9]+$"
     },
     "links": {
       "$id": "#/definitions/links",
