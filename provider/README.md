@@ -280,7 +280,7 @@ Unless stated otherwise by the municipality, this endpoint must return only thos
 
 ### Event Locations
 
-*Docked* mobility providers must include a `stop_id` in the Point Feature of each `event_location` that occurs at a `Stop` by embedding the `stop_id` property in the Feature's `properties` object.
+*Docked* mobility providers must include a `stop_id` in the Point Feature of each `event_location` that occurs at a [Stop](/general-information.md#stop) by embedding the `stop_id` property in the Feature's `properties` object.
 
 ### Status Changes Query Parameters
 
