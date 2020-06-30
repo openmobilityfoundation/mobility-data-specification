@@ -1,28 +1,30 @@
 ## 1.0.0
 
 > Release Date TBD
+> Release Candidate Date: week of June 29, 2020
 
-The 1.0.0 release reconciles many parts of the MDS specifiction and adds features and updates requested by the community.
+The 1.0.0 release reconciles many parts of the MDS specifiction and adds features and updates requested by the community, including support for Stops (for docked vehicles, dockless corrals, parking areas) and adding rates to Policy.
 
 ### CHANGES
 
-See the PRs tagged with [Milestone 1.0.0](https://github.com/openmobilityfoundation/mobility-data-specification/milestone/9) for a working list.
+See the PRs tagged with [Milestone 1.0.0](https://github.com/openmobilityfoundation/mobility-data-specification/milestone/9) for a full list of changes.
 
-_Here is what is currently under consideration. Items may be removed, added or changed before the Release Candidate is created._
+_Here is some of what was added or changed._
 
 *_MDS_*
 
 * [Reconcile the Provider and Agency language differences](https://github.com/openmobilityfoundation/mobility-data-specification/pull/506)
   * [New State Machine Diagram](https://github.com/openmobilityfoundation/mobility-data-specification/pull/530)
-* Adding Docked/Stops. Stops history for a later release. Beta - Active PRs [#427](https://github.com/openmobilityfoundation/mobility-data-specification/pull/427) [#430](https://github.com/openmobilityfoundation/mobility-data-specification/pull/430) [#442](https://github.com/openmobilityfoundation/mobility-data-specification/pull/442) [#441](https://github.com/openmobilityfoundation/mobility-data-specification/pull/441)
+  * [JSON Schema updates](https://github.com/openmobilityfoundation/mobility-data-specification/pull/534)
+* [Adding Stops](https://github.com/openmobilityfoundation/mobility-data-specification/pull/427) - Beta
    
 * Minor Updates 
+  * [Update cities using MDS](https://github.com/openmobilityfoundation/mobility-data-specification/pull/520)
   * Update [Austin](https://github.com/openmobilityfoundation/mobility-data-specification/pull/488), [Louisville](https://github.com/openmobilityfoundation/mobility-data-specification/pull/515) links
   * [Add link to State of Practice](https://github.com/openmobilityfoundation/mobility-data-specification/pull/477)
   * [Update GBFS references and links](https://github.com/openmobilityfoundation/mobility-data-specification/pull/508)
   * Move [Code of Conduct](https://github.com/openmobilityfoundation/mobility-data-specification/pull/514), [Contributing Guide](https://github.com/openmobilityfoundation/mobility-data-specification/pull/513), and [Release Guidelines](https://github.com/openmobilityfoundation/mobility-data-specification/pull/512) to new [Governace repo](https://github.com/openmobilityfoundation/governance)
    * [Update providers.csv to add Superpedestrian](https://github.com/openmobilityfoundation/mobility-data-specification/pull/535)
-   * [Update cities using MDS](https://github.com/openmobilityfoundation/mobility-data-specification/pull/520)
    * [Removed Options version negotiation](https://github.com/openmobilityfoundation/mobility-data-specification/pull/536#pullrequestreview-439364663)
 
 *_Provider_*
