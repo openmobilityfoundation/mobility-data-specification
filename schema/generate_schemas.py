@@ -21,6 +21,13 @@ def load_json(path):
         return data
 
 
+def definition_id(id):
+    """
+    Generate a JSON Schema definition reference for the given id.
+    """
+    return f"#/definitions/{id}"
+
+
 def vehicle_model(common_definitions, provider_name=True, provider_id=True):
     """
     Extract a deep-copy of the common vehicle model definition to allow for customization.
@@ -68,6 +75,143 @@ def vehicle_state_machine(common_definitions, vehicle_state=None, vehicle_events
             option["properties"][vehicle_events] = events
 
     return (state_machine_defs, transitions)
+
+
+def vehicle_type_counts(common_definitions):
+    """
+    Generate a definition for a dict of vehicle_type: int.
+    """
+    vehicle_type_counts = {}
+    def_name = "vehicle_type_counts"
+    def_id = definition_id(def_name)
+    vehicle_types = common_definitions["vehicle_type"]
+
+    for vehicle_type in vehicle_types["enum"]:
+        vehicle_type_counts[vehicle_type] = {
+            "$id": f"{def_id}/properties/{vehicle_type}",
+            "type": "integer",
+            "minimum": 0
+        }
+
+    return {
+        def_name: {
+            "$id": def_id,
+            "type": "object",
+            "properties": vehicle_type_counts,
+            "additionalProperties": False
+        }
+    }
+
+
+def point_schema():
+    """
+    Get the canonical schema definition for a GeoJSON point.
+    """
+    name = "Point"
+    point = requests.get("http://geojson.org/schema/Point.json").json()
+
+    # Modify some metadata
+    point.pop("$schema")
+    point["$id"] = definition_id("Point")
+
+    # enforce lat/lon bounds
+    point["properties"]["coordinates"]["maxItems"] = 2
+    point["properties"]["coordinates"]["items"] = [
+        {
+          "type": "number",
+          "minimum": -180.0,
+          "maximum": 180.0
+        },
+        {
+           "type": "number",
+           "minimum": -90.0,
+           "maximum": 90.0
+        }
+    ]
+
+    return {
+        name: point
+    }
+
+
+def feature_schema(id=None, title=None, geometry=None, properties=None, required=None):
+    """
+    Get the canonical schema for a GeoJSON Feature,
+    and make any given modifications.
+
+    :id: overrides the `$id` metadata
+    :title: overrides the `title` metadata
+    :geometry: overrides the allowed `geometry` for the Feature
+    :properties: overrides the `properties` definitions for this Feature
+    :required: is a list of required :properties:
+    """
+    # Get the canonical Feature schema
+    feature = requests.get("http://geojson.org/schema/Feature.json").json()
+
+    # Modify some metadata
+    feature.pop("$schema")
+    if id is not None:
+        feature["$id"] = id
+    if title is not None:
+        feature["title"] = title
+
+    if geometry is not None:
+        feature["properties"]["geometry"] = geometry
+
+    f_properties = feature["properties"]["properties"]
+    if required is not None:
+        del f_properties["oneOf"]
+        f_properties["type"] = "object"
+        f_properties["required"] = required
+    if properties is not None:
+        f_properties["properties"] = properties
+
+    return feature
+
+
+def mds_feature_point():
+    """
+    Create a customized definition of the GeoJSON Feature schema for MDS Points.
+
+    Optionally require additional properties in the definition.
+    """
+    name = "MDS_Feature_Point"
+    return {
+        name: feature_schema(
+            id = definition_id(name),
+            title = "MDS GeoJSON Feature Point",
+            # Only allow GeoJSON Point feature geometry
+            geometry = { "$ref": definition_id("Point") },
+            properties = {
+                "timestamp": {
+                    "$ref": definition_id("timestamp")
+                },
+                # Locations corresponding to Stops must include a `stop_id` reference
+                "stop_id": {
+                    "$ref": definition_id("uuid")
+                }
+            },
+            # Point features *must* include the `timestamp`
+            required = ["timestamp"]
+        )
+    }
+
+
+def stop_definitions(common_definitions):
+    """
+    Return a dict of definitions needed for stops.
+    """
+    defs = {
+        "stop": common_definitions["stop"],
+        "stop_status": common_definitions["stop_status"],
+        "string": common_definitions["string"],
+        "timestamp": common_definitions["timestamp"],
+        "uuid": common_definitions["uuid"],
+        "vehicle_type_counts": common_definitions["vehicle_type_counts"]
+    }
+    defs.update(mds_feature_point())
+
+    return defs
 
 
 def agency_get_vehicle_schema(common_definitions):
@@ -135,6 +279,7 @@ def agency_post_vehicle_event_schema(common_definitions):
     schema["definitions"] = {
         "telemetry": common_definitions["telemetry"],
         "timestamp": common_definitions["timestamp"],
+        "uuid": common_definitions["uuid"]
     }
 
     # merge the state machine definitions and transition combinations rule
@@ -160,7 +305,46 @@ def agency_post_vehicle_telemetry_schema(common_definitions):
     schema = load_json("./templates/agency/post_vehicle_telemetry.json")
     schema["definitions"] = {
         "telemetry": common_definitions["telemetry"],
+        "timestamp": common_definitions["timestamp"],
+        "uuid": common_definitions["uuid"]
     }
+
+    # verify schema validity
+    jsonschema.Draft6Validator.check_schema(schema)
+
+    return schema
+
+
+def agency_post_stops_schema(common_definitions):
+    """
+    Create the schema for the Agency POST /stops endpoint.
+    """
+    # load schema template and insert definitions
+    schema = load_json("./templates/agency/post_stops.json")
+    stops = stop_definitions(common_definitions)
+    schema["definitions"].update(stops)
+
+    # verify schema validity
+    jsonschema.Draft6Validator.check_schema(schema)
+
+    return schema
+
+
+def agency_put_stops_schema(common_definitions):
+    """
+    Create the schema for the Agency POST /stops endpoint.
+    """
+    # load schema template and insert definitions
+
+    # the PUT body allows a small subset of fields
+    schema = load_json("./templates/agency/put_stops.json")
+
+    stop_defs = stop_definitions(common_definitions)
+    needed_defs = ["stop_status", "uuid", "vehicle_type_counts"]
+    for key in [k for k in stop_defs.keys() if k not in needed_defs]:
+        del stop_defs[key]
+
+    schema["definitions"].update(stop_defs)
 
     # verify schema validity
     jsonschema.Draft6Validator.check_schema(schema)
@@ -174,38 +358,22 @@ def write_agency_schemas(common_definitions):
     """
     print("\nStarting to generate Agency JSON Schemas...\n")
 
-    # GET /vehicle
-    get_vehicle = agency_get_vehicle_schema(common_definitions)
-    with open("../agency/get_vehicle.json", "w") as file:
-        file.write(json.dumps(get_vehicle, indent=2))
-        print("Wrote get_vehicle.json")
+    schema_generators = {
+        "get_vehicle": agency_get_vehicle_schema,
+        "post_vehicle": agency_post_vehicle_schema,
+        "post_vehicle_event": agency_post_vehicle_event_schema,
+        "post_vehicle_telemetry": agency_post_vehicle_telemetry_schema,
+        "post_stops": agency_post_stops_schema,
+        "put_stops": agency_put_stops_schema
+    }
 
-    # POST /vehicle
-    post_vehicle = agency_post_vehicle_schema(common_definitions)
-    with open("../agency/post_vehicle.json", "w") as file:
-        file.write(json.dumps(post_vehicle, indent=2))
-        print("Wrote post_vehicle.json")
-
-    # POST /vehicles/:id/event
-    post_vehicle_event = agency_post_vehicle_event_schema(common_definitions)
-    with open("../agency/post_vehicle_event.json", "w") as file:
-        file.write(json.dumps(post_vehicle_event, indent=2))
-        print("Wrote post_vehicle_event.json")
-
-    # POST /vehicles/telemetry
-    post_vehicle_telemetry = agency_post_vehicle_telemetry_schema(common_definitions)
-    with open("../agency/post_vehicle_telemetry.json", "w") as file:
-        file.write(json.dumps(post_vehicle_telemetry, indent=2))
-        print("Wrote post_vehicle_telemetry.json")
+    for name, generator in schema_generators.items():
+        schema = generator(common_definitions)
+        with open(f"../agency/{name}.json", "w") as schemafile:
+            schemafile.write(json.dumps(schema, indent=2))
+            print(f"Wrote {name}.json")
 
     print("\nFinished generating Agency JSON Schemas")
-
-
-def definition_id(id):
-    """
-    Generate a JSON Schema definition reference for the given id.
-    """
-    return f"#/definitions/{id}"
 
 
 def property_definition(id, common_definitions, ref=""):
@@ -219,69 +387,6 @@ def property_definition(id, common_definitions, ref=""):
     prop = { id: { "$id": f"#/properties/{id}", "$ref": ref } }
 
     return prop, definition
-
-
-def point_schema():
-    """
-    Get the canonical schema for a GeoJSON point.
-    """
-    point = requests.get("http://geojson.org/schema/Point.json").json()
-
-    # Modify some metadata
-    point.pop("$schema")
-    point["$id"] = definition_id("Point")
-
-    # enforce lat/lon bounds
-    point["properties"]["coordinates"]["maxItems"] = 2
-    point["properties"]["coordinates"]["items"] = [
-        {
-          "type": "number",
-          "minimum": -180.0,
-          "maximum": 180.0
-        },
-        {
-           "type": "number",
-           "minimum": -90.0,
-           "maximum": 90.0
-        }
-    ]
-
-    return point
-
-
-def feature_schema(id=None, title=None, geometry=None, properties=None, required=None):
-    """
-    Get the canonical schema for a GeoJSON Feature,
-    and make any given modifications.
-
-    :id: overrides the `$id` metadata
-    :title: overrides the `title` metadata
-    :geometry: overrides the allowed `geometry` for the Feature
-    :properties: overrides the `properties` definitions for this Feature
-    :required: is a list of required :properties:
-    """
-    # Get the canonical Feature schema
-    feature = requests.get("http://geojson.org/schema/Feature.json").json()
-
-    # Modify some metadata
-    feature.pop("$schema")
-    if id is not None:
-        feature["$id"] = id
-    if title is not None:
-        feature["title"] = title
-
-    if geometry is not None:
-        feature["properties"]["geometry"] = geometry
-
-    f_properties = feature["properties"]["properties"]
-    if required is not None:
-        del f_properties["oneOf"]
-        f_properties["type"] = "object"
-        f_properties["required"] = required
-    if properties is not None:
-        f_properties["properties"] = properties
-
-    return feature
 
 
 def feature_collection_schema(id=None, title=None, features=None):
@@ -319,53 +424,37 @@ def provider_schema(endpoint, common_definitions, extra_definitions={}):
     schema["$id"] = schema["$id"].replace("endpoint.json", f"{endpoint}.json")
     schema["title"] = schema["title"].replace("endpoint", endpoint)
 
-    # MDS specific geography
-    mds_feature_point = feature_schema(
-        id = definition_id("MDS_Feature_Point"),
-        title = "MDS GeoJSON Feature Point",
-        # Only allow GeoJSON Point feature geometry
-        geometry = { "$ref": definition_id("Point") },
-        properties = {
-            "timestamp": {
-                "$ref": definition_id("timestamp")
-            },
-            # Locations corresponding to Stops must include a `stop_id` reference
-            "stop_id": {
-                "$ref": definition_id("uuid")
-            }
-        },
-        # Point features *must* include the `timestamp`
-        required = ["timestamp"]
-    )
-
     # merge custom definitions with relevant common definitions
     definitions = {
-        "Point": point_schema(),
-        "MDS_Feature_Point": mds_feature_point,
-        "propulsion_types": common_definitions["propulsion_types"],
         "string": common_definitions["string"],
         "timestamp": common_definitions["timestamp"],
         "uuid": common_definitions["uuid"],
-        "vehicle_type": common_definitions["vehicle_type"],
         "version": common_definitions["version"]
     }
+    definitions.update(point_schema())
+    definitions.update(mds_feature_point())
     definitions.update(extra_definitions)
 
-    # insert definitions into schema
-    schema["definitions"].update(definitions)
-
-    # merge endpoint-specific schema with standard vehicle info
     endpoint_schema = load_json(f"./templates/provider/{endpoint}.json")
-    items = endpoint_schema[endpoint]["items"]
 
-    vehicle = vehicle_model(common_definitions)
-    items["required"] = vehicle["required"] + items["required"]
-    items["properties"] = { **vehicle["properties"], **items["properties"] }
+    # for all but stops, merge standard vehicle info with items schema
+    if endpoint not in ["stops"]:
+        items = endpoint_schema[endpoint]["items"]
+        vehicle = vehicle_model(common_definitions)
+        items["required"] = vehicle["required"] + items["required"]
+        items["properties"] = { **vehicle["properties"], **items["properties"] }
+        definitions.update({
+            "propulsion_types": common_definitions["propulsion_types"],
+            "vehicle_type": common_definitions["vehicle_type"]
+        })
 
-    # merge this endpoint-specific schema into the endpoint template
+    # merge endpoint schema into the endpoint template
     data_schema = schema["properties"]["data"]
     data_schema["required"] = [endpoint]
     data_schema["properties"] = endpoint_schema
+
+    # insert definitions
+    schema["definitions"].update(definitions)
 
     return schema
 
@@ -433,6 +522,34 @@ def provider_events_schema(common_definitions):
     return schema
 
 
+def provider_stops_schema(common_definitions):
+    """
+    Create the schema for the /stops endpoint.
+    """
+    definitions, properties = {}, {}
+
+    prop, _ = property_definition("last_updated", common_definitions, ref=definition_id("timestamp"))
+    properties.update(prop)
+
+    prop, defn = property_definition("ttl", common_definitions)
+    definitions.update(defn)
+    properties.update(prop)
+
+    stop_defs = stop_definitions(common_definitions)
+    definitions.update(stop_defs)
+
+    schema = provider_schema("stops", common_definitions, definitions)
+
+    # update list of required and properties object
+    schema["required"].extend(["last_updated", "ttl"])
+    schema["properties"].update(properties)
+
+    # verify schema validity
+    jsonschema.Draft6Validator.check_schema(schema)
+
+    return schema
+
+
 def provider_vehicles_schema(common_definitions):
     """
     Create the schema for the /vehicles endpoint.
@@ -473,38 +590,44 @@ def write_provider_schemas(common_definitions):
     Create each of the Provider endpoint schema files in the appropriate directory.
     """
     print("\nStarting to generate Provider JSON Schemas...\n")
-    directory = "../provider"
 
-    # /trips
-    trips = provider_trips_schema(common_definitions)
-    with open(f"{directory}/trips.json", "w") as schemafile:
-        schemafile.write(json.dumps(trips, indent=2))
-        print("Wrote trips.json")
+    schema_generators = {
+        "trips": provider_trips_schema,
+        "status_changes": provider_status_changes_schema,
+        "events": provider_events_schema,
+        "vehicles": provider_vehicles_schema,
+        "stops": provider_stops_schema
+    }
 
-    # /status_changes
-    status_changes = provider_status_changes_schema(common_definitions)
-    with open(f"{directory}/status_changes.json", "w") as schemafile:
-        schemafile.write(json.dumps(status_changes, indent=2))
-        print("Wrote status_changes.json")
-
-    # /events
-    events = provider_events_schema(common_definitions)
-    with open(f"{directory}/events.json", "w") as schemafile:
-        schemafile.write(json.dumps(events, indent=2))
-        print("Wrote events.json")
-
-    # /vehicles
-    vehicles = provider_vehicles_schema(common_definitions)
-    with open(f"{directory}/vehicles.json", "w") as schemafile:
-        schemafile.write(json.dumps(vehicles, indent=2))
-        print("Wrote vehicles.json")
+    for name, generator in schema_generators.items():
+        schema = generator(common_definitions)
+        with open(f"../provider/{name}.json", "w") as schemafile:
+            schemafile.write(json.dumps(schema, indent=2))
+            print(f"Wrote {name}.json")
 
     print("\nFinished generating Provider JSON Schemas")
 
 
-if __name__ == "__main__":
+def load_common_definitions():
+    """
+    Load the common.json definitions file, with some generated additions.
+    """
     common = load_json("./templates/common.json")
     common_definitions = common["definitions"]
+
+    # MDS specific geography definition
+    mds_feature = mds_feature_point()
+    common_definitions.update(mds_feature)
+
+    # vehicle_type -> count definition
+    veh_type_counts = vehicle_type_counts(common_definitions)
+    common_definitions.update(veh_type_counts)
+
+    return common_definitions
+
+
+if __name__ == "__main__":
+    common_definitions = load_common_definitions()
 
     if len(sys.argv) == 1:
         write_agency_schemas(common_definitions)
