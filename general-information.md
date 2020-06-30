@@ -8,6 +8,7 @@ This document contains specifications that are shared between the various MDS AP
 * [Costs and Currencies](#costs-and-currencies)
 * [Definitions](#definitions)
 * [Devices](#devices)
+* [Geographic Data][geo]
 * [Propulsion Types](#propulsion-types)
 * [Responses](#responses)
   * [Error Messages](#error-messages)
@@ -333,8 +334,20 @@ If an unsupported or invalid version is requested, the API must respond with a s
 [Top][toc]
 
 [agency]: /agency/README.md
+[decimal-degrees]: https://en.wikipedia.org/wiki/Decimal_degrees
 [gbfs-station-info]: https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_informationjson
 [gbfs-station-status]: https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_statusjson
+[general-stops]: /general-information.md#stops
+[geo]: #geographic-data
+[geojson-feature]: https://tools.ietf.org/html/rfc7946#section-3.2
+[geojson-feature-collection]: https://tools.ietf.org/html/rfc7946#section-3.3
+[geojson-point]: https://tools.ietf.org/html/rfc7946#section-3.1.2
 [policy]: /policy/README.md
 [provider]: /provider/README.md
+[st-intersects]: https://postgis.net/docs/ST_Intersects.html
 [toc]: #table-of-contents
+[ts]: /general-information.md#timestamps
+[wgs84]: https://en.wikipedia.org/wiki/World_Geodetic_System
+
+
+
