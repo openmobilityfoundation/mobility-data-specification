@@ -325,8 +325,16 @@ def provider_schema(endpoint, common_definitions, extra_definitions={}):
         title = "MDS GeoJSON Feature Point",
         # Only allow GeoJSON Point feature geometry
         geometry = { "$ref": definition_id("Point") },
-        # Point features *must* include a `timestamp` property.
-        properties = { "timestamp": { "$ref": definition_id("timestamp") } },
+        properties = {
+            "timestamp": {
+                "$ref": definition_id("timestamp")
+            },
+            # Locations corresponding to Stops must include a `stop_id` reference
+            "stop_id": {
+                "$ref": definition_id("uuid")
+            }
+        },
+        # Point features *must* include the `timestamp`
         required = ["timestamp"]
     )
 
