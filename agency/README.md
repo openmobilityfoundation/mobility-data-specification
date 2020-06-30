@@ -236,7 +236,7 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 
 ## Stops
 
-The `/stops` endpoint allows an agency to register Stops.
+The `/stops` endpoint allows an agency to register city-managed Stops, or a provider to register self-managed Stops.
 
 **Endpoint:** `/stops`  
 **Method:** `POST`  
