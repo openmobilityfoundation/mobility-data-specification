@@ -2,9 +2,6 @@
 
 This specification contains a collection of RESTful APIs used to specify the digital relationship between *mobility as a service* Providers and the Agencies that regulate them.
 
-* Date: 19 Sep 2019
-* Version: BETA
-
 ## Table of Contents
 
 * [General Information](#general-information)
