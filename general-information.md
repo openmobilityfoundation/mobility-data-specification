@@ -108,6 +108,8 @@ All String fields, such as `vehicle_id`, are limited to a maximum of 255 charact
 
 ## Stops
 
+**Stops** describe vehicle trip end locations in a pre-designated physical place. They can vary from docking stations with or without charging, corrals with lock-to railings, or suggested parking areas marked with spray paint.  **Stops** are used in both [Provider](/provider#stops) (including routes and event locations) and [Agency](/agency#stops) (including telemetry data).
+
 | Field                  | Type                                                        | Required/Optional | Description                                                                                  |
 |------------------------|-------------------------------------------------------------|-------------------|----------------------------------------------------------------------------------------------|
 | stop_id                | UUID                                                        | Required          | Unique ID for stop                                                                           |
@@ -133,11 +135,23 @@ All String fields, such as `vehicle_id`, are limited to a maximum of 255 charact
 
 ### Stop Status
 
+**Stop Status** returns information about the current status of a **[Stop](#stops)**.
+
 | Field        | Type    | Required/Optional | Description                                         |
 |--------------|---------|-------------------|-----------------------------------------------------|
 | is_installed | Boolean | Required          | See GBFS [station_status.json][gbfs-station-status] |
 | is_renting   | Boolean | Required          | See GBFS [station_status.json][gbfs-station-status] |
 | is_returning | Boolean | Required          | See GBFS [station_status.json][gbfs-station-status] |
+
+Example of the **Stop Status** object with properties listed:
+
+```json
+ {
+  "is_installed": true,
+  "is_renting": false,
+  "is_returning": true
+ }
+```
 
 ### GBFS Compatibility
 
@@ -264,7 +278,7 @@ If an unsupported or invalid version is requested, the API must respond with a s
 
 [agency]: /agency/README.md
 [gbfs-station-info]: https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_informationjson
-[gbfs-station-status]: https://github.com/NABSA/gbfs/blob/v2.1-RC/gbfs.md#station_statusjson
+[gbfs-station-status]: https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_statusjson
 [policy]: /policy/README.md
 [provider]: /provider/README.md
 [toc]: #table-of-contents
