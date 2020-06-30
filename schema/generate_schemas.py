@@ -352,6 +352,21 @@ def agency_put_stops_schema(common_definitions):
     return schema
 
 
+def agency_get_stops_schema(common_definitions):
+    """
+    Create the schema for the Agency GET /stops endpoint.
+    """
+    # load schema template and insert definitions
+    schema = load_json("./templates/agency/get_stops.json")
+    stops = stop_definitions(common_definitions)
+    schema["definitions"].update(stops)
+
+    # verify schema validity
+    jsonschema.Draft6Validator.check_schema(schema)
+
+    return schema
+
+
 def write_agency_schemas(common_definitions):
     """
     Create each of the Agency endpoint schema files in the appropriate directory.
@@ -364,7 +379,8 @@ def write_agency_schemas(common_definitions):
         "post_vehicle_event": agency_post_vehicle_event_schema,
         "post_vehicle_telemetry": agency_post_vehicle_telemetry_schema,
         "post_stops": agency_post_stops_schema,
-        "put_stops": agency_put_stops_schema
+        "put_stops": agency_put_stops_schema,
+        "get_stops": agency_get_stops_schema
     }
 
     for name, generator in schema_generators.items():

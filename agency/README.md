@@ -57,7 +57,7 @@ Path Params:
 
 200 Success Response:
 
-If `device_id` is specified, `GET` will return a single vehicle record, otherwise it will be a list of vehicle records with pagination details per the [JSON API](https://jsonapi.org/format/#fetching-pagination) spec:
+If `device_id` is specified, `GET` will return an array with a single vehicle record, otherwise it will be a list of vehicle records with pagination details per the [JSON API](https://jsonapi.org/format/#fetching-pagination) spec:
 
 ```json
 {
@@ -263,6 +263,23 @@ The `/stops` endpoint allows an agency to register city-managed Stops, or a prov
 **[Beta feature][beta]:** Yes (as of 1.0.0)  
 **Request Body**: An array of [Stops][stops]
 
+201 Success Response:
+
+_No content returned on success._
+
+400 Failure Response:
+
+| `error`              | `error_description`                               | `error_details`[]               |
+| -------------------- | ------------------------------------------------- | ------------------------------- |
+| `bad_param`          | A validation error occurred.                      | Array of parameters with errors |
+| `missing_param`      | A required parameter is missing.                  | Array of missing parameters     |
+
+409 Failure Response:
+
+| `error`              | `error_description`                               | `error_details`[]               |
+| -------------------- | ------------------------------------------------- | ------------------------------- |
+| `already_registered` | A stop with `stop_id` is already registered       |                                 |
+
 **Endpoint:** `/stops`  
 **Method:** `PUT`  
 **[Beta feature][beta]:** Yes (as of 1.0.0)  
@@ -274,12 +291,35 @@ The `/stops` endpoint allows an agency to register city-managed Stops, or a prov
 | status              | Optional          |See [Stops][stops] |
 | num_spots_disabled  | Optional          |See [Stops][stops] |
 
+200 Success Response:
+
+_No content returned on success._
+
+400 Failure Response:
+
+| `error`              | `error_description`                               | `error_details`[]               |
+| -------------------- | ------------------------------------------------- | ------------------------------- |
+| `bad_param`          | A validation error occurred.                      | Array of parameters with errors |
+| `missing_param`      | A required parameter is missing.                  | Array of missing parameters     |
+
+404 Failure Response:
+
+_No content returned if no vehicle matching `stop_id` is found._
+
 **Endpoint:** `/stops/:stop_id`  
 **Method:** `GET`  
 **[Beta feature][beta]:** Yes (as of 1.0.0)  
-**`data` Payload:** `{ "stops": [] }`, an array of [Stops][stops]
+**Payload:** `{ "stops": [] }`, an array of [Stops][stops]
 
-In the case that a `stop_id` query parameter is specified, the `stops` array returned will only have one entry. In the case that no `stop_id` query parameter is specified, all stops will be returned.
+Path Params:
+
+| Param        | Type | Required/Optional | Description                                 |
+| ------------ | ---- | ----------------- | ------------------------------------------- |
+| `stop_id`    | UUID | Optional          | If provided, retrieve the specified stop    |
+
+200 Success Response:
+
+If `stop_id` is specified, `GET` will return an array with a single stop record, otherwise it will be a list of all stop records.
 
 [Top][toc]
 
