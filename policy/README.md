@@ -30,6 +30,7 @@ The goal of this specification is to enable Agencies to create, revise, and publ
 - Cap allowances (e.g. "Up to 500 additional scooters are permitted near train stations")
 - Speed-limit restrictions (e.g. "15 mph outside of downtown, 10 mph downtown")
 - Idle-time and disabled-time limitations (e.g. "5 days idle while rentable, 12 hours idle while unrentable, per device")
+- Trip fees and subsidies (e.g. "A 25 cent fee applied when a trip ends downtown")
 
 The machine-readable format allows Providers to obtain policies and compute compliance where it can be determined entirely by data obtained internally.
 
@@ -93,7 +94,7 @@ Policies will be returned in order of effective date (see schema below), with pa
 
 Endpoint: `/geographies/{id}`  
 Method: `GET`  
-`data` Payload: `{ geographies: [] }`, an array of GeoJSON `Feature` objects.
+`data` Payload: `{ geographies: [] }`, an array of GeoJSON `Feature` objects that follow the schema [outlined here](#geography).
 
 ##### Query Parameters
 
@@ -183,6 +184,7 @@ An individual `Policy` object is defined by the following fields:
 | `policy_id`      | UUID            | Required   | Unique ID of policy                                                                 |
 | `provider_ids`   | UUID[]          | Optional    | Providers for whom this policy is applicable; empty arrays and `null`/absent implies all Providers |
 | `description`    | String          | Required   | Description of policy                                                               |
+| `currency`       | String          | Optional   | An ISO 4217 Alphabetic Currency Code representing the [currency](../provider#costs--currencies) of all Rules of [type](#rule-types) `rate`.|
 | `start_date`     | [timestamp][ts] | Required   | Beginning date/time of policy enforcement                                           |
 | `end_date`       | [timestamp][ts] | Optional    | End date/time of policy enforcement                                                 |
 | `published_date` | [timestamp][ts] | Required   | Timestamp that the policy was published                                             |
@@ -205,6 +207,8 @@ An individual `Rule` object is defined by the following fields:
 | `propulsion_types` | `propulsion_type[]`         | Optional   | Applicable vehicle [propulsion types][propulsion-types], default "all". |
 | `minimum`          | integer                     | Optional   | Minimum value, if applicable (default 0) |
 | `maximum`          | integer                     | Optional   | Maximum value, if applicable (default unlimited) |
+| `rate_amount`      | integer                     | Optional   | The amount of a rate applied when this rule applies, if applicable (default zero). A positive integer rate amount represents a fee, while a negative integer represents a subsidy. Rate amounts are given in the `currency` defined in the [Policy](#policy). |
+| `rate_recurrence`  | enum                        | Optional   | Recurrence of the rate (see [Rate Recurrences](#rate-recurrences)) |
 | `start_time`       | ISO 8601 time `hh:mm:ss`              | Optional   | Beginning time-of-day when the rule is in effect (default 00:00:00). |
 | `end_time`         | ISO 8601 time `hh:mm:ss`              | Optional   | Ending time-of-day when the rule is in effect (default 23:59:59). |
 | `days`             | day[]                       | Optional   | Days `["sun", "mon", "tue", "wed", "thu", "fri", "sat"]` when the rule is in effect (default all) |
@@ -218,6 +222,7 @@ An individual `Rule` object is defined by the following fields:
 | `count` | Fleet counts based on regions. Rule `max`/`min` refers to number of devices.                                  |
 | `time`  | Individual limitations on time spent in one or more vehicle-states. Rule `max`/`min` refers to increments of time in [Rule Units](#rule-units). |
 | `speed` | Global or local speed limits. Rule `max`/`min` refers to speed in [Rule Units](#rule-units).                  |
+| `rate`  | **[Beta feature](/general-information.md#beta-features):** Yes (as of 1.0.0). Fees or subsidies based on regions and time spent in one or more vehicle-states. Rule `rate_amount` refers to the rate charged according to the [Rate Recurrence](#rate_recurrence). Agencies and Providers must agree on terms of use prior to utilizing the `rate` rule type.     |
 | `user`  | Information for users, e.g. about helmet laws. Generally can't be enforced via events and telemetry.          |
 
 ### Rule Units
@@ -227,8 +232,31 @@ An individual `Rule` object is defined by the following fields:
 | `seconds` | Seconds             |
 | `minutes` | Minutes             |
 | `hours`   | Hours               |
+| `days`    | Days                |
 | `mph`     | Miles per hour      |
 | `kph`     | Kilometers per hour |
+
+### Geography
+
+| Name             | Type      | Required / Optional | Description                                                                         |
+| ---------------- | --------- | --- | ----------------------------------------------------------------------------------- |
+| `name`           | String    | Required   | Name of geography                                                                      |
+| `description`    | String    | Optional   | Detailed description of geography                                                                      |
+| `geography_id`   | UUID      | Required   | Unique ID of geography                                                                 |
+| `geography_json`   | UUID      | Required   | The GeoJSON that defines the geographical coordinates.
+| `effective_date`   | [timestamp][ts] | Optional   | `start_date` for first published policy that uses this geo.  Server should set this when policies are published.  This may be used on the client to distinguish between “logical” geographies that have the same name. E.g. if a policy publishes a geography on 5/1/2020, and then another policy is published which references that same geography is published on 4/1/2020, the effective_date will be set to 4/1/2020.
+| `publish_date`   | [timestamp][ts] | Required   | Timestamp that the policy was published, i.e. made immutable                                             |
+| `prev_geographies`  | UUID[]    | Optional   | Unique IDs of prior geographies replaced by this one                                   |
+
+### Rate Recurrences
+
+Rate recurrences specify when a rate is applied – either once, or periodically according to a `time_unit` specified using [Rule Units](#rule-units). A `time_unit` refers to a unit of time as measured in local time for the juristiction – a day begins at midnight local time, an hour begins at the top of the hour, etc.
+
+| Name      | Description         |
+| --------- | ------------------- |
+| `once`                      |  Rate is applied once to vehicles entering a matching status from a non-matching status.   |     
+| `each_time_unit`            |  During each `time_unit`, rate is applied once to vehicles entering or remaining in a matching status. Requires a `time_unit` to be specified using `rule_units`.  |  
+| `per_complete_time_unit`    | Rate is applied once per complete `time_unit` that vehicles remain in a matching status. Requires a `time_unit` to be specified using `rule_units`.  | 
 
 ### Messages
 

@@ -12,6 +12,7 @@ This document contains specifications that are shared between the various MDS AP
 * [Responses](#responses)
   * [Error Messages](#error-messages)
 * [Strings](#strings)
+* [Stops](#stops)
 * [Timestamps](#timestamps)
 * [UUIDs](#uuids)
 * [Vehicle States](#vehicle-states)
@@ -43,10 +44,10 @@ If the currency field is null, USD cents is implied.
 
 Defining terminology and abbreviations used throughout MDS.
 
-- **API** - Application Programming Interface - A function or set of functions that allow one software application to access or communicate with features of a different software application or service. 
-- **API Endpoint** - A point at which an API connects with a software application or service.
-- **DOT** - Department of Transportation, usually a city-run agency.
-- **PROW** - Public Right of Way - the physical infrastructure reserved for transportation purposes, examples include sidewalks, curbs, bike lanes, transit lanes and stations, traffic lanes and signals, and public parking.
+* **API** - Application Programming Interface - A function or set of functions that allow one software application to access or communicate with features of a different software application or service.
+* **API Endpoint** - A point at which an API connects with a software application or service.
+* **DOT** - Department of Transportation, usually a city-run agency.
+* **PROW** - Public Right of Way - the physical infrastructure reserved for transportation purposes, examples include sidewalks, curbs, bike lanes, transit lanes and stations, traffic lanes and signals, and public parking.
 
 [Top][toc]
 
@@ -102,6 +103,59 @@ A vehicle may have one or more values from the `propulsion`, depending on the nu
 ## Strings
 
 All String fields, such as `vehicle_id`, are limited to a maximum of 255 characters.
+
+[Top][toc]
+
+## Stops
+
+**Stops** describe vehicle trip end locations in a pre-designated physical place. They can vary from docking stations with or without charging, corrals with lock-to railings, or suggested parking areas marked with spray paint.  **Stops** are used in both [Provider](/provider#stops) (including routes and event locations) and [Agency](/agency#stops) (including telemetry data).
+
+| Field                  | Type                                                        | Required/Optional | Description                                                                                  |
+|------------------------|-------------------------------------------------------------|-------------------|----------------------------------------------------------------------------------------------|
+| stop_id                | UUID                                                        | Required          | Unique ID for stop                                                                           |
+| name              | String                                                      | Required          | Name of stop                                                                                 |
+| last_reported          | Timestamp                                                   | Required          | Date/Time that the stop was last updated                                                     |
+| location               | GeoJSON [Point Feature](provider/README.md#geographic-data) | Required          | Location of the Stop                                                                         |
+| status                 | [Stop Status](#stop-status)                                 | Required          | Object representing the status of the Stop. See [Stop Status](#stop-status).                 |
+| capacity               | {vehicle_type: number}                                      | Required          | Number of total spaces per vehicle_type                                                      |
+| num_vehicles_available | {vehicle_type: number}                                      | Required          | How many vehicles are available per vehicle_type at this stop?                               |
+| num_vehicles_disabled  | {vehicle_type: number}                                      | Required          | How many vehicles are unavailable/reserved per vehicle_type at this stop?                    |
+| managed_by             | UUID                                                        | Optional          | `provider_id` for the provider which manages this stop. null/undefined if city managed.      |
+| geography_id           | UUID                                                        | Optional          | Pointer to the Geography that represents the Stop geospatially                               |
+| region_id              | string                                                      | Optional          | ID of the region where station is located, see [GBFS Station Information][gbfs-station-info] |
+| short_name             | String                                                      | Optional          | Abbreviated stop name                                                                        |
+| address                | String                                                      | Optional          | Postal address (useful for directions)                                                       |
+| post_code              | String                                                      | Optional          | Postal code (e.g. `10036`)                                                                   |
+| rental_methods         | [Enum][gbfs-station-info]                                   | Optional          | Payment methods accepted at stop, see [GBFS Rental Methods][gbfs-station-info]               |
+| cross_street           | String                                                      | Optional          | Cross street of where the station is located.                                                |
+| num_spaces_available   | {vehicle_type: number}                                      | Optional          | How many spaces are free to be populated with vehicles at this stop?                         |
+| num_spaces_disabled    | {vehicle_type: number}                                      | Optional          | How many spaces are disabled and unable to accept vehicles at this stop?                     |
+| parent_stop            | UUID                                                        | Optional          | Describe a basic hierarchy of stops (e.g.a stop inside of a greater stop)                    |
+| devices               | UUID[]                                                      | Optional          | List of device_ids for vehicles which are currently at this stop                             |
+
+### Stop Status
+
+**Stop Status** returns information about the current status of a **[Stop](#stops)**.
+
+| Field        | Type    | Required/Optional | Description                                         |
+|--------------|---------|-------------------|-----------------------------------------------------|
+| is_installed | Boolean | Required          | See GBFS [station_status.json][gbfs-station-status] |
+| is_renting   | Boolean | Required          | See GBFS [station_status.json][gbfs-station-status] |
+| is_returning | Boolean | Required          | See GBFS [station_status.json][gbfs-station-status] |
+
+Example of the **Stop Status** object with properties listed:
+
+```json
+ {
+  "is_installed": true,
+  "is_renting": false,
+  "is_returning": true
+ }
+```
+
+### GBFS Compatibility
+
+Some of the fields in the `Stops` definition are using notions which are currently not in MDS, such as `rental_methods`. These fields are included for compatibility with GBFS.
 
 [Top][toc]
 
@@ -183,7 +237,6 @@ Note that to handle out-of-order events, the validity of the prior-state shall n
 The *State Machine Diagram* shows how the `vehicle_state` and `event_type` relate to each other and how vehicles can transition between states. See [Google Slides](https://docs.google.com/presentation/d/1Ar2-ju8YlddSsTATvQw4YjsSa5108XtidtnJNk-UAfA/edit) for the source file.
 ![MDS State Machine Diagram](/MDS-state-machine-diagram.svg)
 
-
 [Top][toc]
 
 ## Vehicle Types
@@ -219,27 +272,13 @@ Accept: application/vnd.mds+json;version=0.3
 > * The `agency` API must respond as if version `0.3` was requested.
 > * The `policy` API must respond as if version `0.4` was requested.
 
-If an unsupported or invalid version is requested, the API must respond with a status of `406 Not Acceptable`. If this occurs, a client can explicitly negotiate available versions.
-
-A client negotiates available versions using the `OPTIONS` method to an MDS endpoint. For example, to check if `trips` supports either version `0.2` or `0.3` with a preference for `0.2`, the client would issue the following request:
-
-```http
-OPTIONS /trips/ HTTP/1.1
-Host: provider.example.com
-Accept: application/vnd.mds+json;version=0.2,application/vnd.mds+json;version=0.3;q=0.9
-```
-
-The response will include the most preferred supported version in the `Content-Type` header. For example, if only `0.3` is supported:
-
-```http
-Content-Type: application/vnd.mds+json;version=0.3
-```
-
-The client can use the returned value verbatim as a version request in the `Accept` header.
+If an unsupported or invalid version is requested, the API must respond with a status of `406 Not Acceptable`.
 
 [Top][toc]
 
 [agency]: /agency/README.md
+[gbfs-station-info]: https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_informationjson
+[gbfs-station-status]: https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_statusjson
 [policy]: /policy/README.md
 [provider]: /provider/README.md
 [toc]: #table-of-contents

@@ -1,0 +1,26 @@
+{
+  "$id": "https://raw.githubusercontent.com/openmobilityfoundation/mobility-data-specification/main/provider/endpoint.json",
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "title": "Schema for MDS Provider endpoint payloads",
+  "type": "object",
+  "definitions": {},
+  "required": [
+    "data",
+    "version"
+  ],
+  "properties": {
+    "data": {
+      "$id": "#/properties/data",
+      "type": "object",
+      "description": "The data records in this payload",
+      "required": [],
+      "properties": {},
+      "additionalProperties": false
+    },
+    "version": {
+      "$id": "#/properties/version",
+      "$ref": "#/definitions/version"
+    }
+  },
+  "additionalProperties": false
+}
