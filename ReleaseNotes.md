@@ -24,16 +24,17 @@ _Here is some of what was added or changed._
   * [Add link to State of Practice](https://github.com/openmobilityfoundation/mobility-data-specification/pull/477)
   * [Update GBFS references and links](https://github.com/openmobilityfoundation/mobility-data-specification/pull/508)
   * Move [Code of Conduct](https://github.com/openmobilityfoundation/mobility-data-specification/pull/514), [Contributing Guide](https://github.com/openmobilityfoundation/mobility-data-specification/pull/513), and [Release Guidelines](https://github.com/openmobilityfoundation/mobility-data-specification/pull/512) to new [Governace repo](https://github.com/openmobilityfoundation/governance)
+   * [Updating 'master' to 'main' as default branch name](https://github.com/openmobilityfoundation/mobility-data-specification/pull/522)
    * [Update providers.csv to add Superpedestrian](https://github.com/openmobilityfoundation/mobility-data-specification/pull/535)
    * [Removed Options version negotiation](https://github.com/openmobilityfoundation/mobility-data-specification/pull/536#pullrequestreview-439364663)
+   * [Added 'other' vechicle type](https://github.com/openmobilityfoundation/mobility-data-specification/issues/518)
 
 *_Provider_*
 
-* [...](...)
+* [Events out of beta](https://github.com/openmobilityfoundation/mobility-data-specification/issues/528)
 
 *_Agency_*
 
-* [Add link to Table of Contents](https://github.com/openmobilityfoundation/mobility-data-specification/pull/470)
 * [Vehicle register: add provider_id field](https://github.com/openmobilityfoundation/mobility-data-specification/pull/469)
 * [Clarify vehicle endpoint requirements](https://github.com/openmobilityfoundation/mobility-data-specification/pull/465)
 * [Vehicle response code should be 200](https://github.com/openmobilityfoundation/mobility-data-specification/pull/467)
