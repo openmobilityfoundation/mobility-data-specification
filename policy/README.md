@@ -25,11 +25,15 @@ This specification describes the digital relationship between _mobility as a ser
 
 The following information applies to all `policy` API endpoints.
 
+[Top][toc]
+
 ### Versioning
 
 `policy` APIs must handle requests for specific versions of the specification from clients.
 
 Versioning must be implemented as specified in the [Versioning section][versioning].
+
+[Top][toc]
 
 ## Background
 
@@ -62,6 +66,8 @@ Policies should be re-fetched whenever:
 2) at an interval specified by the regulatory body, e.g. "daily at midnight".
 
 Flat files have an optional `end_date` field that will apply to the file as a whole.
+
+[Top][toc]
 
 ### REST Endpoints
 
@@ -111,6 +117,8 @@ Method: `GET`
 | Name         | Type      | Required / Optional | Description                                    |
 | ------------ | --------- | --- | ---------------------------------------------- |
 | `id`         | UUID      | Optional    | If provided, returns one geography object with the matching UUID; default is to return all geography objects.               |
+
+[Top][toc]
 
 ### Flat Files
 
@@ -184,6 +192,8 @@ Response bodies must be a `UTF-8` encoded JSON object and must minimally include
 }
 ```
 
+[Top][toc]
+
 ### Policy
 
 An individual `Policy` object is defined by the following fields:
@@ -200,6 +210,8 @@ An individual `Policy` object is defined by the following fields:
 | `published_date` | [timestamp][ts] | Required   | Timestamp that the policy was published                                             |
 | `prev_policies`  | UUID[]          | Optional    | Unique IDs of prior policies replaced by this one                                   |
 | `rules`          | Rule[]          | Required   | List of applicable [Rule](#rules) objects |
+
+[Top][toc]
 
 ### Rules
 
@@ -225,6 +237,8 @@ An individual `Rule` object is defined by the following fields:
 | `messages`         | `{ String:String }`         | Optional   | Message to rider user, if desired, in various languages, keyed by language tag (see [Messages](#messages)) |
 | `value_url`        | URL                         | Optional   | URL to an API endpoint that can provide dynamic information for the measured value (see [Value URL](#value-url)) |
 
+[Top][toc]
+
 ### Rule Types
 
 | Name    | Description                                                                                                   |
@@ -234,6 +248,8 @@ An individual `Rule` object is defined by the following fields:
 | `speed` | Global or local speed limits. Rule `max`/`min` refers to speed in [Rule Units](#rule-units).                  |
 | `rate`  | **[Beta feature](/general-information.md#beta-features):** Yes (as of 1.0.0). Fees or subsidies based on regions and time spent in one or more vehicle-states. Rule `rate_amount` refers to the rate charged according to the [Rate Recurrence](#rate_recurrence). Agencies and Providers must agree on terms of use prior to utilizing the `rate` rule type.     |
 | `user`  | Information for users, e.g. about helmet laws. Generally can't be enforced via events and telemetry.          |
+
+[Top][toc]
 
 ### Rule Units
 
@@ -245,6 +261,8 @@ An individual `Rule` object is defined by the following fields:
 | `days`    | Days                |
 | `mph`     | Miles per hour      |
 | `kph`     | Kilometers per hour |
+
+[Top][toc]
 
 ### Geography
 
@@ -258,6 +276,8 @@ An individual `Rule` object is defined by the following fields:
 | `publish_date`   | [timestamp][ts] | Required   | Timestamp that the policy was published, i.e. made immutable                                             |
 | `prev_geographies`  | UUID[]    | Optional   | Unique IDs of prior geographies replaced by this one                                   |
 
+[Top][toc]
+
 ### Rate Recurrences
 
 Rate recurrences specify when a rate is applied – either once, or periodically according to a `time_unit` specified using [Rule Units](#rule-units). A `time_unit` refers to a unit of time as measured in local time for the juristiction – a day begins at midnight local time, an hour begins at the top of the hour, etc.
@@ -267,6 +287,8 @@ Rate recurrences specify when a rate is applied – either once, or periodicall
 | `once`                      |  Rate is applied once to vehicles entering a matching status from a non-matching status.   |     
 | `each_time_unit`            |  During each `time_unit`, rate is applied once to vehicles entering or remaining in a matching status. Requires a `time_unit` to be specified using `rule_units`.  |  
 | `per_complete_time_unit`    | Rate is applied once per complete `time_unit` that vehicles remain in a matching status. Requires a `time_unit` to be specified using `rule_units`.  | 
+
+[Top][toc]
 
 ### Messages
 
@@ -283,6 +305,8 @@ Example for a decreased speed-limit rule for Venice Beach on weekends:
 },
 ```
 
+[Top][toc]
+
 ### Value URL
 
 An Agency may wish to provide dynamic or global rules, e.g.
@@ -298,6 +322,8 @@ The payload returned from a `GET` request to the `value_url` will have the follo
 | `value`     | integer   | Required         | Value of whatever the rule measures |
 | `timestamp` | [timestamp][ts] | Required   | Timestamp the value was recorded    |
 | `policy_id` | UUID      | Required         | Relevant `policy_id` for reference  |
+
+[Top][toc]
 
 ### Order of Operations
 
