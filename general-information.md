@@ -344,7 +344,6 @@ If an unsupported or invalid version is requested, the API must respond with a s
 [general-stops]: /general-information.md#stops
 [geo]: #geographic-data
 [geojson-feature]: https://tools.ietf.org/html/rfc7946#section-3.2
-[geojson-feature-collection]: https://tools.ietf.org/html/rfc7946#section-3.3
 [geojson-point]: https://tools.ietf.org/html/rfc7946#section-3.1.2
 [policy]: /policy/README.md
 [provider]: /provider/README.md

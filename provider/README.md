@@ -190,7 +190,7 @@ To represent a route, MDS `provider` APIs must create a GeoJSON [`FeatureCollect
 
 Routes must include at least 2 points: the start point and end point. Routes must include all possible GPS or GNSS samples collected by a Provider. Providers may round the latitude and longitude to the level of precision representing the maximum accuracy of the specific measurement. For example, [a-GPS][agps] is accurate to 5 decimal places, [differential GPS][dgps] is generally accurate to 6 decimal places. Providers may round those readings to the appropriate number for their systems.
 
-Trips that start or end at a [Stop][general-stops] must include a `stop_id` property in the first (when starting) and last (when ending) Feature of the `route`. See [Stop-based Geographic Data][stop-based-geo] for more information.
+Trips that start or end at a [Stop][stops] must include a `stop_id` property in the first (when starting) and last (when ending) Feature of the `route`. See [Stop-based Geographic Data][stop-based-geo] for more information.
 
 ```js
 "route": {
@@ -405,18 +405,14 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 [beta]: /general-information.md#beta
 [costs-and-currencies]: /general-information.md#costs-and-currencies
 [data-latency]: #data-latency-requirements
-[decimal-degrees]: https://en.wikipedia.org/wiki/Decimal_degrees
 [dgps]: https://en.wikipedia.org/wiki/Differential_GPS
 [events]: #events
 [events-schema]: events.json
 [event-times]: #event-times
 [gbfs]: https://github.com/NABSA/gbfs
 [general-information]: /general-information.md
-[general-stops]: /general-information.md#stops
 [geo]: /general-information.md#geographic-data
-[geojson-feature]: https://tools.ietf.org/html/rfc7946#section-3.2
 [geojson-feature-collection]: https://tools.ietf.org/html/rfc7946#section-3.3
-[geojson-point]: https://tools.ietf.org/html/rfc7946#section-3.1.2
 [iana]: https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
 [intersection]: /general-information.md#intersection-operation
 [iso4217]: https://en.wikipedia.org/wiki/ISO_4217#Active_codes
@@ -429,7 +425,6 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 [status-schema]: status_changes.json
 [stops]: /general-information.md#stops
 [stop-based-geo]: /general-information.md#stop-based-geographic-data
-[st-intersects]: https://postgis.net/docs/ST_Intersects.html
 [toc]: #table-of-contents
 [trips]: #trips
 [trips-schema]: trips.json
@@ -440,4 +435,3 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 [vehicle-events]: /general-information.md#vehicle-state-events
 [vehicles-schema]: vehicles.json
 [versioning]: /general-information.md#versioning
-[wgs84]: https://en.wikipedia.org/wiki/World_Geodetic_System
