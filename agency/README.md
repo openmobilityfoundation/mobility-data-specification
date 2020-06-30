@@ -20,19 +20,27 @@ This specification contains a collection of RESTful APIs used to specify the dig
 
 This specification uses data types including timestamps, UUIDs, and vehicle state definitions as described in the MDS [General Information][general] document.
 
+[Top][toc]
+
 ### Versioning
 
 `agency` APIs must handle requests for specific versions of the specification from clients.
 
 Versioning must be implemented as specified in the [Versioning section][versioning].
 
+[Top][toc]
+
 ### Responses and Error Messages
 
 See the [Responses][responses] and [Error Messages][error-messages] sections.
 
+[Top][toc]
+
 ### Authorization
 
 When making requests, the Agency API expects `provider_id` to be part of the claims in a [JWT](https://jwt.io/) `access_token` in the `Authorization` header, in the form `Authorization: Bearer <access_token>`. The token issuance, expiration and revocation policies are at the discretion of the Agency.
+
+[Top][toc]
 
 ## Vehicles
 
@@ -83,6 +91,8 @@ A vehicle record is as follows:
 
 _No content returned on vehicle not found._
 
+[Top][toc]
+
 ## Vehicle - Register
 
 The `/vehicles` registration endpoint is used to register a vehicle for use in the Agency jurisdiction.
@@ -120,6 +130,8 @@ _No content returned on success._
 | -------------------- | ------------------------------------------------- | ------------------------------- |
 | `already_registered` | A vehicle with `device_id` is already registered  |                                 |
 
+[Top][toc]
+
 ## Vehicle - Update
 
 The `/vehicles` update endpoint is used to update some mutable aspect of a vehicle. For now, only `vehicle_id`.
@@ -147,6 +159,8 @@ _No content returned on success._
 404 Failure Response:
 
 _No content returned if no vehicle matching `device_id` is found._
+
+[Top][toc]
 
 ## Vehicle - Event
 
@@ -185,6 +199,8 @@ Body Params:
 | `missing_param`     | A required parameter is missing | Array of missing parameters     |
 | `unregistered`      | Vehicle is not registered       |                                 |
 
+[Top][toc]
+
 ## Vehicle - Telemetry
 
 The vehicle `/telemetry` endpoint allows a Provider to send vehicle telemetry data in a batch for any number of vehicles in the fleet.
@@ -214,6 +230,8 @@ Body Params:
 | `invalid_data`  | None of the provided data was valid. |                                 |
 | `missing_param` | A required parameter is missing.     | Array of missing parameters     |
 
+[Top][toc]
+
 ## Telemetry Data
 
 A standard point of vehicle telemetry. References to latitude and longitude imply coordinates encoded in the [WGS 84 (EPSG:4326)](https://en.wikipedia.org/wiki/World_Geodetic_System) standard GPS or GNSS projection expressed as [Decimal Degrees](https://en.wikipedia.org/wiki/Decimal_degrees).
@@ -233,6 +251,8 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | `gps.satellites` | Integer      | Required if Available | Number of GPS or GNSS satellites
 | `charge`       | Float          | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 1 |
 | `stop_id`      | UUID           | Required if Applicable | Stop that the vehicle is currently located at. Only applicable for _docked_ Micromobility. See [Stops][stops] |
+
+[Top][toc]
 
 ## Stops
 
