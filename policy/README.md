@@ -5,12 +5,22 @@ This specification describes the digital relationship between _mobility as a ser
 ## Table of Contents
 
 - [General Information](#general-information)
+  - [Versioning](#versioning)
 - [Background](#background)
 - [Distribution](#distribution)
   - [REST Endpoints](#rest-endpoints)
   - [Flat Files](#flat-files)
 - [Schema](#schema)
-
+  - [Policy](#policy)
+  - [Rules](#rules)
+  - [Rule Types](#rule-types)
+  - [Rule Units](#rule-units)
+  - [Geography](#geography)
+  - [Rate Recurrences](#rate-recurrences)
+  - [Messages](#messages)
+  - [Value URL](#value-url)
+  - [Order of Operations](#order-of-operations)
+  
 ## General information
 
 The following information applies to all `policy` API endpoints.
