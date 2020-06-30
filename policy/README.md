@@ -37,7 +37,7 @@ Versioning must be implemented as specified in the [Versioning section][versioni
 
 ## Background
 
-The goal of this specification is to enable Agencies to create, revise, and publish machine-readable policies, as sets of rules for individual and collective device behavior exhibited by both _mobility as a service_ Providers and riders / users. Examples of policies include:
+The goal of this specification is to enable Agencies to create, revise, and publish machine-readable policies, as sets of rules for individual and collective device behavior exhibited by both _mobility as a service_ Providers and riders / users. [Examples](examples.md) of policies include:
 
 - City-wide and localized caps (e.g. "Minimum 500 and maximum 3000 scooters within city boundaries")
 - Exclusion zones (e.g. "No scooters are permitted in this district on weekends")
@@ -47,6 +47,8 @@ The goal of this specification is to enable Agencies to create, revise, and publ
 - Trip fees and subsidies (e.g. "A 25 cent fee applied when a trip ends downtown")
 
 The machine-readable format allows Providers to obtain policies and compute compliance where it can be determined entirely by data obtained internally.
+
+**See the [Policy Examples](examples.md) for ways these can be implemented.**
 
 [Top][toc]
 
@@ -224,7 +226,7 @@ An individual `Rule` object is defined by the following fields:
 | `rule_type`        | enum                        | Required   | Type of policy (see [Rule Types](#rule-types)) |
 | `geographies`      | UUID[]                      | Required   | List of Geography UUIDs (non-overlapping) specifying the covered geography |
 | `states`           | `{ state: event[] }`        | Required   | [Vehicle state][vehicle-states] to which this rule applies.  Optionally provide a list of specific [vehicle events][#vehicle-events] as a subset of a given status for the rule to apply to. An empty list or `null`/absent defaults to "all". |
-| `rule_units`       | enum                        | Optional   | Measured units of policy (see [Rule Units](#rule-units)) |
+| `rule_units`       | enum                        | Required   | Measured units of policy (see [Rule Units](#rule-units)) |
 | `vehicle_types`    | `vehicle_type[]`            | Optional   | Applicable vehicle types, default "all". |
 | `propulsion_types` | `propulsion_type[]`         | Optional   | Applicable vehicle [propulsion types][propulsion-types], default "all". |
 | `minimum`          | integer                     | Optional   | Minimum value, if applicable (default 0) |
@@ -243,24 +245,26 @@ An individual `Rule` object is defined by the following fields:
 
 | Name    | Description                                                                                                   |
 | ------- | ------------------------------------------------------------------------------------------------------------- |
-| `count` | Fleet counts based on regions. Rule `max`/`min` refers to number of devices.                                  |
+| `count` | Fleet counts based on regions. Rule `max`/`min` refers to number of devices in [Rule Units](#rule-units).                                  |
 | `time`  | Individual limitations on time spent in one or more vehicle-states. Rule `max`/`min` refers to increments of time in [Rule Units](#rule-units). |
 | `speed` | Global or local speed limits. Rule `max`/`min` refers to speed in [Rule Units](#rule-units).                  |
-| `rate`  | **[Beta feature](/general-information.md#beta-features):** Yes (as of 1.0.0). Fees or subsidies based on regions and time spent in one or more vehicle-states. Rule `rate_amount` refers to the rate charged according to the [Rate Recurrence](#rate_recurrence). Agencies and Providers must agree on terms of use prior to utilizing the `rate` rule type.     |
+| `rate`  | **[Beta feature](/general-information.md#beta-features):** Yes (as of 1.0.0). Fees or subsidies based on regions and time spent in one or more vehicle-states. Rule `rate_amount` refers to the rate charged according to the [Rate Recurrences](#rate_recurrences) and the [currency requirements](/general-information.md#costs-and-currencies) in [Rule Units](#rule-units). As this is a beta feature, agencies are strongly advised to consult with providers about how they intended to use the `rate` rule prior to implementation.    |
 | `user`  | Information for users, e.g. about helmet laws. Generally can't be enforced via events and telemetry.          |
 
 [Top][toc]
 
 ### Rule Units
 
-| Name      | Description         |
-| --------- | ------------------- |
-| `seconds` | Seconds             |
-| `minutes` | Minutes             |
-| `hours`   | Hours               |
-| `days`    | Days                |
-| `mph`     | Miles per hour      |
-| `kph`     | Kilometers per hour |
+| Name      | Rule Types     | Description         |
+| --------- | -------------- | ------------------- |
+| `seconds` | `time`         | Seconds             |
+| `minutes` | `time`         | Minutes             |
+| `hours`   | `time`         | Hours               |
+| `days`    | `time`         | Days                |
+| `mph`     | `speed`        | Miles per hour      |
+| `kph`     | `speed`        | Kilometers per hour |
+| `devices` | `count`        | Devices             |
+| `amount`  | `rate`         | Cost (in [local currency](/general-information.md#costs-and-currencies)) |
 
 [Top][toc]
 
