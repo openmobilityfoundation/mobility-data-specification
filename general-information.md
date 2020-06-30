@@ -9,11 +9,15 @@ This document contains specifications that are shared between the various MDS AP
 * [Definitions](#definitions)
 * [Devices](#devices)
 * [Geographic Data][geo]
+  * [Stop-based Geographic Data](stop-based-geographic-data)
+  * [Intersection Operation](intersection-operation)
 * [Propulsion Types](#propulsion-types)
 * [Responses](#responses)
   * [Error Messages](#error-messages)
 * [Strings](#strings)
 * [Stops](#stops)
+  * [Stop Status](stop-status)
+  * [GBFS Compatibility](gbfs-compatibility)
 * [Timestamps](#timestamps)
 * [UUIDs](#uuids)
 * [Vehicle States](#vehicle-states)
@@ -348,6 +352,3 @@ If an unsupported or invalid version is requested, the API must respond with a s
 [toc]: #table-of-contents
 [ts]: /general-information.md#timestamps
 [wgs84]: https://en.wikipedia.org/wiki/World_Geodetic_System
-
-
-
