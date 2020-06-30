@@ -59,6 +59,61 @@ Additionally, `device_id` must remain constant for the device's lifetime of serv
 
 [Top][toc]
 
+## Geographic Data
+
+References to geographic datatypes (Point, MultiPolygon, etc.) imply coordinates encoded in the [WGS 84 (EPSG:4326)][wgs84] standard GPS or GNSS projection expressed as [Decimal Degrees][decimal-degrees].
+
+Whenever an individual location coordinate measurement is presented, it must be
+represented as a GeoJSON [`Feature`][geojson-feature] object with a corresponding [`timestamp`][ts] property and [`Point`][geojson-point] geometry:
+
+```json
+{
+    "type": "Feature",
+    "properties": {
+        "timestamp": 1529968782421
+    },
+    "geometry": {
+        "type": "Point",
+        "coordinates": [
+            -118.46710503101347,
+            33.9909333514159
+        ]
+    }
+}
+```
+
+### Stop-based Geographic Data
+
+When an individual location coordinate measurement corresponds to a [Stop][general-stops],
+it must be presented with a `stop_id` property:
+
+```json
+{
+    "type": "Feature",
+    "properties": {
+        "timestamp": 1529968782421,
+        "stop_id": "b813cde2-a41c-4ae3-b409-72ff221e003d"
+    },
+    "geometry": {
+        "type": "Point",
+        "coordinates": [
+            -118.46710503101347,
+            33.9909333514159
+        ]
+    }
+}
+```
+
+### Intersection Operation
+
+For the purposes of this specification, the intersection of two geographic datatypes is defined according to the [`ST_Intersects` PostGIS operation][st-intersects]
+
+> If a geometry or geography shares any portion of space then they intersect. For geography -- tolerance is 0.00001 meters (so any points that are close are considered to intersect).
+>
+> Overlaps, Touches, Within all imply spatial intersection. If any of the aforementioned returns true, then the geometries also spatially intersect. Disjoint implies false for spatial intersection.
+
+[Top][toc]
+
 ## Propulsion Types
 
 | `propulsion`      | Description                                            |
