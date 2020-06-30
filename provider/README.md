@@ -5,8 +5,18 @@ This specification contains a data standard for *mobility as a service* provider
 ## Table of Contents
 
 * [General Information](#general-information)
+  * [Versioning](#versioning)
+  * [Response Format](#response-format)
+  * [JSON Schema](#json-schema)
+  * [Pagination](#pagination)
+  * [Municipality Boundary](#municipality-boundary)
+  * [Event Times](#event-times)
+  * [Other Data Types](#other-data-types)
 * [Trips][trips]
+  * [Trips - Query Parameters](#trips---query-parameters)
+  * [Routes](#routes)
 * [Status Changes][status]
+  * [Status Changes - Query Parameters](#status-changes---query-parameters)
 * [Realtime Data](#realtime-data)
   * [GBFS](#GBFS)
   * [Data Latency Requirements][data-latency]
@@ -113,9 +123,9 @@ Because of the unreliability of device clocks, the Provider is unlikely to know 
 
 [Top][toc]
 
-### Timestamps, Vehicle Types, Propulsion Types, UUIDs, Costs & Currencies
+### Other Data Types
 
-Please refer to the MDS [General Information][general-information] document.
+For Timestamps, Vehicle Types, Propulsion Types, UUIDs, Costs, and Currencies, refer to the MDS [General Information][general-information] document.
 
 [Top][toc]
 
@@ -154,7 +164,7 @@ Unless stated otherwise by the municipality, the trips endpoint must return all 
 | `actual_cost` | Integer | Optional | The actual cost, in the currency defined in `currency`, paid by the customer of the *mobility as a service* provider (see [Costs & Currencies][costs-and-currencies]) |
 | `currency` | String | Optional, USD cents is implied if null.| An [ISO 4217 Alphabetic Currency Code][iso4217] representing the currency of the payee (see [Costs & Currencies][costs-and-currencies]) |
 
-### Trips Query Parameters
+### Trips - Query Parameters
 
 The `/trips` API should allow querying trips with the following query parameters:
 
@@ -247,7 +257,7 @@ Unless stated otherwise by the municipality, this endpoint must return only thos
 | `trip_id` | UUID | Required if Applicable | Trip UUID (foreign key to Trips API), required if `event_types` contains `trip_start`, `trip_end`, `trip_cancel`, `trip_enter_jurisdiction`, or `trip_leave_jurisdiction` |
 | `associated_ticket` | String | Optional | Identifier for an associated ticket inside an Agency-maintained 311 or CRM system |
 
-### Status Changes Query Parameters
+### Status Changes - Query Parameters
 
 The `/status_changes` API should allow querying status changes with the following query parameters:
 
