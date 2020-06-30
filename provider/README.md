@@ -30,6 +30,8 @@ The following information applies to all `provider` API endpoints. Details on pr
 
 This specification uses data types including timestamps, UUIDs, and vehicle state definitions as described in the MDS [General Information][general-information] document.
 
+[Top][toc]
+
 ### Versioning
 
 `provider` APIs must handle requests for specific versions of the specification from clients.
@@ -164,6 +166,8 @@ Unless stated otherwise by the municipality, the trips endpoint must return all 
 | `actual_cost` | Integer | Optional | The actual cost, in the currency defined in `currency`, paid by the customer of the *mobility as a service* provider (see [Costs & Currencies][costs-and-currencies]) |
 | `currency` | String | Optional, USD cents is implied if null.| An [ISO 4217 Alphabetic Currency Code][iso4217] representing the currency of the payee (see [Costs & Currencies][costs-and-currencies]) |
 
+[Top][toc]
+
 ### Trips - Query Parameters
 
 The `/trips` API should allow querying trips with the following query parameters:
@@ -177,6 +181,8 @@ If the data does not exist or the hour has not completed, `/trips` shall return 
 Without an `end_time` query parameter, `/trips` shall return a `400 Bad Request` error.
 
 For the near-ish real time use cases, please use the [events][events] endpoint.
+
+[Top][toc]
 
 ### Routes
 
@@ -257,6 +263,8 @@ Unless stated otherwise by the municipality, this endpoint must return only thos
 | `trip_id` | UUID | Required if Applicable | Trip UUID (foreign key to Trips API), required if `event_types` contains `trip_start`, `trip_end`, `trip_cancel`, `trip_enter_jurisdiction`, or `trip_leave_jurisdiction` |
 | `associated_ticket` | String | Optional | Identifier for an associated ticket inside an Agency-maintained 311 or CRM system |
 
+[Top][toc]
+
 ### Status Changes - Query Parameters
 
 The `/status_changes` API should allow querying status changes with the following query parameters:
@@ -324,6 +332,8 @@ The events API should allow querying with a combination of query parameters:
 Should either side of the requested time range be missing, `/events` shall return a `400 Bad Request` error.
 
 Should either side of the requested time range be greater than 2 weeks before the time of the request, `/events` shall return a `400 Bad Request` error.
+
+[Top][toc]
 
 ### Stops
 
