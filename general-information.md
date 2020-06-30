@@ -241,7 +241,7 @@ The *State Machine Diagram* shows how the `vehicle_state` and `event_type` relat
 
 ## Vehicle Types
 
-The list of allowed `vehicle_type` values in MDS is:
+The list of allowed `vehicle_type` values in MDS. Aligning with [GBFS vehicle types form factors](https://github.com/NABSA/gbfs/blob/master/gbfs.md#vehicle_typesjson-added-in-v21-rc).
 
 | `vehicle_type` | Description |
 |--------------| --- |
@@ -249,6 +249,7 @@ The list of allowed `vehicle_type` values in MDS is:
 | car          | Any automobile |
 | scooter      | Any motorized mobility device intended for one rider |
 | moped        | A motorcycle/bicycle hybrid that can be powered or pedaled |
+| other        | A device that does not fit in the other categories |
 
 [Top][toc]
 
