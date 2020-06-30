@@ -168,7 +168,7 @@ All String fields, such as `vehicle_id`, are limited to a maximum of 255 charact
 
 ## Stops
 
-**Stops** describe vehicle trip end locations in a pre-designated physical place. They can vary from docking stations with or without charging, corrals with lock-to railings, or suggested parking areas marked with spray paint.  **Stops** are used in both [Provider](/provider#stops) (including routes and event locations) and [Agency](/agency#stops) (including telemetry data).
+Stops describe vehicle trip start and end locations in a pre-designated physical place. They can vary from docking stations with or without charging, corrals with lock-to railings, or suggested parking areas marked with spray paint. Stops are used in both [Provider](/provider#stops) (including routes and event locations) and [Agency](/agency#stops) (including telemetry data).
 
 | Field                  | Type                                                        | Required/Optional | Description                                                                                  |
 |------------------------|-------------------------------------------------------------|-------------------|----------------------------------------------------------------------------------------------|
@@ -180,13 +180,13 @@ All String fields, such as `vehicle_id`, are limited to a maximum of 255 charact
 | capacity               | {vehicle_type: number}                                      | Required          | Number of total spaces per vehicle_type                                                      |
 | num_vehicles_available | {vehicle_type: number}                                      | Required          | How many vehicles are available per vehicle_type at this stop?                               |
 | num_vehicles_disabled  | {vehicle_type: number}                                      | Required          | How many vehicles are unavailable/reserved per vehicle_type at this stop?                    |
-| managed_by             | UUID                                                        | Optional          | `provider_id` for the provider which manages this stop. null/undefined if city managed.      |
+| provider_id            | UUID                                                        | Optional          | UUID for the Provider managing this stop. Null/undefined if managed by an Agency.    |
 | geography_id           | UUID                                                        | Optional          | Pointer to the Geography that represents the Stop geospatially                               |
 | region_id              | string                                                      | Optional          | ID of the region where station is located, see [GBFS Station Information][gbfs-station-info] |
 | short_name             | String                                                      | Optional          | Abbreviated stop name                                                                        |
 | address                | String                                                      | Optional          | Postal address (useful for directions)                                                       |
 | post_code              | String                                                      | Optional          | Postal code (e.g. `10036`)                                                                   |
-| rental_methods         | [Enum][gbfs-station-info]                                   | Optional          | Payment methods accepted at stop, see [GBFS Rental Methods][gbfs-station-info]               |
+| rental_methods         | [Enum[]][gbfs-station-info]                                 | Optional          | List of payment methods accepted at stop, see [GBFS Rental Methods][gbfs-station-info]               |
 | cross_street           | String                                                      | Optional          | Cross street of where the station is located.                                                |
 | num_spaces_available   | {vehicle_type: number}                                      | Optional          | How many spaces are free to be populated with vehicles at this stop?                         |
 | num_spaces_disabled    | {vehicle_type: number}                                      | Optional          | How many spaces are disabled and unable to accept vehicles at this stop?                     |
@@ -206,11 +206,11 @@ All String fields, such as `vehicle_id`, are limited to a maximum of 255 charact
 Example of the **Stop Status** object with properties listed:
 
 ```json
- {
+{
   "is_installed": true,
   "is_renting": false,
   "is_returning": true
- }
+}
 ```
 
 ### GBFS Compatibility

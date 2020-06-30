@@ -425,6 +425,7 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 [status-schema]: status_changes.json
 [stops]: /general-information.md#stops
 [stop-based-geo]: /general-information.md#stop-based-geographic-data
+[stops-schema]: stops.json
 [toc]: #table-of-contents
 [trips]: #trips
 [trips-schema]: trips.json
