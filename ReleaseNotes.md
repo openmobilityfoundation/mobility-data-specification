@@ -1,6 +1,7 @@
 ## 1.0.0
 
-> Release Date TBD
+> Release Date: TBD
+
 > Release Candidate Date: week of June 29, 2020
 
 The 1.0.0 release reconciles many parts of the MDS specifiction and adds features and updates requested by the community, including support for Stops (for docked vehicles, dockless corrals, parking areas) and adding rates to Policy.
