@@ -21,7 +21,7 @@ This specification contains a data standard for *mobility as a service* provider
   * [GBFS](#GBFS)
   * [Data Latency Requirements][data-latency]
   * [Events][events]
-  * [Stops][stops]
+  * [Stops][#stops]
   * [Vehicles][vehicles]
 
 ## General Information
