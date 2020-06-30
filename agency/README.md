@@ -269,7 +269,7 @@ In the case that a `stop_id` query parameter is specified, the `stops` array ret
 [hdop]: https://support.esri.com/en/other-resources/gis-dictionary/term/358112bd-b61c-4081-9679-4fca9e3eb926
 [propulsion-types]: /general-information.md#propulsion-types
 [responses]: /general-information.md#responses
-[stops]: /general-information#stops
+[stops]: /general-information.md#stops
 [toc]: #table-of-contents
 [ts]: /general-information.md#timestamps
 [vehicle-types]: /general-information.md#vehicle-types
