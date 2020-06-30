@@ -245,10 +245,10 @@ An individual `Rule` object is defined by the following fields:
 
 | Name    | Description                                                                                                   |
 | ------- | ------------------------------------------------------------------------------------------------------------- |
-| `count` | Fleet counts based on regions. Rule `max`/`min` refers to number of devices in [Rule Units](#rule-units).                                  |
-| `time`  | Individual limitations on time spent in one or more vehicle-states. Rule `max`/`min` refers to increments of time in [Rule Units](#rule-units). |
-| `speed` | Global or local speed limits. Rule `max`/`min` refers to speed in [Rule Units](#rule-units).                  |
-| `rate`  | **[Beta feature](/general-information.md#beta-features):** Yes (as of 1.0.0). Fees or subsidies based on regions and time spent in one or more vehicle-states. Rule `rate_amount` refers to the rate charged according to the [Rate Recurrences](#rate_recurrences) and the [currency requirements](/general-information.md#costs-and-currencies) in [Rule Units](#rule-units). As this is a beta feature, agencies are strongly advised to consult with providers about how they intended to use the `rate` rule prior to implementation.    |
+| `count` | Fleet counts based on regions. Rule `minimum`/`maximum` refers to number of devices in [Rule Units](#rule-units).                                  |
+| `time`  | Individual limitations on time spent in one or more vehicle-states. Rule `minimum`/`maximum` refers to increments of time in [Rule Units](#rule-units). |
+| `speed` | Global or local speed limits. Rule `minimum`/`maximum` refers to speed in [Rule Units](#rule-units).                  |
+| `rate`  | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.0.0)*. Fees or subsidies based on regions and time spent in one or more vehicle-states. Rule `rate_amount` refers to the rate charged according to the [Rate Recurrences](#rate_recurrences) and the [currency requirements](/general-information.md#costs-and-currencies) in [Rule Units](#rule-units). *As this is a beta feature, agencies are strongly advised to consult with providers about how they intended to use the `rate` rule prior to implementation.*    |
 | `user`  | Information for users, e.g. about helmet laws. Generally can't be enforced via events and telemetry.          |
 
 [Top][toc]
