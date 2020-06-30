@@ -8,13 +8,16 @@ This specification contains a collection of RESTful APIs used to specify the dig
 ## Table of Contents
 
 * [General Information](#general-information)
+  * [Versioning](#versioning)
+  * [Responses and Error Messages](#responses-and-error-messages)
+  * [Authorization](#authorization)
 * [Vehicles](#vehicles)
-* [Vehicle Registration](#vehicle---register)
-* [Vehicle Update](#vehicle---update)
-* [Vehicle Events](#vehicle---event)
-* [Vehicles Telemetry](#vehicles---telemetry)
-* [Telemetry Data](#telemetry-data)
-* [Stops](#stops)
+  * [Vehicle - Register](#vehicle---register)
+  * [Vehicle - Update](#vehicle---update)
+  * [Vehicle - Events](#vehicle---event)
+  * [Vehicle - Telemetry](#vehicle---telemetry)
+  * [Telemetry Data](#telemetry-data)
+  * [Stops](#stops)
 
 ## General information
 
@@ -83,7 +86,7 @@ A vehicle record is as follows:
 
 _No content returned on vehicle not found._
 
-## Vehicle Registration
+## Vehicle - Register
 
 The `/vehicles` registration endpoint is used to register a vehicle for use in the Agency jurisdiction.
 
@@ -159,7 +162,7 @@ Path Params:
 
 | Field        | Type | Required/Optional | Field Description                        |
 | ------------ | ---- | ----------------- | ---------------------------------------- |
-| `device_id`  | UUID | Required          | ID used in [Register](#vehicle-register) |
+| `device_id`  | UUID | Required          | ID used in [Register](#vehicle---register) |
 
 Body Params:
 
@@ -185,7 +188,7 @@ Body Params:
 | `missing_param`     | A required parameter is missing | Array of missing parameters     |
 | `unregistered`      | Vehicle is not registered       |                                 |
 
-## Vehicles - Telemetry
+## Vehicle - Telemetry
 
 The vehicle `/telemetry` endpoint allows a Provider to send vehicle telemetry data in a batch for any number of vehicles in the fleet.
 
@@ -220,7 +223,7 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 
 | Field          | Type           | Required/Optional     | Field Description                                            |
 | -------------- | -------------- | --------------------- | ------------------------------------------------------------ |
-| `device_id`    | UUID           | Required              | ID used in [Register](#vehicle-register)                     |
+| `device_id`    | UUID           | Required              | ID used in [Register](#vehicle---register)                     |
 | `timestamp`    | [timestamp][ts]      | Required              | Date/time that event occurred. Based on GPS or GNSS clock            |
 | `gps`          | Object         | Required              | Telemetry position data                                      |
 | `gps.lat`      | Double         | Required              | Latitude of the location                                     |
