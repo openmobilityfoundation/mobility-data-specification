@@ -12,10 +12,10 @@ This specification contains a collection of RESTful APIs used to specify the dig
   * [Responses and Error Messages](#responses-and-error-messages)
   * [Authorization](#authorization)
 * [Vehicles](#vehicles)
-  * [Vehicle - Register](#vehicle---register)
-  * [Vehicle - Update](#vehicle---update)
-  * [Vehicle - Events](#vehicle---event)
-  * [Vehicle - Telemetry](#vehicle---telemetry)
+* [Vehicle - Register](#vehicle---register)
+* [Vehicle - Update](#vehicle---update)
+* [Vehicle - Events](#vehicle---event)
+* [Vehicle - Telemetry](#vehicle---telemetry)
 * [Telemetry Data](#telemetry-data)
 * [Stops](#stops)
 
@@ -86,7 +86,7 @@ A vehicle record is as follows:
 
 _No content returned on vehicle not found._
 
-### Vehicle - Register
+## Vehicle - Register
 
 The `/vehicles` registration endpoint is used to register a vehicle for use in the Agency jurisdiction.
 
@@ -123,7 +123,7 @@ _No content returned on success._
 | -------------------- | ------------------------------------------------- | ------------------------------- |
 | `already_registered` | A vehicle with `device_id` is already registered  |                                 |
 
-### Vehicle - Update
+## Vehicle - Update
 
 The `/vehicles` update endpoint is used to update some mutable aspect of a vehicle. For now, only `vehicle_id`.
 
@@ -151,7 +151,7 @@ _No content returned on success._
 
 _No content returned if no vehicle matching `device_id` is found._
 
-### Vehicle - Event
+## Vehicle - Event
 
 The vehicle `/event` endpoint allows the Provider to control the state of the vehicle including deregister a vehicle from the fleet.
 
@@ -188,7 +188,7 @@ Body Params:
 | `missing_param`     | A required parameter is missing | Array of missing parameters     |
 | `unregistered`      | Vehicle is not registered       |                                 |
 
-### Vehicle - Telemetry
+## Vehicle - Telemetry
 
 The vehicle `/telemetry` endpoint allows a Provider to send vehicle telemetry data in a batch for any number of vehicles in the fleet.
 
