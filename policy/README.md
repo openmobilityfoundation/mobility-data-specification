@@ -5,15 +5,27 @@ This specification describes the digital relationship between _mobility as a ser
 ## Table of Contents
 
 - [General Information](#general-information)
+  - [Versioning](#versioning)
 - [Background](#background)
 - [Distribution](#distribution)
   - [REST Endpoints](#rest-endpoints)
   - [Flat Files](#flat-files)
 - [Schema](#schema)
-
+  - [Policy](#policy)
+  - [Rules](#rules)
+  - [Rule Types](#rule-types)
+  - [Rule Units](#rule-units)
+  - [Geography](#geography)
+  - [Rate Recurrences](#rate-recurrences)
+  - [Messages](#messages)
+  - [Value URL](#value-url)
+  - [Order of Operations](#order-of-operations)
+  
 ## General information
 
 The following information applies to all `policy` API endpoints.
+
+[Top][toc]
 
 ### Versioning
 
@@ -21,9 +33,11 @@ The following information applies to all `policy` API endpoints.
 
 Versioning must be implemented as specified in the [Versioning section][versioning].
 
+[Top][toc]
+
 ## Background
 
-The goal of this specification is to enable Agencies to create, revise, and publish machine-readable policies, as sets of rules for individual and collective device behavior exhibited by both _mobility as a service_ Providers and riders / users. Examples of policies include:
+The goal of this specification is to enable Agencies to create, revise, and publish machine-readable policies, as sets of rules for individual and collective device behavior exhibited by both _mobility as a service_ Providers and riders / users. [Examples](examples.md) of policies include:
 
 - City-wide and localized caps (e.g. "Minimum 500 and maximum 3000 scooters within city boundaries")
 - Exclusion zones (e.g. "No scooters are permitted in this district on weekends")
@@ -33,6 +47,8 @@ The goal of this specification is to enable Agencies to create, revise, and publ
 - Trip fees and subsidies (e.g. "A 25 cent fee applied when a trip ends downtown")
 
 The machine-readable format allows Providers to obtain policies and compute compliance where it can be determined entirely by data obtained internally.
+
+**See the [Policy Examples](examples.md) for ways these can be implemented.**
 
 [Top][toc]
 
@@ -52,6 +68,8 @@ Policies should be re-fetched whenever:
 2) at an interval specified by the regulatory body, e.g. "daily at midnight".
 
 Flat files have an optional `end_date` field that will apply to the file as a whole.
+
+[Top][toc]
 
 ### REST Endpoints
 
@@ -101,6 +119,8 @@ Method: `GET`
 | Name         | Type      | Required / Optional | Description                                    |
 | ------------ | --------- | --- | ---------------------------------------------- |
 | `id`         | UUID      | Optional    | If provided, returns one geography object with the matching UUID; default is to return all geography objects.               |
+
+[Top][toc]
 
 ### Flat Files
 
@@ -174,6 +194,8 @@ Response bodies must be a `UTF-8` encoded JSON object and must minimally include
 }
 ```
 
+[Top][toc]
+
 ### Policy
 
 An individual `Policy` object is defined by the following fields:
@@ -191,6 +213,8 @@ An individual `Policy` object is defined by the following fields:
 | `prev_policies`  | UUID[]          | Optional    | Unique IDs of prior policies replaced by this one                                   |
 | `rules`          | Rule[]          | Required   | List of applicable [Rule](#rules) objects |
 
+[Top][toc]
+
 ### Rules
 
 An individual `Rule` object is defined by the following fields:
@@ -202,7 +226,7 @@ An individual `Rule` object is defined by the following fields:
 | `rule_type`        | enum                        | Required   | Type of policy (see [Rule Types](#rule-types)) |
 | `geographies`      | UUID[]                      | Required   | List of Geography UUIDs (non-overlapping) specifying the covered geography |
 | `states`           | `{ state: event[] }`        | Required   | [Vehicle state][vehicle-states] to which this rule applies.  Optionally provide a list of specific [vehicle events][#vehicle-events] as a subset of a given status for the rule to apply to. An empty list or `null`/absent defaults to "all". |
-| `rule_units`       | enum                        | Optional   | Measured units of policy (see [Rule Units](#rule-units)) |
+| `rule_units`       | enum                        | Required   | Measured units of policy (see [Rule Units](#rule-units)) |
 | `vehicle_types`    | `vehicle_type[]`            | Optional   | Applicable vehicle types, default "all". |
 | `propulsion_types` | `propulsion_type[]`         | Optional   | Applicable vehicle [propulsion types][propulsion-types], default "all". |
 | `minimum`          | integer                     | Optional   | Minimum value, if applicable (default 0) |
@@ -215,26 +239,34 @@ An individual `Rule` object is defined by the following fields:
 | `messages`         | `{ String:String }`         | Optional   | Message to rider user, if desired, in various languages, keyed by language tag (see [Messages](#messages)) |
 | `value_url`        | URL                         | Optional   | URL to an API endpoint that can provide dynamic information for the measured value (see [Value URL](#value-url)) |
 
+[Top][toc]
+
 ### Rule Types
 
 | Name    | Description                                                                                                   |
 | ------- | ------------------------------------------------------------------------------------------------------------- |
-| `count` | Fleet counts based on regions. Rule `max`/`min` refers to number of devices.                                  |
-| `time`  | Individual limitations on time spent in one or more vehicle-states. Rule `max`/`min` refers to increments of time in [Rule Units](#rule-units). |
-| `speed` | Global or local speed limits. Rule `max`/`min` refers to speed in [Rule Units](#rule-units).                  |
-| `rate`  | **[Beta feature](/general-information.md#beta-features):** Yes (as of 1.0.0). Fees or subsidies based on regions and time spent in one or more vehicle-states. Rule `rate_amount` refers to the rate charged according to the [Rate Recurrence](#rate_recurrence). Agencies and Providers must agree on terms of use prior to utilizing the `rate` rule type.     |
+| `count` | Fleet counts based on regions. Rule `minimum`/`maximum` refers to number of devices in [Rule Units](#rule-units).                                  |
+| `time`  | Individual limitations on time spent in one or more vehicle-states. Rule `minimum`/`maximum` refers to increments of time in [Rule Units](#rule-units). |
+| `speed` | Global or local speed limits. Rule `minimum`/`maximum` refers to speed in [Rule Units](#rule-units).                  |
+| `rate`  | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.0.0)*. Fees or subsidies based on regions and time spent in one or more vehicle-states. Rule `rate_amount` refers to the rate charged according to the [Rate Recurrences](#rate_recurrences) and the [currency requirements](/general-information.md#costs-and-currencies) in [Rule Units](#rule-units). *As this is a beta feature, agencies are strongly advised to consult with providers about how they intended to use the `rate` rule prior to implementation.*    |
 | `user`  | Information for users, e.g. about helmet laws. Generally can't be enforced via events and telemetry.          |
+
+[Top][toc]
 
 ### Rule Units
 
-| Name      | Description         |
-| --------- | ------------------- |
-| `seconds` | Seconds             |
-| `minutes` | Minutes             |
-| `hours`   | Hours               |
-| `days`    | Days                |
-| `mph`     | Miles per hour      |
-| `kph`     | Kilometers per hour |
+| Name      | Rule Types     | Description         |
+| --------- | -------------- | ------------------- |
+| `seconds` | `time`         | Seconds             |
+| `minutes` | `time`         | Minutes             |
+| `hours`   | `time`         | Hours               |
+| `days`    | `time`         | Days                |
+| `mph`     | `speed`        | Miles per hour      |
+| `kph`     | `speed`        | Kilometers per hour |
+| `devices` | `count`        | Devices             |
+| `amount`  | `rate`         | Cost (in [local currency](/general-information.md#costs-and-currencies)) |
+
+[Top][toc]
 
 ### Geography
 
@@ -248,6 +280,8 @@ An individual `Rule` object is defined by the following fields:
 | `publish_date`   | [timestamp][ts] | Required   | Timestamp that the policy was published, i.e. made immutable                                             |
 | `prev_geographies`  | UUID[]    | Optional   | Unique IDs of prior geographies replaced by this one                                   |
 
+[Top][toc]
+
 ### Rate Recurrences
 
 Rate recurrences specify when a rate is applied – either once, or periodically according to a `time_unit` specified using [Rule Units](#rule-units). A `time_unit` refers to a unit of time as measured in local time for the juristiction – a day begins at midnight local time, an hour begins at the top of the hour, etc.
@@ -257,6 +291,8 @@ Rate recurrences specify when a rate is applied – either once, or periodicall
 | `once`                      |  Rate is applied once to vehicles entering a matching status from a non-matching status.   |     
 | `each_time_unit`            |  During each `time_unit`, rate is applied once to vehicles entering or remaining in a matching status. Requires a `time_unit` to be specified using `rule_units`.  |  
 | `per_complete_time_unit`    | Rate is applied once per complete `time_unit` that vehicles remain in a matching status. Requires a `time_unit` to be specified using `rule_units`.  | 
+
+[Top][toc]
 
 ### Messages
 
@@ -273,6 +309,8 @@ Example for a decreased speed-limit rule for Venice Beach on weekends:
 },
 ```
 
+[Top][toc]
+
 ### Value URL
 
 An Agency may wish to provide dynamic or global rules, e.g.
@@ -288,6 +326,8 @@ The payload returned from a `GET` request to the `value_url` will have the follo
 | `value`     | integer   | Required         | Value of whatever the rule measures |
 | `timestamp` | [timestamp][ts] | Required   | Timestamp the value was recorded    |
 | `policy_id` | UUID      | Required         | Relevant `policy_id` for reference  |
+
+[Top][toc]
 
 ### Order of Operations
 

@@ -2,17 +2,17 @@
 
 This specification contains a collection of RESTful APIs used to specify the digital relationship between *mobility as a service* Providers and the Agencies that regulate them.
 
-* Date: 19 Sep 2019
-* Version: BETA
-
 ## Table of Contents
 
 * [General Information](#general-information)
+  * [Versioning](#versioning)
+  * [Responses and Error Messages](#responses-and-error-messages)
+  * [Authorization](#authorization)
 * [Vehicles](#vehicles)
-* [Vehicle Registration](#vehicle---register)
-* [Vehicle Update](#vehicle---update)
-* [Vehicle Events](#vehicle---event)
-* [Vehicles Telemetry](#vehicles---telemetry)
+* [Vehicle - Register](#vehicle---register)
+* [Vehicle - Update](#vehicle---update)
+* [Vehicle - Events](#vehicle---event)
+* [Vehicle - Telemetry](#vehicle---telemetry)
 * [Telemetry Data](#telemetry-data)
 * [Stops](#stops)
 
@@ -20,19 +20,27 @@ This specification contains a collection of RESTful APIs used to specify the dig
 
 This specification uses data types including timestamps, UUIDs, and vehicle state definitions as described in the MDS [General Information][general] document.
 
+[Top][toc]
+
 ### Versioning
 
 `agency` APIs must handle requests for specific versions of the specification from clients.
 
 Versioning must be implemented as specified in the [Versioning section][versioning].
 
+[Top][toc]
+
 ### Responses and Error Messages
 
 See the [Responses][responses] and [Error Messages][error-messages] sections.
 
+[Top][toc]
+
 ### Authorization
 
 When making requests, the Agency API expects `provider_id` to be part of the claims in a [JWT](https://jwt.io/) `access_token` in the `Authorization` header, in the form `Authorization: Bearer <access_token>`. The token issuance, expiration and revocation policies are at the discretion of the Agency.
+
+[Top][toc]
 
 ## Vehicles
 
@@ -83,7 +91,9 @@ A vehicle record is as follows:
 
 _No content returned on vehicle not found._
 
-## Vehicle Registration
+[Top][toc]
+
+## Vehicle - Register
 
 The `/vehicles` registration endpoint is used to register a vehicle for use in the Agency jurisdiction.
 
@@ -120,6 +130,8 @@ _No content returned on success._
 | -------------------- | ------------------------------------------------- | ------------------------------- |
 | `already_registered` | A vehicle with `device_id` is already registered  |                                 |
 
+[Top][toc]
+
 ## Vehicle - Update
 
 The `/vehicles` update endpoint is used to update some mutable aspect of a vehicle. For now, only `vehicle_id`.
@@ -148,6 +160,8 @@ _No content returned on success._
 
 _No content returned if no vehicle matching `device_id` is found._
 
+[Top][toc]
+
 ## Vehicle - Event
 
 The vehicle `/event` endpoint allows the Provider to control the state of the vehicle including deregister a vehicle from the fleet.
@@ -159,7 +173,7 @@ Path Params:
 
 | Field        | Type | Required/Optional | Field Description                        |
 | ------------ | ---- | ----------------- | ---------------------------------------- |
-| `device_id`  | UUID | Required          | ID used in [Register](#vehicle-register) |
+| `device_id`  | UUID | Required          | ID used in [Register](#vehicle---register) |
 
 Body Params:
 
@@ -185,7 +199,9 @@ Body Params:
 | `missing_param`     | A required parameter is missing | Array of missing parameters     |
 | `unregistered`      | Vehicle is not registered       |                                 |
 
-## Vehicles - Telemetry
+[Top][toc]
+
+## Vehicle - Telemetry
 
 The vehicle `/telemetry` endpoint allows a Provider to send vehicle telemetry data in a batch for any number of vehicles in the fleet.
 
@@ -214,13 +230,15 @@ Body Params:
 | `invalid_data`  | None of the provided data was valid. |                                 |
 | `missing_param` | A required parameter is missing.     | Array of missing parameters     |
 
+[Top][toc]
+
 ## Telemetry Data
 
 A standard point of vehicle telemetry. References to latitude and longitude imply coordinates encoded in the [WGS 84 (EPSG:4326)](https://en.wikipedia.org/wiki/World_Geodetic_System) standard GPS or GNSS projection expressed as [Decimal Degrees](https://en.wikipedia.org/wiki/Decimal_degrees).
 
 | Field          | Type           | Required/Optional     | Field Description                                            |
 | -------------- | -------------- | --------------------- | ------------------------------------------------------------ |
-| `device_id`    | UUID           | Required              | ID used in [Register](#vehicle-register)                     |
+| `device_id`    | UUID           | Required              | ID used in [Register](#vehicle---register)                     |
 | `timestamp`    | [timestamp][ts]      | Required              | Date/time that event occurred. Based on GPS or GNSS clock            |
 | `gps`          | Object         | Required              | Telemetry position data                                      |
 | `gps.lat`      | Double         | Required              | Latitude of the location                                     |
@@ -234,9 +252,11 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | `charge`       | Float          | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 1 |
 | `stop_id`      | UUID           | Required if Applicable | Stop that the vehicle is currently located at. Only applicable for _docked_ Micromobility. See [Stops][stops] |
 
+[Top][toc]
+
 ## Stops
 
-The `/stops` endpoint allows an agency to register Stops.
+The `/stops` endpoint allows an agency to register city-managed Stops, or a provider to register self-managed Stops.
 
 **Endpoint:** `/stops`  
 **Method:** `POST`  
@@ -269,7 +289,7 @@ In the case that a `stop_id` query parameter is specified, the `stops` array ret
 [hdop]: https://support.esri.com/en/other-resources/gis-dictionary/term/358112bd-b61c-4081-9679-4fca9e3eb926
 [propulsion-types]: /general-information.md#propulsion-types
 [responses]: /general-information.md#responses
-[stops]: /general-information#stops
+[stops]: /general-information.md#stops
 [toc]: #table-of-contents
 [ts]: /general-information.md#timestamps
 [vehicle-types]: /general-information.md#vehicle-types

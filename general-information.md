@@ -8,11 +8,16 @@ This document contains specifications that are shared between the various MDS AP
 * [Costs and Currencies](#costs-and-currencies)
 * [Definitions](#definitions)
 * [Devices](#devices)
+* [Geographic Data][geo]
+  * [Stop-based Geographic Data](#stop-based-geographic-data)
+  * [Intersection Operation](#intersection-operation)
 * [Propulsion Types](#propulsion-types)
 * [Responses](#responses)
   * [Error Messages](#error-messages)
 * [Strings](#strings)
 * [Stops](#stops)
+  * [Stop Status](#stop-status)
+  * [GBFS Compatibility](#gbfs-compatibility)
 * [Timestamps](#timestamps)
 * [UUIDs](#uuids)
 * [Vehicle States](#vehicle-states)
@@ -56,6 +61,61 @@ Defining terminology and abbreviations used throughout MDS.
 MDS defines the *device* as the unit that transmits GPS or GNSS signals for a particular vehicle. A given device must have a UUID (`device_id` below) that is unique within the Provider's fleet.
 
 Additionally, `device_id` must remain constant for the device's lifetime of service, regardless of the vehicle components that house the device.
+
+[Top][toc]
+
+## Geographic Data
+
+References to geographic datatypes (Point, MultiPolygon, etc.) imply coordinates encoded in the [WGS 84 (EPSG:4326)][wgs84] standard GPS or GNSS projection expressed as [Decimal Degrees][decimal-degrees].
+
+Whenever an individual location coordinate measurement is presented, it must be
+represented as a GeoJSON [`Feature`][geojson-feature] object with a corresponding [`timestamp`][ts] property and [`Point`][geojson-point] geometry:
+
+```json
+{
+    "type": "Feature",
+    "properties": {
+        "timestamp": 1529968782421
+    },
+    "geometry": {
+        "type": "Point",
+        "coordinates": [
+            -118.46710503101347,
+            33.9909333514159
+        ]
+    }
+}
+```
+
+### Stop-based Geographic Data
+
+When an individual location coordinate measurement corresponds to a [Stop][general-stops],
+it must be presented with a `stop_id` property:
+
+```json
+{
+    "type": "Feature",
+    "properties": {
+        "timestamp": 1529968782421,
+        "stop_id": "b813cde2-a41c-4ae3-b409-72ff221e003d"
+    },
+    "geometry": {
+        "type": "Point",
+        "coordinates": [
+            -118.46710503101347,
+            33.9909333514159
+        ]
+    }
+}
+```
+
+### Intersection Operation
+
+For the purposes of this specification, the intersection of two geographic datatypes is defined according to the [`ST_Intersects` PostGIS operation][st-intersects]
+
+> If a geometry or geography shares any portion of space then they intersect. For geography -- tolerance is 0.00001 meters (so any points that are close are considered to intersect).
+>
+> Overlaps, Touches, Within all imply spatial intersection. If any of the aforementioned returns true, then the geometries also spatially intersect. Disjoint implies false for spatial intersection.
 
 [Top][toc]
 
@@ -241,7 +301,7 @@ The *State Machine Diagram* shows how the `vehicle_state` and `event_type` relat
 
 ## Vehicle Types
 
-The list of allowed `vehicle_type` values in MDS is:
+The list of allowed `vehicle_type` values in MDS. Aligning with [GBFS vehicle types form factors](https://github.com/NABSA/gbfs/blob/master/gbfs.md#vehicle_typesjson-added-in-v21-rc).
 
 | `vehicle_type` | Description |
 |--------------| --- |
@@ -249,6 +309,7 @@ The list of allowed `vehicle_type` values in MDS is:
 | car          | Any automobile |
 | scooter      | Any motorized mobility device intended for one rider |
 | moped        | A motorcycle/bicycle hybrid that can be powered or pedaled |
+| other        | A device that does not fit in the other categories |
 
 [Top][toc]
 
@@ -277,8 +338,16 @@ If an unsupported or invalid version is requested, the API must respond with a s
 [Top][toc]
 
 [agency]: /agency/README.md
+[decimal-degrees]: https://en.wikipedia.org/wiki/Decimal_degrees
 [gbfs-station-info]: https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_informationjson
 [gbfs-station-status]: https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_statusjson
+[general-stops]: /general-information.md#stops
+[geo]: #geographic-data
+[geojson-feature]: https://tools.ietf.org/html/rfc7946#section-3.2
+[geojson-point]: https://tools.ietf.org/html/rfc7946#section-3.1.2
 [policy]: /policy/README.md
 [provider]: /provider/README.md
+[st-intersects]: https://postgis.net/docs/ST_Intersects.html
 [toc]: #table-of-contents
+[ts]: /general-information.md#timestamps
+[wgs84]: https://en.wikipedia.org/wiki/World_Geodetic_System

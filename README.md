@@ -76,7 +76,7 @@ for Shareable Dockless Mobility Device Permit Holders](https://www.atlantaga.gov
 * **Ulm, Germany**: A draft of the guidelines can be found at [the city's GitHub presence](https://github.com/stadtulm/mds-zonen).
 * **Washington, DC**: [Dockless Vehicle Permits](https://ddot.dc.gov/page/dockless-vehicle-permits-district), [terms and conditions](https://ddot.dc.gov/sites/default/files/dc/sites/ddot/2019.11.6%20Shared%20dockless%202020%20Terms%20and%20Conditions%20scooter.pdf), [data reporting standards](https://ddot.dc.gov/sites/default/files/dc/sites/ddot/2019.11.6%20Dockless%20Permit%20TC%20Attatchments.pdf),  and [FAQ](https://docs.google.com/document/d/1G2ddANcXl3lShCZInV3uX2NTBfRRu4Fm-tiaCi203QM/).
 
-* _[add your City here by opening a pull request](https://github.com/openmobilityfoundation/mobility-data-specification/compare)_
+* _add a city here by [opening a pull request](https://github.com/openmobilityfoundation/mobility-data-specification/compare/dev...dev) or [making an issue](https://github.com/openmobilityfoundation/mobility-data-specification/issues/new?assignees=&labels=&template=feature-request---proposal.md&title=)_.
 
 Other cities include Baltimore, Bellevue, Charlotte, Oakland, and Seattle, via the [NACTO Guidelines for Regulating Shared Micromobility](https://nacto.org/wp-content/uploads/2019/09/NACTO_Shared_Micromobility_Guidelines_Web.pdf), page 48.
 
