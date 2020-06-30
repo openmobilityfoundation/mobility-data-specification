@@ -120,6 +120,28 @@ represented as a GeoJSON [`Feature`][geojson-feature] object with a correspondin
 }
 ```
 
+#### Stop-based Geographic Data
+
+When an individual location coordinate measurement corresponds to a [Stop][general-stops],
+it must be presented with a `stop_id` property:
+
+```json
+{
+    "type": "Feature",
+    "properties": {
+        "timestamp": 1529968782421,
+        "stop_id": "b813cde2-a41c-4ae3-b409-72ff221e003d"
+    },
+    "geometry": {
+        "type": "Point",
+        "coordinates": [
+            -118.46710503101347,
+            33.9909333514159
+        ]
+    }
+}
+```
+
 #### Intersection Operation
 
 For the purposes of this specification, the intersection of two geographic datatypes is defined according to the [`ST_Intersects` PostGIS operation][st-intersects]
@@ -207,7 +229,7 @@ To represent a route, MDS `provider` APIs must create a GeoJSON [`FeatureCollect
 
 Routes must include at least 2 points: the start point and end point. Routes must include all possible GPS or GNSS samples collected by a Provider. Providers may round the latitude and longitude to the level of precision representing the maximum accuracy of the specific measurement. For example, [a-GPS][agps] is accurate to 5 decimal places, [differential GPS][dgps] is generally accurate to 6 decimal places. Providers may round those readings to the appropriate number for their systems.
 
-*Docked* mobility providers must include a `stop_id` in the first and last Feature of each `route` by embedding the `stop_id` property in the Feature's `properties` object, as all trips for docked vehicles should originate/end at [Stops](/general-information.md#stops).
+Trips that start or end at a [Stop][general-stops] must include a `stop_id` property in the first (when starting) and last (when ending) Feature of the `route`. See [Stop-based Geographic Data][stop-based-geo] for more information.
 
 ```js
 "route": {
@@ -216,7 +238,8 @@ Routes must include at least 2 points: the start point and end point. Routes mus
         "type": "Feature",
         "properties": {
             "timestamp": 1529968782421,
-            "stop_id": "95084833-6a3f-4770-9919-de1ab4b8989b", // REQUIRED for docked mobility providers, optional for dockless
+            // Required for Trips starting at a Stop
+            "stop_id": "95084833-6a3f-4770-9919-de1ab4b8989b",
         },
         "geometry": {
             "type": "Point",
@@ -230,7 +253,8 @@ Routes must include at least 2 points: the start point and end point. Routes mus
         "type": "Feature",
         "properties": {
             "timestamp": 1531007628377,
-            "stop_id": "b813cde2-a41c-4ae3-b409-72ff221e003d" // REQUIRED for docked mobility providers, optional for dockless
+            // Required for Trips ending at a Stop
+            "stop_id": "b813cde2-a41c-4ae3-b409-72ff221e003d"
         },
         "geometry": {
             "type": "Point",
@@ -273,14 +297,10 @@ Unless stated otherwise by the municipality, this endpoint must return only thos
 | `event_types` | Enum[] | Required | [Vehicle event(s)][vehicle-events] for state change, allowable values determined by `vehicle_state` |
 | `event_time` | [timestamp][ts] | Required | Date/time that event occurred at. See [Event Times][event-times] |
 | `publication_time` | [timestamp][ts] | Optional | Date/time that event became available through the status changes endpoint |
-| `event_location` | GeoJSON [Point Feature][geo] | Required | See [event_locations](#event-locations)|
+| `event_location` | GeoJSON [Point Feature][geo] | Required | See also [Stop-based Geographic Data][stop-based-geo] |
 | `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |
 | `trip_id` | UUID | Required if Applicable | Trip UUID (foreign key to Trips API), required if `event_types` contains `trip_start`, `trip_end`, `trip_cancel`, `trip_enter_jurisdiction`, or `trip_leave_jurisdiction` |
-| `associated_ticket` | String | Optional | Identifier for an associated ticket inside an Agency-maintained 311 or CRM system. |
-
-### Event Locations
-
-*Docked* mobility providers must include a `stop_id` in the Point Feature of each `event_location` that occurs at a [Stop](/general-information.md#stops) by embedding the `stop_id` property in the Feature's `properties` object.
+| `associated_ticket` | String | Optional | Identifier for an associated ticket inside an Agency-maintained 311 or CRM system |
 
 ### Status Changes Query Parameters
 
@@ -326,6 +346,8 @@ The `/events` endpoint functions similarly to `/status_changes`, but shall not i
 Unless stated otherwise by the municipality, this endpoint must return only those events with an `event_location` that [intersects][intersection] with the [municipality boundary][muni-boundary].
 
 > Note: As a result of this definition, consumers should query the [trips endpoint][trips] to infer when vehicles enter or leave the municipality boundary.
+
+See also [Stop-based Geographic Data][stop-based-geo].
 
 The schema and datatypes are the same as those defined for [`/status_changes`][status].
 
@@ -408,8 +430,8 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 | `last_event_time` | [timestamp][ts] | Required | Date/time when last state change occurred. See [Event Times][event-times] |
 | `last_vehicle_state` | Enum | Required | [Vehicle state][vehicle-states] of most recent state change. |
 | `last_event_types` | Enum[] | Required | [Vehicle event(s)][vehicle-events] of most recent state change, allowable values determined by `last_vehicle_state`. |
-| `last_event_location` | GeoJSON [Point Feature][geo]| Required | Location of vehicle's last event |
-| `current_location` | GeoJSON [Point Feature][geo] | Required if Applicable | Current location of vehicle if different from last event, and the vehicle is not currently on a trip |
+| `last_event_location` | GeoJSON [Point Feature][geo]| Required | Location of vehicle's last event. See also [Stop-based Geographic Data][stop-based-geo]. |
+| `current_location` | GeoJSON [Point Feature][geo] | Required if Applicable | Current location of vehicle if different from last event, and the vehicle is not currently on a trip. See also [Stop-based Geographic Data][stop-based-geo]. |
 | `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |
 
 [Top][toc]
@@ -425,6 +447,7 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 [event-times]: #event-times
 [gbfs]: https://github.com/NABSA/gbfs
 [general-information]: /general-information.md
+[general-stops]: /general-information.md#stops
 [geo]: #geographic-data
 [geojson-feature]: https://tools.ietf.org/html/rfc7946#section-3.2
 [geojson-feature-collection]: https://tools.ietf.org/html/rfc7946#section-3.3
@@ -440,6 +463,7 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 [status]: #status-changes
 [status-schema]: status_changes.json
 [stops]: #stops
+[stop-based-geo]: #stop-based-geographic-data
 [st-intersects]: https://postgis.net/docs/ST_Intersects.html
 [toc]: #table-of-contents
 [trips]: #trips
