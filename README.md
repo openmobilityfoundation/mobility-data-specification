@@ -23,7 +23,7 @@ To stay up to date on MDS releases, meetings, and events, please **subscribe to 
 
 The Mobility Data Specification is an open source project with all development taking place on GitHub. Comments and ideas can be shared by [creating an issue](https://github.com/openmobilityfoundation/mobility-data-specification/issues), and specific changes can be suggested by [opening a pull request](https://github.com/openmobilityfoundation/mobility-data-specification/pulls). Before contributing, please review our OMF [CONTRIBUTING page](https://github.com/openmobilityfoundation/governance/blob/main/CONTRIBUTING.md) to understand guidelines and policies for participation and our [CODE OF CONDUCT page](https://github.com/openmobilityfoundation/governance/blob/main/CODE_OF_CONDUCT.md).
 
-You can learn more about the polices, methodolgies, and tools in the MDS ecosystem in the [Mobility Data Management State of Practice](https://github.com/openmobilityfoundation/privacy-committee/wiki/Mobility-Data-Management-State-of-Practice) wiki.
+You can learn more about the polices, methodolgies, and tools in the MDS ecosystem in the [Mobility Data Management State of Practice](https://github.com/openmobilityfoundation/privacy-committee/blob/main/mobility-data-state-of-practice.md) wiki.
 
 You can also get involved in development by joining an OMF working group. The working groups maintain the OMF GitHub repositories and work through issues and pull requests. Each working group has its own mailing list for non-technical discussion and planning:
 
@@ -42,8 +42,8 @@ The latest MDS release is in the [`main`](https://github.com/openmobilityfoundat
 
 The MDS specification is versioned using Git tags and [semantic versioning](https://semver.org/). See prior [releases](https://github.com/openmobilityfoundation/mobility-data-specification/releases) and the [Release Guidelines](https://github.com/openmobilityfoundation/governance/blob/main/technical/ReleaseGuidelines.md) for more information.
 
-* [Latest Release (main)](https://github.com/openmobilityfoundation/mobility-data-specification/tree/main)
-* [Development Release (dev)](https://github.com/openmobilityfoundation/mobility-data-specification/tree/dev)
+* [Latest Release](https://github.com/openmobilityfoundation/mobility-data-specification/tree/main) (main)
+* [Development Release](https://github.com/openmobilityfoundation/mobility-data-specification/tree/dev) (dev)
 * [All Releases](https://github.com/openmobilityfoundation/mobility-data-specification/releases)
 * [Release Timeline](https://github.com/openmobilityfoundation/mobility-data-specification/wiki#mds-releases)
 * [Release Guidelines](https://github.com/openmobilityfoundation/governance/blob/main/technical/ReleaseGuidelines.md)
