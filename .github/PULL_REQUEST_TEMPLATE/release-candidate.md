@@ -3,7 +3,7 @@ name: Release Candidate
 about: Initiate discussion to obtain OMF approval for new release
 title: Release Candidate [X.Y.Z]
 labels: admin
-assignees: jfh01
+assignees: @openmobilityfoundation/omf-admin
 
 ---
 
