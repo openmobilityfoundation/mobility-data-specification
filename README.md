@@ -38,13 +38,15 @@ For questions about MDS please contact [info@openmobilityfoundation.org](mailto:
 
 ## Versions
 
-The specification will be versioned using Git tags and [semantic versioning](https://semver.org/). See prior [releases](https://github.com/openmobilityfoundation/mobility-data-specification/releases) and the [Release Guidelines](https://github.com/openmobilityfoundation/governance/blob/main/technical/ReleaseGuidelines.md) for more information.
+The latest MDS release is in the [`main`](https://github.com/openmobilityfoundation/mobility-data-specification/tree/main) branch, and preparation for the next release occurs in the [`dev`](https://github.com/openmobilityfoundation/mobility-data-specification/tree/dev) branch.
 
-Information about the latest release and all releases are below. Please note, you may be viewing a development copy of the Mobility Data Specification based on the current branch. Info about the latest release and all releases is below.
+The MDS specification is versioned using Git tags and [semantic versioning](https://semver.org/). See prior [releases](https://github.com/openmobilityfoundation/mobility-data-specification/releases) and the [Release Guidelines](https://github.com/openmobilityfoundation/governance/blob/main/technical/ReleaseGuidelines.md) for more information.
 
-* [Latest Release](https://github.com/openmobilityfoundation/mobility-data-specification/tree/main)
-
+* [Latest Release (main)](https://github.com/openmobilityfoundation/mobility-data-specification/tree/main)
+* [Development Release (dev)](https://github.com/openmobilityfoundation/mobility-data-specification/tree/dev)
 * [All Releases](https://github.com/openmobilityfoundation/mobility-data-specification/releases)
+* [Release Timeline](https://github.com/openmobilityfoundation/mobility-data-specification/wiki#mds-releases)
+* [Release Guidelines](https://github.com/openmobilityfoundation/governance/blob/main/technical/ReleaseGuidelines.md)
 
 ## Cities Using MDS
 
