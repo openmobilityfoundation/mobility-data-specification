@@ -2,15 +2,13 @@
 
 > Release Date: TBD
 
-> Release Candidate Date: week of June 29, 2020
+> Release Candidate submitted 2020-07-01
 
-The 1.0.0 release reconciles many parts of the MDS specifiction and adds features and updates requested by the community, including support for Stops (for docked vehicles, dockless corrals, parking areas) and adding rates to Policy.
+The 1.0.0 release reconciles many parts of the MDS specification and adds features and updates requested by the community, including support for Stops (for docked vehicles, dockless corrals, parking areas) and adding rates to Policy.
 
 ### CHANGES
 
 See the PRs tagged with [Milestone 1.0.0](https://github.com/openmobilityfoundation/mobility-data-specification/milestone/9) for a full list of changes.
-
-_Here is some of what was added or changed._
 
 *_MDS_*
 
