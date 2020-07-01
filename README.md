@@ -80,7 +80,7 @@ for Shareable Dockless Mobility Device Permit Holders](https://www.atlantaga.gov
 
 * _add a city here by [opening a pull request](https://github.com/openmobilityfoundation/mobility-data-specification/compare/dev...dev) or [making an issue](https://github.com/openmobilityfoundation/mobility-data-specification/issues/new?assignees=&labels=&template=feature-request---proposal.md&title=)_.
 
-Other cities include Baltimore, Bellevue, Charlotte, Oakland, and Seattle, via the [NACTO Guidelines for Regulating Shared Micromobility](https://nacto.org/wp-content/uploads/2019/09/NACTO_Shared_Micromobility_Guidelines_Web.pdf), page 48.
+Other cities include Baltimore, Bellevue, Charlotte, and Oakland, as mentioned in the [NACTO Guidelines for Regulating Shared Micromobility](https://nacto.org/wp-content/uploads/2019/09/NACTO_Shared_Micromobility_Guidelines_Web.pdf), page 48.
 
 ## Use Cases
 Some examples of how cities are using MDS in practice:
