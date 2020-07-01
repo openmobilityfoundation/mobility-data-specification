@@ -8,11 +8,16 @@ This document contains specifications that are shared between the various MDS AP
 * [Costs and Currencies](#costs-and-currencies)
 * [Definitions](#definitions)
 * [Devices](#devices)
+* [Geographic Data][geo]
+  * [Stop-based Geographic Data](#stop-based-geographic-data)
+  * [Intersection Operation](#intersection-operation)
 * [Propulsion Types](#propulsion-types)
 * [Responses](#responses)
   * [Error Messages](#error-messages)
 * [Strings](#strings)
 * [Stops](#stops)
+  * [Stop Status](#stop-status)
+  * [GBFS Compatibility](#gbfs-compatibility)
 * [Timestamps](#timestamps)
 * [UUIDs](#uuids)
 * [Vehicle States](#vehicle-states)
@@ -56,6 +61,61 @@ Defining terminology and abbreviations used throughout MDS.
 MDS defines the *device* as the unit that transmits GPS or GNSS signals for a particular vehicle. A given device must have a UUID (`device_id` below) that is unique within the Provider's fleet.
 
 Additionally, `device_id` must remain constant for the device's lifetime of service, regardless of the vehicle components that house the device.
+
+[Top][toc]
+
+## Geographic Data
+
+References to geographic datatypes (Point, MultiPolygon, etc.) imply coordinates encoded in the [WGS 84 (EPSG:4326)][wgs84] standard GPS or GNSS projection expressed as [Decimal Degrees][decimal-degrees].
+
+Whenever an individual location coordinate measurement is presented, it must be
+represented as a GeoJSON [`Feature`][geojson-feature] object with a corresponding [`timestamp`][ts] property and [`Point`][geojson-point] geometry:
+
+```json
+{
+    "type": "Feature",
+    "properties": {
+        "timestamp": 1529968782421
+    },
+    "geometry": {
+        "type": "Point",
+        "coordinates": [
+            -118.46710503101347,
+            33.9909333514159
+        ]
+    }
+}
+```
+
+### Stop-based Geographic Data
+
+When an individual location coordinate measurement corresponds to a [Stop][general-stops],
+it must be presented with a `stop_id` property:
+
+```json
+{
+    "type": "Feature",
+    "properties": {
+        "timestamp": 1529968782421,
+        "stop_id": "b813cde2-a41c-4ae3-b409-72ff221e003d"
+    },
+    "geometry": {
+        "type": "Point",
+        "coordinates": [
+            -118.46710503101347,
+            33.9909333514159
+        ]
+    }
+}
+```
+
+### Intersection Operation
+
+For the purposes of this specification, the intersection of two geographic datatypes is defined according to the [`ST_Intersects` PostGIS operation][st-intersects]
+
+> If a geometry or geography shares any portion of space then they intersect. For geography -- tolerance is 0.00001 meters (so any points that are close are considered to intersect).
+>
+> Overlaps, Touches, Within all imply spatial intersection. If any of the aforementioned returns true, then the geometries also spatially intersect. Disjoint implies false for spatial intersection.
 
 [Top][toc]
 
@@ -108,7 +168,7 @@ All String fields, such as `vehicle_id`, are limited to a maximum of 255 charact
 
 ## Stops
 
-**Stops** describe vehicle trip end locations in a pre-designated physical place. They can vary from docking stations with or without charging, corrals with lock-to railings, or suggested parking areas marked with spray paint.  **Stops** are used in both [Provider](/provider#stops) (including routes and event locations) and [Agency](/agency#stops) (including telemetry data).
+Stops describe vehicle trip start and end locations in a pre-designated physical place. They can vary from docking stations with or without charging, corrals with lock-to railings, or suggested parking areas marked with spray paint. Stops are used in both [Provider](/provider#stops) (including routes and event locations) and [Agency](/agency#stops) (including telemetry data).
 
 | Field                  | Type                                                        | Required/Optional | Description                                                                                  |
 |------------------------|-------------------------------------------------------------|-------------------|----------------------------------------------------------------------------------------------|
@@ -120,13 +180,13 @@ All String fields, such as `vehicle_id`, are limited to a maximum of 255 charact
 | capacity               | {vehicle_type: number}                                      | Required          | Number of total spaces per vehicle_type                                                      |
 | num_vehicles_available | {vehicle_type: number}                                      | Required          | How many vehicles are available per vehicle_type at this stop?                               |
 | num_vehicles_disabled  | {vehicle_type: number}                                      | Required          | How many vehicles are unavailable/reserved per vehicle_type at this stop?                    |
-| managed_by             | UUID                                                        | Optional          | `provider_id` for the provider which manages this stop. null/undefined if city managed.      |
+| provider_id            | UUID                                                        | Optional          | UUID for the Provider managing this stop. Null/undefined if managed by an Agency.    |
 | geography_id           | UUID                                                        | Optional          | Pointer to the Geography that represents the Stop geospatially                               |
 | region_id              | string                                                      | Optional          | ID of the region where station is located, see [GBFS Station Information][gbfs-station-info] |
 | short_name             | String                                                      | Optional          | Abbreviated stop name                                                                        |
 | address                | String                                                      | Optional          | Postal address (useful for directions)                                                       |
 | post_code              | String                                                      | Optional          | Postal code (e.g. `10036`)                                                                   |
-| rental_methods         | [Enum][gbfs-station-info]                                   | Optional          | Payment methods accepted at stop, see [GBFS Rental Methods][gbfs-station-info]               |
+| rental_methods         | [Enum[]][gbfs-station-info]                                 | Optional          | List of payment methods accepted at stop, see [GBFS Rental Methods][gbfs-station-info]               |
 | cross_street           | String                                                      | Optional          | Cross street of where the station is located.                                                |
 | num_spaces_available   | {vehicle_type: number}                                      | Optional          | How many spaces are free to be populated with vehicles at this stop?                         |
 | num_spaces_disabled    | {vehicle_type: number}                                      | Optional          | How many spaces are disabled and unable to accept vehicles at this stop?                     |
@@ -146,11 +206,11 @@ All String fields, such as `vehicle_id`, are limited to a maximum of 255 charact
 Example of the **Stop Status** object with properties listed:
 
 ```json
- {
+{
   "is_installed": true,
   "is_renting": false,
   "is_returning": true
- }
+}
 ```
 
 ### GBFS Compatibility
@@ -241,7 +301,7 @@ The *State Machine Diagram* shows how the `vehicle_state` and `event_type` relat
 
 ## Vehicle Types
 
-The list of allowed `vehicle_type` values in MDS is:
+The list of allowed `vehicle_type` values in MDS. Aligning with [GBFS vehicle types form factors](https://github.com/NABSA/gbfs/blob/master/gbfs.md#vehicle_typesjson-added-in-v21-rc).
 
 | `vehicle_type` | Description |
 |--------------| --- |
@@ -249,6 +309,7 @@ The list of allowed `vehicle_type` values in MDS is:
 | car          | Any automobile |
 | scooter      | Any motorized mobility device intended for one rider |
 | moped        | A motorcycle/bicycle hybrid that can be powered or pedaled |
+| other        | A device that does not fit in the other categories |
 
 [Top][toc]
 
@@ -277,8 +338,16 @@ If an unsupported or invalid version is requested, the API must respond with a s
 [Top][toc]
 
 [agency]: /agency/README.md
+[decimal-degrees]: https://en.wikipedia.org/wiki/Decimal_degrees
 [gbfs-station-info]: https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_informationjson
 [gbfs-station-status]: https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_statusjson
+[general-stops]: /general-information.md#stops
+[geo]: #geographic-data
+[geojson-feature]: https://tools.ietf.org/html/rfc7946#section-3.2
+[geojson-point]: https://tools.ietf.org/html/rfc7946#section-3.1.2
 [policy]: /policy/README.md
 [provider]: /provider/README.md
+[st-intersects]: https://postgis.net/docs/ST_Intersects.html
 [toc]: #table-of-contents
+[ts]: /general-information.md#timestamps
+[wgs84]: https://en.wikipedia.org/wiki/World_Geodetic_System
