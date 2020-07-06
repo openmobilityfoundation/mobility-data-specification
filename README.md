@@ -82,6 +82,10 @@ for Shareable Dockless Mobility Device Permit Holders](https://www.atlantaga.gov
 
 Other cities include Baltimore, Bellevue, Charlotte, and Oakland, as mentioned in the [NACTO Guidelines for Regulating Shared Micromobility](https://nacto.org/wp-content/uploads/2019/09/NACTO_Shared_Micromobility_Guidelines_Web.pdf), page 48.
 
+## Providers Using MDS
+
+Over two dozen mobility service providers around the world use MDS, allowing them to create tools around a single data standard for multiple cities.  For a full list, see the MDS [provider list](/providers.csv).
+
 ## Use Cases
 Some examples of how cities are using MDS in practice:
 
