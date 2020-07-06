@@ -99,6 +99,8 @@ Some examples of how cities are using MDS in practice:
 - Inform micromobility policy making – number of scooters, distribution, etc.
 - Develop ways to communicate dynamic information on unplanned events, such as emergency road closures, water main breaks, etc. to mobility providers to help them keep their users and contractors informed for better route planning and re-balancing efforts.
 
+More details and examples can be seen on our [Wiki](https://github.com/openmobilityfoundation/governance/wiki/MDS-Use-Cases).
+
 ## Related Projects
 
 ### Open Mobility Foundation
