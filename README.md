@@ -16,6 +16,8 @@ The Mobility Data Specification (**MDS**), a project of the [Open Mobility Found
 
 MDS is designed to be a modular kit-of-parts. Regulatory agencies can use the components of the API that are appropriate for their needs. An agency may choose to use only `agency`, `provider`, or `policy`. Or they may select specific elements (endpoints) from each to help them implement their goals.
 
+Many parts of the MDS definitions and APIs align across each other.  In these cases, consolidated information can be found on the [General Information](/general-information.md) page.
+
 You can read more about the different APIs here: **[Understanding the different MDS APIs](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/Understanding-MDS-APIs)**
 
 ## Learn More / Get Involved / Contributing
