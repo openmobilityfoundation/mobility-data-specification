@@ -1,10 +1,27 @@
 # Mobility Data Specification
 
+## Table of Contents
+
+- [About](#about)
+- [Endpoints](#endpoints)
+- [Get Involved](#get-involved)
+- [Versions](#versions)
+- [Cities Using MDS](#cities-using-mds)
+- [Providers Using MDS](#providers-using-mds)
+- [Use Cases](#use-cases)
+- [Related Projects](#related-projects)
+
+## About
+
 The Mobility Data Specification (**MDS**), a project of the [Open Mobility Foundation](http://www.openmobilityfoundation.org) (OMF), is a set of Application Programming Interfaces (APIs) focused on dockless e-scooters, bicycles, mopeds and carshare. Inspired by projects like [GTFS](https://developers.google.com/transit/gtfs/reference/) and [GBFS](https://github.com/NABSA/gbfs), the goals of MDS are to provide a standardized way for municipalities or other regulatory agencies to ingest, compare and analyze data from mobility service providers, and to give municipalities the ability to express regulation in machine-readable formats.
 
 **MDS** helps cities interact with companies who operate dockless scooters, bicycles, mopeds and carshare in the public right-of-way. MDS is a key piece of digital infrastructure that supports the effective implementation of mobility policies in cities around the world.
 
 **MDS** is an open-source project. It was originally created by the [Los Angeles Department of Transportation](http://ladot.io) (LADOT). In November 2019, stewardship of MDS and the ownership of this repository was transferred to the Open Mobility Foundation. GitHub automatically redirects any links to this repository in the `CityOfLosAngeles` organization to the `openmobilityfoundation` instead. MDS continues to be used by LADOT and many other municipalities.
+
+[Top][toc]
+
+## Endpoints
 
 **MDS** is currently comprised of three distinct components:
 
@@ -16,11 +33,14 @@ The Mobility Data Specification (**MDS**), a project of the [Open Mobility Found
 
 MDS is designed to be a modular kit-of-parts. Regulatory agencies can use the components of the API that are appropriate for their needs. An agency may choose to use only `agency`, `provider`, or `policy`. Or they may select specific elements (endpoints) from each to help them implement their goals.
 
-Many parts of the MDS definitions and APIs align across each other.  In these cases, consolidated information can be found on the [General Information](/general-information.md) page.
+Many parts of the MDS definitions and APIs align across each other. In these cases, consolidated information can be found on the [General Information](/general-information.md) page.
 
 You can read more about the different APIs here: **[Understanding the different MDS APIs](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/Understanding-MDS-APIs)**
 
-## Learn More / Get Involved / Contributing
+[Top][toc]
+
+## Get Involved
+
 To stay up to date on MDS releases, meetings, and events, please **subscribe to the [mds-announce](https://groups.google.com/a/groups.openmobilityfoundation.org/forum/#!forum/mds-announce) mailing list.**
 
 The Mobility Data Specification is an open source project with all development taking place on GitHub. Comments and ideas can be shared by [creating an issue](https://github.com/openmobilityfoundation/mobility-data-specification/issues), and specific changes can be suggested by [opening a pull request](https://github.com/openmobilityfoundation/mobility-data-specification/pulls). Before contributing, please review our OMF [CONTRIBUTING page](https://github.com/openmobilityfoundation/governance/blob/main/CONTRIBUTING.md) to understand guidelines and policies for participation and our [CODE OF CONDUCT page](https://github.com/openmobilityfoundation/governance/blob/main/CODE_OF_CONDUCT.md).
@@ -38,6 +58,8 @@ You can view info about past releases and planning calls in the [wiki](https://g
 
 For questions about MDS please contact [info@openmobilityfoundation.org](mailto:info@openmobilityfoundation.org). Media inquiries to [media@openmobilityfoundation.org](mailto:media@openmobilityfoundation.org)
 
+[Top][toc]
+
 ## Versions
 
 The latest MDS release is in the [`main`](https://github.com/openmobilityfoundation/mobility-data-specification/tree/main) branch, and preparation for the next release occurs in the [`dev`](https://github.com/openmobilityfoundation/mobility-data-specification/tree/dev) branch.
@@ -49,6 +71,8 @@ The MDS specification is versioned using Git tags and [semantic versioning](http
 * [All Releases](https://github.com/openmobilityfoundation/mobility-data-specification/releases)
 * [Release Timeline](https://github.com/openmobilityfoundation/mobility-data-specification/wiki#mds-releases)
 * [Release Guidelines](https://github.com/openmobilityfoundation/governance/blob/main/technical/ReleaseGuidelines.md)
+
+[Top][toc]
 
 ## Cities Using MDS
 
@@ -84,6 +108,14 @@ for Shareable Dockless Mobility Device Permit Holders](https://www.atlantaga.gov
 
 Other cities include Baltimore, Bellevue, Charlotte, and Oakland, as mentioned in the [NACTO Guidelines for Regulating Shared Micromobility](https://nacto.org/wp-content/uploads/2019/09/NACTO_Shared_Micromobility_Guidelines_Web.pdf), page 48.
 
+[Top][toc]
+
+## Providers Using MDS
+
+Over two dozen mobility service providers around the world use MDS, allowing them to create tools around a single data standard for multiple cities.  For a full list, see the MDS [provider list](/providers.csv).
+
+[Top][toc]
+
 ## Use Cases
 Some examples of how cities are using MDS in practice:
 
@@ -100,6 +132,8 @@ Some examples of how cities are using MDS in practice:
 - Develop ways to communicate dynamic information on unplanned events, such as emergency road closures, water main breaks, etc. to mobility providers to help them keep their users and contractors informed for better route planning and re-balancing efforts.
 
 More details and examples can be seen on our [Wiki](https://github.com/openmobilityfoundation/governance/wiki/MDS-Use-Cases).
+
+[Top][toc]
 
 ## Related Projects
 
@@ -131,6 +165,9 @@ More details and examples can be seen on our [Wiki](https://github.com/openmobil
 
 Please open a pull request if you create open source or private tools for implementing or working with MDS data.
 
+[Top][toc]
+
 [agency]: /agency/README.md
 [provider]: /provider/README.md
 [policy]: /policy/README.md
+[toc]: #table-of-contents
