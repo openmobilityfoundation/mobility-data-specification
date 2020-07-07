@@ -34,7 +34,7 @@ Many parts of the MDS definitions and APIs align across each other. In these cas
 
 You can read more about the different APIs here: **[Understanding the different MDS APIs](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/Understanding-MDS-APIs)**
 
-## Learn More / Get Involved / Contributing
+## Get Involved
 
 To stay up to date on MDS releases, meetings, and events, please **subscribe to the [mds-announce](https://groups.google.com/a/groups.openmobilityfoundation.org/forum/#!forum/mds-announce) mailing list.**
 
@@ -155,3 +155,4 @@ Please open a pull request if you create open source or private tools for implem
 [agency]: /agency/README.md
 [provider]: /provider/README.md
 [policy]: /policy/README.md
+x
