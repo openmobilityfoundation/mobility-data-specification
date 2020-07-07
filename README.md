@@ -4,7 +4,7 @@
 
 - [About](#about)
 - [Endpoints](#endpoints)
-- [Get Involved](#learn-more-/-get-involved-/-contributing)
+- [Get Involved](#get-involved)
 - [Versions](#versions)
 - [Cities Using MDS](#cities-using-mds)
 - [Use Cases](#use-cases)
