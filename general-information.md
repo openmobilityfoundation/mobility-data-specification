@@ -177,7 +177,7 @@ Stops describe vehicle trip start and end locations in a pre-designated physical
 | last_reported          | Timestamp                                                   | Required          | Date/Time that the stop was last updated                                                     |
 | location               | GeoJSON [Point Feature](provider/README.md#geographic-data) | Required          | Location of the Stop                                                                         |
 | status                 | [Stop Status](#stop-status)                                 | Required          | Object representing the status of the Stop. See [Stop Status](#stop-status).                 |
-| capacity               | {vehicle_type: number}                                      | Required          | Number of total spaces per vehicle_type                                                      |
+| capacity               | {vehicle_type: number}                                      | Required          | Number of total places per vehicle_type                                                      |
 | num_vehicles_available | {vehicle_type: number}                                      | Required          | How many vehicles are available per vehicle_type at this stop?                               |
 | num_vehicles_disabled  | {vehicle_type: number}                                      | Required          | How many vehicles are unavailable/reserved per vehicle_type at this stop?                    |
 | provider_id            | UUID                                                        | Optional          | UUID for the Provider managing this stop. Null/undefined if managed by an Agency.  See MDS [provider list](/providers.csv).  |
@@ -188,8 +188,8 @@ Stops describe vehicle trip start and end locations in a pre-designated physical
 | post_code              | String                                                      | Optional          | Postal code (e.g. `10036`)                                                                   |
 | rental_methods         | [Enum[]][gbfs-station-info]                                 | Optional          | List of payment methods accepted at stop, see [GBFS Rental Methods][gbfs-station-info]               |
 | cross_street           | String                                                      | Optional          | Cross street of where the station is located.                                                |
-| num_spaces_available   | {vehicle_type: number}                                      | Optional          | How many spaces are free to be populated with vehicles at this stop?                         |
-| num_spaces_disabled    | {vehicle_type: number}                                      | Optional          | How many spaces are disabled and unable to accept vehicles at this stop?                     |
+| num_places_available   | {vehicle_type: number}                                      | Optional          | How many places are free to be populated with vehicles at this stop?                         |
+| num_places_disabled    | {vehicle_type: number}                                      | Optional          | How many places are disabled and unable to accept vehicles at this stop?                     |
 | parent_stop            | UUID                                                        | Optional          | Describe a basic hierarchy of stops (e.g.a stop inside of a greater stop)                    |
 | devices               | UUID[]                                                      | Optional          | List of device_ids for vehicles which are currently at this stop                             |
 

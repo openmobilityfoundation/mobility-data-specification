@@ -26,7 +26,7 @@ See the PRs tagged with [Milestone 1.0.0](https://github.com/openmobilityfoundat
    * [Updating 'master' to 'main' as default branch name](https://github.com/openmobilityfoundation/mobility-data-specification/pull/522)
    * [Update providers.csv to add Superpedestrian](https://github.com/openmobilityfoundation/mobility-data-specification/pull/535)
    * [Removed Options version negotiation](https://github.com/openmobilityfoundation/mobility-data-specification/pull/536#pullrequestreview-439364663)
-   * [Added 'other' vechicle type](https://github.com/openmobilityfoundation/mobility-data-specification/issues/518)
+   * [Added 'other' vehicle type](https://github.com/openmobilityfoundation/mobility-data-specification/issues/518)
 
 *_Provider_*
 
