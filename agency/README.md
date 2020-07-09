@@ -108,7 +108,6 @@ Body Params:
 | `vehicle_id` | String  | Required          | Vehicle Identification Number (vehicle_id) visible on vehicle        |
 | `vehicle_type`       | Enum    | Required          | [Vehicle Type][vehicle-types]                                        |
 | `propulsion_types` | Enum[]  | Required          | Array of [Propulsion Type][propulsion-types]; allows multiple values |
-| `provider_id`| UUID    | Optional          | Provider to which the vehicle belongs if different from the authenticated provider. See MDS [provider list](/providers.csv). |
 | `year`       | Integer | Optional          | Year Manufactured                                                    |
 | `mfgr`       | String  | Optional          | Vehicle Manufacturer                                                 |
 | `model`      | String  | Optional          | Vehicle Model                                                        |
