@@ -102,33 +102,33 @@ Supports querying one or more metrics with the following parameters.
 
 ### Parameters
 
-| Name             | Type     | Required | Comments                                                                            |
-| ---------------- | -------- | -------- | ----------------------------------------------------------------------------------- |
-| `metrics`        | string[] | Yes      | list of metrics to return. [See metric names](core_metrics.md)                      |
-| `start_date`     | datetime | Yes      | Start date to fetch metrics.  Minute (MM) must be divisible the specified interval. |
-| `interval`       | duration | Yes      | Duration for metrics intervals.                                                     |
-| `interval_count` | integer  | No       | Number of intervals to return. Default = 1                                          |
-| `dimensions`     | string[] | No       | List of dimension names. [See dimensions.](#dimensions)                             |
-| `filters`        | filter[] | No       | Filters for metrics to return of format. [See filters.](#filters)                   |
-| `filter.name`    | string   | No       | Name of filter (e.g. 'vehicle_type')                                                |
-| `filter.values`  | string[] | No       | List of values to filter for (e.g ['car', 'moped'])                                 |
+| Name             | Type     | Required | Comments                                                          |
+| ---------------- | -------- | -------- | ----------------------------------------------------------------- |
+| `metrics`        | string[] | Yes      | list of metrics to return. [See metric names](core_metrics.md)    |
+| `interval`       | duration | Yes      | Duration for metrics intervals.                                   |
+| `start_date`     | datetime | Yes      | Start date to fetch metrics.                                      |
+| `end_date`       | datetime | No       | End date to fetch metrics.                                        |
+| `dimensions`     | string[] | No       | List of dimension names. [See dimensions.](#dimensions)           |
+| `filters`        | filter[] | No       | Filters for metrics to return of format. [See filters.](#filters) |
+| `filter.name`    | string   | No       | Name of filter (e.g. 'vehicle_type')                              |
+| `filter.values`  | string[] | No       | List of values to filter for (e.g ['car', 'moped'])               |
 
 ### Response
 
-| Name                   | Type       | Required | Comments                                                        |
-| ---------------------- | ---------- | -------- | --------------------------------------------------------------- |
-| `id`                   | uuid       | Yes      | Unique id for query                                             |
-| `query.metrics`        | string[]   | Yes      | List of metrics to return.                                      |
-| `query.start_date`     | datetime   | Yes      | Start date for fetched metrics.                                 |
-| `query.interval`       | duration   | Yes      | Duration for metrics intervals.                                 |
-| `query.interval_count` | integer    | Yes      | Number of intervals to return.                                  |
-| `query.dimensions`     | string[]   | No       | List of dimensions.                                             |
-| `query.filters`        | filter[]   | No       | Filters for metric calculation.                                 |
-| `columns`              | column[]   | Yes      | Array of column information                                     |
-| `column.name`          | string     | Yes      | Name of metric or dimension column.                             |
-| `column.column_type`   | string     | Yes      | ‘metric’ or ‘dimension’                                         |
-| `column.data_type`     | string     | Yes      | Data type of column.                                            |
-| `rows`                 | values[][] | Yes      | Array of row arrays containing the dimension and metric values. |
+| Name                   | Type       | Comments                                                        |
+| ---------------------- | ---------- | --------------------------------------------------------------- |
+| `id`                   | uuid       | Unique id for query                                             |
+| `query.metrics`        | string[]   | List of metrics to return.                                      |
+| `query.interval`       | duration   | Duration for metrics intervals.                                 |
+| `query.start_date`     | datetime   | Start date for fetched metrics.                                 |
+| `query.end_date`       | datetime   | Number of intervals to return.                                  |
+| `query.dimensions`     | string[]   | List of dimensions.                                             |
+| `query.filters`        | filter[]   | Filters for metric calculation.                                 |
+| `columns`              | column[]   | Array of column information                                     |
+| `column.name`          | string     | Name of metric or dimension column.                             |
+| `column.column_type`   | string     | ‘metric’ or ‘dimension’                                         |
+| `column.data_type`     | string     | Data type of column.                                            |
+| `rows`                 | values[][] | Array of row arrays containing the dimension and metric values. |
 
 ### Response Schema
 ```js
@@ -136,9 +136,9 @@ Supports querying one or more metrics with the following parameters.
   "id": string,
   "query": {
     "metrics": [string],
-    "start_date": datetime,
-    "interval_count": number,
     "interval": duration,
+    "start_date": datetime,
+    "end_date": datetime,
     "dimensions": [string],
     "filters": [
       {
@@ -166,9 +166,9 @@ Supports querying one or more metrics with the following parameters.
 POST /metrics
 {
   "metrics": ["dockless.utilization.avg","trips.count"],
-  "start_date": "2019-10-21T00:00-07",
   "interval": "P1D",
-  "interval_count": 7,
+  "start_date": "2019-10-21T00:00-07",
+  "end_date": "2019-10-28T00:00-07",
   "dimensions": ["vehicle_type"]
 }
 ```
@@ -177,9 +177,9 @@ POST /metrics
 {
   "id": "44428624-186b-4fc3-a7fb-124f487464a1",
   "query": {
-    "start_date": "2019-10-21T00:00-07",
-    "interval_count": 7,
     "interval": "P1D",
+    "start_date": "2019-10-21T00:00-07",
+    "end_date": "2019-10-28T00:00-07",
     "metrics": [
       "dockless.utilization.avg",
       "trips.count"
