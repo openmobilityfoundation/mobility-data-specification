@@ -102,33 +102,35 @@ Supports querying one or more metrics with the following parameters.
 
 ### Parameters
 
-| Name             | Type     | Required | Comments                                                          |
-| ---------------- | -------- | -------- | ----------------------------------------------------------------- |
-| `metrics`        | string[] | Yes      | list of metrics to return. [See metric names](core_metrics.md)    |
-| `interval`       | duration | Yes      | Duration for metrics intervals.                                   |
-| `start_date`     | datetime | Yes      | Start date to fetch metrics.                                      |
-| `end_date`       | datetime | No       | End date to fetch metrics.                                        |
-| `dimensions`     | string[] | No       | List of dimension names. [See dimensions.](#dimensions)           |
-| `filters`        | filter[] | No       | Filters for metrics to return of format. [See filters.](#filters) |
-| `filter.name`    | string   | No       | Name of filter (e.g. 'vehicle_type')                              |
-| `filter.values`  | string[] | No       | List of values to filter for (e.g ['car', 'moped'])               |
+| Name            | Type     | Required | Comments                                                          |
+| --------------- | -------- | -------- | ----------------------------------------------------------------- |
+| `metrics`       | string[] | Yes      | list of metrics to return. [See metric names](core_metrics.md)    |
+| `interval`      | duration | Yes      | Duration for metrics intervals.                                   |
+| `start_date`    | datetime | Yes      | Start date to fetch metrics.                                      |
+| `end_date`      | datetime | No       | End date to fetch metrics.                                        |
+| `dimensions`    | string[] | No       | List of dimension names. [See dimensions.](#dimensions)           |
+| `filters`       | filter[] | No       | Filters for metrics to return of format. [See filters.](#filters) |
+| `filter.name`   | string   | No       | Name of filter (e.g. 'vehicle_type')                              |
+| `filter.values` | string[] | No       | List of values to filter for (e.g ['car', 'moped'])               |
+
+Note: If `end_date` is specified, all intervals that *begin* between the specified `start_date` and the `end_date` *(inclusive)* are fetched. If `end_date` is not specified, only the interval that begins *on* the specified `start_date` is fetched. 
 
 ### Response
 
-| Name                   | Type       | Comments                                                        |
-| ---------------------- | ---------- | --------------------------------------------------------------- |
-| `id`                   | uuid       | Unique id for query                                             |
-| `query.metrics`        | string[]   | List of metrics to return.                                      |
-| `query.interval`       | duration   | Duration for metrics intervals.                                 |
-| `query.start_date`     | datetime   | Start date for fetched metrics.                                 |
-| `query.end_date`       | datetime   | Number of intervals to return.                                  |
-| `query.dimensions`     | string[]   | List of dimensions.                                             |
-| `query.filters`        | filter[]   | Filters for metric calculation.                                 |
-| `columns`              | column[]   | Array of column information                                     |
-| `column.name`          | string     | Name of metric or dimension column.                             |
-| `column.column_type`   | string     | ‘metric’ or ‘dimension’                                         |
-| `column.data_type`     | string     | Data type of column.                                            |
-| `rows`                 | values[][] | Array of row arrays containing the dimension and metric values. |
+| Name                 | Type       | Comments                                                        |
+| -------------------- | ---------- | --------------------------------------------------------------- |
+| `id`                 | uuid       | Unique id for query                                             |
+| `query.metrics`      | string[]   | From request.                                                   |
+| `query.interval`     | duration   | From Request.                                                   |
+| `query.start_date`   | datetime   | From Request.                                                   |
+| `query.end_date`     | datetime   | From Request.                                                   |
+| `query.dimensions`   | string[]   | From Request.                                                   |
+| `query.filters`      | filter[]   | From Request.                                                   |
+| `columns`            | column[]   | Array of column information                                     |
+| `column.name`        | string     | Name of metric or dimension column.                             |
+| `column.column_type` | string     | ‘metric’ or ‘dimension’                                         |
+| `column.data_type`   | string     | Data type of column.                                            |
+| `rows`               | values[][] | Array of row arrays containing the dimension and metric values. |
 
 ### Response Schema
 ```js
