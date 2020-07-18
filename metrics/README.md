@@ -106,12 +106,17 @@ Supports querying one or more metrics with the following parameters.
 | --------------- | -------- | -------- | ----------------------------------------------------------------- |
 | `metrics`       | string[] | Yes      | list of metrics to return. [See metric names](core_metrics.md)    |
 | `interval`      | duration | Yes      | Duration for metrics intervals.                                   |
-| `start_date`    | datetime | Yes      | Start date to fetch metrics.                                      |
-| `end_date`      | datetime | No       | End date to fetch metrics.                                        |
+| `start_date`    | datetime | Yes      | ISO 8601 formatted start date to fetch metrics.                   |
+| `end_date`      | datetime | No       | ISI 8601 formatted end date to fetch metrics.                     |
+| `timezone`      | timezone | No       | ISO 8601 time zone name (default: "UTC")                          |
 | `dimensions`    | string[] | No       | List of dimension names. [See dimensions.](#dimensions)           |
 | `filters`       | filter[] | No       | Filters for metrics to return of format. [See filters.](#filters) |
 | `filter.name`   | string   | No       | Name of filter (e.g. 'vehicle_type')                              |
 | `filter.values` | string[] | No       | List of values to filter for (e.g ['car', 'moped'])               |
+
+Note: If `timezone` is specified then `start_date`, `end_date`, and all _datetime_ column values will be 
+converted to the specified time zone. If not, parameters will be converted to and the results will be 
+displayed in UTC.
 
 Note: If `end_date` is specified, all intervals that *begin* between the specified `start_date` and the `end_date` *(inclusive)* are fetched. If `end_date` is not specified, only the interval that begins *on* the specified `start_date` is fetched. 
 
@@ -126,6 +131,7 @@ Note: If `end_date` is specified, all intervals that *begin* between the specifi
 | `query.end_date`     | datetime   | From Request.                                                   |
 | `query.dimensions`   | string[]   | From Request.                                                   |
 | `query.filters`      | filter[]   | From Request.                                                   |
+| `query.timezone`     | timezone   | From Request.                                                   |
 | `columns`            | column[]   | Array of column information                                     |
 | `column.name`        | string     | Name of metric or dimension column.                             |
 | `column.column_type` | string     | ‘metric’ or ‘dimension’                                         |
