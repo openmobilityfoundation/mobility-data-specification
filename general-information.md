@@ -22,6 +22,7 @@ This document contains specifications that are shared between the various MDS AP
 * [UUIDs](#uuids)
 * [Vehicle States](#vehicle-states)
   * [Vehicle State Events](#vehicle-state-events)
+  * [State Machine Diagram](#state-machine-diagram)
 * [Vehicle Types](#vehicle-types)
 * [Versioning](#versioning)
 
@@ -285,16 +286,20 @@ Note that to handle out-of-order events, the validity of the prior-state shall n
 | `available` | `non_operational` | `system_suspend`          | The vehicle is not available because of e.g. weather or temporary regulations |
 | `available` | `non_operational` | `unspecified`        | The vehicle became unavailable, but he Provider cannot definitively (yet) specify the reason. |
 | `unknown` | `non_operational`   | `comms_restored`        | The vehicle transmitted status information after a period of being out of communication |
+| `unknown` | `non_operational`   | `unspecified`        | The vehicle became unavailable, but he Provider cannot definitively (yet) specify the reason. |
 | `available`, `non_operational`, `elsewhere` | `removed`     | `rebalance_pick_up`  | The provider picked up the vehicle for rebalancing purposes |
 | `available`, `non_operational`, `elsewhere` | `removed`     | `maintenance_pick_up` | The provider picked up the vehicle to service it |
 | `available`, `non_operational`, `elsewhere`, `unknown` | `removed`     | `agency_pick_up`     | An agency picked up the vehicle for some reason, e.g. illegal placement |
 | `available`, `non_operational`, `elsewhere` | `removed`     | `compliance_pick_up` | The provider picked up the vehicle because it was placed in a non-compliant location |
-| `available`, `non_operational`, `removed`, `elsewhere`, `unknown` | `removed`     | `decommissioned`     | The provider has removed the vehicle from its fleet |
+| `available`, `non_operational`, `elsewhere`, `unknown` | `removed`     | `decommissioned`     | The provider has removed the vehicle from its fleet |
 | `unknown`, `non_operational`, `available`, `elsewhere` | `removed`     | `unspecified`        | The vehicle was removed, but the provider cannot definitively (yet) specify the reason |
 | `available`, `reserved`, `on_trip`, `non_operational`, `elsewhere` | `unknown`     | `missing`            | The vehicle is not at its last reported GPS location, or that location is wildly in error |
 | `available`, `reserved`, `on_trip`, `non_operational`, `elsewhere` | `unknown`     | `comms_lost`       | The vehicle is unable to transmit its GPS location or other status information |
+| `available`, `non_operational` | `unknown`     | `unspecified`       | The provider cannot definitively (yet) specify the reason for the unknown state |
 
-The *State Machine Diagram* shows how the `vehicle_state` and `event_type` relate to each other and how vehicles can transition between states. See [Google Slides](https://docs.google.com/presentation/d/1Ar2-ju8YlddSsTATvQw4YjsSa5108XtidtnJNk-UAfA/edit) for the source file.
+### State Machine Diagram
+
+The *State Machine Diagram* shows how `vehicle_state` and `event_type` relate to each other and how vehicles can transition between states. See [Google Slides](https://docs.google.com/presentation/d/1Ar2-ju8YlddSsTATvQw4YjsSa5108XtidtnJNk-UAfA/edit) for the source file.
 ![MDS State Machine Diagram](/MDS-state-machine-diagram.svg)
 
 [Top][toc]
