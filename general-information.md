@@ -233,6 +233,12 @@ MDS uses Version 1 UUIDs.
 
 [Top][toc]
 
+## Modalities
+| `modality`      | Description                                                  |
+| --------------- | ------------------------------------------------------------ |
+| `micromobility` | **FIXME** add some descriptor about micromobility            |
+| `taxi`          | **FIXME** add some descriptor about taxi                     |
+
 ## Vehicle States
 
 This table describes the list of vehicle conditions that may be used by regulators to assess the disposition of individual vehicles and fleets of vehicles.  Some of these states describe vehicles in the Public Right-of-Way (PROW), and others represent vehicles that are not.  One state (`unknown`) implies that PROW status is unknown.

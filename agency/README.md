@@ -82,6 +82,7 @@ A vehicle record is as follows:
 | `propulsion_types`  | Enum[]    | Array of [Propulsion Type][propulsion-types]; allows multiple values          |
 | `year`        | Integer   | Year Manufactured                                                             |
 | `mfgr`        | String    | Vehicle Manufacturer                                                          |
+| `modality`    | Enum      | Modality the vehicle is operating under, see [Modalities][modalities]         |
 | `model`       | String    | Vehicle Model                                                                 |
 | `state`       | Enum      | Current vehicle state. See [Vehicle State][vehicle-states]                    |
 | `prev_events`  | Enum[]      | Last [Vehicle Event][vehicle-event]                                           |
@@ -109,6 +110,7 @@ Body Params:
 | `vehicle_type`       | Enum    | Required          | [Vehicle Type][vehicle-types]                                        |
 | `propulsion_types` | Enum[]  | Required          | Array of [Propulsion Type][propulsion-types]; allows multiple values |
 | `provider_id`| UUID    | Optional          | Provider to which the vehicle belongs if different from the authenticated provider |
+| `modality`   | Enum    | Required          | Modality the vehicle is operating under, see [Modalities][modalities]|
 | `year`       | Integer | Optional          | Year Manufactured                                                    |
 | `mfgr`       | String  | Optional          | Vehicle Manufacturer                                                 |
 | `model`      | String  | Optional          | Vehicle Model                                                        |
@@ -327,6 +329,7 @@ If `stop_id` is specified, `GET` will return an array with a single stop record,
 [general]: /general-information.md
 [error-messages]: /general-information.md#error-messages
 [hdop]: https://support.esri.com/en/other-resources/gis-dictionary/term/358112bd-b61c-4081-9679-4fca9e3eb926
+[modalities]: /general-information.md#modalities
 [propulsion-types]: /general-information.md#propulsion-types
 [responses]: /general-information.md#responses
 [stops]: /general-information.md#stops
