@@ -260,6 +260,8 @@ The state-transition table below describes how the `vehicle_state` changes in re
 
 Note that to handle out-of-order events, the validity of the prior-state shall not be enforced at the time of ingest via Provider or Agency.  Events received out-of-order may result in transient incorrect vehicle states.
 
+Vehicles can enter the `unknown` state to and from any other state with the following event types: `unknown` can go to any state with event type `comms_restored`, and any state can go to `unknown` with event type `comms_lost` or `missing`.
+
 | Valid prior `vehicle_state` values | `vehicle_state` | `event_type` |  Description |
 | --- | --- | --- | --- |
 | `non_operational` | `available`   | `battery_charged`    | The vehicle became available because its battery is now charged. |
@@ -293,8 +295,9 @@ Note that to handle out-of-order events, the validity of the prior-state shall n
 | `available`, `non_operational`, `elsewhere` | `removed`     | `compliance_pick_up` | The provider picked up the vehicle because it was placed in a non-compliant location |
 | `available`, `non_operational`, `elsewhere`, `unknown` | `removed`     | `decommissioned`     | The provider has removed the vehicle from its fleet |
 | `unknown`, `non_operational`, `available`, `elsewhere` | `removed`     | `unspecified`        | The vehicle was removed, but the provider cannot definitively (yet) specify the reason |
-| `available`, `reserved`, `on_trip`, `non_operational`, `elsewhere` | `unknown`     | `missing`            | The vehicle is not at its last reported GPS location, or that location is wildly in error |
-| `available`, `reserved`, `on_trip`, `non_operational`, `elsewhere` | `unknown`     | `comms_lost`       | The vehicle is unable to transmit its GPS location or other status information |
+| `unknown` | `removed`   | `comms_restored`        | The vehicle transmitted status information after a period of being in an unknown state |
+| `available`, `reserved`, `on_trip`, `non_operational`, `elsewhere`, `removed` | `unknown`     | `missing`            | The vehicle is not at its last reported GPS location, or that location is wildly in error |
+| `available`, `reserved`, `on_trip`, `non_operational`, `elsewhere`, `removed` | `unknown`     | `comms_lost`       | The vehicle is unable to transmit its GPS location or other status information |
 | `available`, `non_operational` | `unknown`     | `unspecified`       | The provider cannot definitively (yet) specify the reason for the unknown state |
 
 ### State Machine Diagram
