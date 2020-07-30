@@ -260,7 +260,7 @@ The state-transition table below describes how the `vehicle_state` changes in re
 
 Note that to handle out-of-order events, the validity of the prior-state shall not be enforced at the time of ingest via Provider or Agency.  Events received out-of-order may result in transient incorrect vehicle states.
 
-Vehicles can enter the `unknown` state to and from any other state with the following event types: `unknown` can go to any state with event type `comms_restored`, and any state can go to `unknown` with event type `comms_lost` or `missing`.
+Vehicles can enter the `unknown` state to and from any other state with the following event types: any state can go to `unknown` with event type `comms_lost`, `missing`, or `unspecified`, and `unknown` can go to any state with event type `comms_restored` of `unspecified`.
 
 | Valid prior `vehicle_state` values | `vehicle_state` | `event_type` |  Description |
 | --- | --- | --- | --- |
@@ -301,7 +301,7 @@ Vehicles can enter the `unknown` state to and from any other state with the foll
 | `unknown` | `removed`   | `comms_restored`        | The vehicle transmitted status information after a period of being in an unknown state |
 | `unknown` | `removed`   | `unspecified`        | The provider cannot definitively state why a vehicle was removed |
 | `non_operational` | `removed`   | `unspecified`        | The provider cannot definitively state why a non-opertional vehicle was removed |
-| `available`, `reserved`, `on_trip`, `non_operational`, `elsewhere`, `removed` | `unknown`     | `missing`            | The vehicle is not at its last reported GPS location, or that location is wildly in error |
+| `available`, `elsewhere`, `non_operational`, `on_trip`, `removed`, `reserved` | `unknown`     | `missing`            | The vehicle is not at its last reported GPS location, or that location is wildly in error |
 | `available`, `elsewhere`, `non_operational`, `on_trip`, `removed`, `reserved` | `unknown`     | `comms_lost`       | The vehicle is unable to transmit its GPS location or other status information |
 | `available`, `elsewhere`, `non_operational`, `on_trip`, `removed`, `reserved` | `unknown`     | `unspecified`       | The provider cannot definitively (yet) specify the reason for the unknown state |
 
