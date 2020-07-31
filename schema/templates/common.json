@@ -517,7 +517,8 @@
               "contains": {
                 "enum": [
                   "comms_restored",
-                  "trip_leave_jurisdiction"
+                  "trip_leave_jurisdiction",
+                  "unspecified"
                 ]
               }
             }
@@ -552,7 +553,8 @@
                 "enum": [
                   "comms_restored",
                   "trip_enter_jurisdiction",
-                  "trip_start"
+                  "trip_start",
+                  "unspecified"
                 ]
               }
             }
@@ -586,7 +588,8 @@
               "contains": {
                 "enum": [
                   "comms_restored",
-                  "reservation_start"
+                  "reservation_start",
+                  "unspecified"
                 ]
               }
             }
