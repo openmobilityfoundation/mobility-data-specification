@@ -289,9 +289,8 @@ Vehicles can enter the `unknown` state to and from any other state with the foll
 | `available` | `non_operational` | `maintenance`        | The vehicle requires some non-charge-related maintenance |
 | `available` | `non_operational` | `off_hours`          | The vehicle has exited operating hours (per the regulator or per the Provider) |
 | `available` | `non_operational` | `system_suspend`          | The vehicle is not available because of e.g. weather or temporary regulations |
-| `available` | `non_operational` | `unspecified`        | The vehicle became unavailable, but he Provider cannot definitively (yet) specify the reason. |
+| `available`, `unknown` | `non_operational` | `unspecified`        | The vehicle became unavailable, but the Provider cannot definitively (yet) specify the reason. |
 | `unknown` | `non_operational`   | `comms_restored`        | The vehicle transmitted status information after a period of being out of communication |
-| `unknown` | `non_operational`   | `unspecified`        | The vehicle became unavailable, but he Provider cannot definitively (yet) specify the reason. |
 | `available`, `non_operational`, `elsewhere` | `removed`     | `rebalance_pick_up`  | The provider picked up the vehicle for rebalancing purposes |
 | `available`, `non_operational`, `elsewhere` | `removed`     | `maintenance_pick_up` | The provider picked up the vehicle to service it |
 | `available`, `non_operational`, `elsewhere`, `unknown` | `removed`     | `agency_pick_up`     | An agency picked up the vehicle for some reason, e.g. illegal placement |
@@ -299,8 +298,6 @@ Vehicles can enter the `unknown` state to and from any other state with the foll
 | `available`, `non_operational`, `elsewhere`, `unknown` | `removed`     | `decommissioned`     | The provider has removed the vehicle from its fleet |
 | `unknown`, `non_operational`, `available`, `elsewhere` | `removed`     | `unspecified`        | The vehicle was removed, but the provider cannot definitively (yet) specify the reason |
 | `unknown` | `removed`   | `comms_restored`        | The vehicle transmitted status information after a period of being in an unknown state |
-| `unknown` | `removed`   | `unspecified`        | The provider cannot definitively state why a vehicle was removed |
-| `non_operational` | `removed`   | `unspecified`        | The provider cannot definitively state why a non-opertional vehicle was removed |
 | `available`, `elsewhere`, `non_operational`, `on_trip`, `removed`, `reserved` | `unknown`     | `missing`            | The vehicle is not at its last reported GPS location, or that location is wildly in error |
 | `available`, `elsewhere`, `non_operational`, `on_trip`, `removed`, `reserved` | `unknown`     | `comms_lost`       | The vehicle is unable to transmit its GPS location or other status information |
 | `available`, `elsewhere`, `non_operational`, `on_trip`, `removed`, `reserved` | `unknown`     | `unspecified`       | The provider cannot definitively (yet) specify the reason for the unknown state |
