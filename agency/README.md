@@ -1,6 +1,8 @@
 # Mobility Data Specification: **Agency**
 
-This specification contains a collection of RESTful APIs used to specify the digital relationship between *mobility as a service* Providers and the Agencies that regulate them.
+The Agency API endpoints are intended to be implemented by regulatory agencies and consumed by mobility providers. Providers query the Agency API when events (such as a trip start or vehicle status change) occur in their systems.
+
+This specification contains a collection of RESTful APIs used to specify the digital relationship between *mobility as a service* providers and the agencies that regulate them.
 
 ## Table of Contents
 
@@ -108,7 +110,6 @@ Body Params:
 | `vehicle_id` | String  | Required          | Vehicle Identification Number (vehicle_id) visible on vehicle        |
 | `vehicle_type`       | Enum    | Required          | [Vehicle Type][vehicle-types]                                        |
 | `propulsion_types` | Enum[]  | Required          | Array of [Propulsion Type][propulsion-types]; allows multiple values |
-| `provider_id`| UUID    | Optional          | Provider to which the vehicle belongs if different from the authenticated provider |
 | `year`       | Integer | Optional          | Year Manufactured                                                    |
 | `mfgr`       | String  | Optional          | Vehicle Manufacturer                                                 |
 | `model`      | String  | Optional          | Vehicle Model                                                        |

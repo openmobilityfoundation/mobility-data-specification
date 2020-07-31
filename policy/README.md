@@ -1,6 +1,8 @@
 # Mobility Data Specification: Policy
 
-This specification describes the digital relationship between _mobility as a service_ Providers and the Agencies that regulate them. The Policy specification is meant to communicate municipal policies (such as as vehicle deployment caps and speed limits) in a clear, consistent manner.
+The Policy API endpoints are intended to be implemented by regulatory agencies and consumed by mobility providers. Providers query the Policy API to get information about local rules that may affect the operation of their mobility service or which may be used to determine compliance.
+
+This specification describes the digital relationship between _mobility as a service_ providers and the agencies that regulate them. The Policy API communicates municipal policies (such as as vehicle deployment caps and speed limits) in a clear, consistent manner.
 
 ## Table of Contents
 
@@ -204,7 +206,7 @@ An individual `Policy` object is defined by the following fields:
 | ---------------- | --------------- | ---------- | ----------------------------------------------------------------------------------- |
 | `name`           | String          | Required   | Name of policy                                                                      |
 | `policy_id`      | UUID            | Required   | Unique ID of policy                                                                 |
-| `provider_ids`   | UUID[]          | Optional    | Providers for whom this policy is applicable; empty arrays and `null`/absent implies all Providers |
+| `provider_ids`   | UUID[]          | Optional    | Providers for whom this policy is applicable; empty arrays and `null`/absent implies all Providers. See MDS [provider list](/providers.csv). |
 | `description`    | String          | Required   | Description of policy                                                               |
 | `currency`       | String          | Optional   | An ISO 4217 Alphabetic Currency Code representing the [currency](../provider#costs--currencies) of all Rules of [type](#rule-types) `rate`.|
 | `start_date`     | [timestamp][ts] | Required   | Beginning date/time of policy enforcement                                           |
@@ -248,7 +250,7 @@ An individual `Rule` object is defined by the following fields:
 | `count` | Fleet counts based on regions. Rule `minimum`/`maximum` refers to number of devices in [Rule Units](#rule-units).                                  |
 | `time`  | Individual limitations on time spent in one or more vehicle-states. Rule `minimum`/`maximum` refers to increments of time in [Rule Units](#rule-units). |
 | `speed` | Global or local speed limits. Rule `minimum`/`maximum` refers to speed in [Rule Units](#rule-units).                  |
-| `rate`  | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.0.0)*. Fees or subsidies based on regions and time spent in one or more vehicle-states. Rule `rate_amount` refers to the rate charged according to the [Rate Recurrences](#rate_recurrences) and the [currency requirements](/general-information.md#costs-and-currencies) in [Rule Units](#rule-units). *As this is a beta feature, agencies are strongly advised to consult with providers about how they intended to use the `rate` rule prior to implementation.*    |
+| `rate`  | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.0.0)*. Fees or subsidies based on regions and time spent in one or more vehicle-states. Rule `rate_amount` refers to the rate charged according to the [Rate Recurrences](#rate_recurrences) and the [currency requirements](/general-information.md#costs-and-currencies) in [Rule Units](#rule-units). *As this is a beta feature, agencies are strongly advised to consult with providers about how they intended to use the `rate` rule prior to implementation. It is particularly important to communicate in advance how frequently and in what ways rates might change over time.*    |
 | `user`  | Information for users, e.g. about helmet laws. Generally can't be enforced via events and telemetry.          |
 
 [Top][toc]

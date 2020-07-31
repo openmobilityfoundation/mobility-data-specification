@@ -150,7 +150,7 @@
         "capacity": {
           "$id": "#/definitions/stop/properties/capacity",
           "$ref": "#/definitions/vehicle_type_counts",
-          "description": "Number of total spaces per vehicle_type"
+          "description": "Number of total places per vehicle_type"
         },
         "num_vehicles_available": {
           "$id": "#/definitions/stop/properties/num_vehicles_available",
@@ -197,15 +197,15 @@
           "$ref": "#/definitions/string",
           "description": "Cross street of where Stop is located"
         },
-        "num_spaces_available": {
-          "$id": "#/definitions/stop/properties/num_spaces_available",
+        "num_places_available": {
+          "$id": "#/definitions/stop/properties/num_places_available",
           "$ref": "#/definitions/vehicle_type_counts",
-          "description": "Number of spaces free to be populated per vehicle_type"
+          "description": "Number of places free to be populated per vehicle_type"
         },
-        "num_spaces_disabled": {
-          "$id": "#/definitions/stop/properties/num_spaces_disabled",
+        "num_places_disabled": {
+          "$id": "#/definitions/stop/properties/num_places_disabled",
           "$ref": "#/definitions/vehicle_type_counts",
-          "description": "Number of spaces disabled an unable to accept vehicles per vehicle_type"
+          "description": "Number of places disabled an unable to accept vehicles per vehicle_type"
         },
         "parent_stop": {
           "$id": "#/definitions/stop/properties/parent_stop",
@@ -517,7 +517,8 @@
               "contains": {
                 "enum": [
                   "comms_restored",
-                  "trip_leave_jurisdiction"
+                  "trip_leave_jurisdiction",
+                  "unspecified"
                 ]
               }
             }
@@ -552,7 +553,8 @@
                 "enum": [
                   "comms_restored",
                   "trip_enter_jurisdiction",
-                  "trip_start"
+                  "trip_start",
+                  "unspecified"
                 ]
               }
             }
@@ -586,7 +588,8 @@
               "contains": {
                 "enum": [
                   "comms_restored",
-                  "reservation_start"
+                  "reservation_start",
+                  "unspecified"
                 ]
               }
             }

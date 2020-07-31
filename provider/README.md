@@ -1,5 +1,7 @@
 # Mobility Data Specification: **Provider**
 
+The Provider API endpoints are intended to be implemented by mobility providers and consumed by regulatory agencies. When a municipality queries information from a mobility provider, the Provider API has a historical view of operations in a standard format.
+
 This specification contains a data standard for *mobility as a service* providers to define a RESTful API for municipalities to access on-demand.
 
 ## Table of Contents
@@ -147,7 +149,7 @@ Unless stated otherwise by the municipality, the trips endpoint must return all 
 
 | Field | Type    | Required/Optional | Comments |
 | ----- | -------- | ----------------- | ----- |
-| `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS |
+| `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
 | `provider_name` | String | Required | The public-facing name of the Provider |
 | `device_id` | UUID | Required | A unique device ID in UUID format |
 | `vehicle_id` | String | Required | The Vehicle Identification Number visible on the vehicle itself |
@@ -248,7 +250,7 @@ Unless stated otherwise by the municipality, this endpoint must return only thos
 
 | Field | Type | Required/Optional | Comments |
 | ----- | ---- | ----------------- | ----- |
-| `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS |
+| `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
 | `provider_name` | String | Required | The public-facing name of the Provider |
 | `device_id` | UUID | Required | A unique device ID in UUID format |
 | `vehicle_id` | String | Required | The Vehicle Identification Number visible on the vehicle itself |
@@ -386,7 +388,7 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 
 | Field | Type | Required/Optional | Comments |
 | ----- | ---- | ----------------- | ----- |
-| `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS |
+| `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
 | `provider_name` | String | Required | The public-facing name of the Provider |
 | `device_id` | UUID | Required | A unique device ID in UUID format, should match this device in Provider |
 | `vehicle_id` | String | Required | The Vehicle Identification Number visible on the vehicle itself, should match this device in provider |
