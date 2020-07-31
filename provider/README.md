@@ -1,5 +1,7 @@
 # Mobility Data Specification: **Provider**
 
+The Provider API endpoints are intended to be implemented by mobility providers and consumed by regulatory agencies. When a municipality queries information from a mobility provider, the Provider API has a historical view of operations in a standard format.
+
 This specification contains a data standard for *mobility as a service* providers to define a RESTful API for municipalities to access on-demand.
 
 ## Table of Contents
