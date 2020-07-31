@@ -95,8 +95,7 @@ def post_vehicle_schema(common_definitions):
     }
 
     # merge common vehicle information, with Agency tweaks
-    vehicle = common.vehicle_definition(common_definitions, provider_name=False)
-    vehicle["required"].remove("provider_id")
+    vehicle = common.vehicle_definition(common_definitions, provider_name=False, provider_id=False)
 
     schema["required"] = vehicle["required"] + schema["required"]
     schema["properties"] = { **vehicle["properties"], **schema["properties"] }

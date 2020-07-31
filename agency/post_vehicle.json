@@ -61,11 +61,6 @@
     "propulsion_types"
   ],
   "properties": {
-    "provider_id": {
-      "$id": "#/definitions/vehicle/properties/provider_id",
-      "$ref": "#/definitions/uuid",
-      "description": "The UUID for the Provider, unique within MDS"
-    },
     "device_id": {
       "$id": "#/definitions/vehicle/properties/device_id",
       "$ref": "#/definitions/uuid",
