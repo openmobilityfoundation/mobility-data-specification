@@ -257,9 +257,9 @@ In a multi-jurisdiction environment, the status of a vehicle is per-jurisdiction
 
 [Top][toc]
 
-### Vehicle State Events
+### Micromobility Vehicle States & Events
 
-This is the list of `vehicle_state` and `event_type` pairings that constitute the valid transitions of the vehicle state machine.
+This is the list of `vehicle_state` and `event_type` pairings that constitute the valid transitions of the micromobility vehicle state machine.
 
 The state-transition table below describes how the `vehicle_state` changes in response to each `event_type`.  Most events will have a single `event_type`.  However, if a single event has more than one ordered `event_type` entry, the intermediate `vehicle_state` value(s) are discarded.  For example, if an event contains [`trip_end`, `battery_low`] then the vehicle transitions from `on_trip` through `available` to `non_operational` per the state machine, but the vehicle is never "in" the `available` state.  
 
@@ -303,8 +303,52 @@ Note that to handle out-of-order events, the validity of the prior-state shall n
 The *State Machine Diagram* shows how the `vehicle_state` and `event_type` relate to each other and how vehicles can transition between states. See [Google Slides](https://docs.google.com/presentation/d/1Ar2-ju8YlddSsTATvQw4YjsSa5108XtidtnJNk-UAfA/edit) for the source file.
 ![MDS State Machine Diagram](/MDS-state-machine-diagram.svg)
 
+### Taxi Vehicle States & Events
 [Top][toc]
+#### When the number of trips for the vehicle is `<=1`
+| **Previous** `vehicle_state` | `vehicle_state`   | `trip_state` | `event_type`             | Description                                                                                                      |
+|------------------------------|-------------------|--------------|--------------------------|------------------------------------------------------------------------------------------------------------------|
+| `available`                  | `elsewhere`       | N/A          | `leave_jurisdiction`     | The vehicle has left jurisdictional boundaries while available for use                                           |
+| `available`                  | `non_operational` | N/A          | `service_end`            | The vehicle has went out of service (is unavailable for use)                                                     |
+| `available`                  | `reserved`        | `reserved`   | `reserve`                | The vehicle was reserved by a passenger                                                                          |
+| `available`                  | `unknown`         | N/A          | `comms_lost`             | The vehicle has went out of comms while available for use                                                        |
+| `elsewhere`                  | `available`       | N/A          | `enter_jurisdiction`     | The vehicle has entered jurisdictional boundaries while available for use                                        |
+| `elsewhere`                  | `non_operational` | N/A          | `enter_jurisdiction`     | The vehicle has entered jurisdictional boundaries while not operating commercially                               |
+| `elsewhere`                  | `on_trip`         | `on_trip`    | `enter_jurisdiction`     | The vehicle has entered jurisdictional boundaries while on a trip                                                |
+| `elsewhere`                  | `reserved`        | N/A          | `enter_jurisdiction`     | The vehicle has entered jurisdictional boundaries while reserved by a customer                                   |
+| `elsewhere`                  | `unknown`         | N/A          | `comms_lost`             | The vehicle has went out of comms while outside of jurisdictional boundaries                                     |
+| `non_operational`            | `available`       | N/A          | `service_start`          | The vehicle has went into service (is available for use)                                                         |
+| `non_operational`            | `elsewhere`       | N/A          | `leave_jurisdiction`     | The vehicle has left jurisdictional boundaries while not operating commercially                                  |
+| `non_operational`            | `removed`         | N/A          | `depot_enter`            | The vehicle has entered the depot for maintenance                                                                |
+| `non_operational`            | `unknown`         | N/A          | `comms_lost`             | The vehicle has went out of comms while not operating commercially                                               |
+| `on_trip`                    | `elsewhere`       | N/A          | `leave_jurisdiction`     | The vehicle has left jurisdictional boundaries while on a trip                                                   |
+| `on_trip`                    | `stopped`         | `stopped`    | `trip_stop`              | The vehicle has stopped while on a trip                                                                          |
+| `on_trip`                    | `unknown`         | N/A          | `comms_lost`             | The vehicle has went out of comms while on a trip                                                                |
+| `removed`                    | `non_operational` | N/A          | `depot_leave`            | The vehicle has left the depot                                                                                   |
+| `removed`                    | `unknown`         | N/A          | `comms_lost`             | The vehicle has went out of comms while removed                                                                  |
+| `reserved`                   | `available`       | N/A          | `driver_cancellation`    | The driver has cancelled the reservation                                                                         |
+| `reserved`                   | `available`       | N/A          | `passenger_cancellation` | The passenger has cancelled the reservation                                                                      |
+| `reserved`                   | `elsewhere`       | N/A          | `leave_jurisdiction`     | The vehicle has left the jurisdiction while in a reservation                                                     |
+| `reserved`                   | `stopped`         | `stopped`    | `reserve_stop`           | The vehicle has stopped to pick up the passenger                                                                 |
+| `reserved`                   | `unknown`         | N/A          | `comms-lost`             | The vehicle has went out of comms while reserved by a passenger                                                  |
+| `stopped`                    | `available`       | N/A          | `driver_cancellation`    | The driver has cancelled the trip while either waiting for the passenger, or dropping them off                   |
+| `stopped`                    | `available`       | N/A          | `passenger_cancellation` | The passenger has cancelled the trip while the vehicle is waiting to pick them up, or they are being dropped off |
+| `stopped`                    | `available`       | N/A          | `trip_end`               | The trip has been successfully completed                                                                         |
+| `stopped`                    | `on_trip`         | `on_trip`    | `trip_resume`            | Resume a trip that was previously stopped (e.g. picking up a friend to go to the airport with)                   |
+| `stopped`                    | `on_trip`         | `on_trip`    | `trip_start`             | Start a trip                                                                                                     |
+| `stopped`                    | `unknown`         | N/A          | `comms_lost`             | The vehicle has went out of comms while stopped                                                                  |
+| `unknown`                    | `available`       | N/A          | `comms_restored`         | The vehicle has come back into comms while available for use                                                     |
+| `unknown`                    | `elsewhere`       | N/A          | `comms_restored`         | The vehicle has come back into comms while outside of jurisdictional boundaries                                  |
+| `unknown`                    | `non_operational` | N/A          | `comms_restored`         | The vehicle has come back into comms while not operating commercially                                            |
+| `unknown`                    | `on_trip`         | `on_trip`    | `comms_restored`         | The vehicle has come back into comms while on a trip                                                             |
+| `unknown`                    | `removed`         | N/A          | `comms_restored`         | The vehicle has come back into comms while removed                                                               |
+| `unknown`                    | `reserved`        | `reserved`   | `comms_restored`         | The vehicle has come back into comms while reserved by a passenger                                               |
+| `unknown`                    | `stopped`         | `stopped`    | `comms_restored`         | The vehicle has come back into comms while stopped                                                               |
 
+Note: When there is only one trip ongoing, `trip_state == vehicle_state`
+
+#### When the number of concurrent trips is `>1`
+TODO: @avatarneil
 ## Vehicle Types
 
 The list of allowed `vehicle_type` values in MDS. Aligning with [GBFS vehicle types form factors](https://github.com/NABSA/gbfs/blob/master/gbfs.md#vehicle_typesjson-added-in-v21-rc).
