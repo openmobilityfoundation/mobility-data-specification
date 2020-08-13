@@ -8,7 +8,17 @@ import common
 
 
 def policy_schema(common_definitions):
-    print("Generating policy schema")
+    """
+    Create the schema for the Policy endpoint.
+    """
+    # load schema template and insert definitions
+    schema = common.load_json("./templates/policy/policy.json")
+    schema["definitions"] = {
+        "version": common_definitions["version"]
+    }
+
+    # verify and return
+    return common.check_schema(schema)
 
 
 def schema_generators():

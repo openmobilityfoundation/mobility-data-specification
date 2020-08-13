@@ -5,8 +5,38 @@
   "type": "object",
   "definitions": {},
   "required": [
+    "data",
+    "version"
   ],
   "properties": {
+    "data": {
+      "$id": "#/properties/data",
+      "type": "object",
+      "description": "The data records in this payload",
+      "required": [
+        "policy"
+      ],
+      "properties": {
+        "policy": {
+          "$id": "#/properties/data/properties/policy",
+          "type": "array",
+          "title": "The policy payload",
+          "items": {
+            "$id": "#/properties/data/properties/policy/items",
+            "type": "object",
+            "title": "The policy item schema",
+            "additionalItems": false,
+            "required": [],
+            "properties": {}
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "version": {
+      "$id": "#/properties/version",
+      "$ref": "#/definitions/version"
+    }
   },
   "additionalProperties": false
 }
