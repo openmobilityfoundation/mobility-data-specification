@@ -344,9 +344,11 @@ The internal mechanics of ordering are up to the Policy editing and hosting soft
 [Top][toc]
 
 [beta]: /general-information.md#beta
+[error-messages]: /general-information.md#error-messages
 [iana]: https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
 [muni-boundary]: ../provider/README.md#municipality-boundary
 [propulsion-types]: /general-information.md#propulsion-types
+[responses]: /general-information.md#responses
 [ts]: /general-information.md#timestamps
 [toc]: #table-of-contents
 [vehicle-events]: /general-information.md#vehicle-state-events
