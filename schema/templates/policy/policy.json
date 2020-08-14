@@ -6,6 +6,7 @@
   "definitions": {},
   "required": [
     "data",
+    "updated",
     "version"
   ],
   "properties": {
@@ -33,9 +34,20 @@
       },
       "additionalProperties": false
     },
+    "end_date": {
+      "$id": "#/properties/end_date",
+      "$ref": "#/definitions/timestamp",
+      "description": "The timestamp after which the Policy is no longer effective"
+    },
+    "updated": {
+      "$id": "#/properties/updated",
+      "$ref": "#/definitions/timestamp",
+      "description": "The timestamp when the Policy document was last updated"
+    },
     "version": {
       "$id": "#/properties/version",
-      "$ref": "#/definitions/version"
+      "$ref": "#/definitions/version",
+      "description": "The MDS version this Policy document corresponds with"
     }
   },
   "additionalProperties": false
