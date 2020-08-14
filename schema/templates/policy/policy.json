@@ -60,8 +60,68 @@
       "type": "object",
       "description": "An individual rule in a policy",
       "additionalProperties": false,
-      "required": [],
-      "properties": {}
+      "required": [
+        "name",
+        "rule_id",
+        "rule_type",
+        "geographies",
+        "states",
+        "rule_units"
+      ],
+      "properties": {
+        "name": {
+          "$id": "#/definitions/rule/properties/name",
+          "$ref": "#/definitions/string",
+          "description": "Name of rule"
+        },
+        "rule_id": {
+          "$id": "#/definitions/rule/properties/rule_id",
+          "$ref": "#/definitions/uuid",
+          "description": "Unique ID of rule"
+        },
+        "rule_type": {
+          "$id": "#/definitions/rule/properties/rule_type",
+          "type": "string",
+          "description": "The type of rule",
+          "enum": [
+            "count",
+            "time",
+            "speed",
+            "rate",
+            "user"
+          ]
+        },
+        "geographies": {
+          "$id": "#/definitions/rule/properties/geographies",
+          "type": "array",
+          "description": "List of Geography UUIDs (non-overlapping) specifying the covered geography",
+          "items": {
+            "$id": "#/definitions/rule/properties/geographies/items",
+            "$ref": "#/definitions/uuid"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "states": {
+          "$id": "#/definitions/rule/properties/states",
+          "type": "object"
+        },
+        "rule_units": {
+          "$id": "#/definitions/rule/properties/rule_units",
+          "type": "string",
+          "description": "Meaured units of policy",
+          "enum": [
+            "seconds",
+            "minutes",
+            "hours",
+            "days",
+            "mph",
+            "kph",
+            "devices",
+            "amount"
+          ]
+        }
+      }
     }
   },
   "required": [
