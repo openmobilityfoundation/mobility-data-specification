@@ -4,9 +4,61 @@
   "title": "The MDS Policy Schema",
   "type": "object",
   "definitions": {
+    "policy": {
+      "$id": "#/definitions/policy",
+      "type": "object",
+      "title": "The policy object schema",
+      "additionalItems": false,
+      "required": [
+        "name",
+        "policy_id",
+        "description",
+        "start_date",
+        "published_date",
+        "rules"
+      ],
+      "properties": {
+        "name": {
+          "$id": "#/definitions/policy/properties/name",
+          "$ref": "#/definitions/string",
+          "description": "Name of policy"
+        },
+        "policy_id": {
+          "$id": "#/definitions/policy/properties/policy_id",
+          "$ref": "#/definitions/uuid",
+          "description": "Unique ID of policy"
+        },
+        "description": {
+          "$id": "#/definitions/policy/properties/description",
+          "$ref": "#/definitions/string",
+          "description": "Description of policy"
+        },
+        "start_date":{
+          "$id": "#/definitions/policy/properties/start_date",
+          "$ref": "#/definitions/timestamp",
+          "description": "Beginning date/time of policy enforcement"
+        },
+        "published_date": {
+          "$id": "#/definitions/policy/properties/published_date",
+          "$ref": "#/definitions/timestamp",
+          "description": "Timestamp at which the policy was published"
+        },
+        "rules": {
+          "$id": "#/definitions/rule",
+          "type": "array",
+          "description": "List of applicable Rule objects",
+          "items": {
+            "$id": "#/definitions/policy/properties/rules/items",
+            "$ref": "#/definitions/rule"
+          },
+          "minItems": 1
+        }
+      }
+    },
     "rule": {
       "$id": "#/definitions/rule",
       "type": "object",
+      "description": "An individual rule in a policy",
       "additionalProperties": false,
       "required": [],
       "properties": {}
@@ -32,54 +84,7 @@
           "title": "The policy payload",
           "items": {
             "$id": "#/properties/data/properties/policy/items",
-            "type": "object",
-            "title": "The policy item schema",
-            "additionalItems": false,
-            "required": [
-              "name",
-              "policy_id",
-              "description",
-              "start_date",
-              "published_date",
-              "rules"
-            ],
-            "properties": {
-              "name": {
-                "$id": "#/properties/data/properties/policy/items/properties/name",
-                "$ref": "#/definitions/string",
-                "description": "Name of policy"
-              },
-              "policy_id": {
-                "$id": "#/properties/data/properties/policy/items/properties/policy_id",
-                "$ref": "#/definitions/uuid",
-                "description": "Unique ID of policy"
-              },
-              "description": {
-                "$id": "#/properties/data/properties/policy/items/properties/description",
-                "$ref": "#/definitions/string",
-                "description": "Description of policy"
-              },
-              "start_date":{
-                "$id": "#/properties/data/properties/policy/items/properties/start_date",
-                "$ref": "#/definitions/timestamp",
-                "description": "Beginning date/time of policy enforcement"
-              },
-              "published_date": {
-                "$id": "#/properties/data/properties/policy/items/properties/published_date",
-                "$ref": "#/definitions/timestamp",
-                "description": "Timestamp that the policy was published"
-              },
-              "rules": {
-                "$id": "#/properties/data/properties/policy/items/properties/rules",
-                "type": "array",
-                "description": "List of applicable Rule objects",
-                "items": {
-                  "$id": "#/properties/data/properties/policy/items/properties/rules/items",
-                  "$ref": "#/definitions/rule",
-                  "description": "An individual rule in the policy"
-                }
-              }
-            }
+            "$ref": "#/definitions/policy"
           }
         }
       },
