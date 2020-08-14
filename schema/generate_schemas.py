@@ -8,27 +8,24 @@ USAGE:
 import sys
 
 import agency
-import common
 import policy
 import provider
 
 
 if __name__ == "__main__":
-    common_definitions = common.load_definitions()
-
     if len(sys.argv) == 1:
-        agency.write_schema_files(common_definitions)
-        policy.write_schema_files(common_definitions)
-        provider.write_schema_files(common_definitions)
+        agency.write_schema_files()
+        policy.write_schema_files()
+        provider.write_schema_files()
     else:
         if "--agency" in sys.argv:
-            agency.write_schema_files(common_definitions)
+            agency.write_schema_files()
             sys.argv.remove("--agency")
         if "--policy" in sys.argv:
-            policy.write_schema_files(common_definitions)
+            policy.write_schema_files()
             sys.argv.remove("--policy")
         if "--provider" in sys.argv:
-            provider.write_schema_files(common_definitions)
+            provider.write_schema_files()
             sys.argv.remove("--provider")
         if len(sys.argv) > 1:
             print(__doc__)

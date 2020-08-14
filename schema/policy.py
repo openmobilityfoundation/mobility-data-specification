@@ -7,18 +7,19 @@ import json
 import common
 
 
-def policy_schema(common_definitions):
+def policy_schema():
     """
     Create the schema for the Policy endpoint.
     """
     # load schema template and insert definitions
     schema = common.load_json("./templates/policy/policy.json")
-    schema["definitions"].update({
-        "string": common_definitions["string"],
-        "timestamp": common_definitions["timestamp"],
-        "uuid": common_definitions["uuid"],
-        "version": common_definitions["version"]
-    })
+    definitions = common.load_definitions(
+        "string",
+        "timestamp",
+        "uuid",
+        "version"
+    )
+    schema["definitions"].update(definitions)
 
     # verify and return
     return common.check_schema(schema)
@@ -37,14 +38,14 @@ def schema_generators():
     }
 
 
-def write_schema_files(common_definitions):
+def write_schema_files():
     """
     Create each of the Policy endpoint schema files in the appropriate directory.
     """
     print("\nStarting to generate Policy JSON Schemas...\n")
 
     for name, generator in schema_generators().items():
-        schema = generator(common_definitions)
+        schema = generator()
         with open(f"../policy/{name}.json", "w") as schemafile:
             schemafile.write(json.dumps(schema, indent=2))
             print(f"Wrote {name}.json")

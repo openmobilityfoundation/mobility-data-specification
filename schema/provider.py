@@ -34,7 +34,7 @@ def feature_collection_schema(id=None, title=None, features=None):
     return feature_collection
 
 
-def endpoint_schema(endpoint, common_definitions, extra_definitions={}):
+def endpoint_schema(endpoint, extra_definitions={}):
     """
     Generate the Provider payload schema for the given endpoint.
     """
@@ -44,12 +44,12 @@ def endpoint_schema(endpoint, common_definitions, extra_definitions={}):
     schema["title"] = schema["title"].replace("endpoint", endpoint)
 
     # merge custom definitions with relevant common definitions
-    definitions = {
-        "string": common_definitions["string"],
-        "timestamp": common_definitions["timestamp"],
-        "uuid": common_definitions["uuid"],
-        "version": common_definitions["version"]
-    }
+    definitions = common.load_definitions(
+        "string",
+        "timestamp",
+        "uuid",
+        "version"
+    )
     definitions.update(common.point_definition())
     definitions.update(common.mds_feature_point_definition())
     definitions.update(extra_definitions)
@@ -59,13 +59,10 @@ def endpoint_schema(endpoint, common_definitions, extra_definitions={}):
     # for all but stops, merge standard vehicle info with items schema
     if endpoint not in ["stops"]:
         items = endpoint_schema[endpoint]["items"]
-        vehicle = common.vehicle_definition(common_definitions)
+        vehicle = common.vehicle_definition()
         items["required"] = vehicle["required"] + items["required"]
         items["properties"] = { **vehicle["properties"], **items["properties"] }
-        definitions.update({
-            "propulsion_types": common_definitions["propulsion_types"],
-            "vehicle_type": common_definitions["vehicle_type"]
-        })
+        definitions.update(common.load_definitions("propulsion_types", "vehicle_type"))
 
     # merge endpoint schema into the endpoint template
     data_schema = schema["properties"]["data"]
@@ -78,7 +75,7 @@ def endpoint_schema(endpoint, common_definitions, extra_definitions={}):
     return schema
 
 
-def trips_schema(common_definitions):
+def trips_schema():
     """
     Create the schema for the /trips endpoint.
     """
@@ -93,39 +90,39 @@ def trips_schema(common_definitions):
     trips_definitions = { "MDS_FeatureCollection_Route": mds_feature_collection_route }
 
     # create the trips schema
-    schema = endpoint_schema("trips", common_definitions, trips_definitions)
+    schema = endpoint_schema("trips", trips_definitions)
 
     # verify and return
     return common.check_schema(schema)
 
 
-def status_changes_schema(common_definitions):
+def status_changes_schema():
     """
     Create the schema for the /status_changes endpoint.
     """
-    schema = endpoint_schema("status_changes", common_definitions)
+    schema = endpoint_schema("status_changes")
     items = schema["properties"]["data"]["properties"]["status_changes"]["items"]
 
     # merge the state machine definitions and transition combinations rule
-    state_machine_defs, transitions = common.vehicle_state_machine(common_definitions, "vehicle_state", "event_types")
+    state_machine_defs, transitions = common.vehicle_state_machine("vehicle_state", "event_types")
     schema["definitions"].update(state_machine_defs)
     items["allOf"].append(transitions)
 
-    trip_id_ref = common_definitions["trip_id_reference"]
+    trip_id_ref = common.load_definitions("trip_id_reference")
     items["allOf"].append(trip_id_ref)
 
     # verify and return
     return common.check_schema(schema)
 
 
-def events_schema(common_definitions):
+def events_schema():
     """
     Create the schema for the /events endpoint.
     """
-    links_prop, links_def = common.property_definition("links", common_definitions)
+    links_prop, links_def = common.property_definition("links")
 
     # events is the same as status_changes, but allows paging
-    schema = status_changes_schema(common_definitions)
+    schema = status_changes_schema()
     schema["$id"] = schema["$id"].replace("status_changes", "events")
     schema["title"] = schema["title"].replace("status_changes", "events")
     schema["definitions"].update(links_def)
@@ -135,23 +132,23 @@ def events_schema(common_definitions):
     return common.check_schema(schema)
 
 
-def stops_schema(common_definitions):
+def stops_schema():
     """
     Create the schema for the /stops endpoint.
     """
     definitions, properties = {}, {}
 
-    prop, _ = common.property_definition("last_updated", common_definitions, ref=common.definition_id("timestamp"))
+    prop, _ = common.property_definition("last_updated", ref=common.definition_id("timestamp"))
     properties.update(prop)
 
-    prop, defn = common.property_definition("ttl", common_definitions)
+    prop, defn = common.property_definition("ttl")
     definitions.update(defn)
     properties.update(prop)
 
-    stop_defs = common.stop_definitions(common_definitions)
+    stop_defs = common.stop_definitions()
     definitions.update(stop_defs)
 
-    schema = endpoint_schema("stops", common_definitions, definitions)
+    schema = endpoint_schema("stops", definitions)
 
     # update list of required and properties object
     schema["required"].extend(["last_updated", "ttl"])
@@ -161,27 +158,27 @@ def stops_schema(common_definitions):
     return common.check_schema(schema)
 
 
-def vehicles_schema(common_definitions):
+def vehicles_schema():
     """
     Create the schema for the /vehicles endpoint.
     """
     definitions, properties = {}, {}
 
-    prop, defn = common.property_definition("links", common_definitions)
+    prop, defn = common.property_definition("links")
     definitions.update(defn)
     properties.update(prop)
 
-    prop, _ = common.property_definition("last_updated", common_definitions, ref=common.definition_id("timestamp"))
+    prop, _ = common.property_definition("last_updated", ref=common.definition_id("timestamp"))
     properties.update(prop)
 
-    prop, defn = common.property_definition("ttl", common_definitions)
+    prop, defn = common.property_definition("ttl")
     definitions.update(defn)
     properties.update(prop)
 
-    state_defs, transitions = common.vehicle_state_machine(common_definitions, "last_vehicle_state", "last_event_types")
+    state_defs, transitions = common.vehicle_state_machine("last_vehicle_state", "last_event_types")
     definitions.update(state_defs)
 
-    schema = endpoint_schema("vehicles", common_definitions, definitions)
+    schema = endpoint_schema("vehicles", definitions)
 
     # update list of required and properties object
     schema["required"].extend(["last_updated", "ttl"])
@@ -211,14 +208,14 @@ def schema_generators():
     }
 
 
-def write_schema_files(common_definitions):
+def write_schema_files():
     """
     Create each of the Provider endpoint schema files in the appropriate directory.
     """
     print("\nStarting to generate Provider JSON Schemas...\n")
 
     for name, generator in schema_generators().items():
-        schema = generator(common_definitions)
+        schema = generator()
         with open(f"../provider/{name}.json", "w") as schemafile:
             schemafile.write(json.dumps(schema, indent=2))
             print(f"Wrote {name}.json")

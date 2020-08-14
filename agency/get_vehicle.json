@@ -31,6 +31,13 @@
       ],
       "pattern": "^(.*)$"
     },
+    "timestamp": {
+      "$id": "#/definitions/timestamp",
+      "type": "number",
+      "description": "Integer milliseconds since Unix epoch",
+      "multipleOf": 1.0,
+      "minimum": 0
+    },
     "vehicle_type": {
       "$id": "#/definitions/vehicle_type",
       "type": "string",
@@ -42,13 +49,6 @@
         "moped",
         "other"
       ]
-    },
-    "timestamp": {
-      "$id": "#/definitions/timestamp",
-      "type": "number",
-      "description": "Integer milliseconds since Unix epoch",
-      "multipleOf": 1.0,
-      "minimum": 0
     },
     "uuid": {
       "$id": "#/definitions/uuid",
