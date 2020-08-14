@@ -3,7 +3,15 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "title": "The MDS Policy Schema",
   "type": "object",
-  "definitions": {},
+  "definitions": {
+    "rule": {
+      "$id": "#/definitions/rule",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [],
+      "properties": {}
+    }
+  },
   "required": [
     "data",
     "updated",
@@ -27,8 +35,51 @@
             "type": "object",
             "title": "The policy item schema",
             "additionalItems": false,
-            "required": [],
-            "properties": {}
+            "required": [
+              "name",
+              "policy_id",
+              "description",
+              "start_date",
+              "published_date",
+              "rules"
+            ],
+            "properties": {
+              "name": {
+                "$id": "#/properties/data/properties/policy/items/properties/name",
+                "$ref": "#/definitions/string",
+                "description": "Name of policy"
+              },
+              "policy_id": {
+                "$id": "#/properties/data/properties/policy/items/properties/policy_id",
+                "$ref": "#/definitions/uuid",
+                "description": "Unique ID of policy"
+              },
+              "description": {
+                "$id": "#/properties/data/properties/policy/items/properties/description",
+                "$ref": "#/definitions/string",
+                "description": "Description of policy"
+              },
+              "start_date":{
+                "$id": "#/properties/data/properties/policy/items/properties/start_date",
+                "$ref": "#/definitions/timestamp",
+                "description": "Beginning date/time of policy enforcement"
+              },
+              "published_date": {
+                "$id": "#/properties/data/properties/policy/items/properties/published_date",
+                "$ref": "#/definitions/timestamp",
+                "description": "Timestamp that the policy was published"
+              },
+              "rules": {
+                "$id": "#/properties/data/properties/policy/items/properties/rules",
+                "type": "array",
+                "description": "List of applicable Rule objects",
+                "items": {
+                  "$id": "#/properties/data/properties/policy/items/properties/rules/items",
+                  "$ref": "#/definitions/rule",
+                  "description": "An individual rule in the policy"
+                }
+              }
+            }
           }
         }
       },

@@ -13,9 +13,12 @@ def policy_schema(common_definitions):
     """
     # load schema template and insert definitions
     schema = common.load_json("./templates/policy/policy.json")
-    schema["definitions"] = {
+    schema["definitions"].update({
+        "string": common_definitions["string"],
+        "timestamp": common_definitions["timestamp"],
+        "uuid": common_definitions["uuid"],
         "version": common_definitions["version"]
-    }
+    })
 
     # verify and return
     return common.check_schema(schema)
