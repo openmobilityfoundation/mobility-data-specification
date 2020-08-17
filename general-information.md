@@ -21,7 +21,7 @@ This document contains specifications that are shared between the various MDS AP
 * [Timestamps](#timestamps)
 * [UUIDs](#uuids)
 * [Vehicle States](#vehicle-states)
-  * [Evetnt Types](#event-types)
+  * [Event Types](#event-types)
   * [Vehicle State Events](#vehicle-state-events)
   * [State Machine Diagram](#state-machine-diagram)
 * [Vehicle Types](#vehicle-types)
