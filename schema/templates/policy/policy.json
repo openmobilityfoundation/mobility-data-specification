@@ -28,6 +28,12 @@
           "$ref": "#/definitions/uuid",
           "description": "Unique ID of policy"
         },
+        "provider_ids":{
+          "$id": "#/definitions/policy/properties/provider_ids",
+          "$ref": "#/definitions/uuid_array",
+          "description": "Providers for whom this policy is applicable; empty arrays and null/absent implies all Providers.",
+          "uniqueItems": true
+        },
         "description": {
           "$id": "#/definitions/policy/properties/description",
           "$ref": "#/definitions/string",
@@ -97,12 +103,8 @@
         },
         "geographies": {
           "$id": "#/definitions/rule/properties/geographies",
-          "type": "array",
+          "$ref": "#/definitions/uuid_array",
           "description": "List of Geography UUIDs (non-overlapping) specifying the covered geography",
-          "items": {
-            "$id": "#/definitions/rule/properties/geographies/items",
-            "$ref": "#/definitions/uuid"
-          },
           "minItems": 1,
           "uniqueItems": true
         },

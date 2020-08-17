@@ -199,6 +199,7 @@ def stop_definitions():
         "string",
         "timestamp",
         "uuid",
+        "uuid_array",
         "vehicle_type_counts"
     )
     definitions.update(mds_feature_point_definition())

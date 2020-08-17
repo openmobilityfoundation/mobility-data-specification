@@ -23,6 +23,7 @@ def policy_schema():
         "string",
         "timestamp",
         "uuid",
+        "uuid_array",
         "vehicle_event",
         "vehicle_type",
         "vehicle_types",
