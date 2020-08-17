@@ -8,7 +8,7 @@
       "$id": "#/definitions/policy",
       "type": "object",
       "title": "The policy object schema",
-      "additionalItems": false,
+      "additionalProperties": false,
       "required": [
         "name",
         "policy_id",
@@ -48,10 +48,21 @@
           "$ref": "#/definitions/timestamp",
           "description": "Beginning date/time of policy enforcement"
         },
+        "end_date": {
+          "$id": "#/definitions/policy/properties/end_date",
+          "$ref": "#/definitions/timestamp",
+          "description": "End date/time of policy enforcement"
+        },
         "published_date": {
           "$id": "#/definitions/policy/properties/published_date",
           "$ref": "#/definitions/timestamp",
           "description": "Timestamp at which the policy was published"
+        },
+        "prev_policies": {
+          "$id": "#/definitions/policy/properties/prev_policies",
+          "$ref": "#/definitions/uuid_array",
+          "description": "Unique IDs of prior policies replaced by this one",
+          "uniqueItems": true
         },
         "rules": {
           "$id": "#/definitions/rule",
