@@ -46,7 +46,7 @@
         "rules": {
           "$id": "#/definitions/rule",
           "type": "array",
-          "description": "List of applicable Rule objects",
+          "description": "Array of applicable Rule objects",
           "items": {
             "$id": "#/definitions/policy/properties/rules/items",
             "$ref": "#/definitions/rule"
@@ -109,7 +109,7 @@
         "rule_units": {
           "$id": "#/definitions/rule/properties/rule_units",
           "type": "string",
-          "description": "Meaured units of policy",
+          "description": "Measured units of policy",
           "enum": [
             "seconds",
             "minutes",
@@ -120,6 +120,70 @@
             "devices",
             "amount"
           ]
+        },
+        "vehicle_types": {
+          "$id": "#/definitions/rule/properties/vehicle_types",
+          "$ref": "#/definitions/vehicle_types",
+          "description": "Applicable vehicle types, default \"all\""
+        },
+        "propulsion_types": {
+          "$id": "#/definitions/rule/properties/propulsion_types",
+          "$ref": "#/definitions/propulsion_types",
+          "description": "Applicable vehicle propulsion types, default \"all\""
+        },
+        "minimum": {
+          "$id": "#/definitions/rule/properties/minimum",
+          "type": "integer",
+          "description": "Minimum value, if applicable (default 0)"
+        },
+        "maximum": {
+          "$id": "#/definitions/rule/properties/maximum",
+          "type": "integer",
+          "description": "Maximum value, if applicable (default unlimited)"
+        },
+        "rate_amount": {
+          "$id": "#/definitions/rule/properties/rate_amount",
+          "type": "integer",
+          "description": "The amount of a rate applied when this rule applies, if applicable (default zero). A positive integer rate amount represents a fee, while a negative integer represents a subsidy. Rate amounts are given in the currency defined in the Policy."
+        },
+        "rate_recurrence": {
+          "$id": "#/definitions/rule/properties/rate_recurrence",
+          "type": "string",
+          "description": "Specify when a rate is applied – either once, or periodically according to a time unit specified using rule_units",
+          "enum": [
+            "once",
+            "each_time_unit",
+            "per_complete_time_unit"
+          ]
+        },
+        "start_time": {
+          "$id": "#/definitions/rule/properties/start_time",
+          "$ref": "#/definitions/iso_time",
+          "description": "Beginning time-of-day when the rule is in effect (default 00:00:00)"
+        },
+        "end_time": {
+          "$id": "#/definitions/rule/properties/end_time",
+          "$ref": "#/definitions/iso_time",
+          "description": "Ending time-of-day when the rule is in effect (default 23:59:59)"
+        },
+        "days": {
+          "$id": "#/definitions/rule/properties/days",
+          "$ref": "#/definitions/days",
+          "description": "Days when the rule is in effect (default all)"
+        },
+        "messages": {
+          "$id": "#/definitions/rule/properties/messages",
+          "type": "object",
+          "description": "Message to rider user, if desired, in various languages, keyed by BCP 47 language tag",
+          "propertyNames": {
+            "pattern": "([A-Za-z]{2,3})([-][A-Za-z]{3}){0,3}([-]([A-Za-z]{4}))?([-]([A-Za-z]{2}|[0-9]{3}))?"
+          }
+        },
+        "value_url": {
+          "$id": "#/definitions/rule/properties/value_url",
+          "type": "string",
+          "description": "URL to an API endpoint that can provide dynamic information for the measured value",
+          "format": "uri"
         }
       }
     }
@@ -158,12 +222,12 @@
     "updated": {
       "$id": "#/properties/updated",
       "$ref": "#/definitions/timestamp",
-      "description": "The timestamp when the Policy document was last updated"
+      "description": "The timestamp when the Policy was last updated"
     },
     "version": {
       "$id": "#/properties/version",
       "$ref": "#/definitions/version",
-      "description": "The MDS version this Policy document corresponds with"
+      "description": "The version of MDS that the Policy represents"
     }
   },
   "additionalProperties": false

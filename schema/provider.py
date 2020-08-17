@@ -62,7 +62,7 @@ def endpoint_schema(endpoint, extra_definitions={}):
         vehicle = common.vehicle_definition()
         items["required"] = vehicle["required"] + items["required"]
         items["properties"] = { **vehicle["properties"], **items["properties"] }
-        definitions.update(common.load_definitions("propulsion_types", "vehicle_type"))
+        definitions.update(common.load_definitions("propulsion_type", "propulsion_types", "vehicle_type"))
 
     # merge endpoint schema into the endpoint template
     data_schema = schema["properties"]["data"]

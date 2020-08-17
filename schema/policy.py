@@ -14,9 +14,17 @@ def policy_schema():
     # load schema template and insert definitions
     schema = common.load_json("./templates/policy/policy.json")
     definitions = common.load_definitions(
+        "day",
+        "days",
+        "iso_time",
+        "propulsion_type",
+        "propulsion_types",
         "string",
         "timestamp",
         "uuid",
+        "vehicle_event",
+        "vehicle_type",
+        "vehicle_types",
         "version"
     )
     schema["definitions"].update(definitions)
