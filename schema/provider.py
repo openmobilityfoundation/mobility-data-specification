@@ -87,7 +87,10 @@ def trips_schema():
         # 2. There must be *at least* two Features in the FeatureCollection.
         features = { "items": { "$ref": common.definition_id("MDS_Feature_Point") }, "minItems": 2 }
     )
-    trips_definitions = { "MDS_FeatureCollection_Route": mds_feature_collection_route }
+    trips_definitions = {
+        "currency": common.load_definitions("currency"),
+        "MDS_FeatureCollection_Route": mds_feature_collection_route
+    }
 
     # create the trips schema
     schema = endpoint_schema("trips", trips_definitions)

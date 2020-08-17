@@ -33,6 +33,10 @@
           "$ref": "#/definitions/string",
           "description": "Description of policy"
         },
+        "currency": {
+          "$id": "#/definitions/policy/properties/currency",
+          "$ref": "#/definitions/currency"
+        },
         "start_date":{
           "$id": "#/definitions/policy/properties/start_date",
           "$ref": "#/definitions/timestamp",

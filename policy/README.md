@@ -208,7 +208,7 @@ An individual `Policy` object is defined by the following fields:
 | `policy_id`      | UUID            | Required   | Unique ID of policy                                                                 |
 | `provider_ids`   | UUID[]          | Optional    | Providers for whom this policy is applicable; empty arrays and `null`/absent implies all Providers. See MDS [provider list](/providers.csv). |
 | `description`    | String          | Required   | Description of policy                                                               |
-| `currency`       | String          | Optional   | An ISO 4217 Alphabetic Currency Code representing the [currency](../provider#costs--currencies) of all Rules of [type](#rule-types) `rate`.|
+| `currency`       | String          | Optional   | An ISO 4217 Alphabetic Currency Code representing the [currency](../general-information.md#costs-and-currencies) of all Rules of [type](#rule-types) `rate`.|
 | `start_date`     | [timestamp][ts] | Required   | Beginning date/time of policy enforcement                                           |
 | `end_date`       | [timestamp][ts] | Optional    | End date/time of policy enforcement                                                 |
 | `published_date` | [timestamp][ts] | Required   | Timestamp that the policy was published                                             |

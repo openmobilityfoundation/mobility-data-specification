@@ -14,6 +14,21 @@
         "preferred_drop_off"
       ]
     },
+    "currency": {
+      "$id": "#/definitions/currency",
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[A-Z]{3}$",
+      "default": "USD",
+      "description": "An ISO 4217 Alphabetic Currency Code representing currency of the payee. If null, USD cents is implied.",
+      "examples": [
+        "USD",
+        "EUR",
+        "GBP"
+      ]
+    },
     "day": {
       "$id": "#/definitions/day",
       "type": "string",

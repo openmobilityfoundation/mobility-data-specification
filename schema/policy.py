@@ -14,6 +14,7 @@ def policy_schema():
     # load schema template and insert definitions
     schema = common.load_json("./templates/policy/policy.json")
     definitions = common.load_definitions(
+        "currency",
         "day",
         "days",
         "iso_time",
