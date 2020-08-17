@@ -21,6 +21,7 @@ This document contains specifications that are shared between the various MDS AP
 * [Timestamps](#timestamps)
 * [UUIDs](#uuids)
 * [Vehicle States](#vehicle-states)
+  * [Evetnt Types](#event-types)
   * [Vehicle State Events](#vehicle-state-events)
   * [State Machine Diagram](#state-machine-diagram)
 * [Vehicle Types](#vehicle-types)
@@ -249,6 +250,40 @@ In a multi-jurisdiction environment, the status of a vehicle is per-jurisdiction
 | `on_trip`         | yes | In possession of renter.  May or may not be in motion. |
 | `elsewhere`       | no | Outside of regulator's jurisdiction, and thus not subject to cap-counts or other regulations. Example: a vehicle that started a trip in L.A. has transitioned to Santa Monica.  |
 | `unknown`         | unknown | Provider has lost contact with the vehicle and its disposition is unknown.  Examples include: taken into a private residence, thrown in river. |
+
+[Top][toc]
+
+### Event Types
+
+Event types are the possible transitions bewteen some vehicle states.  
+
+| `event_type` | Description |
+|---|---|
+| `agency_drop_off` |	Drop off by the agency	|
+| `agency_pick_up` |	Pick up by the agency	|
+| `battery_charged` |	Battery charged	|
+| `battery_low` |	Battery low	|
+| `comms_lost` |	Communications lost	|
+| `comms_restored` |	Communications restored	|
+| `compliance_pick_up` |	Pick up for compliance	|
+| `decommissioned` |	Decommissioned	|
+| `maintenance` |	General maintenance	|
+| `maintenance_pick_up` |	Pick up for maintenance	|
+| `missing` |	Missing	|
+| `off_hours` |	Off hours - end of service	|
+| `on_hours` |	On hours - start of service	|
+| `provider_drop_off`	 |	Drop off by the provider	|
+| `rebalance_pick_up` |	Pick up for rebalancing	|
+| `reservation_cancel` |	Reservation cancelled	|
+| `reservation_start` |	Reservation started	|
+| `system_resume` |	Resume system operations	|
+| `system_suspend`	 |	Suspend system operations	|
+| `trip_cancel` |	Cancel trip	|
+| `trip_end` |	End trip	|
+| `trip_enter_jurisdiction` |	Trip enters a jurisdiction	|
+| `trip_leave_jurisdiction` |	Trip leaves a jurisdiction	|
+| `trip_start` |	Start trip	|
+| `unspecified` |	Unspecified	|
 
 [Top][toc]
 
