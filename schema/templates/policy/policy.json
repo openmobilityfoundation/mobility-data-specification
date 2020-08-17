@@ -104,7 +104,21 @@
         },
         "states": {
           "$id": "#/definitions/rule/properties/states",
-          "type": "object"
+          "type": "object",
+          "description": "Vehicle state to which this rule applies. Optionally provide a list of specific vehicle events as a subset of a given state for the rule to apply to. An empty list or null/absent defaults to \"all\" for the state.",
+          "propertyNames": {
+            "$id": "#/definitions/rule/properties/states/propertyNames",
+            "$ref": "#/definitions/vehicle_state"
+          },
+          "properties": {
+          },
+          "additionalProperties": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "$ref": "#/definitions/vehicle_event"
+            }
+          }
         },
         "rule_units": {
           "$id": "#/definitions/rule/properties/rule_units",
