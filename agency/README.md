@@ -72,22 +72,21 @@ If `device_id` is specified, `GET` will return an array with a single vehicle re
 ```
 
 A vehicle record is as follows:
-
-| Field         | Type      | Field Description                                                             |
-| ------------- | --------- | ----------------------------------------------------------------------------- |
-| `device_id`   | UUID      | Provided by Operator to uniquely identify a vehicle                           |
-| `provider_id` | UUID      | Issued by Agency and [tracked](../providers.csv)                              |
-| `vehicle_id`  | String    | Vehicle Identification Number (vehicle_id) visible on vehicle                 |
-| `vehicle_type`        | Enum      | [Vehicle Type][vehicle-types]                                                 |
-| `propulsion_types`  | Enum[]    | Array of [Propulsion Type][propulsion-types]; allows multiple values          |
-| `year`        | Integer   | Year Manufactured                                                             |
-| `mfgr`        | String    | Vehicle Manufacturer                                                          |
-| `modality`    | Enum      | Modality the vehicle is operating under, see [Modalities][modalities]         |
-| `model`       | String    | Vehicle Model                                                                 |
-| `state`       | Enum      | Current vehicle state. See [Vehicle State][vehicle-states]                    |
-| `prev_events`  | Enum[]      | Last [Vehicle Event][vehicle-event]                                           |
-| `updated`     | [timestamp][ts] | Date of last event update                                                     |
-
+| Field                   | Type            | Field Description                                                                                    |
+|-------------------------|-----------------|------------------------------------------------------------------------------------------------------|
+| `accessibility_options` | Enum[]          | Accessibility options available for this vehicle, see [Accessibility Options][accessibility-options] |
+| `device_id`             | UUID            | Provided by Operator to uniquely identify a vehicle                                                  |
+| `provider_id`           | UUID            | Issued by Agency and [tracked](../providers.csv)                                                     |
+| `vehicle_id`            | String          | Vehicle Identification Number (vehicle_id) visible on vehicle                                        |
+| `vehicle_type`          | Enum            | [Vehicle Type][vehicle-types]                                                                        |
+| `propulsion_types`      | Enum[]          | Array of [Propulsion Type][propulsion-types]; allows multiple values                                 |
+| `year`                  | Integer         | Year Manufactured                                                                                    |
+| `mfgr`                  | String          | Vehicle Manufacturer                                                                                 |
+| `modality`              | Enum            | Modality the vehicle is operating under, see [Modalities][modalities]                                |
+| `model`                 | String          | Vehicle Model                                                                                        |
+| `state`                 | Enum            | Current vehicle state. See [Vehicle State][vehicle-states]                                           |
+| `prev_events`           | Enum[]          | Last [Vehicle Event][vehicle-event]                                                                  |
+| `updated`               | [timestamp][ts] | Date of last event update                                                                            |
 404 Failure Response:
 
 _No content returned on vehicle not found._
