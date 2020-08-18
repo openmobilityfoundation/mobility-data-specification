@@ -103,17 +103,18 @@ Method: `POST`
 
 Body Params:
 
-| Field        | Type    | Required/Optional | Field Description                                                    |
-| ------------ | ------- | ----------------- | -------------------------------------------------------------------- |
-| `device_id`  | UUID    | Required          | Provided by Operator to uniquely identify a vehicle                  |
-| `vehicle_id` | String  | Required          | Vehicle Identification Number (vehicle_id) visible on vehicle        |
-| `vehicle_type`       | Enum    | Required          | [Vehicle Type][vehicle-types]                                        |
-| `propulsion_types` | Enum[]  | Required          | Array of [Propulsion Type][propulsion-types]; allows multiple values |
-| `provider_id`| UUID    | Optional          | Provider to which the vehicle belongs if different from the authenticated provider |
-| `modality`   | Enum    | Required          | Modality the vehicle is operating under, see [Modalities][modalities]|
-| `year`       | Integer | Optional          | Year Manufactured                                                    |
-| `mfgr`       | String  | Optional          | Vehicle Manufacturer                                                 |
-| `model`      | String  | Optional          | Vehicle Model                                                        |
+| Field                   | Type    | Required/Optional | Field Description                                                                  |
+|-------------------------|---------|-------------------|------------------------------------------------------------------------------------|
+| `accessibility_options` | Enum[]  | Optional          | Accessibility options available for this vehicle, see [Accessibility Options][accessibility-options]                                   |
+| `device_id`             | UUID    | Required          | Provided by Operator to uniquely identify a vehicle                                |
+| `vehicle_id`            | String  | Required          | Vehicle Identification Number (vehicle_id) visible on vehicle                      |
+| `vehicle_type`          | Enum    | Required          | [Vehicle Type][vehicle-types]                                                      |
+| `propulsion_types`      | Enum[]  | Required          | Array of [Propulsion Type][propulsion-types]; allows multiple values               |
+| `provider_id`           | UUID    | Optional          | Provider to which the vehicle belongs if different from the authenticated provider |
+| `modality`              | Enum    | Required          | Modality the vehicle is operating under, see [Modalities][modalities]              |
+| `year`                  | Integer | Optional          | Year Manufactured                                                                  |
+| `mfgr`                  | String  | Optional          | Vehicle Manufacturer                                                               |
+| `model`                 | String  | Optional          | Vehicle Model                                                                      |
 
 201 Success Response:
 
@@ -325,6 +326,7 @@ If `stop_id` is specified, `GET` will return an array with a single stop record,
 
 [Top][toc]
 
+[accessibility-options]: /general-information.md#accessibility-options
 [beta]: /general-information.md#beta-features
 [general]: /general-information.md
 [error-messages]: /general-information.md#error-messages
