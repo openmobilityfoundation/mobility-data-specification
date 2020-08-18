@@ -305,7 +305,6 @@ The *State Machine Diagram* shows how the `vehicle_state` and `event_type` relat
 
 ### Taxi Vehicle States & Events
 [Top][toc]
-#### When the number of trips for the vehicle is `<=1`
 | **Previous** `vehicle_state` | `vehicle_state`   | `trip_state` | `event_type`             | Description                                                                                                      |
 |------------------------------|-------------------|--------------|--------------------------|------------------------------------------------------------------------------------------------------------------|
 | `available`                  | `elsewhere`       | N/A          | `leave_jurisdiction`     | The vehicle has left jurisdictional boundaries while available for use                                           |
@@ -345,10 +344,25 @@ The *State Machine Diagram* shows how the `vehicle_state` and `event_type` relat
 | `unknown`                    | `reserved`        | `reserved`   | `comms_restored`         | The vehicle has come back into comms while reserved by a passenger                                               |
 | `unknown`                    | `stopped`         | `stopped`    | `comms_restored`         | The vehicle has come back into comms while stopped                                                               |
 
-Note: When there is only one trip ongoing, `trip_state == vehicle_state`
+#### Trip State Notes
+When there is only one trip ongoing, `trip_state == vehicle_state`
 
-#### When the number of concurrent trips is `>1`
-TODO: @avatarneil
+In cases where there are multiple trips ongoing, please follow the trip state model pseudocode for determining what the vehicle state should be:
+```
+t = all on-going trips for vehicle
+v = vehicle state
+
+if t.any(state == ‘stopped’):
+  v = ‘stopped’ 
+else:
+ if t.any(state == ‘on_trip’):      
+   v = ‘on_trip’
+ else:
+   if t.any(state == ‘reserved’):
+     v = ‘reserved’
+```
+`trip_state` mappings should be the same as in the table above.
+
 ## Vehicle Types
 
 The list of allowed `vehicle_type` values in MDS. Aligning with [GBFS vehicle types form factors](https://github.com/NABSA/gbfs/blob/master/gbfs.md#vehicle_typesjson-added-in-v21-rc).
