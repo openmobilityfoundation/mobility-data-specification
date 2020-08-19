@@ -4,17 +4,19 @@ This specification contains a collection of RESTful APIs used to specify the dig
 
 ## Table of Contents
 
-* [General Information](#general-information)
-  * [Versioning](#versioning)
-  * [Responses and Error Messages](#responses-and-error-messages)
-  * [Authorization](#authorization)
-* [Vehicles](#vehicles)
-* [Vehicle - Register](#vehicle---register)
-* [Vehicle - Update](#vehicle---update)
-* [Vehicle - Events](#vehicle---event)
-* [Vehicle - Telemetry](#vehicle---telemetry)
-* [Telemetry Data](#telemetry-data)
-* [Stops](#stops)
+- [Mobility Data Specification: **Agency**](#mobility-data-specification-agency)
+  - [Table of Contents](#table-of-contents)
+  - [General information](#general-information)
+    - [Versioning](#versioning)
+    - [Responses and Error Messages](#responses-and-error-messages)
+    - [Authorization](#authorization)
+  - [Vehicles](#vehicles)
+  - [Vehicle - Register](#vehicle---register)
+  - [Vehicle - Update](#vehicle---update)
+  - [Vehicle - Event](#vehicle---event)
+  - [Vehicle - Telemetry](#vehicle---telemetry)
+  - [Telemetry Data](#telemetry-data)
+  - [Stops](#stops)
 
 ## General information
 
