@@ -17,6 +17,10 @@ This specification contains a collection of RESTful APIs used to specify the dig
   - [Vehicle - Telemetry](#vehicle---telemetry)
   - [Telemetry Data](#telemetry-data)
   - [Stops](#stops)
+  - [Reservation Type](#reservation-type)
+  - [Reservation Method](#reservation-method)
+  - [Fare](#fare)
+  - [Trip](#trip)
 
 ## General information
 
@@ -324,6 +328,58 @@ Path Params:
 200 Success Response:
 
 If `stop_id` is specified, `GET` will return an array with a single stop record, otherwise it will be a list of all stop records.
+
+## Reservation Type
+| `reservation_type` | Description |
+| ------------------| ----------------|
+| `on_demand`       | Reservation was created on demand |
+| `scheduled`       | Reservation was scheduled ahead of time |
+
+## Reservation Method
+| `reservation_method` | Description                                               |
+|----------------------|-----------------------------------------------------------|
+| `app`                | Reservation was made through an application (mobile/web)  |
+| `street_hail`        | Reservation was made by the passenger hailing the vehicle |
+| `phone_dispatch`     | Reservation was made by calling the dispatch operator     |
+
+## Fare
+| Field           | Type                           | Required/Optional | Field Description                                                |
+|-----------------|--------------------------------|-------------------|------------------------------------------------------------------|
+| quoted_cost     | Float                          | Required          | Cost quoted to the customer at the time of booking               |
+| actual_cost     | Float                          | Required          | Actual cost after a trip was completed                           |
+| components      | `{ [string]: float }`          | Optional          | Breakdown of the different fees that composed a fare, e.g. tolls |
+| currency        | string                         | Required          | ISO 4217 currency code                                           |
+| payment_methods | `{ [PAYMENT_METHOD]: number }` | Optional          | Breakdown of different payment methods used for a trip           |
+
+
+## Trip
+| Field                      | Type          | Required/Optional      | Field Description                                                                           |
+|----------------------------|---------------|------------------------|---------------------------------------------------------------------------------------------|
+| trip_id                    | UUID          | Required               | UUID for the trip this payload pertains to                                                  |
+| provider_id                | UUID          | Required               | Provider which managed this trip                                                            |
+| reserve_time               | Timestamp     | Required               | Time the customer *requested* a reservation                                                 |
+| dispatch_time              | Timestamp     | Conditionally Required | Time the vehicle was dispatched to the customer (required for Taxi)                         |
+| trip_start_time            | Timestamp     | Required               | Time the trip started                                                                       |
+| trip_end_time              | Timestamp     | Required               | Time the trip ended                                                                         |
+| distance                   | Float         | Required               | Total distance of the trip (in meters)                                                      |
+| accessibility_options_used | Enum[]        | Optional               | Accessibility options used in this trip. See [accessibility-options][accessibility-options] |
+| fare                       | [Fare](#fare) | Required               | Fare for the trip                                                                           |
+| reservation_method         | Enum          | Required               | Way the customer created their reservation, see [reservation-method](#reservation-method)   |
+| reservation_type           | Enum          | Required               | Type of reservation, see [reservation-type](#reservation-type)                              |
+
+**Endpoint:** `/trips`  
+**Method:** `POST`  
+**[Beta feature][beta]:** Yes (as of 1.0.0)  
+**Request Body**: A [Trip][trip]
+
+200 Success Response:
+Payload which was POST'd
+
+400 Failure Response:
+| `error`              | `error_description`                               | `error_details`[]               |
+| -------------------- | ------------------------------------------------- | ------------------------------- |
+| `bad_param`          | A validation error occurred.                      | Array of parameters with errors |
+| `missing_param`      | A required parameter is missing.                  | Array of missing parameters     |
 
 [Top][toc]
 
