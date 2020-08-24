@@ -357,7 +357,7 @@ If `stop_id` is specified, `GET` will return an array with a single stop record,
 |----------------------------|---------------|------------------------|---------------------------------------------------------------------------------------------|
 | trip_id                    | UUID          | Required               | UUID for the trip this payload pertains to                                                  |
 | provider_id                | UUID          | Required               | Provider which managed this trip                                                            |
-| reserve_time               | Timestamp     | Required               | Time the customer *requested* a reservation                                                 |
+| reservation_time           | Timestamp     | Required               | Time the customer *requested* a reservation                                                 |
 | dispatch_time              | Timestamp     | Conditionally Required | Time the vehicle was dispatched to the customer (required for Taxi)                         |
 | trip_start_time            | Timestamp     | Required               | Time the trip started                                                                       |
 | trip_end_time              | Timestamp     | Required               | Time the trip ended                                                                         |
