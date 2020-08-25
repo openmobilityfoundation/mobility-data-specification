@@ -350,22 +350,23 @@ If `stop_id` is specified, `GET` will return an array with a single stop record,
 | components      | `{ [string]: float }`          | Optional          | Breakdown of the different fees that composed a fare, e.g. tolls |
 | currency        | string                         | Required          | ISO 4217 currency code                                           |
 | payment_methods | `{ [PAYMENT_METHOD]: number }` | Optional          | Breakdown of different payment methods used for a trip           |
-
+TODO @avatarneil, update
 
 ## Trip
-| Field                      | Type          | Required/Optional      | Field Description                                                                           |
-|----------------------------|---------------|------------------------|---------------------------------------------------------------------------------------------|
-| trip_id                    | UUID          | Required               | UUID for the trip this payload pertains to                                                  |
-| provider_id                | UUID          | Required               | Provider which managed this trip                                                            |
-| reservation_time           | Timestamp     | Required               | Time the customer *requested* a reservation                                                 |
-| dispatch_time              | Timestamp     | Conditionally Required | Time the vehicle was dispatched to the customer (required for Taxi)                         |
-| trip_start_time            | Timestamp     | Required               | Time the trip started                                                                       |
-| trip_end_time              | Timestamp     | Required               | Time the trip ended                                                                         |
-| distance                   | Float         | Required               | Total distance of the trip (in meters)                                                      |
-| accessibility_options_used | Enum[]        | Optional               | Accessibility options used in this trip. See [accessibility-options][accessibility-options] |
-| fare                       | [Fare](#fare) | Required               | Fare for the trip                                                                           |
-| reservation_method         | Enum          | Required               | Way the customer created their reservation, see [reservation-method](#reservation-method)   |
-| reservation_type           | Enum          | Required               | Type of reservation, see [reservation-type](#reservation-type)                              |
+| Field                      | Type          | Required/Optional      | Field Description                                                                                                                                       |
+|----------------------------|---------------|------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
+| trip_id                    | UUID          | Required               | UUID for the trip this payload pertains to                                                                                                              |
+| provider_id                | UUID          | Required               | Provider which managed this trip                                                                                                                        |
+| reservation_method         | Enum          | Required               | Way the customer created their reservation, see [reservation-method](#reservation-method)                                                               |
+| reservation_time           | Timestamp     | Required               | Time the customer *requested* a reservation                                                                                                             |
+| reservation_type           | Enum          | Required               | Type of reservation, see [reservation-type](#reservation-type)                                                                                          |
+| dispatch_time              | Timestamp     | Conditionally Required | Time the vehicle was dispatched to the customer (required if trip was dispatched)                                                                       |
+| trip_start_time            | Timestamp     | Conditionally Required | Time the trip started (required if trip started)                                                                                                        |
+| trip_end_time              | Timestamp     | Conditionally Required | Time the trip ended (required if trip was completed)                                                                                                    |
+| distance                   | Float         | Conditionally Required | Total distance of the trip in meters (required if trip was completed)                                                                                   |
+| cancellation_reason        | string        | Conditionally Required | The reason why a *driver* cancelled a reservation. (required if a driver cancelled a trip, and a `driver_cancellation` event_type was part of the trip) |
+| fare                       | [Fare](#fare) | Conditionally Required | Fare for the trip (required if trip was completed)                                                                                                      |
+| accessibility_options_used | Enum[]        | Optional               | Accessibility options used in this trip. See [accessibility-options][accessibility-options]                                                             |
 
 **Endpoint:** `/trips`  
 **Method:** `POST`  

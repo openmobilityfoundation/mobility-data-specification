@@ -234,9 +234,9 @@ MDS uses Version 1 UUIDs.
 [Top][toc]
 
 ## Accessibility Options
-| `accessibility_option` | Description                                      |
-|------------------------|--------------------------------------------------|
-| `wheelchair_boarding`  | Wheelchair boarding is available on this vehicle |
+| `accessibility_option`  | Description                           |
+|-------------------------|---------------------------------------|
+| `wheelchair_accessible` | This vehicle is wheelchair accessible |
 
 ## Modalities
 | `modality`      | Description                                                  |
