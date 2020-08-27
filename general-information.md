@@ -328,7 +328,7 @@ The *State Machine Diagram* shows how the `vehicle_state` and `event_type` relat
 | `on_trip`                    | `elsewhere`       | N/A          | `leave_jurisdiction`     | The vehicle has left jurisdictional boundaries while on a trip                                                   |
 | `on_trip`                    | `stopped`         | `stopped`    | `trip_stop`              | The vehicle has stopped while on a trip                                                                          |
 | `on_trip`                    | `unknown`         | N/A          | `comms_lost`             | The vehicle has went out of comms while on a trip                                                                |
-| `removed`                    | `non_operational` | N/A          | `depot_leave`            | The vehicle has left the depot                                                                                   |
+| `removed`                    | `non_operational` | N/A          | `maintenance_end`            | The vehicle has left the depot                                                                                   |
 | `removed`                    | `unknown`         | N/A          | `comms_lost`             | The vehicle has went out of comms while removed                                                                  |
 | `reserved`                   | `available`       | N/A          | `driver_cancellation`    | The driver has cancelled the reservation                                                                         |
 | `reserved`                   | `available`       | N/A          | `passenger_cancellation` | The passenger has cancelled the reservation                                                                      |
