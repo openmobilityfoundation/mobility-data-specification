@@ -323,7 +323,7 @@ The *State Machine Diagram* shows how the `vehicle_state` and `event_type` relat
 | `elsewhere`                  | `unknown`         | N/A          | `comms_lost`             | The vehicle has went out of comms while outside of jurisdictional boundaries                                     |
 | `non_operational`            | `available`       | N/A          | `service_start`          | The vehicle has went into service (is available for use)                                                         |
 | `non_operational`            | `elsewhere`       | N/A          | `leave_jurisdiction`     | The vehicle has left jurisdictional boundaries while not operating commercially                                  |
-| `non_operational`            | `removed`         | N/A          | `depot_enter`            | The vehicle has entered the depot for maintenance                                                                |
+| `non_operational`            | `removed`         | N/A          | `maintenance_start`            | The vehicle has entered the depot for maintenance                                                                |
 | `non_operational`            | `unknown`         | N/A          | `comms_lost`             | The vehicle has went out of comms while not operating commercially                                               |
 | `on_trip`                    | `elsewhere`       | N/A          | `leave_jurisdiction`     | The vehicle has left jurisdictional boundaries while on a trip                                                   |
 | `on_trip`                    | `stopped`         | `stopped`    | `trip_stop`              | The vehicle has stopped while on a trip                                                                          |
@@ -411,6 +411,16 @@ If an unsupported or invalid version is requested, the API must respond with a s
 [gbfs-station-info]: https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_informationjson
 [gbfs-station-status]: https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_statusjson
 [general-stops]: /general-information.md#stops
+[geo]: #geographic-data
+[geojson-feature]: https://tools.ietf.org/html/rfc7946#section-3.2
+[geojson-point]: https://tools.ietf.org/html/rfc7946#section-3.1.2
+[policy]: /policy/README.md
+[provider]: /provider/README.md
+[st-intersects]: https://postgis.net/docs/ST_Intersects.html
+[toc]: #table-of-contents
+[ts]: /general-information.md#timestamps
+[wgs84]: https://en.wikipedia.org/wiki/World_Geodetic_System
+ral-information.md#stops
 [geo]: #geographic-data
 [geojson-feature]: https://tools.ietf.org/html/rfc7946#section-3.2
 [geojson-point]: https://tools.ietf.org/html/rfc7946#section-3.1.2
