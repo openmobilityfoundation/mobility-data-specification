@@ -267,6 +267,7 @@ Event types are the possible transitions bewteen some vehicle states.
 | `comms_restored` |	Communications restored	|
 | `compliance_pick_up` |	Pick up for compliance	|
 | `decommissioned` |	Decommissioned	|
+| `located` |	Located	|
 | `maintenance` |	General maintenance	|
 | `maintenance_pick_up` |	Pick up for maintenance	|
 | `missing` |	Missing	|
@@ -309,16 +310,20 @@ Vehicles can enter the `unknown` state to and from any other state with the foll
 | `on_trip` | `available`   | `trip_cancel`        | A trip was initiated, then canceled prior to moving any distance |
 | `non_operational` | `available` | `system_resume`          | The vehicle is available because e.g. weather suspension or temporary regulations ended |
 | `unknown` | `available`   | `comms_restored`        | The vehicle transmitted status information after a period of being out of communication. |
+| `unknown` | `available`   | `located`        | The vehicle has been located by the provider |
 | `non_operational`, `unknown`| `available`   | `unspecified`        | The vehicle became available, but the provider cannot definitively (yet) specify the reason.  Generally, regulator Service-Level Agreements will limit the amount of time a vehicle's last event type may be `unspecified`. |
 | `available` | `reserved`    | `reservation_start`  | The vehicle was reserved for use by a customer |
 | `unknown` | `reserved`   | `comms_restored`        | The vehicle transmitted status information after a period of being out of communication. |
+| `unknown` | `reserved`   | `located`        | The vehicle has been located by the provider |
 | `unknown` | `reserved`   | `unspecified`        | The provider cannot definitively state how a vehicle became reserved. |
 | `available`, `reserved` | `on_trip`        | `trip_start`         | A customer initiated a trip with this vehicle |
 | `elsewhere` | `on_trip`        | `trip_enter_jurisdiction` | A vehicle on a trip entered the jurisdiction |
 | `unknown` | `on_trip`   | `comms_restored`        | The vehicle transmitted status information after a period of being out of communication. |
+| `unknown` | `on_trip`   | `located`        | The vehicle has been located by the provider |
 | `unknown` | `on_trip`   | `unspecified`        | The provider cannot definitively state how a vehicle started a trip. |
 | `on_trip` | `elsewhere`   | `trip_leave_jurisdiction` | A vehicle on a trip left the jurisdiction |
 | `unknown` | `elsewhere`   | `comms_restored` | The vehicle transmitted status information after a period of being out of communication. |
+| `unknown` | `elsewhere`   | `located`        | The vehicle has been located by the provider |
 | `unknown` | `elsewhere`   | `unspecified` | The provider cannot definitively state how a vehicle went `elsewhere`. |
 | `available` | `non_operational` | `battery_low`        | The vehicle's battery is below some rentability threshold |
 | `available` | `non_operational` | `maintenance`        | The vehicle requires some non-charge-related maintenance |
@@ -326,6 +331,7 @@ Vehicles can enter the `unknown` state to and from any other state with the foll
 | `available` | `non_operational` | `system_suspend`          | The vehicle is not available because of e.g. weather or temporary regulations |
 | `available`, `unknown` | `non_operational` | `unspecified`        | The vehicle became unavailable, but the Provider cannot definitively (yet) specify the reason. |
 | `unknown` | `non_operational`   | `comms_restored`        | The vehicle transmitted status information after a period of being out of communication |
+| `unknown` | `non_operational`   | `located`        | The vehicle has been located by the provider |
 | `available`, `non_operational`, `elsewhere` | `removed`     | `rebalance_pick_up`  | The provider picked up the vehicle for rebalancing purposes |
 | `available`, `non_operational`, `elsewhere` | `removed`     | `maintenance_pick_up` | The provider picked up the vehicle to service it |
 | `available`, `non_operational`, `elsewhere`, `unknown` | `removed`     | `agency_pick_up`     | An agency picked up the vehicle for some reason, e.g. illegal placement |
@@ -333,6 +339,7 @@ Vehicles can enter the `unknown` state to and from any other state with the foll
 | `available`, `non_operational`, `elsewhere`, `unknown` | `removed`     | `decommissioned`     | The provider has removed the vehicle from its fleet |
 | `unknown`, `non_operational`, `available`, `elsewhere` | `removed`     | `unspecified`        | The vehicle was removed, but the provider cannot definitively (yet) specify the reason |
 | `unknown` | `removed`   | `comms_restored`        | The vehicle transmitted status information after a period of being in an unknown state |
+| `unknown` | `removed`   | `located`        | The vehicle has been located by the provider |
 | `available`, `elsewhere`, `non_operational`, `on_trip`, `removed`, `reserved` | `unknown`     | `missing`            | The vehicle is not at its last reported GPS location, or that location is wildly in error |
 | `available`, `elsewhere`, `non_operational`, `on_trip`, `removed`, `reserved` | `unknown`     | `comms_lost`       | The vehicle is unable to transmit its GPS location or other status information |
 | `available`, `elsewhere`, `non_operational`, `on_trip`, `removed`, `reserved` | `unknown`     | `unspecified`       | The provider cannot definitively (yet) specify the reason for the unknown state |

@@ -438,6 +438,7 @@
         "comms_restored",
         "compliance_pick_up",
         "decommissioned",
+        "located",
         "maintenance",
         "maintenance_pick_up",
         "missing",
@@ -495,6 +496,7 @@
                   "agency_drop_off",
                   "battery_charged",
                   "comms_restored",
+                  "located",
                   "maintenance",
                   "on_hours",
                   "provider_drop_off",
@@ -517,6 +519,7 @@
               "contains": {
                 "enum": [
                   "comms_restored",
+                  "located",
                   "trip_leave_jurisdiction",
                   "unspecified"
                 ]
@@ -534,6 +537,7 @@
                 "enum": [
                   "battery_low",
                   "comms_restored",
+                  "located",
                   "maintenance",
                   "off_hours",
                   "system_suspend",
@@ -552,6 +556,7 @@
               "contains": {
                 "enum": [
                   "comms_restored",
+                  "located",
                   "trip_enter_jurisdiction",
                   "trip_start",
                   "unspecified"
@@ -571,6 +576,7 @@
                   "agency_pick_up",
                   "compliance_pick_up",
                   "decommissioned",
+                  "located",
                   "maintenance_pick_up",
                   "rebalance_pick_up",
                   "unspecified"
@@ -588,6 +594,7 @@
               "contains": {
                 "enum": [
                   "comms_restored",
+                  "located",
                   "reservation_start",
                   "unspecified"
                 ]
