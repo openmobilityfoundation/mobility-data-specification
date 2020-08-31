@@ -341,12 +341,14 @@ Path Params:
 If `stop_id` is specified, `GET` will return an array with a single stop record, otherwise it will be a list of all stop records.
 
 ## Reservation Type
-| `reservation_type` | Description |
-| ------------------| ----------------|
-| `on_demand`       | Reservation was created on demand |
-| `scheduled`       | Reservation was scheduled ahead of time |
+The reservation type enum expresses the urgency of a given reservation. This can be useful when attempting to quantify metrics around trips: for example, computing passenger wait-time. In the `on_demand` case, passenger wait-time may be quantified by the delta between the time a passenger created their reservation, and the pick-up time; however, in the `scheduled` case, the wait time may be quantified based on the delta between ... TODO @avatarneil finish this
+| `reservation_type` | Description                                                            |
+|--------------------|------------------------------------------------------------------------|
+| `on_demand`        | The passenger requested the vehicle as soon as possible                |
+| `scheduled`        | The passenger requested the vehicle for a scheduled time in the future |
 
 ## Reservation Method
+The reservation method enum describes the different ways in which a passenger can create their reservation.
 | `reservation_method` | Description                                               |
 |----------------------|-----------------------------------------------------------|
 | `app`                | Reservation was made through an application (mobile/web)  |
