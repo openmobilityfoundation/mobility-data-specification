@@ -4,26 +4,34 @@ This document contains specifications that are shared between the various MDS AP
 
 ## Table of Contents
 
-* [Beta Features](#beta-features)
-* [Costs and Currencies](#costs-and-currencies)
-* [Definitions](#definitions)
-* [Devices](#devices)
-* [Geographic Data][geo]
-  * [Stop-based Geographic Data](#stop-based-geographic-data)
-  * [Intersection Operation](#intersection-operation)
-* [Propulsion Types](#propulsion-types)
-* [Responses](#responses)
-  * [Error Messages](#error-messages)
-* [Strings](#strings)
-* [Stops](#stops)
-  * [Stop Status](#stop-status)
-  * [GBFS Compatibility](#gbfs-compatibility)
-* [Timestamps](#timestamps)
-* [UUIDs](#uuids)
-* [Vehicle States](#vehicle-states)
-  * [Vehicle State Events](#vehicle-state-events)
-* [Vehicle Types](#vehicle-types)
-* [Versioning](#versioning)
+- [Mobility Data Specification: **General information**](#mobility-data-specification-general-information)
+  - [Table of Contents](#table-of-contents)
+  - [Beta Features](#beta-features)
+  - [Costs and currencies](#costs-and-currencies)
+  - [Definitions](#definitions)
+  - [Devices](#devices)
+  - [Geographic Data](#geographic-data)
+    - [Stop-based Geographic Data](#stop-based-geographic-data)
+    - [Intersection Operation](#intersection-operation)
+  - [Responses](#responses)
+    - [Error Messages](#error-messages)
+  - [Strings](#strings)
+  - [Stops](#stops)
+    - [Stop Status](#stop-status)
+    - [GBFS Compatibility](#gbfs-compatibility)
+  - [Timestamps](#timestamps)
+  - [UUIDs](#uuids)
+  - [Accessibility Options](#accessibility-options)
+  - [Modalities](#modalities)
+  - [Vehicle States](#vehicle-states)
+    - [Micromobility Vehicle States & Events](#micromobility-vehicle-states--events)
+    - [Taxi Vehicle States & Events](#taxi-vehicle-states--events)
+      - [Trip State Notes](#trip-state-notes)
+  - [Vehicle Types](#vehicle-types)
+  - [Propulsion Types](#propulsion-types)
+    - [Valid for vehicle_types: bicycle, scooter, moped, other](#valid-for-vehicle_types-bicycle-scooter-moped-other)
+    - [Valid for vehicle_types: car](#valid-for-vehicle_types-car)
+  - [Versioning](#versioning)
 
 ## Beta Features
 
@@ -221,6 +229,7 @@ MDS uses Version 1 UUIDs.
 [Top][toc]
 
 ## Accessibility Options
+This enum represents the accessibility options available on a given vehicle, or the accessibility options utilized for a given trip. This enum is currently only used by the Taxi mode, and is not used by micromobility.
 | `accessibility_option`  | Description                           |
 |-------------------------|---------------------------------------|
 | `wheelchair_accessible` | This vehicle is wheelchair accessible |
