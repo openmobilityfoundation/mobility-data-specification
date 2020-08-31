@@ -216,7 +216,7 @@ Body Params:
 Required if `event_types` contains `trip_start`, `trip_end`, `trip_cancel`, `trip_enter_jurisdiction`, or `trip_leave_jurisdiction`.
 
 #### Taxi
-Required if `event_types` contains `reservation_start`, `reservation_stop`, `trip_start`, `trip_stop`, `trip_end`, `passenger_cancellation`, `driver_cancellation`. Additionally, `trip_id` is also required if `event_types` contains a `enter_jurisdiction` or `leave_jurisdiction` event which pertain to a passenger trip. 
+Required if `event_types` contains `reservation_start`, `reservation_stop`, `trip_start`, `trip_stop`, `trip_end`, `passenger_cancellation`, `driver_cancellation`. Additionally, `trip_id` is also required if `event_types` contains a `enter_jurisdiction` or `leave_jurisdiction` event which pertains to a passenger trip. 
 
 [Top][toc]
 
