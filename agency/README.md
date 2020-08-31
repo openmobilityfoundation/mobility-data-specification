@@ -343,14 +343,13 @@ If `stop_id` is specified, `GET` will return an array with a single stop record,
 | `phone_dispatch`     | Reservation was made by calling the dispatch operator     |
 
 ## Fare
-| Field           | Type                           | Required/Optional | Field Description                                                |
-|-----------------|--------------------------------|-------------------|------------------------------------------------------------------|
-| quoted_cost     | Float                          | Required          | Cost quoted to the customer at the time of booking               |
-| actual_cost     | Float                          | Required          | Actual cost after a trip was completed                           |
-| components      | `{ [string]: float }`          | Optional          | Breakdown of the different fees that composed a fare, e.g. tolls |
-| currency        | string                         | Required          | ISO 4217 currency code                                           |
-| payment_methods | `{ [PAYMENT_METHOD]: number }` | Optional          | Breakdown of different payment methods used for a trip           |
-TODO @avatarneil, update
+| Field           | Type                   | Required/Optional | Field Description                                                       |
+|-----------------|------------------------|-------------------|-------------------------------------------------------------------------|
+| quoted_cost     | Float                  | Required          | Cost quoted to the customer at the time of booking                      |
+| actual_cost     | Float                  | Required          | Actual cost after a trip was completed                                  |
+| components      | `{ [string]: float }`  | Optional          | Breakdown of the different fees that composed a fare, e.g. tolls        |
+| currency        | string                 | Required          | ISO 4217 currency code                                                  |
+| payment_methods | `{ [string]: number }` | Optional          | Breakdown of different payment methods used for a trip, e.g. cash, card |
 
 ## Trip
 | Field                      | Type          | Required/Optional      | Field Description                                                                                                                                       |
