@@ -14,6 +14,9 @@ This specification contains a collection of RESTful APIs used to specify the dig
   - [Vehicle - Register](#vehicle---register)
   - [Vehicle - Update](#vehicle---update)
   - [Vehicle - Event](#vehicle---event)
+    - [Trip_id Requirements](#trip_id-requirements)
+      - [Micromobility](#micromobility)
+      - [Taxi](#taxi)
   - [Vehicle - Telemetry](#vehicle---telemetry)
   - [Telemetry Data](#telemetry-data)
   - [Stops](#stops)
@@ -172,7 +175,7 @@ _No content returned if no vehicle matching `device_id` is found._
 
 ## Vehicle - Event
 
-The vehicle `/event` endpoint allows the Provider to control the state of the vehicle including deregister a vehicle from the fleet.
+The vehicle `/event` endpoint allows the Provider to control the state of the vehicle.
 
 Endpoint: `/vehicles/{device_id}/event`
 Method: `POST`
@@ -185,13 +188,13 @@ Path Params:
 
 Body Params:
 
-| Field           | Type                          | Required/Optional | Field Description |
-| -----------     | ----------------------------- | -------- | -------------------------------------------------------------------------------- |
-| `vehicle_state` | Enum                          | Required | see [Vehicle States][vehicle-states] |
-| `event_types`   | Enum[]                        | Required | see [Vehicle Events][vehicle-events] |
-| `timestamp`     | [timestamp][ts]                     | Required | Date of last event update |
-| `telemetry`     | [Telemetry](#telemetry-data)  | Required | Single point of telemetry |
-| `trip_id`       | UUID                          | Optional | UUID provided by Operator to uniquely identify the trip. Required if `event_types` contains `trip_start`, `trip_end`, `trip_cancel`, `trip_enter_jurisdiction`, or `trip_leave_jurisdiction` |
+| Field           | Type                         | Required/Optional      | Field Description                                                                                          |
+|-----------------|------------------------------|------------------------|------------------------------------------------------------------------------------------------------------|
+| `vehicle_state` | Enum                         | Required               | see [Vehicle States][vehicle-states]                                                                       |
+| `event_types`   | Enum[]                       | Required               | see [Micromobility Vehicle Events][mm-vehicle-events] and [Taxi Vehicle Events][taxi-vehicle-events]       |
+| `timestamp`     | [timestamp][ts]              | Required               | Date of last event update                                                                                  |
+| `telemetry`     | [Telemetry](#telemetry-data) | Required               | Single point of telemetry                                                                                  |
+| `trip_id`       | UUID                         | Conditionally required | UUID provided by Operator to uniquely identify the trip. See [trip_id requirements](#trip_id-requirements) |
 
 201 Success Response:
 
@@ -206,6 +209,14 @@ Body Params:
 | `bad_param`         | A validation error occurred     | Array of parameters with errors |
 | `missing_param`     | A required parameter is missing | Array of missing parameters     |
 | `unregistered`      | Vehicle is not registered       |                                 |
+
+### Trip_id Requirements
+
+#### Micromobility
+Required if `event_types` contains `trip_start`, `trip_end`, `trip_cancel`, `trip_enter_jurisdiction`, or `trip_leave_jurisdiction`.
+
+#### Taxi
+Required if `event_types` contains `reservation_start`, `reservation_stop`, `trip_start`, `trip_stop`, `trip_end`, `passenger_cancellation`, `driver_cancellation`. Additionally, `trip_id` is also required if `event_types` contains a `enter_jurisdiction` or `leave_jurisdiction` event which pertain to a passenger trip. 
 
 [Top][toc]
 
@@ -396,5 +407,6 @@ Payload which was POST'd
 [ts]: /general-information.md#timestamps
 [vehicle-types]: /general-information.md#vehicle-types
 [vehicle-states]: /general-information.md#vehicle-states
-[vehicle-events]: /general-information.md#vehicle-state-events
+[mm-vehicle-events]: /general-information.md#micromobility-vehicle-states--events
+[taxi-vehicle-events]: /general-information.md#taxi-vehicle-states--events
 [versioning]: /general-information.md#versioning
