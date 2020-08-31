@@ -119,19 +119,6 @@ For the purposes of this specification, the intersection of two geographic datat
 
 [Top][toc]
 
-## Propulsion Types
-
-| `propulsion`      | Description                                            |
-| ----------------- | ------------------------------------------------------ |
-| `human`           | Pedal or foot propulsion                               |
-| `electric_assist` | Provides power only alongside human propulsion         |
-| `electric`        | Contains throttle mode with a battery-powered motor    |
-| `combustion`      | Contains throttle mode with a gas engine-powered motor |
-
-A vehicle may have one or more values from the `propulsion`, depending on the number of modes of operation. For example, a scooter that can be powered by foot or by electric motor would have the `propulsion` represented by the array `['human', 'electric']`. A bicycle with pedal-assist would have the `propulsion` represented by the array `['human', 'electric_assist']` if it can also be operated as a traditional bicycle.
-
-[Top][toc]
-
 ## Responses
 
 * **200:** OK: operation successful.
@@ -379,6 +366,28 @@ The list of allowed `vehicle_type` values in MDS. Aligning with [GBFS vehicle ty
 | scooter      | Any motorized mobility device intended for one rider |
 | moped        | A motorcycle/bicycle hybrid that can be powered or pedaled |
 | other        | A device that does not fit in the other categories |
+
+[Top][toc]
+
+
+## Propulsion Types
+A vehicle may have one or more values from the `propulsion_types`, depending on the number of modes of operation. For example, a scooter that can be powered by foot or by electric motor would have the `propulsion_types` represented by the array `['human', 'electric']`. A bicycle with pedal-assist would have the `propulsion_types` represented by the array `['human', 'electric_assist']` if it can also be operated as a traditional bicycle. A hybrid car would have the `propulsion_types` represented by the array `['electric', 'combustion']`.
+
+### Valid for vehicle_types: bicycle, scooter, moped, other
+| `propulsion`      | Description                                            |
+| ----------------- | ------------------------------------------------------ |
+| `human`           | Pedal or foot propulsion                               |
+| `electric_assist` | Provides power only alongside human propulsion         |
+| `electric`        | Contains throttle mode with a battery-powered motor    |
+| `combustion`      | Contains throttle mode with a gas engine-powered motor |
+
+
+### Valid for vehicle_types: car
+| `propulsion`      | Description                         |
+| ----------------- | ----------------------------------- |
+| `electric`        | Contains a battery-powered motor    |
+| `combustion`      | Contains a gas engine-powered motor |
+
 
 [Top][toc]
 
