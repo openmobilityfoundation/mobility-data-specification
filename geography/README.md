@@ -8,7 +8,6 @@ This specification contains a collection of RESTful APIs used to read Geographie
 
 ## Table of Contents
 
-- [Audience](#audience)
 - [Background](#background)
 - [Distribution](#distribution)
 - [Schema](#schema)
