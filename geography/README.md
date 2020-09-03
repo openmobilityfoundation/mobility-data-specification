@@ -1,9 +1,9 @@
-# Mobility Data Specification: Geography Author
+# Mobility Data Specification: Geography API
 
 This specification contains a collection of RESTful APIs used to read Geographies.
 
 - Authors: LADOT
-- Date: 21 February 2020
+- Date: 01 September 2020
 - Version: beta
 
 ## Table of Contents
@@ -20,18 +20,24 @@ This specification contains a collection of RESTful APIs used to read Geographie
 
 ## Background
 
-The main intended clients of this API are the Policy, Policy Author, and Jurisdiction services. A Policy object may require
-a geofence to function properly. A Jurisdiction is by definition a collection of Geography objects.
+Geographical data has many applications in the context of mobility, such as the description of municipal boundaries, locations for pick-up and drop-off zones, and areas of temporary closure for special events or emergencies.  This API is intended to support a variety of other APIs, including the Policy API.
 
-Geographical data will be stored as GeoJSON and read from either `geographies.json` or the `/geographies` endpoint, referenced by UUID. A Geography is mutable up until the point it is published, at which point, it becomes immutable. Since the Geography service is intended to serve only read-only endpoints, publishing must be done through a call to the Geography Author service or some other means on the backend.
+Geographical data will be stored as GeoJSON and read from either `geographies.json` or the `/geographies` endpoint, referenced by UUID. Geography data once published through this API shall be treated as immutable, to ensure that any rules or regulations referring to the boundaries cannot be retroactively changed.  A Geography may be deprecated and replaced by updated version with a new UUID.
+Obsoleting or otherwise changing a geography is accomplished by publishing a new geography with a field named `prev_geographies`, a list of UUID references to the geography or geographies superseded by the new geography.
 
-A Geography may also have an associated GeographyMetadata. To link a Geography to a GeographyMetadata, both objects must have the same UUID. Metadata may be read and written through the companion GeographyAuthor service.
+### Versioning
 
-<a name="scoping"></a>
+MDS APIs must handle requests for specific versions of the specification from clients.
 
-## Scoping and how it relates to Geography status
+Versioning must be implemented as specified in the [Versioning section][versioning].
 
-Since an unpublished Geography may not be ready for viewing by a broader audience, unlike published geographies, it requires a narrower audience. The Geography Author Service must implement two read scopes: `geographies:read:published` and `geographies:read:unpublished`. The `geographies:read:unpublished` scope is meant to supersede the `geographies:read:published` scope. A user that has only the `geographies:read:published` scope must be restricted to reading only published geographies. A user that has the `geographies:read:unpublished` scope should be able to read both published and unpublished geographies. GeographyMetada is likewise restricted.
+### Responses and Error Messages
+
+See the [Responses][responses] and [Error Messages][error-messages] sections.
+
+### Authorization
+
+When making requests, the Geography API expects `provider_id` to be part of the claims in a [JWT](https://jwt.io/) `access_token` in the `Authorization` header, in the form `Authorization: Bearer <access_token>`. The token issuance, expiration and revocation policies are at the discretion of the Agency.
 
 <a name="schema"></a>
 
@@ -41,27 +47,24 @@ Since an unpublished Geography may not be ready for viewing by a broader audienc
 
 ### Geography Fields
 
-| Name             | Type      | R/O | Description                                                                         |
-| ---------------- | --------- | --- | ----------------------------------------------------------------------------------- |
-| `name`           | String    | R   | Name of geography                                                                      |
-| `description`    | String    | O   | Detailed description of geography                                                                      |
-| `geography_id`   | UUID      | R   | Unique ID of geography                                                                 |
+| Name               | Type      | R/O | Description                                                                         |
+| ----------------   | --------- | --- | ----------------------------------------------------------------------------------- |
+| `name`             | String    | R   | Name of geography                                                                      |
+| `description`      | String    | O   | Detailed description of geography                                                                      |
+| `geography_id`     | UUID      | R   | Unique ID of geography                                                                 |
 | `geography_json`   | UUID      | R   | The GeoJSON that defines the geographical coordinates.
-| `effective_date`   | timestamp | O   | `start_date` for first published policy that uses this geo.  Server should set this when policies are published.  This may be used on the client to distinguish between “logical” geographies that have the same name. E.g. if a policy publishes a geography on 5/1/2020, and then another policy is published which references that same geography is published on 4/1/2020, the effective_date will be set to 4/1/2020.
-| `publish_date`   | timestamp | R   | Timestamp that the policy was published, i.e. made immutable                                             |
-| `prev_geographies`  | UUID[]    | O   | Unique IDs of prior geographies replaced by this one                                   |
-
+| `effective_date`   | timestamp | O   | The date at which a Geography is considered "live".  Must be at or after `publish_date`.
+| `publish_date`     | timestamp | R   | Timestamp that the policy was published, i.e. made immutable                                             |
+| `prev_geographies` | UUID[]    | O   | Unique IDs of prior geographies replaced by this one                                   |
 
 <a name="file-format"></a>
 
 ## File format
 
-To use flat files rather than REST endpoints, Geography objects should be stored in `geographies.json`.  The `geographies.json` file will look like the output of `GET /geographies`.  Examples are as follows:
-
-```
+To use flat files rather than REST endpoints, Geography objects should be stored in `geographies.json`.  The `geographies.json` file will look like the output of `GET /geographies`.  
 
 Example `geographies.json`
-```
+```json
 {
     "version": "0.4.0",
     "updated:" "1570035222868",
@@ -75,8 +78,6 @@ Example `geographies.json`
     ]
 }
 ```
-```
-
 
 _Note: A simple tool to validate `geographies.json` will be contributed to the Open Mobility Foundation._
 
@@ -88,20 +89,21 @@ Responses must set the `Content-Type` header, as specified in the [Provider vers
 
 The Geography Author API consists of the following endpoints:
 
-### GET /geographies/:geography_id
+Endpoint:  `/geographies/{geography_id}`
+Method: `GET`
 
-#### Path Parameters
+Path Params:
 
-| Name          | Type                                                          | R/O | Description                                         |
-| ------------- | ------------------------------------------------------------- | --- | --------------------------------------------------- |
-| geography_id | [UUID](../common/DataDefinitions.md#unique-identifiers-uuids) | R   | Unique identifier for a single specific Geography. |
+| Name          | Type | R/O | Description                                       |
+| ------------- | ---- | --- | --------------------------------------------------- |
+| geography_id  | UUID | R   | Unique identifier for a single specific Geography |
 
 Returns: A single Geography.  
 
 Response body:
 ```js
 {
-  version: '0.1.0',
+  version: '1.0.0',
   geography: {
     geography_id: UUID,
     geography_json: GeoJSON FeatureCollection,
@@ -120,16 +122,16 @@ Response codes:
 - 404 - no geography found
 - 403 - user is attempting to read an unpublished geography, but only has the `geographies:read:published` scope.
 
-### GET /geographies
-#### Query String Parameters
+Endpoint:  `/geographies`
+Method: `GET`
+
+Path Params: 
 
 | Name         | Type      | R/O | Description                                    |
 | ------------ | --------- | --- | ---------------------------------------------- |
-| `get_published` | string | O   | Filter for published geographies.  |
-| `get_unpublished`   | string | O   | Filter for unpublished geographies      |
-| `summary`   | string | O   | Return geographies, minus the GeoJSON in each geography object     |
+| `summary`    | string    | O   | Return geographies, minus the GeoJSON in each geography object     |
 
-Returns: All geography objects, unless either `get_published` or `get_unpublished` was supplied. If both parameters have been supplied, that is an invalid query. If a user does not supply `get_unpublished` but has only the `geographies:read:published` scope, unpublished geographies will be silently filtered out. If a user explicitly requests unpublished geographies without the `geographies:read:unpublished` scope, a 403 will be thrown. 
+Returns: All non-deprecated geography objects
 
 Response body:
 ```js
@@ -143,7 +145,8 @@ Response body:
 
 Response codes:
 - 200 - success
-- 400 - bad query (most likely both `get_published` and `get_unpublished` were both set)
 - 401 - unauthorized
-- 404 - no geography found
-- 403 - user is attempting to read an unpublished geography, but only has the `geographies:read:published` scope.
+
+[responses]: /general-information.md#responses
+[ts]: /general-information.md#timestamps
+[versioning]: /general-information.md#versioning
