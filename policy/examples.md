@@ -8,6 +8,9 @@ This file presents a series of [Policy object](./README.md#policy) examples for 
 - [Provider Cap](#provider-cap)
 - [Idle Time](#idle-time)
 - [Speed Limits](#speed-limits)
+- [Per Trip Fees](#per-trip-fees)
+- [Vehicle Right of Way Fees](#vehicle-right-of-way-fees)
+- [Metered Parking Fees](#metered-parking-fees)
 
 ## Prohibited Zone
 
@@ -123,6 +126,7 @@ This Policy allows scooters and bikes can be in the public right-of-way for up t
   "prev_policies": null,
   "rules": [{
       "name": "Greater LA (rentable)",
+      "rule_id": "e1942f2d-e5c7-46c4-94c7-293d4e481ed0",
       "rule_type": "time",
       "rule_units": "hours",
       "geographies": [
@@ -139,6 +143,7 @@ This Policy allows scooters and bikes can be in the public right-of-way for up t
       "maximum": 72
   }, {
       "name": "Greater LA (non-rentable)",
+      "rule_id": "a7eb28b9-969e-4c52-b18c-4243a96f7143",
       "rule_type": "time",
       "rule_units": "hours",
       "geographies": [
@@ -152,7 +157,7 @@ This Policy allows scooters and bikes can be in the public right-of-way for up t
         "bicycle",
         "scooter"
       ],
-      "limit": 24
+      "maximum": 24
   }]
 }
 ```
@@ -173,22 +178,8 @@ This Policy sets a 15 MPH speed limit in greater LA, and a 10 MPH speed limit in
   "published_date": 1552678594428,
   "prev_policies": null,
   "rules": [{
-      "name": "Greater LA",
-      "rule_type": "speed",
-      "rule_units": "mph",
-      "geographies": [
-        "b4bcc213-4888-48ce-a33d-4dd6c3384bda"
-      ],
-      "statuses": {
-        "trip": []
-      },
-      "vehicle_types": [
-        "bicycle",
-        "scooter"
-      ],
-      "maximum": 15
-  }, {
       "name": "Venice Beach on weekend afternoons",
+      "rule_id": "d4c0f42f-3f79-4eb4-850a-430b9701d5cf",
       "rule_type": "speed",
       "rule_units": "mph",
       "geographies": [
@@ -212,8 +203,118 @@ This Policy sets a 15 MPH speed limit in greater LA, and a 10 MPH speed limit in
           "en-US": "Remember to stay under 10 MPH on Venice Beach on weekends!",
           "es-US": "¡Recuerda permanecer menos de 10 millas por hora en Venice Beach los fines de semana!"
       }
+  }, {
+      "name": "Greater LA",
+      "rule_id": "529b6cd7-0e0d-4439-babf-c5908a664ecf",
+      "rule_type": "speed",
+      "rule_units": "mph",
+      "geographies": [
+        "b4bcc213-4888-48ce-a33d-4dd6c3384bda"
+      ],
+      "statuses": {
+        "trip": []
+      },
+      "vehicle_types": [
+        "bicycle",
+        "scooter"
+      ],
+      "maximum": 15
   }]
 }
 ```
+[Top](#table-of-contents)
 
+## Per Trip Fees
+This policy sets a 25 cent per-trip fee that is applied for trips that start in the municipal boundary.
+
+
+```json
+{
+      "policy_id": "d2567b3c-3071-48a6-bbeb-3424721dbd12",
+      "published_date": 1586736000000,
+      "name": "Trip Fees",
+      "start_date": 1586822400000,
+      "end_date": 1587427200000,
+      "prev_policies": null,
+      "rules": [{
+    		  "name": "City Wide Trip Fee",
+    		  "rule_type": "rate",
+    		  "rate_amount": 25,
+    		  "rate_recurrence": "once",
+    		  "geography": MUNICIPAL_BOUNDARY_GEOGRAPHY,
+    		  "statuses": {
+    		        "trip": ["trip_start"]
+    		   }
+    		}]
+    }
+```
+[Top](#table-of-contents)
+
+## Vehicle Right of Way Fees
+This policy sets a Right-of-Way fee that is charged once a day for vehicles deployed in a given area. It charges a 25 cents per day for vehicles deployed downtown, and 5 cents per day for vehicles deployed in a historically underserved neighborhood. In the case where a vehicle is deployed twice in both areas in the same day, the higher fee would apply (because it appears first in the rules).
+
+```json
+{
+      "policy_id": "4137a47c-836a-11ea-bc55-0242ac130003",
+      "published_date": 1586736000000,
+      "name": "Right of Way Fees",
+      "start_date": 1586822400000,
+      "end_date": 1587427200000,
+      "prev_policies": null,
+      "rules": [
+    			{
+    			  "name": "Downtown Right of Way Fee",
+    			  "rule_type": "rate",
+    			  "rate_amount": 25,
+    			  "rate_recurrence": "each_time_unit",
+    			  "rule_units": "days",
+    			  "geography": DOWNTOWN_GEOGRAPHY,
+    			  "statuses": {
+    			        "available": ["service_start"]
+    			   }
+    			},
+    			{
+    			  "name": "Decreased Right of Way Fee",
+    			  "rule_type": "rate",
+    			  "rate_amount": 5,
+    			  "rate_recurrence": "each_time_unit",
+    			  "rule_units": "days",
+    			  "geography": HISTORICALLY_UNDERSERVED_NEIGHBORHOOD_GEOGRAPHY,
+    			  "statuses": {
+    			        "available": ["service_start"]
+    			   }
+    			}
+    		]
+    }
+```
+[Top](#table-of-contents)
+
+## Metered Parking Fees
+This policy sets a 10 cent per hour metered parking charge that is applied while a vehicle is parked in a congested area during rush hour.
+
+```json
+{
+      "policy_id": "6a3dd008-836a-11ea-bc55-0242ac130003",
+      "published_date": 1586736000000,
+      "name": "Parking Fees",
+      "start_date": 1586822400000,
+      "end_date": 1587427200000,
+      "prev_policies": null,
+      "rules": [{
+    		  "name": "Downtown Peak-Hour Parking Fee",
+    		  "rule_type": "rate",
+    		  "rate_amount": 10,
+    		  "rate_recurrence": "per_complete_time_unit",
+    		  "rule_units": "hours",
+    		  "geography": INNER_CITY_GEOGRAPHY,
+    		  "days": ["mon","tue","wed","thu","fri"],
+    		  "start_time": "7:00:00",
+    		  "end_time": "8:30:00",
+    		  "statuses": {
+    		        "available": [],
+    		        "unavailable": [],
+    		   }
+    		}]
+    }
+```
 [Top](#table-of-contents)

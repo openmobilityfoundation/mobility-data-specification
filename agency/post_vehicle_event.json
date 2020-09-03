@@ -1,154 +1,9 @@
 {
-  "$id": "https://raw.githubusercontent.com/CityofLosAngeles/mobility-data-specification/master/agency/post_vehicle_event.json",
+  "$id": "https://raw.githubusercontent.com/openmobilityfoundation/mobility-data-specification/main/agency/post_vehicle_event.json",
   "$schema": "http://json-schema.org/draft-06/schema#",
   "title": "The MDS Agency Schema, POST vehicle status body",
   "type": "object",
   "definitions": {
-    "vehicle_event": {
-      "$id": "#/definitions/vehicle_event",
-      "type": "string",
-      "description": "A status event for a vehicle",
-      "oneOf": [
-        {
-          "properties": {
-            "event_type": {
-              "enum": [
-                "register"
-              ]
-            }
-          }
-        },
-        {
-          "properties": {
-            "event_type": {
-              "enum": [
-                "service_start"
-              ]
-            }
-          }
-        },
-        {
-          "properties": {
-            "event_type": {
-              "enum": [
-                "service_end"
-              ]
-            },
-            "event_type_reason": {
-              "enum": [
-                "low_battery",
-                "maintenance",
-                "compliance",
-                "off_hours"
-              ]
-            }
-          }
-        },
-        {
-          "properties": {
-            "event_type": {
-              "enum": [
-                "provider_drop_off"
-              ]
-            }
-          }
-        },
-        {
-          "properties": {
-            "event_type": {
-              "enum": [
-                "provider_pick_up"
-              ]
-            },
-            "event_type_reason": {
-              "enum": [
-                "rebalance",
-                "maintenance",
-                "charge",
-                "compliance"
-              ]
-            }
-          }
-        },
-        {
-          "properties": {
-            "event_type": {
-              "enum": [
-                "city_pick_up"
-              ]
-            }
-          }
-        },
-        {
-          "properties": {
-            "event_type": {
-              "enum": [
-                "reserve"
-              ]
-            }
-          }
-        },
-        {
-          "properties": {
-            "event_type": {
-              "enum": [
-                "cancel_reservation"
-              ]
-            }
-          }
-        },
-        {
-          "properties": {
-            "event_type": {
-              "enum": [
-                "trip_start"
-              ]
-            }
-          }
-        },
-        {
-          "properties": {
-            "event_type": {
-              "enum": [
-                "trip_enter"
-              ]
-            }
-          }
-        },
-        {
-          "properties": {
-            "event_type": {
-              "enum": [
-                "trip_leave"
-              ]
-            }
-          }
-        },
-        {
-          "properties": {
-            "event_type": {
-              "enum": [
-                "trip_end"
-              ]
-            }
-          }
-        },
-        {
-          "properties": {
-            "event_type": {
-              "enum": [
-                "deregister"
-              ]
-            },
-            "event_type_reason": {
-              "enum": [
-                "missing"
-              ]
-            }
-          }
-        }
-      ]
-    },
     "telemetry": {
       "$id": "#/definitions/telemetry",
       "type": "object",
@@ -220,24 +75,85 @@
         }
       }
     },
-    "uuid": {
-      "$id": "#/definitions/uuid",
+    "timestamp": {
+      "$id": "#/definitions/timestamp",
+      "type": "number",
+      "description": "Integer milliseconds since Unix epoch",
+      "multipleOf": 1.0,
+      "minimum": 0
+    },
+    "vehicle_state": {
+      "$id": "#/definitions/vehicle_state",
       "type": "string",
-      "title": "A UUID used to uniquely identifty an object",
-      "default": "",
-      "examples": [
-        "3c9604d6-b5ee-11e8-96f8-529269fb1459"
-      ],
-      "pattern": "^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$"
+      "description": "The state of a vehicle",
+      "enum": [
+        "available",
+        "elsewhere",
+        "non_operational",
+        "on_trip",
+        "removed",
+        "reserved",
+        "unknown"
+      ]
+    },
+    "vehicle_event": {
+      "$id": "#/definitions/vehicle_event",
+      "type": "string",
+      "description": "An event that changes a vehicle's state",
+      "enum": [
+        "agency_drop_off",
+        "agency_pick_up",
+        "battery_charged",
+        "battery_low",
+        "comms_lost",
+        "comms_restored",
+        "compliance_pick_up",
+        "decommissioned",
+        "maintenance",
+        "maintenance_pick_up",
+        "missing",
+        "off_hours",
+        "on_hours",
+        "provider_drop_off",
+        "rebalance_pick_up",
+        "reservation_cancel",
+        "reservation_start",
+        "system_resume",
+        "system_suspend",
+        "trip_cancel",
+        "trip_end",
+        "trip_enter_jurisdiction",
+        "trip_leave_jurisdiction",
+        "trip_start",
+        "unspecified"
+      ]
+    },
+    "vehicle_events": {
+      "$id": "#/definitions/vehicle_events",
+      "type": "array",
+      "description": "Array of events indicating a change to a vehicle's state",
+      "uniqueItems": true,
+      "minItems": 1,
+      "items": {
+        "$ref": "#/definitions/vehicle_event"
+      }
     }
   },
   "required": [
-    "event_type",
+    "vehicle_state",
+    "event_types",
+    "timestamp",
     "telemetry"
   ],
   "properties": {
-    "event_type": {
-      "$ref": "#/definitions/vehicle_event"
+    "vehicle_state": {
+      "$ref": "#/definitions/vehicle_state"
+    },
+    "event_types": {
+      "$ref": "#/definitions/vehicle_events"
+    },
+    "timestamp": {
+      "$ref": "#/definitions/timestamp"
     },
     "telemetry": {
       "$ref": "#/definitions/telemetry"
@@ -246,5 +162,163 @@
       "$ref": "#/definitions/uuid"
     }
   },
-  "additionalProperties": false
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "description": "valid vehicle_state and vehicle_events combinations",
+      "oneOf": [
+        {
+          "properties": {
+            "vehicle_state": {
+              "const": "available"
+            },
+            "event_types": {
+              "contains": {
+                "enum": [
+                  "agency_drop_off",
+                  "battery_charged",
+                  "comms_restored",
+                  "maintenance",
+                  "on_hours",
+                  "provider_drop_off",
+                  "reservation_cancel",
+                  "system_resume",
+                  "trip_cancel",
+                  "trip_end",
+                  "unspecified"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "vehicle_state": {
+              "const": "elsewhere"
+            },
+            "event_types": {
+              "contains": {
+                "enum": [
+                  "comms_restored",
+                  "trip_leave_jurisdiction"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "vehicle_state": {
+              "const": "non_operational"
+            },
+            "event_types": {
+              "contains": {
+                "enum": [
+                  "battery_low",
+                  "comms_restored",
+                  "maintenance",
+                  "off_hours",
+                  "system_suspend",
+                  "unspecified"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "vehicle_state": {
+              "const": "on_trip"
+            },
+            "event_types": {
+              "contains": {
+                "enum": [
+                  "comms_restored",
+                  "trip_enter_jurisdiction",
+                  "trip_start"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "vehicle_state": {
+              "const": "removed"
+            },
+            "event_types": {
+              "contains": {
+                "enum": [
+                  "agency_pick_up",
+                  "compliance_pick_up",
+                  "decommissioned",
+                  "maintenance_pick_up",
+                  "rebalance_pick_up",
+                  "unspecified"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "vehicle_state": {
+              "const": "reserved"
+            },
+            "event_types": {
+              "contains": {
+                "enum": [
+                  "comms_restored",
+                  "reservation_start"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "vehicle_state": {
+              "const": "unknown"
+            },
+            "event_types": {
+              "contains": {
+                "enum": [
+                  "comms_lost",
+                  "missing",
+                  "unspecified"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "description": "Conditionally require a trip_id reference",
+      "anyOf": [
+        {
+          "not": {
+            "properties": {
+              "event_types": {
+                "contains": {
+                  "enum": [
+                    "trip_cancel",
+                    "trip_end",
+                    "trip_enter_jurisdiction",
+                    "trip_leave_jurisdiction",
+                    "trip_start"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "required": [
+            "trip_id"
+          ]
+        }
+      ]
+    }
+  ]
 }
