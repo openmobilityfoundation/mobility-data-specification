@@ -345,6 +345,10 @@ The *Micromobility State Machine Diagram* shows how the `vehicle_state` and `eve
 | `unknown`                    | `reserved`        | `reserved`   | `comms_restored`         | The vehicle has come back into comms while reserved by a passenger                                               |
 | `unknown`                    | `stopped`         | `stopped`    | `comms_restored`         | The vehicle has come back into comms while stopped                                                               |
 
+The *Taxi State Machine Diagram* shows how the `vehicle_state` and `event_type` relate to each other and how taxi vehicles can transition between states.
+
+![Taxi State Machine Diagram](/taxi-state-machine-diagram.svg)
+
 #### Trip State Notes
 When there is only one trip ongoing, `trip_state == vehicle_state`
 
