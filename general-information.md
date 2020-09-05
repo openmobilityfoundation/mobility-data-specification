@@ -301,8 +301,8 @@ Note that to handle out-of-order events, the validity of the prior-state shall n
 | `available`, `reserved`, `on_trip`, `non_operational`, `elsewhere` | `unknown`     | `missing`            | The vehicle is not at its last reported GPS location, or that location is wildly in error |
 | `available`, `reserved`, `on_trip`, `non_operational`, `elsewhere` | `unknown`     | `comms_lost`       | The vehicle is unable to transmit its GPS location or other status information |
 
-The *State Machine Diagram* shows how the `vehicle_state` and `event_type` relate to each other and how vehicles can transition between states. See [Google Slides](https://docs.google.com/presentation/d/1Ar2-ju8YlddSsTATvQw4YjsSa5108XtidtnJNk-UAfA/edit) for the source file.
-![MDS State Machine Diagram](/MDS-state-machine-diagram.svg)
+The *Micromobility State Machine Diagram* shows how the `vehicle_state` and `event_type` relate to each other and how micromobility vehicles can transition between states. See [Google Slides](https://docs.google.com/presentation/d/1Ar2-ju8YlddSsTATvQw4YjsSa5108XtidtnJNk-UAfA/edit) for the source file.
+![Micromobility State Machine Diagram](/micromobility-state-machine-diagram.svg)
 
 ### Taxi Vehicle States & Events
 [Top][toc]
