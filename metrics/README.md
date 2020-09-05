@@ -14,7 +14,7 @@ Initial Design Use Cases:
 
 ## Date and Time Format
 
-All dates and times (datetime) are [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format strings (YYYY-MM-DDTHHMM), with minute granularity supported and time zone as default UTC or included offset. 
+All dates and times (datetime) are [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) formatted strings (YYYY-MM-DDTHHMM), with minute granularity supported and time zone (default UTC) or included offset. Dates and times may also be specified using a numeric *Unix epoch/timestamp* 
 
 All interval durations (duration) are [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) duration format strings (e.g. PT15M, PT1H, P1D).
 
@@ -102,21 +102,23 @@ Supports querying one or more metrics with the following parameters.
 
 ### Parameters
 
-| Name            | Type     | Required | Comments                                                          |
-| --------------- | -------- | -------- | ----------------------------------------------------------------- |
-| `metrics`       | string[] | Yes      | list of metrics to return. [See metric names](core_metrics.md)    |
-| `interval`      | duration | Yes      | Duration for metrics intervals.                                   |
-| `start_date`    | datetime | Yes      | ISO 8601 formatted start date to fetch metrics.                   |
-| `end_date`      | datetime | No       | ISI 8601 formatted end date to fetch metrics.                     |
-| `timezone`      | timezone | No       | ISO 8601 time zone name (default: "UTC")                          |
-| `dimensions`    | string[] | No       | List of dimension names. [See dimensions.](#dimensions)           |
-| `filters`       | filter[] | No       | Filters for metrics to return of format. [See filters.](#filters) |
-| `filter.name`   | string   | No       | Name of filter (e.g. 'vehicle_type')                              |
-| `filter.values` | string[] | No       | List of values to filter for (e.g ['car', 'moped'])               |
+| Name            | Type          | Required | Comments                                                                |
+| --------------- | ------------- | -------- | ----------------------------------------------------------------------- |
+| `metrics`       | string[]      | Yes      | list of metrics to return. [See metric names](core_metrics.md)          |
+| `interval`      | duration      | Yes      | Duration for metrics intervals.                                         |
+| `start_date`    | datetime      | Yes      | ISO 8601 formatted start date or numeric timestamp to fetch metrics.    |
+| `end_date`      | datetime      | No       | ISI 8601 formatted end date or numberic timestamp to fetch metrics.     |
+| `timezone`      | timezone      | No       | TZ Database time zone name (default: "UTC")                             |
+| `dimensions`    | string[]      | No       | List of dimension names. [See dimensions.](#dimensions)                 |
+| `filters`       | filter[]      | No       | Filters for metrics to return of format [See filters.](#filters) .      |
+| `filter.name`   | string        | No       | Name of filter (e.g. 'vehicle_type')                                    |
+| `filter.values` | string[]      | No       | List of values to filter for (e.g ['car', 'moped'])                     |
 
 Note: If `timezone` is specified then `start_date`, `end_date`, and all _datetime_ column values will be 
 converted to the specified time zone. If not, parameters will be converted to and the results will be 
-displayed in UTC.
+displayed in UTC. If `start_date` is specified as a numeric _Unix timestamp_ then all _datetime_ column values will be
+displayed using numeric _Unix timestamp_ values as well. The `timezone` parameter is not allowed when using numeric
+_Unix timestamp_ values.
 
 Note: If `end_date` is specified, all intervals that *begin* between the specified `start_date` and the `end_date` *(inclusive)* are fetched. If `end_date` is not specified, only the interval that begins *on* the specified `start_date` is fetched. 
 
@@ -134,8 +136,8 @@ Note: If `end_date` is specified, all intervals that *begin* between the specifi
 | `query.timezone`     | timezone   | From Request.                                                   |
 | `columns`            | column[]   | Array of column information                                     |
 | `column.name`        | string     | Name of metric or dimension column.                             |
-| `column.column_type` | string     | ‘metric’ or ‘dimension’                                         |
-| `column.data_type`   | string     | Data type of column.                                            |
+| `column.column_type` | string     | Type of column: `measure` or `dimension`.                       |
+| `column.data_type`   | string     | Data type of column: `datetime`, `string`, `integer`, `float`.  |
 | `rows`               | values[][] | Array of row arrays containing the dimension and metric values. |
 
 ### Response Schema
@@ -208,12 +210,12 @@ POST /metrics
     },
     {
       "name": "dockless.utilization.avg",
-      "column_type": "metric",
+      "column_type": "measure",
       "data_type": "float"
     },
     {
       "name": "trips.count",
-      "column_type": "metric",
+      "column_type": "measure",
       "data_type": "integer"
     }
   ],
