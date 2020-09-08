@@ -9,6 +9,7 @@ This specification contains a data standard for *mobility as a service* provider
 * [General Information](#general-information)
   * [Versioning](#versioning)
   * [Response Format](#response-format)
+  * [Responses and Error Messages](#responses-and-error-messages)
   * [JSON Schema](#json-schema)
   * [Pagination](#pagination)
   * [Municipality Boundary](#municipality-boundary)
@@ -42,7 +43,7 @@ Versioning must be implemented as specified in the [Versioning section][versioni
 
 [Top][toc]
 
-### Response Format
+### Responses and Error Messages
 
 The response to a client request must include a valid HTTP status code defined in the [IANA HTTP Status Code Registry][iana].
 
@@ -408,6 +409,7 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 [costs-and-currencies]: /general-information.md#costs-and-currencies
 [data-latency]: #data-latency-requirements
 [dgps]: https://en.wikipedia.org/wiki/Differential_GPS
+[error-messages]: /general-information.md#error-messages
 [events]: #events
 [events-schema]: events.json
 [event-times]: #event-times
