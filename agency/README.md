@@ -341,7 +341,7 @@ Path Params:
 If `stop_id` is specified, `GET` will return an array with a single stop record, otherwise it will be a list of all stop records.
 
 ## Reservation Type
-The reservation type enum expresses the urgency of a given reservation. This can be useful when attempting to quantify metrics around trips: for example, computing passenger wait-time. In the `on_demand` case, passenger wait-time may be quantified by the delta between the time a passenger created their reservation, and the pick-up time; however, in the `scheduled` case, the wait time may be quantified based on the delta between ... TODO @avatarneil finish this
+The reservation type enum expresses the urgency of a given reservation. This can be useful when attempting to quantify metrics around trips: for example, computing passenger wait-time. In the `on_demand` case, passenger wait-time may be quantified by the delta between the `reservation_time`, and the pick-up time; however, in the `scheduled` case, the wait time may be quantified based on the delta between the `scheduled_trip_start_time` found in the Trips payload, and the actual `trip_start_time`. 
 | `reservation_type` | Description                                                            |
 |--------------------|------------------------------------------------------------------------|
 | `on_demand`        | The passenger requested the vehicle as soon as possible                |
