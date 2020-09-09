@@ -332,7 +332,7 @@ The *State Machine Diagram* shows how the `vehicle_state` and `event_type` relat
 | `reserved`                   | `available`       | N/A          | `passenger_cancellation` | The passenger has cancelled the reservation                                                                      |
 | `reserved`                   | `elsewhere`       | N/A          | `leave_jurisdiction`     | The vehicle has left the jurisdiction while in a reservation                                                     |
 | `reserved`                   | `stopped`         | `stopped`    | `reserve_stop`           | The vehicle has stopped to pick up the passenger                                                                 |
-| `reserved`                   | `unknown`         | N/A          | `comms-lost`             | The vehicle has went out of comms while reserved by a passenger                                                  |
+| `reserved`                   | `unknown`         | N/A          | `comms_lost`             | The vehicle has went out of comms while reserved by a passenger                                                  |
 | `stopped`                    | `available`       | N/A          | `driver_cancellation`    | The driver has cancelled the trip while either waiting for the passenger, or dropping them off                   |
 | `stopped`                    | `available`       | N/A          | `passenger_cancellation` | The passenger has cancelled the trip while the vehicle is waiting to pick them up, or they are being dropped off |
 | `stopped`                    | `available`       | N/A          | `trip_end`               | The trip has been successfully completed                                                                         |
