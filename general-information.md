@@ -73,11 +73,11 @@ Additionally, `device_id` must remain constant for the device's lifetime of serv
 [Top][toc]
 
 ## Modalities
-A Modality is an operational model for a form of transportation in MDS. Differing modalities may have different state machines, and data requirements throughout MDS, given the nature of the differing operational flows, and need for regulators to capture this information.
+A Modality is an operational model for a form of transportation in MDS. Given the nature of the differing operational flows, and need for regulators to capture this information, each modality may have different state machines, and different data requirements throughout MDS. 
 | `modality`      | Description                                                  |
 | --------------- | ------------------------------------------------------------ |
-| `micromobility` | **FIXME** add some descriptor about micromobility            |
-| `taxi`          | **FIXME** add some descriptor about taxi                     |
+| `micromobility` | This mode includes e-scooters, dockless pedal bikes that a are availble for rent by consumers through a micormobility operator within a city's jurisdiction|
+| `taxi`          | This mode includes franchise taxi service operators who operate and are regulated within an agency's jurisdfiction|
 
 ## Geographic Data
 
