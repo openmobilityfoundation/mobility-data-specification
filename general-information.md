@@ -24,6 +24,9 @@ This document contains specifications that are shared between the various MDS AP
   - [UUIDs](#uuids)
   - [Accessibility Options](#accessibility-options)
   - [Vehicle States](#vehicle-states)
+    - [Micromobility Vehicle States](#micromobility-vehicle-states)
+    - [Taxi Vehicle States](#taxi-vehicle-states)
+  - [Vehicle Events](#vehicle-events)
     - [Micromobility Vehicle States & Events](#micromobility-vehicle-states--events)
     - [Taxi Vehicle States & Events](#taxi-vehicle-states--events)
       - [Trip State Notes](#trip-state-notes)
@@ -247,25 +250,42 @@ This table describes the list of vehicle conditions that may be used by regulato
 
 In a multi-jurisdiction environment, the status of a vehicle is per-jurisdiction.  For example, a vehicle may be in the `on_trip` status for a county that contains five cities, and also in the `on_trip` status for one of those cities, but `elsewhere` for the other four cities.  In such a condition, generally a Provider would send the device data to the over-arching jurisdiction (the county) and the vehicle state with respect to each city would be determined by the Agency managing the jurisdictions.
 
-| `vehicle_state` | In PROW? | Description |
-| --- | --- | --- |
-| `removed`         | no | Examples include: at the Provider's warehouse, in a Provider's truck, or destroyed and in a landfill. |
-| `available`       | yes | Available for rental via the Provider's app. In PROW. |
-| `non_operational` | yes | Not available for rent.  Examples include: vehicle has low battery, or currently outside legal operating hours. |
-| `reserved`        | yes | Reserved via Provider's app, waiting to be picked up by a rider. |
-| `on_trip`         | yes | In possession of renter.  May or may not be in motion. |
-| `elsewhere`       | no | Outside of regulator's jurisdiction, and thus not subject to cap-counts or other regulations. Example: a vehicle that started a trip in L.A. has transitioned to Santa Monica.  |
-| `unknown`         | unknown | Provider has lost contact with the vehicle and its disposition is unknown.  Examples include: taken into a private residence, thrown in river. |
+### Micromobility Vehicle States
+
+| `vehicle_state`   | In PROW? | Description                                                                                                                                                                    |
+|-------------------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `removed`         | no       | Examples include: at the Provider's warehouse, in a Provider's truck, or destroyed and in a landfill.                                                                          |
+| `available`       | yes      | Available for rental via the Provider's app. In PROW.                                                                                                                          |
+| `non_operational` | yes      | Not available for rent.  Examples include: vehicle has low battery, or currently outside legal operating hours.                                                                |
+| `reserved`        | yes      | Reserved via Provider's app, waiting to be picked up by a rider.                                                                                                               |
+| `on_trip`         | yes      | In possession of renter.  May or may not be in motion.                                                                                                                         |
+| `elsewhere`       | no       | Outside of regulator's jurisdiction, and thus not subject to cap-counts or other regulations. Example: a vehicle that started a trip in L.A. has transitioned to Santa Monica. |
+| `unknown`         | unknown  | Provider has lost contact with the vehicle and its disposition is unknown.  Examples include: taken into a private residence, thrown in river.                                 |
+
+### Taxi Vehicle States
+
+| `state`           | In PROW? | Description                                                                                                                                                                    |
+|-------------------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `removed`         | no       | Vehicle is explicitly removed from the PROW. Examples include: at the shop receiving maintenance, vehicle moved to another fleet                                               |
+| `available`       | yes      | Available for-hire by a passenger.                                                                                                                                             |
+| `non_operational` | yes      | Not available for-hire.  Example: driver's shift ends and vehicle goes out of service                                                                                          |
+| `reserved`        | yes      | Reserved via Provider's app, waiting to be picked up by a rider.                                                                                                               |
+| `on_trip`         | yes      | On a trip with passengers in the vehicle.  May or may not be in motion.                                                                                                        |
+| `stopped`         | yes      | Vehicle is stopped to either pick-up, or drop-off a passenger.                                                                                                                 |
+| `elsewhere`       | no       | Outside of regulator's jurisdiction, and thus not subject to cap-counts or other regulations. Example: a vehicle that started a trip in L.A. has transitioned to Santa Monica. |
+| `unknown`         | unknown  | Provider has lost contact with the vehicle and its disposition is unknown.  Examples include: driving in a tunnel, hardware malfunction                                        |
 
 [Top][toc]
 
-### Micromobility Vehicle States & Events
+## Vehicle Events
 
-This is the list of `vehicle_state` and `event_type` pairings that constitute the valid transitions of the micromobility vehicle state machine.
+This is the list of `vehicle_state` and `event_type` pairings that constitute the valid transitions of the vehicle state machine.
 
-The state-transition table below describes how the `vehicle_state` changes in response to each `event_type`.  Most events will have a single `event_type`.  However, if a single event has more than one ordered `event_type` entry, the intermediate `vehicle_state` value(s) are discarded.  For example, if an event contains [`trip_end`, `battery_low`] then the vehicle transitions from `on_trip` through `available` to `non_operational` per the state machine, but the vehicle is never "in" the `available` state.  
+The state-transition table below describes how the `vehicle_state` changes in response to each `event_type`.  Most events will have a single `event_type`.  However, if a single event has more than one ordered `event_type` entry, the intermediate `vehicle_state` value(s) are discarded.  For example, in the micromobility state machine, if an event contains [`trip_end`, `battery_low`] then the vehicle transitions from `on_trip` through `available` to `non_operational` per the state machine, but the vehicle is never "in" the `available` state.  
 
 Note that to handle out-of-order events, the validity of the prior-state shall not be enforced at the time of ingest via Provider or Agency.  Events received out-of-order may result in transient incorrect vehicle states.
+
+### Micromobility Vehicle States & Events
 
 | Valid prior `vehicle_state` values | `vehicle_state` | `event_type` |  Description |
 | --- | --- | --- | --- |
@@ -306,19 +326,19 @@ The *Micromobility State Machine Diagram* shows how the `vehicle_state` and `eve
 ![Micromobility State Machine Diagram](/micromobility-state-machine-diagram.svg)
 
 ### Taxi Vehicle States & Events
-[Top][toc]
+
 | **Previous** `vehicle_state` | `vehicle_state`   | `trip_state` | `event_type`             | Description                                                                                                      |
 |------------------------------|-------------------|--------------|--------------------------|------------------------------------------------------------------------------------------------------------------|
-| `available`                  | `elsewhere`       | N/A          | `leave_jurisdiction`     | The vehicle has left jurisdictional boundaries while available for use                                           |
-| `available`                  | `non_operational` | N/A          | `service_end`            | The vehicle has went out of service (is unavailable for use)                                                     |
+| `available`                  | `elsewhere`       | N/A          | `leave_jurisdiction`     | The vehicle has left jurisdictional boundaries while available for-hire                                          |
+| `available`                  | `non_operational` | N/A          | `service_end`            | The vehicle has went out of service (is unavailable for-hire)                                                    |
 | `available`                  | `reserved`        | `reserved`   | `reserve`                | The vehicle was reserved by a passenger                                                                          |
-| `available`                  | `unknown`         | N/A          | `comms_lost`             | The vehicle has went out of comms while available for use                                                        |
-| `elsewhere`                  | `available`       | N/A          | `enter_jurisdiction`     | The vehicle has entered jurisdictional boundaries while available for use                                        |
+| `available`                  | `unknown`         | N/A          | `comms_lost`             | The vehicle has went out of comms while available for-use                                                        |
+| `elsewhere`                  | `available`       | N/A          | `enter_jurisdiction`     | The vehicle has entered jurisdictional boundaries while available for-hire                                       |
 | `elsewhere`                  | `non_operational` | N/A          | `enter_jurisdiction`     | The vehicle has entered jurisdictional boundaries while not operating commercially                               |
 | `elsewhere`                  | `on_trip`         | `on_trip`    | `enter_jurisdiction`     | The vehicle has entered jurisdictional boundaries while on a trip                                                |
 | `elsewhere`                  | `reserved`        | N/A          | `enter_jurisdiction`     | The vehicle has entered jurisdictional boundaries while reserved by a customer                                   |
 | `elsewhere`                  | `unknown`         | N/A          | `comms_lost`             | The vehicle has went out of comms while outside of jurisdictional boundaries                                     |
-| `non_operational`            | `available`       | N/A          | `service_start`          | The vehicle has went into service (is available for use)                                                         |
+| `non_operational`            | `available`       | N/A          | `service_start`          | The vehicle has went into service (is available for-hire)                                                        |
 | `non_operational`            | `elsewhere`       | N/A          | `leave_jurisdiction`     | The vehicle has left jurisdictional boundaries while not operating commercially                                  |
 | `non_operational`            | `removed`         | N/A          | `decommissioned`         | The vehicle has been removed from the Provider's fleet                                                           |
 | `non_operational`            | `removed`         | N/A          | `maintenance_start`      | The vehicle has entered the depot for maintenance                                                                |
@@ -333,14 +353,14 @@ The *Micromobility State Machine Diagram* shows how the `vehicle_state` and `eve
 | `reserved`                   | `available`       | N/A          | `passenger_cancellation` | The passenger has cancelled the reservation                                                                      |
 | `reserved`                   | `elsewhere`       | N/A          | `leave_jurisdiction`     | The vehicle has left the jurisdiction while in a reservation                                                     |
 | `reserved`                   | `stopped`         | `stopped`    | `reserve_stop`           | The vehicle has stopped to pick up the passenger                                                                 |
-| `reserved`                   | `unknown`         | N/A          | `comms_lost`             | The vehicle went out of comms while being reserved by a passenger                                                  |
+| `reserved`                   | `unknown`         | N/A          | `comms_lost`             | The vehicle went out of comms while being reserved by a passenger                                                |
 | `stopped`                    | `available`       | N/A          | `driver_cancellation`    | The driver has cancelled the trip while either waiting for the passenger, or dropping them off                   |
 | `stopped`                    | `available`       | N/A          | `passenger_cancellation` | The passenger has cancelled the trip while the vehicle is waiting to pick them up, or they are being dropped off |
 | `stopped`                    | `available`       | N/A          | `trip_end`               | The trip has been successfully completed                                                                         |
 | `stopped`                    | `on_trip`         | `on_trip`    | `trip_resume`            | Resume a trip that was previously stopped (e.g. picking up a friend to go to the airport with)                   |
 | `stopped`                    | `on_trip`         | `on_trip`    | `trip_start`             | Start a trip                                                                                                     |
 | `stopped`                    | `unknown`         | N/A          | `comms_lost`             | The vehicle has went out of comms while stopped                                                                  |
-| `unknown`                    | `available`       | N/A          | `comms_restored`         | The vehicle has come back into comms while available for use                                                     |
+| `unknown`                    | `available`       | N/A          | `comms_restored`         | The vehicle has come back into comms while available for-hire                                                    |
 | `unknown`                    | `elsewhere`       | N/A          | `comms_restored`         | The vehicle has come back into comms while outside of jurisdictional boundaries                                  |
 | `unknown`                    | `non_operational` | N/A          | `comms_restored`         | The vehicle has come back into comms while not operating commercially                                            |
 | `unknown`                    | `on_trip`         | `on_trip`    | `comms_restored`         | The vehicle has come back into comms while on a trip                                                             |
@@ -353,6 +373,7 @@ The *Taxi State Machine Diagram* shows how the `vehicle_state` and `event_type` 
 ![Taxi State Machine Diagram](/taxi-state-machine-diagram.svg)
 
 #### Trip State Notes
+
 When there is only one trip ongoing, `trip_state == vehicle_state`
 
 In cases where there are multiple trips ongoing, please follow the trip state model pseudocode for determining what the vehicle state should be:
@@ -370,6 +391,9 @@ else:
      v = ‘reserved’
 ```
 `trip_state` mappings should be the same as in the table above.
+
+[Top][toc]
+
 
 ## Vehicle Types
 
