@@ -48,8 +48,8 @@ When making requests, the Geography API expects `provider_id` to be part of the 
 | `description`      | String    | Optional   | Detailed description of geography                                                                      |
 | `geography_id`     | UUID      | Required   | Unique ID of geography                                                                 |
 | `geography_json`   | UUID      | Required   | The GeoJSON that defines the geographical coordinates.
-| `effective_date`   | timestamp | Optional   | The date at which a Geography is considered "live".  Must be at or after `publish_date`.
-| `publish_date`     | timestamp | Required   | Timestamp that the policy was published, i.e. made immutable                                             |
+| `effective_date`   | [timestamp][ts] | Optional   | The date at which a Geography is considered "live".  Must be at or after `publish_date`.
+| `publish_date`     | [timestamp][ts] | Required   | Timestamp that the policy was published, i.e. made immutable                                             |
 | `prev_geographies` | UUID[]    | Optional   | Unique IDs of prior geographies replaced by this one                                   |
 
 <a name="file-format"></a>
@@ -89,9 +89,9 @@ The Geography Author API consists of the following endpoints:
 
 Path Params:
 
-| Name          | Type | R/O | Description                                       |
+| Name          | Type | Required/Optional | Description                                       |
 | ------------- | ---- | --- | --------------------------------------------------- |
-| geography_id  | UUID | R   | Unique identifier for a single specific Geography |
+| geography_id  | UUID | Required   | Unique identifier for a single specific Geography |
 
 Returns: A single Geography.  
 
@@ -104,8 +104,8 @@ Response body:
     geography_json: GeoJSON FeatureCollection,
     prev_geographies: UUID[],
     name: string,
-    publish_date: [Timestamp](../common/DataDefinitions.md#timestamps)
-    effective_date: Timestamp
+    publish_date: timestamp
+    effective_date: timestamp
     description: string
   } 
 }
@@ -122,9 +122,9 @@ Response codes:
 
 Path Params: 
 
-| Name         | Type      | R/O | Description                                    |
+| Name         | Type      | Required/Optional | Description                                    |
 | ------------ | --------- | --- | ---------------------------------------------- |
-| `summary`    | string    | O   | Return geographies, minus the GeoJSON in each geography object     |
+| `summary`    | string    | Optional   | Return geographies, minus the GeoJSON in each geography object     |
 
 Returns: All non-deprecated geography objects
 
