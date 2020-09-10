@@ -10,6 +10,7 @@ This document contains specifications that are shared between the various MDS AP
   - [Costs and currencies](#costs-and-currencies)
   - [Definitions](#definitions)
   - [Devices](#devices)
+  - [Modalities](#modalities)
   - [Geographic Data](#geographic-data)
     - [Stop-based Geographic Data](#stop-based-geographic-data)
     - [Intersection Operation](#intersection-operation)
@@ -22,7 +23,6 @@ This document contains specifications that are shared between the various MDS AP
   - [Timestamps](#timestamps)
   - [UUIDs](#uuids)
   - [Accessibility Options](#accessibility-options)
-  - [Modalities](#modalities)
   - [Vehicle States](#vehicle-states)
     - [Micromobility Vehicle States & Events](#micromobility-vehicle-states--events)
     - [Taxi Vehicle States & Events](#taxi-vehicle-states--events)
@@ -71,6 +71,13 @@ MDS defines the *device* as the unit that transmits GPS or GNSS signals for a pa
 Additionally, `device_id` must remain constant for the device's lifetime of service, regardless of the vehicle components that house the device.
 
 [Top][toc]
+
+## Modalities
+A Modality is an operational model for a form of transportation in MDS. Given the nature of the differing operational flows, and need for regulators to capture this information, each modality may have different state machines, and different data requirements throughout MDS. 
+| `modality`      | Description                                                                                                                                                       |
+|-----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `micromobility` | This mode includes e-scooters, and dockless pedal bikes that are available for rent by consumers through a micromobility operator within an agency's jurisdiction |
+| `taxi`          | This mode includes franchise taxi service operators who operate and are regulated within an agency's jurisdiction                                                 |
 
 ## Geographic Data
 
@@ -233,12 +240,6 @@ This enum represents the accessibility options available on a given vehicle, or 
 | `accessibility_option`  | Description                           |
 |-------------------------|---------------------------------------|
 | `wheelchair_accessible` | This vehicle is wheelchair accessible |
-
-## Modalities
-| `modality`      | Description                                                  |
-| --------------- | ------------------------------------------------------------ |
-| `micromobility` | **FIXME** add some descriptor about micromobility            |
-| `taxi`          | **FIXME** add some descriptor about taxi                     |
 
 ## Vehicle States
 
