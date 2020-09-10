@@ -1,28 +1,24 @@
-# Mobility Data Specification: Geography API
+# Mobility Data Specification: Geography
 
-This specification contains a collection of RESTful APIs used to read Geographies.
-
-- Authors: LADOT
-- Date: 01 September 2020
-- Version: beta
-
-## Table of Contents
-
-- [Background](#background)
-- [Distribution](#distribution)
-- [Schema](#schema)
-- [File Format](#file-format)
-- [Endpoints](#endpoints)
-
-
-<a name="background"></a>
-
-## Background
+This specification contains a collection of RESTful APIs used to read Geographies (descriptions of geographical information, e.g. multi-polygons, currently represented via GeoJSON).
 
 Geographical data has many applications in the context of mobility, such as the description of municipal boundaries, locations for pick-up and drop-off zones, and areas of temporary closure for special events or emergencies.  This API is intended to support a variety of other APIs, including the Policy API.
 
 Geographical data will be stored as GeoJSON and read from either `geographies.json` or the `/geographies` endpoint, referenced by UUID. Geography data once published through this API shall be treated as immutable, to ensure that any rules or regulations referring to the boundaries cannot be retroactively changed.  A Geography may be deprecated and replaced by updated version with a new UUID.
 Obsoleting or otherwise changing a geography is accomplished by publishing a new geography with a field named `prev_geographies`, a list of UUID references to the geography or geographies superseded by the new geography.
+
+## Table of Contents
+
+* [General Information](#general-information)
+   * [Versioning](#versioning)
+   * [Response Format](#repsonse-format)
+   * [Authorization](#authorization)
+* [Distribution](#distribution)
+* [Schema](#schema)
+* [File Format](#file-format)
+* [Endpoints](#endpoints)
+
+## General Information
 
 ### Versioning
 
@@ -30,7 +26,7 @@ MDS APIs must handle requests for specific versions of the specification from cl
 
 Versioning must be implemented as specified in the [Versioning section][versioning].
 
-### Responses and Error Messages
+### Response Format
 
 See the [Responses][responses] and [Error Messages][error-messages] sections.
 
@@ -46,15 +42,15 @@ When making requests, the Geography API expects `provider_id` to be part of the 
 
 ### Geography Fields
 
-| Name               | Type      | R/O | Description                                                                         |
+| Name               | Type      | Required/Optional | Description                                                                         |
 | ----------------   | --------- | --- | ----------------------------------------------------------------------------------- |
-| `name`             | String    | R   | Name of geography                                                                      |
-| `description`      | String    | O   | Detailed description of geography                                                                      |
-| `geography_id`     | UUID      | R   | Unique ID of geography                                                                 |
-| `geography_json`   | UUID      | R   | The GeoJSON that defines the geographical coordinates.
-| `effective_date`   | timestamp | O   | The date at which a Geography is considered "live".  Must be at or after `publish_date`.
-| `publish_date`     | timestamp | R   | Timestamp that the policy was published, i.e. made immutable                                             |
-| `prev_geographies` | UUID[]    | O   | Unique IDs of prior geographies replaced by this one                                   |
+| `name`             | String    | Required   | Name of geography                                                                      |
+| `description`      | String    | Optional   | Detailed description of geography                                                                      |
+| `geography_id`     | UUID      | Required   | Unique ID of geography                                                                 |
+| `geography_json`   | UUID      | Required   | The GeoJSON that defines the geographical coordinates.
+| `effective_date`   | timestamp | Optional   | The date at which a Geography is considered "live".  Must be at or after `publish_date`.
+| `publish_date`     | timestamp | Required   | Timestamp that the policy was published, i.e. made immutable                                             |
+| `prev_geographies` | UUID[]    | Optional   | Unique IDs of prior geographies replaced by this one                                   |
 
 <a name="file-format"></a>
 
@@ -88,8 +84,8 @@ Responses must set the `Content-Type` header, as specified in the [Provider vers
 
 The Geography Author API consists of the following endpoints:
 
-Endpoint:  `/geographies/{geography_id}`
-Method: `GET`
+**Endpoint**:  `/geographies/{geography_id}`
+**Method**: `GET`
 
 Path Params:
 
@@ -121,8 +117,8 @@ Response codes:
 - 404 - no geography found
 - 403 - user is attempting to read an unpublished geography, but only has the `geographies:read:published` scope.
 
-Endpoint:  `/geographies`
-Method: `GET`
+**Endpoint**:  `/geographies`
+**Method**: `GET`
 
 Path Params: 
 
@@ -146,6 +142,7 @@ Response codes:
 - 200 - success
 - 401 - unauthorized
 
+[error-messages]: /general-information.md#error-messages
 [responses]: /general-information.md#responses
 [ts]: /general-information.md#timestamps
 [versioning]: /general-information.md#versioning
