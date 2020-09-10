@@ -15,6 +15,7 @@ Obsoleting or otherwise changing a geography is accomplished by publishing a new
    * [Authorization](#authorization)
 * [Distribution](#distribution)
 * [Schema](#schema)
+  * [Geography Fields](#geography-fields)
 * [File Format](#file-format)
 * [Endpoints](#endpoints)
 
@@ -38,7 +39,7 @@ When making requests, the Geography API expects `provider_id` to be part of the 
 
 ## Schema
 
-<a name="geography-fields"></a>
+Placeholder -- schema to be added.  
 
 ### Geography Fields
 
@@ -85,6 +86,7 @@ Responses must set the `Content-Type` header, as specified in the [Provider vers
 The Geography Author API consists of the following endpoints:
 
 **Endpoint**:  `/geographies/{geography_id}`
+
 **Method**: `GET`
 
 Path Params:
