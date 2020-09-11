@@ -357,13 +357,14 @@ The reservation method enum describes the different ways in which a passenger ca
 | `phone_dispatch`     | Reservation was made by calling the dispatch operator     |
 
 ## Fare
-| Field           | Type                   | Required/Optional | Field Description                                                       |
-|-----------------|------------------------|-------------------|-------------------------------------------------------------------------|
-| quoted_cost     | Float                  | Required          | Cost quoted to the customer at the time of booking                      |
-| actual_cost     | Float                  | Required          | Actual cost after a trip was completed                                  |
-| components      | `{ [string]: float }`  | Optional          | Breakdown of the different fees that composed a fare, e.g. tolls        |
-| currency        | string                 | Required          | ISO 4217 currency code                                                  |
-| payment_methods | `{ [string]: number }` | Optional          | Breakdown of different payment methods used for a trip, e.g. cash, card |
+The Fare enum describes a fare for a Trip. 
+| Field           | Type                  | Required/Optional | Field Description                                                                       |
+|-----------------|-----------------------|-------------------|-----------------------------------------------------------------------------------------|
+| quoted_cost     | Float                 | Required          | Cost quoted to the customer at the time of booking                                      |
+| actual_cost     | Float                 | Required          | Actual cost after a trip was completed                                                  |
+| components      | `{ [string]: float }` | Optional          | Breakdown of the different fees that composed a fare, e.g. tolls                        |
+| currency        | string                | Required          | ISO 4217 currency code                                                                  |
+| payment_methods | `string[]`            | Optional          | Breakdown of different payment methods used for a trip, e.g. cash, card, equity_program |
 
 ## Trips
 The Trips endpoint serves multiple purposes: 
