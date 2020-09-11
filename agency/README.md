@@ -386,7 +386,7 @@ The reservation method enum describes the different ways in which a passenger ca
 **Endpoint:** `/trips`  
 **Method:** `POST`  
 **[Beta feature][beta]:** Yes (as of 1.0.0)  
-**Request Body**: A [Trip][trip]
+**Request Body**: A [Trip](#trip)
 
 200 Success Response:
 Payload which was POST'd
