@@ -96,6 +96,7 @@ A vehicle record is as follows:
 | `state`                 | Enum            | Current vehicle state. See [Vehicle State][vehicle-states]                                           |
 | `prev_events`           | Enum[]          | Last [Vehicle Event][vehicle-event]                                                                  |
 | `updated`               | [timestamp][ts] | Date of last event update                                                                            |
+
 404 Failure Response:
 
 _No content returned on vehicle not found._
