@@ -357,7 +357,7 @@ The reservation method enum describes the different ways in which a passenger ca
 | `phone_dispatch`     | Reservation was made by calling the dispatch operator     |
 
 ## Fare
-The Fare enum describes a fare for a Trip. 
+The Fare object describes a fare for a Trip. 
 | Field           | Type                  | Required/Optional | Field Description                                                                       |
 |-----------------|-----------------------|-------------------|-----------------------------------------------------------------------------------------|
 | quoted_cost     | Float                 | Required          | Cost quoted to the customer at the time of booking                                      |
