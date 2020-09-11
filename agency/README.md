@@ -23,7 +23,7 @@ This specification contains a collection of RESTful APIs used to specify the dig
   - [Reservation Type](#reservation-type)
   - [Reservation Method](#reservation-method)
   - [Fare](#fare)
-  - [Trip](#trip)
+  - [Trips](#trips)
 
 ## General information
 
@@ -365,7 +365,10 @@ The reservation method enum describes the different ways in which a passenger ca
 | currency        | string                 | Required          | ISO 4217 currency code                                                  |
 | payment_methods | `{ [string]: number }` | Optional          | Breakdown of different payment methods used for a trip, e.g. cash, card |
 
-## Trip
+## Trips
+The Trips endpoint serves multiple purposes: 
+* Definitively indicating that a Trip (a sequence of events linked by a trip_id) has been completed. For example, from analyzing only the raw Vehicle Events feed, if a trip crosses an Agency's jurisdictional boundaries but does not end within the jurisdiction (last event_type seen is a `leave_jurisdiction`), this can result in a 'dangling trip'. The Trips endpoint satisfies this concern, by acting as a final indication that a trip has been finished, even if it ends outside of jurisdictional boundaries; if a trip has intersected an Agency's jurisdictional boundaries at all during a trip, it is expected that a Provider will send a Trip payload to the Agency following the trip's completion.
+* Providing information to an Agency regarding an entire trip, without extending any of the Vehicle Event payloads, or changing any requirements on when Vehicle Events should be sent.
 | Field                         | Type                           | Required/Optional      | Field Description                                                                                                                                                                                                                                                                                                             |
 |-------------------------------|--------------------------------|------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | trip_id                       | UUID                           | Required               | UUID for the trip this payload pertains to                                                                                                                                                                                                                                                                                    |
@@ -386,9 +389,9 @@ The reservation method enum describes the different ways in which a passenger ca
 **Endpoint:** `/trips`  
 **Method:** `POST`  
 **[Beta feature][beta]:** Yes (as of 1.0.0)  
-**Request Body**: A [Trip](#trip)
+**Request Body**: A [Trip](#trips)
 
-200 Success Response:
+201 Success Response:
 Payload which was POST'd
 
 400 Failure Response:
