@@ -1,6 +1,6 @@
-# Examples
+# Policy Examples
 
-This file presents a series of [Policy object](./README.md#policy) examples for Agencies to use as templates.
+This file presents a series of example [Policy documents](../README.md#schema) for Agencies to use as templates.
 
 ## Table of Contents
 
@@ -16,8 +16,10 @@ This file presents a series of [Policy object](./README.md#policy) examples for 
 
 This Policy shows how to prohibit dockless vehicles from operating in a specific area. This is otherwise known as a "geofence". This geofence prohibits both:
 
-* Operators from deploying devices
-* Users from renting / dropping devices off
+- Operators from deploying devices
+- Users from renting / dropping devices off
+
+File: [`prohibited-zone.json`](prohibited-zone.json)
 
 ```json
 {
@@ -59,6 +61,8 @@ This Policy shows how to prohibit dockless vehicles from operating in a specific
 ## Provider Cap
 
 This Policy defines a Provider cap to incentivize deployment inside disadvantaged communities.
+
+File: [`provider-cap.json`](provider-cap.json)
 
 ```json
 {
@@ -123,6 +127,8 @@ This Policy defines a Provider cap to incentivize deployment inside disadvantage
 
 This Policy allows scooters and bikes can be in the public right-of-way for up to three days if rentable, and only one day if not.
 
+File: [`idle-time.json`](idle-time.json)
+
 ```json
 {
   "policy_id": "a2c9a65f-fd85-463e-9564-fc95ea473f7d",
@@ -178,6 +184,8 @@ This Policy allows scooters and bikes can be in the public right-of-way for up t
 ## Speed Limits
 
 This Policy sets a 15 MPH speed limit in greater LA, and a 10 MPH speed limit in Venice Beach on Saturday/Sunday from noon until midnight.
+
+File: [`speed-limits.json`](speed-limits.json)
 
 ```json
 {
@@ -243,6 +251,8 @@ This Policy sets a 15 MPH speed limit in greater LA, and a 10 MPH speed limit in
 
 This policy sets a 25 cent per-trip fee that is applied for trips that start in the municipal boundary.
 
+File: [`per-trip-fees.json`](per-trip-fees.json)
+
 ```json
 {
   "policy_id": "d2567b3c-3071-48a6-bbeb-3424721dbd12",
@@ -278,6 +288,8 @@ This policy sets a 25 cent per-trip fee that is applied for trips that start in 
 ## Vehicle Right of Way Fees
 
 This policy sets a Right-of-Way fee that is charged once a day for vehicles deployed in a given area. It charges a 25 cents per day for vehicles deployed downtown, and 5 cents per day for vehicles deployed in a historically underserved neighborhood. In the case where a vehicle is deployed twice in both areas in the same day, the higher fee would apply (because it appears first in the rules).
+
+File: [`vehicle-row-fees.json`](vehicle-row-fees.json)
 
 ```json
 {
@@ -330,6 +342,8 @@ This policy sets a Right-of-Way fee that is charged once a day for vehicles depl
 ## Metered Parking Fees
 
 This policy sets a 10 cent per hour metered parking charge that is applied while a vehicle is parked in a congested area during rush hour.
+
+File: [`metered-parking-fees.json`](metered-parking-fees.json)
 
 ```json
 {

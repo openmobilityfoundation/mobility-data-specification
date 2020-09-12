@@ -39,7 +39,7 @@ Versioning must be implemented as specified in the [Versioning section][versioni
 
 ## Background
 
-The goal of this specification is to enable Agencies to create, revise, and publish machine-readable policies, as sets of rules for individual and collective device behavior exhibited by both _mobility as a service_ Providers and riders / users. [Examples](examples.md) of policies include:
+The goal of this specification is to enable Agencies to create, revise, and publish machine-readable policies, as sets of rules for individual and collective device behavior exhibited by both _mobility as a service_ Providers and riders / users. [Examples](./examples/README.md) of policies include:
 
 - City-wide and localized caps (e.g. "Minimum 500 and maximum 3000 scooters within city boundaries")
 - Exclusion zones (e.g. "No scooters are permitted in this district on weekends")
@@ -50,7 +50,7 @@ The goal of this specification is to enable Agencies to create, revise, and publ
 
 The machine-readable format allows Providers to obtain policies and compute compliance where it can be determined entirely by data obtained internally.
 
-**See the [Policy Examples](examples.md) for ways these can be implemented.**
+**See the [Policy Examples](./examples/README.md) for ways these can be implemented.**
 
 [Top][toc]
 
