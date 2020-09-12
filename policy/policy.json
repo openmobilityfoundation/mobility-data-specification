@@ -1,0 +1,532 @@
+{
+  "$id": "https://raw.githubusercontent.com/openmobilityfoundation/mobility-data-specification/main/policy/policy.json",
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "title": "The MDS Policy Schema",
+  "type": "object",
+  "definitions": {
+    "policy": {
+      "$id": "#/definitions/policy",
+      "type": "object",
+      "title": "The policy object schema",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "policy_id",
+        "description",
+        "start_date",
+        "published_date",
+        "rules"
+      ],
+      "properties": {
+        "name": {
+          "$id": "#/definitions/policy/properties/name",
+          "$ref": "#/definitions/string",
+          "description": "Name of policy"
+        },
+        "policy_id": {
+          "$id": "#/definitions/policy/properties/policy_id",
+          "$ref": "#/definitions/uuid",
+          "description": "Unique ID of policy"
+        },
+        "provider_ids": {
+          "$id": "#/definitions/policy/properties/provider_ids",
+          "$ref": "#/definitions/null_uuid_array",
+          "description": "Providers for whom this policy is applicable; empty arrays and null/absent implies all Providers.",
+          "uniqueItems": true
+        },
+        "description": {
+          "$id": "#/definitions/policy/properties/description",
+          "$ref": "#/definitions/string",
+          "description": "Description of policy"
+        },
+        "currency": {
+          "$id": "#/definitions/policy/properties/currency",
+          "$ref": "#/definitions/currency"
+        },
+        "start_date": {
+          "$id": "#/definitions/policy/properties/start_date",
+          "$ref": "#/definitions/timestamp",
+          "description": "Beginning date/time of policy enforcement"
+        },
+        "end_date": {
+          "$id": "#/definitions/policy/properties/end_date",
+          "$ref": "#/definitions/null_timestamp",
+          "description": "End date/time of policy enforcement"
+        },
+        "published_date": {
+          "$id": "#/definitions/policy/properties/published_date",
+          "$ref": "#/definitions/timestamp",
+          "description": "Timestamp at which the policy was published"
+        },
+        "prev_policies": {
+          "$id": "#/definitions/policy/properties/prev_policies",
+          "$ref": "#/definitions/null_uuid_array",
+          "description": "Unique IDs of prior policies replaced by this one",
+          "uniqueItems": true
+        },
+        "rules": {
+          "$id": "#/definitions/rules",
+          "type": "array",
+          "description": "Array of applicable Rule objects",
+          "items": {
+            "$id": "#/definitions/policy/properties/rules/items",
+            "$ref": "#/definitions/rule"
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "rule": {
+      "$id": "#/definitions/rule",
+      "type": "object",
+      "description": "An individual rule in a policy",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "rule_id",
+        "rule_type",
+        "geographies",
+        "states",
+        "rule_units"
+      ],
+      "properties": {
+        "name": {
+          "$id": "#/definitions/rule/properties/name",
+          "$ref": "#/definitions/string",
+          "description": "Name of rule"
+        },
+        "rule_id": {
+          "$id": "#/definitions/rule/properties/rule_id",
+          "$ref": "#/definitions/uuid",
+          "description": "Unique ID of rule"
+        },
+        "rule_type": {
+          "$id": "#/definitions/rule/properties/rule_type",
+          "type": "string",
+          "description": "The type of rule",
+          "enum": [
+            "count",
+            "time",
+            "speed",
+            "rate",
+            "user"
+          ]
+        },
+        "geographies": {
+          "$id": "#/definitions/rule/properties/geographies",
+          "$ref": "#/definitions/uuid_array",
+          "description": "List of Geography UUIDs (non-overlapping) specifying the covered geography",
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "states": {
+          "$id": "#/definitions/rule/properties/states",
+          "type": "object",
+          "description": "Vehicle state to which this rule applies. Optionally provide a list of specific vehicle events as a subset of a given state for the rule to apply to. An empty list or null/absent defaults to \"all\" for the state.",
+          "propertyNames": {
+            "$id": "#/definitions/rule/properties/states/propertyNames",
+            "$ref": "#/definitions/vehicle_state"
+          },
+          "properties": {},
+          "additionalProperties": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "$ref": "#/definitions/vehicle_event"
+            }
+          }
+        },
+        "rule_units": {
+          "$id": "#/definitions/rule/properties/rule_units",
+          "type": "string",
+          "description": "Measured units of policy",
+          "enum": [
+            "seconds",
+            "minutes",
+            "hours",
+            "days",
+            "mph",
+            "kph",
+            "devices",
+            "amount"
+          ]
+        },
+        "vehicle_types": {
+          "$id": "#/definitions/rule/properties/vehicle_types",
+          "$ref": "#/definitions/null_vehicle_types",
+          "description": "Applicable vehicle types, default \"all\""
+        },
+        "propulsion_types": {
+          "$id": "#/definitions/rule/properties/propulsion_types",
+          "$ref": "#/definitions/null_propulsion_types",
+          "description": "Applicable vehicle propulsion types, default \"all\""
+        },
+        "minimum": {
+          "$id": "#/definitions/rule/properties/minimum",
+          "type": [
+            "null",
+            "integer"
+          ],
+          "description": "Minimum value, if applicable (default 0)"
+        },
+        "maximum": {
+          "$id": "#/definitions/rule/properties/maximum",
+          "type": [
+            "null",
+            "integer"
+          ],
+          "description": "Maximum value, if applicable (default unlimited)"
+        },
+        "rate_amount": {
+          "$id": "#/definitions/rule/properties/rate_amount",
+          "type": [
+            "null",
+            "integer"
+          ],
+          "description": "The amount of a rate applied when this rule applies, if applicable (default zero). A positive integer rate amount represents a fee, while a negative integer represents a subsidy. Rate amounts are given in the currency defined in the Policy."
+        },
+        "rate_recurrence": {
+          "$id": "#/definitions/rule/properties/rate_recurrence",
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Specify when a rate is applied \u00e2\u20ac\u201c either once, or periodically according to a time unit specified using rule_units",
+          "enum": [
+            "once",
+            "each_time_unit",
+            "per_complete_time_unit"
+          ]
+        },
+        "start_time": {
+          "$id": "#/definitions/rule/properties/start_time",
+          "$ref": "#/definitions/null_iso_time",
+          "description": "Beginning time-of-day when the rule is in effect (default 00:00:00)"
+        },
+        "end_time": {
+          "$id": "#/definitions/rule/properties/end_time",
+          "$ref": "#/definitions/null_iso_time",
+          "description": "Ending time-of-day when the rule is in effect (default 23:59:59)"
+        },
+        "days": {
+          "$id": "#/definitions/rule/properties/days",
+          "$ref": "#/definitions/null_days",
+          "description": "Days when the rule is in effect (default all)"
+        },
+        "messages": {
+          "$id": "#/definitions/rule/properties/messages",
+          "type": [
+            "null",
+            "object"
+          ],
+          "description": "Message to rider user, if desired, in various languages, keyed by BCP 47 language tag",
+          "propertyNames": {
+            "pattern": "([A-Za-z]{2,3})([-][A-Za-z]{3}){0,3}([-]([A-Za-z]{4}))?([-]([A-Za-z]{2}|[0-9]{3}))?"
+          }
+        },
+        "value_url": {
+          "$id": "#/definitions/rule/properties/value_url",
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "URL to an API endpoint that can provide dynamic information for the measured value",
+          "format": "uri"
+        }
+      }
+    },
+    "currency": {
+      "$id": "#/definitions/currency",
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[A-Z]{3}$",
+      "default": "USD",
+      "description": "An ISO 4217 Alphabetic Currency Code representing currency of the payee. If null, USD cents is implied.",
+      "examples": [
+        "USD",
+        "EUR",
+        "GBP"
+      ]
+    },
+    "day": {
+      "$id": "#/definitions/day",
+      "type": "string",
+      "description": "A day of the week",
+      "enum": [
+        "sun",
+        "mon",
+        "tue",
+        "wed",
+        "thu",
+        "fri",
+        "sat"
+      ]
+    },
+    "propulsion_type": {
+      "$id": "#/definitions/propulsion_type",
+      "type": "string",
+      "description": "The type of propulsion",
+      "enum": [
+        "combustion",
+        "electric",
+        "electric_assist",
+        "human"
+      ]
+    },
+    "string": {
+      "$id": "#/definitions/string",
+      "type": "string",
+      "description": "A length-limited string type",
+      "maxLength": 255,
+      "default": "",
+      "examples": [
+        "ABC123"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "timestamp": {
+      "$id": "#/definitions/timestamp",
+      "type": "number",
+      "description": "Integer milliseconds since Unix epoch",
+      "multipleOf": 1.0,
+      "minimum": 0
+    },
+    "uuid": {
+      "$id": "#/definitions/uuid",
+      "type": "string",
+      "description": "A UUID used to uniquely identifty an object",
+      "default": "",
+      "examples": [
+        "3c9604d6-b5ee-11e8-96f8-529269fb1459"
+      ],
+      "pattern": "^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$"
+    },
+    "uuid_array": {
+      "$id": "#/definitions/uuid_array",
+      "type": "array",
+      "description": "Array of UUID",
+      "items": {
+        "$id": "#/definitions/uuid_array/items",
+        "$ref": "#/definitions/uuid"
+      }
+    },
+    "vehicle_event": {
+      "$id": "#/definitions/vehicle_event",
+      "type": "string",
+      "description": "An event that changes a vehicle's state",
+      "enum": [
+        "agency_drop_off",
+        "agency_pick_up",
+        "battery_charged",
+        "battery_low",
+        "comms_lost",
+        "comms_restored",
+        "compliance_pick_up",
+        "decommissioned",
+        "maintenance",
+        "maintenance_pick_up",
+        "missing",
+        "off_hours",
+        "on_hours",
+        "provider_drop_off",
+        "rebalance_pick_up",
+        "reservation_cancel",
+        "reservation_start",
+        "system_resume",
+        "system_suspend",
+        "trip_cancel",
+        "trip_end",
+        "trip_enter_jurisdiction",
+        "trip_leave_jurisdiction",
+        "trip_start",
+        "unspecified"
+      ]
+    },
+    "vehicle_state": {
+      "$id": "#/definitions/vehicle_state",
+      "type": "string",
+      "description": "The state of a vehicle",
+      "enum": [
+        "available",
+        "elsewhere",
+        "non_operational",
+        "on_trip",
+        "removed",
+        "reserved",
+        "unknown"
+      ]
+    },
+    "vehicle_type": {
+      "$id": "#/definitions/vehicle_type",
+      "type": "string",
+      "description": "The type of vehicle",
+      "enum": [
+        "bicycle",
+        "car",
+        "scooter",
+        "moped",
+        "other"
+      ]
+    },
+    "version": {
+      "$id": "#/definitions/version",
+      "type": "string",
+      "description": "The version of MDS this data represents",
+      "examples": [
+        "1.0.0"
+      ],
+      "pattern": "^1\\.0\\.[0-9]+$"
+    },
+    "days": {
+      "$id": "#/definitions/days",
+      "type": "array",
+      "description": "Array of days of the week",
+      "items": {
+        "$id": "#/definitions/days/items",
+        "$ref": "#/definitions/day"
+      },
+      "uniqueItems": true
+    },
+    "iso_time": {
+      "$id": "#/definitions/iso_time",
+      "type": "string",
+      "description": "Time-of-day expressed as ISO 8601 hh:mm:ss",
+      "pattern": "([0-2][0-3]|[0-1][0-9]):[0-5][0-9]:[0-5][0-9]"
+    },
+    "propulsion_types": {
+      "$id": "#/definitions/propulsion_types",
+      "type": "array",
+      "description": "Array of propulsion types, allowing multiple values",
+      "items": {
+        "$id": "#/definitions/propulsion_types/items",
+        "$ref": "#/definitions/propulsion_type"
+      },
+      "uniqueItems": true
+    },
+    "vehicle_types": {
+      "$id": "#/definitions/vehicle_types",
+      "type": "array",
+      "description": "Array of vehicle types",
+      "items": {
+        "$id": "#/definitions/vehicle_types/items",
+        "$ref": "#/definitions/vehicle_type"
+      },
+      "uniqueItems": true
+    },
+    "null_days": {
+      "$id": "#/definitions/null_days",
+      "type": [
+        "array",
+        "null"
+      ],
+      "description": "Array of days of the week",
+      "items": {
+        "$id": "#/definitions/days/items",
+        "$ref": "#/definitions/day"
+      },
+      "uniqueItems": true
+    },
+    "null_iso_time": {
+      "$id": "#/definitions/null_iso_time",
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Time-of-day expressed as ISO 8601 hh:mm:ss",
+      "pattern": "([0-2][0-3]|[0-1][0-9]):[0-5][0-9]:[0-5][0-9]"
+    },
+    "null_propulsion_types": {
+      "$id": "#/definitions/null_propulsion_types",
+      "type": [
+        "array",
+        "null"
+      ],
+      "description": "Array of propulsion types, allowing multiple values",
+      "items": {
+        "$id": "#/definitions/propulsion_types/items",
+        "$ref": "#/definitions/propulsion_type"
+      },
+      "uniqueItems": true
+    },
+    "null_timestamp": {
+      "$id": "#/definitions/null_timestamp",
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "Integer milliseconds since Unix epoch",
+      "multipleOf": 1.0,
+      "minimum": 0
+    },
+    "null_uuid_array": {
+      "$id": "#/definitions/null_uuid_array",
+      "type": [
+        "array",
+        "null"
+      ],
+      "description": "Array of UUID",
+      "items": {
+        "$id": "#/definitions/uuid_array/items",
+        "$ref": "#/definitions/uuid"
+      }
+    },
+    "null_vehicle_types": {
+      "$id": "#/definitions/null_vehicle_types",
+      "type": [
+        "array",
+        "null"
+      ],
+      "description": "Array of vehicle types",
+      "items": {
+        "$id": "#/definitions/vehicle_types/items",
+        "$ref": "#/definitions/vehicle_type"
+      },
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "data",
+    "updated",
+    "version"
+  ],
+  "properties": {
+    "data": {
+      "$id": "#/properties/data",
+      "type": "object",
+      "description": "The data records in this payload",
+      "required": [
+        "policy"
+      ],
+      "properties": {
+        "policy": {
+          "$id": "#/properties/data/properties/policy",
+          "type": "array",
+          "title": "The policy payload",
+          "items": {
+            "$id": "#/properties/data/properties/policy/items",
+            "$ref": "#/definitions/policy"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "end_date": {
+      "$id": "#/properties/end_date",
+      "$ref": "#/definitions/null_timestamp",
+      "description": "The timestamp after which the Policy is no longer effective"
+    },
+    "updated": {
+      "$id": "#/properties/updated",
+      "$ref": "#/definitions/timestamp",
+      "description": "The timestamp when the Policy was last updated"
+    },
+    "version": {
+      "$id": "#/properties/version",
+      "$ref": "#/definitions/version",
+      "description": "The version of MDS that the Policy represents"
+    }
+  },
+  "additionalProperties": false
+}

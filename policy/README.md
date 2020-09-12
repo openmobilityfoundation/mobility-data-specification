@@ -139,7 +139,7 @@ The `updated` field in the payload wrapper should be set to the time of publishi
 
 #### Example `policies.json`
 
-```json
+```jsonc
 {
     "version": "0.4.0",
     "updated": 1570035222868,
@@ -161,7 +161,7 @@ The optional `end_date` field applies to all policies represented in the file.
 
 #### Example `geographies.json`
 
-```json
+```jsonc
 {
     "version": "0.4.0",
     "updated": 1570035222868,
@@ -186,7 +186,7 @@ All response fields must use `lower_case_with_underscores`.
 
 Response bodies must be a `UTF-8` encoded JSON object and must minimally include the MDS `version`, a timestamp indicating the last time the data was `updated`, and a `data` payload:
 
-```json
+```jsonc
 {
     "version": "x.y.z",
     "updated": 1570035222868,
@@ -195,6 +195,12 @@ Response bodies must be a `UTF-8` encoded JSON object and must minimally include
     }
 }
 ```
+
+### JSON Schema
+
+The JSON Schema file is available in this repository: [`policy.json`](./policy.json).
+
+Before publishing a new Policy document, the document should be validated against the schema to ensure it has the correct format and fields.
 
 [Top][toc]
 
