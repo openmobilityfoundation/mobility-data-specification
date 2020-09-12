@@ -16,19 +16,25 @@ def policy_schema():
     definitions = common.load_definitions(
         "currency",
         "day",
-        "days",
-        "iso_time",
         "propulsion_type",
-        "propulsion_types",
         "string",
         "timestamp",
         "uuid",
         "uuid_array",
         "vehicle_event",
+        "vehicle_state",
         "vehicle_type",
-        "vehicle_types",
         "version"
     )
+    definitions.update(common.load_definitions(
+        "days",
+        "iso_time",
+        "propulsion_types",
+        "timestamp",
+        "uuid_array",
+        "vehicle_types",
+        allow_null=True
+    ))
     schema["definitions"].update(definitions)
 
     # verify and return

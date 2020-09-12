@@ -220,45 +220,72 @@ def property_definition(property_id, ref=""):
     return prop, definition
 
 
-def load_definitions(*args):
+def load_definitions(*args, allow_null=False):
     """
     Load the common.json definitions file, with some generated additions.
 
     If args are provided, filter to a dictionary of definitions using the args as keys.
 
-    With only a single arg, return just the definition with that key directly.
+    With only a single arg, return the definition with that key directly.
+
+    If allow_null is True, override definition types to allow null.
     """
     global COMMON_DEFINITIONS
 
     if COMMON_DEFINITIONS == {}:
         common = load_json("./templates/common.json")
-        definitions = common["definitions"]
+        common_definitions = common["definitions"]
 
         # MDS specific geography definition
         mds_feature = mds_feature_point_definition()
-        definitions.update(mds_feature)
+        common_definitions.update(mds_feature)
 
         # vehicle_type -> count definition
-        veh_type_counts = vehicle_type_counts_definition(definitions)
-        definitions.update(veh_type_counts)
+        veh_type_counts = vehicle_type_counts_definition(common_definitions)
+        common_definitions.update(veh_type_counts)
 
-        COMMON_DEFINITIONS = definitions
+        COMMON_DEFINITIONS = common_definitions
+
+    definitions = copy.deepcopy(COMMON_DEFINITIONS)
 
     if args and len(args) > 0:
-        if len(args) == 1:
-            return COMMON_DEFINITIONS.get(args[0])
-        else:
-            return { key: COMMON_DEFINITIONS.get(key) for key in args }
-    else:
-        return COMMON_DEFINITIONS
+        definitions = { typekey: definitions.get(typekey) for typekey in args }
+
+    # modify definitions to allow null
+    if allow_null:
+        typekey = "type"
+        typedefs = { k: v for k, v in definitions.items() if typekey in v }
+        for key, defn in typedefs.items():
+            nullkey = f"null_{key}"
+
+            if "$ref" in defn:
+                refid = defn["$ref"].split("/")
+                refid[-1] = f"null_{refid[-1]}"
+
+                defn["$ref"] = "/".join(refid)
+            else:
+                defnid = defn["$id"].split("/")
+                defnid[-1] = f"null_{defnid[-1]}"
+
+                nulldefn = copy.deepcopy(defn)
+                nulldefn["$id"] = "/".join(defnid)
+
+                if isinstance(nulldefn[typekey], str):
+                    nulldefn[typekey] = [nulldefn[typekey]]
+                if "null" not in nulldefn[typekey]:
+                    nulldefn[typekey].append("null")
+
+                definitions[nullkey] = nulldefn
+
+    return definitions.get(args[0]) if len(args) == 1 else definitions
 
 
 def check_schema(schema):
     """
-    Check the validity of the given schema document under Draft 6 of the JSON Schema spec.
+    Check the validity of the given schema document under Draft 7 of the JSON Schema spec.
 
     Returns the (valid) schema instance.
     """
-    jsonschema.Draft6Validator.check_schema(schema)
+    jsonschema.Draft7Validator.check_schema(schema)
 
     return schema
