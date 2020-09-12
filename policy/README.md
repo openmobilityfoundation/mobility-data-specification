@@ -233,8 +233,8 @@ An individual `Rule` object is defined by the following fields:
 | `rule_id`          | UUID                        | Required   | Unique ID of the rule |
 | `rule_type`        | enum                        | Required   | Type of policy (see [Rule Types](#rule-types)) |
 | `geographies`      | UUID[]                      | Required   | List of Geography UUIDs (non-overlapping) specifying the covered geography |
-| `states`           | `{ state: event[] }`        | Required   | [Vehicle state][vehicle-states] to which this rule applies.  Optionally provide a list of specific [vehicle events][#vehicle-events] as a subset of a given status for the rule to apply to. An empty list or `null`/absent defaults to "all". |
-| `rule_units`       | enum                        | Required   | Measured units of policy (see [Rule Units](#rule-units)) |
+| `states`           | `{ state: event[] }`        | Required   | [Vehicle state][vehicle-states] to which this rule applies. Optionally provide a list of specific [vehicle events][#vehicle-events] as a subset of a given status for the rule to apply to. An empty list or `null`/absent defaults to "all". |
+| `rule_units`       | enum                        | Conditionally Required   | Measured units of policy (see [Rule Units](#rule-units)) |
 | `vehicle_types`    | `vehicle_type[]`            | Optional   | Applicable vehicle types, default "all". |
 | `propulsion_types` | `propulsion_type[]`         | Optional   | Applicable vehicle [propulsion types][propulsion-types], default "all". |
 | `minimum`          | integer                     | Optional   | Minimum value, if applicable (default 0) |
@@ -263,16 +263,18 @@ An individual `Rule` object is defined by the following fields:
 
 ### Rule Units
 
-| Name      | Rule Types     | Description         |
-| --------- | -------------- | ------------------- |
-| `seconds` | `time`         | Seconds             |
-| `minutes` | `time`         | Minutes             |
-| `hours`   | `time`         | Hours               |
-| `days`    | `time`         | Days                |
-| `mph`     | `speed`        | Miles per hour      |
-| `kph`     | `speed`        | Kilometers per hour |
-| `devices` | `count`        | Devices             |
-| `amount`  | `rate`         | Cost (in [local currency](/general-information.md#costs-and-currencies)) |
+| Name      | Rule Types             | Description         |
+| --------- | ---------------------- | ------------------- |
+| `seconds` | `rate`, `time`         | Seconds             |
+| `minutes` | `rate`, `time`         | Minutes             |
+| `hours`   | `rate`, `time`         | Hours               |
+| `days`    | `rate`, `time`         | Days                |
+| `amount`  | `rate`                 | Cost (in [local currency](/general-information.md#costs-and-currencies)) |
+| `mph`     | `speed`                | Miles per hour      |
+| `kph`     | `speed`                | Kilometers per hour |
+| `devices` | `count`                | Devices             |
+
+[Rule type](#rule-types) `user` has no associated Rule units; `rule_units` is not required when the Rule type is `user`.
 
 [Top][toc]
 
@@ -296,9 +298,9 @@ Rate recurrences specify when a rate is applied – either once, or periodicall
 
 | Name      | Description         |
 | --------- | ------------------- |
-| `once`                      |  Rate is applied once to vehicles entering a matching status from a non-matching status.   |     
+| `once`                      |  Rate is applied once to vehicles entering a matching status from a non-matching status.   |
 | `each_time_unit`            |  During each `time_unit`, rate is applied once to vehicles entering or remaining in a matching status. Requires a `time_unit` to be specified using `rule_units`.  |  
-| `per_complete_time_unit`    | Rate is applied once per complete `time_unit` that vehicles remain in a matching status. Requires a `time_unit` to be specified using `rule_units`.  | 
+| `per_complete_time_unit`    | Rate is applied once per complete `time_unit` that vehicles remain in a matching status. Requires a `time_unit` to be specified using `rule_units`.  |
 
 [Top][toc]
 

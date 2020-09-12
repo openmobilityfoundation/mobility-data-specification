@@ -86,8 +86,7 @@
         "rule_id",
         "rule_type",
         "geographies",
-        "states",
-        "rule_units"
+        "states"
       ],
       "properties": {
         "name": {
@@ -216,7 +215,94 @@
           "description": "URL to an API endpoint that can provide dynamic information for the measured value",
           "format": "uri"
         }
-      }
+      },
+      "allOf": [
+        {
+          "description": "Valid rule_type and rule_unit values for this rule",
+          "oneOf": [
+            {
+              "properties": {
+                "rule_type": {
+                  "const": "user"
+                }
+              }
+            },
+            {
+              "allOf": [
+                {
+                  "required": [
+                    "rule_units"
+                  ]
+                },
+                {
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "rule_type": {
+                          "const": "time"
+                        },
+                        "rule_units": {
+                          "enum": [
+                            "seconds",
+                            "minutes",
+                            "hours",
+                            "days"
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "properties": {
+                        "rule_type": {
+                          "const": "speed"
+                        },
+                        "rule_units": {
+                          "enum": [
+                            "mph",
+                            "kph"
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "properties": {
+                        "rule_type": {
+                          "const": "count"
+                        },
+                        "rule_units": {
+                          "enum": [
+                            "devices"
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "required": [
+                        "rate_amount",
+                        "rate_recurrence"
+                      ],
+                      "properties": {
+                        "rule_type": {
+                          "const": "rate"
+                        },
+                        "rule_units": {
+                          "enum": [
+                            "amount",
+                            "seconds",
+                            "minutes",
+                            "hours",
+                            "days"
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   },
   "required": [
