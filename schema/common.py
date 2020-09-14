@@ -230,6 +230,7 @@ def load_definitions(*args, allow_null=False):
 
     If allow_null is True, override definition types to allow null.
     """
+    # store the definitions once globally after reading from the source file
     global COMMON_DEFINITIONS
 
     if COMMON_DEFINITIONS == {}:
@@ -246,23 +247,30 @@ def load_definitions(*args, allow_null=False):
 
         COMMON_DEFINITIONS = common_definitions
 
-    definitions = copy.deepcopy(COMMON_DEFINITIONS)
-
+    # filter all definitions to those requested as args
     if args and len(args) > 0:
-        definitions = { typekey: definitions.get(typekey) for typekey in args }
+        _d = { key: COMMON_DEFINITIONS.get(key) for key in args }
+    else:
+        _d = COMMON_DEFINITIONS
+
+    # create a deepcopy for possible modifications
+    definitions = copy.deepcopy(_d)
 
     # modify definitions to allow null
     if allow_null:
+        # get all definitions with a type property
         typekey = "type"
         typedefs = { k: v for k, v in definitions.items() if typekey in v }
         for key, defn in typedefs.items():
             nullkey = f"null_{key}"
 
+            # for reference definitions, override the reference to the null version
             if "$ref" in defn:
                 refid = defn["$ref"].split("/")
                 refid[-1] = f"null_{refid[-1]}"
 
                 defn["$ref"] = "/".join(refid)
+            # for type definitions, create a new definition allowing null
             else:
                 defnid = defn["$id"].split("/")
                 defnid[-1] = f"null_{defnid[-1]}"
@@ -274,9 +282,10 @@ def load_definitions(*args, allow_null=False):
                     nulldefn[typekey] = [nulldefn[typekey]]
                 if "null" not in nulldefn[typekey]:
                     nulldefn[typekey].append("null")
-
+                # add the null definition to the definitions dict
                 definitions[nullkey] = nulldefn
 
+    # if there was only one arg, return the definition directly
     return definitions.get(args[0]) if len(args) == 1 else definitions
 
 
