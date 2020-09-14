@@ -1,15 +1,19 @@
 ## MDS Dockless Metrics
 
-MDS dockless metrics are a set of defined metrics and compound metrics that are useful for measuring 
-dockless vehicle activity with MDS data.  The definitions rely on [MDS core metrics](core_metrics).
+MDS dockless metrics are a set of defined metrics and compound metrics useful for measuring dockless vehicle activity with MDS data. Dockless metrics measure vehicle activity when they are in the public right of way, which means vehicles were in either available, unavailable, reserved, or trip state.
 
-The following represents supported MDS dockless metrics extension and definition:
+The table below represents supported MDS dockless metrics extension and definition. All metrics are aggregated by time interval and geographic areas. This [document](https://docs.google.com/document/d/1UNo7wAW6-Z6wcW7YLiX5fE9-tqOhkRUJ3M9OGWWEvxs/edit?usp=sharing) provides methodologies and sample calculations of MDS metrics. 
 
-| Metric               | Description                                                                                                          |
-| -------------------- | -------------------------------------------------------------------------------------------------------------------- |
-| dockless.avg         | Sum of all vehicles in the public right of way.  (vehicles.available.avg + vehicles.unavailable.avg + vehicles.reserved.avg + vehicles.trip.avg) |
-| dockless.min         | Sum of all vehicles in the public right of way.  (vehicles.available.min + vehicles.unavailable.min + vehicles.reserved.min + vehicles.trip.min) |
-| dockless.max         | Sum of all vehicles in the public right of way.(vehicles.available.max + vehicles.unavailable.max + vehicles.reserved.max +vehicles.trip.max)    |
-| dockless.active      | Number of vehicles in PRoW during the interval that had at least one trip during the last x. *Default x = interval*  |
-| dockless.inactive    | Number of vehicles in PRoW during the interval that have zero trips during the last x. *Default x = interval*        |
-| dockless.utilization | = dockless.active / (dockless.active + dockless.inactive)                                                            |
+|No| Metric               | Description                                                                                                          |
+|--|-- | -- |
+|2.1|dockless.avg         | The average number of vehicles in the public right of way.|
+|2.2|dockless.avg.min|The minimum of the average number of vehicles in the public right of way. |
+|2.3| dockless.min         | The minimum number of vehicles in the public right of way.|
+|2.4| dockless.avg.max| The maximum average number of vehicles in the public right of way.  |
+|2.5| dockless.max         | The maximum number of vehicles in the public right of way. |
+|2.6| dockless.active.count |The number of vehicles in the public right of way that have at least one trip during the interval, i.e. hourly. |
+|2.7| dockless.inactive.count|The number of vehicles in the public right of way that have no trip during the interval.  |
+|2.8| dockless.utilization.idle.percent|The percentage of time vehicles spent not in trip to the total time vehicles spent in the public right of way.|
+|2.9 | dockless.utilization.active.percent|The percentage of vehicles that had at least one trip during the interval.|
+|2.10|dockless.utilization.trips_per_vehicle.avg| The average number of trips for all vehicles in the public right of way during the interval.|
+

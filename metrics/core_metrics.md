@@ -1,29 +1,31 @@
 ## MDS Core Metrics
 
-The core metrics are a set of defined, consistent MDS metrics that provide building blocks for other MDS metrics, regardless of vehicle type.
+The core metrics are a set of defined, consistent MDS metrics that provide building blocks for other MDS metrics, regardless of vehicle type. 
 
-The following represents supported MDS core metrics and definition:
+The table below represents supported MDS core metrics and definition. All metrics are aggregated by time interval and geographic areas. This [document](https://docs.google.com/document/d/1UNo7wAW6-Z6wcW7YLiX5fE9-tqOhkRUJ3M9OGWWEvxs/edit?usp=sharing) provides methodologies and sample calculations of MDS metrics. 
 
 
-| Metric               | Description                                                                                                         |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| vehicles.[status].avg | <img src="https://lh6.googleusercontent.com/E7yd_nf0KsVabWC_7J6L_2jn2KPOw9F0tA9T1jwFULHBrB-9H0uQ13GViSGKSd69JEUIBOhKM6O0eQY0GW84W5OromEQ0NduoDH1BuFzAsXJZicjA1UZxSojkTVKYb2uUx0lwZVk" title="" alt="" width="88"> where f(x) is the number of vehicles in [MDS status](https://github.com/openmobilityfoundation/mobility-data-specification/tree/dev/agency#vehicle-events) at time x. Average number of vehicles in status over the interval (a to b). |
-| vehicles.[status].min | Min number of vehicles in [MDS status](https://github.com/openmobilityfoundation/mobility-data-specification/tree/dev/agency#vehicle-events) at any time during interval   |
-| vehicles.[status].max | Max number of vehicles in [MDS status](https://github.com/openmobilityfoundation/mobility-data-specification/tree/dev/agency#vehicle-events) at any time during interval   |
-| events               | returns counts for each [MDS event_type](https://github.com/openmobilityfoundation/mobility-data-specification/tree/dev/agency#vehicle-events) during interval |
-| events.[event_type]  | Count of all `event_type` during interval                                                                            |
-| trips                | Trips (count unique trip_id) with trip_end or **final** trip_leave event during interval                               |
-| trips.duration       | Total time duration (in seconds)of all trips ending or leaving during interval                                     |
-| trips.distance       | Total distance (in meters) traveled by trips ending or leaving during interval                                     |
+|No| Metric               | Description                                                                                                         |
+|--| --| -- |
+|1.1 | vehicles.[status].avg | The average number of vehicles in [MDS status](https://github.com/openmobilityfoundation/mobility-data-specification/tree/dev/agency#vehicle-events). |
+|1.2 | vehicles.[status].min | The minimum number of vehicles in [MDS status](https://github.com/openmobilityfoundation/mobility-data-specification/tree/dev/agency#vehicle-events).   |
+|1.3| vehicles.[status].max | The maximum number of vehicles in [MDS status](https://github.com/openmobilityfoundation/mobility-data-specification/tree/dev/agency#vehicle-events). |
+|1.4| vehicles.[status].duration.sum | The total duration (in seconds) vehicles spent in a specified [MDS status](https://github.com/openmobilityfoundation/mobility-data-specification/tree/dev/agency#vehicle-events). |
+|1.5| events.[event_type].count |The number of [MDS event type](https://github.com/openmobilityfoundation/mobility-data-specification/tree/dev/agency#vehicle-events) received.  |
+|1.6| trips.[start_loc/end_loc].count|The number of trips aggregated by either the start or first enter, or end or final leave locations.|
+|1.7| trips.[start_loc/end_loc]_duration.avg|The average trip duration (in seconds) aggregated by either the start or first enter, or end or final leave locations.|
+|1.8| trips.[start_loc/end_loc]_duration.sum| The total trip duration (in seconds) aggregated by either the start or first enter, or end or final leave locations. |
+|1.9| trips.[start_loc/end_loc]_distance.avg| The average trip distance (in meter) aggregated by either the start or first enter, or end or final leave locations. |
+|1.10| trips.[start_loc/end_loc]_distance.sum|The total trip distance (in meter) aggregated by either the start or first enter, or end or final leave locations.|
 
 ### Dimensions
 
 The following represent the suggested MDS core metric dimensions:
 
-| Dimension    | Description                                                                                                                |
+| Dimension    | Description |
 | ------------ | -------------------------------------------------------------------------------------------------------------------------- |
 | provider_id  | Transportation provider id issued by OMF and [tracked here](https://github.com/openmobilityfoundation/mobility-data-specification/blob/dev/providers.csv)                              |
-| geo.[type]   | [MDS Geography](https://github.com/openmobilityfoundation/mobility-data-specification/blob/dev/policy/README.md#geographies) e.g. geo.policy, geo.jurisdictions, geo.council_districts |
+| [geography_type]   | [MDS Geography](https://github.com/openmobilityfoundation/mobility-data-specification/blob/dev/policy/README.md#geographies) e.g. policy, jurisdictions, council_districts |
 | vehicle_type | [Vehicle Type](https://github.com/openmobilityfoundation/mobility-data-specification/tree/dev/agency#vehicle-type) defined by MDS                                                  |
 
 ### Filters
