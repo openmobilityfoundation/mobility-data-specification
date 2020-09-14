@@ -6,11 +6,11 @@ The table below represents supported MDS dockless metrics extension and definiti
 
 |No| Metric               | Description                                                                                                          |
 |--|-- | -- |
-|2.1|dockless.avg         | The average number of vehicles in the public right of way.|
-|2.2|dockless.avg.min|The minimum of the average number of vehicles in the public right of way. |
-|2.3| dockless.min         | The minimum number of vehicles in the public right of way.|
-|2.4| dockless.avg.max| The maximum average number of vehicles in the public right of way.  |
-|2.5| dockless.max         | The maximum number of vehicles in the public right of way. |
+|2.1|dockless.deployed.avg         | The average number of vehicles in the public right of way.|
+|2.2|dockless.deployed.avg.min|The minimum of the average number of vehicles in the public right of way. |
+|2.3| dockless.deployed.min         | The minimum number of vehicles in the public right of way.|
+|2.4| dockless.deployed.avg.max| The maximum average number of vehicles in the public right of way.  |
+|2.5| dockless.deployed.max         | The maximum number of vehicles in the public right of way. |
 |2.6| dockless.active.count |The number of vehicles in the public right of way that have at least one trip during the interval, i.e. hourly. |
 |2.7| dockless.inactive.count|The number of vehicles in the public right of way that have no trip during the interval.  |
 |2.8| dockless.utilization.idle.percent|The percentage of time vehicles spent not in trip to the total time vehicles spent in the public right of way.|
