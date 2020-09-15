@@ -183,9 +183,9 @@ Body Params:
 | `vehicle_state` | Enum                          | Required | see [Vehicle States][vehicle-states] |
 | `event_types`   | Enum[]                        | Required | see [Vehicle Events][vehicle-events] |
 | `timestamp`     | [timestamp][ts]                     | Required | Date of last event update |
-| `telemetry`     | [Telemetry](#telemetry-data)  | Optional | Single point of telemetry. Required unless `status` is `trip`. |
+| `telemetry`     | [Telemetry](#telemetry-data)  | Optional | Single point of telemetry. |
 | `event_geographies`  | UUID[] | Required          | Array of Geography UUIDs consisting of every Geography that contains the location of the event. |
-| `trip_id`       | UUID                          | Optional | UUID provided by Operator to uniquely identify the trip. Required for `trip_start`, `trip_end`, `trip_enter`, and `trip_leave` event types |
+| `trip_id`       | UUID                          | Optional | UUID provided by Operator to uniquely identify the trip. Required if `event_types` contains `trip_start`, `trip_end`, `trip_cancel`, `trip_enter_jurisdiction`, or `trip_leave_jurisdiction` |
 
 201 Success Response:
 
