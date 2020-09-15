@@ -1,15 +1,29 @@
 # Mobility Data Specification: **Provider**
 
+The Provider API endpoints are intended to be implemented by mobility providers and consumed by regulatory agencies. When a municipality queries information from a mobility provider, the Provider API has a historical view of operations in a standard format.
+
 This specification contains a data standard for *mobility as a service* providers to define a RESTful API for municipalities to access on-demand.
 
 ## Table of Contents
 
 * [General Information](#general-information)
+  * [Versioning](#versioning)
+  * [Response Format](#response-format)
+  * [JSON Schema](#json-schema)
+  * [Pagination](#pagination)
+  * [Municipality Boundary](#municipality-boundary)
+  * [Event Times](#event-times)
+  * [Other Data Types](#other-data-types)
 * [Trips][trips]
+  * [Trips - Query Parameters](#trips---query-parameters)
+  * [Routes](#routes)
 * [Status Changes][status]
+  * [Status Changes - Query Parameters](#status-changes---query-parameters)
 * [Realtime Data](#realtime-data)
   * [GBFS](#GBFS)
+  * [Data Latency Requirements][data-latency]
   * [Events][events]
+  * [Stops](#stops)
   * [Vehicles][vehicles]
 
 ## General Information
@@ -17,6 +31,8 @@ This specification contains a data standard for *mobility as a service* provider
 The following information applies to all `provider` API endpoints. Details on providing authorization to endpoints is specified in the [auth](auth.md) document.
 
 This specification uses data types including timestamps, UUIDs, and vehicle state definitions as described in the MDS [General Information][general-information] document.
+
+[Top][toc]
 
 ### Versioning
 
@@ -95,44 +111,11 @@ At a minimum, paginated payloads must include a `next` key, which must be set to
 
 [Top][toc]
 
-### Geographic Data
-
-References to geographic datatypes (Point, MultiPolygon, etc.) imply coordinates encoded in the [WGS 84 (EPSG:4326)][wgs84] standard GPS or GNSS projection expressed as [Decimal Degrees][decimal-degrees].
-
-Whenever an individual location coordinate measurement is presented, it must be
-represented as a GeoJSON [`Feature`][geojson-feature] object with a corresponding [`timestamp`][ts] property and [`Point`][geojson-point] geometry:
-
-```json
-{
-    "type": "Feature",
-    "properties": {
-        "timestamp": 1529968782421
-    },
-    "geometry": {
-        "type": "Point",
-        "coordinates": [
-            -118.46710503101347,
-            33.9909333514159
-        ]
-    }
-}
-```
-
-#### Intersection Operation
-
-For the purposes of this specification, the intersection of two geographic datatypes is defined according to the [`ST_Intersects` PostGIS operation][st-intersects]
-
-> If a geometry or geography shares any portion of space then they intersect. For geography -- tolerance is 0.00001 meters (so any points that are close are considered to intersect).
->
-> Overlaps, Touches, Within all imply spatial intersection. If any of the aforementioned returns true, then the geometries also spatially intersect. Disjoint implies false for spatial intersection.
-
-[Top][toc]
-
 ### Municipality Boundary
 
 Municipalities requiring MDS Provider API compliance should provide an unambiguous digital source for the municipality boundary. This boundary must be used when determining which data each `provider` API endpoint will include.
 
-The boundary should be defined as a polygon or collection of polygons. The file defining the boundary should be provided in Shapefile or GeoJSON format and hosted online at a published address that all providers and `provider` API consumers can access and download. The boundary description can be sent as a reference to an GeoJSON object obtained via the Geography API or flat-file, if the agency is using Geography.
+The boundary should be defined as a polygon or collection of polygons. The file defining the boundary should be provided in Shapefile or GeoJSON format and hosted online at a published address that all providers and `provider` API consumers can access and download. The boundary description can be sent as a reference to an GeoJSON object or flat-file, if the agency is using Geography.
 
 Providers are not required to recalculate the set of historical data that is included when the municipality boundary changes. All new data must use the updated municipality boundary.
 
@@ -144,9 +127,9 @@ Because of the unreliability of device clocks, the Provider is unlikely to know 
 
 [Top][toc]
 
-### Timestamps, Vehicle Types, Propulsion Types, UUIDs, Costs & Currencies
+### Other Data Types
 
-Please refer to the MDS [General Information][general-information] document.
+For Timestamps, Vehicle Types, Propulsion Types, UUIDs, Costs, and Currencies, refer to the MDS [General Information][general-information] document.
 
 [Top][toc]
 
@@ -166,12 +149,12 @@ Unless stated otherwise by the municipality, the trips endpoint must return all 
 
 | Field | Type    | Required/Optional | Comments |
 | ----- | -------- | ----------------- | ----- |
-| `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS |
+| `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
 | `provider_name` | String | Required | The public-facing name of the Provider |
 | `device_id` | UUID | Required | A unique device ID in UUID format |
 | `vehicle_id` | String | Required | The Vehicle Identification Number visible on the vehicle itself |
 | `vehicle_type` | Enum | Required | See [vehicle types][vehicle-types] table |
-| `propulsion_type` | Enum[] | Required | Array of [propulsion types][propulsion-types]; allows multiple values |
+| `propulsion_types` | Enum[] | Required | Array of [propulsion types][propulsion-types]; allows multiple values |
 | `trip_id` | UUID | Required | A unique ID for each trip |
 | `trip_duration` | Integer | Required | Time, in Seconds |
 | `trip_distance` | Integer | Required | Trip Distance, in Meters |
@@ -185,7 +168,9 @@ Unless stated otherwise by the municipality, the trips endpoint must return all 
 | `actual_cost` | Integer | Optional | The actual cost, in the currency defined in `currency`, paid by the customer of the *mobility as a service* provider (see [Costs & Currencies][costs-and-currencies]) |
 | `currency` | String | Optional, USD cents is implied if null.| An [ISO 4217 Alphabetic Currency Code][iso4217] representing the currency of the payee (see [Costs & Currencies][costs-and-currencies]) |
 
-### Trips Query Parameters
+[Top][toc]
+
+### Trips - Query Parameters
 
 The `/trips` API should allow querying trips with the following query parameters:
 
@@ -199,11 +184,15 @@ Without an `end_time` query parameter, `/trips` shall return a `400 Bad Request`
 
 For the near-ish real time use cases, please use the [events][events] endpoint.
 
+[Top][toc]
+
 ### Routes
 
 To represent a route, MDS `provider` APIs must create a GeoJSON [`FeatureCollection`][geojson-feature-collection], which includes every [observed point][geo] in the route, even those which occur outside the [municipality boundary][muni-boundary].
 
 Routes must include at least 2 points: the start point and end point. Routes must include all possible GPS or GNSS samples collected by a Provider. Providers may round the latitude and longitude to the level of precision representing the maximum accuracy of the specific measurement. For example, [a-GPS][agps] is accurate to 5 decimal places, [differential GPS][dgps] is generally accurate to 6 decimal places. Providers may round those readings to the appropriate number for their systems.
+
+Trips that start or end at a [Stop][stops] must include a `stop_id` property in the first (when starting) and last (when ending) Feature of the `route`. See [Stop-based Geographic Data][stop-based-geo] for more information.
 
 ```js
 "route": {
@@ -211,7 +200,9 @@ Routes must include at least 2 points: the start point and end point. Routes mus
     "features": [{
         "type": "Feature",
         "properties": {
-            "timestamp": 1529968782421
+            "timestamp": 1529968782421,
+            // Required for Trips starting at a Stop
+            "stop_id": "95084833-6a3f-4770-9919-de1ab4b8989b",
         },
         "geometry": {
             "type": "Point",
@@ -224,7 +215,9 @@ Routes must include at least 2 points: the start point and end point. Routes mus
     {
         "type": "Feature",
         "properties": {
-            "timestamp": 1531007628377
+            "timestamp": 1531007628377,
+            // Required for Trips ending at a Stop
+            "stop_id": "b813cde2-a41c-4ae3-b409-72ff221e003d"
         },
         "geometry": {
             "type": "Point",
@@ -257,23 +250,25 @@ Unless stated otherwise by the municipality, this endpoint must return only thos
 
 | Field | Type | Required/Optional | Comments |
 | ----- | ---- | ----------------- | ----- |
-| `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS |
+| `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
 | `provider_name` | String | Required | The public-facing name of the Provider |
 | `device_id` | UUID | Required | A unique device ID in UUID format |
 | `vehicle_id` | String | Required | The Vehicle Identification Number visible on the vehicle itself |
 | `vehicle_type` | Enum | Required | see [vehicle types][vehicle-types] table |
-| `propulsion_type` | Enum[] | Required | Array of [propulsion types][propulsion-types]; allows multiple values |
+| `propulsion_types` | Enum[] | Required | Array of [propulsion types][propulsion-types]; allows multiple values |
 | `vehicle_state` | Enum | Required | See [vehicle state][vehicle-states] table |
-| `event_type` | Enum[] | Required | [Vehicle event(s)][vehicle-events] for state change, allowable values determined by `vehicle_state`. |
+| `event_types` | Enum[] | Required | [Vehicle event(s)][vehicle-events] for state change, allowable values determined by `vehicle_state` |
 | `event_time` | [timestamp][ts] | Required | Date/time that event occurred at. See [Event Times][event-times] |
 | `publication_time` | [timestamp][ts] | Optional | Date/time that event became available through the status changes endpoint |
-| `event_location` | GeoJSON [Point Feature][geo] | Optional | A location is required unless `event_type_reason` is `user_pick_up` |
+| `event_location` | GeoJSON [Point Feature][geo] | Optional | See also [Stop-based Geographic Data][stop-based-geo] |
 | `event_geographies` | UUID[] | Required | Array of Geography UUIDs consisting of every Geography that contains the location of the status change. |
 | `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |
-| `associated_trip` | UUID | Required if Applicable | Trip UUID (foreign key to Trips API), required if `event_type` is `trip_start` or `trip_end`, or for any other status change event that marks the end of a trip. |
-| `associated_ticket` | String | Optional | Identifier for an associated ticket inside an Agency-maintained 311 or CRM system. |
+| `trip_id` | UUID | Required if Applicable | Trip UUID (foreign key to Trips API), required if `event_types` contains `trip_start`, `trip_end`, `trip_cancel`, `trip_enter_jurisdiction`, or `trip_leave_jurisdiction` |
+| `associated_ticket` | String | Optional | Identifier for an associated ticket inside an Agency-maintained 311 or CRM system |
 
-### Status Changes Query Parameters
+[Top][toc]
+
+### Status Changes - Query Parameters
 
 The `/status_changes` API should allow querying status changes with the following query parameters:
 
@@ -297,15 +292,28 @@ GBFS 2.0 includes some changes that may make it less useful for regulatory purpo
 
 [Top][toc]
 
+### Data Latency Requirements
+
+The data returned by a near-realtime endpoint should be as close to realtime as possible, but in no case should it be more than 5 minutes out-of-date. Near-realtime endpoints must contain `last_updated` and `ttl` properties in the top-level of the response body. These properties are defined as:
+
+Field Name          | Required  | Defines
+--------------------| ----------| ----------
+last_updated        | Yes       | Timestamp indicating the last time the data in this feed was updated
+ttl                 | Yes       | Integer representing the number of milliseconds before the data in this feed will be updated again (0 if the data should always be refreshed).
+
+[Top][toc]
+
 ### Events
 
-The `/events` endpoint is a near-ish real-time feed of status changes, designed to give access to as recent as possible series of events.
+The `/events` endpoint is a near-realtime feed of status changes, designed to give access to as recent as possible series of events.
 
 The `/events` endpoint functions similarly to `/status_changes`, but shall not included data older than 2 weeks (that should live in `/status_changes.`)
 
 Unless stated otherwise by the municipality, this endpoint must return only those events with an `event_location` that [intersects][intersection] with the [municipality boundary][muni-boundary].
 
 > Note: As a result of this definition, consumers should query the [trips endpoint][trips] to infer when vehicles enter or leave the municipality boundary.
+
+See also [Stop-based Geographic Data][stop-based-geo].
 
 The schema and datatypes are the same as those defined for [`/status_changes`][status].
 
@@ -330,11 +338,37 @@ Should either side of the requested time range be greater than 2 weeks before th
 
 [Top][toc]
 
+### Stops
+
+Stop information should be updated on a near-realtime basis by providers who operate _docked_ mobility devices in a given municipality.
+
+In addition to the standard [Provider payload wrapper](#response-format), responses from this endpoint should contain the last update timestamp and amount of time until the next update in accordance with the [Data Latency Requirements][data-latency]:
+
+```json
+{
+    "version": "x.y.z",
+    "data": {
+        "stops": []
+    },
+    "last_updated": "12345",
+    "ttl": "12345"
+}
+```
+
+**Endpoint:** `/stops/:stop_id`  
+**Method:** `GET`  
+**[Beta feature][beta]:** Yes (as of 1.0.0)  
+**`data` Payload:** `{ "stops": [] }`, an array of [Stops][stops]
+
+In the case that a `stop_id` query parameter is specified, the `stops` array returned will only have one entry. In the case that no `stop_id` query parameter is specified, all stops will be returned.
+
+[Top][toc]
+
 ### Vehicles
 
-The `/vehicles` endpoint returns the current status of vehicles on the PROW. Only vehicles that are currently in available, unavailable, or reserved states should be returned in this payload. Data in this endpoint should reconcile with data from the `/status_changes` enpdoint. The data returned by this endpoint should be as close to realtime as possible, but in no case should it be more than 5 minutes out-of-date. As with other MDS APIs, `/vehicles` is intended for use by regulators, not by the general public. It does not replace the role of a [GBFS][gbfs] feed in enabling consumer-facing applications.
+The `/vehicles` endpoint returns the current status of vehicles on the PROW. Only vehicles that are currently in available, unavailable, or reserved states should be returned in this payload. Data in this endpoint should reconcile with data from the `/status_changes` enpdoint. As with other MDS APIs, `/vehicles` is intended for use by regulators, not by the general public. It does not replace the role of a [GBFS][gbfs] feed in enabling consumer-facing applications.
 
-In addition to the standard [Provider payload wrapper](#response-format), responses from this endpoint should contain the last update timestamp and amount of time until the next update:
+In addition to the standard [Provider payload wrapper](#response-format), responses from this endpoint should contain the last update timestamp and amount of time until the next update in accordance with the [Data Latency Requirements][data-latency]:
 
 ```json
 {
@@ -347,13 +381,6 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 }
 ```
 
-Where `last_updated` and `ttl` are defined as follows:
-
-Field Name          | Required  | Defines
---------------------| ----------| ----------
-last_updated        | Yes       | Timestamp indicating the last time the data in this feed was updated
-ttl                 | Yes       | Integer representing the number of milliseconds before the data in this feed will be updated again (0 if the data should always be refreshed).
-
 **Endpoint:** `/vehicles`  
 **Method:** `GET`  
 **[Beta feature][beta]:** Yes (as of 0.4.1)  
@@ -362,17 +389,17 @@ ttl                 | Yes       | Integer representing the number of millisecond
 
 | Field | Type | Required/Optional | Comments |
 | ----- | ---- | ----------------- | ----- |
-| `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS |
+| `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
 | `provider_name` | String | Required | The public-facing name of the Provider |
 | `device_id` | UUID | Required | A unique device ID in UUID format, should match this device in Provider |
 | `vehicle_id` | String | Required | The Vehicle Identification Number visible on the vehicle itself, should match this device in provider |
 | `vehicle_type` | Enum | Required | see [vehicle types][vehicle-types] table |
-| `propulsion_type` | Enum[] | Required | Array of [propulsion types][propulsion-types]; allows multiple values |
+| `propulsion_types` | Enum[] | Required | Array of [propulsion types][propulsion-types]; allows multiple values |
 | `last_event_time` | [timestamp][ts] | Required | Date/time when last state change occurred. See [Event Times][event-times] |
-| `last_vehicle_state` | Enum | Required | Vehicle state of most recent state change. See [vehicle states][vehicle-states] table |
-| `last_vehicle_events` | Enum[] | Required | [Vehicle event(s)][vehicle-events] of most recent state change, allowable values determined by `last_vehicle_state`. |
-| `last_event_location` | GeoJSON [Point Feature][geo]| Required | Location of vehicle's last event |
-| `current_location` | GeoJSON [Point Feature][geo] | Required if Applicable | Current location of vehicle if different from last event, and the vehicle is not currently on a trip |
+| `last_vehicle_state` | Enum | Required | [Vehicle state][vehicle-states] of most recent state change. |
+| `last_event_types` | Enum[] | Required | [Vehicle event(s)][vehicle-events] of most recent state change, allowable values determined by `last_vehicle_state`. |
+| `last_event_location` | GeoJSON [Point Feature][geo]| Required | Location of vehicle's last event. See also [Stop-based Geographic Data][stop-based-geo]. |
+| `current_location` | GeoJSON [Point Feature][geo] | Required if Applicable | Current location of vehicle if different from last event, and the vehicle is not currently on a trip. See also [Stop-based Geographic Data][stop-based-geo]. |
 | `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |
 
 [Top][toc]
@@ -380,19 +407,17 @@ ttl                 | Yes       | Integer representing the number of millisecond
 [agps]: https://en.wikipedia.org/wiki/Assisted_GPS
 [beta]: /general-information.md#beta
 [costs-and-currencies]: /general-information.md#costs-and-currencies
-[decimal-degrees]: https://en.wikipedia.org/wiki/Decimal_degrees
+[data-latency]: #data-latency-requirements
 [dgps]: https://en.wikipedia.org/wiki/Differential_GPS
 [events]: #events
-[events-schema]: dockless/events.json
+[events-schema]: events.json
 [event-times]: #event-times
 [gbfs]: https://github.com/NABSA/gbfs
 [general-information]: /general-information.md
-[geo]: #geographic-data
-[geojson-feature]: https://tools.ietf.org/html/rfc7946#section-3.2
+[geo]: /general-information.md#geographic-data
 [geojson-feature-collection]: https://tools.ietf.org/html/rfc7946#section-3.3
-[geojson-point]: https://tools.ietf.org/html/rfc7946#section-3.1.2
 [iana]: https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
-[intersection]: #intersection-operation
+[intersection]: /general-information.md#intersection-operation
 [iso4217]: https://en.wikipedia.org/wiki/ISO_4217#Active_codes
 [json-api-pagination]: http://jsonapi.org/format/#fetching-pagination
 [json-schema]: https://json-schema.org
@@ -400,16 +425,17 @@ ttl                 | Yes       | Integer representing the number of millisecond
 [propulsion-types]: /general-information.md#propulsion-types
 [responses]: /general-information.md#responses
 [status]: #status-changes
-[status-schema]: dockless/status_changes.json
-[st-intersects]: https://postgis.net/docs/ST_Intersects.html
+[status-schema]: status_changes.json
+[stops]: /general-information.md#stops
+[stop-based-geo]: /general-information.md#stop-based-geographic-data
+[stops-schema]: stops.json
 [toc]: #table-of-contents
 [trips]: #trips
-[trips-schema]: dockless/trips.json
+[trips-schema]: trips.json
 [ts]: /general-information.md#timestamps
 [vehicles]: #vehicles
 [vehicle-types]: /general-information.md#vehicle-types
 [vehicle-states]: /general-information.md#vehicle-states
 [vehicle-events]: /general-information.md#vehicle-state-events
-[vehicles-schema]: dockless/vehicles.json
+[vehicles-schema]: vehicles.json
 [versioning]: /general-information.md#versioning
-[wgs84]: https://en.wikipedia.org/wiki/World_Geodetic_System

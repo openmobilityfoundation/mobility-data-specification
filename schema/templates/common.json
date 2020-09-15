@@ -1,185 +1,8 @@
 {
   "$id": "https://raw.githubusercontent.com/openmobilityfoundation/mobility-data-specification/main/schema/templates/common.json",
   "$schema": "http://json-schema.org/draft-06/schema#",
-  "title": "The MDS Provider Schema, common definitions",
-  "type": "object",
+  "title": "Common schema definitions for MDS",
   "definitions": {
-    "version": {
-      "$id": "#/definitions/version",
-      "type": "string",
-      "title": "The MDS Provider version this data represents",
-      "examples": [
-        "0.4.0"
-      ],
-      "pattern": "^0\\.4\\.[0-9]+$"
-    },
-    "uuid": {
-      "$id": "#/definitions/uuid",
-      "type": "string",
-      "title": "A UUID used to uniquely identifty an object",
-      "default": "",
-      "examples": [
-        "3c9604d6-b5ee-11e8-96f8-529269fb1459"
-      ],
-      "pattern": "^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$"
-    },
-    "propulsion_type": {
-      "$id": "#/definitions/propulsion_type",
-      "type": "array",
-      "description": "The type of propulsion; allows multiple values",
-      "items": {
-        "type": "string",
-        "enum": [
-          "combustion",
-          "electric",
-          "electric_assist",
-          "human"
-        ]
-      },
-      "minItems": 1
-    },
-    "vehicle_status": {
-      "$id": "#/definitions/vehicle_status",
-      "type": "string",
-      "description": "The status of a vehicle",
-      "enum": [
-        "available",
-        "elsewhere",
-        "inactive",
-        "removed",
-        "reserved",
-        "trip",
-        "unavailable"
-      ]
-    },
-    "vehicle_type": {
-      "$id": "#/definitions/vehicle_type",
-      "type": "string",
-      "description": "The type of vehicle",
-      "enum": [
-        "bicycle",
-        "car",
-        "scooter",
-        "moped"
-      ]
-    },
-    "vehicle_event": {
-      "$id": "#/definitions/vehicle_event",
-      "type": "string",
-      "description": "A status event for a vehicle",
-      "oneOf": [
-        {
-          "properties": {
-            "event_type": {
-              "enum": ["register"]
-            }
-          }
-        },
-        {
-          "properties": {
-            "event_type": {
-              "enum": ["service_start"]
-            }
-          }
-        },
-        {
-          "properties": {
-            "event_type": {
-              "enum": ["service_end"]
-            },
-            "event_type_reason": {
-              "enum": [
-                "low_battery",
-                "maintenance",
-                "compliance",
-                "off_hours"
-              ]
-            }
-          }
-        },
-        {
-          "properties": {
-            "event_type": {
-              "enum": ["provider_drop_off"]
-            }
-          }
-        },
-        {
-          "properties": {
-            "event_type": {
-              "enum": ["provider_pick_up"]
-            },
-            "event_type_reason": {
-              "enum": [
-                "rebalance",
-                "maintenance",
-                "charge",
-                "compliance"
-              ]
-            }
-          }
-        },
-        {
-          "properties": {
-            "event_type": {
-              "enum": ["city_pick_up"]
-            }
-          }
-        },
-        {
-          "properties": {
-            "event_type": {
-              "enum": ["reserve"]
-            }
-          }
-        },
-        {
-          "properties": {
-            "event_type": {
-              "enum": ["cancel_reservation"]
-            }
-          }
-        },
-        {
-          "properties": {
-            "event_type": {
-              "enum": ["trip_start"]
-            }
-          }
-        },
-        {
-          "properties": {
-            "event_type": {
-              "enum": ["trip_enter"]
-            }
-          }
-        },
-        {
-          "properties": {
-            "event_type": {
-              "enum": ["trip_leave"]
-            }
-          }
-        },
-        {
-          "properties": {
-            "event_type": {
-              "enum": ["trip_end"]
-            }
-          }
-        },
-        {
-          "properties": {
-            "event_type": {
-              "enum": ["deregister"]
-            },
-            "event_type_reason": {
-              "enum": ["missing", "decommissioned"]
-            }
-          }
-        }
-      ]
-    },
     "area_type": {
       "$id": "#/definitions/area_type",
       "type": "string",
@@ -191,81 +14,10 @@
         "preferred_drop_off"
       ]
     },
-    "telemetry": {
-      "$id": "#/definitions/telemetry",
-      "type": "object",
-      "description": "A vehicle telemetry datum",
-      "required": [
-        "device_id",
-        "timestamp",
-        "gps"
-      ],
-      "additionalProperties": false,
-      "properties": {
-        "device_id": {
-          "$ref": "#/definitions/uuid"
-        },
-        "timestamp": {
-          "$ref": "#/definitions/timestamp"
-        },
-        "gps": {
-          "type": "object",
-          "required": [
-            "lat",
-            "lng"
-          ],
-          "additionalProperties": false,
-          "properties": {
-            "lat": {
-              "type": "number",
-              "description": "Latitude of the location",
-              "minimum": -90,
-              "maximum": 90
-            },
-            "lng": {
-              "type": "number",
-              "description": "Longitude of the location",
-              "minimum": -180,
-              "maximum": 180
-            },
-            "altitude": {
-              "type": "number",
-              "description": "Altitude above mean sea level in meters"
-            },
-            "heading": {
-              "type": "number",
-              "description": "Degrees clockwise from true north"
-            },
-            "speed": {
-              "type": "number",
-              "description": "Speed in meters/sec"
-            },
-	      "accuracy": {
-              "type": "number",
-              "description": "Accuracy in meters"
-            },
-            "hdop": {
-              "type": "number",
-              "description": "Horizontal GPS or GNSS accuracy value"
-            },
-            "satellites": {
-              "type": "integer",
-              "description": "Number of GPS or GNSS satellites"
-            }
-          }
-        },
-        "charge": {
-          "type": "number",
-          "description": "Fraction of charge of the vehicle (required if applicable",
-          "minimum": 0,
-          "maximum": 1
-        }
-      }
-    },
     "links": {
       "$id": "#/definitions/links",
       "type": "object",
-      "required":[
+      "required": [
         "next"
       ],
       "properties": {
@@ -321,12 +73,566 @@
       },
       "additionalProperties": false
     },
+    "propulsion_types": {
+      "$id": "#/definitions/propulsion_types",
+      "type": "array",
+      "description": "The type of propulsion; allows multiple values",
+      "items": {
+        "type": "string",
+        "enum": [
+          "combustion",
+          "electric",
+          "electric_assist",
+          "human"
+        ]
+      },
+      "uniqueItems": true,
+      "minItems": 1
+    },
+    "rental_methods": {
+      "$id": "#/definitions/rental_methods",
+      "type": "array",
+      "description": "Payment methods accepted at this Stop. From GBFS Station Information.",
+      "items": {
+        "enum": [
+          "KEY",
+          "CREDITCARD",
+          "PAYPASS",
+          "APPLEPAY",
+          "ANDROIDPAY",
+          "TRANSITCARD",
+          "ACCOUNTNUMBER",
+          "PHONE"
+        ]
+      },
+      "uniqueItems": true
+    },
+    "stop": {
+      "$id": "#/definitions/stop",
+      "type": "object",
+      "description": "The common schema elements for a Stop in MDS",
+      "required": [
+        "stop_id",
+        "name",
+        "last_reported",
+        "location",
+        "status",
+        "capacity",
+        "num_vehicles_available",
+        "num_vehicles_disabled"
+      ],
+      "properties": {
+        "stop_id": {
+          "$id": "#/definitions/stop/properties/stop_id",
+          "$ref": "#/definitions/uuid",
+          "description": "UUID for the Stop"
+        },
+        "name": {
+          "$id": "#/definitions/stop/properties/name",
+          "$ref": "#/definitions/string",
+          "description": "Name of the Stop"
+        },
+        "last_reported": {
+          "$id": "#/definitions/stop/properties/last_reported",
+          "$ref": "#/definitions/timestamp",
+          "description": "Date/Time of the last status update for this Stop"
+        },
+        "location": {
+          "$id": "#/definitions/stop/properties/location",
+          "$ref": "#/definitions/MDS_Feature_Point",
+          "description": "Location of the stop"
+        },
+        "status": {
+          "$id": "#/definitions/stop/properties/status",
+          "$ref": "#/definitions/stop_status",
+          "description": "The status of the Stop"
+        },
+        "capacity": {
+          "$id": "#/definitions/stop/properties/capacity",
+          "$ref": "#/definitions/vehicle_type_counts",
+          "description": "Number of total places per vehicle_type"
+        },
+        "num_vehicles_available": {
+          "$id": "#/definitions/stop/properties/num_vehicles_available",
+          "$ref": "#/definitions/vehicle_type_counts",
+          "description": "Number of available vehicles per vehicle_type"
+        },
+        "num_vehicles_disabled": {
+          "$id": "#/definitions/stop/properties/num_vehicles_disabled",
+          "$ref": "#/definitions/vehicle_type_counts",
+          "description": "Number of non_operational/reserved vehicles per vehicle_type"
+        },
+        "provider_id": {
+          "$id": "#/definitions/stop/properties/provider_id",
+          "$ref": "#/definitions/uuid",
+          "description": "UUID for the Provider managing this Stop. Null/undefined if managed by an Agency."
+        },
+        "geography_id": {
+          "$id": "#/definitions/stop/properties/geography_id",
+          "$ref": "#/definitions/uuid",
+          "description": "UUID for the Stop"
+        },
+        "region_id": {
+          "$id": "#/definitions/stop/properties/region_id",
+          "$ref": "#/definitions/string",
+          "description": "ID of the region where the Stop is located. See GBFS Station Information."
+        },
+        "short_name": {
+          "$id": "#/definitions/stop/properties/short_name",
+          "$ref": "#/definitions/string",
+          "description": "Abbreviated Stop name"
+        },
+        "address": {
+          "$id": "#/definitions/stop/properties/address",
+          "$ref": "#/definitions/string",
+          "description": "Postal address (useful for directions)"
+        },
+        "post_code": {
+          "$id": "#/definitions/stop/properties/post_code",
+          "$ref": "#/definitions/string",
+          "description": "Postal code (e.g. 10036)"
+        },
+        "cross_street": {
+          "$id": "#/definitions/stop/properties/cross_street",
+          "$ref": "#/definitions/string",
+          "description": "Cross street of where Stop is located"
+        },
+        "num_places_available": {
+          "$id": "#/definitions/stop/properties/num_places_available",
+          "$ref": "#/definitions/vehicle_type_counts",
+          "description": "Number of places free to be populated per vehicle_type"
+        },
+        "num_places_disabled": {
+          "$id": "#/definitions/stop/properties/num_places_disabled",
+          "$ref": "#/definitions/vehicle_type_counts",
+          "description": "Number of places disabled an unable to accept vehicles per vehicle_type"
+        },
+        "parent_stop": {
+          "$id": "#/definitions/stop/properties/parent_stop",
+          "$ref": "#/definitions/uuid",
+          "description": "Describe a basic hierarchy of Stops (e.g. a Stop inside a greater Stop)"
+        },
+        "devices": {
+          "$id": "#/definitions/stop/properties/devices",
+          "type": "array",
+          "description": "List of device_id for vehicles currently at this Stop.",
+          "items": {
+            "$ref": "#/definitions/uuid"
+          }
+        }
+      }
+    },
+    "stop_status": {
+      "$id": "#/definitions/stop_status",
+      "type": "object",
+      "description": "Status object for a Stop in MDS",
+      "required": [
+        "is_installed",
+        "is_renting",
+        "is_returning"
+      ],
+      "properties": {
+        "is_installed": {
+          "$id": "#/definitions/stop_status/properties/is_installed",
+          "type": "boolean"
+        },
+        "is_renting": {
+          "$id": "#/definitions/stop_status/properties/is_renting",
+          "type": "boolean"
+        },
+        "is_returning": {
+          "$id": "#/definitions/stop_status/properties/is_returning",
+          "type": "boolean"
+        }
+      }
+    },
+    "string": {
+      "$id": "#/definitions/string",
+      "type": "string",
+      "description": "A length-limited string type",
+      "maxLength": 255,
+      "default": "",
+      "examples": [
+        "ABC123"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "telemetry": {
+      "$id": "#/definitions/telemetry",
+      "type": "object",
+      "description": "A vehicle telemetry datum",
+      "required": [
+        "device_id",
+        "timestamp",
+        "gps"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "device_id": {
+          "$ref": "#/definitions/uuid"
+        },
+        "timestamp": {
+          "$ref": "#/definitions/timestamp"
+        },
+        "gps": {
+          "type": "object",
+          "required": [
+            "lat",
+            "lng"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "lat": {
+              "type": "number",
+              "description": "Latitude of the location",
+              "minimum": -90,
+              "maximum": 90
+            },
+            "lng": {
+              "type": "number",
+              "description": "Longitude of the location",
+              "minimum": -180,
+              "maximum": 180
+            },
+            "altitude": {
+              "type": "number",
+              "description": "Altitude above mean sea level in meters"
+            },
+            "heading": {
+              "type": "number",
+              "description": "Degrees clockwise from true north"
+            },
+            "speed": {
+              "type": "number",
+              "description": "Speed in meters/sec"
+            },
+            "accuracy": {
+              "type": "number",
+              "description": "Accuracy in meters"
+            },
+            "hdop": {
+              "type": "number",
+              "description": "Horizontal GPS or GNSS accuracy value"
+            },
+            "satellites": {
+              "type": "integer",
+              "description": "Number of GPS or GNSS satellites"
+            }
+          }
+        },
+        "charge": {
+          "type": "number",
+          "description": "Fraction of charge of the vehicle (required if applicable",
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    },
     "timestamp": {
       "$id": "#/definitions/timestamp",
-      "title": "Integer milliseconds since Unix epoch",
       "type": "number",
+      "description": "Integer milliseconds since Unix epoch",
       "multipleOf": 1.0,
       "minimum": 0
+    },
+    "trip_id_reference": {
+      "description": "Conditionally require a trip_id reference",
+      "anyOf": [
+        {
+          "not": {
+            "properties": {
+              "event_types": {
+                "contains": {
+                  "enum": [
+                      "trip_cancel",
+                      "trip_end",
+                      "trip_enter_jurisdiction",
+                      "trip_leave_jurisdiction",
+                      "trip_start"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "required": [
+            "trip_id"
+          ]
+        }
+      ]
+    },
+    "ttl": {
+      "$id": "#/definitions/ttl",
+      "type": "integer",
+      "description": "Integer milliseconds until next data update (0 if the data is always refreshed)",
+      "minimum": 0,
+      "maximum": 300000
+    },
+    "uuid": {
+      "$id": "#/definitions/uuid",
+      "type": "string",
+      "description": "A UUID used to uniquely identifty an object",
+      "default": "",
+      "examples": [
+        "3c9604d6-b5ee-11e8-96f8-529269fb1459"
+      ],
+      "pattern": "^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$"
+    },
+    "vehicle": {
+      "$id": "#/definitions/vehicle",
+      "type": "object",
+      "description": "The common schema elements for a Vehicle in MDS",
+      "required": [
+        "provider_name",
+        "provider_id",
+        "device_id",
+        "vehicle_id",
+        "vehicle_type",
+        "propulsion_types"
+      ],
+      "properties": {
+        "provider_name": {
+          "$id": "#/definitions/vehicle/properties/provider_name",
+          "$ref": "#/definitions/string",
+          "description": "The public-facing name of the Provider"
+        },
+        "provider_id": {
+          "$id": "#/definitions/vehicle/properties/provider_id",
+          "$ref": "#/definitions/uuid",
+          "description": "The UUID for the Provider, unique within MDS"
+        },
+        "device_id": {
+          "$id": "#/definitions/vehicle/properties/device_id",
+          "$ref": "#/definitions/uuid",
+          "description": "A unique device ID in UUID format"
+        },
+        "vehicle_id": {
+          "$id": "#/definitions/vehicle/properties/vehicle_id",
+          "$ref": "#/definitions/string",
+          "description": "The Vehicle Identification Number visible on the vehicle itself"
+        },
+        "vehicle_type": {
+          "$id": "#/definitions/vehicle/properties/vehicle_type",
+          "$ref": "#/definitions/vehicle_type",
+          "description": "The type of vehicle"
+        },
+        "propulsion_types": {
+          "$id": "#/definitions/vehicle/properties/propulsion_types",
+          "$ref": "#/definitions/propulsion_types",
+          "description": "The type of propulsion; allows multiple values"
+        }
+      },
+      "additionalProperties": false
+    },
+    "vehicle_event": {
+      "$id": "#/definitions/vehicle_event",
+      "type": "string",
+      "description": "An event that changes a vehicle's state",
+      "enum": [
+        "agency_drop_off",
+        "agency_pick_up",
+        "battery_charged",
+        "battery_low",
+        "comms_lost",
+        "comms_restored",
+        "compliance_pick_up",
+        "decommissioned",
+        "maintenance",
+        "maintenance_pick_up",
+        "missing",
+        "off_hours",
+        "on_hours",
+        "provider_drop_off",
+        "rebalance_pick_up",
+        "reservation_cancel",
+        "reservation_start",
+        "system_resume",
+        "system_suspend",
+        "trip_cancel",
+        "trip_end",
+        "trip_enter_jurisdiction",
+        "trip_leave_jurisdiction",
+        "trip_start",
+        "unspecified"
+      ]
+    },
+    "vehicle_events": {
+      "$id": "#/definitions/vehicle_events",
+      "type": "array",
+      "description": "Array of events indicating a change to a vehicle's state",
+      "uniqueItems": true,
+      "minItems": 1,
+      "items": {
+        "$ref": "#/definitions/vehicle_event"
+      }
+    },
+    "vehicle_state": {
+      "$id": "#/definitions/vehicle_state",
+      "type": "string",
+      "description": "The state of a vehicle",
+      "enum": [
+        "available",
+        "elsewhere",
+        "non_operational",
+        "on_trip",
+        "removed",
+        "reserved",
+        "unknown"
+      ]
+    },
+    "vehicle_state_transitions": {
+      "description": "valid vehicle_state and vehicle_events combinations",
+      "oneOf": [
+        {
+          "properties": {
+            "vehicle_state": {
+              "const": "available"
+            },
+            "vehicle_events": {
+              "contains": {
+                "enum": [
+                  "agency_drop_off",
+                  "battery_charged",
+                  "comms_restored",
+                  "maintenance",
+                  "on_hours",
+                  "provider_drop_off",
+                  "reservation_cancel",
+                  "system_resume",
+                  "trip_cancel",
+                  "trip_end",
+                  "unspecified"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "vehicle_state": {
+              "const": "elsewhere"
+            },
+            "vehicle_events": {
+              "contains": {
+                "enum": [
+                  "comms_restored",
+                  "trip_leave_jurisdiction",
+                  "unspecified"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "vehicle_state": {
+              "const": "non_operational"
+            },
+            "vehicle_events": {
+              "contains": {
+                "enum": [
+                  "battery_low",
+                  "comms_restored",
+                  "maintenance",
+                  "off_hours",
+                  "system_suspend",
+                  "unspecified"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "vehicle_state": {
+              "const": "on_trip"
+            },
+            "vehicle_events": {
+              "contains": {
+                "enum": [
+                  "comms_restored",
+                  "trip_enter_jurisdiction",
+                  "trip_start",
+                  "unspecified"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "vehicle_state": {
+              "const": "removed"
+            },
+            "vehicle_events": {
+              "contains": {
+                "enum": [
+                  "agency_pick_up",
+                  "compliance_pick_up",
+                  "decommissioned",
+                  "maintenance_pick_up",
+                  "rebalance_pick_up",
+                  "unspecified"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "vehicle_state": {
+              "const": "reserved"
+            },
+            "vehicle_events": {
+              "contains": {
+                "enum": [
+                  "comms_restored",
+                  "reservation_start",
+                  "unspecified"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "vehicle_state": {
+              "const": "unknown"
+            },
+            "vehicle_events": {
+              "contains": {
+                "enum": [
+                  "comms_lost",
+                  "missing",
+                  "unspecified"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "vehicle_type": {
+      "$id": "#/definitions/vehicle_type",
+      "type": "string",
+      "description": "The type of vehicle",
+      "enum": [
+        "bicycle",
+        "car",
+        "scooter",
+        "moped",
+        "other"
+      ]
+    },
+    "version": {
+      "$id": "#/definitions/version",
+      "type": "string",
+      "description": "The version of MDS this data represents",
+      "examples": [
+        "1.0.0"
+      ],
+      "pattern": "^1\\.0\\.[0-9]+$"
     }
   }
 }

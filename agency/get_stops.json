@@ -1,0 +1,263 @@
+{
+  "$id": "https://raw.githubusercontent.com/openmobilityfoundation/mobility-data-specification/main/agency/get_stops.json",
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "title": "The MDS Agency Schema, GET stops payload",
+  "type": "object",
+  "definitions": {
+    "stop": {
+      "$id": "#/definitions/stop",
+      "type": "object",
+      "description": "The common schema elements for a Stop in MDS",
+      "required": [
+        "stop_id",
+        "name",
+        "last_reported",
+        "location",
+        "status",
+        "capacity",
+        "num_vehicles_available",
+        "num_vehicles_disabled"
+      ],
+      "properties": {
+        "stop_id": {
+          "$id": "#/definitions/stop/properties/stop_id",
+          "$ref": "#/definitions/uuid",
+          "description": "UUID for the Stop"
+        },
+        "name": {
+          "$id": "#/definitions/stop/properties/name",
+          "$ref": "#/definitions/string",
+          "description": "Name of the Stop"
+        },
+        "last_reported": {
+          "$id": "#/definitions/stop/properties/last_reported",
+          "$ref": "#/definitions/timestamp",
+          "description": "Date/Time of the last status update for this Stop"
+        },
+        "location": {
+          "$id": "#/definitions/stop/properties/location",
+          "$ref": "#/definitions/MDS_Feature_Point",
+          "description": "Location of the stop"
+        },
+        "status": {
+          "$id": "#/definitions/stop/properties/status",
+          "$ref": "#/definitions/stop_status",
+          "description": "The status of the Stop"
+        },
+        "capacity": {
+          "$id": "#/definitions/stop/properties/capacity",
+          "$ref": "#/definitions/vehicle_type_counts",
+          "description": "Number of total places per vehicle_type"
+        },
+        "num_vehicles_available": {
+          "$id": "#/definitions/stop/properties/num_vehicles_available",
+          "$ref": "#/definitions/vehicle_type_counts",
+          "description": "Number of available vehicles per vehicle_type"
+        },
+        "num_vehicles_disabled": {
+          "$id": "#/definitions/stop/properties/num_vehicles_disabled",
+          "$ref": "#/definitions/vehicle_type_counts",
+          "description": "Number of non_operational/reserved vehicles per vehicle_type"
+        },
+        "provider_id": {
+          "$id": "#/definitions/stop/properties/provider_id",
+          "$ref": "#/definitions/uuid",
+          "description": "UUID for the Provider managing this Stop. Null/undefined if managed by an Agency."
+        },
+        "geography_id": {
+          "$id": "#/definitions/stop/properties/geography_id",
+          "$ref": "#/definitions/uuid",
+          "description": "UUID for the Stop"
+        },
+        "region_id": {
+          "$id": "#/definitions/stop/properties/region_id",
+          "$ref": "#/definitions/string",
+          "description": "ID of the region where the Stop is located. See GBFS Station Information."
+        },
+        "short_name": {
+          "$id": "#/definitions/stop/properties/short_name",
+          "$ref": "#/definitions/string",
+          "description": "Abbreviated Stop name"
+        },
+        "address": {
+          "$id": "#/definitions/stop/properties/address",
+          "$ref": "#/definitions/string",
+          "description": "Postal address (useful for directions)"
+        },
+        "post_code": {
+          "$id": "#/definitions/stop/properties/post_code",
+          "$ref": "#/definitions/string",
+          "description": "Postal code (e.g. 10036)"
+        },
+        "cross_street": {
+          "$id": "#/definitions/stop/properties/cross_street",
+          "$ref": "#/definitions/string",
+          "description": "Cross street of where Stop is located"
+        },
+        "num_places_available": {
+          "$id": "#/definitions/stop/properties/num_places_available",
+          "$ref": "#/definitions/vehicle_type_counts",
+          "description": "Number of places free to be populated per vehicle_type"
+        },
+        "num_places_disabled": {
+          "$id": "#/definitions/stop/properties/num_places_disabled",
+          "$ref": "#/definitions/vehicle_type_counts",
+          "description": "Number of places disabled an unable to accept vehicles per vehicle_type"
+        },
+        "parent_stop": {
+          "$id": "#/definitions/stop/properties/parent_stop",
+          "$ref": "#/definitions/uuid",
+          "description": "Describe a basic hierarchy of Stops (e.g. a Stop inside a greater Stop)"
+        },
+        "devices": {
+          "$id": "#/definitions/stop/properties/devices",
+          "type": "array",
+          "description": "List of device_id for vehicles currently at this Stop.",
+          "items": {
+            "$ref": "#/definitions/uuid"
+          }
+        }
+      }
+    },
+    "stop_status": {
+      "$id": "#/definitions/stop_status",
+      "type": "object",
+      "description": "Status object for a Stop in MDS",
+      "required": [
+        "is_installed",
+        "is_renting",
+        "is_returning"
+      ],
+      "properties": {
+        "is_installed": {
+          "$id": "#/definitions/stop_status/properties/is_installed",
+          "type": "boolean"
+        },
+        "is_renting": {
+          "$id": "#/definitions/stop_status/properties/is_renting",
+          "type": "boolean"
+        },
+        "is_returning": {
+          "$id": "#/definitions/stop_status/properties/is_returning",
+          "type": "boolean"
+        }
+      }
+    },
+    "string": {
+      "$id": "#/definitions/string",
+      "type": "string",
+      "description": "A length-limited string type",
+      "maxLength": 255,
+      "default": "",
+      "examples": [
+        "ABC123"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "timestamp": {
+      "$id": "#/definitions/timestamp",
+      "type": "number",
+      "description": "Integer milliseconds since Unix epoch",
+      "multipleOf": 1.0,
+      "minimum": 0
+    },
+    "uuid": {
+      "$id": "#/definitions/uuid",
+      "type": "string",
+      "description": "A UUID used to uniquely identifty an object",
+      "default": "",
+      "examples": [
+        "3c9604d6-b5ee-11e8-96f8-529269fb1459"
+      ],
+      "pattern": "^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$"
+    },
+    "vehicle_type_counts": {
+      "$id": "#/definitions/vehicle_type_counts",
+      "type": "object",
+      "properties": {
+        "bicycle": {
+          "$id": "#/definitions/vehicle_type_counts/properties/bicycle",
+          "type": "integer",
+          "minimum": 0
+        },
+        "car": {
+          "$id": "#/definitions/vehicle_type_counts/properties/car",
+          "type": "integer",
+          "minimum": 0
+        },
+        "scooter": {
+          "$id": "#/definitions/vehicle_type_counts/properties/scooter",
+          "type": "integer",
+          "minimum": 0
+        },
+        "moped": {
+          "$id": "#/definitions/vehicle_type_counts/properties/moped",
+          "type": "integer",
+          "minimum": 0
+        },
+        "other": {
+          "$id": "#/definitions/vehicle_type_counts/properties/other",
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "MDS_Feature_Point": {
+      "$id": "#/definitions/MDS_Feature_Point",
+      "title": "MDS GeoJSON Feature Point",
+      "type": "object",
+      "required": [
+        "type",
+        "properties",
+        "geometry"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "Feature"
+          ]
+        },
+        "properties": {
+          "type": "object",
+          "required": [
+            "timestamp"
+          ],
+          "properties": {
+            "timestamp": {
+              "$ref": "#/definitions/timestamp"
+            },
+            "stop_id": {
+              "$ref": "#/definitions/uuid"
+            }
+          }
+        },
+        "geometry": {
+          "$ref": "#/definitions/Point"
+        },
+        "bbox": {
+          "type": "array",
+          "minItems": 4,
+          "items": {
+            "type": "number"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "stops"
+  ],
+  "properties": {
+    "stops": {
+      "$id": "#/properties/stops",
+      "type": "array",
+      "description": "The array of stops",
+      "items": {
+        "$ref": "#/definitions/stop"
+      }
+    }
+  },
+  "additionalProperties": false
+}
