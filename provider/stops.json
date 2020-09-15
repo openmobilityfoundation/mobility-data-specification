@@ -238,11 +238,8 @@
         },
         "devices": {
           "$id": "#/definitions/stop/properties/devices",
-          "type": "array",
-          "description": "List of device_id for vehicles currently at this Stop.",
-          "items": {
-            "$ref": "#/definitions/uuid"
-          }
+          "$ref": "#/definitions/uuid_array",
+          "description": "List of device_id for vehicles currently at this Stop."
         }
       }
     },
@@ -268,6 +265,15 @@
           "$id": "#/definitions/stop_status/properties/is_returning",
           "type": "boolean"
         }
+      }
+    },
+    "uuid_array": {
+      "$id": "#/definitions/uuid_array",
+      "type": "array",
+      "description": "Array of UUID",
+      "items": {
+        "$id": "#/definitions/uuid_array/items",
+        "$ref": "#/definitions/uuid"
       }
     },
     "vehicle_type_counts": {

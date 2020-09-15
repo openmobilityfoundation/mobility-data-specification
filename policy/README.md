@@ -39,7 +39,7 @@ Versioning must be implemented as specified in the [Versioning section][versioni
 
 ## Background
 
-The goal of this specification is to enable Agencies to create, revise, and publish machine-readable policies, as sets of rules for individual and collective device behavior exhibited by both _mobility as a service_ Providers and riders / users. [Examples](examples.md) of policies include:
+The goal of this specification is to enable Agencies to create, revise, and publish machine-readable policies, as sets of rules for individual and collective device behavior exhibited by both _mobility as a service_ Providers and riders / users. [Examples](./examples/README.md) of policies include:
 
 - City-wide and localized caps (e.g. "Minimum 500 and maximum 3000 scooters within city boundaries")
 - Exclusion zones (e.g. "No scooters are permitted in this district on weekends")
@@ -50,7 +50,7 @@ The goal of this specification is to enable Agencies to create, revise, and publ
 
 The machine-readable format allows Providers to obtain policies and compute compliance where it can be determined entirely by data obtained internally.
 
-**See the [Policy Examples](examples.md) for ways these can be implemented.**
+**See the [Policy Examples](./examples/README.md) for ways these can be implemented.**
 
 [Top][toc]
 
@@ -139,7 +139,7 @@ The `updated` field in the payload wrapper should be set to the time of publishi
 
 #### Example `policies.json`
 
-```json
+```jsonc
 {
     "version": "0.4.0",
     "updated": 1570035222868,
@@ -161,7 +161,7 @@ The optional `end_date` field applies to all policies represented in the file.
 
 #### Example `geographies.json`
 
-```json
+```jsonc
 {
     "version": "0.4.0",
     "updated": 1570035222868,
@@ -186,7 +186,7 @@ All response fields must use `lower_case_with_underscores`.
 
 Response bodies must be a `UTF-8` encoded JSON object and must minimally include the MDS `version`, a timestamp indicating the last time the data was `updated`, and a `data` payload:
 
-```json
+```jsonc
 {
     "version": "x.y.z",
     "updated": 1570035222868,
@@ -195,6 +195,12 @@ Response bodies must be a `UTF-8` encoded JSON object and must minimally include
     }
 }
 ```
+
+### JSON Schema
+
+The JSON Schema file is available in this repository: [`policy.json`](./policy.json).
+
+Before publishing a new Policy document, the document should be validated against the schema to ensure it has the correct format and fields.
 
 [Top][toc]
 
@@ -208,7 +214,7 @@ An individual `Policy` object is defined by the following fields:
 | `policy_id`      | UUID            | Required   | Unique ID of policy                                                                 |
 | `provider_ids`   | UUID[]          | Optional    | Providers for whom this policy is applicable; empty arrays and `null`/absent implies all Providers. See MDS [provider list](/providers.csv). |
 | `description`    | String          | Required   | Description of policy                                                               |
-| `currency`       | String          | Optional   | An ISO 4217 Alphabetic Currency Code representing the [currency](../provider#costs--currencies) of all Rules of [type](#rule-types) `rate`.|
+| `currency`       | String          | Optional   | An ISO 4217 Alphabetic Currency Code representing the [currency](../general-information.md#costs-and-currencies) of all Rules of [type](#rule-types) `rate`.|
 | `start_date`     | [timestamp][ts] | Required   | Beginning date/time of policy enforcement                                           |
 | `end_date`       | [timestamp][ts] | Optional    | End date/time of policy enforcement                                                 |
 | `published_date` | [timestamp][ts] | Required   | Timestamp that the policy was published                                             |
@@ -227,8 +233,8 @@ An individual `Rule` object is defined by the following fields:
 | `rule_id`          | UUID                        | Required   | Unique ID of the rule |
 | `rule_type`        | enum                        | Required   | Type of policy (see [Rule Types](#rule-types)) |
 | `geographies`      | UUID[]                      | Required   | List of Geography UUIDs (non-overlapping) specifying the covered geography |
-| `states`           | `{ state: event[] }`        | Required   | [Vehicle state][vehicle-states] to which this rule applies.  Optionally provide a list of specific [vehicle events][#vehicle-events] as a subset of a given status for the rule to apply to. An empty list or `null`/absent defaults to "all". |
-| `rule_units`       | enum                        | Required   | Measured units of policy (see [Rule Units](#rule-units)) |
+| `states`           | `{ state: event[] }`        | Required   | [Vehicle state][vehicle-states] to which this rule applies. Optionally provide a list of specific [vehicle events][#vehicle-events] as a subset of a given status for the rule to apply to. An empty list or `null`/absent defaults to "all". |
+| `rule_units`       | enum                        | Conditionally Required   | Measured units of policy (see [Rule Units](#rule-units)) |
 | `vehicle_types`    | `vehicle_type[]`            | Optional   | Applicable vehicle types, default "all". |
 | `propulsion_types` | `propulsion_type[]`         | Optional   | Applicable vehicle [propulsion types][propulsion-types], default "all". |
 | `minimum`          | integer                     | Optional   | Minimum value, if applicable (default 0) |
@@ -257,16 +263,18 @@ An individual `Rule` object is defined by the following fields:
 
 ### Rule Units
 
-| Name      | Rule Types     | Description         |
-| --------- | -------------- | ------------------- |
-| `seconds` | `time`         | Seconds             |
-| `minutes` | `time`         | Minutes             |
-| `hours`   | `time`         | Hours               |
-| `days`    | `time`         | Days                |
-| `mph`     | `speed`        | Miles per hour      |
-| `kph`     | `speed`        | Kilometers per hour |
-| `devices` | `count`        | Devices             |
-| `amount`  | `rate`         | Cost (in [local currency](/general-information.md#costs-and-currencies)) |
+| Name      | Rule Types             | Description         |
+| --------- | ---------------------- | ------------------- |
+| `seconds` | `rate`, `time`         | Seconds             |
+| `minutes` | `rate`, `time`         | Minutes             |
+| `hours`   | `rate`, `time`         | Hours               |
+| `days`    | `rate`, `time`         | Days                |
+| `amount`  | `rate`                 | Cost (in [local currency](/general-information.md#costs-and-currencies)) |
+| `mph`     | `speed`                | Miles per hour      |
+| `kph`     | `speed`                | Kilometers per hour |
+| `devices` | `count`                | Devices             |
+
+[Rule type](#rule-types) `user` has no associated Rule units; `rule_units` is not required when the Rule type is `user`.
 
 [Top][toc]
 
@@ -290,9 +298,9 @@ Rate recurrences specify when a rate is applied – either once, or periodicall
 
 | Name      | Description         |
 | --------- | ------------------- |
-| `once`                      |  Rate is applied once to vehicles entering a matching status from a non-matching status.   |     
+| `once`                      |  Rate is applied once to vehicles entering a matching status from a non-matching status.   |
 | `each_time_unit`            |  During each `time_unit`, rate is applied once to vehicles entering or remaining in a matching status. Requires a `time_unit` to be specified using `rule_units`.  |  
-| `per_complete_time_unit`    | Rate is applied once per complete `time_unit` that vehicles remain in a matching status. Requires a `time_unit` to be specified using `rule_units`.  | 
+| `per_complete_time_unit`    | Rate is applied once per complete `time_unit` that vehicles remain in a matching status. Requires a `time_unit` to be specified using `rule_units`.  |
 
 [Top][toc]
 
@@ -344,9 +352,11 @@ The internal mechanics of ordering are up to the Policy editing and hosting soft
 [Top][toc]
 
 [beta]: /general-information.md#beta
+[error-messages]: /general-information.md#error-messages
 [iana]: https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
 [muni-boundary]: ../provider/README.md#municipality-boundary
 [propulsion-types]: /general-information.md#propulsion-types
+[responses]: /general-information.md#responses
 [ts]: /general-information.md#timestamps
 [toc]: #table-of-contents
 [vehicle-events]: /general-information.md#vehicle-state-events
