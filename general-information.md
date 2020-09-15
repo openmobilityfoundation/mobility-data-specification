@@ -283,8 +283,8 @@ Vehicles can enter the `unknown` state to and from any other state with the foll
 | `unknown` | `on_trip`   | `comms_restored`        | The vehicle transmitted status information after a period of being out of communication. |
 | `unknown` | `on_trip`   | `unspecified`        | The provider cannot definitively state how a vehicle started a trip. |
 | `on_trip` | `elsewhere`   | `trip_leave_jurisdiction` | A vehicle on a trip left the jurisdiction |
-| `on_trip` | `on_trip `   | `trip_enter_geography` | Customer enters one or more Geographies managed by Policy during an active trip. |
-| `on_trip` | `on_trip `   | `trip_leave_geography` | Customer leaves one or more Geographies managed by Policy during an active trip. |
+| `on_trip` | `on_trip `   | `trip_enter_geography` | The vehicle enters one or more Geographies managed by Policy during an active trip. |
+| `on_trip` | `on_trip `   | `trip_leave_geography` | The vehicle leaves one or more Geographies managed by Policy during an active trip. |
 | `unknown` | `elsewhere`   | `comms_restored` | The vehicle transmitted status information after a period of being out of communication. |
 | `unknown` | `elsewhere`   | `unspecified` | The provider cannot definitively state how a vehicle went `elsewhere`. |
 | `available` | `non_operational` | `battery_low`        | The vehicle's battery is below some rentability threshold |
