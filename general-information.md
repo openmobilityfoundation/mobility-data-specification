@@ -22,6 +22,7 @@ This document contains specifications that are shared between the various MDS AP
 * [UUIDs](#uuids)
 * [Vehicle States](#vehicle-states)
   * [Event Types](#event-types)
+  * [Limitations on the Use of Certain Values](#limitations-on-the-use-of-certain-values)
   * [Vehicle State Events](#vehicle-state-events)
   * [State Machine Diagram](#state-machine-diagram)
 * [Vehicle Types](#vehicle-types)
@@ -285,6 +286,20 @@ Event types are the possible transitions bewteen some vehicle states.
 | `trip_leave_jurisdiction` |	Trip leaves a jurisdiction	|
 | `trip_start` |	Start trip	|
 | `unspecified` |	Unspecified	|
+
+[Top][toc]
+
+### Limitations on the Use of Certain Values
+
+MDS is intended to communicate the provider's best available information to regulators. However there may be legitimate circumstances where providers do not have definitive or current information about devices on the ground. MDS incorporates some values to convey these situations.  These vehicle state and event type values are to be used sparingly and temporarily, and are not meant for repeated or prolonged use. These values exist to create logical coherence within MDS about vehicles that are operating abnormally or are out of communication. When a more accurate value is known, the MDS API should be updated with the latest information. Cities may add language to their Service Level Agreements (SLAs) that minimize the use of these values by providers. 
+
+**Vehicle State: Unknown**
+
+The `unknown` vehicle state means that the vehicle cannot be reliably placed into any of the other available states by the provider. This could be due to connectivity loss, GPS issues, missing vehicles, or other operational variances. It is expected that `unknown` will not be used frequently, and only for short periods of time. Cities may put in place specific limitations via an SLA. As vehicles regain connectivity or are located by providers they should return to their prior state, and then send additional events to reflect any subsequent changes to that state.
+
+**Event Type: Unspecified**
+
+The `unspecified` event type state transition means that the vehicle has moved from one state to another for an unspecified or unknown reason. It is used when there are multiple possible event types between states, but the reason for the transition is not clear. It is expected that `unspecified` will not be used frequently, and only for short periods of time. Cities may put in place specific limitations via an SLA. When more accurate information becomes available to the provider, it should be updated in the MDS data by sending a new event type state transition with the current timestamp.
 
 [Top][toc]
 
