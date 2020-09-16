@@ -1,5 +1,5 @@
 {
-  "$id": "https://raw.githubusercontent.com/openmobilityfoundation/mobility-data-specification/master/agency/post_vehicle_telemetry.json",
+  "$id": "https://raw.githubusercontent.com/openmobilityfoundation/mobility-data-specification/main/agency/post_vehicle_telemetry.json",
   "$schema": "http://json-schema.org/draft-06/schema#",
   "title": "The MDS Agency Schema, POST vehicle telemetry body",
   "type": "object",
@@ -74,6 +74,23 @@
           "maximum": 1
         }
       }
+    },
+    "timestamp": {
+      "$id": "#/definitions/timestamp",
+      "type": "number",
+      "description": "Integer milliseconds since Unix epoch",
+      "multipleOf": 1.0,
+      "minimum": 0
+    },
+    "uuid": {
+      "$id": "#/definitions/uuid",
+      "type": "string",
+      "description": "A UUID used to uniquely identifty an object",
+      "default": "",
+      "examples": [
+        "3c9604d6-b5ee-11e8-96f8-529269fb1459"
+      ],
+      "pattern": "^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$"
     }
   },
   "required": [

@@ -1,203 +1,70 @@
 {
-  "$id": "https://raw.githubusercontent.com/openmobilityfoundation/mobility-data-specification/master/provider/dockless/status_changes.json",
-  "$schema": "http://json-schema.org/draft-06/schema#",
-  "title": "The MDS Provider Schema, status_change payload",
-  "type": "object",
-  "definitions": {},
-  "required": [
-    "version",
-    "data"
-  ],
-  "properties": {
-    "version": {
-      "$id": "#/properties/version",
-      "$ref": "#/definitions/version"
-    },
-    "data": {
-      "$id": "#/properties/data",
+  "status_changes": {
+    "$id": "#/properties/data/properties/status_changes",
+    "type": "array",
+    "title": "The status_changes payload",
+    "items": {
+      "$id": "#/properties/data/properties/status_changes/items",
       "type": "object",
-      "title": "The page of data",
+      "title": "The status_change item schema",
+      "additionalProperties": false,
       "required": [
-        "status_changes"
+        "vehicle_state",
+        "event_types",
+        "event_time",
+        "event_location"
       ],
       "properties": {
-        "status_changes": {
-          "$id": "#/properties/data/properties/status_changes",
-          "type": "array",
-          "title": "The status_changes payload",
-          "items": {
-            "$id": "#/properties/data/properties/status_changes/items",
-            "type": "object",
-            "title": "The status_change item schema",
-            "required": [
-              "provider_name",
-              "provider_id",
-              "device_id",
-              "vehicle_id",
-              "vehicle_type",
-              "propulsion_type",
-              "event_type",
-              "event_type_reason",
-              "event_time",
-              "event_location"
-            ],
-            "properties": {
-              "provider_name": {
-                "$id": "#/properties/data/properties/status_changes/items/properties/provider_name",
-                "type": "string",
-                "description": "The public-facing name of the Provider",
-                "examples": ["Provider Name"],
-                "pattern": "^(.*)$"
-              },
-              "provider_id": {
-                "$id": "#/properties/data/properties/status_changes/items/properties/provider_id",
-                "description": "The UUID for the Provider, unique within MDS",
-                "$ref": "#/definitions/uuid"
-              },
-              "device_id": {
-                "$id": "#/properties/data/properties/status_changes/items/properties/device_id",
-                "description": "A unique device ID in UUID format",
-                "$ref": "#/definitions/uuid"
-              },
-              "vehicle_id": {
-                "$id": "#/properties/data/properties/status_changes/items/properties/vehicle_id",
-                "type": "string",
-                "description": "The Vehicle Identification Number visible on the vehicle itself",
-                "default": "",
-                "examples": ["ABC123"],
-                "pattern": "^(.*)$"
-              },
-              "vehicle_type": {
-                "$id": "#/properties/data/properties/status_changes/items/properties/vehicle_type",
-                "$ref": "#/definitions/vehicle_type",
-                "description": "The type of vehicle"
-              },
-              "propulsion_type": {
-                "$id": "#/properties/data/properties/status_changes/items/properties/propulsion_type",
-                "description": "The type of propulsion; allows multiple values",
-                "$ref": "#/definitions/propulsion_type"
-              },
-              "event_time": {
-                "$id": "#/properties/data/properties/status_changes/items/properties/event_time",
-                "description": "The time the event occurred, expressed as a Unix Timestamp",
-                "$ref": "#/definitions/timestamp"
-              },
-              "publication_time": {
-                "$id": "#/properties/data/properties/status_changes/items/properties/publication_time",
-                "description": "The time the event became available through the status changes endpoint, expressed as a Unix Timestamp",
-                "$ref": "#/definitions/timestamp"
-              },
-              "event_location": {
-                "$id": "#/properties/data/properties/status_changes/items/properties/event_location",
-                "description": "The GPS or GNSS coordinates of where the event occurred",
-                "$ref": "#/definitions/MDS_Feature_Point"
-              },
-              "event_type": {
-                "type": "string",
-                "description": "The type of the event"
-              },
-              "event_type_reason": {
-                "type": "string",
-                "description": "The reason for the event"
-              },
-              "battery_pct": {
-                "$id": "#/properties/data/properties/status_changes/items/properties/battery_pct",
-                "type": ["number", "null"],
-                "description": "Percent charge of device battery, expressed between 0 and 1",
-                "examples": [0.89],
-                "minimum": 0,
-                "maximum": 1
-              },
-              "associated_trip": {
-                "$id": "#/properties/data/properties/status_changes/items/properties/associated_trip",
-                "description": "Trip UUID, required if event_type_reason is user_pick_up or user_drop_off",
-                "$ref": "#/definitions/uuid"
-              },
-              "associated_ticket": {
-                "type": "string",
-                "description": "Identifier for an associated ticket inside an Agency-maintained 311 or CRM system."
-              }
-            },
-            "allOf": [
-              {
-                "description": "valid event_type and event_type_reason combinations",
-                "oneOf": [
-                  {
-                    "properties": {
-                      "event_type": {
-                        "enum": ["available"]
-                      },
-                      "event_type_reason": {
-                        "enum": [
-                          "service_start",
-                          "user_drop_off",
-                          "rebalance_drop_off",
-                          "maintenance_drop_off",
-                          "agency_drop_off"
-                        ]
-                      }
-                    }
-                  },
-                  {
-                    "properties": {
-                      "event_type": {
-                        "enum": ["reserved"]
-                      },
-                      "event_type_reason": {
-                        "enum": ["user_pick_up"]
-                      }
-                    }
-                  },
-                  {
-                    "properties": {
-                      "event_type": {
-                        "enum": ["unavailable"]
-                      },
-                      "event_type_reason": {
-                        "enum": ["low_battery", "maintenance"]
-                      }
-                    }
-                  },
-                  {
-                    "properties": {
-                      "event_type": {
-                        "enum": ["removed"]
-                      },
-                      "event_type_reason": {
-                        "enum": [
-                          "service_end",
-                          "rebalance_pick_up",
-                          "maintenance_pick_up",
-                          "agency_pick_up"
-                        ]
-                      }
-                    }
-                  }
-                ]
-              },
-              {
-                "description": "conditionally require associated_trip when applicable",
-                "anyOf": [
-                  {
-                    "not": {
-                      "properties": {
-                        "event_type_reason": {
-                          "enum": ["user_pick_up", "user_drop_off"]
-                        }
-                      }
-                    }
-                  },
-                  {
-                    "required": ["associated_trip"]
-                  }
-                ]
-              }
-            ]
-          }
+        "event_time": {
+          "$id": "#/properties/data/properties/status_changes/items/properties/event_time",
+          "$ref": "#/definitions/timestamp",
+          "description": "The time the event occurred, expressed as a Unix Timestamp"
+        },
+        "publication_time": {
+          "$id": "#/properties/data/properties/status_changes/items/properties/publication_time",
+          "$ref": "#/definitions/timestamp",
+          "description": "The time the event became available through the status changes endpoint, expressed as a Unix Timestamp"
+        },
+        "event_location": {
+          "$id": "#/properties/data/properties/status_changes/items/properties/event_location",
+          "$ref": "#/definitions/MDS_Feature_Point",
+          "description": "The GPS or GNSS coordinates of where the event occurred"
+        },
+        "vehicle_state": {
+          "$id": "#/properties/data/properties/status_changes/items/properties/vehicle_state",
+          "$ref": "#/definitions/vehicle_state",
+          "description": "The state of the vehicle"
+        },
+        "event_types": {
+          "$id": "#/properties/data/properties/status_changes/items/properties/event_types",
+          "$ref": "#/definitions/vehicle_events",
+          "description": "The event(s) that caused a change in the vehicle's state"
+        },
+        "battery_pct": {
+          "$id": "#/properties/data/properties/status_changes/items/properties/battery_pct",
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "Percent charge of device battery, expressed between 0 and 1",
+          "examples": [
+            0.89
+          ],
+          "minimum": 0,
+          "maximum": 1
+        },
+        "trip_id": {
+          "$id": "#/properties/data/properties/status_changes/items/properties/trip_id",
+          "$ref": "#/definitions/uuid",
+          "description": "Trip UUID (foreign key to Trips API), required if event_types contains trip_start, trip_end, trip_cancel, trip_enter_jurisdiction, or trip_leave_jurisdiction"
+        },
+        "associated_ticket": {
+          "$id": "#/properties/data/properties/status_changes/items/properties/associated_ticket",
+          "$ref": "#/definitions/string",
+          "description": "Identifier for an associated ticket inside an Agency-maintained 311 or CRM system."
         }
       },
-      "additionalProperties": false
+      "allOf": []
     }
-  },
-  "additionalProperties": false
+  }
 }
