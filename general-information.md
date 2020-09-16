@@ -21,6 +21,8 @@ This document contains specifications that are shared between the various MDS AP
 * [Timestamps](#timestamps)
 * [UUIDs](#uuids)
 * [Vehicle States](#vehicle-states)
+  * [Event Types](#event-types)
+  * [Limitations on the Use of Certain Values](#limitations-on-the-use-of-certain-values)
   * [Vehicle State Events](#vehicle-state-events)
   * [State Machine Diagram](#state-machine-diagram)
 * [Vehicle Types](#vehicle-types)
@@ -252,6 +254,55 @@ In a multi-jurisdiction environment, the status of a vehicle is per-jurisdiction
 
 [Top][toc]
 
+### Event Types
+
+Event types are the possible transitions bewteen some vehicle states.  
+
+| `event_type` | Description |
+|---|---|
+| `agency_drop_off` |	Drop off by the agency	|
+| `agency_pick_up` |	Pick up by the agency	|
+| `battery_charged` |	Battery charged	|
+| `battery_low` |	Battery low	|
+| `comms_lost` |	Communications lost	|
+| `comms_restored` |	Communications restored	|
+| `compliance_pick_up` |	Pick up for compliance	|
+| `decommissioned` |	Decommissioned	|
+| `located` |	Located	|
+| `maintenance` |	General maintenance	|
+| `maintenance_pick_up` |	Pick up for maintenance	|
+| `missing` |	Missing	|
+| `off_hours` |	Off hours - end of service	|
+| `on_hours` |	On hours - start of service	|
+| `provider_drop_off`	 |	Drop off by the provider	|
+| `rebalance_pick_up` |	Pick up for rebalancing	|
+| `reservation_cancel` |	Reservation cancelled	|
+| `reservation_start` |	Reservation started	|
+| `system_resume` |	Resume system operations	|
+| `system_suspend`	 |	Suspend system operations	|
+| `trip_cancel` |	Cancel trip	|
+| `trip_end` |	End trip	|
+| `trip_enter_jurisdiction` |	Trip enters a jurisdiction	|
+| `trip_leave_jurisdiction` |	Trip leaves a jurisdiction	|
+| `trip_start` |	Start trip	|
+| `unspecified` |	Unspecified	|
+
+[Top][toc]
+
+### Limitations on the Use of Certain Values
+
+MDS is intended to communicate the provider's best available information to regulators. However there may be legitimate circumstances where providers do not have definitive or current information about devices on the ground. MDS incorporates some values to convey these situations.  These vehicle state and event type values are to be used sparingly and temporarily, and are not meant for repeated or prolonged use. These values exist to create logical coherence within MDS about vehicles that are operating abnormally or are out of communication. When a more accurate value is known, the MDS API should be updated with the latest information. Cities may add language to their Service Level Agreements (SLAs) that minimize the use of these values by providers. 
+
+**Vehicle State: Unknown**
+
+The `unknown` vehicle state means that the vehicle cannot be reliably placed into any of the other available states by the provider. This could be due to connectivity loss, GPS issues, missing vehicles, or other operational variances. It is expected that `unknown` will not be used frequently, and only for short periods of time. Cities may put in place specific limitations via an SLA. As vehicles regain connectivity or are located by providers they should return to their prior state, and then send additional events to reflect any subsequent changes to that state.
+
+**Event Type: Unspecified**
+
+The `unspecified` event type state transition means that the vehicle has moved from one state to another for an unspecified or unknown reason. It is used when there are multiple possible event types between states, but the reason for the transition is not clear. It is expected that `unspecified` will not be used frequently, and only for short periods of time. Cities may put in place specific limitations via an SLA. When more accurate information becomes available to the provider, it should be updated in the MDS data by sending a new event type state transition with the current timestamp.
+
+[Top][toc]
+
 ### Vehicle State Events
 
 This is the list of `vehicle_state` and `event_type` pairings that constitute the valid transitions of the vehicle state machine.
@@ -274,16 +325,20 @@ Vehicles can enter the `unknown` state to and from any other state with the foll
 | `on_trip` | `available`   | `trip_cancel`        | A trip was initiated, then canceled prior to moving any distance |
 | `non_operational` | `available` | `system_resume`          | The vehicle is available because e.g. weather suspension or temporary regulations ended |
 | `unknown` | `available`   | `comms_restored`        | The vehicle transmitted status information after a period of being out of communication. |
+| `unknown` | `available`   | `located`        | The vehicle has been located by the provider |
 | `non_operational`, `unknown`| `available`   | `unspecified`        | The vehicle became available, but the provider cannot definitively (yet) specify the reason.  Generally, regulator Service-Level Agreements will limit the amount of time a vehicle's last event type may be `unspecified`. |
 | `available` | `reserved`    | `reservation_start`  | The vehicle was reserved for use by a customer |
 | `unknown` | `reserved`   | `comms_restored`        | The vehicle transmitted status information after a period of being out of communication. |
+| `unknown` | `reserved`   | `located`        | The vehicle has been located by the provider |
 | `unknown` | `reserved`   | `unspecified`        | The provider cannot definitively state how a vehicle became reserved. |
 | `available`, `reserved` | `on_trip`        | `trip_start`         | A customer initiated a trip with this vehicle |
 | `elsewhere` | `on_trip`        | `trip_enter_jurisdiction` | A vehicle on a trip entered the jurisdiction |
 | `unknown` | `on_trip`   | `comms_restored`        | The vehicle transmitted status information after a period of being out of communication. |
+| `unknown` | `on_trip`   | `located`        | The vehicle has been located by the provider |
 | `unknown` | `on_trip`   | `unspecified`        | The provider cannot definitively state how a vehicle started a trip. |
 | `on_trip` | `elsewhere`   | `trip_leave_jurisdiction` | A vehicle on a trip left the jurisdiction |
 | `unknown` | `elsewhere`   | `comms_restored` | The vehicle transmitted status information after a period of being out of communication. |
+| `unknown` | `elsewhere`   | `located`        | The vehicle has been located by the provider |
 | `unknown` | `elsewhere`   | `unspecified` | The provider cannot definitively state how a vehicle went `elsewhere`. |
 | `available` | `non_operational` | `battery_low`        | The vehicle's battery is below some rentability threshold |
 | `available` | `non_operational` | `maintenance`        | The vehicle requires some non-charge-related maintenance |
@@ -291,6 +346,7 @@ Vehicles can enter the `unknown` state to and from any other state with the foll
 | `available` | `non_operational` | `system_suspend`          | The vehicle is not available because of e.g. weather or temporary regulations |
 | `available`, `unknown` | `non_operational` | `unspecified`        | The vehicle became unavailable, but the Provider cannot definitively (yet) specify the reason. |
 | `unknown` | `non_operational`   | `comms_restored`        | The vehicle transmitted status information after a period of being out of communication |
+| `unknown` | `non_operational`   | `located`        | The vehicle has been located by the provider |
 | `available`, `non_operational`, `elsewhere` | `removed`     | `rebalance_pick_up`  | The provider picked up the vehicle for rebalancing purposes |
 | `available`, `non_operational`, `elsewhere` | `removed`     | `maintenance_pick_up` | The provider picked up the vehicle to service it |
 | `available`, `non_operational`, `elsewhere`, `unknown` | `removed`     | `agency_pick_up`     | An agency picked up the vehicle for some reason, e.g. illegal placement |
@@ -298,6 +354,7 @@ Vehicles can enter the `unknown` state to and from any other state with the foll
 | `available`, `non_operational`, `elsewhere`, `unknown` | `removed`     | `decommissioned`     | The provider has removed the vehicle from its fleet |
 | `unknown`, `non_operational`, `available`, `elsewhere` | `removed`     | `unspecified`        | The vehicle was removed, but the provider cannot definitively (yet) specify the reason |
 | `unknown` | `removed`   | `comms_restored`        | The vehicle transmitted status information after a period of being in an unknown state |
+| `unknown` | `removed`   | `located`        | The vehicle has been located by the provider |
 | `available`, `elsewhere`, `non_operational`, `on_trip`, `removed`, `reserved` | `unknown`     | `missing`            | The vehicle is not at its last reported GPS location, or that location is wildly in error |
 | `available`, `elsewhere`, `non_operational`, `on_trip`, `removed`, `reserved` | `unknown`     | `comms_lost`       | The vehicle is unable to transmit its GPS location or other status information |
 | `available`, `elsewhere`, `non_operational`, `on_trip`, `removed`, `reserved` | `unknown`     | `unspecified`       | The provider cannot definitively (yet) specify the reason for the unknown state |
