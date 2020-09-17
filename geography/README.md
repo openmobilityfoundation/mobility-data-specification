@@ -75,8 +75,6 @@ Example `geographies.json`
 }
 ```
 
-_Note: A simple tool to validate `geographies.json` will be contributed to the Open Mobility Foundation._
-
 <a name="endpoints"></a>
 
 ## REST Endpoints
