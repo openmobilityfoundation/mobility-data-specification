@@ -2,7 +2,7 @@
 
 MDS dockless metrics are a set of defined metrics and compound metrics useful for measuring dockless vehicle activity with MDS data. Dockless metrics measure vehicle activity when they are in the public right of way, which means vehicles were in either available, unavailable, reserved, or trip state.
 
-The table below represents supported MDS dockless metrics extension and definition. All metrics are aggregated by time interval and geographic areas. This [document](https://docs.google.com/document/d/1UNo7wAW6-Z6wcW7YLiX5fE9-tqOhkRUJ3M9OGWWEvxs/edit?usp=sharing) provides methodologies and sample calculations of MDS metrics. 
+The table below represents supported MDS dockless metrics extension and definition. All metrics are aggregated by time interval and geographic areas. This [document](https://docs.google.com/document/d/1rOhnaKWPSZApfWhFd1lzurXMbWLuZTJAYCLoxT2PQ14/edit?usp=sharing) provides methodologies and sample calculations of MDS metrics. 
 
 |No| Metric               | Description                                                                                                          |
 |--|-- | -- |

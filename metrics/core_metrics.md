@@ -2,7 +2,7 @@
 
 The core metrics are a set of defined, consistent MDS metrics that provide building blocks for other MDS metrics, regardless of vehicle type. 
 
-The table below represents supported MDS core metrics and definition. All metrics are aggregated by time interval and geographic areas. This [document](https://docs.google.com/document/d/1UNo7wAW6-Z6wcW7YLiX5fE9-tqOhkRUJ3M9OGWWEvxs/edit?usp=sharing) provides methodologies and sample calculations of MDS metrics. 
+The table below represents supported MDS core metrics and definition. All metrics are aggregated by time interval and geographic areas. This [document](https://docs.google.com/document/d/1rOhnaKWPSZApfWhFd1lzurXMbWLuZTJAYCLoxT2PQ14/edit?usp=sharing) provides methodologies and sample calculations of MDS metrics. 
 
 
 |No| Metric               | Description                                                                                                         |
