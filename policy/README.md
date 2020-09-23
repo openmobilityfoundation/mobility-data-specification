@@ -4,22 +4,31 @@ This specification describes the digital relationship between _mobility as a ser
 
 ## Table of Contents
 
-- [General Information](#general-information)
-  - [Versioning](#versioning)
-- [Background](#background)
-- [Distribution](#distribution)
-  - [REST Endpoints](#rest-endpoints)
-  - [Flat Files](#flat-files)
-- [Schema](#schema)
-  - [Policy](#policy)
-  - [Rules](#rules)
-  - [Rule Types](#rule-types)
-  - [Rule Units](#rule-units)
-  - [Geography](#geography)
-  - [Rate Recurrences](#rate-recurrences)
-  - [Messages](#messages)
-  - [Value URL](#value-url)
-  - [Order of Operations](#order-of-operations)
+- [Mobility Data Specification: Policy](#mobility-data-specification-policy)
+  - [Table of Contents](#table-of-contents)
+  - [General information](#general-information)
+    - [Versioning](#versioning)
+  - [Background](#background)
+  - [Distribution](#distribution)
+    - [REST Endpoints](#rest-endpoints)
+      - [Responses and Error Messages](#responses-and-error-messages)
+      - [Policies](#policies)
+        - [Query Parameters](#query-parameters)
+      - [Geographies](#geographies)
+        - [Query Parameters](#query-parameters-1)
+    - [Flat Files](#flat-files)
+      - [Example `policies.json`](#example-policiesjson)
+      - [Example `geographies.json`](#example-geographiesjson)
+  - [Schema](#schema)
+    - [Policy](#policy)
+    - [Rules](#rules)
+    - [Rule Types](#rule-types)
+    - [Rule Units](#rule-units)
+    - [Geography](#geography)
+    - [Rate Recurrences](#rate-recurrences)
+    - [Messages](#messages)
+    - [Value URL](#value-url)
+    - [Order of Operations](#order-of-operations)
   
 ## General information
 
@@ -227,6 +236,7 @@ An individual `Rule` object is defined by the following fields:
 | `geographies`      | UUID[]                      | Required   | List of Geography UUIDs (non-overlapping) specifying the covered geography |
 | `states`           | `{ state: event[] }`        | Required   | [Vehicle state][vehicle-states] to which this rule applies.  Optionally provide a list of specific [vehicle events][#vehicle-events] as a subset of a given status for the rule to apply to. An empty list or `null`/absent defaults to "all". |
 | `rule_units`       | enum                        | Required   | Measured units of policy (see [Rule Units](#rule-units)) |
+| `accessibility_options` | [AccessibilityOption][accessibility-options][] | Applicable vehicle [accessibility options][accessibility-options], default N/A |
 | `vehicle_types`    | `vehicle_type[]`            | Optional   | Applicable vehicle types, default "all". |
 | `propulsion_types` | `propulsion_type[]`         | Optional   | Applicable vehicle [propulsion types][propulsion-types], default "all". |
 | `minimum`          | integer                     | Optional   | Minimum value, if applicable (default 0) |
@@ -341,6 +351,7 @@ The internal mechanics of ordering are up to the Policy editing and hosting soft
 
 [Top][toc]
 
+[accessibility-options]: /general-information.md#accessibility-options
 [beta]: /general-information.md#beta
 [iana]: https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
 [muni-boundary]: ../provider/README.md#municipality-boundary
