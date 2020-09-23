@@ -4,22 +4,31 @@ This specification describes the digital relationship between _mobility as a ser
 
 ## Table of Contents
 
-- [General Information](#general-information)
-  - [Versioning](#versioning)
-- [Background](#background)
-- [Distribution](#distribution)
-  - [REST Endpoints](#rest-endpoints)
-  - [Flat Files](#flat-files)
-- [Schema](#schema)
-  - [Policy](#policy)
-  - [Rules](#rules)
-  - [Rule Types](#rule-types)
-  - [Rule Units](#rule-units)
-  - [Geography](#geography)
-  - [Rate Recurrences](#rate-recurrences)
-  - [Messages](#messages)
-  - [Value URL](#value-url)
-  - [Order of Operations](#order-of-operations)
+- [Mobility Data Specification: Policy](#mobility-data-specification-policy)
+  - [Table of Contents](#table-of-contents)
+  - [General information](#general-information)
+    - [Versioning](#versioning)
+  - [Background](#background)
+  - [Distribution](#distribution)
+    - [REST Endpoints](#rest-endpoints)
+      - [Responses and Error Messages](#responses-and-error-messages)
+      - [Policies](#policies)
+        - [Query Parameters](#query-parameters)
+      - [Geographies](#geographies)
+        - [Query Parameters](#query-parameters-1)
+    - [Flat Files](#flat-files)
+      - [Example `policies.json`](#example-policiesjson)
+      - [Example `geographies.json`](#example-geographiesjson)
+  - [Schema](#schema)
+    - [Policy](#policy)
+    - [Rules](#rules)
+    - [Rule Types](#rule-types)
+    - [Rule Units](#rule-units)
+    - [Geography](#geography)
+    - [Rate Recurrences](#rate-recurrences)
+    - [Messages](#messages)
+    - [Value URL](#value-url)
+    - [Order of Operations](#order-of-operations)
   
 ## General information
 
@@ -231,6 +240,7 @@ An individual `Rule` object is defined by the following fields:
 | `propulsion_types` | `propulsion_type[]`         | Optional   | Applicable vehicle [propulsion types][propulsion-types], default "all". |
 | `minimum`          | integer                     | Optional   | Minimum value, if applicable (default 0) |
 | `maximum`          | integer                     | Optional   | Maximum value, if applicable (default unlimited) |
+| `modality`         | [Modality][modalities]      | Optional   | Modality this rule should apply to (default all) |
 | `rate_amount`      | integer                     | Optional   | The amount of a rate applied when this rule applies, if applicable (default zero). A positive integer rate amount represents a fee, while a negative integer represents a subsidy. Rate amounts are given in the `currency` defined in the [Policy](#policy). |
 | `rate_recurrence`  | enum                        | Optional   | Recurrence of the rate (see [Rate Recurrences](#rate-recurrences)) |
 | `start_time`       | ISO 8601 time `hh:mm:ss`              | Optional   | Beginning time-of-day when the rule is in effect (default 00:00:00). |
@@ -351,3 +361,4 @@ The internal mechanics of ordering are up to the Policy editing and hosting soft
 [vehicle-states]: /general-information.md#vehicle-states
 [vehicle-types]: /general-information.md#vehicle-types
 [versioning]: /general-information.md#versioning
+[modalities]: /general-information.md#modalities
