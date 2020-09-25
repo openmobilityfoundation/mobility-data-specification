@@ -23,7 +23,7 @@ The Mobility Data Specification (**MDS**), a project of the [Open Mobility Found
 
 ## Endpoints
 
-**MDS** is currently comprised of three distinct components:
+**MDS** is currently comprised of four distinct components:
 
 * The [`provider`][provider] API endpoints are intended to be implemented by mobility providers and consumed by regulatory agencies. When a municipality queries information from a mobility provider, the Provider API has a historical view of operations in a standard format. It was first released in June 2018. Development takes place under the guidance of the OMF's Provider Services Working Group.
 
