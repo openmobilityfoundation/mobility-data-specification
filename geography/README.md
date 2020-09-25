@@ -47,11 +47,22 @@ Placeholder -- schema to be added.
 | ----------------   | --------- | --- | ----------------------------------------------------------------------------------- |
 | `name`             | String    | Required   | Name of geography                                                                      |
 | `description`      | String    | Optional   | Detailed description of geography                                                                      |
+| `geography_type`   | Enum      | Optional   | Type of geography, e.g. `city_boundary` or `council_district`.  See [Geography Types](geo_types). |
 | `geography_id`     | UUID      | Required   | Unique ID of geography                                                                 |
 | `geography_json`   | UUID      | Required   | The GeoJSON that defines the geographical coordinates.
 | `effective_date`   | [timestamp][ts] | Optional   | The date at which a Geography is considered "live".  Must be at or after `publish_date`.
 | `publish_date`     | [timestamp][ts] | Required   | Timestamp that the policy was published, i.e. made immutable                                             |
 | `prev_geographies` | UUID[]    | Optional   | Unique IDs of prior geographies replaced by this one                                   |
+
+### Geography Types
+
+| Value              | Description                  |
+| -----              | -----------                  |
+| `city_boundary`    | Edge of a city               |
+| `county_boundary`  | Edge of a county             |
+| `census_tract`     | Census tract                 |
+| `council_district` | City council district        |
+| `stop`             | See [Stops](stops)           |
 
 <a name="file-format"></a>
 
