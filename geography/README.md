@@ -16,6 +16,7 @@ Obsoleting or otherwise changing a geography is accomplished by publishing a new
 * [Distribution](#distribution)
 * [Schema](#schema)
   * [Geography Fields](#geography-fields)
+  * [Geography Types](#geography-types)
 * [File Format](#file-format)
 * [Endpoints](#endpoints)
 
@@ -56,13 +57,18 @@ Placeholder -- schema to be added.
 
 ### Geography Types
 
-| Value              | Description                  |
-| -----              | -----------                  |
-| `city_boundary`    | Edge of a city               |
-| `county_boundary`  | Edge of a county             |
-| `census_tract`     | Census tract                 |
-| `council_district` | City council district        |
-| `stop`             | See [Stops](stops)           |
+| Value                | Description                  |
+| -----                | -----------                  |
+| `city_boundary`      | Edge of a city               |
+| `county_boundary`    | Edge of a county             |
+| `stop`               | See [Stops](stops)           |
+| `council_district`   | City council district        |
+| `traffic_zone`       | Transportation planning unit |
+| `census_block`       | Census block                 |
+| `census_block_group` | Census block group           |
+| `census_tract`       | Census tract                 |
+
+For this initial version, we can make these specific types recommendations but not a hard requirement.  Others may be used as needed.
 
 <a name="file-format"></a>
 
@@ -73,7 +79,7 @@ To use flat files rather than REST endpoints, Geography objects should be stored
 Example `geographies.json`
 ```json
 {
-    "version": "0.4.0",
+    "version": "1.1.0",
     "updated:" "1570035222868",
     "geographies": [
         {
@@ -109,7 +115,7 @@ Returns: A single Geography.
 Response body:
 ```js
 {
-  version: '1.0.0',
+  version: '1.1.0',
   geography: {
     geography_id: UUID,
     geography_json: GeoJSON FeatureCollection,
@@ -142,7 +148,7 @@ Returns: All non-deprecated geography objects
 Response body:
 ```js
 {
-  version: '0.1.0',
+  version: '1.1.0',
   geographies: {
     Geography[]
   } 
