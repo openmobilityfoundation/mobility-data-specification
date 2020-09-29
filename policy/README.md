@@ -58,9 +58,9 @@ The machine-readable format allows Providers to obtain policies and compute comp
 
 Policies shall be published by regulatory bodies or their authorized delegates as JSON objects. These JSON objects shall be served by either [flat files](#flat-files) or via [REST API endpoints](#rest-endpoints). In either case, policy data shall follow the [schema](#schema) outlined below.
 
-Policies typically refer to one or more associated geographies. Each policy and geography shall have a unique ID (UUID).
+Policies typically refer to one or more associated geographies. Geographic information is obtained from the MDS Geography API.  Each policy and geography shall have a unique ID (UUID).
 
-Published policies and geographies should be treated as immutable data. Obsoleting or otherwise changing a policy is accomplished by publishing a new policy with a field named `prev_policies`, a list of UUID references to the policy or policies superseded by the new policy.
+Published policies, like geographies, should be treated as immutable data. Obsoleting or otherwise changing a policy is accomplished by publishing a new policy with a field named `prev_policies`, a list of UUID references to the policy or policies superseded by the new policy.
 
 Geographical data shall be represented as GeoJSON `Feature` objects. No part of the geographical data should be outside the [municipality boundary][muni-boundary].
 
@@ -82,7 +82,7 @@ Among other use-cases, configuring a REST API allows an Agency to:
 3) Adjust other attributes in closer to real time
 4) Enumerate when policies are set to change
 
-Responses must set the `Content-Type` header, as specified in the [Provider versioning][versioning] section.
+Responses must set the `Content-Type` header, as specified in the [versioning][versioning] section.
 
 #### Responses and Error Messages
 
