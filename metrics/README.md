@@ -32,22 +32,22 @@ None.
 
 ### Response
 
-| Name              | Type       | Required | Comments                                                                                                  |
-| ----------------- | ---------- | -------- | --------------------------------------------------------------------------------------------------------- |
-| `metrics`         | metric[]   | Yes      | List of supported metrics.                                                                                |
-| `metric.name`     | string[]   | Yes      | List of supported metric names. [See metric names](core_metrics.md)                                       |
-| `metric.since`    | datetime   | Yes      | Earliest supported start date for fetching metrics.  Minute (MM) must be divisible by minimum `interval`. |
-| `metric.interval` | duration[] | Yes      | A list of interval durations in ascending order.  Minimum (first) interval duration is the default.       |
-| `max_intervals`   | integer    | Yes      | Maximum number intervals that can be returned.                                                            |
-| `dimensions`      | string[]   | Yes      | List of supported dimensions. [See dimensions.](core_metrics.md#dimensions)                               |
-| `filters`         | string[]   | Yes      | List of supported filters for metrics. [See filters.](core_metrics.md#filters)                            |
+| Name               | Type       | Required | Comments                                                                                                  |
+| ------------------ | ---------- | -------- | --------------------------------------------------------------------------------------------------------- |
+| `metrics`          | metric[]   | Yes      | List of supported metrics.                                                                                |
+| `metric.measures`  | string[]   | Yes      | List of measure names. [See metric names](core_metrics.md)                                                |
+| `metric.since`     | datetime   | Yes      | Earliest supported start date for fetching metrics.  Minute (MM) must be divisible by minimum `interval`. |
+| `metric.intervals` | duration[] | Yes      | A list of interval durations in ascending order.  Minimum (first) interval duration is the default.       |
+| `max_intervals`    | integer    | Yes      | Maximum number intervals that can be returned.                                                            |
+| `dimensions`       | string[]   | Yes      | List of supported dimensions. [See dimensions.](core_metrics.md#dimensions)                               |
+| `filters`          | string[]   | Yes      | List of supported filters for metrics. [See filters.](core_metrics.md#filters)                            |
 
 ### Response Schema
 ```js
 {
   "metrics": [
     {
-      "name": [string],
+      "measures": [string],
       "since": datetime,
       "intervals": [duration]
     }
@@ -68,12 +68,12 @@ GET /metrics
 {
   "metrics": [
     {
-      "name": ["dockless.utilization.avg"],
+      "measures": ["dockless.utilization.avg"],
       "since": "2019-01-01T00:00-07",
       "intervals": ["PT1H"]
     },
     {
-      "name": ["vehicles.available.count", "trips.count"],
+      "measures": ["vehicles.available.count", "trips.count"],
       "since": "2018-01-01T00:00-07",
       "intervals": ["PT15M", "PT1H", "P1D"]
     }
@@ -104,7 +104,7 @@ Supports querying one or more metrics with the following parameters.
 
 | Name            | Type          | Required | Comments                                                                |
 | --------------- | ------------- | -------- | ----------------------------------------------------------------------- |
-| `metrics`       | string[]      | Yes      | list of metrics to return. [See metric names](core_metrics.md)          |
+| `measures`      | string[]      | Yes      | list of measures to return. [See metric names](core_metrics.md)         |
 | `interval`      | duration      | Yes      | Duration for metrics intervals.                                         |
 | `start_date`    | datetime      | Yes      | ISO 8601 formatted start date or numeric timestamp to fetch metrics.    |
 | `end_date`      | datetime      | No       | ISI 8601 formatted end date or numberic timestamp to fetch metrics.     |
@@ -127,7 +127,7 @@ Note: If `end_date` is specified, all intervals that *begin* between the specifi
 | Name                 | Type       | Comments                                                        |
 | -------------------- | ---------- | --------------------------------------------------------------- |
 | `id`                 | uuid       | Unique id for query                                             |
-| `query.metrics`      | string[]   | From request.                                                   |
+| `query.measures`     | string[]   | From request.                                                   |
 | `query.interval`     | duration   | From Request.                                                   |
 | `query.start_date`   | datetime   | From Request.                                                   |
 | `query.end_date`     | datetime   | From Request.                                                   |
@@ -145,7 +145,7 @@ Note: If `end_date` is specified, all intervals that *begin* between the specifi
 {
   "id": string,
   "query": {
-    "metrics": [string],
+    "measures": [string],
     "interval": duration,
     "start_date": datetime,
     "end_date": datetime,
@@ -175,7 +175,7 @@ Note: If `end_date` is specified, all intervals that *begin* between the specifi
 ```js
 POST /metrics
 {
-  "metrics": ["dockless.utilization.avg","trips.count"],
+  "measures": ["dockless.utilization.avg","trips.count"],
   "interval": "P1D",
   "start_date": "2019-10-21T00:00-07",
   "end_date": "2019-10-28T00:00-07",
@@ -190,7 +190,7 @@ POST /metrics
     "interval": "P1D",
     "start_date": "2019-10-21T00:00-07",
     "end_date": "2019-10-28T00:00-07",
-    "metrics": [
+    "measures": [
       "dockless.utilization.avg",
       "trips.count"
     ],
