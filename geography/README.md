@@ -18,10 +18,11 @@ Obsoleting or otherwise changing a geography is accomplished by publishing a new
   * [Geography Fields](#geography-fields)
 * [File Format](#file-format)
 * [Endpoints](#endpoints)
+* [Examples](#examples)
 
 ## General Information
 
-### Versioning
+## Versioning
 
 MDS APIs must handle requests for specific versions of the specification from clients.
 
@@ -141,6 +142,11 @@ Response body:
 Response codes:
 - 200 - success
 - 401 - unauthorized
+
+## Examples
+
+See the [Geography Examples](examples.md) for ways these can be implemented.
+
 
 [error-messages]: /general-information.md#error-messages
 [responses]: /general-information.md#responses
