@@ -5,6 +5,7 @@ This specification contains a collection of RESTful APIs used to read Geographie
 Geographical data has many applications in the context of mobility, such as the description of municipal boundaries, locations for pick-up and drop-off zones, and areas of temporary closure for special events or emergencies.  This API is intended to support a variety of other APIs, including the Policy API.
 
 Geographical data will be stored as GeoJSON and read from either `geographies.json` or the `/geographies` endpoint, referenced by UUID. Geography data once published through this API shall be treated as immutable, to ensure that any rules or regulations referring to the boundaries cannot be retroactively changed.  A Geography may be deprecated and replaced by updated version with a new UUID.
+
 Obsoleting or otherwise changing a geography is accomplished by publishing a new geography with a field named `prev_geographies`, a list of UUID references to the geography or geographies superseded by the new geography.
 
 ## Table of Contents
@@ -22,7 +23,11 @@ Obsoleting or otherwise changing a geography is accomplished by publishing a new
 
 ## General Information
 
-## Versioning
+The following information applies to all `geography` API endpoints.
+
+Note that in MDS 1.0.0 Geography was defined as an endpoint in the [`policy`](/policy#geography) API.  For the MDS 1.1.0 minor release, that endpoint is still valid to use in all existing cases, though it will likely be phased out in the next major release.  This new `geography` endpoint is an optional way to reference geographies throughout MDS.
+
+### Versioning
 
 MDS APIs must handle requests for specific versions of the specification from clients.
 
@@ -146,7 +151,6 @@ Response codes:
 ## Examples
 
 See the [Geography Examples](examples.md) for ways these can be implemented.
-
 
 [error-messages]: /general-information.md#error-messages
 [responses]: /general-information.md#responses
