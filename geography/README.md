@@ -25,7 +25,7 @@ Obsoleting or otherwise changing a geography is accomplished by publishing a new
 
 The following information applies to all `geography` API endpoints.
 
-Note that in MDS 1.0.0 Geography was defined as an endpoint in the [`policy`](/policy#geography) API.  For the MDS 1.1.0 minor release, that endpoint is still valid to use in all existing cases, though it will likely be phased out in the next major release.  This new `geography` endpoint is an optional way to reference geographies throughout MDS.
+_Note that in MDS 1.0.0 Geography was defined as an endpoint within the [`policy`](/policy#geography) API.  For the MDS 1.1.0 minor release, that endpoint is still valid to use in all existing cases, though it will likely be phased out in the next major release.  This new `geography` endpoint is an optional way to reference geographies throughout MDS._
 
 ### Versioning
 
