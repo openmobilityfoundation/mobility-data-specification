@@ -58,7 +58,7 @@ The machine-readable format allows Providers to obtain policies and compute comp
 
 Policies shall be published by regulatory bodies or their authorized delegates as JSON objects. These JSON objects shall be served by either [flat files](#flat-files) or via [REST API endpoints](#rest-endpoints). In either case, policy data shall follow the [schema](#schema) outlined below.
 
-Policies typically refer to one or more associated geographies. Geographic information is obtained from the MDS Geography API.  Each policy and geography shall have a unique ID (UUID).
+Policies typically refer to one or more associated geographies. Geographic information is obtained from the MDS [Geography](/geography#general-information) API.  Each policy and geography shall have a unique ID (UUID).
 
 Published policies, like geographies, should be treated as immutable data. Obsoleting or otherwise changing a policy is accomplished by publishing a new policy with a field named `prev_policies`, a list of UUID references to the policy or policies superseded by the new policy.
 
@@ -112,15 +112,17 @@ Policies will be returned in order of effective date (see schema below), with pa
 
 #### Geographies
 
+_Note that in MDS 1.0.0 [Geography](/geography#general-information) was defined here as an endpoint in the policy API. For the MDS 1.1.0 minor release, this endpoint is still valid to use in all existing cases, though it will likely be phased out in the next major release. The new [Geography](/geography#general-information) endpoint is an optional way to reference geographies throughout MDS._
+
 Endpoint: `/geographies/{id}`  
 Method: `GET`  
-`data` Payload: `{ geographies: [] }`, an array of GeoJSON `Feature` objects that follow the schema [outlined here](#geography).
+`data` Payload: `{ geographies: [] }`, an array of GeoJSON `Feature` objects that follow the schema [outlined here](#geography) or in [Geography](/geography#general-information).
 
 ##### Query Parameters
 
 | Name         | Type      | Required / Optional | Description                                    |
 | ------------ | --------- | --- | ---------------------------------------------- |
-| `id`         | UUID      | Optional    | If provided, returns one geography object with the matching UUID; default is to return all geography objects.               |
+| `id`         | UUID      | Optional    | If provided, returns one [Geography](/geography#general-information) object with the matching UUID; default is to return all geography objects.               |
 
 [Top][toc]
 
@@ -226,7 +228,7 @@ An individual `Rule` object is defined by the following fields:
 | `name`             | String                      | Required   | Name of rule |
 | `rule_id`          | UUID                        | Required   | Unique ID of the rule |
 | `rule_type`        | enum                        | Required   | Type of policy (see [Rule Types](#rule-types)) |
-| `geographies`      | UUID[]                      | Required   | List of Geography UUIDs (non-overlapping) specifying the covered geography |
+| `geographies`      | UUID[]                      | Required   | List of [Geography](/geography#general-information) UUIDs (non-overlapping) specifying the covered geography |
 | `states`           | `{ state: event[] }`        | Required   | [Vehicle state][vehicle-states] to which this rule applies.  Optionally provide a list of specific [vehicle events][#vehicle-events] as a subset of a given status for the rule to apply to. An empty list or `null`/absent defaults to "all". |
 | `rule_units`       | enum                        | Required   | Measured units of policy (see [Rule Units](#rule-units)) |
 | `vehicle_types`    | `vehicle_type[]`            | Optional   | Applicable vehicle types, default "all". |
@@ -276,11 +278,11 @@ An individual `Rule` object is defined by the following fields:
 | ---------------- | --------- | --- | ----------------------------------------------------------------------------------- |
 | `name`           | String    | Required   | Name of geography                                                                      |
 | `description`    | String    | Optional   | Detailed description of geography                                                                      |
-| `geography_id`   | UUID      | Required   | Unique ID of geography                                                                 |
+| `geography_id`   | UUID      | Required   | Unique ID of [Geography](/geography#general-information)                                               |
 | `geography_json`   | UUID      | Required   | The GeoJSON that defines the geographical coordinates.
 | `effective_date`   | [timestamp][ts] | Optional   | `start_date` for first published policy that uses this geo.  Server should set this when policies are published.  This may be used on the client to distinguish between “logical” geographies that have the same name. E.g. if a policy publishes a geography on 5/1/2020, and then another policy is published which references that same geography is published on 4/1/2020, the effective_date will be set to 4/1/2020.
 | `publish_date`   | [timestamp][ts] | Required   | Timestamp that the policy was published, i.e. made immutable                                             |
-| `prev_geographies`  | UUID[]    | Optional   | Unique IDs of prior geographies replaced by this one                                   |
+| `prev_geographies`  | UUID[]    | Optional   | Unique IDs of prior [geographies](/geography#general-information) replaced by this one                                   |
 
 [Top][toc]
 
