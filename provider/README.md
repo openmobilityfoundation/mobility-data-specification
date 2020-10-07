@@ -47,7 +47,7 @@ Versioning must be implemented as specified in the [Versioning section][versioni
 
 The response to a client request must include a valid HTTP status code defined in the [IANA HTTP Status Code Registry][iana].
 
-See the [Responses section][responses] for information on valid MDS response codes and the [Error Messages section][error-messages] for information on formatting error messages.
+See [Responses][responses] for information on valid MDS response codes and [Error Messages][error-messages] for information on formatting error messages.
 
 The response must set the `Content-Type` header as specified in the [Versioning section][versioning].
 

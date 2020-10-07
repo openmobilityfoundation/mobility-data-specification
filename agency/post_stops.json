@@ -111,11 +111,8 @@
         },
         "devices": {
           "$id": "#/definitions/stop/properties/devices",
-          "type": "array",
-          "description": "List of device_id for vehicles currently at this Stop.",
-          "items": {
-            "$ref": "#/definitions/uuid"
-          }
+          "$ref": "#/definitions/uuid_array",
+          "description": "List of device_id for vehicles currently at this Stop."
         }
       }
     },
@@ -170,6 +167,15 @@
         "3c9604d6-b5ee-11e8-96f8-529269fb1459"
       ],
       "pattern": "^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$"
+    },
+    "uuid_array": {
+      "$id": "#/definitions/uuid_array",
+      "type": "array",
+      "description": "Array of UUID",
+      "items": {
+        "$id": "#/definitions/uuid_array/items",
+        "$ref": "#/definitions/uuid"
+      }
     },
     "vehicle_type_counts": {
       "$id": "#/definitions/vehicle_type_counts",
