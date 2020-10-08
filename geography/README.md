@@ -18,6 +18,7 @@ Geographical data will be stored as GeoJSON and read from either `geographies.js
 * [Schema](#schema)
   * [Geography Fields](#geography-fields)
   * [Previous Geographies](#previous-geographies)
+  * [Geography Type](#geography-type)
 * [File Format](#file-format)
 * [Endpoints](#endpoints)
   * [Geography](#geography)
@@ -94,14 +95,15 @@ Placeholder -- link to schema to be added later.
 
 ### Geography Fields
 
-| Name               | Type      | Required/Optional | Description                                                                         |
-| ----------------   | --------- | --- | ----------------------------------------------------------------------------------- |
+| Name               | Type      | Required/Optional | Description                                                                     |
+| ----------------   | --------- | --- | --------------------------------------------------------------------------------------------- |
 | `name`             | String    | Required   | Name of geography                                                                      |
-| `description`      | String    | Optional   | Detailed description of geography                                                                      |
+| `description`      | String    | Optional   | Detailed description of geography                                                      |
+| `geography_type`   | Enum      | Optional   | Type of geography, e.g. `municipal_boundary` or `council_district`.  See [Geography Types](#geography-types). |
 | `geography_id`     | UUID      | Required   | Unique ID of geography                                                                 |
-| `geography_json`   | UUID      | Required   | The GeoJSON that defines the geographical coordinates.
-| `effective_date`   | [timestamp][ts] | Optional   | The date at which a Geography is considered "live".  Must be at or after `publish_date`.
-| `publish_date`     | [timestamp][ts] | Required   | Time that the geography was published, i.e. made immutable                                             |
+| `geography_json`   | UUID      | Required   | The GeoJSON that defines the geographical coordinates.                                 |
+| `effective_date`   | [timestamp][ts] | Optional   | The date at which a Geography is considered "live".  Must be at or after `publish_date`. |
+| `publish_date`     | [timestamp][ts] | Required   | Time that the geography was published, i.e. made immutable                       |
 | `prev_geographies` | UUID[]    | Optional   | Unique IDs of prior geographies replaced by this one                                   |
 
 [Top][toc]
@@ -111,6 +113,26 @@ Placeholder -- link to schema to be added later.
 Obsoleting or otherwise changing a geography is accomplished by publishing a new geography with the `prev_geographies` field, which is a list of UUID references to the geography or geographies superseded by the new geography. The previous geographies are also published in the `/geographies` endpoint.  Using it allows agencies to look back historically at previously published geographies, for analysis, historic reference, or an auditable change trail.
 
 This field is optional can be omitted by the publishing Agency.  
+
+### Geography Type
+
+| Value                | Description                          |
+| -----                | -----------                          |
+| `municipal_boundary` | Edge of a city                       |
+| `operating_area`     | Vehicle permitted operating area     |
+| `distribution_zone`  | An area of interest for distribution |
+| `no_ride_zone`       | Areas where riding is not permitted  |
+| `no_parking_zone`    | Areas where parking is not permitted |
+| `slow_ride_zone`     | Areas where top speed is reduced     |
+| `county_boundary`    | Edge of a county                     |
+| `stop`               | See [Stops](stops)                   |
+| `council_district`   | City council district                |
+| `traffic_zone`       | Transportation planning unit         |
+| `census_block`       | Census block                         |
+| `census_block_group` | Census block group                   |
+| `census_tract`       | Census tract                         |
+
+These specific types are recommendations, but not a hard requirement.  Others may be created by the Agency as needed.
 
 [Top][toc]
 
