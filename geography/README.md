@@ -150,7 +150,7 @@ Response codes:
 
 ## Examples
 
-See the [Geography Examples](examples.md) for ways these can be implemented.
+See the [Geography Examples](examples/readme.md) for ways these can be implemented and geometry previews.
 
 [error-messages]: /general-information.md#error-messages
 [responses]: /general-information.md#responses
