@@ -112,7 +112,7 @@ Policies will be returned in order of effective date (see schema below), with pa
 
 #### Geographies
 
-_Note that in MDS 1.0.0 [Geography](/geography#general-information) was defined here as an endpoint in the policy API. For the MDS 1.1.0 minor release, this endpoint is still valid to use in all existing cases, though it will likely be phased out in the next major release. The new [Geography](/geography#general-information) endpoint is an optional way to reference geographies throughout MDS._
+**Note:** see the new [Geography API](https://github.com/openmobilityfoundation/mobility-data-specification/blob/feature-geography/geography/README.md#transition-from-policy) to understand the transisiton away from this endpoint, and how to support both in the MDS 1.1.0 release.
 
 Endpoint: `/geographies/{id}`  
 Method: `GET`  
