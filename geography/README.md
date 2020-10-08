@@ -12,15 +12,17 @@ Obsoleting or otherwise changing a geography is accomplished by publishing a new
 
 * [General Information](#general-information)
    * [Versioning](#versioning)
-   * [Transition from Policy](#)
+   * [Transition from Policy](#transition-from-policy)
 * [Distribution](#distribution)
    * [Flat Files](#flat-files)
-   * [Response Format](#repsonse-format)
+   * [Response Format](#response-format)
    * [Authorization](#authorization)
 * [Schema](#schema)
   * [Geography Fields](#geography-fields)
 * [File Format](#file-format)
 * [Endpoints](#endpoints)
+  * [Geography](#geography)
+  * [Geographies](#geographies)
 * [Examples](#examples)
 
 ## General Information
@@ -87,7 +89,7 @@ Optionally, an Agency may decide to make these endpoints unauthenticated and pub
 
 ## Schema
 
-Placeholder -- link to. schema to be added later.  
+Placeholder -- link to schema to be added later.  
 
 [Top][toc]
 
@@ -107,7 +109,7 @@ Placeholder -- link to. schema to be added later.
 
 ## File format
 
-To use flat files rather than REST endpoints, Geography objects should be stored in `geographies.json`.  The `geographies.json` file will look like the output of `GET /geographies`.  
+Note: to use flat files rather than REST endpoints, Geography objects should be stored in `geographies.json`.  The `geographies.json` file will look like the output of `GET /geographies`.  
 
 Example `geographies.json`
 ```json
@@ -133,6 +135,8 @@ Responses must set the `Content-Type` header, as specified in the [Provider vers
 
 The Geography Author API consists of the following endpoints:
 
+### Geography
+
 **Endpoint**:  `/geographies/{geography_id}`
 
 **Method**: `GET`
@@ -143,9 +147,10 @@ Path Params:
 | ------------- | ---- | --- | --------------------------------------------------- |
 | geography_id  | UUID | Required   | Unique identifier for a single specific Geography |
 
-Returns: A single Geography.  
+Returns: Details of a single Geography based on a UUID.  
 
 Response body:
+
 ```js
 {
   version: '1.1.0',
@@ -167,24 +172,33 @@ Response codes:
 - 404 - no geography found
 - 403 - user is attempting to read an unpublished geography, but only has the `geographies:read:published` scope.
 
+### Geographies
+
 **Endpoint**:  `/geographies`
+
 **Method**: `GET`
 
 Path Params: 
 
 | Name         | Type      | Required/Optional | Description                                    |
 | ------------ | --------- | --- | ---------------------------------------------- |
-| `summary`    | string    | Optional   | Return geographies, minus the GeoJSON in each geography object     |
+| `summary`    | string    | Optional   | Return geographies, including the GeoJSON in each geography object     |
 
-Returns: All non-deprecated geography objects
+Returns: All geography objects
 
 Response body:
 ```js
 {
-  version: '1.1.0',
-  geographies: {
-    Geography[]
-  } 
+    "version": "1.1.0",
+    "updated:" "1570035222868",
+    "geographies": [
+        {
+            // Geography 1
+        },
+        {
+            // Geography 2
+        }
+    ]
 }
 ```
 
@@ -205,3 +219,4 @@ See the [Geography Examples](examples/readme.md) for ways these can be implement
 [ts]: /general-information.md#timestamps
 [versioning]: /general-information.md#versioning
 [muni-boundary]: ../provider/README.md#municipality-boundary
+[toc]: #table-of-contents
