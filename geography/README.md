@@ -115,7 +115,7 @@ Example `geographies.json`
 ```json
 {
     "version": "1.1.0",
-    "updated:" "1570035222868",
+    "updated": "1570035222868",
     "geographies": [
         {
             // GeoJSON 1
@@ -153,15 +153,15 @@ Response body:
 
 ```js
 {
-  version: '1.1.0',
-  geography: {
-    geography_id: UUID,
-    geography_json: GeoJSON FeatureCollection,
-    prev_geographies: UUID[],
-    name: string,
-    publish_date: timestamp
-    effective_date: timestamp
-    description: string
+  "version": '1.1.0',
+  "geography": {
+    "geography_id": UUID,
+    "geography_json": GeoJSON FeatureCollection,
+    "prev_geographies": UUID[],
+    "name": string,
+    "publish_date": timestamp
+    "effective_date": timestamp
+    "description": string
   } 
 }
 ```
@@ -171,6 +171,8 @@ Response codes:
 - 401 - unauthorized
 - 404 - no geography found
 - 403 - user is attempting to read an unpublished geography, but only has the `geographies:read:published` scope.
+
+[Top][toc]
 
 ### Geographies
 
@@ -190,7 +192,7 @@ Response body:
 ```js
 {
     "version": "1.1.0",
-    "updated:" "1570035222868",
+    "updated": "1570035222868",
     "geographies": [
         {
             // Geography 1
