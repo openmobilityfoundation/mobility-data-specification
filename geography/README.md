@@ -12,9 +12,11 @@ Obsoleting or otherwise changing a geography is accomplished by publishing a new
 
 * [General Information](#general-information)
    * [Versioning](#versioning)
+   * [Transition from Policy](#)
+* [Distribution](#distribution)
+   * [Flat Files](#flat-files)
    * [Response Format](#repsonse-format)
    * [Authorization](#authorization)
-* [Distribution](#distribution)
 * [Schema](#schema)
   * [Geography Fields](#geography-fields)
 * [File Format](#file-format)
@@ -25,7 +27,7 @@ Obsoleting or otherwise changing a geography is accomplished by publishing a new
 
 The following information applies to all `geography` API endpoints.
 
-_Note that in MDS 1.0.0 Geography was defined as an endpoint within the [`policy`](/policy#geography) API.  For the MDS 1.1.0 minor release, that endpoint is still valid to use in all existing cases, though it will likely be phased out in the next major release.  This new `geography` endpoint is an optional way to reference geographies throughout MDS._
+[Top][toc]
 
 ### Versioning
 
@@ -33,19 +35,61 @@ MDS APIs must handle requests for specific versions of the specification from cl
 
 Versioning must be implemented as specified in the [Versioning section][versioning].
 
+[Top][toc]
+
+### Transition from Policy
+
+To ensure this Geography API is not creating a breaking change for the 1.1.0 release, it's expected that the data contained in the [`/geographies`](/policy#geography) endpoint in the Policy API is identical to this Geography API. This will ensure that when a Geography ID is used anywhere in this release, the data could be retrieved from either location.
+
+This temporary requirement is to ensure backwards compatibility, but the overall intent is to remove the /policy/geographies endpoint at the next major MDS release. 
+
+[Top][toc]
+
+## Distribution
+
+Geographies shall be published by regulatory agencies or their authorized delegates as JSON objects. These JSON objects shall be served by either [flat files](#flat-files) or via [REST API endpoints](#rest-endpoints). In either case, policy data shall follow the [schema](#schema) outlined below.
+
+Published geographies, should be treated as immutable data. Obsoleting or otherwise changing a geography is accomplished by publishing a new geography with a field named `prev_geographies`, a list of UUID references to the geography or policies geographies by the new geography.
+
+Geographical data shall be represented as GeoJSON `Feature` objects. Typically no part of the geographical data should be outside the [municipality boundary][muni-boundary] unless an agency has the authority to regulate there.
+
+Geographies should be re-fetched at an agreed upon interval between providers and agencies, or when either entity requests it.
+
+[Top][toc]
+
+### Flat Files
+
+To use a flat file, geographies shall be represented in one (1) file equivalent to the /geographies endpoint:
+
+- `geographies.json`
+
+The files shall be structured like the output of the [REST endpoints](#rest-endpoints) above.
+
+The publishing Agency should establish and communicate to providers how frequently these files should be polled.
+
+The `updated` field in the payload wrapper should be set to the time of publishing a revision, so that it is simple to identify a changed file.
+
+[Top][toc]
+
 ### Response Format
 
 See the [Responses][responses] and [Error Messages][error-messages] sections.
 
+[Top][toc]
+
 ### Authorization
 
-When making requests, the Geography API expects `provider_id` to be part of the claims in a [JWT](https://jwt.io/) `access_token` in the `Authorization` header, in the form `Authorization: Bearer <access_token>`. The token issuance, expiration and revocation policies are at the discretion of the Agency.
+When making requests, the Geography API expects `provider_id` to include an `access_token` in the `Authorization` header, in the form `Authorization: Bearer <access_token>`. The token issuance, expiration and revocation policies are at the discretion of the Agency.
 
-<a name="schema"></a>
+Optionally, an Agency may decide to make these endpoints unauthenticated and public, which could be done in conjunction with the [/policy](/policy) endpoints.
+
+[Top][toc]
 
 ## Schema
 
-Placeholder -- schema to be added.  
+Placeholder -- link to. schema to be added later.  
+
+[Top][toc]
 
 ### Geography Fields
 
@@ -59,7 +103,7 @@ Placeholder -- schema to be added.
 | `publish_date`     | [timestamp][ts] | Required   | Time that the geography was published, i.e. made immutable                                             |
 | `prev_geographies` | UUID[]    | Optional   | Unique IDs of prior geographies replaced by this one                                   |
 
-<a name="file-format"></a>
+[Top][toc]
 
 ## File format
 
@@ -68,7 +112,7 @@ To use flat files rather than REST endpoints, Geography objects should be stored
 Example `geographies.json`
 ```json
 {
-    "version": "0.4.0",
+    "version": "1.1.0",
     "updated:" "1570035222868",
     "geographies": [
         {
@@ -81,9 +125,9 @@ Example `geographies.json`
 }
 ```
 
-<a name="endpoints"></a>
+[Top][toc]
 
-## REST Endpoints
+## Endpoints
 
 Responses must set the `Content-Type` header, as specified in the [Provider versioning](../provider/README.md#versioning) section. They must also specify the API version in the JSON-formatted response body, under the `version` key.
 
@@ -104,7 +148,7 @@ Returns: A single Geography.
 Response body:
 ```js
 {
-  version: '1.0.0',
+  version: '1.1.0',
   geography: {
     geography_id: UUID,
     geography_json: GeoJSON FeatureCollection,
@@ -137,7 +181,7 @@ Returns: All non-deprecated geography objects
 Response body:
 ```js
 {
-  version: '0.1.0',
+  version: '1.1.0',
   geographies: {
     Geography[]
   } 
@@ -148,11 +192,16 @@ Response codes:
 - 200 - success
 - 401 - unauthorized
 
+[Top][toc]
+
 ## Examples
 
 See the [Geography Examples](examples/readme.md) for ways these can be implemented and geometry previews.
+
+[Top][toc]
 
 [error-messages]: /general-information.md#error-messages
 [responses]: /general-information.md#responses
 [ts]: /general-information.md#timestamps
 [versioning]: /general-information.md#versioning
+[muni-boundary]: ../provider/README.md#municipality-boundary
