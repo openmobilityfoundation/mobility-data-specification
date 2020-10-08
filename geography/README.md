@@ -6,8 +6,6 @@ Geographical data has many applications in the context of mobility, such as the 
 
 Geographical data will be stored as GeoJSON and read from either `geographies.json` or the `/geographies` endpoint, referenced by UUID. Geography data once published through this API shall be treated as immutable, to ensure that any rules or regulations referring to the boundaries cannot be retroactively changed.  A Geography may be deprecated and replaced by updated version with a new UUID.
 
-Obsoleting or otherwise changing a geography is accomplished by publishing a new geography with a field named `prev_geographies`, a list of UUID references to the geography or geographies superseded by the new geography.
-
 ## Table of Contents
 
 * [General Information](#general-information)
@@ -19,6 +17,7 @@ Obsoleting or otherwise changing a geography is accomplished by publishing a new
    * [Authorization](#authorization)
 * [Schema](#schema)
   * [Geography Fields](#geography-fields)
+  * [Previous Geographies](#previous-geographies)
 * [File Format](#file-format)
 * [Endpoints](#endpoints)
   * [Geography](#geography)
@@ -49,7 +48,7 @@ This temporary requirement is to ensure backwards compatibility, but the overall
 
 ## Distribution
 
-Geographies shall be published by regulatory agencies or their authorized delegates as JSON objects. These JSON objects shall be served by either [flat files](#flat-files) or via [REST API endpoints](#rest-endpoints). In either case, policy data shall follow the [schema](#schema) outlined below.
+Geographies shall be published by regulatory agencies or their authorized delegates as JSON objects. These JSON objects shall be served by either [flat files](#flat-files) or via [REST API endpoints](#rest-endpoints). In either case, geography data shall follow the [schema](#schema) outlined below.
 
 Published geographies, should be treated as immutable data. Obsoleting or otherwise changing a geography is accomplished by publishing a new geography with a field named `prev_geographies`, a list of UUID references to the geography or policies geographies by the new geography.
 
@@ -104,6 +103,14 @@ Placeholder -- link to schema to be added later.
 | `effective_date`   | [timestamp][ts] | Optional   | The date at which a Geography is considered "live".  Must be at or after `publish_date`.
 | `publish_date`     | [timestamp][ts] | Required   | Time that the geography was published, i.e. made immutable                                             |
 | `prev_geographies` | UUID[]    | Optional   | Unique IDs of prior geographies replaced by this one                                   |
+
+[Top][toc]
+
+### Previous Geographies
+
+Obsoleting or otherwise changing a geography is accomplished by publishing a new geography with the `prev_geographies` field, which is a list of UUID references to the geography or geographies superseded by the new geography. The previous geographies are also published in the `/geographies` endpoint.  Using it allows agencies to look back historically at previously published geographies, for analysis, historic reference, or an auditable change trail.
+
+This field is optional can be omitted by the publishing Agency.  
 
 [Top][toc]
 
