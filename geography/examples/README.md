@@ -10,7 +10,9 @@ This file presents a series of example [Geography documents](/geography) to use 
 
 This Geography shows the boundaries of a city's operating area for provider devices. 
 
-**File with full geometry and preview**: [`operating-area.json`](operating-area.json)
+**File with full geometry**: [`operating-area.json`](operating-area.json)
+
+**GeoJSON part of file with preview**: [`operating-area.geojson`](operating-area.geojson)
 
 ```json
 {
