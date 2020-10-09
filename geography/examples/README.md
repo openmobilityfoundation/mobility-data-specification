@@ -71,9 +71,9 @@ Boundaries of a city's permitted operating area for provider vehicles.
 
 Boundaries of one of 9 areas in a city where vehicles can be distibuted and reblananced. 
 
-**File with full geometry**: [`distribution-zone.json`](distribution-zone.json)
+**File with full geometry**: [`distribution-zone-8.json`](distribution-zone.json)
 
-**GeoJSON part of file with preview**: [`distribution-zone.geojson`](distribution-zone.geojson)
+**GeoJSON part of file with preview**: [`distribution-zone-8.geojson`](distribution-zone.geojson)
 
 ```json
 {
