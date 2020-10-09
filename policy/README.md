@@ -58,6 +58,8 @@ The machine-readable format allows Providers to obtain policies and compute comp
 
 Policies shall be published by regulatory bodies or their authorized delegates as JSON objects. These JSON objects shall be served by either [flat files](#flat-files) or via [REST API endpoints](#rest-endpoints). In either case, policy data shall follow the [schema](#schema) outlined below.
 
+Policy API endpoints shall be public.
+
 Policies typically refer to one or more associated geographies. Each policy and geography shall have a unique ID (UUID).
 
 Published policies and geographies should be treated as immutable data. Obsoleting or otherwise changing a policy is accomplished by publishing a new policy with a field named `prev_policies`, a list of UUID references to the policy or policies superseded by the new policy.
