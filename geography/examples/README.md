@@ -21,17 +21,17 @@ Shows the muncipal boundaries of a regulating entity, which may be larger than t
 ```json
 {
   "version": "1.0.0",
-	"geography": {
-		"geography_id": "e00535dd-d8ff-4b1b-920d-34e7404d0208",
-		"geography_type": "municipal_boundary",
-		"name": "Municipal Boundary",
-		"description": "Full municipal jurisdiction for the combined city/county",
-		"effective_date": 1570034561834,
-		"publish_date": 1570035222868,
-		"prev_geographies": [
-			"40d78c83-493f-40ad-8aba-a1ef036c5ffa"
-		],
-    "geography_json": MUNICIPAL_BOUNDARY_GEOGRAPHY
+  "geography": {
+  "geography_id": "e00535dd-d8ff-4b1b-920d-34e7404d0208",
+  "geography_type": "municipal_boundary",
+  "name": "Municipal Boundary",
+  "description": "Full municipal jurisdiction for the combined city/county",
+  "effective_date": 1570034561834,
+  "publish_date": 1570035222868,
+  "prev_geographies": [
+    "40d78c83-493f-40ad-8aba-a1ef036c5ffa"
+  ],
+  "geography_json": MUNICIPAL_BOUNDARY_GEOGRAPHY
   } 
 }
 ```
