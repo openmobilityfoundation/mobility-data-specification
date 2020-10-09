@@ -116,6 +116,8 @@ This field is optional can be omitted by the publishing Agency.
 
 ### Geography Type
 
+Type of geography. These specific types are recommendations, but not a hard requirement.  Others may be created by the Agency as needed.
+
 | Value                | Description                          |
 | -----                | -----------                          |
 | `municipal_boundary` | Edge of a city                       |
@@ -131,8 +133,6 @@ This field is optional can be omitted by the publishing Agency.
 | `census_block`       | Census block                         |
 | `census_block_group` | Census block group                   |
 | `census_tract`       | Census tract                         |
-
-These specific types are recommendations, but not a hard requirement.  Others may be created by the Agency as needed.
 
 [Top][toc]
 
@@ -185,12 +185,13 @@ Response body:
   "version": '1.1.0',
   "geography": {
     "geography_id": UUID,
-    "geography_json": GeoJSON FeatureCollection,
-    "prev_geographies": UUID[],
+    "geography_type": Enum,
     "name": string,
-    "publish_date": timestamp
-    "effective_date": timestamp
-    "description": string
+    "description": string,
+    "publish_date": timestamp,
+    "effective_date": timestamp,
+    "prev_geographies": UUID[],
+    "geography_json": GeoJSON FeatureCollection
   } 
 }
 ```
