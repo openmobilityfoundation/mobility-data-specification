@@ -242,7 +242,7 @@ Response codes:
 
 ## Examples
 
-See the [Geography Examples](examples/readme.md) for ways these can be implemented and geometry previews.
+See the [Geography Examples](examples/README.md) for ways these can be implemented and geometry previews.
 
 [Top][toc]
 
