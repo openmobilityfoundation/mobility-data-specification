@@ -4,12 +4,22 @@ This file presents a series of example [Geography documents](/geography) to use 
 
 ## Table of Contents
 
+- [All Geographies](#all-geographies)
 - [Municipal Boundary](#municipal-boundary)
 - [Operating Area](#operating-area)
 - [Distribution Zone](#distribution-zone)
 - [No Ride Zone](#no-ride-zone)
 - [Slow Ride Zone](#slow-ride-zone)
 - [Stop](#stop)
+
+## All Geographies
+
+All of the examples below will be presented within the single [/geographies](/geography#geographies) endpoint.  
+
+**File with full geometry**: [`geographies.json`](geographies.json)
+
+**GeoJSON sample to view all geometries together in a preview**: [`geographies.geojson`](geographies.geojson)
+Note this file is just for your reference to generate a preview on Githug. It is not part of the spec.
 
 ## Municipal Boundary
 
