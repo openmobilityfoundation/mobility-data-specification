@@ -116,7 +116,9 @@ This field is optional can be omitted by the publishing Agency.
 
 ### Geography Type
 
-Type of geography. These specific types are recommendations, but not a hard requirement.  Others may be created by the Agency as needed.
+Type of geography. These specific types are recommendations based on ones commonly defined by agencies.  Others may be created by the Agency as needed, or the optional `geography_type` field may be omitted.
+
+`geography_type` does not imply policy or required actions by providers, but instead is for organizational and discovery purposes within the standalone Geography API. Geographies need to be referenced from other areas of MDS to be meaningfully applied.
 
 | Value                | Description                          |
 | -----                | -----------                          |
@@ -129,7 +131,15 @@ Type of geography. These specific types are recommendations, but not a hard requ
 | `county_boundary`    | Edge of a county                     |
 | `stop`               | See [Stops](stops)                   |
 | `council_district`   | City council district                |
-| `traffic_zone`       | Transportation planning unit         |
+| `political_district` | Politically defined voting area      |
+| `neighborhood`       | Neighborhood area                    |
+| `market_area`        | Economic area                        |
+| `opportunity_zone`   | Defined Opportunity Zone             |
+| `overlay_district`   | Agengy overlay district              |
+| `post_code`          | Zip or postal code                   |
+| `traffic_zone`       | Transportation planning area         |
+| `property_line`      | One or more property lines           |
+| `right_of_way`       | Public right of way area             |
 | `census_block`       | Census block                         |
 | `census_block_group` | Census block group                   |
 | `census_tract`       | Census tract                         |
