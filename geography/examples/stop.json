@@ -1,12 +1,18 @@
 {
   "version": "1.0.0",
   "geography": {
-    "geography_id": "fc277865-79d3-4f0e-8459-53e9a647db99",
+    "geography_id": "d1328cdb-92fe-4267-85e0-a9fe5653268e",
     "geography_type": "stop",
     "name": "Parking areas",
     "description": "Highlands area preferred parking locations",
     "effective_date": 1570034561834,
     "publish_date": 1570035222868,
+    "prev_geographies": [
+      "789f677f-38eb-4397-a2ec-eca3f5c2ccb7",
+      "fa4a3d92-706b-4400-8f44-0170b2ad632b",
+      "1d4587ae-5cc4-4950-9ac8-aec3f558dd39",
+      "e8ed9fc7-f0e2-4117-ae7b-6607ff60c413"
+    ],
     "geography_json": {
       "type": "FeatureCollection",
       "name": "stops",
