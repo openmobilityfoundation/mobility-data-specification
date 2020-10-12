@@ -9,6 +9,7 @@ This file presents a series of example [Geography documents](/geography) to use 
 - [Distribution Zone](#distribution-zone)
 - [No Ride Zone](#no-ride-zone)
 - [Slow Ride Zone](#slow-ride-zone)
+- [Stop](#stop)
 
 ## Municipal Boundary
 
@@ -143,6 +144,38 @@ Boundaries of areas in a city where vehicles are to be ridden at a slower top sp
     "prev_geographies": [
       "6100b029-a943-439c-b344-72bcc8e78d15",
       "5ce17f69-d869-4103-b414-9f213fd6347d"
+    ],
+    "geography_json": SLOW_RIDE_ZONE_GEOGRAPHY
+  } 
+}
+```
+
+[Top](#table-of-contents)
+
+
+## Stop
+
+Designated stoping areas for vehicles. In this example the recommended parking locations are spray-painted on the sidewalk. Note these are represented as `Point` geometry types, not `MultiPolygon` like other examples.
+
+**File with full geometry**: [`stop.json`](stop.json)
+
+**GeoJSON part of file with preview**: [`stop.geojson`](stop.geojson)
+
+```json
+{
+  "version": "1.0.0",
+  "geography": {
+    "geography_id": "d1328cdb-92fe-4267-85e0-a9fe5653268e",
+    "geography_type": "stop",
+    "name": "Parking areas",
+    "description": "Highlands area preferred parking locations",
+    "effective_date": 1570034561834,
+    "publish_date": 1570035222868,
+    "prev_geographies": [
+      "789f677f-38eb-4397-a2ec-eca3f5c2ccb7",
+      "fa4a3d92-706b-4400-8f44-0170b2ad632b",
+      "1d4587ae-5cc4-4950-9ac8-aec3f558dd39",
+      "e8ed9fc7-f0e2-4117-ae7b-6607ff60c413"
     ],
     "geography_json": SLOW_RIDE_ZONE_GEOGRAPHY
   } 
