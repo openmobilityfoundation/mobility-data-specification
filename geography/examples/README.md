@@ -1,6 +1,6 @@
 # Geography Examples
 
-This file presents a series of example [Geography documents](/geography) to use as templates.
+This file presents a series of example [Geography](/geography) files to use as reference and to see previews.
 
 ## Table of Contents
 
