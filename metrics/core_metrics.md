@@ -25,7 +25,7 @@ The following represent the suggested MDS core metric dimensions:
 | Dimension    | Description |
 | ------------ | -------------------------------------------------------------------------------------------------------------------------- |
 | provider_id  | Transportation provider id issued by OMF and [tracked here](https://github.com/openmobilityfoundation/mobility-data-specification/blob/dev/providers.csv)                              |
-| [geography_type]   | [MDS Geography](https://github.com/openmobilityfoundation/mobility-data-specification/blob/dev/policy/README.md#geographies) e.g. policy, jurisdictions, council_districts |
+| [geography_type]   | [MDS Geography](https://github.com/openmobilityfoundation/mobility-data-specification/tree/dev/geography) e.g. policy, jurisdictions, council_districts |
 | vehicle_type | [Vehicle Type](https://github.com/openmobilityfoundation/mobility-data-specification/tree/dev/agency#vehicle-type) defined by MDS                                                  |
 
 ### Filters
@@ -35,7 +35,7 @@ The following represent the suggested MDS core metric filters:
 | Filter       | Description                                                                                                                |
 | ------------ | -------------------------------------------------------------------------------------------------------------------------- |
 | provider_id  | Transportation provider id issued by OMF and [tracked here](https://github.com/openmobilityfoundation/mobility-data-specification/blob/dev/providers.csv)                              |
-| geography_id    | [MDS Geography](https://github.com/openmobilityfoundation/mobility-data-specification/blob/dev/policy/README.md#geographies) |
+| geography_id    | [MDS Geography](https://github.com/openmobilityfoundation/mobility-data-specification/tree/dev/geography) |
 | vehicle_type | [Vehicle Type](https://github.com/openmobilityfoundation/mobility-data-specification/tree/dev/agency#vehicle-type) defined by MDS                                                      |
 
 
