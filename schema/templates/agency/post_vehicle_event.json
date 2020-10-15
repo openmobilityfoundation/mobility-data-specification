@@ -1,16 +1,24 @@
 {
-  "$id": "https://raw.githubusercontent.com/CityofLosAngeles/mobility-data-specification/master/agency/post_vehicle_event.json",
+  "$id": "https://raw.githubusercontent.com/openmobilityfoundation/mobility-data-specification/main/agency/post_vehicle_event.json",
   "$schema": "http://json-schema.org/draft-06/schema#",
   "title": "The MDS Agency Schema, POST vehicle status body",
   "type": "object",
   "definitions": {},
   "required": [
-    "event_type",
+    "vehicle_state",
+    "event_types",
+    "timestamp",
     "telemetry"
   ],
   "properties": {
-    "event_type": {
-      "$ref": "#/definitions/vehicle_event"
+    "vehicle_state": {
+      "$ref": "#/definitions/vehicle_state"
+    },
+    "event_types": {
+      "$ref": "#/definitions/vehicle_events"
+    },
+    "timestamp": {
+      "$ref": "#/definitions/timestamp"
     },
     "telemetry": {
       "$ref": "#/definitions/telemetry"
@@ -19,5 +27,6 @@
       "$ref": "#/definitions/uuid"
     }
   },
-  "additionalProperties": false
+  "additionalProperties": false,
+  "allOf": []
 }

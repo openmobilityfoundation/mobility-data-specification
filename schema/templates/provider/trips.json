@@ -1,183 +1,114 @@
 {
-  "$id": "https://raw.githubusercontent.com/CityofLosAngeles/mobility-data-specification/master/provider/trips.json",
-  "$schema": "http://json-schema.org/draft-06/schema#",
-  "title": "The MDS Provider Schema, trips payload",
-  "type": "object",
-  "definitions": {},
-  "required": [
-    "version",
-    "data"
-  ],
-  "properties": {
-    "version": {
-      "$id": "#/properties/version",
-      "$ref": "#/definitions/version"
-    },
-    "data": {
-      "$id": "#/properties/data",
+  "trips": {
+    "$id": "#/properties/data/properties/trips",
+    "type": "array",
+    "title": "The trips payload",
+    "items": {
+      "$id": "#/properties/data/properties/trips/items",
       "type": "object",
-      "title": "The page of data",
+      "title": "The trip item schema",
+      "additionalProperties": false,
       "required": [
-        "trips"
+        "trip_id",
+        "trip_duration",
+        "trip_distance",
+        "route",
+        "accuracy",
+        "start_time",
+        "end_time"
       ],
       "properties": {
-        "trips": {
-          "$id": "#/properties/data/properties/trips",
-          "type": "array",
-          "title": "The Trips Schema",
-          "items": {
-            "$id": "#/properties/data/properties/trips/items",
-            "type": "object",
-            "title": "The Trip Schema",
-            "required": [
-              "provider_name",
-              "provider_id",
-              "device_id",
-              "vehicle_id",
-              "vehicle_type",
-              "propulsion_type",
-              "trip_id",
-              "trip_duration",
-              "trip_distance",
-              "route",
-              "accuracy",
-              "start_time",
-              "end_time"
-            ],
-            "properties": {
-              "provider_name": {
-                "$id": "#/properties/data/properties/trips/items/properties/provider_name",
-                "type": "string",
-                "description": "The public-facing name of the Provider",
-                "examples": [
-                  "Provider Name"
-                ],
-                "pattern": "^(.*)$"
-              },
-              "provider_id": {
-                "$id": "#/properties/data/properties/trips/items/properties/provider_id",
-                "description": "The UUID for the Provider, unique within MDS",
-                "$ref": "#/definitions/uuid"
-              },
-              "device_id": {
-                "$id": "#/properties/data/properties/trips/items/properties/device_id",
-                "$ref": "#/definitions/uuid",
-                "description": "A unique device ID in UUID format"
-              },
-              "vehicle_id": {
-                "$id": "#/properties/data/properties/trips/items/properties/vehicle_id",
-                "type": "string",
-                "description": "The Vehicle Identification Number visible on the vehicle itself",
-                "default": "",
-                "examples": [
-                  "ABC123"
-                ],
-                "pattern": "^(.*)$"
-              },
-              "vehicle_type": {
-                "$id": "#/properties/data/properties/trips/items/properties/vehicle_type",
-                "$ref": "#/definitions/vehicle_type",
-                "description": "The type of vehicle"
-              },
-              "propulsion_type": {
-                "$id": "#/properties/data/properties/trips/items/properties/propulsion_type",
-                "description": "The type of propulsion; allows multiple values",
-                "$ref": "#/definitions/propulsion_type"
-              },
-              "trip_id": {
-                "$id": "#/properties/data/properties/trips/items/properties/trip_id",
-                "description": "A unique ID for each trip",
-                "$ref": "#/definitions/uuid"
-              },
-              "trip_duration": {
-                "$id": "#/properties/data/properties/trips/items/properties/trip_duration",
-                "type": "integer",
-                "description": "The length of time, in seconds, that the trip lasted",
-                "default": 0,
-                "examples": [
-                  600
-                ]
-              },
-              "trip_distance": {
-                "$id": "#/properties/data/properties/trips/items/properties/trip_distance",
-                "type": "integer",
-                "description": "The distance, in meters, that the trip covered",
-                "default": 0,
-                "examples": [
-                  1000
-                ]
-              },
-              "route": {
-                "$id": "#/properties/data/properties/trips/items/properties/route",
-                "title": "The Route Schema",
-                "$ref": "#/definitions/MDS_FeatureCollection_Route"
-              },
-              "accuracy": {
-                "$id": "#/properties/data/properties/trips/items/properties/accuracy",
-                "type": "integer",
-                "title": "The approximate level of accuracy, in meters, of Points within route",
-                "default": 0,
-                "examples": [
-                  15
-                ]
-              },
-              "start_time": {
-                "$id": "#/properties/data/properties/trips/items/properties/start_time",
-                "description": "The time the trip began, expressed as a Unix Timestamp",
-                "$ref": "#/definitions/timestamp"
-              },
-              "end_time": {
-                "$id": "#/properties/data/properties/trips/items/properties/end_time",
-                "description": "The time the trip ended, expressed as a Unix Timestamp",
-                "$ref": "#/definitions/timestamp"
-              },
-              "publication_time": {
-                "$id": "#/properties/data/properties/trips/items/properties/publication_time",
-                "description": "The time the trip became available through the trips endpoint, expressed as a Unix Timestamp",
-                "$ref": "#/definitions/timestamp"
-              },
-              "parking_verification_url": {
-                "$id": "#/properties/data/properties/trips/items/properties/parking_verification_url",
-                "type": ["string", "null"],
-                "description": "A URL to a photo (or other evidence) of proper vehicle parking",
-                "examples": [
-                  "https://data.provider.co/parking_verify/1234.jpg"
-                ],
-                "pattern": "^(https://.*)$"
-              },
-              "standard_cost": {
-                "$id": "#/properties/data/properties/trips/items/properties/standard_cost",
-                "type": ["integer", "null"],
-                "description": "The cost, in the currency defined in `currency`, that it would cost to perform that trip in the standard operation of the System. If no currency is given, USD cents is implied.",
-                "examples": [
-                  500
-                ]
-              },
-              "actual_cost": {
-                "$id": "#/properties/data/properties/trips/items/properties/actual_cost",
-                "type": ["integer", "null"],
-                "description": "The actual cost, in the currency defined in `currency`, paid by the customer of the *mobility as a service* provider. If no currency is given, USD cents is implied.",
-                "examples": [
-                  520
-                ]
-              },
-              "currency": {
-                "$id": "#/properties/data/properties/trips/items/properties/currency",
-                "type": ["string", "null"],
-                "description": "An ISO 4217 Alphabetic Currency Code representing the currency of the payee. If null, USD cents is implied.",
-                "examples": [
-                    "USD", "EUR", "GBP"
-                ]
-              }
-            }
-          }
+        "trip_id": {
+          "$id": "#/properties/data/properties/trips/items/properties/trip_id",
+          "description": "A unique ID for each trip",
+          "$ref": "#/definitions/uuid"
+        },
+        "trip_duration": {
+          "$id": "#/properties/data/properties/trips/items/properties/trip_duration",
+          "type": "integer",
+          "description": "The length of time, in seconds, that the trip lasted",
+          "default": 0,
+          "examples": [
+            600
+          ]
+        },
+        "trip_distance": {
+          "$id": "#/properties/data/properties/trips/items/properties/trip_distance",
+          "type": "integer",
+          "description": "The distance, in meters, that the trip covered",
+          "default": 0,
+          "examples": [
+            1000
+          ]
+        },
+        "route": {
+          "$id": "#/properties/data/properties/trips/items/properties/route",
+          "title": "The Route Schema",
+          "$ref": "#/definitions/MDS_FeatureCollection_Route"
+        },
+        "accuracy": {
+          "$id": "#/properties/data/properties/trips/items/properties/accuracy",
+          "type": "integer",
+          "title": "The approximate level of accuracy, in meters, of Points within route",
+          "default": 0,
+          "examples": [
+            15
+          ]
+        },
+        "start_time": {
+          "$id": "#/properties/data/properties/trips/items/properties/start_time",
+          "description": "The time the trip began, expressed as a Unix Timestamp",
+          "$ref": "#/definitions/timestamp"
+        },
+        "end_time": {
+          "$id": "#/properties/data/properties/trips/items/properties/end_time",
+          "description": "The time the trip ended, expressed as a Unix Timestamp",
+          "$ref": "#/definitions/timestamp"
+        },
+        "publication_time": {
+          "$id": "#/properties/data/properties/trips/items/properties/publication_time",
+          "description": "The time the trip became available through the trips endpoint, expressed as a Unix Timestamp",
+          "$ref": "#/definitions/timestamp"
+        },
+        "parking_verification_url": {
+          "$id": "#/properties/data/properties/trips/items/properties/parking_verification_url",
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "uri",
+          "description": "A URL to a photo (or other evidence) of proper vehicle parking",
+          "examples": [
+            "https://data.provider.co/parking_verify/1234.jpg"
+          ]
+        },
+        "standard_cost": {
+          "$id": "#/properties/data/properties/trips/items/properties/standard_cost",
+          "type": [
+            "integer",
+            "null"
+          ],
+          "description": "The cost, in the currency defined in `currency`, that it would cost to perform that trip in the standard operation of the System. If no currency is given, USD cents is implied.",
+          "examples": [
+            500
+          ]
+        },
+        "actual_cost": {
+          "$id": "#/properties/data/properties/trips/items/properties/actual_cost",
+          "type": [
+            "integer",
+            "null"
+          ],
+          "description": "The actual cost, in the currency defined in `currency`, paid by the customer of the *mobility as a service* provider. If no currency is given, USD cents is implied.",
+          "examples": [
+            520
+          ]
+        },
+        "currency": {
+          "$id": "#/properties/data/properties/trips/items/properties/currency",
+          "$ref": "#/definitions/currency"
         }
       }
-    },
-    "links": {
-      "$id": "#properties/links",
-      "$ref": "#/definitions/links"
     }
-  },
-  "additionalProperties": false
+  }
 }

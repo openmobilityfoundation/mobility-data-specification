@@ -1,0 +1,102 @@
+{
+  "$id": "https://raw.githubusercontent.com/openmobilityfoundation/mobility-data-specification/main/agency/put_stops.json",
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "title": "The MDS Agency Schema, update Stops",
+  "type": "object",
+  "definitions": {
+    "stop_status": {
+      "$id": "#/definitions/stop_status",
+      "type": "object",
+      "description": "Status object for a Stop in MDS",
+      "required": [
+        "is_installed",
+        "is_renting",
+        "is_returning"
+      ],
+      "properties": {
+        "is_installed": {
+          "$id": "#/definitions/stop_status/properties/is_installed",
+          "type": "boolean"
+        },
+        "is_renting": {
+          "$id": "#/definitions/stop_status/properties/is_renting",
+          "type": "boolean"
+        },
+        "is_returning": {
+          "$id": "#/definitions/stop_status/properties/is_returning",
+          "type": "boolean"
+        }
+      }
+    },
+    "uuid": {
+      "$id": "#/definitions/uuid",
+      "type": "string",
+      "description": "A UUID used to uniquely identifty an object",
+      "default": "",
+      "examples": [
+        "3c9604d6-b5ee-11e8-96f8-529269fb1459"
+      ],
+      "pattern": "^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$"
+    },
+    "vehicle_type_counts": {
+      "$id": "#/definitions/vehicle_type_counts",
+      "type": "object",
+      "properties": {
+        "bicycle": {
+          "$id": "#/definitions/vehicle_type_counts/properties/bicycle",
+          "type": "integer",
+          "minimum": 0
+        },
+        "car": {
+          "$id": "#/definitions/vehicle_type_counts/properties/car",
+          "type": "integer",
+          "minimum": 0
+        },
+        "scooter": {
+          "$id": "#/definitions/vehicle_type_counts/properties/scooter",
+          "type": "integer",
+          "minimum": 0
+        },
+        "moped": {
+          "$id": "#/definitions/vehicle_type_counts/properties/moped",
+          "type": "integer",
+          "minimum": 0
+        },
+        "other": {
+          "$id": "#/definitions/vehicle_type_counts/properties/other",
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "stops"
+  ],
+  "properties": {
+    "stops": {
+      "$id": "#/properties/stops",
+      "type": "array",
+      "description": "The array of stops",
+      "items": {
+        "type": "object",
+        "required": [
+          "stop_id"
+        ],
+        "properties": {
+          "stop_id": {
+            "$ref": "#/definitions/uuid"
+          },
+          "status": {
+            "$ref": "#/definitions/stop_status"
+          },
+          "num_spots_disabled": {
+            "$ref": "#/definitions/vehicle_type_counts"
+          }
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}
