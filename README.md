@@ -6,7 +6,7 @@ The Mobility Data Specification (**MDS**), a project of the [Open Mobility Found
 
 **MDS** is an open-source project. It was originally created by the [Los Angeles Department of Transportation](http://ladot.io) (LADOT). In November 2019, stewardship of MDS and the ownership of this repository was transferred to the Open Mobility Foundation. GitHub automatically redirects any links to this repository in the `CityOfLosAngeles` organization to the `openmobilityfoundation` instead. MDS continues to be used by LADOT and many other municipalities.
 
-**MDS** is currently comprised of three distinct components:
+**MDS** is currently comprised of four distinct components:
 
 * The [`provider`][provider] API endpoints are intended to be implemented by mobility providers and consumed by regulatory agencies. When a municipality queries information from a mobility provider, the Provider API has a historical view of operations in a standard format. It was first released in June 2018. Development takes place under the guidance of the OMF's Provider Services Working Group.
 
@@ -14,7 +14,9 @@ The Mobility Data Specification (**MDS**), a project of the [Open Mobility Found
 
 * The [`policy`][policy] API endpoints are intended to be implemented by regulatory agencies and consumed by mobility providers. Providers query the Policy API to get information about local rules that may affect the operation of their mobility service or which may be used to determine compliance. It was first released in October 2019. Development takes place under the guidance of the OMF's City Services Working Group.
 
-MDS is designed to be a modular kit-of-parts. Regulatory agencies can use the components of the API that are appropriate for their needs. An agency may choose to use only `agency`, `provider`, or `policy`. Or they may select specific elements (endpoints) from each to help them implement their goals.
+* The [`metrics`](metrics) API endpoints are intended to be implemented by regulatory agencies, mobility providers or third-party ecosystem services to have a standard way to consistently describe available metrics, and create an extensible interface for querying MDS metrics. Development takes place under the guidance of the OMF's City Services and Provider Services Working Group.  
+
+MDS is designed to be a modular kit-of-parts. Regulatory agencies can use the components of the API that are appropriate for their needs. An agency may choose to use only `agency`, `provider`, `policy`, or `metrics`. Or they may select specific elements (endpoints) from each to help them implement their goals.
 
 ## Learn More / Get Involved / Contributing
 To stay up to date on MDS releases, meetings, and events, please **subscribe to the [mds-announce](https://groups.google.com/a/groups.openmobilityfoundation.org/forum/#!forum/mds-announce) mailing list.**
@@ -25,8 +27,8 @@ You can also get involved in development by joining an OMF working group. The wo
 
 Working Group | Mailing List | Description
 --- | --- | ---
-Provider Services | [mds-provider-services](https://groups.google.com/a/groups.openmobilityfoundation.org/forum/#!forum/mds-provider-services) | Manages the [`provider`][provider] API within MDS.
-City Services | [mds-city-services](https://groups.google.com/a/groups.openmobilityfoundation.org/forum/#!forum/mds-city-services) | Manages the [`agency`][agency] and [`policy`][policy] APIs within MDS, as well as the [`mds-core`](https://github.com/openmobilityfoundation/mds-core) reference implementation.
+Provider Services | [mds-provider-services](https://groups.google.com/a/groups.openmobilityfoundation.org/forum/#!forum/mds-provider-services) | Manages the [`provider`][provider] and [`metrics`](metrics) API within MDS.
+City Services | [mds-city-services](https://groups.google.com/a/groups.openmobilityfoundation.org/forum/#!forum/mds-city-services) | Manages the [`agency`][agency], [`policy`][policy] and [`metrics`](metrics) APIs within MDS, as well as the [`mds-core`](https://github.com/openmobilityfoundation/mds-core) reference implementation.
 
 You can view info about past releases and planning calls in the [wiki](https://github.com/openmobilityfoundation/mobility-data-specification/wiki).
 
