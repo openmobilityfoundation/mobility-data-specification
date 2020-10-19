@@ -47,7 +47,7 @@ GET /metrics
 ### Example: Activities
 This metrics will pull daily vehicle deployment and the number of trips made by each vehicle type for all providers. 
 
-File: [`activities.json`](activities.json)
+File: [`activities.json`](activities.json) (request)
 
 #### Request
 ```js
