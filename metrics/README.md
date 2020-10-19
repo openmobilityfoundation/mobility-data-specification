@@ -109,22 +109,24 @@ Note: If `end_date` is specified, all intervals that *begin* between the specifi
 
 ### Response
 
-| Name                 | Type       | Comments                                                        |
-| -------------------- | ---------- | --------------------------------------------------------------- |
-| `id`                 | uuid       | Unique id for query                                             |
-| `query.measures`     | string[]   | From request.                                                   |
-| `query.interval`     | duration   | From Request.                                                   |
-| `query.start_date`   | datetime   | From Request.                                                   |
-| `query.end_date`     | datetime   | From Request.                                                   |
-| `query.timezone`     | timezone   | From Request.                                                   |
+All named fields are required to be returned in response. Non-relevant values can be empty.
+
+| Name                 | Type       | Comments                                                             |
+| -------------------- | ---------- | -------------------------------------------------------------------- |
+| `id`                 | uuid       | Unique id for query                                                  |
+| `query.measures`     | string[]   | From request.                                                        |
+| `query.interval`     | duration   | From Request.                                                        |
+| `query.start_date`   | datetime   | From Request.                                                        |
+| `query.end_date`     | datetime   | From Request.                                                        |
+| `query.timezone`     | timezone   | From Request.                                                        |
 | `query.k_value`      | integer    | The k-anonymity value used in any [data redaction](#data-redaction). |
-| `query.dimensions`   | string[]   | From Request.                                                   |
-| `query.filters`      | filter[]   | From Request.                                                   |
-| `columns`            | column[]   | Array of column information                                     |
-| `column.name`        | string     | Name of metric or dimension column.                             |
-| `column.column_type` | string     | Type of column: `measure` or `dimension`.                       |
-| `column.data_type`   | string     | Data type of column: `datetime`, `string`, `integer`, `float`.  |
-| `rows`               | values[][] | Array of row arrays containing the dimension and metric values. |
+| `query.dimensions`   | string[]   | From Request.                                                        |
+| `query.filters`      | filter[]   | From Request.                                                        |
+| `columns`            | column[]   | Array of column information                                          |
+| `column.name`        | string     | Name of metric or dimension column.                                  |
+| `column.column_type` | string     | Type of column: `measure` or `dimension`.                            |
+| `column.data_type`   | string     | Data type of column: `datetime`, `string`, `integer`, `float`.       |
+| `rows`               | values[][] | Array of row arrays containing the dimension and metric values.      |
 
 ### Response Schema
 ```js
