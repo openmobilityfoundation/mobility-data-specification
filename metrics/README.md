@@ -119,6 +119,7 @@ Note: If `end_date` is specified, all intervals that *begin* between the specifi
 | `query.dimensions`   | string[]   | From Request.                                                   |
 | `query.filters`      | filter[]   | From Request.                                                   |
 | `query.timezone`     | timezone   | From Request.                                                   |
+| `k.value`            | integer    | The k-anonymity value used in any [data redaction](#data-redaction). 10 is the default. |
 | `columns`            | column[]   | Array of column information                                     |
 | `column.name`        | string     | Name of metric or dimension column.                             |
 | `column.column_type` | string     | Type of column: `measure` or `dimension`.                       |
