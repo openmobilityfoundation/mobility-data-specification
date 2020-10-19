@@ -6,6 +6,7 @@ An API for requesting **historical** calculated [metrics](core_metrics.md) and a
 
 - [General Information](#general-information)
 - [Date and Time Format](#date-and-time-format)
+- [Data Redaction](#data-redaction)
 - [Metrics Discovery API](#metrics-discovery-api)
 - [Metrics Query API](#metrics-query-api)
 
@@ -26,6 +27,14 @@ Initial Design Use Cases:
 All dates and times (datetime) are [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) formatted strings (YYYY-MM-DDTHHMM), with minute granularity supported and time zone (default UTC) or included offset. Dates and times may also be specified using a numeric *Unix epoch/timestamp* 
 
 All interval durations (duration) are [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) duration format strings (e.g. PT15M, PT1H, P1D).
+
+## Data Redaction
+
+Some combinations of dimensions, filters, time, and geography may return a small count of trips, which could increase a privacy risk of re-identification. To correct for that, Metrics does not return data below a certain count of results.  This is called k-anonymity, and the threshold is set at a k-value of 10. 
+
+If the query returns less than `10` trips in its count, then a `rows` value `number` of `-1` is returned.
+
+The k-value is always returned in the Metrics Query API [response](/metrics#response-1) to provider important context for the data consumer on the data redaction that is occuring.
 
 ## Metrics Discovery API
 
@@ -85,8 +94,8 @@ Supports querying one or more metrics with the following parameters.
 | `start_date`    | datetime      | Yes      | ISO 8601 formatted start date or numeric timestamp to fetch metrics.    |
 | `end_date`      | datetime      | No       | ISI 8601 formatted end date or numberic timestamp to fetch metrics.     |
 | `timezone`      | timezone      | No       | TZ Database time zone name (default: "UTC")                             |
-| `dimensions`    | string[]      | No       | List of dimension names. [See dimensions.](#dimensions)                 |
-| `filters`       | filter[]      | No       | Filters for metrics to return of format [See filters.](#filters) .      |
+| `dimensions`    | string[]      | No       | List of dimension names. [See dimensions.](core_metrics.md#dimensions)  |
+| `filters`       | filter[]      | No       | Filters for metrics to return of format [See filters.](core_metrics.md#filters) |
 | `filter.name`   | string        | No       | Name of filter (e.g. 'vehicle_type')                                    |
 | `filter.values` | string[]      | No       | List of values to filter for (e.g ['car', 'moped'])                     |
 
