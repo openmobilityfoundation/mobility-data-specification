@@ -15,13 +15,15 @@ An API for requesting **historical** calculated [metrics](core_metrics.md) and a
 
 Objectives:
 - Cities need a number of clearly defined best practice metrics for operating, measuring, and managing emerging micro mobility programs using MDS data.
-- There is currently no standard counting methodology that mobility providers and cities have agreed upon. This consequently causes friction when establishing a new mobility program and evaluating its impact
+- There is currently no standard counting methodology that mobility providers and cities have agreed upon. This consequently causes friction when establishing a new mobility program and evaluating its impact.
 - Cities need to rely upon trusted data sources upon which to perform longer term studies on citizen impact.
 - Mobility providers would like consistent rules between each city deployment in order to make their operations more scalable.
+- Some information like special groups usage is too sensitive to be shared at the trip level, so aggregate metrics are a preferable way to share a subset of this provider data with cities to evaluate program success.
 
-Initial Design Use Cases:
-- For cities to republish data ingested from MDS (Agency or Provider data) for use in visualization, analysis, or other applications
-- For cities to publish calculated metrics back to providers allowing shared understanding of how policies are measured and enforced
+Initial Design Use Cases and Scenarios:
+- For cities to republish data ingested from MDS (Agency or Provider data) for use in visualization, analysis, or other applications to trusted third parties (e.g., departments or individuals within their city, academic researchers).
+- For cities to publish calculated metrics back to providers allowing shared understanding and alignment on billing, enforcement, and policy alignment.
+- For providers to publish metrics to cities for analysis and report alignment. This is mean to supplement the required trips endpoint, but it may solve some of a city's use cases.
 
 [Top][toc]
 
