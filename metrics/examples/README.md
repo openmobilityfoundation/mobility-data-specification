@@ -74,7 +74,7 @@ POST /metrics
     "end_date": "2019-10-28T00:00-07",
     "dimensions": ["vehicle_type"],
     "timezone": "UTC",
-    "k.value": 10,
+    "k_value": 10,
     "filters": []
   },
   "columns": [
