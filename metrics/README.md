@@ -6,6 +6,7 @@ An API for requesting **historical** calculated [metrics](core_metrics.md) and a
 
 - [General Information](#general-information)
 - [Date and Time Format](#date-and-time-format)
+- [Authorization](#authorization)
 - [Data Redaction](#data-redaction)
 - [Metrics Discovery API](#metrics-discovery-api)
 - [Metrics Query API](#metrics-query-api)
@@ -22,11 +23,21 @@ Initial Design Use Cases:
 - For cities to republish data ingested from MDS (Agency or Provider data) for use in visualization, analysis, or other applications
 - For cities to publish calculated metrics back to providers allowing shared understanding of how policies are measured and enforced
 
+[Top][toc]
+
 ## Date and Time Format
 
 All dates and times (datetime) are [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) formatted strings (YYYY-MM-DDTHHMM), with minute granularity supported and time zone (default UTC) or included offset. Dates and times may also be specified using a numeric *Unix epoch/timestamp* 
 
 All interval durations (duration) are [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) duration format strings (e.g. PT15M, PT1H, P1D).
+
+[Top][toc]
+
+## Authorization
+
+When making requests, the Metrics API expects `provider_id` to be part of the claims in a [JWT](https://jwt.io/) `access_token` in the `Authorization` header, in the form `Authorization: Bearer <access_token>`. The token issuance, expiration and revocation policies are at the discretion of the Agency/Provider.
+
+[Top][toc]
 
 ## Data Redaction
 
@@ -35,6 +46,8 @@ Some combinations of dimensions, filters, time, and geography may return a small
 If the query returns less than `10` trips in its count, then a `rows` value `number` of `-1` is returned.
 
 The k-value is always returned in the Metrics Query API [response](/metrics#response-1) to provider important context for the data consumer on the data redaction that is occuring.
+
+[Top][toc]
 
 ## Metrics Discovery API
 
@@ -76,6 +89,8 @@ None.
 }
 ```
 See the [Metrics Examples](examples) for ways these can be implemented.
+
+[Top][toc]
 
 ## Metrics Query API
 
@@ -160,3 +175,7 @@ All named fields are required to be returned in response. Non-relevant values ca
 }
 ```
 See the [Metrics Examples](examples) for ways these can be implemented.
+
+[Top][toc]
+
+[toc]: #table-of-contents
