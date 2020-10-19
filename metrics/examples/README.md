@@ -1,6 +1,6 @@
 # Metrics Examples
 
-This file represents a series of examples of [Metrics](metrics) to use as templates. 
+This file represents a series of examples of [Metrics](/metrics) to use as templates. 
 
 ## Table of Contents
 - [Metrics Discovery API](metrics-discovery-api)
