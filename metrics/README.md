@@ -26,7 +26,7 @@ Objectives:
 Initial Design Use Cases and Scenarios:
 - For cities to republish data ingested from MDS (Agency or Provider data) for use in visualization, analysis, or other applications to trusted third parties (e.g., departments or individuals within their city, academic researchers).
 - For cities to publish calculated metrics back to providers allowing shared understanding and alignment on billing, enforcement, and policy alignment.
-- For providers to publish metrics to cities for analysis and report alignment. This is mean to supplement the required trips endpoint, but it may solve some of a city's use cases.
+- For providers to publish metrics to cities for analysis and report alignment. This is not meant to supplement the required [trips](https://github.com/openmobilityfoundation/mobility-data-specification/tree/feature-metrics/provider#trips) endpoint, but it may solve some of a city's use cases.
 
 [Top][toc]
 
