@@ -1,6 +1,8 @@
 # Mobility Data Specification: Metrics
 
-An API for requesting **historical** calculated [metrics](core_metrics.md) and aggregations of MDS data. 
+The Metrics API endpoints are intended to be implemented by regulatory agencies or mobility providers for requesting **historical** calculated [core metrics](core_metrics.md) and aggregations of MDS data. The Metrics API allows viewing of aggregate report data derived from some MDS endpoints, and information outside of MDS, that may be used for use cases like compliance, program effectiveness, and alignment on counts.
+
+[Metrics Examples](examples) are available with sample implementations.
 
 ## Table of Contents
 
