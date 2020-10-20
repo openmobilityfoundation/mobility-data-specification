@@ -12,6 +12,7 @@ The Metrics API endpoints are intended to be implemented by regulatory agencies 
 - [Data Redaction](#data-redaction)
 - [Metrics Discovery API](#metrics-discovery-api)
 - [Metrics Query API](#metrics-query-api)
+- [Examples](#examples)
 
 ## General Information
 
@@ -178,6 +179,11 @@ All named fields are required to be returned in response. Non-relevant values ca
   ]
 }
 ```
+
+[Top][toc]
+
+## Examples
+
 See the [Metrics Examples](examples) for ways these can be implemented.
 
 [Top][toc]
