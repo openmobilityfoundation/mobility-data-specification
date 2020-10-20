@@ -1,6 +1,6 @@
 # MDS Core Metrics
 
-The core metrics are a set of defined, consistent MDS metrics definitions that provide building blocks for other MDS metrics, regardless of vehicle type. 
+The core metrics are a set of defined, consistent MDS metrics definitions that provide building blocks for other MDS [metrics](/metrics), regardless of vehicle type. 
 
 ## Table of Contents
 
