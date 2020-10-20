@@ -1,9 +1,18 @@
 # MDS Core Metrics
 
-The core metrics are a set of defined, consistent MDS metrics that provide building blocks for other MDS metrics, regardless of vehicle type. 
+The core metrics are a set of defined, consistent MDS metrics definitions that provide building blocks for other MDS metrics, regardless of vehicle type. 
+
+## Table of Contents
+
+- [Metrics Definitions](#metrics-definitions)
+  - [Dimensions](#dimensions)
+  - [Filters](#filters)
+  - [Special Group Type](#special-group-type)
+- [Other MDS Metrics](#other-mds-metrics)
+
+# Metrics Definitions
 
 The table below represents supported MDS core metrics and definition. All metrics are aggregated by time interval and geographic areas. This [document](https://docs.google.com/document/d/1rOhnaKWPSZApfWhFd1lzurXMbWLuZTJAYCLoxT2PQ14/edit?usp=sharing) provides methodologies and sample calculations of MDS metrics. 
-
 
 |Number| Metric                | Description    |
 |------|-----------------------|----------------|
@@ -22,6 +31,8 @@ The table below represents supported MDS core metrics and definition. All metric
 | 1.13 | trips.[start_loc/end_loc]_distance.std | The standard deviation trip distance (in meters) aggregated by either the start or first enter, or end or final leave locations. |
 | 1.14 | trips.[start_loc/end_loc]_distance.sum | The total sum of trip distance (in meters) aggregated by either the start or first enter, or end or final leave locations. |
 
+[Top][toc]
+
 ## Dimensions
 
 The following represent the suggested MDS core metric dimensions:
@@ -33,6 +44,8 @@ The following represent the suggested MDS core metric dimensions:
 | vehicle_type | [Vehicle Type](/agency#vehicle-type) defined by MDS                                                  |
 | special_group_type | [Special Group Type](#special-group-type) defined by MDS                                                  |
 
+[Top][toc]
+
 ## Filters
 
 The following represent the suggested MDS core metric filters:
@@ -43,6 +56,8 @@ The following represent the suggested MDS core metric filters:
 | geography_id    | [MDS Geography](/geography) |
 | vehicle_type | [Vehicle Type](/agency#vehicle-type) defined by MDS                                                      |
 | special_group_type | [Special Group Type](#special-group-type) defined by MDS                                                  |
+
+[Top][toc]
 
 ## Special Group Type
 
@@ -56,6 +71,12 @@ Here are the possible values for the `special_group_type` field:
 
 Other special group types may be added in future MDS releases as relevant agency and provider use cases are identified.
 
+[Top][toc]
+
 # Other MDS Metrics
 
 - [MDS Dockless Metrics](dockless_metrics.md)
+
+[Top][toc]
+
+[toc]: #table-of-contents
