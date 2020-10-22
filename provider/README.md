@@ -9,6 +9,7 @@ This specification contains a data standard for *mobility as a service* provider
 * [General Information](#general-information)
   * [Versioning](#versioning)
   * [Response Format](#response-format)
+  * [Responses and Error Messages](#responses-and-error-messages)
   * [JSON Schema](#json-schema)
   * [Pagination](#pagination)
   * [Municipality Boundary](#municipality-boundary)
@@ -42,11 +43,11 @@ Versioning must be implemented as specified in the [Versioning section][versioni
 
 [Top][toc]
 
-### Response Format
+### Responses and Error Messages
 
 The response to a client request must include a valid HTTP status code defined in the [IANA HTTP Status Code Registry][iana].
 
-See the [Responses section][responses] for information on valid MDS response codes and the [Error Messages section][error-messages] for information on formatting error messages.
+See [Responses][responses] for information on valid MDS response codes and [Error Messages][error-messages] for information on formatting error messages.
 
 The response must set the `Content-Type` header as specified in the [Versioning section][versioning].
 
@@ -115,7 +116,7 @@ At a minimum, paginated payloads must include a `next` key, which must be set to
 
 Municipalities requiring MDS Provider API compliance should provide an unambiguous digital source for the municipality boundary. This boundary must be used when determining which data each `provider` API endpoint will include.
 
-The boundary should be defined as a polygon or collection of polygons. The file defining the boundary should be provided in Shapefile or GeoJSON format and hosted online at a published address that all providers and `provider` API consumers can access and download. The boundary description can be sent as a reference to an GeoJSON object or flat-file, if the agency is using Geography.
+The boundary should be defined as a polygon or collection of polygons. The file defining the boundary should be provided in Shapefile or GeoJSON format and hosted online at a published address that all providers and `provider` API consumers can access and download. The boundary description can be sent as a reference to an GeoJSON object or flat-file, if the agency is using [Geography](/geography).
 
 Providers are not required to recalculate the set of historical data that is included when the municipality boundary changes. All new data must use the updated municipality boundary.
 
@@ -409,6 +410,7 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 [costs-and-currencies]: /general-information.md#costs-and-currencies
 [data-latency]: #data-latency-requirements
 [dgps]: https://en.wikipedia.org/wiki/Differential_GPS
+[error-messages]: /general-information.md#error-messages
 [events]: #events
 [events-schema]: events.json
 [event-times]: #event-times
