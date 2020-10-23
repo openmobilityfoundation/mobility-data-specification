@@ -105,6 +105,7 @@ Placeholder -- link to schema to be added later.
 | `effective_date`   | [timestamp][ts] | Optional   | The date at which a Geography is considered "live".  Must be at or after `publish_date`. |
 | `publish_date`     | [timestamp][ts] | Required   | Time that the geography was published, i.e. made immutable                       |
 | `prev_geographies` | UUID[]    | Optional   | Unique IDs of prior geographies replaced by this one                                   |
+| `retire_date` | [timestamp][ts] | Optional | The date at which a Geography is no longer considered "live".  Must be after `effective_date`. |
 
 [Top][toc]
 
