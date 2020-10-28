@@ -52,7 +52,7 @@ Some combinations of dimensions, filters, time, and geography may return a small
 
 If the query returns less than `10` trips in its count, then a `rows` value `number` of `-1` is returned.
 
-The k-value is always returned in the Metrics Query API [response](/metrics#response-1) to provider important context for the data consumer on the data redaction that is occuring.
+The k-value is always returned in the Metrics Query API [response](/metrics#response-1) to provide important context for the data consumer on the data redaction that is occuring.
 
 [Top][toc]
 
