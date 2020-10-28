@@ -11,10 +11,34 @@ This specification details the purpose, use cases, and schema for Jurisdictions.
 - [Schema](#schema)
 
 ## Background
+City and transportation agencies need to regulate mobility within their own jurisdictions. Within a collection of agencies under a single MDS software deployment, those agencies need to coordinate and share relevant data between one another when their jurisdictions overlap.
 
-While MDS provides a specification for a machine-readable format to describe a geofence in the Geography specification, a plain Geography is not always enough for all use cases. A Geography is a stand-alone object that intentionally has no additional metadata. A Jurisdiction  designates a particular Geography as one that describes some region over which an agency has legal authority. For example, the geographical boundaries of a county might form a Jurisdiction of interest for a county transportation agency. 
+The jurisdictions API helps to answer the following questions when implementing MDS in a multi-jurisdictional environment:
 
-An Agency might have multiple Jurisdictions that fall within its authority. For example, the city of London is divided into multiple boroughs that could each form a Jurisdiction. This would make it easier to see which boroughs are most popular for trips, and enable data isolation by borough. 
+How do agencies identify their authority (geographic area, up-to-date-ness, etc.) to one another and to mobility operators? How is “Elsewhere defined?”
+In a multi-agency, multi-jurisdictional setting, agencies have the need to see inherit mobility policies from other agencies based on their jurisdiction.
+When mobility data flows into a multi-jurisdictional deployment (ex: a Municipal Planning Organization), with multiple agencies contained within, how are users and applications at the various agencies assigned permission to see relevant data for their agency?
+In the cases where agency jurisdictions overlap, how should a system represent these overlaps for the purpose of allowing different types of data purview for agency users.
+
+### Use Cases
+#### 1. Defining what elsewhere means
+For a Single jurisdiction MDS deployment, a city designates a jurisdiction that providers can reference and know in what area to send events. When a trip leaves the LADOT jurisdiction, providers need to send an elsewhere event.
+
+For a multi-jurisdiction MDS deployment where a Municipal Planning Organization (MPO) is handling mobility policy, the MPO can designate a special geography as the jurisdiction of the MPO where mobility providers should send data to one MDS instance (From the Providers’ POV, they can treat the MPO as a single large jurisdiction). Cities and agencies contained within the MPO would internally be able filter for their own jurisdictional data. This would allow mobility providers to not need to send MDS data to multiple MDS instances.
+
+#### 2. Jurisdictional overlap for Policy
+Agencies and mobility providers would be able to see what policies apply to what agency’s jurisdictions.
+
+Example: The City of Coral Gables, one of 34 municipalities within Miami-Dade county, would like to view and inherit the official published mobility policies from Miami-Dade county. Coral Gables would need the permissions to see and use the same mobility policy for the Miami-Dade jurisdiction. At the same time, Coral Gables would also be able to author its own mobility policies for its jurisdiction. 
+
+#### 3. Agencies can assign permissions in a single MDS deployment
+
+Example: A SaaS company contracts with Miami-Dade County to provide MDS. There are 34 cities within the county. Miami-Dade County needs to assign permissions to each city to control who writes policy, based on jurisdictions. A Jurisdictions object with a stable identifier can be used for access control.
+
+#### 4. Agencies need to grant application access
+Example: The City of Miami has different data visualization tools from the city of Coral Gables
+Those tools can be granted data access from the SaaS tool based on the jurisdiction stable identifier. 
+
 
 [Top](#table-of-contents)
 
