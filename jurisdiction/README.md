@@ -75,6 +75,7 @@ An individual `Jurisdiction` object is defined by the following fields:
 | `agency_name`    | String    | Optional   | Human-readable agency name for display purposes |
 | `description`    | String    | Required   | Description of Jurisdiction.                                                               |
 | `geography_id`   | UUID      | Optional   | The unique ID of the geography covered by this Jurisdiction.
+| `mobility_mode`  | String    | Optional   | Valid values are left up to the agency to determine, but a couple examples that we think might be useful are 'taxi' and 'micromobility'.
 | `timestamp`      | timestamp | Required   | Creation or update time of a Jurisdiction.                                                 |
 
 Formatted in JSON, a Jurisdiction object should look like this:
