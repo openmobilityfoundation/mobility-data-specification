@@ -1,6 +1,6 @@
 # Metrics Methodology Documentation
 
-This section provides methodologies and sample calculations of [MDS metrics](https://github.com/lacuna-tech/mobility-data-specification/blob/c5d0092e80a62708efe4e23c8c4c64635b69ed5d/metrics/README.md). The Primary audience for this Guide is cities, mobility service providers, and third-party ecosystem services to have a standard way to consistently compute mobility metrics, while consumers of metrics may also find this document helpful to better understand metric parameters and assumptions.
+This section provides methodologies and sample calculations of [MDS metrics](/metrics/README.md). The Primary audience for this Guide is cities, mobility service providers, and third-party ecosystem services to have a standard way to consistently compute mobility metrics, while consumers of metrics may also find this document helpful to better understand metric parameters and assumptions.
 
 **Assumptions:** Metrics calculations assume datasets are complete, received on time, and have valid state transitions unless noted otherwise. 
 
@@ -40,7 +40,7 @@ This document will be updated to match in accordance with MDS version 1.0.0
 
 ## 1. MDS Core Metrics
 
-Reference to MDS Core Metrics specification in Github: [link](https://github.com/lacuna-tech/mobility-data-specification/blob/add_metrics_definitions/metrics/core_metrics.md) 
+Reference to MDS Core Metrics specification in Github: [link](/metrics/core_metrics.md) 
 
 ### 1.1 vehicles.[state].avg
 
@@ -189,7 +189,7 @@ A sample metric output table for trips.start.count Some columns are omitted in t
 | trips.end_loc.count   | 10:30             | PT15M                | neighborhood_council | Downtown            | 4     |
 | trips.end_loc.count   | 10:45             | PT15M                | neighborhood_council | Downtown            | 1     |
 
-### 1.7 trips.[start_loc/end_loc]_duration.avg
+### 1.7 `trips.[start_loc/end_loc]_duration.avg`
 
 The average duration (in seconds) of trips aggregated by geography areas of either trip_start or trip_enter, or trip_end or final trip_leave events during the time interval. 
 
@@ -205,7 +205,7 @@ A sample metric output table for **trips.[start_loc/end_loc]_duration.avg**.
 | trips.start_loc_duration.avg | 10:30             | PT15M                | neighborhood_council | Downtown            | 975   |
 | trips.end_loc_duration.avg   | 10:45             | PT15M                | neighborhood_council | Downtown            | 1080  |
 
-### 1.8 trips.[start_loc/end_loc]_duration.sum
+### 1.8 `trips.[start_loc/end_loc]_duration.sum`
 
 The total duration (in seconds) of trips aggregated by geography areas of either trip_start or trip_enter, or trip_end or final trip_leave events during the time interval. 
 
@@ -221,7 +221,7 @@ A sample metric output table for **trips.[start_loc/end_loc]_duration.sum**.
 | trips.end_loc_duration.sum   | 10:30             | PT15M                | neighborhood_council | Downtown            | 3900  |
 | trips.end_loc_duration.sum   | 10:45             | PT15M                | neighborhood_council | Downtown            | 1080  |
 
-### 1.9 trips.[start_loc/end_loc]_distance.avg
+### 1.9 `trips.[start_loc/end_loc]_distance.avg`
 
 The average distance (in meter) of trips aggregated by geography areas of either trip_start or trip_enter, or trip_end or final trip_leave events during the time interval. 
 
@@ -237,7 +237,7 @@ A sample metric output table for **trips.[start_loc/end_loc]_distance.avg**.
 | trips.end_loc.distance.avg   | 10:30             | PT15M                | neighborhood_council | Downtown            | 484.25 |
 | trips.end_loc.distance.avg   | 10:45             | PT15M                | neighborhood_council | Downtown            | 420    |
 
-### 1.10 trips.[start_loc/end_loc]_distance.sum
+### 1.10 `trips.[start_loc/end_loc]_distance.sum`
 
 The total distance (in meter) of trips aggregated by geography areas of either trip_start or trip_enter, or trip_end or final trip_leave events during the time interval. 
 
@@ -257,7 +257,7 @@ A sample metric output table for **trips.[start_loc/end_loc]_distance.sum**.
 
 Reference to MDS Dockless Metrics specification in Github: [link](https://github.com/lacuna-tech/mobility-data-specification/blob/add_metrics_definitions/metrics/dockless_metrics.md) 
 
-### 2.1 dockless.deployed.avg
+### 2.1 `dockless.deployed.avg`
 
 The average number of vehicles in the public right of way during the time interval and within the geographic area. Vehicles in the public right of way mean they were either in available, unavailable, reserved, or trip state. 
 
@@ -327,7 +327,7 @@ Below is an example of **dockless.deployed.avg** grouped into a 1-hour bin, and 
 | dockless.deployed.avg     | 09:00             | PT1H                 | Zone A    | 1.80  |
 | dockless.deployed.avg.min | 06:00             | PT4H                 | Zone A    | 1.80  |
 
-### 2.3 dockless.deployed.min
+### 2.3 `dockless.deployed.min`
 
 The minimum number of vehicles in the public right of way, which is in the state available, unavailable, reserved, or trip during the time interval, and within the geographic area. 
 
@@ -339,7 +339,7 @@ Using the same sample dataset to calculate dockless.avg, the **dockless.deployed
 | --------------------- | ----------------- | -------------------- | --------- | --- |
 | dockless.deployed.min | 10:00             | PT15M                | Zone A    | 1   |
 
-### 2.4 dockless.deployed.avg.max
+### 2.4 `dockless.deployed.avg.max`
 
 The maximum average number of vehicles in the public right of way, which is in the state available, unavailable, reserved, or trip during a time interval, and within the geographic area. The time interval for **dockless.deployed.avg.max** has to be larger than ones used for **dockless.deployed.avg**, such that if dockless.deployed.avg is calculated at 1-hour interval, **dockless.deployed.avg.max** can be the maximum of the 1-hour interval of a 4 hour peak time. 
 
@@ -359,7 +359,7 @@ Below is an example of dockless.avg grouped into a 15 minutes bin, and dockless.
 | dockless.deployed.avg     | 09:00             | PT1H                 | Zone A    | 1.80  |
 | dockless.deployed.avg.max | 06:00             | PT4H                 | Zone A    | 4.10  |
 
-### 2.5 dockless.deployed.max
+### 2.5 `dockless.deployed.max`
 
 The maximum number of vehicles in the public right of way, which is in the state available, unavailable, reserved, or trip during the time interval, and within the geographic area. 
 
@@ -399,7 +399,7 @@ We modify the event information slightly, such that (1) we did point-in-polygon 
 | --------------------- | ----------------- | -------------------- | --------- | ----- |
 | dockless.active.count | 10:00             | PT15M                | Zone A    | 2     |
 
-### 2.7 dockless.inactive.count
+### 2.7 `dockless.inactive.count`
 
 The number of vehicles in the public right of way that has no trip during the interval. Metric is grouped by the geographic location of where the vehicle state started.
 
@@ -414,7 +414,7 @@ Using the same sample dataset to calculate dockless.active, the **dockless.inact
 | dockless.inactive.count | 10:00             | PT15M                | Zone A    | 1     |
 | dockless.inactive.count | 10:00             | PT15M                | Zone B    | 1     |
 
-### 2.8 dockless.utilization.idle.percent
+### 2.8 `dockless.utilization.idle.percent`
 
 The percentage of time vehicles spent not on a trip to the total time vehicles spent in the public right of way (available, unavailable, in trip or reserved) within the geography area during the interval. 
 
@@ -430,7 +430,7 @@ Provided pre-calculated** vehicles.[state].duration.sum** metrics, the **dockles
 | vehicles.trip.duration.sum        | 10:00             | PT15M                | Zone A    | 120   |
 | dockless.utilization.idle.percent | 10:00             | PT15M                | Zone A    | 0.98  |
 
-### 2.9 dockless.utilization.active.percent
+### 2.9 `dockless.utilization.active.percent`
 
 The percentage of vehicles that had at least one trip within the geography area during the interval. 
 
@@ -446,7 +446,7 @@ Provided pre-calculated **dockless.active** and **dockless.inactive**, the **doc
 | dockless.utilization.active.percent | 10:00             | PT15M                | Zone A    | 0.50  |
 | dockless.utilization.active.percent | 10:00             | PT15M                | Zone B    | 1.00  |
 
-### 2.10 dockless.utilization.trips_per_vehicle.avg
+### 2.10 `dockless.utilization.trips_per_vehicle.avg`
 
 The average number of trips for all deployed vehicles during the interval. 
 
@@ -466,30 +466,32 @@ The table below maps MDS Metrics to Mobility Data Collaborative (MDC) [Glossary 
 
 **  
 
-| MDS Core Metrics                                 | MDC Metrics                                                                                           |
-| ------------------------------------------------ | ----------------------------------------------------------------------------------------------------- |
-| 1.1    vehicles.[state].avg                      | 6.1   Number of Vehicle of a Specified Status*6.2   Average Number of Vehicles of a Specified Status* |
-| 1.2    vehicles.[state].min                      | 6.6   Absolute Minimum Number of Vehicles of a Specified Status*                                      |
-| 1.3    vehicles.[state].max                      | 6.4   Absolute Maximum Number of Vehicles of a Specified Status*                                      |
-| 1.4    vehicles.[state].duration.sum             | 5.x   Time Definitions                                                                                |
-| 1.5    events.[event_type].count                 | -                                                                                                     |
-| 1.6    trips.[start_loc/end_loc].count           | 7.1   Number of Trips                                                                                 |
-| 1.7    trips.[start_loc/end_loc]_duration.avg    | -                                                                                                     |
-| 1.8    trips.[start_loc/end_loc]_duration.sum    | -                                                                                                     |
-| 1.9    trips.[start_loc/end_loc]_distance.avg    | -                                                                                                     |
-| 1.10  trips.[start_loc/end_loc]_distance.sum     | -                                                                                                     |
-| MDS Dockless Metrics                             | MDC Metrics                                                                                           |
-| 2.1    dockless.deployed.avg                     | 6.1   Number of Vehicle of a Specified Status*6.2   Average Number of Vehicles of a Specified Status* |
-| 2.2    dockless.deployed.avg.min                 | 6.5   Minimum Average Number of Vehicles of a Specified Status*                                       |
-| 2.3    dockless.deployed.min                     | 6.6   Absolute Minimum Number of Vehicles of a Specified Status*                                      |
-| 2.4    dockless.deployed.avg.max                 | 6.3   Maximum Average Number of Vehicles of a Specific Status*                                        |
-| 2.5    dockless.deployed.max                     | 6.4   Absolute Maximum Number of Vehicles of a Specified Status*                                      |
-| 2.6    dockless.active.count                     | -                                                                                                     |
-| 2.7    dockless.inactive.count                   | -                                                                                                     |
-| 2.8    dockless.utilization.idle_percent         | -                                                                                                     |
-| 2.9    dockless.utilization.active_percent       | -                                                                                                     |
-| 2.10  dockless.utilization.trips_per_vehicle.avg | 7.2   Utilization Rate of Vehicles of a Specified Status**                                            |
+| MDS Core Metrics                                 | MDC Metrics                                                                                            |
+| ------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
+| 1.1    vehicles.[state].avg                      | 6.1   Number of Vehicle of a Specified Status *6.2   Average Number of Vehicles of a Specified Status* |
+| 1.2    vehicles.[state].min                      | 6.6   Absolute Minimum Number of Vehicles of a Specified Status*                                       |
+| 1.3    vehicles.[state].max                      | 6.4   Absolute Maximum Number of Vehicles of a Specified Status*                                       |
+| 1.4    vehicles.[state].duration.sum             | 5.x   Time Definitions                                                                                 |
+| 1.5    events.[event_type].count                 | -                                                                                                      |
+| 1.6    trips.[start_loc/end_loc].count           | 7.1   Number of Trips                                                                                  |
+| 1.7    trips.[start_loc/end_loc]_duration.avg    | -                                                                                                      |
+| 1.8    trips.[start_loc/end_loc]_duration.sum    | -                                                                                                      |
+| 1.9    trips.[start_loc/end_loc]_distance.avg    | -                                                                                                      |
+| 1.10  trips.[start_loc/end_loc]_distance.sum     | -                                                                                                      |
 
-_*MDC does not include a sample to handle geospatial aggregation for vehicles on the move, i.e. in trip status._
+| MDS Dockless Metrics                             | MDC Metrics                            |
+| ------------------------------------------------ | -------------------------------------- |
+| 2.1    dockless.deployed.avg                     | 6.1   Number of Vehicle of a Specified Status *6.2   Average Number of Vehicles of a Specified Status* |
+| 2.2    dockless.deployed.avg.min                 | 6.5   Minimum Average Number of Vehicles of a Specified Status*                                        |
+| 2.3    dockless.deployed.min                     | 6.6   Absolute Minimum Number of Vehicles of a Specified Status*                                       |
+| 2.4    dockless.deployed.avg.max                 | 6.3   Maximum Average Number of Vehicles of a Specific Status*                                         |
+| 2.5    dockless.deployed.max                     | 6.4   Absolute Maximum Number of Vehicles of a Specified Status*                                       |
+| 2.6    dockless.active.count                     | -                                                                                                      |
+| 2.7    dockless.inactive.count                   | -                                                                                                      |
+| 2.8    dockless.utilization.idle_percent         | -                                                                                                      |
+| 2.9    dockless.utilization.active_percent       | -                                                                                                      |
+| 2.10  dockless.utilization.trips_per_vehicle.avg | 7.2   Utilization Rate of Vehicles of a Specified Status                                               |
+
+**MDC does not include a sample to handle geospatial aggregation for vehicles on the move, i.e. in trip status.*
 
 _**MDC glossary does not specify the status used to calculate utilization rate. Metrics API calculation is the average of trips per active vehicle, which is consistent with [SharedStreets metrics](https://github.com/sharedstreets/mobility-metrics#metrics)._
