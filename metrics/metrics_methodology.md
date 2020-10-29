@@ -42,7 +42,7 @@ This document will be updated to match in accordance with MDS version 1.0.0
 
 Reference to MDS Core Metrics specification in Github: [link](/metrics/core_metrics.md) 
 
-### 1.1 vehicles.[state].avg
+### 1.1 `vehicles.[state].avg`
 
 The average number of vehicles in an [MDS state](https://github.com/openmobilityfoundation/mobility-data-specification/tree/release-0.4.1/agency#vehicle-events) during the interval within a geographic area. To calculate **vehicles.[state].avg**, we will take a snapshot of vehicle status every N-period, and  average the number of vehicles shown to be in status. The default for N is a 1-minute snapshot, with the goal to compute metrics at the largest interval where the least amount of change will occur. Although depending on use cases and computational capabilities, the snapshot frequency can be configurable.
 
@@ -91,7 +91,7 @@ vehicles.available.avg = 23 / 15 = 1.53
 | ---------------------- | ----------------- | -------------------- | --------- | ----- |
 | vehicles.available.avg | 10:00             | PT15M                | Zone A    | 1.53  |
 
-### 1.2 vehicles.[state].min
+### 1.2 `vehicles.[state].min`
 
 The minimum number of vehicles in a specified state during the interval within a geographical area. Similar to calculating **vehicles.[state].avg**, we will take a snapshot of the vehicle state every N-period, and find the minimum number of vehicles in the specified state during the interval.
 
@@ -103,7 +103,7 @@ Using the same sample dataset to calculate **vehicles.[state].avg**, the **vehic
 | --------------------- | ----------------- | -------------------- | --------- | ----- |
 | vehicle.available.min | 10:00             | PT15M                | Zone A    | 1     |
 
-### 1.3 vehicles.[state].max
+### 1.3 `vehicles.[state].max`
 
 The maximum number of vehicles in a specified state during the interval within a geographical area. Similar to calculating **vehicles.[state].avg**, we will take a snapshot of the vehicle state every N-period, and find the maximum number of vehicles in the specified state during the interval.
 
@@ -146,7 +146,7 @@ The sample dataset above will return **vehicles.[state].duration.sum** as shown 
 | vehicles.available.duration.sum | 10:00             | PT15M                | Zone A    | 540   |
 | vehicles.available.duration.sum | 10:00             | PT15M                | Zone B    | 300   |
 
-### 1.5 events.[event_type].count
+### 1.5 `events.[event_type].count`
 
 The number of [MDS events](https://github.com/openmobilityfoundation/mobility-data-specification/tree/release-0.4.1/agency#vehicle-events) received during the time interval within a geographical area.
 
@@ -163,7 +163,7 @@ Using the same sample dataset to calculate **vehicles.[state].duration.sum**, th
 | events.reserve.count           | 10:15             | PT15M                | Zone A    | 1     |
 | events.reserve.count           | 10:15             | PT15M                | Zone B    | 1     |
 
-### 1.6 trips.[start_loc/end_loc].count
+### 1.6 `trips.[start_loc/end_loc].count`
 
 The number of trips aggregated by geography areas of either trip_start or trip_enter, or trip_end or final trip_leave events during the time interval. 
 
