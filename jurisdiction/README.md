@@ -15,10 +15,10 @@ City and transportation agencies need to regulate mobility within their own juri
 
 The jurisdictions API helps to answer the following questions when implementing MDS in a multi-jurisdictional environment:
 
-How do agencies identify their authority (geographic area, up-to-date-ness, etc.) to one another and to mobility operators? How is “Elsewhere defined?”
-In a multi-agency, multi-jurisdictional setting, agencies have the need to see inherit mobility policies from other agencies based on their jurisdiction.
-When mobility data flows into a multi-jurisdictional deployment (ex: a Municipal Planning Organization), with multiple agencies contained within, how are users and applications at the various agencies assigned permission to see relevant data for their agency?
-In the cases where agency jurisdictions overlap, how should a system represent these overlaps for the purpose of allowing different types of data purview for agency users.
+- How do agencies identify their authority (geographic area, up-to-date-ness, etc.) to one another and to mobility operators? How is “Elsewhere defined?”
+- In a multi-agency, multi-jurisdictional setting, agencies have the need to see inherit mobility policies from other agencies based on their jurisdiction.
+- When mobility data flows into a multi-jurisdictional deployment (ex: a Municipal Planning Organization), with multiple agencies contained within, how are users and applications at the various agencies assigned permission to see relevant data for their agency?
+- In the cases where agency jurisdictions overlap, how should a system represent these overlaps for the purpose of allowing different types of data purview for agency users.
 
 ### Use Cases
 #### 1. Defining what elsewhere means
@@ -135,7 +135,7 @@ The `updated` field in the payload wrapper should be set to the time of publishi
 
 ```json
 {
-    "version": "0.4.0",
+    "version": "1.1.0",
     "updated": "1570035222868",
     "end_date": "1570035222868",
     "Jurisdictions": 
