@@ -145,21 +145,21 @@ The `updated` field in the payload wrapper should be set to the time of publishi
         "agency_key": "miami-dade-county",
         "agency_name": "County of Miami-Dade",
         "agency_name": "County of Miami-Dade",
-        "mobility_modes": ["scooter", "taxi"],
+        "mobility_modes": ["taxi"],
         "geography_id": "e95cb0f7-41eb-4bdd-8b1d-92b0593a7df1"
       },
       {
         "jurisdiction_id": "3c71f367-7c7d-49c7-94d0-21b9e7259c1b",
         "agency_key": "miami",
         "agency_name": "City of Miami",
-        "mobility_modes": ["scooter", "taxi"],
+        "mobility_modes": ["micromobility"],
         "geography_id": "a3ddc3f6-b476-4784-bae7-f0141bb534f6"
       },
       {
         "jurisdiction_id": "9fc51c56-9ac3-497a-b575-07097aa147cb",
         "agency_key": "coral-gables",
         "agency_name": "City of Coral Gables",
-        "mobility_modes": ["taxi"],
+        "mobility_modes": [],
         "geography_id": "ad4b47d3-bb49-4122-ad19-5d517490baa6"
       }
     ]
