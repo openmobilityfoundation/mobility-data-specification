@@ -17,6 +17,7 @@ The Metrics API endpoints are intended to be implemented by regulatory agencies 
 ## General Information
 
 Objectives:
+
 - Cities need a number of clearly defined best practice metrics for operating, measuring, and managing emerging micro mobility programs using MDS data.
 - There is currently no standard counting methodology that mobility providers and cities have agreed upon. This consequently causes friction when establishing a new mobility program and evaluating its impact.
 - Cities need to rely upon trusted data sources upon which to perform longer term studies on citizen impact.
@@ -24,6 +25,7 @@ Objectives:
 - Some information like special groups usage is too sensitive to be shared at the trip level, so aggregate metrics are a preferable way to share a subset of this provider data with cities to evaluate program success.
 
 Initial Design Use Cases and Scenarios:
+
 - For cities to republish data ingested from MDS (Agency or Provider data) for use in visualization, analysis, or other applications to trusted third parties (e.g., departments or individuals within their city, academic researchers).
 - For cities to publish calculated metrics back to providers allowing shared understanding and alignment on billing, enforcement, and policy alignment.
 - For providers to publish metrics to cities for analysis and report alignment. This is not meant to replace the required MDS [trips](https://github.com/openmobilityfoundation/mobility-data-specification/tree/feature-metrics/provider#trips) endpoint, but it may supplement it and solve a few of a city's use cases.
@@ -39,8 +41,17 @@ All interval durations (duration) are [ISO 8601](https://en.wikipedia.org/wiki/I
 [Top][toc]
 
 ## Authorization
-
-When making requests, the Metrics API expects `provider_id` to be part of the claims in a [JWT](https://jwt.io/) `access_token` in the `Authorization` header, in the form `Authorization: Bearer <access_token>`. The token issuance, expiration and revocation policies are at the discretion of the Agency/Provider.
+### For Agencies hosting the Metrics API
+When making requests, the Metrics API expects one of two scopes `metrics:read` or `metrics:read:provider` to be present as part of the `scope` claims in a [JWT](https://jwt.io/) `access_token` in the `Authorization` header, in the form `Authorization: Bearer <access_token>`. The token issuance, expiration and revocation policies are at the discretion of the Agency.
+​
+If a client has a `metrics:read` scope, they are permitted to read _all_ metrics available via the Metrics API.
+​
+If a client has a `metrics:read:provider` scope, they are only permitted to read metrics which pertain to a particular `provider_id` claim in the aforementioned [JWT](https://jwt.io/) `access_token`.
+​
+Further scopes and requirements may be added at the discretion of the Agency, depending on their particular access control needs.
+### For Providers hosting the Metrics API
+Follow the pattern outlined in Provider API [auth](../provider/auth.md) document.
+Collapse
 
 [Top][toc]
 
@@ -50,7 +61,7 @@ Some combinations of dimensions, filters, time, and geography may return a small
 
 If the query returns less than `10` trips in its count, then a `rows` value `number` of `-1` is returned.
 
-The k-value is always returned in the Metrics Query API [response](/metrics#response-1) to provider important context for the data consumer on the data redaction that is occuring.
+The k-value is always returned in the Metrics Query API [response](/metrics#response-1) to provide important context for the data consumer on the data redaction that is occuring.
 
 [Top][toc]
 
@@ -79,6 +90,7 @@ None.
 | `filters`          | string[]   | Yes      | List of supported filters for metrics. [See filters.](core_metrics.md#filters)                            |
 
 ### Response Schema
+
 ```js
 {
   "metrics": [
@@ -93,6 +105,7 @@ None.
   "filters": [string]
 }
 ```
+
 See the [Metrics Examples](examples) for ways these can be implemented.
 
 [Top][toc]
@@ -107,17 +120,17 @@ Supports querying one or more metrics with the following parameters.
 
 ### Parameters
 
-| Name            | Type          | Required | Comments                                                                |
-| --------------- | ------------- | -------- | ----------------------------------------------------------------------- |
-| `measures`      | string[]      | Yes      | list of measures to return. [See metric names](core_metrics.md)         |
-| `interval`      | duration      | Yes      | Duration for metrics intervals.                                         |
-| `start_date`    | datetime      | Yes      | ISO 8601 formatted start date or numeric timestamp to fetch metrics.    |
-| `end_date`      | datetime      | No       | ISI 8601 formatted end date or numberic timestamp to fetch metrics.     |
-| `timezone`      | timezone      | No       | TZ Database time zone name (default: "UTC")                             |
-| `dimensions`    | string[]      | No       | List of dimension names. [See dimensions.](core_metrics.md#dimensions)  |
-| `filters`       | filter[]      | No       | Filters for metrics to return of format [See filters.](core_metrics.md#filters) |
-| `filter.name`   | string        | No       | Name of filter (e.g. 'vehicle_type')                                    |
-| `filter.values` | string[]      | No       | List of values to filter for (e.g ['car', 'moped'])                     |
+| Name            | Type     | Required | Comments                                                                        |
+| --------------- | -------- | -------- | ------------------------------------------------------------------------------- |
+| `measures`      | string[] | Yes      | list of measures to return. [See metric names](core_metrics.md)                 |
+| `interval`      | duration | Yes      | Duration for metrics intervals.                                                 |
+| `start_date`    | datetime | Yes      | ISO 8601 formatted start date or numeric timestamp to fetch metrics.            |
+| `end_date`      | datetime | No       | ISI 8601 formatted end date or numberic timestamp to fetch metrics.             |
+| `timezone`      | timezone | No       | TZ Database time zone name (default: "UTC")                                     |
+| `dimensions`    | string[] | No       | List of dimension names. [See dimensions.](core_metrics.md#dimensions)          |
+| `filters`       | filter[] | No       | Filters for metrics to return of format [See filters.](core_metrics.md#filters) |
+| `filter.name`   | string   | No       | Name of filter (e.g. 'vehicle_type')                                            |
+| `filter.values` | string[] | No       | List of values to filter for (e.g ['car', 'moped'])                             |
 
 Note: If `timezone` is specified then `start_date`, `end_date`, and all _datetime_ column values will be 
 converted to the specified time zone. If not, parameters will be converted to and the results will be 
@@ -149,6 +162,7 @@ All named fields are required to be returned in response. Non-relevant values ca
 | `rows`               | values[][] | Array of row arrays containing the dimension and metric values.      |
 
 ### Response Schema
+
 ```js
 {
   "id": string,
