@@ -70,7 +70,7 @@ Here are the possible values for the `special_group_type` field:
 | ---------- | --------------------------------------------------------------------------------------------------------------------- |
 | low_income | Trips where a low income discount is applied by the provider, e.g., a discount from a qualified provider equity plan. |
 
-Other special group types may be added in future MDS releases as relevant agency and provider use cases are identified.
+Other special group types may be added in future MDS releases as relevant agency and provider use cases are identified. When additional special group types or metrics are proposed, a thorough review of utility and relevance in program oversight, evaluation, and policy development should be done by OMF Working Groups, as well as any privacy implications by the OMF Privacy Committee.
 
 [Top][toc]
 
