@@ -78,7 +78,7 @@ The MDS specification is versioned using Git tags and [semantic versioning](http
 
 ## Cities Using MDS
 
-More than 100 cities and public agencies around the world use MDS, and it has been implemented by most major mobility providers. Below are links to some of the specific agency programs/policies:
+More than 115 cities and public agencies around the world use MDS, and it has been implemented by most major mobility providers. Below are links to some of the specific agency programs/policies:
 
 * **Arlington, VA**: [Shared Micro-Mobility Devices](https://transportation.arlingtonva.us/scooters-and-dockless-bikeshare/) page and [permit application](https://arlingtonva.s3.amazonaws.com/wp-content/uploads/sites/19/2019/12/Micro-Mobility_Permit_Final_191203.pdf).
 * **Atlanta, GA**: [Administrative Regulations
