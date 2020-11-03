@@ -7,6 +7,7 @@ The Metrics API endpoints are intended to be implemented by regulatory agencies 
 ## Table of Contents
 
 - [General Information](#general-information)
+- [Beta Feature](#beta-feature)
 - [Date and Time Format](#date-and-time-format)
 - [Authorization](#authorization)
 - [Data Redaction](#data-redaction)
@@ -29,6 +30,12 @@ Initial Design Use Cases and Scenarios:
 - For cities to republish data ingested from MDS (Agency or Provider data) for use in visualization, analysis, or other applications to trusted third parties (e.g., departments or individuals within their city, academic researchers).
 - For cities to publish calculated metrics back to providers allowing shared understanding and alignment on billing, enforcement, and policy alignment.
 - For providers to publish metrics to cities for analysis and report alignment. This is not meant to replace the required MDS [trips](https://github.com/openmobilityfoundation/mobility-data-specification/tree/feature-metrics/provider#trips) endpoint, but it may supplement it and solve a few of a city's use cases.
+
+[Top][toc]
+
+## Beta Feature
+
+The Metrics API and all of its endpoints are marked as a [beta feature](https://github.com/openmobilityfoundation/mobility-data-specification/blob/feature-metrics/general-information.md#beta) starting in the 1.1.0 release.
 
 [Top][toc]
 
