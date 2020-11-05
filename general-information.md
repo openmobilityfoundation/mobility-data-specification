@@ -337,8 +337,7 @@ Vehicles can enter the `unknown` state to and from any other state with the foll
 | `unknown` | `on_trip`   | `located`        | The vehicle has been located by the provider |
 | `unknown` | `on_trip`   | `unspecified`        | The provider cannot definitively state how a vehicle started a trip. |
 | `on_trip` | `elsewhere`   | `trip_leave_jurisdiction` | A vehicle on a trip left the jurisdiction |
-| `on_trip` | `on_trip `   | `trip_enter_geography` | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.1.0)*. The vehicle enters one or more Geographies managed by Policy during an active trip. |
-| `on_trip` | `on_trip `   | `trip_leave_geography` | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.1.0)*. The vehicle leaves one or more Geographies managed by Policy during an active trip. |
+| `on_trip` | `on_trip `   | `crossed_geography_boundary` | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.1.0)*. The vehicle enters or leaves one or more Geographies managed by a Policy. |
 | `unknown` | `elsewhere`   | `comms_restored` | The vehicle transmitted status information after a period of being out of communication. |
 | `unknown` | `elsewhere`   | `located`        | The vehicle has been located by the provider |
 | `unknown` | `elsewhere`   | `unspecified` | The provider cannot definitively state how a vehicle went `elsewhere`. |
