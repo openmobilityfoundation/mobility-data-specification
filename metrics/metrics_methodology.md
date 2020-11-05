@@ -365,7 +365,7 @@ The maximum number of vehicles in the public right of way, which is in the state
 
 **Sample**
 
-Using the same sample dataset to calculate** dockless.deployed.avg**, the **dockless.deployed**.**max** metric will return the following output. Some columns are omitted in this sample table for simplicity.
+Using the same sample dataset to calculate **dockless.deployed.avg**, the **dockless.deployed.max** metric will return the following output. Some columns are omitted in this sample table for simplicity.
 
 | name                  | metric_start_time | metric_time_interval | geography | Value |
 | --------------------- | ----------------- | -------------------- | --------- | ----- |
@@ -420,7 +420,7 @@ The percentage of time vehicles spent not on a trip to the total time vehicles s
 
 **Sample**
 
-Provided pre-calculated** vehicles.[state].duration.sum** metrics, the **dockless.utilization** metric will return the following output. Some columns are omitted in this sample table for simplicity.
+Provided pre-calculated **vehicles.[state].duration.sum** metrics, the **dockless.utilization** metric will return the following output. Some columns are omitted in this sample table for simplicity.
 
 | name                              | metric_start_time | metric_time_interval | geography | value |
 | --------------------------------- | ----------------- | -------------------- | --------- | ----- |
@@ -462,15 +462,13 @@ Provided pre-calculated **trips.start.count** and **dockless.avg**, the **dockle
 
 ## Compatibility with Mobility Data Collaborative Metrics
 
-The table below maps MDS Metrics to Mobility Data Collaborative (MDC) [Glossary Metrics](https://github.com/openmobilityfoundation/mobility-data-specification/files/4659200/MDCGlossaryMetrics02202004.pdf).
-
-**  
+The table below maps MDS Metrics to Mobility Data Collaborative (MDC) [Glossary Metrics](https://github.com/openmobilityfoundation/mobility-data-specification/files/4659200/MDCGlossaryMetrics02202004.pdf).[**](#footnotes)   
 
 | MDS Core Metrics                                 | MDC Metrics                                                                                            |
 | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
-| 1.1    vehicles.[state].avg                      | 6.1   Number of Vehicle of a Specified Status *6.2   Average Number of Vehicles of a Specified Status* |
-| 1.2    vehicles.[state].min                      | 6.6   Absolute Minimum Number of Vehicles of a Specified Status*                                       |
-| 1.3    vehicles.[state].max                      | 6.4   Absolute Maximum Number of Vehicles of a Specified Status*                                       |
+| 1.1    vehicles.[state].avg                      | 6.1   Number of Vehicle of a Specified Status[*](#footnotes),  6.2   Average Number of Vehicles of a Specified Status[*](#footnotes)  |
+| 1.2    vehicles.[state].min                      | 6.6   Absolute Minimum Number of Vehicles of a Specified Status[*](#footnotes)                                       |
+| 1.3    vehicles.[state].max                      | 6.4   Absolute Maximum Number of Vehicles of a Specified Status[*](#footnotes)                                        |
 | 1.4    vehicles.[state].duration.sum             | 5.x   Time Definitions                                                                                 |
 | 1.5    events.[event_type].count                 | -                                                                                                      |
 | 1.6    trips.[start_loc/end_loc].count           | 7.1   Number of Trips                                                                                  |
@@ -481,17 +479,19 @@ The table below maps MDS Metrics to Mobility Data Collaborative (MDC) [Glossary 
 
 | MDS Dockless Metrics                             | MDC Metrics                            |
 | ------------------------------------------------ | -------------------------------------- |
-| 2.1    dockless.deployed.avg                     | 6.1   Number of Vehicle of a Specified Status *6.2   Average Number of Vehicles of a Specified Status* |
-| 2.2    dockless.deployed.avg.min                 | 6.5   Minimum Average Number of Vehicles of a Specified Status*                                        |
-| 2.3    dockless.deployed.min                     | 6.6   Absolute Minimum Number of Vehicles of a Specified Status*                                       |
-| 2.4    dockless.deployed.avg.max                 | 6.3   Maximum Average Number of Vehicles of a Specific Status*                                         |
-| 2.5    dockless.deployed.max                     | 6.4   Absolute Maximum Number of Vehicles of a Specified Status*                                       |
+| 2.1    dockless.deployed.avg                     | 6.1   Number of Vehicle of a Specified Status[*](#footnotes), 6.2   Average Number of Vehicles of a Specified Status[*](#footnotes)  |
+| 2.2    dockless.deployed.avg.min                 | 6.5   Minimum Average Number of Vehicles of a Specified Status[*](#footnotes)                                       |
+| 2.3    dockless.deployed.min                     | 6.6   Absolute Minimum Number of Vehicles of a Specified Status[*](#footnotes)                                        |
+| 2.4    dockless.deployed.avg.max                 | 6.3   Maximum Average Number of Vehicles of a Specific Status[*](#footnotes)                                          |
+| 2.5    dockless.deployed.max                     | 6.4   Absolute Maximum Number of Vehicles of a Specified Status[*](#footnotes)                                        |
 | 2.6    dockless.active.count                     | -                                                                                                      |
 | 2.7    dockless.inactive.count                   | -                                                                                                      |
 | 2.8    dockless.utilization.idle_percent         | -                                                                                                      |
 | 2.9    dockless.utilization.active_percent       | -                                                                                                      |
 | 2.10  dockless.utilization.trips_per_vehicle.avg | 7.2   Utilization Rate of Vehicles of a Specified Status                                               |
 
-**MDC does not include a sample to handle geospatial aggregation for vehicles on the move, i.e. in trip status.*
+### Footnotes
 
-_**MDC glossary does not specify the status used to calculate utilization rate. Metrics API calculation is the average of trips per active vehicle, which is consistent with [SharedStreets metrics](https://github.com/sharedstreets/mobility-metrics#metrics)._
+* _MDC does not include a sample to handle geospatial aggregation for vehicles on the move, i.e. in trip status._
+
+** _MDC glossary does not specify the status used to calculate utilization rate. Metrics API calculation is the average of trips per active vehicle, which is consistent with [SharedStreets metrics](https://github.com/sharedstreets/mobility-metrics#metrics)._
