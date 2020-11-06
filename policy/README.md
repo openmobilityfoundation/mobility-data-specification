@@ -126,6 +126,7 @@ Method: `GET`
 
 [Top][toc]
 
+
 ### Flat Files
 
 To use flat files, policies shall be represented in two (2) files:
@@ -179,6 +180,31 @@ The optional `end_date` field applies to all policies represented in the file.
     }
 }
 ```
+
+[Top][toc]
+
+## Geometry-Driven Events **[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.1.0)*
+
+Geometry-Driven Events is a new MDS feature for Agencies to perform complete Policy compliance monitoring without requiring precise location data. Geometry-Driven Events describe individual vehicles in realtime – not just aggregate data. However, rather than receiving the exact location of a vehicle, Agencies receive information about the vehicle's current geographic region. The regions used for Geometry-Driven Events correspond to the Geographies in an Agency's current Policy. In this way, the data-shared using Geometry-Driven Events is matched to an Agency's particular regulatory needs.
+
+Here's how it works in practice:
+
+1. The Agency creates a geographic Policy Area for a local regulatory need
+
+	*Scooters traveling within downtown during peak hours incur a $0.20 fee.*
+
+2. Providers notify the Agency in real-time about events in the Policy Area.
+
+	*At 5:21pm scooter X7123 entered downtown.*
+
+3. The Agency can refine their data needs over time by revising their published Policy Areas.
+
+	*Agency adds rule disallowing parking on waterfront path, begins receiving data on events within area.*
+
+
+
+Agencies that wish to use Geometry-Driven Events do so by requiring a new `event_geographies` field in status events. This field acts in lieu of location or telemtry data. When an Agency is using Geometry-Driven Events, Providers must emit a new `crossed_geography_boundary` status event whenever a vehicle in a trip crosses a Geography managed by a Policy.
+
 
 [Top][toc]
 
@@ -350,6 +376,7 @@ Rules are a form of pattern matching; conditions under which a given rule is "me
 If a vehicle is matched with a rule, then it _will not_ be considered in the subsequent evaluation of rules within a given policy. This allows for expressing complex policies, such as a layer of "valid" geographies in an earlier rule, with overarching "invalid" geographies in later rules.
 
 The internal mechanics of ordering are up to the Policy editing and hosting software.
+
 
 [Top][toc]
 
