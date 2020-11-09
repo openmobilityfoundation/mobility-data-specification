@@ -35,7 +35,7 @@ Initial Design Use Cases and Scenarios:
 
 ## Beta Feature
 
-The Metrics API and all of its endpoints are marked as a [beta feature](https://github.com/openmobilityfoundation/mobility-data-specification/blob/feature-metrics/general-information.md#beta) starting in the 1.1.0 release.
+The Metrics API and all of its endpoints are marked as a [beta feature](https://github.com/openmobilityfoundation/mobility-data-specification/blob/feature-metrics/general-information.md#beta-features) starting in the 1.1.0 release.
 
 [Top][toc]
 
@@ -50,11 +50,11 @@ All interval durations (duration) are [ISO 8601](https://en.wikipedia.org/wiki/I
 ## Authorization
 ### For Agencies hosting the Metrics API
 When making requests, the Metrics API expects one of two scopes `metrics:read` or `metrics:read:provider` to be present as part of the `scope` claims in a [JWT](https://jwt.io/) `access_token` in the `Authorization` header, in the form `Authorization: Bearer <access_token>`. The token issuance, expiration and revocation policies are at the discretion of the Agency.
-​
+
 If a client has a `metrics:read` scope, they are permitted to read _all_ metrics available via the Metrics API.
-​
+
 If a client has a `metrics:read:provider` scope, they are only permitted to read metrics which pertain to a particular `provider_id` claim in the aforementioned [JWT](https://jwt.io/) `access_token`.
-​
+
 Further scopes and requirements may be added at the discretion of the Agency, depending on their particular access control needs.
 ### For Providers hosting the Metrics API
 Follow the pattern outlined in Provider API [auth](../provider/auth.md) document.
