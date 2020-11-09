@@ -203,7 +203,7 @@ Here's how it works in practice:
 
 
 
-Agencies that wish to use Geometry-Driven Events do so by requiring a new `event_geographies` field in status events. This field acts in lieu of location or telemtry data. When an Agency is using Geometry-Driven Events, Providers must emit a new `crossed_geography_boundary` status event whenever a vehicle in a trip crosses a Geography managed by a Policy.
+Agencies that wish to use Geometry-Driven Events do so by requiring a new `event_geographies` field in status events. This field acts in lieu of location or telemtry data. When an Agency is using Geometry-Driven Events, Providers must emit a new `changed_geographies` status event whenever a vehicle in a trip enters or leaves a Geography managed by a Policy.
 
 
 [Top][toc]
