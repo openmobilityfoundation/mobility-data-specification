@@ -33,24 +33,26 @@ Objectives:
 
 Here are the initial design use cases and scenarios for Metrics, based on who is publishing the Metrics API.
 
-**Cities**
+### Cities
 
 - Share aggregated data from Provider or Agency with other agencies, city departments, vendors, and academic researchers. 
 - A methodology for metrics defintions and calcuations which can feed reports to the public.
 - For use in visualization, analysis, or other applications.
 - Share their calculations back to providers to reduce disagreements about compliance, allowing shared understanding and alignment on billing, enforcement, and policy alignment.
 
-**Providers**
+### Providers
+
+**_Note:_** Metrics is not a substitute for disaggregated data. See the [Data Requirements](#data-requirements) section for details.
 
 - Offer cities pre-aggregated metrics for convenience, or for information not supported at the trip-level (ex: low-income discounts program usage).
 
 **_Note:_** Metrics is not a substitute for disaggregated data. See the [Data Requirements](#data-requirements) section for details.
 
-**Third Parites**
-
-- After aggregating MDS data from providers, can send metrics to cities.
+### Third Parites
 
 **_Note:_** Metrics is not a substitute for disaggregated data. See the [Data Requirements](#data-requirements) section for details.
+
+- After aggregating MDS data from providers, can send metrics to cities.
 
 [Top][toc]
 
