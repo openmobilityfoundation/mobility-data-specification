@@ -7,6 +7,8 @@ The Metrics API endpoints are intended to be implemented by regulatory agencies 
 ## Table of Contents
 
 - [General Information](#general-information)
+- [Implementation](#implementation)
+- [Data Requirements](#data-requirements)
 - [Beta Feature](#beta-feature)
 - [Date and Time Format](#date-and-time-format)
 - [Authorization](#authorization)
@@ -25,17 +27,44 @@ Objectives:
 - Mobility providers would like consistent rules between each city deployment in order to make their operations more scalable.
 - Some information like special groups usage is too sensitive to be shared at the trip level, so aggregate metrics are a preferable way to share a subset of this provider data with cities to evaluate program success.
 
-Initial Design Use Cases and Scenarios:
+[Top][toc]
 
-- For cities to republish data ingested from MDS (Agency or Provider data) for use in visualization, analysis, or other applications to trusted third parties (e.g., departments or individuals within their city, academic researchers).
-- For cities to publish calculated metrics back to providers allowing shared understanding and alignment on billing, enforcement, and policy alignment.
-- For providers to publish metrics to cities for analysis and report alignment. This is not meant to replace the required MDS [trips](https://github.com/openmobilityfoundation/mobility-data-specification/tree/feature-metrics/provider#trips) endpoint, but it may supplement it and solve a few of a city's use cases.
+## Implementation
+
+Here are the initial design use cases and scenarios for Metrics, based on who is publishing the Metrics API.
+
+**Cities**
+
+- Share aggregated data from Provider or Agency with other agencies, city departments, vendors, and academic researchers. 
+- A methodology for metrics defintions and calcuations which can feed reports to the public.
+- For use in visualization, analysis, or other applications.
+- Share their calculations back to providers to reduce disagreements about compliance, allowing shared understanding and alignment on billing, enforcement, and policy alignment.
+
+**Providers**
+
+- Offer cities pre-aggregated metrics for convenience, or for information not supported at the trip-level (ex: low-income discounts program usage).
+
+**_Note:_** Metrics is not a substitute for disaggregated data. See the [Data Requirements](#data-requirements) section for details.
+
+**Third Parites**
+
+- After aggregating MDS data from providers, can send metrics to cities.
+
+**_Note:_** Metrics is not a substitute for disaggregated data. See the [Data Requirements](#data-requirements) section for details.
+
+[Top][toc]
+
+## Data Requirements
+
+The Metrics API is not meant to replace required MDS Provider and Agency endpoints ([trips](/provider#trips), [events](/provider#events), [vehicles](/provider#vehicles)). It is not a replacement for disaggregated data access as regulators need this for policy, data validation, auditing, and operational needs. 
+
+Metrics may be a supplement for other MDS data, and may be used to solve a few of a city's use cases.  
 
 [Top][toc]
 
 ## Beta Feature
 
-The Metrics API and all of its endpoints are marked as a [beta feature](https://github.com/openmobilityfoundation/mobility-data-specification/blob/feature-metrics/general-information.md#beta-features) starting in the 1.1.0 release.
+The Metrics API and all of its endpoints are marked as a [beta feature](https://github.com/openmobilityfoundation/mobility-data-specification/blob/feature-metrics/general-information.md#beta-features) starting in the 1.1.0 release. It has not been tested in real world scenarios, and may be adjusted in future releases.
 
 [Top][toc]
 
