@@ -46,8 +46,6 @@ Here are the initial design use cases and scenarios for Metrics, based on who is
 
 - Offer cities pre-aggregated metrics for convenience, or for information not supported at the trip-level (ex: low-income discounts program usage).
 
-**_Note:_** Metrics is not a substitute for disaggregated data. See the [Data Requirements](#data-requirements) section for details.
-
 ### Third Parites
 
 **_Note:_** Metrics is not a substitute for disaggregated data. See the [Data Requirements](#data-requirements) section for details.
