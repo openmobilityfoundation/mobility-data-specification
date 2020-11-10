@@ -13,31 +13,40 @@ This specification details the purpose, use cases, and schema for Jurisdictions.
 ## Background
 City and transportation agencies need to regulate mobility within their own jurisdictions. Within a collection of agencies under a single MDS software deployment, those agencies need to coordinate and share relevant data between one another when their jurisdictions overlap.
 
-The jurisdictions API helps to answer the following questions when implementing MDS in a multi-jurisdictional environment:
+The jurisdictions API helps to solve the following problems when implementing MDS in a multi-jurisdictional environment:
 
-- How do agencies identify their authority (geographic area, up-to-date-ness, etc.) to one another and to mobility operators? How is “Elsewhere defined?”
-- In a multi-agency, multi-jurisdictional setting, agencies have the need to see inherit mobility policies from other agencies based on their jurisdiction.
-- When mobility data flows into a multi-jurisdictional deployment (ex: a Municipal Planning Organization), with multiple agencies contained within, how are users and applications at the various agencies assigned permission to see relevant data for their agency?
-- In the cases where agency jurisdictions overlap, how should a system represent these overlaps for the purpose of allowing different types of data purview for agency users.
+- Giving agencies a mechanism to communicate boundaries between one another and to mobility providers. 
+- Some agencies manage multiple overlapping jurisdictions and need a mechanism to administer scope and permissions to data.
+
+A jurisdiction is:
+- A representation of an agency’s authority to the outside world
+- Human-readable name
+- Uniquely identified
+- Purview to make rules over physical boundaries and modal boundaries (e.g. a jurisdiction could be for taxis only)
+- A way of tracking revisions in an agency's authority
+
 
 ### Use Cases
-#### 1. Defining what elsewhere means
-For a Single jurisdiction MDS deployment, a city designates a jurisdiction that providers can reference and know in what area to send events. When a trip leaves the LADOT jurisdiction, providers need to send an elsewhere event.
+#### 1. Defining boundaries and what the vehicle state `elsewhere` means
+For a single jurisdiction MDS deployment, a city designates a jurisdiction that providers can reference and know in what area to send events. When a trip leaves the LADOT jurisdiction, providers need to send an event with the vehicle state set to `elsewhere`.
 
-For a multi-jurisdiction MDS deployment where a Municipal Planning Organization (MPO) is handling mobility policy, the MPO can designate a special geography as the jurisdiction of the MPO where mobility providers should send data to one MDS instance (From the Providers’ POV, they can treat the MPO as a single large jurisdiction). Cities and agencies contained within the MPO would internally be able filter for their own jurisdictional data. This would allow mobility providers to not need to send MDS data to multiple MDS instances.
+Cities and agencies contained within the MPO would internally be able filter for their own jurisdictional data. This would allow mobility providers to not need to send MDS data to multiple MDS instances.
 
-#### 2. Jurisdictional overlap for Policy
-Agencies and mobility providers would be able to see what policies apply to what agency’s jurisdictions.
+In addition, Agency authority have an explicit revision mechanism through a canonical API. 
 
-Example: The City of Coral Gables, one of 34 municipalities within Miami-Dade county, would like to view and inherit the official published mobility policies from Miami-Dade county. Coral Gables would need the permissions to see and use the same mobility policy for the Miami-Dade jurisdiction. At the same time, Coral Gables would also be able to author its own mobility policies for its jurisdiction. 
 
-#### 3. Agencies can assign permissions in a single MDS deployment
+#### 2. Clarifying overlapping authority
+Agencies and mobility providers would be able to understand agency authority in a geographical area and in what mobility mode through a list of jurisdictions..
+
+Example: LADOT has jurisdictional authority over the city of Los Angeles for micromobility permitting, and jurisdictional authority over the county of Los Angeles for taxi permitting. 
+
+#### 3. Access scoping
 
 Example: A SaaS company contracts with Miami-Dade County to provide MDS. There are 34 cities within the county. Miami-Dade County needs to assign permissions to each city to control who writes policy, based on jurisdictions. A Jurisdictions object with a stable identifier can be used for access control.
 
 #### 4. Agencies need to grant application access
 Example: The City of Miami has different data visualization tools from the city of Coral Gables
-Those tools can be granted data access from the SaaS tool based on the jurisdiction stable identifier. 
+Those tools can be granted data access from the SaaS tool based on the jurisdiction's stable identifier. 
 
 
 [Top](#table-of-contents)
@@ -70,12 +79,12 @@ An individual `Jurisdiction` object is defined by the following fields:
 
 | Name             | Type      | Required / Optional | Description                                                                         |
 | ---------------- | --------- | --- | ----------------------------------------------------------------------------------- |
-| `jurisdiction_id`| UUID      | Required   | Unique ID of Jurisdiction
-| `agency_key`     | String    | Required   | A unique string key for the Jurisdiction. Allows for easier management of Jurisdiction-based access control in JWTs.
-| `agency_name`    | String    | Optional   | Human-readable agency name for display purposes |
-| `description`    | String    | Required   | Description of Jurisdiction.                                                               |
-| `geography_id`   | UUID      | Optional   | The unique ID of the geography covered by this Jurisdiction.
-| `mobility_modes`  | String[]    | Optional   | Valid values are left up to the agency to determine, but a couple examples that we think might be useful are 'taxi' and 'micromobility'.
+| `jurisdiction_id`| UUID      | Required   | Unique ID of Jurisdiction. This field is immutable. |
+| `agency_key`     | String    | Required   | A unique string key for the Jurisdiction. This field must also be immutable. Allows for easier management of Jurisdiction-based access control in JWTs. |
+| `agency_name`    | String    | Optional   | Human-readable agency name for display purposes. |
+| `description`    | String    | Required   | Description of Jurisdiction.                                                               | 
+| `geography_id`   | UUID      | Optional   | The unique ID of the geography covered by this Jurisdiction.  |
+| `mobility_modes`  | String[]    | Optional   | Set this field to specify what mobility modes a jurisdiction applies to. Valid values are left up to the agency to determine, but a couple examples that we think might be useful are 'taxi' and 'micromobility'. An empty array or undefined field indicates all mobility modes are covered under this jurisdiction. |
 | `timestamp`      | timestamp | Required   | Creation or update time of a Jurisdiction.                                                 |
 
 Formatted in JSON, a Jurisdiction object should look like this:
