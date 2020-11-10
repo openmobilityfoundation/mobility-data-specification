@@ -40,23 +40,23 @@ Here are the initial design use cases and scenarios for Metrics, based on who is
 - For use in visualization, analysis, or other applications.
 - Share their calculations back to providers to reduce disagreements about compliance, allowing shared understanding and alignment on billing, enforcement, and policy alignment.
 
-### Providers
-
-**_Note:_** Metrics is not a substitute for disaggregated data. See the [Data Requirements](#data-requirements) section for details.
-
-- Offer cities pre-aggregated metrics for convenience, or for information not supported at the trip-level (ex: low-income discounts program usage).
-
 ### Third Parites
 
 **_Note:_** Metrics is not designed as a substitute for disaggregated data. See the [Data Requirements](#data-requirements) section for details.
 
 - Aggregate MDS data from providers and make metrics available to cities or research partners.
 
+### Providers
+
+**_Note:_** Metrics is not designed as a substitute for disaggregated data. See the [Data Requirements](#data-requirements) section for details.
+
+- Offer cities pre-aggregated metrics for convenience, or for information not supported at the trip-level (ex: low-income discounts program usage).
+
 [Top][toc]
 
 ## Data Requirements
 
-The Metrics API is not meant to replace required MDS Provider and Agency endpoints ([trips](/provider#trips), [events](/provider#events), [vehicles](/provider#vehicles)). Regulators use disaggregated data access for policy, data validation, auditing, and operational needs, and the Metrics API is not designed to serve these purposes.
+The Metrics API is not meant to replace required MDS Provider and Agency endpoints (e.g., [trips](/provider#trips), [events](/provider#events), [vehicles](/provider#vehicles)). Regulators use disaggregated data access for policy, data validation, auditing, and operational needs, and the Metrics API is not designed to serve these purposes.
 
 Metrics may be a supplement for other MDS data, and may be used to solve a few of a city's use cases.  
 
