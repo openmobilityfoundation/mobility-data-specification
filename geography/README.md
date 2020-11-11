@@ -102,8 +102,8 @@ Placeholder -- link to schema to be added later.
 | `geography_type`   | Enum      | Optional   | Type of geography, e.g. `municipal_boundary` or `council_district`.  See [Geography Types](#geography-types). |
 | `geography_id`     | UUID      | Required   | Unique ID of geography                                                                 |
 | `geography_json`   | UUID      | Required   | The GeoJSON that defines the geographical coordinates.                                 |
-| `effective_date`   | [timestamp][ts] | Optional   | The date at which a Geography is considered "live".  Must be at or after `publish_date`. |
-| `publish_date`     | [timestamp][ts] | Required   | Time that the geography was published, i.e. made immutable                       |
+| `effective_date`   | [timestamp][ts] | Optional   | The date at which a Geography is considered "live".  Must be at or after `published_date`. |
+| `published_date`     | [timestamp][ts] | Required   | Time that the geography was published, i.e. made immutable                       |
 | `prev_geographies` | UUID[]    | Optional   | Unique IDs of prior geographies replaced by this one                                   |
 
 [Top][toc]
@@ -198,7 +198,7 @@ Response body:
     "geography_type": Enum,
     "name": string,
     "description": string,
-    "publish_date": timestamp,
+    "published_date": timestamp,
     "effective_date": timestamp,
     "prev_geographies": UUID[],
     "geography_json": GeoJSON FeatureCollection
