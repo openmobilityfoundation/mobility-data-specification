@@ -183,9 +183,9 @@ The optional `end_date` field applies to all policies represented in the file.
 
 [Top][toc]
 
-## Geometry-Driven Events **[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.1.0)*
+## Geography-Driven Events **[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.1.0)*
 
-Geometry-Driven Events is a new MDS feature for Agencies to perform complete Policy compliance monitoring without requiring precise location data. Geometry-Driven Events describe individual vehicles in realtime – not just aggregate data. However, rather than receiving the exact location of a vehicle, Agencies receive information about the vehicle's current geographic region. The regions used for Geometry-Driven Events correspond to the Geographies in an Agency's current Policy. In this way, the data-shared using Geometry-Driven Events is matched to an Agency's particular regulatory needs.
+Geography-Driven Events is a new MDS feature for Agencies to perform complete Policy compliance monitoring without requiring precise location data. Geography-Driven Events describe individual vehicles in realtime – not just aggregate data. However, rather than receiving the exact location of a vehicle, Agencies receive information about the vehicle's current geographic region. The regions used for Geography-Driven Events correspond to the Geographies in an Agency's current Policy. In this way, the data-shared using Geography-Driven Events is matched to an Agency's particular regulatory needs.
 
 Here's how it works in practice:
 
@@ -203,7 +203,7 @@ Here's how it works in practice:
 
 
 
-Agencies that wish to use Geometry-Driven Events do so by requiring a new `event_geographies` field in status events. This field acts in lieu of location or telemtry data. When an Agency is using Geometry-Driven Events, Providers must emit a new `changed_geographies` status event whenever a vehicle in a trip enters or leaves a Geography managed by a Policy.
+Agencies that wish to use Geography-Driven Events do so by requiring a new `event_geographies` field in status events. This field acts in lieu of location or telemtry data. When an Agency is using Geography-Driven Events, Providers must emit a new `changed_geographies` status event whenever a vehicle in a trip enters or leaves a Geography managed by a Policy.
 
 
 [Top][toc]

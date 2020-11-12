@@ -184,7 +184,7 @@ Body Params:
 | `event_types`   | Enum[]                        | Required | see [Vehicle Events][vehicle-events] |
 | `timestamp`     | [timestamp][ts]                     | Required | Date of last event update |
 | `telemetry`     | [Telemetry](#telemetry-data)  | Optional | Single point of telemetry. Required if `event_geographies` is not present. |
-| `event_geographies`  | UUID[] | Optional          | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.1.0)*. Array of Geography UUIDs consisting of every Geography that contains the location of the event. See [Geometry Driven Events](#geometry-driven-events). Required if `telemetry` is not present. |
+| `event_geographies`  | UUID[] | Optional          | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.1.0)*. Array of Geography UUIDs consisting of every Geography that contains the location of the event. See [Geography Driven Events](#geography-driven-events). Required if `telemetry` is not present. |
 | `trip_id`       | UUID                          | Optional | UUID provided by Operator to uniquely identify the trip. Required if `event_types` contains `trip_start`, `trip_end`, `trip_cancel`, `trip_enter_jurisdiction`, or `trip_leave_jurisdiction` |
 
 201 Success Response:
@@ -327,7 +327,7 @@ If `stop_id` is specified, `GET` will return an array with a single stop record,
 
 [beta]: /general-information.md#beta-features
 [general]: /general-information.md
-[geometry-driven-events]: /policy/README.md#geometry-driven-events
+[geography-driven-events]: /policy/README.md#geography-driven-events
 [error-messages]: /general-information.md#error-messages
 [hdop]: https://support.esri.com/en/other-resources/gis-dictionary/term/358112bd-b61c-4081-9679-4fca9e3eb926
 [propulsion-types]: /general-information.md#propulsion-types

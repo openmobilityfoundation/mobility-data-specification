@@ -337,7 +337,7 @@ Vehicles can enter the `unknown` state to and from any other state with the foll
 | `unknown` | `on_trip`   | `located`        | The vehicle has been located by the provider |
 | `unknown` | `on_trip`   | `unspecified`        | The provider cannot definitively state how a vehicle started a trip. |
 | `on_trip` | `elsewhere`   | `trip_leave_jurisdiction` | A vehicle on a trip left the jurisdiction |
-| `on_trip` | `on_trip `   | `changed_geographies` | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.1.0)*. The vehicle has entered or left one or more Geographies managed by a Policy. See [Geometry Driven Events](#geometry-driven-events).|
+| `on_trip` | `on_trip `   | `changed_geographies` | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.1.0)*. The vehicle has entered or left one or more Geographies managed by a Policy. See [Geography Driven Events](#geography-driven-events).|
 | `unknown` | `elsewhere`   | `comms_restored` | The vehicle transmitted status information after a period of being out of communication. |
 | `unknown` | `elsewhere`   | `located`        | The vehicle has been located by the provider |
 | `unknown` | `elsewhere`   | `unspecified` | The provider cannot definitively state how a vehicle went `elsewhere`. |
@@ -411,7 +411,7 @@ If an unsupported or invalid version is requested, the API must respond with a s
 [gbfs-station-status]: https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_statusjson
 [general-stops]: /general-information.md#stops
 [geo]: #geographic-data
-[geometry-driven-events]: /policy/README.md#geometry-driven-events
+[geography-driven-events]: /policy/README.md#geography-driven-events
 [geojson-feature]: https://tools.ietf.org/html/rfc7946#section-3.2
 [geojson-point]: https://tools.ietf.org/html/rfc7946#section-3.1.2
 [policy]: /policy/README.md
