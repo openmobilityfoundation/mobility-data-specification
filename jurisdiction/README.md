@@ -132,50 +132,19 @@ Response codes:
 - 500 - Server error
 
 ### [Flat Files](#flat-files)
-To use flat files, Jurisdictions shall be represented in the following file:
+To use flat files, Jurisdictions shall be represented in the following files:
 
 - `jurisdictions.json`
 - `geographies.json`
+
+The format and content of `jurisdictions.json` should resemble the responses from `GET /jurisdictions`.
 
 The publishing Agency should establish and communicate to interested parties how frequently these files should be polled.
 
 The `updated` field in the payload wrapper should be set to the time of publishing a revision, so that it is simple to identify a changed file.
 
-#### Example `jurisdictions.json`
+#### Examples `jurisdictions.json`
 
-```json
-{
-    "version": "1.1.0",
-    "updated": "1570035222868",
-    "end_date": "1570035222868",
-    "Jurisdictions": 
-    [
-      {
-        "jurisdiction_id": "240edf69-9f2b-457c-accf-e8156e78811f",
-        "agency_key": "miami-dade-county",
-        "agency_name": "County of Miami-Dade",
-        "mobility_modes": ["taxi"],
-        "geography_id": "e95cb0f7-41eb-4bdd-8b1d-92b0593a7df1"
-      },
-      {
-        "jurisdiction_id": "3c71f367-7c7d-49c7-94d0-21b9e7259c1b",
-        "agency_key": "miami",
-        "agency_name": "City of Miami",
-        "mobility_modes": ["micromobility"],
-        "geography_id": "a3ddc3f6-b476-4784-bae7-f0141bb534f6"
-      },
-      {
-        "jurisdiction_id": "9fc51c56-9ac3-497a-b575-07097aa147cb",
-        "agency_key": "coral-gables",
-        "agency_name": "City of Coral Gables",
-        "mobility_modes": [],
-        "geography_id": "ad4b47d3-bb49-4122-ad19-5d517490baa6"
-      }
-    ]
-}
-```
-
-See the Geography spec for a sample `geographies.json`.
-
+See the [Jurisdiction Examples](examples/README.md) for a sample `jurisdictions.json` file. See the [Geography Examples](../../geography/examples/README.md) for an example `geographies.json`.
 
 [Top](#table-of-contents)
