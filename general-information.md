@@ -92,7 +92,7 @@ represented as a GeoJSON [`Feature`][geojson-feature] object with a correspondin
 
 ### Stop-based Geographic Data
 
-When an individual location coordinate measurement corresponds to a [Stop][general-stops],
+When an individual location coordinate (Point, MultiPolygon, etc.) corresponds to a [Stop][general-stops],
 it must be presented with a `stop_id` property:
 
 ```json
@@ -178,7 +178,7 @@ Stops describe vehicle trip start and end locations in a pre-designated physical
 | stop_id                | UUID                                                        | Required          | Unique ID for stop                                                                           |
 | name              | String                                                      | Required          | Name of stop                                                                                 |
 | last_reported          | Timestamp                                                   | Required          | Date/Time that the stop was last updated                                                     |
-| location               | GeoJSON [Point Feature](provider/README.md#geographic-data) | Required          | Location of the Stop                                                                         |
+| location               | GeoJSON [Point or Polygon Feature](provider/README.md#geographic-data) | Required          | Location of the Stop. If Point is used then assume a 20 meter buffer.                                                                         |
 | status                 | [Stop Status](#stop-status)                                 | Required          | Object representing the status of the Stop. See [Stop Status](#stop-status).                 |
 | capacity               | {vehicle_type: number}                                      | Required          | Number of total places per vehicle_type                                                      |
 | num_vehicles_available | {vehicle_type: number}                                      | Required          | How many vehicles are available per vehicle_type at this stop?                               |
