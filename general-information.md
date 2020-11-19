@@ -195,6 +195,8 @@ Stops describe vehicle trip start and end locations in a pre-designated physical
 | num_places_disabled    | {vehicle_type: number}                                      | Optional          | How many places are disabled and unable to accept vehicles at this stop?                     |
 | parent_stop            | UUID                                                        | Optional          | Describe a basic hierarchy of stops (e.g.a stop inside of a greater stop)                    |
 | devices               | UUID[]                                                      | Optional          | List of device_ids for vehicles which are currently at this stop                             |
+| image_url               | URL                                                      | Optional          | Link to an image, photo, or diagram of the stop. Could be used by providers to help riders find or use the stop.                            |
+
 
 ### Stop Status
 
