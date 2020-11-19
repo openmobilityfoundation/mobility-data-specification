@@ -55,7 +55,7 @@ Those tools can be granted data access from the SaaS tool based on the jurisdict
 
 Jurisdictions can be served by agencies through the following REST API, or via [flat-files](#flat-files).
 
-### REST Endpoints
+### [REST Endpoints](#rest-endpoints)
 
 All response fields must use `lower_case_with_underscores`.
 
@@ -130,7 +130,7 @@ Response codes:
 - 404 - not found
 - 500 - Server error
 
-[Flat files](#flat-files)
+[Flat Files](#flat-files)
 To use flat files, Jurisdictions shall be represented in the following file:
 
 - `jurisdictions.json`
@@ -152,7 +152,6 @@ The `updated` field in the payload wrapper should be set to the time of publishi
       {
         "jurisdiction_id": "240edf69-9f2b-457c-accf-e8156e78811f",
         "agency_key": "miami-dade-county",
-        "agency_name": "County of Miami-Dade",
         "agency_name": "County of Miami-Dade",
         "mobility_modes": ["taxi"],
         "geography_id": "e95cb0f7-41eb-4bdd-8b1d-92b0593a7df1"
