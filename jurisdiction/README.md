@@ -7,7 +7,7 @@ This specification details the purpose, use cases, and schema for Jurisdictions.
 - [Background](#background)
 - [Distribution](#distribution)
   - [REST](#rest)
-  - [REST Endpoints](#endpoints)
+  - [REST Endpoints](#rest-endpoints)
   - [Flat Files](#flat-files)
 - [Schema](#schema)
 
@@ -100,7 +100,7 @@ Formatted in JSON, a Jurisdiction object should look like this:
 }
 ```
 
-## [REST Endpoints](#endpoints)
+## [REST Endpoints](#rest-endpoints)
 
 ### GET /Jurisdictions
 
