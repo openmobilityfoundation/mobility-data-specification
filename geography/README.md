@@ -123,11 +123,7 @@ Type of geography. These specific types are recommendations based on ones common
 | Value                | Description                          |
 | -----                | -----------                          |
 | `municipal_boundary` | Edge of a city                       |
-| `operating_area`     | Vehicle permitted operating area     |
-| `distribution_zone`  | An area of interest for distribution |
-| `no_ride_zone`       | Areas where riding is not permitted  |
-| `no_parking_zone`    | Areas where parking is not permitted |
-| `slow_ride_zone`     | Areas where top speed is reduced     |
+| `policy_zone`        | Zone where [Policy](/policy) rules could be in effect, like operating area, distribution/equity zones, no/slow ride zone, no parking, etc |
 | `county_boundary`    | Edge of a county                     |
 | `stop`               | See [Stops](stops)                   |
 | `council_district`   | City council district                |
