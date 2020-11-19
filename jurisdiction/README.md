@@ -7,7 +7,7 @@ This specification details the purpose, use cases, and schema for Jurisdictions.
 - [Background](#background)
 - [Distribution](#distribution)
   - [REST](#rest)
-  - [REST Endpoints](#rest-endpoints)
+    - [REST Endpoints](#rest-endpoints)
   - [Flat Files](#flat-files)
 - [Schema](#schema)
 
