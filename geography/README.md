@@ -51,7 +51,7 @@ This temporary requirement is to ensure backwards compatibility, but the overall
 
 Geographies shall be published by regulatory agencies or their authorized delegates as JSON objects. These JSON objects shall be served by either [flat files](#flat-files) or via [REST API endpoints](#rest-endpoints). In either case, geography data shall follow the [schema](#schema) outlined below.
 
-Published geographies, should be treated as immutable data. Obsoleting or otherwise changing a geography is accomplished by publishing a new geography with a field named `prev_geographies`, a list of UUID references to the geography or policies geographies by the new geography.
+Published geographies, should be treated as immutable data. Obsoleting or otherwise changing a geography is accomplished by publishing a new geography with a field named `prev_geographies`, a list of UUID references to the geography or policies geographies by the new geography. Note adding `retire_date` once is allowed without the need for a new `geography_id`.
 
 Geographical data shall be represented as GeoJSON `Feature` objects. Typically no part of the geographical data should be outside the [municipality boundary][muni-boundary] unless an agency has the authority to regulate there.
 
@@ -104,6 +104,7 @@ Placeholder -- link to schema to be added later.
 | `geography_json`   | UUID      | Required   | The GeoJSON that defines the geographical coordinates.                                 |
 | `effective_date`   | [timestamp][ts] | Optional   | The date at which a Geography is considered "live".  Must be at or after `published_date`. |
 | `published_date`     | [timestamp][ts] | Required   | Time that the geography was published, i.e. made immutable                       |
+| `retire_date`     | [timestamp][ts] | Optional   | Time that the geography is slated to retire, i.e. be no longer usable. Note add this does not require creating a new `geography_id`, eg, it does not affect immutability.                       |
 | `prev_geographies` | UUID[]    | Optional   | Unique IDs of prior geographies replaced by this one                                   |
 
 [Top][toc]
