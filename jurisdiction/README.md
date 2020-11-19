@@ -131,7 +131,7 @@ Response codes:
 - 404 - not found
 - 500 - Server error
 
-[Flat Files](#flat-files)
+### [Flat Files](#flat-files)
 To use flat files, Jurisdictions shall be represented in the following file:
 
 - `jurisdictions.json`
