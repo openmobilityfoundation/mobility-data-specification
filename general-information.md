@@ -122,6 +122,13 @@ For the purposes of this specification, the intersection of two geographic datat
 
 [Top][toc]
 
+## Open Data APIs
+
+Policy and Geography APIs are intended to be Open Data. This allows transparency for the public to see how the city is regulating, holds the city accountable for their policy decisions, and reduces the technical burden on providers to use these endpoints. Additionally, benefit is that this allows third parties to ingest this information into their applications and services for public benefit.
+
+
+To preserve backward compatibility, hosting these endpoints with authentication is not explicitly disallowed by MDS. However, beginning with MDS 1.1, it is recommended that these endpoints be unauthenticated and public. Additionally, it is required that these endpoints be public when implementing Geometry Driven Events.
+
 ## Propulsion Types
 
 | `propulsion`      | Description                                            |
