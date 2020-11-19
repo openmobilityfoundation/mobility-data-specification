@@ -1,69 +1,55 @@
 # Mobility Data Specification: **Provider**
 
+The Provider API endpoints are intended to be implemented by mobility providers and consumed by regulatory agencies. When a municipality queries information from a mobility provider, the Provider API has a historical view of operations in a standard format.
+
 This specification contains a data standard for *mobility as a service* providers to define a RESTful API for municipalities to access on-demand.
 
 ## Table of Contents
 
 * [General Information](#general-information)
-* [Trips](#trips)
-* [Status Changes](#status-changes)
+  * [Versioning](#versioning)
+  * [Response Format](#response-format)
+  * [Responses and Error Messages](#responses-and-error-messages)
+  * [JSON Schema](#json-schema)
+  * [Pagination](#pagination)
+  * [Municipality Boundary](#municipality-boundary)
+  * [Event Times](#event-times)
+  * [Other Data Types](#other-data-types)
+* [Trips][trips]
+  * [Trips - Query Parameters](#trips---query-parameters)
+  * [Routes](#routes)
+* [Status Changes][status]
+  * [Status Changes - Query Parameters](#status-changes---query-parameters)
 * [Realtime Data](#realtime-data)
-  - [GBFS](#GBFS)
-  - [Events](#events)
+  * [GBFS](#GBFS)
+  * [Data Latency Requirements][data-latency]
+  * [Events][events]
+  * [Stops](#stops)
+  * [Vehicles][vehicles]
 
 ## General Information
 
 The following information applies to all `provider` API endpoints. Details on providing authorization to endpoints is specified in the [auth](auth.md) document.
 
-Currently, the provider API is implemented for dockless scooter and bikeshare. To implement another mode, add it to the `schema/generate_schema.py` file and this README and submit a pull request.
+This specification uses data types including timestamps, UUIDs, and vehicle state definitions as described in the MDS [General Information][general-information] document.
+
+[Top][toc]
 
 ### Versioning
 
 `provider` APIs must handle requests for specific versions of the specification from clients.
 
-Versioning must be implemented through the use of a custom media-type, `application/vnd.mds.provider+json`, combined with a required `version` parameter.
+Versioning must be implemented as specified in the [Versioning section][versioning].
 
-The version parameter specifies the dot-separated combination of major and minor versions from a published version of the specification. For example, the media-type for version `0.2.1` would be specified as `application/vnd.mds.provider+json;version=0.2`
+[Top][toc]
 
-> Note: Normally breaking changes are covered by different major versions in semver notation. However, as this specification is still pre-1.0.0, changes in minor versions may include breaking changes, and therefore are included in the version string.
+### Responses and Error Messages
 
-Clients must specify the version they are targeting through the `Accept` header. For example:
+The response to a client request must include a valid HTTP status code defined in the [IANA HTTP Status Code Registry][iana].
 
-```http
-Accept: application/vnd.mds.provider+json;version=0.3
-```
+See [Responses][responses] for information on valid MDS response codes and [Error Messages][error-messages] for information on formatting error messages.
 
-> Since versioning was not added until the 0.3.0 release, if the `Accept` header is not set as specified above, the `provider` API must respond as if version `0.2` was requested.
-
-Responses to client requests must indicate the version the response adheres to through the `Content-Type` header. For example:
-
-```http
-Content-Type: application/vnd.mds.provider+json;version=0.3
-```
-
-> Since versioning was not added until the 0.3.0 release, if the `Content-Type` header is not set as specified above, version `0.2` must be assumed.
-
-If an unsupported or invalid version is requested, the API must respond with a status of `406 Not Acceptable`. If this occurs, a client can explicitly negotiate available versions.
-
-A client negotiates available versions using the `OPTIONS` method to an MDS endpoint. For example, to check if `trips` supports either version `0.2` or `0.3` with a preference for `0.2`, the client would issue the following request:
-
-```http
-OPTIONS /trips/ HTTP/1.1
-Host: provider.example.com
-Accept: application/vnd.mds.provider+json;version=0.2,application/vnd.mds.provider+json;version=0.3;q=0.9
-```
-
-The response will include the most preferred supported version in the `Content-Type` header. For example, if only `0.3` is supported:
-
-```http
-Content-Type: application/vnd.mds.provider+json;version=0.3
-```
-
-The client can use the returned value verbatim as a version request in the `Accept` header.
-
-### Response Format
-
-The response to a client request must include a valid HTTP status code defined in the [IANA HTTP Status Code Registry](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml). It also must set the `Content-Type` header, as specified in the [Versioning](#Versioning) section.
+The response must set the `Content-Type` header as specified in the [Versioning section][versioning].
 
 Response bodies must be a `UTF-8` encoded JSON object and must minimally include the MDS `version` and a `data` payload:
 
@@ -79,41 +65,23 @@ Response bodies must be a `UTF-8` encoded JSON object and must minimally include
 }
 ```
 
-#### HTTP Response Codes
-
-* **200:** OK: operation successful.
-* **400:** Bad request.
-* **401:** Unauthorized: Invalid, expired, or insufficient scope of token.
-* **404:** Not Found: Object(s) do not exist.
-* **500:** Internal server error.
-
-#### Error Format
-
-```json
-{
-    "error": "...",
-    "error_description": "...",
-    "error_details": [ "...", "..." ]
-}
-```
-
-| Field               | Type     | Field Description      |
-| ------------------- | -------- | ---------------------- |
-| `error`             | String   | Error message string   |
-| `error_description` | String   | Human readable error description (can be localized) |
-| `error_details`     | String[] (optional) | Array of error details |
-
 All response fields must use `lower_case_with_underscores`.
 
-#### JSON Schema
+[Top][toc]
 
-MDS defines [JSON Schema](https://json-schema.org/) files for [`trips`][trips-schema] and [`status_changes`][sc-schema].
+### JSON Schema
+
+MDS defines [JSON Schema][json-schema] files for each endpoint.
 
 `provider` API responses must validate against their respective schema files. The schema files always take precedence over the language and examples in this and other supporting documentation meant for *human* consumption.
 
+[Top][toc]
+
 ### Pagination
 
-`provider` APIs may decide to paginate the data payload. If so, pagination must comply with the [JSON API](http://jsonapi.org/format/#fetching-pagination) specification.
+The `/trips` and `/status_changes` endpoints must not use pagination.
+
+If Providers choose to use pagination for either of the `/events` or `/vehicles` endpoints, the pagination must comply with the [JSON API][json-api-pagination] specification.
 
 The following keys must be used for pagination links:
 
@@ -122,7 +90,7 @@ The following keys must be used for pagination links:
 * `prev`: url to the previous page of data
 * `next`: url to the next page of data
 
-At a minimum, paginated payloads must include a `next` key, which must be set to `null` to indicate the last page of data. 
+At a minimum, paginated payloads must include a `next` key, which must be set to `null` to indicate the last page of data.
 
 ```json
 {
@@ -142,86 +110,27 @@ At a minimum, paginated payloads must include a `next` key, which must be set to
 }
 ```
 
-### UUIDs for Devices
-
-MDS defines the *device* as the unit that transmits GPS or GNSS signals for a particular vehicle. A given device must have a UUID (`device_id` below) that is unique within the Provider's fleet.
-
-Additionally, `device_id` must remain constant for the device's lifetime of service, regardless of the vehicle components that house the device.
-
-### Geographic Data
-
-References to geographic datatypes (Point, MultiPolygon, etc.) imply coordinates encoded in the [WGS 84 (EPSG:4326)](https://en.wikipedia.org/wiki/World_Geodetic_System) standard GPS or GNSS projection expressed as [Decimal Degrees](https://en.wikipedia.org/wiki/Decimal_degrees).
-
-Whenever an individual location coordinate measurement is presented, it must be
-represented as a GeoJSON [`Feature`](https://tools.ietf.org/html/rfc7946#section-3.2) object with a corresponding [`timestamp`][ts] property and [`Point`](https://tools.ietf.org/html/rfc7946#section-3.1.2) geometry:
-
-```json
-{
-    "type": "Feature",
-    "properties": {
-        "timestamp": 1529968782421
-    },
-    "geometry": {
-        "type": "Point",
-        "coordinates": [
-            -118.46710503101347,
-            33.9909333514159
-        ]
-    }
-}
-```
-
-#### Intersection Operation
-
-For the purposes of this specification, the intersection of two geographic datatypes is defined according to the [`ST_Intersects` PostGIS operation](https://postgis.net/docs/ST_Intersects.html)
-
-> If a geometry or geography shares any portion of space then they intersect. For geography -- tolerance is 0.00001 meters (so any points that are close are considered to intersect).<br>
-> Overlaps, Touches, Within all imply spatial intersection. If any of the aforementioned returns true, then the geometries also spatially intersect. Disjoint implies false for spatial intersection.
-
 [Top][toc]
 
 ### Municipality Boundary
 
 Municipalities requiring MDS Provider API compliance should provide an unambiguous digital source for the municipality boundary. This boundary must be used when determining which data each `provider` API endpoint will include.
 
-The boundary should be defined as a polygon or collection of polygons. The file defining the boundary should be provided in Shapefile or GeoJSON format and hosted online at a published address that all providers and `provider` API consumers can access and download.
+The boundary should be defined as a polygon or collection of polygons. The file defining the boundary should be provided in Shapefile or GeoJSON format and hosted online at a published address that all providers and `provider` API consumers can access and download. The boundary description can be sent as a reference to an GeoJSON object or flat-file, if the agency is using [Geography](/geography).
 
 Providers are not required to recalculate the set of historical data that is included when the municipality boundary changes. All new data must use the updated municipality boundary.
 
-### Timestamps
+[Top][toc]
 
-References to `timestamp` imply integer milliseconds since [Unix epoch](https://en.wikipedia.org/wiki/Unix_time). You can find the implementation of unix timestamp in milliseconds for your programming language [here](https://currentmillis.com/).
+### Event Times
 
-### Vehicle Types
-
-The list of allowed `vehicle_type` referenced below is:
-
-| `vehicle_type` |
-|--------------|
-| bicycle      |
-| car          |
-| scooter      |
-
-### Propulsion Types
-
-The list of allowed `propulsion_type` referenced below is:
-
-| `propulsion_type` | Description |
-| ----------------- | ----------------- |
-| human           | Pedal or foot propulsion |
-| electric_assist | Provides power only alongside human propulsion |
-| electric        | Contains throttle mode with a battery-powered motor |
-| combustion      | Contains throttle mode with a gas engine-powered motor |
-
-A device may have one or more values from the `propulsion_type`, depending on the number of modes of operation. For example, a scooter that can be powered by foot or by electric motor would have the `propulsion_type` represented by the array `['human', 'electric']`. A bicycle with pedal-assist would have the `propulsion_type` represented by the array `['human', 'electric_assist']` if it can also be operated as a traditional bicycle.
+Because of the unreliability of device clocks, the Provider is unlikely to know with total confidence what time an event occurred at. However, Providers are responsible for constructing as accurate a timeline as possible. Most importantly, the order of the timestamps for a particular device's events must reflect the Provider's best understanding of the order in which those events occurred.
 
 [Top][toc]
 
-### Costs & currencies
+### Other Data Types
 
-Fields specifying a monetary cost use a currency as specified in [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217#Active_codes). All costs should be given as integers in the currency's smallest unit. As an example, to represent $1 USD, specify an amount of `100` (100 cents).
-
-If the currency field is null, USD cents is implied.
+For Timestamps, Vehicle Types, Propulsion Types, UUIDs, Costs, and Currencies, refer to the MDS [General Information][general-information] document.
 
 [Top][toc]
 
@@ -231,22 +140,22 @@ A trip represents a journey taken by a *mobility as a service* customer with a g
 
 The trips endpoint allows a user to query historical trip data.
 
-Unless stated otherwise by the municipality, the trips endpoint must return all trips with a `route` which [intersects](#intersection-operation) with the [municipality boundary](#municipality-boundary).
+Unless stated otherwise by the municipality, the trips endpoint must return all trips with a `route` which [intersects][intersection] with the [municipality boundary][muni-boundary].
 
-Endpoint: `/trips`  
-Method: `GET`  
-Schema: [`trips` schema][trips-schema]  
-`data` Payload: `{ "trips": [] }`, an array of objects with the following structure  
-
+**Endpoint:** `/trips`  
+**Method:** `GET`  
+**[Beta feature][beta]:** No  
+**Schema:** [`trips` schema][trips-schema]  
+**`data` Payload:** `{ "trips": [] }`, an array of objects with the following structure  
 
 | Field | Type    | Required/Optional | Comments |
 | ----- | -------- | ----------------- | ----- |
-| `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS |
+| `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
 | `provider_name` | String | Required | The public-facing name of the Provider |
 | `device_id` | UUID | Required | A unique device ID in UUID format |
 | `vehicle_id` | String | Required | The Vehicle Identification Number visible on the vehicle itself |
-| `vehicle_type` | Enum | Required | See [vehicle types](#vehicle-types) table |
-| `propulsion_type` | Enum[] | Required | Array of [propulsion types](#propulsion-types); allows multiple values |
+| `vehicle_type` | Enum | Required | See [vehicle types][vehicle-types] table |
+| `propulsion_types` | Enum[] | Required | Array of [propulsion types][propulsion-types]; allows multiple values |
 | `trip_id` | UUID | Required | A unique ID for each trip |
 | `trip_duration` | Integer | Required | Time, in Seconds |
 | `trip_distance` | Integer | Required | Trip Distance, in Meters |
@@ -256,11 +165,13 @@ Schema: [`trips` schema][trips-schema]
 | `end_time` | [timestamp][ts] | Required | |
 | `publication_time` | [timestamp][ts] | Optional | Date/time that trip became available through the trips endpoint |
 | `parking_verification_url` | String | Optional | A URL to a photo (or other evidence) of proper vehicle parking |
-| `standard_cost` | Integer | Optional | The cost, in the currency defined in `currency`, that it would cost to perform that trip in the standard operation of the System (see [Costs & Currencies](#costs--currencies)) |
-| `actual_cost` | Integer | Optional | The actual cost, in the currency defined in `currency`, paid by the customer of the *mobility as a service* provider (see [Costs & Currencies](#costs--currencies)) |
-| `currency` | String | Optional, USD cents is implied if null.| An [ISO 4217 Alphabetic Currency Code](https://en.wikipedia.org/wiki/ISO_4217#Active_codes) representing the currency of the payee (see [Costs & Currencies](#costs--currencies)) |
+| `standard_cost` | Integer | Optional | The cost, in the currency defined in `currency`, that it would cost to perform that trip in the standard operation of the System (see [Costs & Currencies][costs-and-currencies]) |
+| `actual_cost` | Integer | Optional | The actual cost, in the currency defined in `currency`, paid by the customer of the *mobility as a service* provider (see [Costs & Currencies][costs-and-currencies]) |
+| `currency` | String | Optional, USD cents is implied if null.| An [ISO 4217 Alphabetic Currency Code][iso4217] representing the currency of the payee (see [Costs & Currencies][costs-and-currencies]) |
 
-### Trips Query Parameters
+[Top][toc]
+
+### Trips - Query Parameters
 
 The `/trips` API should allow querying trips with the following query parameters:
 
@@ -268,17 +179,25 @@ The `/trips` API should allow querying trips with the following query parameters
 | --------------- | ------ | --------------- |
 | `end_time` | `YYYY-MM-DDTHH`, an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) extended datetime representing an UTC hour between 00 and 23. | All trips with an end time occurring within the hour. For example, requesting `end_time=2019-10-01T07` returns all trips where `2019-10-01T07:00:00 <= trip.end_time < 2019-10-01T08:00:00` UTC. |
 
-If the data does not exist or the hour has not completed, `/trips` shall return a `404 Not Found` error.
+If the provider was operational during the requested hour the provider shall return
+a 200 response, even if there are no trips to report (in which case
+the response will contain an empty list of trips).
+If the requested hour occurs in a time period in which the provider was not operational
+or the hour is not yet in the past `/trips` shall return a `404 Not Found` error.
 
 Without an `end_time` query parameter, `/trips` shall return a `400 Bad Request` error.
 
-For the near-ish real time use cases, please use the [events](#events) endpoint. 
+For the near-ish real time use cases, please use the [events][events] endpoint.
+
+[Top][toc]
 
 ### Routes
 
-To represent a route, MDS `provider` APIs must create a GeoJSON [`FeatureCollection`](https://tools.ietf.org/html/rfc7946#section-3.3), which includes every [observed point][geo] in the route, even those which occur outside the [municipality boundary](#municipality-boundary).
+To represent a route, MDS `provider` APIs must create a GeoJSON [`FeatureCollection`][geojson-feature-collection], which includes every [observed point][geo] in the route, even those which occur outside the [municipality boundary][muni-boundary].
 
-Routes must include at least 2 points: the start point and end point. Routes must include all possible GPS or GNSS samples collected by a Provider. Providers may round the latitude and longitude to the level of precision representing the maximum accuracy of the specific measurement. For example, [a-GPS](https://en.wikipedia.org/wiki/Assisted_GPS) is accurate to 5 decimal places, [differential GPS](https://en.wikipedia.org/wiki/Differential_GPS) is generally accurate to 6 decimal places. Providers may round those readings to the appropriate number for their systems.
+Routes must include at least 2 points: the start point and end point. Routes must include all possible GPS or GNSS samples collected by a Provider. Providers may round the latitude and longitude to the level of precision representing the maximum accuracy of the specific measurement. For example, [a-GPS][agps] is accurate to 5 decimal places, [differential GPS][dgps] is generally accurate to 6 decimal places. Providers may round those readings to the appropriate number for their systems.
+
+Trips that start or end at a [Stop][stops] must include a `stop_id` property in the first (when starting) and last (when ending) Feature of the `route`. See [Stop-based Geographic Data][stop-based-geo] for more information.
 
 ```js
 "route": {
@@ -286,7 +205,9 @@ Routes must include at least 2 points: the start point and end point. Routes mus
     "features": [{
         "type": "Feature",
         "properties": {
-            "timestamp": 1529968782421
+            "timestamp": 1529968782421,
+            // Required for Trips starting at a Stop
+            "stop_id": "95084833-6a3f-4770-9919-de1ab4b8989b",
         },
         "geometry": {
             "type": "Point",
@@ -299,7 +220,9 @@ Routes must include at least 2 points: the start point and end point. Routes mus
     {
         "type": "Feature",
         "properties": {
-            "timestamp": 1531007628377
+            "timestamp": 1531007628377,
+            // Required for Trips ending at a Stop
+            "stop_id": "b813cde2-a41c-4ae3-b409-72ff221e003d"
         },
         "geometry": {
             "type": "Point",
@@ -322,35 +245,34 @@ The status changes endpoint allows a user to query the historical availability f
 
 Unless stated otherwise by the municipality, this endpoint must return only those status changes with a `event_location` that [intersects](#intersection-operation) with the [municipality boundary](#municipality-boundary).
 
-> Note: As a result of this definition, consumers should query the [trips endpoint](#trips) to infer when vehicles enter or leave the municipality boundary.
+> Note: As a result of this definition, consumers should query the [trips endpoint][trips] to infer when vehicles enter or leave the municipality boundary.
 
-Endpoint: `/status_changes`  
-Method: `GET`  
-Schema: [`status_changes` schema][sc-schema]  
-`data` Payload: `{ "status_changes": [] }`, an array of objects with the following structure
+**Endpoint:** `/status_changes`  
+**Method:** `GET`  
+**[Beta feature][beta]:** No  
+**Schema:** [`status_changes` schema][status-schema]  
+**`data` Payload:** `{ "status_changes": [] }`, an array of objects with the following structure
 
 | Field | Type | Required/Optional | Comments |
 | ----- | ---- | ----------------- | ----- |
-| `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS |
+| `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
 | `provider_name` | String | Required | The public-facing name of the Provider |
 | `device_id` | UUID | Required | A unique device ID in UUID format |
 | `vehicle_id` | String | Required | The Vehicle Identification Number visible on the vehicle itself |
-| `vehicle_type` | Enum | Required | see [vehicle types](#vehicle-types) table |
-| `propulsion_type` | Enum[] | Required | Array of [propulsion types](#propulsion-types); allows multiple values |
-| `event_type` | Enum | Required | See [event types](#event-types) table |
-| `event_type_reason` | Enum | Required | Reason for status change, allowable values determined by [`event type`](#event-types) |
-| `event_time` | [timestamp][ts] | Required | Date/time that event occurred at. See [Event Times](#event-times) |
+| `vehicle_type` | Enum | Required | see [vehicle types][vehicle-types] table |
+| `propulsion_types` | Enum[] | Required | Array of [propulsion types][propulsion-types]; allows multiple values |
+| `vehicle_state` | Enum | Required | See [vehicle state][vehicle-states] table |
+| `event_types` | Enum[] | Required | [Vehicle event(s)][vehicle-events] for state change, allowable values determined by `vehicle_state` |
+| `event_time` | [timestamp][ts] | Required | Date/time that event occurred at. See [Event Times][event-times] |
 | `publication_time` | [timestamp][ts] | Optional | Date/time that event became available through the status changes endpoint |
-| `event_location` | GeoJSON [Point Feature][geo] | Required | |
+| `event_location` | GeoJSON [Point Feature][geo] | Required | See also [Stop-based Geographic Data][stop-based-geo] |
 | `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |
-| `associated_trip` | UUID | Required if Applicable | Trip UUID (foreign key to Trips API), required if `event_type_reason` is `user_pick_up` or `user_drop_off`, or for any other status change event that marks the end of a trip. |
-| `associated_ticket` | String | Optional | Identifier for an associated ticket inside an Agency-maintained 311 or CRM system. | 
+| `trip_id` | UUID | Required if Applicable | Trip UUID (foreign key to Trips API), required if `event_types` contains `trip_start`, `trip_end`, `trip_cancel`, `trip_enter_jurisdiction`, or `trip_leave_jurisdiction` |
+| `associated_ticket` | String | Optional | Identifier for an associated ticket inside an Agency-maintained 311 or CRM system |
 
-### Event Times
+[Top][toc]
 
-Because of the unreliability of device clocks, the Provider is unlikely to know with total confidence what time an event occurred at. However, they are responsible for constructing as accurate a timeline as possible. Most importantly, the order of the timestamps for a particular device's events must reflect the Provider's best understanding of the order in which those events occurred.
-
-### Status Changes Query Parameters
+### Status Changes - Query Parameters
 
 The `/status_changes` API should allow querying status changes with the following query parameters:
 
@@ -358,26 +280,13 @@ The `/status_changes` API should allow querying status changes with the followin
 | --------------- | ------ | --------------- |
 | `event_time` | `YYYY-MM-DDTHH`, an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) extended datetime representing an UTC hour between 00 and 23. | All status changes with an event time occurring within the hour. For example, requesting `event_time=2019-10-01T07` returns all status changes where `2019-10-01T07:00:00 <= status_change.event_time < 2019-10-01T08:00:00` UTC. |
 
-If the data does not exist or the hour has not completed, `/status_changes` shall return a `404 Not Found` error.
+If the provider was operational during the requested hour the provider shall return
+a 200 response, even if there are no status changes to report (in which case
+the response will contain an empty list of status changes).
+If the requested hour occurs in a time period in which the provider was not operational
+or the hour is not yet in the past `/status_changes` shall return a `404 Not Found` error.
 
 Without an `event_time` query parameter, `/status_changes` shall return a `400 Bad Request` error.
-
-### Event Types
-
-| `event_type` | Description | `event_type_reason` | Description |
-| ---------- | ---------------------- | ------- | ------------------ |
-| `available` | A device becomes available for customer use | `service_start` | Device introduced into service at the beginning of the day (if program does not operate 24/7) |
-| | | `user_drop_off` | User ends reservation |
-| | | `rebalance_drop_off` | Device moved for rebalancing |
-| | | `maintenance_drop_off` | Device introduced into service after being removed for maintenance |
-| | | `agency_drop_off` | The administrative agency (ie, DOT) drops a device into the PROW using an admin code or similar | 
-| `reserved` | A customer reserves a device (even if trip has not started yet) | `user_pick_up` | Customer reserves device |
-| `unavailable` | A device is on the street but becomes unavailable for customer use | `maintenance` | A device is no longer available due to equipment issues |
-| | | `low_battery` | A device is no longer available due to insufficient battery |
-| `removed` | A device is removed from the street and unavailable for customer use | `service_end` | Device removed from street because service has ended for the day (if program does not operate 24/7) |
-| | | `rebalance_pick_up` | Device removed from street and will be placed at another location to rebalance service |
-| | | `maintenance_pick_up` | Device removed from street so it can be worked on |
-| | | `agency_pick_up` | The administrative agency (ie, DOT) removes a device using an admin code or similar |
 
 [Top][toc]
 
@@ -385,35 +294,44 @@ Without an `event_time` query parameter, `/status_changes` shall return a `400 B
 
 ### GBFS
 
-All MDS compatible `provider` APIs must expose a public [GBFS](https://github.com/NABSA/gbfs) feed as well. Given that GBFS hasn't fully [evolved to support dockless mobility](https://github.com/NABSA/gbfs/pull/92) yet, we follow the current guidelines in making bike information avaliable to the public. 
+All MDS compatible `provider` APIs must expose a public [GBFS](https://github.com/NABSA/gbfs) feed as well. Compatibility with [GBFS 2.0](https://github.com/NABSA/gbfs/blob/v2.0/gbfs.md) or greater is advised due to privacy concerns and support for micromobility.
 
-  - `gbfs.json` is always required and must contain a `feeds` property that lists all published feeds
-  - `system_information.json` is always required
-  - `free_bike_status.json` is required for MDS
-  - `station_information.json` and `station_status.json` don't apply for MDS
+GBFS 2.0 includes some changes that may make it less useful for regulatory purposes (specifically, the automatic rotation of vehicle IDs). The [`/vehicles`](#vehicles) endpoint offers an alternative to GBFS that may more effectively meet the use cases of regulators. Additional information on MDS and GBFS can be found in this [guidance document](https://github.com/openmobilityfoundation/governance/blob/main/technical/GBFS_and_MDS.md).
+
+[Top][toc]
+
+### Data Latency Requirements
+
+The data returned by a near-realtime endpoint should be as close to realtime as possible, but in no case should it be more than 5 minutes out-of-date. Near-realtime endpoints must contain `last_updated` and `ttl` properties in the top-level of the response body. These properties are defined as:
+
+Field Name          | Required  | Defines
+--------------------| ----------| ----------
+last_updated        | Yes       | Timestamp indicating the last time the data in this feed was updated
+ttl                 | Yes       | Integer representing the number of milliseconds before the data in this feed will be updated again (0 if the data should always be refreshed).
+
+[Top][toc]
 
 ### Events
 
-The `/events` endpoint is a near-ish real-time feed of status changes, designed to give access to as recent as possible series of events.
+The `/events` endpoint is a near-realtime feed of status changes, designed to give access to as recent as possible series of events.
 
 The `/events` endpoint functions similarly to `/status_changes`, but shall not included data older than 2 weeks (that should live in `/status_changes.`)
 
-Unless stated otherwise by the municipality, this endpoint must return only those events with an `event_location` that [intersects](#intersection-operation) with the [municipality boundary](#municipality-boundary).
+Unless stated otherwise by the municipality, this endpoint must return only those events with an `event_location` that [intersects][intersection] with the [municipality boundary][muni-boundary].
 
-> Note: As a result of this definition, consumers should query the [trips endpoint](#trips) to infer when vehicles enter or leave the municipality boundary.
+> Note: As a result of this definition, consumers should query the [trips endpoint][trips] to infer when vehicles enter or leave the municipality boundary.
+
+See also [Stop-based Geographic Data][stop-based-geo].
 
 The schema and datatypes are the same as those defined for [`/status_changes`][status].
 
-Endpoint: `/events`  
-Method: `GET`  
-Schema: [`status_changes` schema][sc-schema]  
-`data` Payload: `{ "status_changes": [] }`, an array of objects with the same structure as in [`/status_changes`][status]
+**Endpoint:** `/events`  
+**Method:** `GET`  
+**[Beta feature][beta]:** No (as of 1.0.0)  
+**Schema:** [`events` schema][events-schema]  
+**`data` Payload:** `{ "status_changes": [] }`, an array of objects with the same structure as in [`/status_changes`][status]
 
-### Event Times
-
-Because of the unreliability of device clocks, the Provider is unlikely to know with total confidence what time an event occurred at. However, they are responsible for constructing as accurate a timeline as possible. Most importantly, the order of the timestamps for a particular device's events must reflect the Provider's best understanding of the order in which those events occurred.
-
-### Events Query Parameters
+#### Events Query Parameters
 
 The events API should allow querying with a combination of query parameters:
 
@@ -428,9 +346,105 @@ Should either side of the requested time range be greater than 2 weeks before th
 
 [Top][toc]
 
-[geo]: #geographic-data
-[sc-schema]: status_changes.json
+### Stops
+
+Stop information should be updated on a near-realtime basis by providers who operate _docked_ mobility devices in a given municipality.
+
+In addition to the standard [Provider payload wrapper](#response-format), responses from this endpoint should contain the last update timestamp and amount of time until the next update in accordance with the [Data Latency Requirements][data-latency]:
+
+```json
+{
+    "version": "x.y.z",
+    "data": {
+        "stops": []
+    },
+    "last_updated": "12345",
+    "ttl": "12345"
+}
+```
+
+**Endpoint:** `/stops/:stop_id`  
+**Method:** `GET`  
+**[Beta feature][beta]:** Yes (as of 1.0.0)  
+**`data` Payload:** `{ "stops": [] }`, an array of [Stops][stops]
+
+In the case that a `stop_id` query parameter is specified, the `stops` array returned will only have one entry. In the case that no `stop_id` query parameter is specified, all stops will be returned.
+
+[Top][toc]
+
+### Vehicles
+
+The `/vehicles` endpoint returns the current status of vehicles on the PROW. Only vehicles that are currently in available, unavailable, or reserved states should be returned in this payload. Data in this endpoint should reconcile with data from the `/status_changes` enpdoint. As with other MDS APIs, `/vehicles` is intended for use by regulators, not by the general public. It does not replace the role of a [GBFS][gbfs] feed in enabling consumer-facing applications.
+
+In addition to the standard [Provider payload wrapper](#response-format), responses from this endpoint should contain the last update timestamp and amount of time until the next update in accordance with the [Data Latency Requirements][data-latency]:
+
+```json
+{
+    "version": "x.y.z",
+    "data": {
+        "vehicles": []
+    },
+    "last_updated": "12345",
+    "ttl": "12345"
+}
+```
+
+**Endpoint:** `/vehicles`  
+**Method:** `GET`  
+**[Beta feature][beta]:** Yes (as of 0.4.1)  
+**Schema:** [`vehicles` schema][vehicles-schema]  
+**`data` Payload:** `{ "vehicles": [] }`, an array of objects with the following structure
+
+| Field | Type | Required/Optional | Comments |
+| ----- | ---- | ----------------- | ----- |
+| `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
+| `provider_name` | String | Required | The public-facing name of the Provider |
+| `device_id` | UUID | Required | A unique device ID in UUID format, should match this device in Provider |
+| `vehicle_id` | String | Required | The Vehicle Identification Number visible on the vehicle itself, should match this device in provider |
+| `vehicle_type` | Enum | Required | see [vehicle types][vehicle-types] table |
+| `propulsion_types` | Enum[] | Required | Array of [propulsion types][propulsion-types]; allows multiple values |
+| `last_event_time` | [timestamp][ts] | Required | Date/time when last state change occurred. See [Event Times][event-times] |
+| `last_vehicle_state` | Enum | Required | [Vehicle state][vehicle-states] of most recent state change. |
+| `last_event_types` | Enum[] | Required | [Vehicle event(s)][vehicle-events] of most recent state change, allowable values determined by `last_vehicle_state`. |
+| `last_event_location` | GeoJSON [Point Feature][geo]| Required | Location of vehicle's last event. See also [Stop-based Geographic Data][stop-based-geo]. |
+| `current_location` | GeoJSON [Point Feature][geo] | Required if Applicable | Current location of vehicle if different from last event, and the vehicle is not currently on a trip. See also [Stop-based Geographic Data][stop-based-geo]. |
+| `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |
+
+[Top][toc]
+
+[agps]: https://en.wikipedia.org/wiki/Assisted_GPS
+[beta]: /general-information.md#beta
+[costs-and-currencies]: /general-information.md#costs-and-currencies
+[data-latency]: #data-latency-requirements
+[dgps]: https://en.wikipedia.org/wiki/Differential_GPS
+[error-messages]: /general-information.md#error-messages
+[events]: #events
+[events-schema]: events.json
+[event-times]: #event-times
+[gbfs]: https://github.com/NABSA/gbfs
+[general-information]: /general-information.md
+[geo]: /general-information.md#geographic-data
+[geojson-feature-collection]: https://tools.ietf.org/html/rfc7946#section-3.3
+[iana]: https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
+[intersection]: /general-information.md#intersection-operation
+[iso4217]: https://en.wikipedia.org/wiki/ISO_4217#Active_codes
+[json-api-pagination]: http://jsonapi.org/format/#fetching-pagination
+[json-schema]: https://json-schema.org
+[muni-boundary]: #municipality-boundary
+[propulsion-types]: /general-information.md#propulsion-types
+[responses]: /general-information.md#responses
 [status]: #status-changes
+[status-schema]: status_changes.json
+[stops]: /general-information.md#stops
+[stop-based-geo]: /general-information.md#stop-based-geographic-data
+[stops-schema]: stops.json
 [toc]: #table-of-contents
+[trips]: #trips
 [trips-schema]: trips.json
-[ts]: #timestamps
+[ts]: /general-information.md#timestamps
+[vehicles]: #vehicles
+[vehicle-types]: /general-information.md#vehicle-types
+[vehicle-states]: /general-information.md#vehicle-states
+[vehicle-events]: /general-information.md#vehicle-state-events
+[vehicles-schema]: vehicles.json
+[versioning]: /general-information.md#versioning

@@ -1,0 +1,21 @@
+{
+  "$id": "https://raw.githubusercontent.com/openmobilityfoundation/mobility-data-specification/main/agency/get_stops.json",
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "title": "The MDS Agency Schema, GET stops payload",
+  "type": "object",
+  "definitions": {},
+  "required": [
+    "stops"
+  ],
+  "properties": {
+    "stops": {
+      "$id": "#/properties/stops",
+      "type": "array",
+      "description": "The array of stops",
+      "items": {
+        "$ref": "#/definitions/stop"
+      }
+    }
+  },
+  "additionalProperties": false
+}

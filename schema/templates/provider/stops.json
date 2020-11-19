@@ -1,0 +1,11 @@
+{
+  "stops": {
+    "$id": "#/properties/data/properties/stops",
+    "type": "array",
+    "title": "The stops payload",
+    "items": {
+      "$id": "#/properties/data/properties/stops/items",
+      "$ref": "#/definitions/stop"
+    }
+  }
+}

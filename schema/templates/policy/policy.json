@@ -1,0 +1,351 @@
+{
+  "$id": "https://raw.githubusercontent.com/openmobilityfoundation/mobility-data-specification/main/policy/policy.json",
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "title": "The MDS Policy Schema",
+  "type": "object",
+  "definitions": {
+    "policy": {
+      "$id": "#/definitions/policy",
+      "type": "object",
+      "title": "The policy object schema",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "policy_id",
+        "description",
+        "start_date",
+        "published_date",
+        "rules"
+      ],
+      "properties": {
+        "name": {
+          "$id": "#/definitions/policy/properties/name",
+          "$ref": "#/definitions/string",
+          "description": "Name of policy"
+        },
+        "policy_id": {
+          "$id": "#/definitions/policy/properties/policy_id",
+          "$ref": "#/definitions/uuid",
+          "description": "Unique ID of policy"
+        },
+        "provider_ids":{
+          "$id": "#/definitions/policy/properties/provider_ids",
+          "$ref": "#/definitions/null_uuid_array",
+          "description": "Providers for whom this policy is applicable; empty arrays and null/absent implies all Providers.",
+          "uniqueItems": true
+        },
+        "description": {
+          "$id": "#/definitions/policy/properties/description",
+          "$ref": "#/definitions/string",
+          "description": "Description of policy"
+        },
+        "currency": {
+          "$id": "#/definitions/policy/properties/currency",
+          "$ref": "#/definitions/currency"
+        },
+        "start_date":{
+          "$id": "#/definitions/policy/properties/start_date",
+          "$ref": "#/definitions/timestamp",
+          "description": "Beginning date/time of policy enforcement"
+        },
+        "end_date": {
+          "$id": "#/definitions/policy/properties/end_date",
+          "$ref": "#/definitions/null_timestamp",
+          "description": "End date/time of policy enforcement"
+        },
+        "published_date": {
+          "$id": "#/definitions/policy/properties/published_date",
+          "$ref": "#/definitions/timestamp",
+          "description": "Timestamp at which the policy was published"
+        },
+        "prev_policies": {
+          "$id": "#/definitions/policy/properties/prev_policies",
+          "$ref": "#/definitions/null_uuid_array",
+          "description": "Unique IDs of prior policies replaced by this one",
+          "uniqueItems": true
+        },
+        "rules": {
+          "$id": "#/definitions/rules",
+          "type": "array",
+          "description": "Array of applicable Rule objects",
+          "items": {
+            "$id": "#/definitions/policy/properties/rules/items",
+            "$ref": "#/definitions/rule"
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "rule": {
+      "$id": "#/definitions/rule",
+      "type": "object",
+      "description": "An individual rule in a policy",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "rule_id",
+        "rule_type",
+        "geographies",
+        "states"
+      ],
+      "properties": {
+        "name": {
+          "$id": "#/definitions/rule/properties/name",
+          "$ref": "#/definitions/string",
+          "description": "Name of rule"
+        },
+        "rule_id": {
+          "$id": "#/definitions/rule/properties/rule_id",
+          "$ref": "#/definitions/uuid",
+          "description": "Unique ID of rule"
+        },
+        "rule_type": {
+          "$id": "#/definitions/rule/properties/rule_type",
+          "type": "string",
+          "description": "The type of rule",
+          "enum": [
+            "count",
+            "time",
+            "speed",
+            "rate",
+            "user"
+          ]
+        },
+        "geographies": {
+          "$id": "#/definitions/rule/properties/geographies",
+          "$ref": "#/definitions/uuid_array",
+          "description": "List of Geography UUIDs (non-overlapping) specifying the covered geography",
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "states": {
+          "$id": "#/definitions/rule/properties/states",
+          "type": "object",
+          "description": "Vehicle state to which this rule applies. Optionally provide a list of specific vehicle events as a subset of a given state for the rule to apply to. An empty list or null/absent defaults to \"all\" for the state.",
+          "propertyNames": {
+            "$id": "#/definitions/rule/properties/states/propertyNames",
+            "$ref": "#/definitions/vehicle_state"
+          },
+          "properties": {
+          },
+          "additionalProperties": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "$ref": "#/definitions/vehicle_event"
+            }
+          }
+        },
+        "rule_units": {
+          "$id": "#/definitions/rule/properties/rule_units",
+          "type": "string",
+          "description": "Measured units of policy",
+          "enum": [
+            "seconds",
+            "minutes",
+            "hours",
+            "days",
+            "mph",
+            "kph",
+            "devices",
+            "amount"
+          ]
+        },
+        "vehicle_types": {
+          "$id": "#/definitions/rule/properties/vehicle_types",
+          "$ref": "#/definitions/null_vehicle_types",
+          "description": "Applicable vehicle types, default \"all\""
+        },
+        "propulsion_types": {
+          "$id": "#/definitions/rule/properties/propulsion_types",
+          "$ref": "#/definitions/null_propulsion_types",
+          "description": "Applicable vehicle propulsion types, default \"all\""
+        },
+        "minimum": {
+          "$id": "#/definitions/rule/properties/minimum",
+          "type": ["null", "integer"],
+          "description": "Minimum value, if applicable (default 0)"
+        },
+        "maximum": {
+          "$id": "#/definitions/rule/properties/maximum",
+          "type": ["null", "integer"],
+          "description": "Maximum value, if applicable (default unlimited)"
+        },
+        "rate_amount": {
+          "$id": "#/definitions/rule/properties/rate_amount",
+          "type": ["null", "integer"],
+          "description": "The amount of a rate applied when this rule applies, if applicable (default zero). A positive integer rate amount represents a fee, while a negative integer represents a subsidy. Rate amounts are given in the currency defined in the Policy."
+        },
+        "rate_recurrence": {
+          "$id": "#/definitions/rule/properties/rate_recurrence",
+          "type": ["string", "null"],
+          "description": "Specify when a rate is applied – either once, or periodically according to a time unit specified using rule_units",
+          "enum": [
+            "once",
+            "each_time_unit",
+            "per_complete_time_unit"
+          ]
+        },
+        "start_time": {
+          "$id": "#/definitions/rule/properties/start_time",
+          "$ref": "#/definitions/null_iso_time",
+          "description": "Beginning time-of-day when the rule is in effect (default 00:00:00)"
+        },
+        "end_time": {
+          "$id": "#/definitions/rule/properties/end_time",
+          "$ref": "#/definitions/null_iso_time",
+          "description": "Ending time-of-day when the rule is in effect (default 23:59:59)"
+        },
+        "days": {
+          "$id": "#/definitions/rule/properties/days",
+          "$ref": "#/definitions/null_days",
+          "description": "Days when the rule is in effect (default all)"
+        },
+        "messages": {
+          "$id": "#/definitions/rule/properties/messages",
+          "type": ["null", "object"],
+          "description": "Message to rider user, if desired, in various languages, keyed by BCP 47 language tag",
+          "propertyNames": {
+            "pattern": "([A-Za-z]{2,3})([-][A-Za-z]{3}){0,3}([-]([A-Za-z]{4}))?([-]([A-Za-z]{2}|[0-9]{3}))?"
+          }
+        },
+        "value_url": {
+          "$id": "#/definitions/rule/properties/value_url",
+          "type": ["null", "string"],
+          "description": "URL to an API endpoint that can provide dynamic information for the measured value",
+          "format": "uri"
+        }
+      },
+      "allOf": [
+        {
+          "description": "Valid rule_type and rule_unit values for this rule",
+          "oneOf": [
+            {
+              "properties": {
+                "rule_type": {
+                  "const": "user"
+                }
+              }
+            },
+            {
+              "allOf": [
+                {
+                  "required": [
+                    "rule_units"
+                  ]
+                },
+                {
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "rule_type": {
+                          "const": "time"
+                        },
+                        "rule_units": {
+                          "enum": [
+                            "seconds",
+                            "minutes",
+                            "hours",
+                            "days"
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "properties": {
+                        "rule_type": {
+                          "const": "speed"
+                        },
+                        "rule_units": {
+                          "enum": [
+                            "mph",
+                            "kph"
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "properties": {
+                        "rule_type": {
+                          "const": "count"
+                        },
+                        "rule_units": {
+                          "enum": [
+                            "devices"
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "required": [
+                        "rate_amount",
+                        "rate_recurrence"
+                      ],
+                      "properties": {
+                        "rule_type": {
+                          "const": "rate"
+                        },
+                        "rule_units": {
+                          "enum": [
+                            "amount",
+                            "seconds",
+                            "minutes",
+                            "hours",
+                            "days"
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "required": [
+    "data",
+    "updated",
+    "version"
+  ],
+  "properties": {
+    "data": {
+      "$id": "#/properties/data",
+      "type": "object",
+      "description": "The data records in this payload",
+      "required": [
+        "policy"
+      ],
+      "properties": {
+        "policy": {
+          "$id": "#/properties/data/properties/policy",
+          "type": "array",
+          "title": "The policy payload",
+          "items": {
+            "$id": "#/properties/data/properties/policy/items",
+            "$ref": "#/definitions/policy"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "end_date": {
+      "$id": "#/properties/end_date",
+      "$ref": "#/definitions/null_timestamp",
+      "description": "The timestamp after which the Policy is no longer effective"
+    },
+    "updated": {
+      "$id": "#/properties/updated",
+      "$ref": "#/definitions/timestamp",
+      "description": "The timestamp when the Policy was last updated"
+    },
+    "version": {
+      "$id": "#/properties/version",
+      "$ref": "#/definitions/version",
+      "description": "The version of MDS that the Policy represents"
+    }
+  },
+  "additionalProperties": false
+}
