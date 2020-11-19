@@ -6,8 +6,8 @@ This specification details the purpose, use cases, and schema for Jurisdictions.
 
 - [Background](#background)
 - [Distribution](#distribution)
-  - [General REST Notes](#rest-notes)
-  - [Endpoints](#endpoints)
+  - [REST](#rest)
+  - [REST Endpoints](#endpoints)
   - [Flat Files](#flat-files)
 - [Schema](#schema)
 
@@ -56,7 +56,7 @@ Those tools can be granted data access from the SaaS tool based on the jurisdict
 
 Jurisdictions can be served by agencies through the following REST API, or via [flat-files](#flat-files).
 
-### [General REST Notes](#rest-notes)
+### [REST](#rest)
 
 All response fields must use `lower_case_with_underscores`.
 
@@ -100,7 +100,7 @@ Formatted in JSON, a Jurisdiction object should look like this:
 }
 ```
 
-## [Endpoints](#endpoints)
+## [REST Endpoints](#endpoints)
 
 ### GET /Jurisdictions
 
