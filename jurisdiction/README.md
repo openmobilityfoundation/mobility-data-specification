@@ -1,6 +1,6 @@
-# Mobility Data Specification: Jurisdiction
+# Mobility Data Specification: Jurisdiction **[Beta](/general-information.md#beta-features):**
 
-This specification details the purpose, use cases, and schema for Jurisdictions.
+This specification details the purpose, use cases, and schema for Jurisdictions, a beta feature. Jurisdictions are an optional service that, if implemented, must be authenticated, and served by a coordinated group of agencies.
 
 ## Table of Contents
 
@@ -12,43 +12,46 @@ This specification details the purpose, use cases, and schema for Jurisdictions.
 - [Schema](#schema)
 
 ## Background
+
 City and transportation agencies need to regulate mobility within their own jurisdictions. Within a collection of agencies under a single MDS software deployment, those agencies need to coordinate and share relevant data between one another when their jurisdictions overlap.
 
 The jurisdictions API helps to solve the following problems when implementing MDS in a multi-jurisdictional environment:
 
-- Giving agencies a mechanism to communicate boundaries between one another and to mobility providers. 
+- Giving agencies a mechanism to communicate boundaries between one another and to mobility providers.
 - Some agencies manage multiple overlapping jurisdictions and need a mechanism to administer scope and permissions to data.
 
 A jurisdiction is:
+
 - A representation of an agency’s authority to the outside world
 - Human-readable name
 - Uniquely identified
 - Purview to make rules over physical boundaries and modal boundaries (e.g. a jurisdiction could be for taxis only)
 - A way of tracking revisions in an agency's authority
 
-
 ### Use Cases
+
 #### 1. Defining boundaries and what the vehicle state `elsewhere` means
+
 For a single jurisdiction MDS deployment, a city designates a jurisdiction that providers can reference and know in what area to send events. When a trip leaves the LADOT jurisdiction, providers need to send an event with the vehicle state set to `elsewhere`.
 
 Cities and agencies contained within the MPO would internally be able filter for their own jurisdictional data. This would allow mobility providers to not need to send MDS data to multiple MDS instances.
 
-In addition, Agency authority have an explicit revision mechanism through a canonical API. 
-
+In addition, Agency authority have an explicit revision mechanism through a canonical API.
 
 #### 2. Clarifying overlapping authority
+
 Agencies and mobility providers would be able to understand agency authority in a geographical area and in what mobility mode through a list of jurisdictions..
 
-Example: LADOT has jurisdictional authority over the city of Los Angeles for micromobility permitting, and jurisdictional authority over the county of Los Angeles for taxi permitting. 
+Example: LADOT has jurisdictional authority over the city of Los Angeles for micromobility permitting, and jurisdictional authority over the county of Los Angeles for taxi permitting.
 
 #### 3. Access scoping
 
 Example: A SaaS company contracts with Miami-Dade County to provide MDS. There are 34 cities within the county. Miami-Dade County needs to assign permissions to each city to control who writes policy, based on jurisdictions. A Jurisdictions object with a stable identifier can be used for access control.
 
 #### 4. Agencies need to grant application access
-Example: The City of Miami has different data visualization tools from the city of Coral Gables
-Those tools can be granted data access from the SaaS tool based on the jurisdiction's stable identifier. 
 
+Example: The City of Miami has different data visualization tools from the city of Coral Gables
+Those tools can be granted data access from the SaaS tool based on the jurisdiction's stable identifier.
 
 [Top](#table-of-contents)
 
@@ -72,21 +75,21 @@ The response to a client request must include a valid HTTP status code defined i
 
 ## Schema
 
-A Jurisdiction optionally contains a reference to a Geography object. This reference may change over time, e.g. if two  
+A Jurisdiction optionally contains a reference to a Geography object. This reference may change over time, e.g. if two
 
 When a Jurisdiction is updated, the old version should remain in the back-end for archival purposes.
 
 An individual `Jurisdiction` object is defined by the following fields:
 
-| Name             | Type      | Required / Optional | Description                                                                         |
-| ---------------- | --------- | --- | ----------------------------------------------------------------------------------- |
-| `jurisdiction_id`| UUID      | Required   | Unique ID of Jurisdiction. This field is immutable. |
-| `agency_key`     | String    | Required   | A unique string key for the Jurisdiction. This field must also be immutable. Allows for easier management of Jurisdiction-based access control in JWTs. |
-| `agency_name`    | String    | Optional   | Human-readable agency name for display purposes. |
-| `description`    | String    | Required   | Description of Jurisdiction.                                                               | 
-| `geography_id`   | UUID      | Optional   | The unique ID of the geography covered by this Jurisdiction.  |
-| `mobility_modes`  | String[]    | Optional   | Set this field to specify what mobility modes a jurisdiction applies to. Valid values are left up to the agency to determine, but a couple examples that we think might be useful are 'taxi' and 'micromobility'. An empty array or undefined field indicates all mobility modes are covered under this jurisdiction. |
-| `timestamp`      | timestamp | Required   | Creation or update time of a Jurisdiction.                                                 |
+| Name              | Type      | Required / Optional | Description                                                                                                                                                                                                                                                                                                           |
+| ----------------- | --------- | ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `jurisdiction_id` | UUID      | Required            | Unique ID of Jurisdiction. This field is immutable.                                                                                                                                                                                                                                                                   |
+| `agency_key`      | String    | Required            | A unique string key for the Jurisdiction. This field must also be immutable. Allows for easier management of Jurisdiction-based access control in JWTs.                                                                                                                                                               |
+| `agency_name`     | String    | Optional            | Human-readable agency name for display purposes.                                                                                                                                                                                                                                                                      |
+| `description`     | String    | Required            | Description of Jurisdiction.                                                                                                                                                                                                                                                                                          |
+| `geography_id`    | UUID      | Optional            | The unique ID of the geography covered by this Jurisdiction.                                                                                                                                                                                                                                                          |
+| `mobility_modes`  | String[]  | Optional            | Set this field to specify what mobility modes a jurisdiction applies to. Valid values are left up to the agency to determine, but a couple examples that we think might be useful are 'taxi' and 'micromobility'. An empty array or undefined field indicates all mobility modes are covered under this jurisdiction. |
+| `timestamp`       | timestamp | Required            | Creation or update time of a Jurisdiction.                                                                                                                                                                                                                                                                            |
 
 Formatted in JSON, a Jurisdiction object should look like this:
 
@@ -107,11 +110,12 @@ Formatted in JSON, a Jurisdiction object should look like this:
 Gets all of an agency's Jurisdictions.
 
 Parameters:
-| Name         | Type      | R/O | Description                                    |
+| Name | Type | R/O | Description |
 | ------------ | --------- | --- | ---------------------------------------------- |
-| `effective`   | Timestamp | O   | See the state of all the Jurisdictions (i.e. which ones are effective) at that point in time. If not supplied, the default is to show only Jurisdictions that are currently in effect.     |
+| `effective` | Timestamp | O | See the state of all the Jurisdictions (i.e. which ones are effective) at that point in time. If not supplied, the default is to show only Jurisdictions that are currently in effect. |
 
 Response codes:
+
 - 200 - success
 - 403 - unauthorized
 - 500 - server error
@@ -121,17 +125,19 @@ Response codes:
 Gets a single Jurisdictions.
 
 Parameters:
-| Name         | Type      | R/O | Description                                    |
+| Name | Type | R/O | Description |
 | ------------ | --------- | --- | ---------------------------------------------- |
-| `effective`   | Timestamp | O   | See the version of the Jurisdiction that was in effect at that point in time.      |
+| `effective` | Timestamp | O | See the version of the Jurisdiction that was in effect at that point in time. |
 
 Response codes:
+
 - 200 - Success
 - 403 - Unauthorized
 - 404 - not found
 - 500 - Server error
 
 ### [Flat Files](#flat-files)
+
 To use flat files, Jurisdictions shall be represented in the following files:
 
 - `jurisdictions.json`
