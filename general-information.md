@@ -184,7 +184,7 @@ Stops describe vehicle trip start and end locations in a pre-designated physical
 | num_vehicles_available | {vehicle_type: number}                                      | Required          | How many vehicles are available per vehicle_type at this stop?                               |
 | num_vehicles_disabled  | {vehicle_type: number}                                      | Required          | How many vehicles are unavailable/reserved per vehicle_type at this stop?                    |
 | provider_id            | UUID                                                        | Optional          | UUID for the Provider managing this stop. Null/undefined if managed by an Agency.  See MDS [provider list](/providers.csv).  |
-| geography_id           | UUID                                                        | Optional          | Pointer to the Geography that represents the Stop geospatially                               |
+| geography_id           | UUID                                                        | Optional          | Pointer to the [Geography](/geography) that represents the Stop geospatially                               |
 | region_id              | string                                                      | Optional          | ID of the region where station is located, see [GBFS Station Information][gbfs-station-info] |
 | short_name             | String                                                      | Optional          | Abbreviated stop name                                                                        |
 | address                | String                                                      | Optional          | Postal address (useful for directions)                                                       |
