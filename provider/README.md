@@ -179,7 +179,11 @@ The `/trips` API should allow querying trips with the following query parameters
 | --------------- | ------ | --------------- |
 | `end_time` | `YYYY-MM-DDTHH`, an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) extended datetime representing an UTC hour between 00 and 23. | All trips with an end time occurring within the hour. For example, requesting `end_time=2019-10-01T07` returns all trips where `2019-10-01T07:00:00 <= trip.end_time < 2019-10-01T08:00:00` UTC. |
 
-If the data does not exist or the hour has not completed, `/trips` shall return a `404 Not Found` error.
+If the provider was operational during the requested hour the provider shall return
+a 200 response, even if there are no trips to report (in which case
+the response will contain an empty list of trips).
+If the requested hour occurs in a time period in which the provider was not operational
+or the hour is not yet in the past `/trips` shall return a `404 Not Found` error.
 
 Without an `end_time` query parameter, `/trips` shall return a `400 Bad Request` error.
 
@@ -277,7 +281,11 @@ The `/status_changes` API should allow querying status changes with the followin
 | --------------- | ------ | --------------- |
 | `event_time` | `YYYY-MM-DDTHH`, an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) extended datetime representing an UTC hour between 00 and 23. | All status changes with an event time occurring within the hour. For example, requesting `event_time=2019-10-01T07` returns all status changes where `2019-10-01T07:00:00 <= status_change.event_time < 2019-10-01T08:00:00` UTC. |
 
-If the data does not exist or the hour has not completed, `/status_changes` shall return a `404 Not Found` error.
+If the provider was operational during the requested hour the provider shall return
+a 200 response, even if there are no status changes to report (in which case
+the response will contain an empty list of status changes).
+If the requested hour occurs in a time period in which the provider was not operational
+or the hour is not yet in the past `/status_changes` shall return a `404 Not Found` error.
 
 Without an `event_time` query parameter, `/status_changes` shall return a `400 Bad Request` error.
 

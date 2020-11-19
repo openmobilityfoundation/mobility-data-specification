@@ -6,7 +6,7 @@
 		"name": "Municipal Boundary",
 		"description": "Full municipal jurisdiction for the combined city/county",
 		"effective_date": 1570034561834,
-		"publish_date": 1570035222868,
+		"published_date": 1570035222868,
 		"prev_geographies": [
 			"40d78c83-493f-40ad-8aba-a1ef036c5ffa"
 		],

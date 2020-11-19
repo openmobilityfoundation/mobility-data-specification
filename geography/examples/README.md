@@ -38,7 +38,7 @@ Shows the muncipal boundaries of a regulating entity, which may be larger than t
   "name": "Municipal Boundary",
   "description": "Full municipal jurisdiction for the combined city/county",
   "effective_date": 1570034561834,
-  "publish_date": 1570035222868,
+  "published_date": 1570035222868,
   "prev_geographies": [
     "40d78c83-493f-40ad-8aba-a1ef036c5ffa"
   ],
@@ -66,7 +66,7 @@ Boundaries of a city's permitted operating area for provider vehicles.
     "name": "Operating Area",
     "description": "Municipal permitted operating area for devices",
     "effective_date": 1570034561834,
-    "publish_date": 1570035222868,
+    "published_date": 1570035222868,
     "prev_geographies": [
       "6100b029-a943-439c-b344-72bcc8e78d15",
       "5ce17f69-d869-4103-b414-9f213fd6347d"
@@ -95,7 +95,7 @@ Boundaries of one of 9 areas in a city where vehicles can be distibuted and rebl
     "name": "Distribution Zone #8",
     "description": "Distribution area for reblancing vehicles. One of 9 zones in the city.",
     "effective_date": 1570034561834,
-    "publish_date": 1570035222868,
+    "published_date": 1570035222868,
     "prev_geographies": [
       "036e9c50-ae67-4135-a9e1-31df1f76f4a2",
       "3198dd92-749f-48e9-93ff-dd6ef4ec4149",
@@ -125,7 +125,7 @@ Boundaries of areas in a city where vehicles are not allowed be ridden by riders
     "name": "Slow Ride Zones",
     "description": "Areas where vehicles are to be ridden at a reduced top speed",
     "effective_date": 1570034561834,
-    "publish_date": 1570035222868,
+    "published_date": 1570035222868,
     "geography_json": NO_RIDE_ZONE_GEOGRAPHY
   } 
 }
@@ -150,7 +150,7 @@ Boundaries of areas in a city where vehicles are to be ridden at a slower top sp
     "name": "Operating Area",
     "description": "Municipal permitted operating area for devices",
     "effective_date": 1570034561834,
-    "publish_date": 1570035222868,
+    "published_date": 1570035222868,
     "prev_geographies": [
       "6100b029-a943-439c-b344-72bcc8e78d15",
       "5ce17f69-d869-4103-b414-9f213fd6347d"
@@ -180,7 +180,7 @@ Designated stoping areas for vehicles. In this example the recommended parking l
     "name": "Parking areas",
     "description": "Highlands area preferred parking locations",
     "effective_date": 1570034561834,
-    "publish_date": 1570035222868,
+    "published_date": 1570035222868,
     "prev_geographies": [
       "789f677f-38eb-4397-a2ec-eca3f5c2ccb7",
       "fa4a3d92-706b-4400-8f44-0170b2ad632b",
