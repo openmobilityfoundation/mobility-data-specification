@@ -104,7 +104,7 @@ Placeholder -- link to schema to be added later.
 | `geography_json`   | UUID      | Required   | The GeoJSON that defines the geographical coordinates.                                 |
 | `effective_date`   | [timestamp][ts] | Optional   | The date at which a Geography is considered "live".  Must be at or after `published_date`. |
 | `published_date`     | [timestamp][ts] | Required   | Time that the geography was published, i.e. made immutable                       |
-| `retire_date`     | [timestamp][ts] | Optional   | Time that the geography is slated to retire, i.e. be no longer usable. Note add this does not require creating a new `geography_id`, eg, it does not affect immutability.                       |
+| `retire_date`     | [timestamp][ts] | Optional   | Time that the geography is slated to retire, i.e. be no longer usable. Note add this does not require creating a new `geography_id`, eg, it does not affect immutability.  Must be after `effective_date`.                     |
 | `prev_geographies` | UUID[]    | Optional   | Unique IDs of prior geographies replaced by this one                                   |
 
 [Top][toc]
