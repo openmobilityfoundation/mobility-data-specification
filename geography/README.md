@@ -81,7 +81,7 @@ See the [Responses][responses] and [Error Messages][error-messages] sections.
 
 ### Authorization
 
-Authorization of the Geometry API is not required or recommended. See [Open Data APIs](/general-information.md#open-data-apis) for details.
+Authorization of the Geography API is not required or recommended. See [Open Data APIs](/general-information.md#open-data-apis) for details.
 
 [Top][toc]
 
