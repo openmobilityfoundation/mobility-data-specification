@@ -248,7 +248,6 @@ An individual `Rule` object is defined by the following fields:
 | `days`             | day[]                       | Optional   | Days `["sun", "mon", "tue", "wed", "thu", "fri", "sat"]` when the rule is in effect (default all) |
 | `messages`         | `{ String:String }`         | Optional   | Message to rider user, if desired, in various languages, keyed by language tag (see [Messages](#messages)) |
 | `value_url`        | URL                         | Optional   | URL to an API endpoint that can provide dynamic information for the measured value (see [Value URL](#value-url)) |
-| `stops`      | UUID[]                      | Optional   | List of [Stop](/general-information.md#stops) UUIDs that this Rule applies to. If this field is used then the `geographies` field must be used to identify the locations.  |
 
 [Top][toc]
 
