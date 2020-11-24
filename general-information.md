@@ -92,8 +92,7 @@ represented as a GeoJSON [`Feature`][geojson-feature] object with a correspondin
 
 ### Stop-based Geographic Data
 
-When an individual location coordinate (Point, MultiPolygon, etc.) corresponds to a [Stop][general-stops],
-it must be presented with a `stop_id` property:
+When an individual location coordinate measurement (Point) corresponds to a [Stop][general-stops], it must be presented with a `stop_id` property:
 
 ```json
 {
@@ -176,15 +175,15 @@ Stops describe vehicle trip start and end locations in a pre-designated physical
 | Field                  | Type                                                        | Required/Optional | Description                                                                                  |
 |------------------------|-------------------------------------------------------------|-------------------|----------------------------------------------------------------------------------------------|
 | stop_id                | UUID                                                        | Required          | Unique ID for stop                                                                           |
-| name              | String                                                      | Required          | Name of stop                                                                                 |
+| name                   | String                                                      | Required          | Name of stop                                                                                 |
 | last_reported          | Timestamp                                                   | Required          | Date/Time that the stop was last updated                                                     |
-| location               | GeoJSON [Point or Polygon Feature](provider/README.md#geographic-data) | Required          | Location of the Stop. If Point is used then assume a 20 meter buffer.                                                                         |
+| location               | GeoJSON [Point Feature](#stop-based-geographic-data) | Required          | Simple centerpoint location of the Stop. The use of the optional `geography_id` is recommended to provide more detail.                                                                         |
 | status                 | [Stop Status](#stop-status)                                 | Required          | Object representing the status of the Stop. See [Stop Status](#stop-status).                 |
 | capacity               | {vehicle_type: number}                                      | Required          | Number of total places per vehicle_type                                                      |
 | num_vehicles_available | {vehicle_type: number}                                      | Required          | How many vehicles are available per vehicle_type at this stop?                               |
 | num_vehicles_disabled  | {vehicle_type: number}                                      | Required          | How many vehicles are unavailable/reserved per vehicle_type at this stop?                    |
 | provider_id            | UUID                                                        | Optional          | UUID for the Provider managing this stop. Null/undefined if managed by an Agency.  See MDS [provider list](/providers.csv).  |
-| geography_id           | UUID                                                        | Optional          | Pointer to the [Geography](/geography) that represents the Stop geospatially                               |
+| geography_id           | UUID                                                        | Optional          | Pointer to the [Geography](/geography) that represents the Stop geospatially via Polygon or MultiPolygon.                               |
 | region_id              | string                                                      | Optional          | ID of the region where station is located, see [GBFS Station Information][gbfs-station-info] |
 | short_name             | String                                                      | Optional          | Abbreviated stop name                                                                        |
 | address                | String                                                      | Optional          | Postal address (useful for directions)                                                       |
