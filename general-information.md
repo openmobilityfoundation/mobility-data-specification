@@ -69,7 +69,7 @@ Additionally, `device_id` must remain constant for the device's lifetime of serv
 
 ## Geographic Data
 
-References to geographic datatypes (Point, MultiPolygon, etc.) imply coordinates encoded in the [WGS 84 (EPSG:4326)][wgs84] standard GPS or GNSS projection expressed as [Decimal Degrees][decimal-degrees].
+References to geographic datatypes (Point, MultiPolygon, etc.) imply coordinates encoded in the [WGS 84 (EPSG:4326)][wgs84] standard GPS or GNSS projection expressed as [Decimal Degrees][decimal-degrees]. When points are used, you may assume a 20 meter buffer around the point when needed.
 
 Whenever an individual location coordinate measurement is presented, it must be
 represented as a GeoJSON [`Feature`][geojson-feature] object with a corresponding [`timestamp`][ts] property and [`Point`][geojson-point] geometry:
