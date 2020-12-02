@@ -1,4 +1,4 @@
-# Mobility Data Specification: Jurisdiction **[Beta](/general-information.md#beta-features):**
+# Mobility Data Specification: Jurisdiction
 
 This specification details the purpose, use cases, and schema for Jurisdictions, a beta feature. Jurisdictions are an optional service that, if implemented, must be authenticated, and served by a coordinated group of agencies.
 
@@ -64,7 +64,7 @@ Those tools can be granted data access from the SaaS tool based on the jurisdict
 
 Jurisdictions can be served by agencies through the following REST API, or via [flat-files](#flat-files).
 
-### [REST]
+### REST
 
 All response fields must use `lower_case_with_underscores`.
 
@@ -108,7 +108,7 @@ Formatted in JSON, a Jurisdiction object should look like this:
 }
 ```
 
-## [REST Endpoints]
+## REST Endpoints
 
 ### GET /Jurisdictions
 
@@ -141,7 +141,7 @@ Response codes:
 - 404 - not found
 - 500 - Server error
 
-### [Flat Files]
+### Flat Files
 
 To use flat files, Jurisdictions shall be represented in the following files:
 
