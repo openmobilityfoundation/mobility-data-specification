@@ -5,9 +5,10 @@ This specification details the purpose, use cases, and schema for Jurisdictions,
 ## Table of Contents
 
 - [Background](#background)
+- [Beta Feature](#beta-feature)
 - [Distribution](#distribution)
   - [REST](#rest)
-    - [REST Endpoints](#rest-endpoints)
+  - [REST Endpoints](#rest-endpoints)
   - [Flat Files](#flat-files)
 - [Schema](#schema)
 
@@ -27,6 +28,10 @@ A jurisdiction is:
 - Uniquely identified
 - Purview to make rules over physical boundaries and modal boundaries (e.g. a jurisdiction could be for taxis only)
 - A way of tracking revisions in an agency's authority
+
+## Beta Feature
+
+The Jurisdictions API and all of its endpoints are marked as a [beta feature](https://github.com/openmobilityfoundation/mobility-data-specification/blob/feature-metrics/general-information.md#beta-features) starting in the 1.1.0 release. It has not been tested in real world scenarios, and may be adjusted in future releases.
 
 ### Use Cases
 
@@ -59,7 +64,7 @@ Those tools can be granted data access from the SaaS tool based on the jurisdict
 
 Jurisdictions can be served by agencies through the following REST API, or via [flat-files](#flat-files).
 
-### [REST](#rest)
+### [REST]
 
 All response fields must use `lower_case_with_underscores`.
 
@@ -103,7 +108,7 @@ Formatted in JSON, a Jurisdiction object should look like this:
 }
 ```
 
-## [REST Endpoints](#rest-endpoints)
+## [REST Endpoints]
 
 ### GET /Jurisdictions
 
@@ -136,7 +141,7 @@ Response codes:
 - 404 - not found
 - 500 - Server error
 
-### [Flat Files](#flat-files)
+### [Flat Files]
 
 To use flat files, Jurisdictions shall be represented in the following files:
 
