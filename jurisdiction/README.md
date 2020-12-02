@@ -141,6 +141,7 @@ Response codes:
 - 404 - not found
 - 500 - Server error
 
+[Top](#table-of-contents)
 ### Flat Files
 
 To use flat files, Jurisdictions shall be represented in the following files:
