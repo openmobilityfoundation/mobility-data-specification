@@ -425,7 +425,7 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 [gbfs]: https://github.com/NABSA/gbfs
 [general-information]: /general-information.md
 [geo]: /general-information.md#geographic-data
-[geography-driven-events]: /policy/README.md#geography-driven-events
+[geography-driven-events]: /general-information.md#geography-driven-events
 [geojson-feature-collection]: https://tools.ietf.org/html/rfc7946#section-3.3
 [iana]: https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
 [intersection]: /general-information.md#intersection-operation

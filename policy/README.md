@@ -183,33 +183,6 @@ The optional `end_date` field applies to all policies represented in the file.
 
 [Top][toc]
 
-## Geography-Driven Events **[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.1.0)*
-
-Geography-Driven Events is a new MDS feature for Agencies to perform complete Policy compliance monitoring without precise location data. Geography-Driven Events describe individual vehicles in realtime – not just aggregate data. However, rather than receiving the exact location of a vehicle, Agencies receive information about the vehicle's current geographic region. The regions used for Geography-Driven Events correspond to the Geographies in an Agency's current Policy. In this way, the data-shared using Geography-Driven Events is matched to an Agency's particular regulatory needs.
-
-Here's how it works in practice:
-
-1. The Agency creates a geographic Policy Area for a local regulatory need
-
-	*Scooters traveling within downtown during peak hours incur a $0.20 fee.*
-
-2. Providers notify the Agency in real-time about events in the Policy Area.
-
-	*At 5:21pm scooter X7123 entered downtown.*
-
-3. The Agency can refine their data needs over time by revising their published Policy Areas.
-
-	*Agency adds rule disallowing parking on waterfront path, begins receiving data on events within area.*
-
-
-
-Agencies that wish to use Geography-Driven Events do so by requiring a new `event_geographies` field in status events. When an Agency is using Geography-Driven Events, Providers must emit a new `changed_geographies` status event whenever a vehicle in a trip enters or leaves a Geography managed by a Policy.
-
-During the Beta period for this feature, location and telemtry data remain required fields. This allows Aggencies to test Geometry-Driven Events, measuring its accuracy and efficacy against regulatory systems based on precise location data. After the beta period, if Geometry-Driven Events is deemed by OMF to be accurate and effective, the specification will evolve to allow cities to use Geography-Driven Events in lieu of location or telemtry data.
-
-
-[Top][toc]
-
 ## Schema
 
 All response fields must use `lower_case_with_underscores`.
