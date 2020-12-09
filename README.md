@@ -33,7 +33,7 @@ The Mobility Data Specification (**MDS**), a project of the [Open Mobility Found
 
 * The [`geography`][geography] API endpoints are intended to be implemented by regulatory agencies and consumed by mobility providers. Providers query the Policy API to get information about geographical regions for regulatory and other purposes. It was first released in October 2019, originally included as part of the Policy specification. Development takes place under the guidance of the OMF's City Services Working Group.
 
-* The [`metrics`](metrics) API endpoints are intended to be implemented by regulatory agencies, mobility providers or third-party ecosystem services to have a standard way to consistently describe available metrics, and create an extensible interface for querying MDS metrics. Development takes place under the guidance of the OMF's City Services and Provider Services Working Group.  
+* The [`metrics`](metrics) API endpoints are intended to be implemented by regulatory agencies or their appointed third-party representatives to have a standard way to consistently describe available metrics, and create an extensible interface for querying MDS metrics. Development takes place under the guidance of the OMF's City Services Working Group.  
 
 MDS is designed to be a modular kit-of-parts. Regulatory agencies can use the components of the API that are appropriate for their needs. An agency may choose to use only `agency`, `provider`, `policy`, or `metrics`. Or they may select specific elements (endpoints) from each to help them implement their goals.
 
