@@ -7,7 +7,6 @@ The core metrics are a set of defined, consistent MDS metrics definitions that p
 - [Metrics Definitions](#metrics-definitions)
   - [Dimensions](#dimensions)
   - [Filters](#filters)
-  - [Special Group Type](#special-group-type)
 - [Other MDS Metrics](#other-mds-metrics)
 
 # Metrics Definitions
@@ -56,21 +55,6 @@ The following represent the suggested MDS core metric filters:
 | geography_id       | [MDS Geography](/geography)                                                                       |
 | geography_type     | [MDS Geography Type](/geography#geography-type) e.g. census_block, jurisdiction, council_district |
 | vehicle_type       | [Vehicle Type](/agency#vehicle-type) defined by MDS                                               |
-| special_group_type | [Special Group Type](#special-group-type) defined by MDS                                          |
-
-[Top][toc]
-
-## Special Group Type
-
-Special groups of riders can be optionally queried and counts can be returned in aggregate.  
-
-Here are the possible values for the `special_group_type` field:
-
-| Name       | Description                                                                                                           |
-| ---------- | --------------------------------------------------------------------------------------------------------------------- |
-| low_income | Trips where a low income discount is applied by the provider, e.g., a discount from a qualified provider equity plan. |
-
-Other special group types may be added in future MDS releases as relevant agency and provider use cases are identified. When additional special group types or metrics are proposed, a thorough review of utility and relevance in program oversight, evaluation, and policy development should be done by OMF Working Groups, as well as any privacy implications by the OMF Privacy Committee.
 
 [Top][toc]
 
