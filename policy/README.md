@@ -126,6 +126,7 @@ Method: `GET`
 
 [Top][toc]
 
+
 ### Flat Files
 
 To use flat files, policies shall be represented in two (2) files:
@@ -217,7 +218,7 @@ An individual `Policy` object is defined by the following fields:
 | `provider_ids`   | UUID[]          | Optional    | Providers for whom this policy is applicable; empty arrays and `null`/absent implies all Providers. See MDS [provider list](/providers.csv). |
 | `description`    | String          | Required   | Description of policy                                                               |
 | `currency`       | String          | Optional   | An ISO 4217 Alphabetic Currency Code representing the [currency](../general-information.md#costs-and-currencies) of all Rules of [type](#rule-types) `rate`.|
-| `start_date`     | [timestamp][ts] | Required   | Beginning date/time of policy enforcement                                           |
+| `start_date`     | [timestamp][ts] | Required   | Beginning date/time of policy enforcement. In order to give providers sufficient time to poll, `start_date` must be at least 20 minutes after `published_date`.                                           |
 | `end_date`       | [timestamp][ts] | Optional    | End date/time of policy enforcement                                                 |
 | `published_date` | [timestamp][ts] | Required   | Timestamp that the policy was published                                             |
 | `prev_policies`  | UUID[]          | Optional    | Unique IDs of prior policies replaced by this one                                   |
@@ -350,6 +351,7 @@ Rules are a form of pattern matching; conditions under which a given rule is "me
 If a vehicle is matched with a rule, then it _will not_ be considered in the subsequent evaluation of rules within a given policy. This allows for expressing complex policies, such as a layer of "valid" geographies in an earlier rule, with overarching "invalid" geographies in later rules.
 
 The internal mechanics of ordering are up to the Policy editing and hosting software.
+
 
 [Top][toc]
 

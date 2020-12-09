@@ -179,7 +179,11 @@ The `/trips` API should allow querying trips with the following query parameters
 | --------------- | ------ | --------------- |
 | `end_time` | `YYYY-MM-DDTHH`, an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) extended datetime representing an UTC hour between 00 and 23. | All trips with an end time occurring within the hour. For example, requesting `end_time=2019-10-01T07` returns all trips where `2019-10-01T07:00:00 <= trip.end_time < 2019-10-01T08:00:00` UTC. |
 
-If the data does not exist or the hour has not completed, `/trips` shall return a `404 Not Found` error.
+If the provider was operational during the requested hour the provider shall return
+a 200 response, even if there are no trips to report (in which case
+the response will contain an empty list of trips).
+If the requested hour occurs in a time period in which the provider was not operational
+or the hour is not yet in the past `/trips` shall return a `404 Not Found` error.
 
 Without an `end_time` query parameter, `/trips` shall return a `400 Bad Request` error.
 
@@ -261,7 +265,8 @@ Unless stated otherwise by the municipality, this endpoint must return only thos
 | `event_types` | Enum[] | Required | [Vehicle event(s)][vehicle-events] for state change, allowable values determined by `vehicle_state` |
 | `event_time` | [timestamp][ts] | Required | Date/time that event occurred at. See [Event Times][event-times] |
 | `publication_time` | [timestamp][ts] | Optional | Date/time that event became available through the status changes endpoint |
-| `event_location` | GeoJSON [Point Feature][geo] | Required | See also [Stop-based Geographic Data][stop-based-geo] |
+| `event_location` | GeoJSON [Point Feature][geo] | Required | See also [Stop-based Geographic Data][stop-based-geo]. |
+| `event_geographies` | UUID[] | Optional | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.1.0)*. Array of Geography UUIDs consisting of every Geography that contains the location of the status change. See [Geography Driven Events](#geography-driven-events). Required if `event_location` is not present. |
 | `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |
 | `trip_id` | UUID | Required if Applicable | Trip UUID (foreign key to Trips API), required if `event_types` contains `trip_start`, `trip_end`, `trip_cancel`, `trip_enter_jurisdiction`, or `trip_leave_jurisdiction` |
 | `associated_ticket` | String | Optional | Identifier for an associated ticket inside an Agency-maintained 311 or CRM system |
@@ -276,7 +281,11 @@ The `/status_changes` API should allow querying status changes with the followin
 | --------------- | ------ | --------------- |
 | `event_time` | `YYYY-MM-DDTHH`, an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) extended datetime representing an UTC hour between 00 and 23. | All status changes with an event time occurring within the hour. For example, requesting `event_time=2019-10-01T07` returns all status changes where `2019-10-01T07:00:00 <= status_change.event_time < 2019-10-01T08:00:00` UTC. |
 
-If the data does not exist or the hour has not completed, `/status_changes` shall return a `404 Not Found` error.
+If the provider was operational during the requested hour the provider shall return
+a 200 response, even if there are no status changes to report (in which case
+the response will contain an empty list of status changes).
+If the requested hour occurs in a time period in which the provider was not operational
+or the hour is not yet in the past `/status_changes` shall return a `404 Not Found` error.
 
 Without an `event_time` query parameter, `/status_changes` shall return a `400 Bad Request` error.
 
@@ -416,6 +425,7 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 [gbfs]: https://github.com/NABSA/gbfs
 [general-information]: /general-information.md
 [geo]: /general-information.md#geographic-data
+[geography-driven-events]: /general-information.md#geography-driven-events
 [geojson-feature-collection]: https://tools.ietf.org/html/rfc7946#section-3.3
 [iana]: https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
 [intersection]: /general-information.md#intersection-operation
