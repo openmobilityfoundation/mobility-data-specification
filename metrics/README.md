@@ -1,6 +1,6 @@
 # Mobility Data Specification: Metrics
 
-The Metrics API endpoints are intended to be implemented by regulatory agencies or mobility providers for requesting **historical** calculated [core metrics](core_metrics.md) and aggregations of MDS data. The Metrics API allows viewing of aggregate report data derived from some MDS endpoints, and information outside of MDS, that may be used for use cases like compliance, program effectiveness, and alignment on counts.
+The Metrics API endpoints are intended to be implemented by regulatory agencies, their third party appointed representatives, or city designated partners for requesting **historical** calculated [core metrics](core_metrics.md) and aggregations of MDS data. The Metrics API allows viewing of aggregate report data derived from some MDS endpoints that may be used for use cases like compliance, program effectiveness, and alignment on counts. The metrics [methodology](/metrics/metrics_methodology.md) definitions may be used by providers and third parties in their own calculations.
 
 [Metrics Examples](examples) are available with sample implementations.
 
@@ -25,46 +25,47 @@ Objectives:
 - There is currently no standard counting methodology that mobility providers and cities have agreed upon. This consequently causes friction when establishing a new mobility program and evaluating its impact.
 - Cities need to rely upon trusted data sources upon which to perform longer term studies on citizen impact.
 - Mobility providers would like consistent rules between each city deployment in order to make their operations more scalable.
-- Some information like special groups usage is too sensitive to be shared at the trip level, so aggregate metrics are a preferable way to share a subset of this provider data with cities to evaluate program success.
 
 [Top][toc]
 
 ## Implementation
 
-Here are the initial design use cases and scenarios for Metrics, based on who is publishing the Metrics API.
+Here are initial design use cases and scenarios for Metrics.
 
 ### Cities
 
-- Share aggregated data from Provider or Agency with other agencies, city departments, vendors, and academic researchers. 
-- A methodology for metrics defintions and calcuations which can feed reports to the public.
-- For use in visualization, analysis, or other applications.
-- Share their calculations back to providers to reduce disagreements about compliance, allowing shared understanding and alignment on billing, enforcement, and policy alignment.
+- Share aggregated data from Provider or Agency with other city employees, city departments, vendors, and academic researchers. 
+- Share their calculations back to providers to reduce disagreements about compliance, allowing shared understanding and alignment on billing, enforcement, and policy alignment, using a well-defined [methodology](/metrics/metrics_methodology.md).
+- Generating data which could then feed reports to the public.
+- For use in visualizations, analysis, or other applications.
 
 ### Third Parites
 
 **_Note:_** Metrics is not designed as a substitute for disaggregated data. See the [Data Requirements](#data-requirements) section for details.
 
-- Aggregate MDS data from providers and make metrics available to cities or research partners.
+- Aggregate MDS data consistently from providers and make metrics available to cities or research partners.
 
 ### Providers
 
-**_Note:_** Metrics is not designed as a substitute for disaggregated data. See the [Data Requirements](#data-requirements) section for details.
+**_Note:_** Metrics is not designed to be served by providers.
 
-- Offer cities pre-aggregated metrics for convenience, or for information not supported at the trip-level (ex: low-income discounts program usage).
+- The Metrics [methodology](/metrics/metrics_methodology.md) defintions for metrics may be referenced for consistency with report calculations.
 
 [Top][toc]
 
 ## Data Requirements
 
-The Metrics API is not meant to replace required MDS Provider and Agency endpoints (e.g., [trips](/provider#trips), [events](/provider#events), [vehicles](/provider#vehicles)). Regulators use disaggregated data access for policy, data validation, auditing, and operational needs, and the Metrics API is not designed to serve these purposes.
+The Metrics API does not replace required MDS Provider and Agency endpoints (e.g., [trips](/provider#trips), [events](/provider#events), [vehicles](/provider#vehicles), etc.) in any way. City regulators use disaggregated data access for policy, data validation, auditing, and operational needs, and the Metrics API is not designed to serve these purposes.
 
-Metrics may be a supplement for other MDS data, and may be used to solve a few of a city's use cases.  
+Metrics may be a supplement for other more granular MDS data, and may be used to solve a few of a city's use cases and share with key partners.  
 
 [Top][toc]
 
 ## Beta Feature
 
-The Metrics API and all of its endpoints are marked as a [beta feature](https://github.com/openmobilityfoundation/mobility-data-specification/blob/feature-metrics/general-information.md#beta-features) starting in the 1.1.0 release. It has not been tested in real world scenarios, and may be adjusted in future releases.
+[Beta feature](https://github.com/openmobilityfoundation/mobility-data-specification/blob/feature-metrics/general-information.md#beta-features): Yes (as of 1.0.0)
+
+The Metrics API and all of its endpoints are marked as a [beta feature](https://github.com/openmobilityfoundation/mobility-data-specification/blob/feature-metrics/general-information.md#beta-features). It has not been tested in real world scenarios, and may be adjusted in future releases.
 
 [Top][toc]
 
@@ -77,7 +78,9 @@ All interval durations (duration) are [ISO 8601](https://en.wikipedia.org/wiki/I
 [Top][toc]
 
 ## Authorization
+
 ### For Agencies hosting the Metrics API
+
 When making requests, the Metrics API expects one of two scopes `metrics:read` or `metrics:read:provider` to be present as part of the `scope` claims in a [JWT](https://jwt.io/) `access_token` in the `Authorization` header, in the form `Authorization: Bearer <access_token>`. The token issuance, expiration and revocation policies are at the discretion of the Agency.
 
 If a client has a `metrics:read` scope, they are permitted to read _all_ metrics available via the Metrics API.
@@ -85,9 +88,6 @@ If a client has a `metrics:read` scope, they are permitted to read _all_ metrics
 If a client has a `metrics:read:provider` scope, they are only permitted to read metrics which pertain to a particular `provider_id` claim in the aforementioned [JWT](https://jwt.io/) `access_token`.
 
 Further scopes and requirements may be added at the discretion of the Agency, depending on their particular access control needs.
-### For Providers hosting the Metrics API
-Follow the pattern outlined in Provider API [auth](../provider/auth.md) document.
-Collapse
 
 [Top][toc]
 
