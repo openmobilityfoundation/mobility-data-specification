@@ -23,7 +23,7 @@ This specification contains a data standard for *mobility as a service* provider
 * [Reports](#reports)
   * [Reports - Response](#reports---response)
   * [Reports - Response Schema](#reports---response-schema)
-  * [Reports - Query Parameters](#reports---query-parameters)
+  * [Reports - Query Parameters](#reports---parameters)
   * [Reports - Dimensions](#reports---dimensions)
   * [Data Redaction](#data-redaction)
 * [Realtime Data](#realtime-data)
