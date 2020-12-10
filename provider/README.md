@@ -20,10 +20,11 @@ This specification contains a data standard for *mobility as a service* provider
   * [Routes](#routes)
 * [Status Changes][status]
   * [Status Changes - Query Parameters](#status-changes---query-parameters)
-* [Reports][#reports]
+* [Reports](#reports)
   * [Reports - Response](#reports---response)
   * [Reports - Response Schema](#reports---response-schema)
   * [Reports - Query Parameters](#reports---query-parameters)
+  * [Reports - Dimensions](#reports---dimensions)
   * [Data Redaction](#data-redaction)
 * [Realtime Data](#realtime-data)
   * [GBFS](#GBFS)
@@ -298,27 +299,149 @@ Without an `event_time` query parameter, `/status_changes` shall return a `400 B
 
 ## Reports
 
-Reports are information that providers can send back to agencies containing aggregated information of data that is not contained within other MDS endpoints.
+Reports are information that providers can send back to agencies containing aggregated information of data that is not contained within other MDS endpoints, like counts of special groups.
 
 The authenticated reports endpoint allows a user to pass in some parameters and get trip counts in the response.
 
-### Response
+### Reports - Response
 
 **Endpoint:** `/reports`  
 **Method:** `GET`  
 **[Beta feature][beta]:** Yes (as of 1.1.0)  
 **Schema:** TBD when out of beta  
-**`data` Payload:** `{ "reports": [] }`, an array of objects with the following structure  
+**`data` Payload:** `{ "reports": [] }`, an array of objects with the following structure: 
 
-TBD
+| Name                 | Type       | Comments                                                             |
+| -------------------- | ---------- | -------------------------------------------------------------------- |
+| `id`                 | uuid       | Unique id for query                                                  |
+| `query.interval`     | duration   | Value is always `P1M` for monthly. Based on [ISO 8601 duration](https://en.wikipedia.org/wiki/ISO_8601#Durations) |
+| `query.start_date`   | datetime   | From Request.                                                        |
+| `query.end_date`     | datetime   | From Request.                                                        |
+| `query.timezone`     | timezone   | From Request.                                                        |
+| `query.k_value`      | integer    | The k-anonymity value used in any [data redaction](#data-redaction). |
+| `query.dimensions`   | string[]   | From Request.                                                        |
+| `columns`            | column[]   | Array of column information                                          |
+| `column.name`        | string     | Name of metric or dimension column.                                  |
+| `column.column_type` | string     | Type of column: `measure` or `dimension`.                            |
+| `rows`               | values[][] | Array of row arrays containing the dimension and metric values.      |
 
-### Response Schema
+### Reports - Response Schema
 
-TBD
+```js
+{
+  "id": string,
+  "query": {
+    "interval": duration,
+    "start_date": datetime,
+    "end_date": datetime,
+    "dimensions": [string],
+    "timezone": string,
+    "k_value": 10,
+  "columns": [
+    {
+      "name": string,
+      "column_type": string
+    }
+  ],
+  "rows": [
+    [string | number]
+  ]
+}
+```
 
-### Parameters
+### Reports - Parameters
 
-TBD
+| Name            | Type     | Required | Comments                                                                        |
+| --------------- | -------- | -------- | ------------------------------------------------------------------------------- |
+| `start_date`    | datetime | Yes      | ISO 8601 formatted start date or numeric timestamp to fetch reports.            |
+| `end_date`      | datetime | No       | ISO 8601 formatted end date or numberic timestamp to fetch reports.             |
+| `timezone`      | timezone | No       | TZ Database time zone name (default: "UTC")                                     |
+| `dimensions`    | string[] | No       | List of dimension names. [See dimensions.](#reports---dimensions)               |
+
+### Reports - Dimensions
+
+The following represent the possible report dimensions:
+
+| Dimension          | Required | Description                                                                 |
+| ------------------ | -------- | --------------------------------------------------------------------------- |
+| special_group_type | Yes      | [Special Group Type](#special-group-type) defined by MDS                    |
+| geography_id       | No       | [MDS Geography](/geography)                                                 |
+| vehicle_type       | No       | [Vehicle Type](/agency#vehicle-type) defined by MDS                         |
+
+### Special Group Type	
+
+Here are the possible values for the `special_group_type` dimension field:	
+
+| Name       | Description                                                                                                           |	
+| ---------- | --------------------------------------------------------------------------------------------------------------------- |	
+| low_income | Trips where a low income discount is applied by the provider, e.g., a discount from a qualified provider equity plan. |	
+
+Other special group types may be added in future MDS releases as relevant agency and provider use cases are identified. When additional special group types or metrics are proposed, a thorough review of utility and relevance in program oversight, evaluation, and policy development should be done by OMF Working Groups, as well as any privacy implications by the OMF Privacy Committee.
+
+### Reports - Example
+
+#### Request
+
+```js
+POST /reports
+{
+  "start_date": "2019-07-01T00:00-07",
+  "end_date": "2019-12-31T00:00-07",
+  "dimensions": ["geography_id", "vehicle_type", "special_group_type"]
+}
+```
+
+#### Reponse
+
+```json
+{
+  "id": "44428624-186b-4fc3-a7fb-124f487464a1",
+  "query": {
+    "interval": "P1D",
+    "start_date": "2019-07-01T00:00-07",
+    "end_date": "2019-12-31T00:00-07",
+    "dimensions": ["geography_id", "vehicle_type", "special_group_type"],
+    "timezone": "UTC",
+    "k_value": 10
+  },
+  "columns": [
+    {
+      "name": "interval_start",
+      "column_type": "dimension",
+      "data_type": "datetime"
+    },
+    {
+      "name": "geography_id",
+      "column_type": "dimension",
+      "data_type": "uuid"
+    },
+    {
+      "name": "vehicle_type",
+      "column_type": "dimension",
+      "data_type": "string"
+    },
+    {
+      "name": "count",
+      "column_type": "measure",
+      "data_type": "integer"
+    }
+  ],
+  "rows": [
+    ["2019-07-01T00:00-07", "03db06d0-3998-406a-92c7-25a83fc2784a", "scooter", 69],
+    ["2019-08-01T00:00-07", "03db06d0-3998-406a-92c7-25a83fc2784a", "scooter", 114],
+    ["2019-09-10T00:00-07", "03db06d0-3998-406a-92c7-25a83fc2784a", "scooter", 46],
+    ["2019-10-01T00:00-07", "03db06d0-3998-406a-92c7-25a83fc2784a", "scooter", 36],
+    ["2019-11-01T00:00-07", "03db06d0-3998-406a-92c7-25a83fc2784a", "scooter", -1],
+    ["2019-12-01T00:00-07", "03db06d0-3998-406a-92c7-25a83fc2784a", "scooter", 10967],    
+    ["2019-07-01T00:00-07", "03db06d0-3998-406a-92c7-25a83fc2784a", "bicycle", 25271],
+    ["2019-08-01T00:00-07", "03db06d0-3998-406a-92c7-25a83fc2784a", "bicycle", 69],
+    ["2019-09-01T00:00-07", "03db06d0-3998-406a-92c7-25a83fc2784a", "bicycle", 114],
+    ["2019-10-01T00:00-07", "03db06d0-3998-406a-92c7-25a83fc2784a", "bicycle", 46],
+    ["2019-11-01T00:00-07", "03db06d0-3998-406a-92c7-25a83fc2784a", "bicycle", 36],
+    ["2019-12-01T00:00-07", "03db06d0-3998-406a-92c7-25a83fc2784a", "bicycle", -1]
+  ]
+}
+```
 
 ### Data Redaction
 
