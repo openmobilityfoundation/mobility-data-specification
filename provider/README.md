@@ -299,7 +299,7 @@ Without an `event_time` query parameter, `/status_changes` shall return a `400 B
 
 ## Reports
 
-Reports are information that providers can send back to agencies containing aggregated information of data that is not contained within other MDS endpoints, like counts of special groups.
+Reports are information that providers can send back to agencies containing aggregated data that is not contained within other MDS endpoints, like counts of special groups.
 
 The authenticated reports endpoint allows a user to pass in some parameters and get trip counts in the response.
 
