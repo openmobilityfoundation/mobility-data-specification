@@ -383,7 +383,7 @@ Other special group types may be added in future MDS releases as relevant agency
 #### Request
 
 ```js
-POST /reports
+GET /reports
 {
   "start_date": "2019-07-01T00:00-07",
   "end_date": "2019-12-31T00:00-07",
