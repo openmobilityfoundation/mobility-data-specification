@@ -20,6 +20,11 @@ This specification contains a data standard for *mobility as a service* provider
   * [Routes](#routes)
 * [Status Changes][status]
   * [Status Changes - Query Parameters](#status-changes---query-parameters)
+* [Reports][#reports]
+  * [Reports - Response](#reports---response)
+  * [Reports - Response Schema](#reports---response-schema)
+  * [Reports - Query Parameters](#reports---query-parameters)
+  * [Data Redaction](#data-redaction)
 * [Realtime Data](#realtime-data)
   * [GBFS](#GBFS)
   * [Data Latency Requirements][data-latency]
@@ -288,6 +293,40 @@ If the requested hour occurs in a time period in which the provider was not oper
 or the hour is not yet in the past `/status_changes` shall return a `404 Not Found` error.
 
 Without an `event_time` query parameter, `/status_changes` shall return a `400 Bad Request` error.
+
+[Top][toc]
+
+## Reports
+
+Reports are information that providers can send back to agencies containing aggregated information of data that is not contained within other MDS endpoints.
+
+The authenticated reports endpoint allows a user to pass in some parameters and get trip counts in the response.
+
+### Response
+
+**Endpoint:** `/reports`  
+**Method:** `GET`  
+**[Beta feature][beta]:** Yes (as of 1.1.0)  
+**Schema:** TBD when out of beta  
+**`data` Payload:** `{ "reports": [] }`, an array of objects with the following structure  
+
+TBD
+
+### Response Schema
+
+TBD
+
+### Parameters
+
+TBD
+
+### Data Redaction
+
+Some combinations of parameters may return a small count of trips, which could increase a privacy risk of re-identification. To correct for that, Reports does not return data below a certain count of results. This is called k-anonymity, and the threshold is set at a k-value of 10.
+
+If the query returns less than 10 trips in its count, then a rows value number of -1 is returned.
+
+The k-value used is always returned in the `/reports` endpoint response to provide important context for the data consumer on the data redaction that is occuring.
 
 [Top][toc]
 
