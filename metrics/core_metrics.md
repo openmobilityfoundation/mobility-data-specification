@@ -41,7 +41,6 @@ The following represent the suggested MDS core metric dimensions:
 | provider_id        | Transportation provider id issued by OMF and [tracked here](/providers.csv) |
 | geography_id       | [MDS Geography](/geography)                                                 |
 | vehicle_type       | [Vehicle Type](/agency#vehicle-type) defined by MDS                         |
-| special_group_type | [Special Group Type](#special-group-type) defined by MDS                    |
 
 [Top][toc]
 
