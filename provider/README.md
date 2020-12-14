@@ -309,7 +309,7 @@ The authenticated reports endpoint are monthly, historic flat files that may be 
 **Method:** `GET`  
 **[Beta feature][beta]:** Yes (as of 1.1.0)  
 **Schema:** TBD when out of beta  
-**`data` Filename:** monthly file named by year and month, e.g. `/reports/YYYY-MM.csv` 
+**`data` Filename:** monthly file named by year and month, e.g. `/reports/YYYY-MM.csv`  
 **`data` Payload:** monthly CSV files with the following structure: 
 
 | Name               | Type                                      | Comments                                         |
@@ -324,15 +324,15 @@ The authenticated reports endpoint are monthly, historic flat files that may be 
 
 #### Data Notes
 
-Report contents include every combination of special group types, geography IDs, and vehicle types in operation for each month of the entire provider operating time period in the jurisdiction. New files are added monthly in addition to the previous monthly files. 
+Report contents include every combination of special group types, geography IDs, and vehicle types in operation for each month since the provider began operations in the jurisdiction. New files are added monthly in addition to the previous monthly historic files. 
 
 Counts are calculated based the city's local time zone, and this time zone is returned within the `StartDate` value.
 
-All geography IDs included in the city published [Geography](/geography) API endpoint are included in the report results. In lieu of serving an API, this can alternately be a [flat file](/geography#file-format) created by the city and sent to the provider. If there is no `/geography` available, then counts are for the entire agency operating area, and `null` is returned for Geography ID. 
+All geography IDs included in the city published [Geography](/geography) API endpoint are included in the report results. In lieu of serving an API, this can alternately be a [flat file](/geography#file-format) created by the city and sent to the provider via link. If there is no `/geography` available, then counts are for the entire agency operating area, and `null` is returned for Geography ID. 
 
 ### Reports - Example
 
-For 3 months of provider operation in a city (July 2019 through September 2019) for 3 geographies, 2 vehicle types, and 1 speical group. Values of `-1` represent [redacted data](#data-redaction).
+For 3 months of provider operation in a city (July 2019 through September 2019) for 3 geographies, 2 vehicle types, and 1 special group. Values of `-1` represent [redacted data](#data-redaction).
 
 **July 2019** `/reports/2019-07.csv`
 
