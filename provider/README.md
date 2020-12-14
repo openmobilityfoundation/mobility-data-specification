@@ -326,66 +326,66 @@ The authenticated reports endpoint are monthly, historic flat files that may be 
 
 Report contents include every combination of special group types, geography IDs, and vehicle types in operation for each month since the provider began operations in the jurisdiction. New files are added monthly in addition to the previous monthly historic files. 
 
-Counts are calculated based the city's local time zone, and this time zone is returned within the `StartDate` value.
+Counts are calculated based the city's local time zone, and this time zone is returned within the `StartDate` value. For months where there is a Daylight Saving Time change, use the timezone that is in the majority of the month.
 
 All geography IDs included in the city published [Geography](/geography) API endpoint are included in the report results. In lieu of serving an API, this can alternately be a [flat file](/geography#file-format) created by the city and sent to the provider via link. If there is no `/geography` available, then counts are for the entire agency operating area, and `null` is returned for Geography ID. 
 
 ### Reports - Example
 
-For 3 months of provider operation in a city (July 2019 through September 2019) for 3 geographies, 2 vehicle types, and 1 special group. Values of `-1` represent [redacted data](#data-redaction).
-
-**July 2019** `/reports/2019-07.csv`
-
-```csv
-StartDate,Duration,Special Group Type,Geography ID,Vehicle Type,Trip Count,Rider Count
-2019-07-01T00:00-05,P1M,all_riders,44428624-186b-4fc3-a7fb-124f487464a1,scooter,1302,983
-2019-07-01T00:00-05,P1M,low_income,44428624-186b-4fc3-a7fb-124f487464a1,scooter,201,104
-2019-07-01T00:00-05,P1M,all_riders,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,530,200
-2019-07-01T00:00-05,P1M,low_income,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,75,26
-2019-07-01T00:00-05,P1M,all_riders,03db06d0-3998-406a-92c7-25a83fc2784a,scooter,687,450
-2019-07-01T00:00-05,P1M,low_income,03db06d0-3998-406a-92c7-25a83fc2784a,scooter,98,45
-2019-07-01T00:00-05,P1M,all_riders,03db06d0-3998-406a-92c7-25a83fc2784a,bicycle,256,104
-2019-07-01T00:00-05,P1M,low_income,03db06d0-3998-406a-92c7-25a83fc2784a,bicycle,41,16
-2019-07-01T00:00-05,P1M,all_riders,8ad39dc3-005b-4348-9d61-c830c54c161b,scooter,201,140
-2019-07-01T00:00-05,P1M,low_income,8ad39dc3-005b-4348-9d61-c830c54c161b,scooter,35,21
-2019-07-01T00:00-05,P1M,all_riders,8ad39dc3-005b-4348-9d61-c830c54c161b,bicycle,103,39
-2019-07-01T00:00-05,P1M,low_income,8ad39dc3-005b-4348-9d61-c830c54c161b,bicycle,15,-1
-```
-
-**August 2019** `/reports/2019-08.csv`
-
-```csv
-StartDate,Duration,Special Group Type,Geography ID,Vehicle Type,Trip Count,Rider Count
-2019-08-01T00:00-05,P1M,all_riders,44428624-186b-4fc3-a7fb-124f487464a1,scooter,1042,786
-2019-08-01T00:00-05,P1M,low_income,44428624-186b-4fc3-a7fb-124f487464a1,scooter,161,83
-2019-08-01T00:00-05,P1M,all_riders,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,424,160
-2019-08-01T00:00-05,P1M,low_income,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,60,21
-2019-08-01T00:00-05,P1M,all_riders,03db06d0-3998-406a-92c7-25a83fc2784a,scooter,550,360
-2019-08-01T00:00-05,P1M,low_income,03db06d0-3998-406a-92c7-25a83fc2784a,scooter,78,36
-2019-08-01T00:00-05,P1M,all_riders,03db06d0-3998-406a-92c7-25a83fc2784a,bicycle,205,83
-2019-08-01T00:00-05,P1M,low_income,03db06d0-3998-406a-92c7-25a83fc2784a,bicycle,33,13
-2019-08-01T00:00-05,P1M,all_riders,8ad39dc3-005b-4348-9d61-c830c54c161b,scooter,161,112
-2019-08-01T00:00-05,P1M,low_income,8ad39dc3-005b-4348-9d61-c830c54c161b,scooter,28,17
-2019-08-01T00:00-05,P1M,all_riders,8ad39dc3-005b-4348-9d61-c830c54c161b,bicycle,82,31
-2019-08-01T00:00-05,P1M,low_income,8ad39dc3-005b-4348-9d61-c830c54c161b,bicycle,12,-1
-```
+For 3 months of provider operation in a city (September 2019 through November 2019) for 3 geographies, 2 vehicle types, and 1 special group. Timezone is Eastern Time in the US which is _-4_ from UTC before November 3, 2019, and _-5_ after. Values of `-1` represent [redacted data](#data-redaction) counts.
 
 **September 2019** `/reports/2019-09.csv`
 
 ```csv
 StartDate,Duration,Special Group Type,Geography ID,Vehicle Type,Trip Count,Rider Count
-2019-09-01T00:00-05,P1M,all_riders,44428624-186b-4fc3-a7fb-124f487464a1,scooter,834,629
-2019-09-01T00:00-05,P1M,low_income,44428624-186b-4fc3-a7fb-124f487464a1,scooter,129,66
-2019-09-01T00:00-05,P1M,all_riders,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,339,128
-2019-09-01T00:00-05,P1M,low_income,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,48,-1
-2019-09-01T00:00-05,P1M,all_riders,03db06d0-3998-406a-92c7-25a83fc2784a,scooter,440,288
-2019-09-01T00:00-05,P1M,low_income,03db06d0-3998-406a-92c7-25a83fc2784a,scooter,62,29
-2019-09-01T00:00-05,P1M,all_riders,03db06d0-3998-406a-92c7-25a83fc2784a,bicycle,164,66
-2019-09-01T00:00-05,P1M,low_income,03db06d0-3998-406a-92c7-25a83fc2784a,bicycle,26,10
-2019-09-01T00:00-05,P1M,all_riders,8ad39dc3-005b-4348-9d61-c830c54c161b,scooter,129,90
-2019-09-01T00:00-05,P1M,low_income,8ad39dc3-005b-4348-9d61-c830c54c161b,scooter,22,-1
-2019-09-01T00:00-05,P1M,all_riders,8ad39dc3-005b-4348-9d61-c830c54c161b,bicycle,66,25
-2019-09-01T00:00-05,P1M,low_income,8ad39dc3-005b-4348-9d61-c830c54c161b,bicycle,-1,-1
+2019-09-01T00:00-04,P1M,all_riders,44428624-186b-4fc3-a7fb-124f487464a1,scooter,1302,983
+2019-09-01T00:00-04,P1M,low_income,44428624-186b-4fc3-a7fb-124f487464a1,scooter,201,104
+2019-09-01T00:00-04,P1M,all_riders,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,530,200
+2019-09-01T00:00-04,P1M,low_income,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,75,26
+2019-09-01T00:00-04,P1M,all_riders,03db06d0-3998-406a-92c7-25a83fc2784a,scooter,687,450
+2019-09-01T00:00-04,P1M,low_income,03db06d0-3998-406a-92c7-25a83fc2784a,scooter,98,45
+2019-09-01T00:00-04,P1M,all_riders,03db06d0-3998-406a-92c7-25a83fc2784a,bicycle,256,104
+2019-09-01T00:00-04,P1M,low_income,03db06d0-3998-406a-92c7-25a83fc2784a,bicycle,41,16
+2019-09-01T00:00-04,P1M,all_riders,8ad39dc3-005b-4348-9d61-c830c54c161b,scooter,201,140
+2019-09-01T00:00-04,P1M,low_income,8ad39dc3-005b-4348-9d61-c830c54c161b,scooter,35,21
+2019-09-01T00:00-04,P1M,all_riders,8ad39dc3-005b-4348-9d61-c830c54c161b,bicycle,103,39
+2019-09-01T00:00-04,P1M,low_income,8ad39dc3-005b-4348-9d61-c830c54c161b,bicycle,15,-1
+```
+
+**October 2019** `/reports/2019-10.csv`
+
+```csv
+StartDate,Duration,Special Group Type,Geography ID,Vehicle Type,Trip Count,Rider Count
+2019-10-01T00:00-04,P1M,all_riders,44428624-186b-4fc3-a7fb-124f487464a1,scooter,1042,786
+2019-10-01T00:00-04,P1M,low_income,44428624-186b-4fc3-a7fb-124f487464a1,scooter,161,83
+2019-10-01T00:00-04,P1M,all_riders,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,424,160
+2019-10-01T00:00-04,P1M,low_income,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,60,0
+2019-10-01T00:00-04,P1M,all_riders,03db06d0-3998-406a-92c7-25a83fc2784a,scooter,550,360
+2019-10-01T00:00-04,P1M,low_income,03db06d0-3998-406a-92c7-25a83fc2784a,scooter,78,36
+2019-10-01T00:00-04,P1M,all_riders,03db06d0-3998-406a-92c7-25a83fc2784a,bicycle,205,83
+2019-10-01T00:00-04,P1M,low_income,03db06d0-3998-406a-92c7-25a83fc2784a,bicycle,33,13
+2019-10-01T00:00-04,P1M,all_riders,8ad39dc3-005b-4348-9d61-c830c54c161b,scooter,161,112
+2019-10-01T00:00-04,P1M,low_income,8ad39dc3-005b-4348-9d61-c830c54c161b,scooter,28,-1
+2019-10-01T00:00-04,P1M,all_riders,8ad39dc3-005b-4348-9d61-c830c54c161b,bicycle,82,31
+2019-10-01T00:00-04,P1M,low_income,8ad39dc3-005b-4348-9d61-c830c54c161b,bicycle,-1,0
+```
+
+**November 2019** `/reports/2019-11.csv`
+
+```csv
+StartDate,Duration,Special Group Type,Geography ID,Vehicle Type,Trip Count,Rider Count
+2019-11-01T00:00-05,P1M,all_riders,44428624-186b-4fc3-a7fb-124f487464a1,scooter,834,629
+2019-11-01T00:00-05,P1M,low_income,44428624-186b-4fc3-a7fb-124f487464a1,scooter,129,66
+2019-11-01T00:00-05,P1M,all_riders,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,339,128
+2019-11-01T00:00-05,P1M,low_income,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,48,-1
+2019-11-01T00:00-05,P1M,all_riders,03db06d0-3998-406a-92c7-25a83fc2784a,scooter,440,288
+2019-11-01T00:00-05,P1M,low_income,03db06d0-3998-406a-92c7-25a83fc2784a,scooter,62,29
+2019-11-01T00:00-05,P1M,all_riders,03db06d0-3998-406a-92c7-25a83fc2784a,bicycle,164,66
+2019-11-01T00:00-05,P1M,low_income,03db06d0-3998-406a-92c7-25a83fc2784a,bicycle,26,0
+2019-11-01T00:00-05,P1M,all_riders,8ad39dc3-005b-4348-9d61-c830c54c161b,scooter,129,90
+2019-11-01T00:00-05,P1M,low_income,8ad39dc3-005b-4348-9d61-c830c54c161b,scooter,22,-1
+2019-11-01T00:00-05,P1M,all_riders,8ad39dc3-005b-4348-9d61-c830c54c161b,bicycle,-1,25
+2019-11-01T00:00-05,P1M,low_income,8ad39dc3-005b-4348-9d61-c830c54c161b,bicycle,0,0
 ```
 
 ### Special Group Type	
@@ -403,7 +403,7 @@ Other special group types may be added in future MDS releases as relevant agency
 
 Some combinations of parameters may return a small count of trips, which could increase a privacy risk of re-identification. To correct for that, Reports does not return data below a certain count of results. This is called k-anonymity, and the threshold is set at a k-value of 10.
 
-If the report returns less than 10 in any count, then a number of value -1 is returned.
+If the report returns count values from 1 through 10, then a number of value `-1` is returned to represent redacted data. Counts of `0` are still returned as usual.
 
 [Top][toc]
 
