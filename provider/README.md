@@ -325,7 +325,7 @@ Contents include every combination of geography ID and vehicle type that the cit
 
 ### Reports - Example
 
-From June 2019 through September 2019 for 3 geographies and 2 vehicle types.
+For 3 months (July 2019 through September 2019) for 3 geographies and 2 vehicle types. Values of `-1` represent [redacted data](#data-redaction).
 
 ```csv
 StartDate,Duration,Special Group Type,Geography ID,Vehicle Type,Trip Count,Rider Count
@@ -382,7 +382,7 @@ Other special group types may be added in future MDS releases as relevant agency
 
 Some combinations of parameters may return a small count of trips, which could increase a privacy risk of re-identification. To correct for that, Reports does not return data below a certain count of results. This is called k-anonymity, and the threshold is set at a k-value of 10.
 
-If the query returns less than 10 trips in its count, then a rows value number of -1 is returned.
+If the report returns less than 10 in any count, then a value number of -1 is returned.
 
 The k-value used is always returned in the `/reports` endpoint response to provide important context for the data consumer on the data redaction that is occuring.
 
