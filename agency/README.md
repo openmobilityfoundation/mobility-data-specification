@@ -226,11 +226,12 @@ Body Params:
 
 400 Failure Response:
 
-| `error`         | `error_description`                  | `error_details`[]               |
-| --------------- | ------------------------------------ | ------------------------------- |
-| `bad_param`     | A validation error occurred.         | Array of parameters with errors |
-| `invalid_data`  | None of the provided data was valid. |                                 |
-| `missing_param` | A required parameter is missing.     | Array of missing parameters     |
+| `error`         | `error_description`                  | `error_details`[]                 |
+| --------------- | ------------------------------------ | --------------------------------- |
+| `bad_param`     | A validation error occurred.         | Array of parameters with errors   |
+| `invalid_data`  | None of the provided data was valid. |                                   |
+| `missing_param` | A required parameter is missing.     | Array of missing parameters       |
+| `unregistered`  | Some of the devices are unregistered | Array of unregistered `device_id` |
 
 [Top][toc]
 
