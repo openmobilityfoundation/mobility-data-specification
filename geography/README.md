@@ -81,9 +81,7 @@ See the [Responses][responses] and [Error Messages][error-messages] sections.
 
 ### Authorization
 
-When making requests, the Geography API expects `provider_id` to include an `access_token` in the `Authorization` header, in the form `Authorization: Bearer <access_token>`. The token issuance, expiration and revocation policies are at the discretion of the Agency.
-
-Optionally, an Agency may decide to make these endpoints unauthenticated and public, which could be done in conjunction with the [/policy](/policy) endpoints.
+Authorization is not required. An agency may decide to make this endpoint unauthenticated and public. See [Optional Authentication](/general-information.md#optional-authentication) for details.
 
 [Top][toc]
 
