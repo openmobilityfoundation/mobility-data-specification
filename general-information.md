@@ -148,12 +148,11 @@ During the Beta period for this feature, location and telemtry data remain requi
 
 [Top][toc]
 
-## Open Data APIs
+## Optional Authentication
 
-Policy and Geography APIs are intended to be Open Data. This allows transparency for the public to see how the city is regulating, holds the city accountable for their policy decisions, and reduces the technical burden on providers to use these endpoints. Additionally, benefit is that this allows third parties to ingest this information into their applications and services for public benefit.
+Authorization of the Policy and Geography APIs is no longer required and will be deprecated in next major release with these endpoints becoming optionally private instead of optionally public. An agency may optionally decide to make both the Policy and Geography endpoints unauthenticated and public. This allows transparency for the public to see how the city is regulating, holds the city accountable for their policy decisions, and reduces the technical burden on providers to use these endpoints. A side benefit is that this allows third parties to ingest this information into their applications and services for public benefit.
 
-
-To preserve backward compatibility, hosting these endpoints with authentication is not explicitly disallowed by MDS. However, beginning with MDS 1.1, it is recommended that these endpoints be unauthenticated and public. Additionally, it is required that these endpoints be public when implementing Geography Driven Events.
+Note if implementing the beta features [Geography Driven Events](/general-information.md#geography-driven-events), both Policy and Geography must be public.
 
 [Top][toc]
 

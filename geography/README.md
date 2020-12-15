@@ -81,7 +81,7 @@ See the [Responses][responses] and [Error Messages][error-messages] sections.
 
 ### Authorization
 
-Authorization of the Geography API is not required or recommended. See [Open Data APIs](/general-information.md#open-data-apis) for details.
+Authorization is not required. An agency may decide to make this endpoint unauthenticated and public. See [Optional Authentication](/general-information.md#optional-authentication) for details.
 
 [Top][toc]
 

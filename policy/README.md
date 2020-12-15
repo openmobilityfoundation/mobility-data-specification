@@ -91,8 +91,8 @@ The response to a client request must include a valid HTTP status code defined i
 See the [Responses section][responses] for information on valid MDS response codes and the [Error Messages section][error-messages] for information on formatting error messages.
 
 ### Authorization
-Authorization of the Policy API endpoints is not required or recommended. See [Open Data APIs](/general-information.md#open-data-apis) for details.
 
+Authorization is not required. An agency may decide to make this endpoint unauthenticated and public. See [Optional Authentication](/general-information.md#optional-authentication) for details.
 
 #### Policies
 
