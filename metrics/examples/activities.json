@@ -1,0 +1,13 @@
+{
+  "measures": ["dockless.deployed.avg","trips.end_loc.count"],
+  "interval": "P1D",
+  "start_date": "2019-10-21T00:00-07",
+  "end_date": "2019-10-28T00:00-07",
+  "dimensions": ["geography_id", "vehicle_type"],
+  "filters": [
+    {
+      "name": "geography_type",
+      "values": ["census_block"]
+    }
+  ]
+}

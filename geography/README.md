@@ -97,11 +97,12 @@ Placeholder -- link to schema to be added later.
 | ----------------   | --------- | --- | --------------------------------------------------------------------------------------------- |
 | `name`             | String    | Required   | Name of geography                                                                      |
 | `description`      | String    | Optional   | Detailed description of geography                                                      |
-| `geography_type`   | Enum      | Optional   | Type of geography, e.g. `municipal_boundary` or `council_district`.  See [Geography Types](#geography-types). |
+| `geography_type`   | Sting     | Optional   | Type of geography, e.g. `municipal_boundary` or `council_district` or custom text.  See [Geography Types](#geography-types). |
 | `geography_id`     | UUID      | Required   | Unique ID of geography                                                                 |
 | `geography_json`   | UUID      | Required   | The GeoJSON that defines the geographical coordinates.                                 |
 | `effective_date`   | [timestamp][ts] | Optional   | The date at which a Geography is considered "live".  Must be at or after `published_date`. |
 | `published_date`     | [timestamp][ts] | Required   | Time that the geography was published, i.e. made immutable                       |
+| `retire_date`     | [timestamp][ts] | Optional   | Time that the geography is slated to retire. Once the retire date is passed, new policies can no longer reference it and old policies referencing it should be updated. Retired geographies should continue to be returned in the geographies list. Must be after `effective_date`. |
 | `prev_geographies` | UUID[]    | Optional   | Unique IDs of prior geographies replaced by this one                                   |
 
 [Top][toc]
@@ -121,13 +122,9 @@ Type of geography. These specific types are recommendations based on ones common
 | Value                | Description                          |
 | -----                | -----------                          |
 | `municipal_boundary` | Edge of a city                       |
-| `operating_area`     | Vehicle permitted operating area     |
-| `distribution_zone`  | An area of interest for distribution |
-| `no_ride_zone`       | Areas where riding is not permitted  |
-| `no_parking_zone`    | Areas where parking is not permitted |
-| `slow_ride_zone`     | Areas where top speed is reduced     |
+| `policy_zone`        | Zone where [Policy](/policy) rules could be in effect, like operating area, distribution/equity zones, no/slow ride zone, no parking, etc |
 | `county_boundary`    | Edge of a county                     |
-| `stop`               | See [Stops](stops)                   |
+| `stop`               | See [Stops](/general-information.ms#stops)                   |
 | `council_district`   | City council district                |
 | `political_district` | Politically defined voting area      |
 | `neighborhood`       | Neighborhood area                    |

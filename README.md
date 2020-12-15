@@ -23,7 +23,7 @@ The Mobility Data Specification (**MDS**), a project of the [Open Mobility Found
 
 ## Endpoints
 
-**MDS** is currently comprised of four distinct components:
+**MDS** is currently comprised of five distinct components:
 
 * The [`provider`][provider] API endpoints are intended to be implemented by mobility providers and consumed by regulatory agencies. When a municipality queries information from a mobility provider, the Provider API has a historical view of operations in a standard format. It was first released in June 2018. Development takes place under the guidance of the OMF's Provider Services Working Group.
 
@@ -32,6 +32,10 @@ The Mobility Data Specification (**MDS**), a project of the [Open Mobility Found
 * The [`policy`][policy] API endpoints are intended to be implemented by regulatory agencies and consumed by mobility providers. Providers query the Policy API to get information about local rules that may affect the operation of their mobility service or which may be used to determine compliance. It was first released in October 2019. Development takes place under the guidance of the OMF's City Services Working Group.
 
 * The [`geography`][geography] API endpoints are intended to be implemented by regulatory agencies and consumed by mobility providers. Providers query the Policy API to get information about geographical regions for regulatory and other purposes. It was first released in October 2019, originally included as part of the Policy specification. Development takes place under the guidance of the OMF's City Services Working Group.
+
+* The [`jurisdiction`][jurisdiction] API endpoints are intended to be implemented by regulatory agencies that have a need to coordinate with each other. The jurisdiction endpoints allow cities to communicate boundaries between one another and to mobility providers. It was first released in November 2020, originally included as part of the Jurisdiction specification. Development takes place under the guidance of the OMF's City Services Working Group.
+
+* The [`metrics`](metrics) API endpoints are intended to be implemented by regulatory agencies or their appointed third-party representatives to have a standard way to consistently describe available metrics, and create an extensible interface for querying MDS metrics. Development takes place under the guidance of the OMF's City Services Working Group.  
 
 MDS is designed to be a modular kit-of-parts. Regulatory agencies can use the components of the API that are appropriate for their needs. An agency may choose to use only `agency`, `provider`, or `policy`. Or they may select specific elements (endpoints) from each to help them implement their goals.
 
@@ -53,8 +57,8 @@ You can also get involved in development by joining an [OMF working group](https
 
 Working Group | Mailing List | Description
 --- | --- | ---
-Provider Services | [mds-provider-services](https://groups.google.com/a/groups.openmobilityfoundation.org/forum/#!forum/mds-provider-services) | Manages the [`provider`][provider] API within MDS.
-City Services | [mds-city-services](https://groups.google.com/a/groups.openmobilityfoundation.org/forum/#!forum/mds-city-services) | Manages the [`agency`][agency] and [`policy`][policy] APIs within MDS, as well as the [`mds-core`](https://github.com/openmobilityfoundation/mds-core) and [`mds-compliance-mobile`](https://github.com/openmobilityfoundation/mds-compliance-mobile) reference implementations.
+Provider Services | [mds-provider-services](https://groups.google.com/a/groups.openmobilityfoundation.org/forum/#!forum/mds-provider-services) | Manages the [`provider`][provider] and [`metrics`](metrics) API within MDS.
+City Services | [mds-city-services](https://groups.google.com/a/groups.openmobilityfoundation.org/forum/#!forum/mds-city-services) | Manages the [`agency`][agency], [`policy`][policy] and [`metrics`](metrics) APIs within MDS, as well as the [`mds-core`](https://github.com/openmobilityfoundation/mds-core) and [`mds-compliance-mobile`](https://github.com/openmobilityfoundation/mds-compliance-mobile)  reference implementation.
 
 You can view info about past releases and planning calls in the [wiki](https://github.com/openmobilityfoundation/mobility-data-specification/wiki).
 
@@ -78,12 +82,14 @@ The MDS specification is versioned using Git tags and [semantic versioning](http
 
 ## Cities Using MDS
 
-More than 90 cities and public agencies around the world use MDS, and it has been implemented by most major mobility providers. Below are links to some of the specific agency programs/policies:
+More than 115 cities and public agencies around the world use MDS, and it has been implemented by most major mobility providers. Below are links to some of the specific agency programs/policies:
 
 * **Arlington, VA**: [Shared Micro-Mobility Devices](https://transportation.arlingtonva.us/scooters-and-dockless-bikeshare/) page and [permit application](https://arlingtonva.s3.amazonaws.com/wp-content/uploads/sites/19/2019/12/Micro-Mobility_Permit_Final_191203.pdf).
 * **Atlanta, GA**: [Administrative Regulations
 for Shareable Dockless Mobility Device Permit Holders](https://www.atlantaga.gov/home/showdocument?id=46315) from [Department of City Planning](https://www.atlantaga.gov/government/departments/city-planning).
+* **Auckland, New Zealand**: See the [city council website](https://ourauckland.aucklandcouncil.govt.nz/media/26909/e-scooter-share-code-of-practice-april-october-2019.pdf) and the [Code of Practice document](https://ourauckland.aucklandcouncil.govt.nz/media/26909/e-scooter-share-code-of-practice-april-october-2019.pdf).
 * **Austin, TX**: The rules and guidelines for Austin's Micromobility Program can be found on Austin's [Shared Mobility Program](https://austintexas.gov/department/shared-mobility-services) website. See the [Director Rules](https://austintexas.gov/sites/default/files/files/Transportation/Dockless_Final_Accepted_Searchable.pdf) and [Application](http://austintexas.gov/sites/default/files/files/Transportation/Dockless_Mobility_License_Application.pdf) for more details.
+* **Bogotá, Columbia**: Read the overview on the city government [website landing page](https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=83613) and see details on the [permit process page](https://www.movilidadbogota.gov.co/web/Noticia/avanza_proceso_de_solicitud_de_permisos_para_el_alquiler_de_patinetas_en_el_espacio_p%C3%BAblico) and they use Agency and Provider as seen in the [technical appendix](https://drive.google.com/file/d/13ejveplHxoj2sS9O0AqC1rNjVt6Grdwf/view?usp=sharing).
 * **Calgary, Canada**: Programs for a [Dockless Bike Share Pilot](https://www.calgary.ca/transportation/tp/cycling/cycling-strategy/bike-share-system.html?redirect=/bikeshare) and a [shared electric scooter pilot](https://www.calgary.ca/transportation/tp/cycling/cycling-strategy/shared-electric-scooter-pilot.html) that require [MDS in the application](https://www.calgary.ca/content/dam/www/transportation/tp/documents/cycling/cycling_strategy/framework-for-dockless-bike-share-permit-phase-2.pdf) and programs.
 * **Chicago, IL**: [E-Scooter Share Pilot Program](https://www.chicago.gov/city/en/depts/cdot/supp_info/escooter-share-pilot-project.html) information.
 * **Denver, CO**: [Dockless Mobility Vehicle Pilot Permit Program](https://www.denvergov.org/content/denvergov/en/transportation-infrastructure/programs-services/dockless-mobility.html) in the [Department of Transportation & Infrastructure](https://www.denvergov.org/content/denvergov/en/transportation-infrastructure.html).
@@ -94,9 +100,10 @@ for Shareable Dockless Mobility Device Permit Holders](https://www.atlantaga.gov
 * **Kelowna, Canada**: [Bikeshare Permit Program](https://www.kelowna.ca/roads-transportation/active-transportation/cycling/bikeshare-permit-program) and operator application.
 * **Long Beach, CA**: Detailed [Permit Application](http://www.longbeach.gov/globalassets/go-active-lb/media-library/documents/programs/micro-mobility-program-e-scooterse-bikes/city-of-long-beach_shared-micro-mobility-program_permit_2019-2020) including MDS and general reporting.
 * **Los Angeles, CA**: The rules and guidelines for the Los Angeles Dockless Bikeshare Systems / Pilot Program can be found on [Council Clerk Connect](https://cityclerk.lacity.org/lacityclerkconnect/index.cfm?fa=ccfi.viewrecord&cfnumber=17-1125) along with supporting info on [ladot.io](https://ladot.lacity.org/projects/transportation-services/shared-mobility/micromobility). See the [application](https://ladot.lacity.org/sites/default/files/documents/combined-six-month-application-with-attachments_0.pdf) and [Technical Compliance](https://www.ladot.lacity.org/sites/default/files/documents/ladot-mds-api-compliance-mobility-provider-guidelines.pdf) documents.
-* **Louisville, KY**: City [Dockless Vehicle Policy](https://data.louisvilleky.gov/dataset/dockless-vehicles/resource/541f050d-b868-428e-9601-c48a04eba17c) and [Public Works Guideance](https://louisvilleky.gov/government/public-works/dockless-find-and-ride-vehicles).
+* **Louisville, KY**: City [Dockless Vehicle Policy](https://data.louisvilleky.gov/dataset/dockless-vehicles/resource/541f050d-b868-428e-9601-c48a04eba17c) and [Public Works Guidance](https://louisvilleky.gov/government/public-works/dockless-find-and-ride-vehicles).
 * **Nashville, TN**: [Mobility Devices Bill](https://www.nashville.gov/Metro-Clerk/Legislative/Ordinances/Details/7d2cf076-b12c-4645-a118-b530577c5ee8/2015-2019/BL2018-1202.aspx).
 * **Miami, FL**: [Miami Scooter Program](https://www.miamigov.com/Services/Transportation/Miami-Scooter-Pilot-Program?BestBetMatch=scooters|d13b95b2-5146-4b00-9e3e-a80c73739a64|4f05f368-ecaa-4a93-b749-7ad6c4867c1f|en-US).
+* **Milwaukee, WI**: See the [Milwaukee city website](http://milwaukee.gov/docklessscooters) for the detailed [dockless study details](https://city.milwaukee.gov/ImageLibrary/Groups/cityBikePed/2019-Images/Dockless-Scooter/DocklessScooterPilotStudy-TermsandConditions-FINALRev2019.08.012.pdf).
 * **Minneapolis, MN**: [Mobility Data Methodology and Analysis](http://www2.minneapolismn.gov/www/groups/public/@publicworks/documents/webcontent/wcmsp-218311.pdf) and [Motorized Foot Scooters](http://www.minneapolismn.gov/publicworks/trans/WCMSP-212816) webpage.
 * **Philadelphia, PA**: [Dockless Bike Share Pilot](http://www.phillyotis.com/portfolio-item/dockless-bike-share-pilot/) and regulations, including [application](http://www.phillyotis.com/wp-content/uploads/2019/08/2019-Phila-Dockless-Bike-Share.pdf) and [regulations](http://www.phillyotis.com/wp-content/uploads/2019/08/City-of-Philadelphia-Dockless-Bike-Share-Regulations.pdf).
 * **Pittsburgh, PA**: The city's [Bike+ Master Plan](https://pittsburghpa.gov/domi/bikeplan) includes multiple modes.
@@ -108,6 +115,8 @@ for Shareable Dockless Mobility Device Permit Holders](https://www.atlantaga.gov
 * **Seattle, WA**: SDOT's [Free-floating Bike Share Permitting](https://www.seattle.gov/transportation/projects-and-programs/programs/bike-program/bike-share#permityearpermit2.1) program, [permit requirements](https://www.seattle.gov/Documents/Departments/SDOT/BikeProgram/Seattle_Bike_Share_Permit_Requirements_v2.1_20181219.pdf), and [Mobility Data Privacy and Handling Guidelines](http://www.seattle.gov/Documents/Departments/Tech/Privacy/SDOT_Mobility_Data_Guidelines.pdf).
 * **Ulm, Germany**: A draft of the guidelines can be found at [the city's GitHub presence](https://github.com/stadtulm/mds-zonen).
 * **Washington, DC**: Information about the program can be found on [DDOT’s dockless mobility](https://ddot.dc.gov/page/dockless-vehicle-permits-district) page along with the [terms and conditions](https://ddot.dc.gov/sites/default/files/dc/sites/ddot/2019.11.6%20Shared%20dockless%202020%20Terms%20and%20Conditions%20scooter.pdf) and [Attachment C data standards](https://ddot.dc.gov/sites/default/files/dc/sites/ddot/2019.11.6%20Dockless%20Permit%20TC%20Attatchments.pdf).  Further information on the dockless data policies are available [here](https://ddot.dc.gov/page/dockless-api).  
+* **Wellington, New Zealand**: The [city council](https://wellington.govt.nz/services/parking-and-roads/smart-transport/scooters-and-bikes) manages the city's [electric powered scooter code of practice](https://wellington.govt.nz/~/media/services/consents-and-licenses/trading-in-public-places/files/electric-scooter-share-code-of-practice.pdf?la=en).
+* **Zapopan, Mexico**: This city next to Guadalajara has a [detailed operations manual](https://www.zapopan.gob.mx/wp-content/uploads/2019/11/Gaceta-Vol.-XXVI-No.-124_opt-1.pdf) and uses both Provider and Agency, with an announcement on their [city website](https://www.zapopan.gob.mx/v3/noticias/empresas-operadoras-de-sistemas-de-transporte-individual-en-red-aceptadas-para-la-prueba).
 
 * _add a city here by [opening a pull request](https://github.com/openmobilityfoundation/mobility-data-specification/compare/dev...dev) or [making an issue](https://github.com/openmobilityfoundation/mobility-data-specification/issues/new?assignees=&labels=&template=feature-request---proposal.md&title=)_.
 
@@ -176,4 +185,5 @@ Please open a pull request if you create open source or private tools for implem
 [provider]: /provider/README.md
 [policy]: /policy/README.md
 [geography]: /geography/README.md
+[jurisdiction]: /jurisdiction/README.md
 [toc]: #table-of-contents

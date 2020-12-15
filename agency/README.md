@@ -183,7 +183,8 @@ Body Params:
 | `vehicle_state` | Enum                          | Required | see [Vehicle States][vehicle-states] |
 | `event_types`   | Enum[]                        | Required | see [Vehicle Events][vehicle-events] |
 | `timestamp`     | [timestamp][ts]                     | Required | Date of last event update |
-| `telemetry`     | [Telemetry](#telemetry-data)  | Required | Single point of telemetry |
+| `telemetry`     | [Telemetry](#telemetry-data)  | Required | Single point of telemetry. |
+| `event_geographies`  | UUID[] | Optional          | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.1.0)*. Array of Geography UUIDs consisting of every Geography that contains the location of the event. See [Geography Driven Events](#geography-driven-events). Required if `telemetry` is not present. |
 | `trip_id`       | UUID                          | Optional | UUID provided by Operator to uniquely identify the trip. Required if `event_types` contains `trip_start`, `trip_end`, `trip_cancel`, `trip_enter_jurisdiction`, or `trip_leave_jurisdiction` |
 
 201 Success Response:
@@ -225,11 +226,12 @@ Body Params:
 
 400 Failure Response:
 
-| `error`         | `error_description`                  | `error_details`[]               |
-| --------------- | ------------------------------------ | ------------------------------- |
-| `bad_param`     | A validation error occurred.         | Array of parameters with errors |
-| `invalid_data`  | None of the provided data was valid. |                                 |
-| `missing_param` | A required parameter is missing.     | Array of missing parameters     |
+| `error`         | `error_description`                  | `error_details`[]                 |
+| --------------- | ------------------------------------ | --------------------------------- |
+| `bad_param`     | A validation error occurred.         | Array of parameters with errors   |
+| `invalid_data`  | None of the provided data was valid. |                                   |
+| `missing_param` | A required parameter is missing.     | Array of missing parameters       |
+| `unregistered`  | Some of the devices are unregistered | Array of unregistered `device_id` |
 
 [Top][toc]
 
@@ -326,6 +328,7 @@ If `stop_id` is specified, `GET` will return an array with a single stop record,
 
 [beta]: /general-information.md#beta-features
 [general]: /general-information.md
+[geography-driven-events]: /general-information.md#geography-driven-events
 [error-messages]: /general-information.md#error-messages
 [hdop]: https://support.esri.com/en/other-resources/gis-dictionary/term/358112bd-b61c-4081-9679-4fca9e3eb926
 [propulsion-types]: /general-information.md#propulsion-types
