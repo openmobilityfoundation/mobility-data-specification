@@ -97,7 +97,7 @@ Placeholder -- link to schema to be added later.
 | ----------------   | --------- | --- | --------------------------------------------------------------------------------------------- |
 | `name`             | String    | Required   | Name of geography                                                                      |
 | `description`      | String    | Optional   | Detailed description of geography                                                      |
-| `geography_type`   | Sting     | Optional   | Type of geography, e.g. `municipal_boundary` or `council_district` or custom text.  See [Geography Types](#geography-types). |
+| `geography_type`   | String     | Optional   | Type of geography, e.g. `municipal_boundary` or `council_district` or custom text.  See [Geography Types](#geography-types). |
 | `geography_id`     | UUID      | Required   | Unique ID of geography                                                                 |
 | `geography_json`   | UUID      | Required   | The GeoJSON that defines the geographical coordinates.                                 |
 | `effective_date`   | [timestamp][ts] | Optional   | The date at which a Geography is considered "live".  Must be at or after `published_date`. |
