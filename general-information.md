@@ -12,6 +12,7 @@ This document contains specifications that are shared between the various MDS AP
   * [Stop-based Geographic Data](#stop-based-geographic-data)
   * [Intersection Operation](#intersection-operation)
 * [Geography-Driven Events](#geography-driven-events)
+* [Optional Authentication](#optional-authentication)
 * [Propulsion Types](#propulsion-types)
 * [Responses](#responses)
   * [Error Messages](#error-messages)
