@@ -11,6 +11,7 @@ This document contains specifications that are shared between the various MDS AP
 * [Geographic Data][geo]
   * [Stop-based Geographic Data](#stop-based-geographic-data)
   * [Intersection Operation](#intersection-operation)
+* [Geography-Driven Events](#geography-driven-events)
 * [Propulsion Types](#propulsion-types)
 * [Responses](#responses)
   * [Error Messages](#error-messages)
@@ -121,7 +122,9 @@ For the purposes of this specification, the intersection of two geographic datat
 
 [Top][toc]
 
-## Geography-Driven Events **[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.1.0)*
+## Geography-Driven Events
+
+**[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.1.0)*
 
 Geography-Driven Events is a new MDS feature for Agencies to perform complete Policy compliance monitoring without precise location data. Geography-Driven Events describe individual vehicles in realtime – not just aggregate data. However, rather than receiving the exact location of a vehicle, Agencies receive information about the vehicle's current geographic region. The regions used for Geography-Driven Events correspond to the Geographies in an Agency's current Policy. In this way, the data-shared using Geography-Driven Events is matched to an Agency's particular regulatory needs.
 
