@@ -8,6 +8,7 @@ This specification describes the digital relationship between _mobility as a ser
 
 - [General Information](#general-information)
   - [Versioning](#versioning)
+  - [Update Frequency](#update-frequency)  
 - [Background](#background)
 - [Distribution](#distribution)
   - [REST Endpoints](#rest-endpoints)
@@ -26,6 +27,12 @@ This specification describes the digital relationship between _mobility as a ser
 ## General information
 
 The following information applies to all `policy` API endpoints.
+
+[Top][toc]
+
+### Update Frequency
+
+The publishing agency should establish beforehand and communicate to providers how frequently the Policy endpoints are expected to change, how often they should be polled to get the latest information, and expectations around emergency updates.
 
 [Top][toc]
 
