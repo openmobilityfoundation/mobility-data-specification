@@ -23,7 +23,7 @@ The Mobility Data Specification (**MDS**), a project of the [Open Mobility Found
 
 ## Endpoints
 
-**MDS** is currently comprised of five distinct components:
+**MDS** is comprised of six distinct API components:
 
 * The [`provider`][provider] API endpoints are intended to be implemented by mobility providers and consumed by regulatory agencies. When a municipality queries information from a mobility provider, the Provider API has a historical view of operations in a standard format. It was first released in June 2018. Development takes place under the guidance of the OMF's Provider Services Working Group.
 
@@ -33,11 +33,11 @@ The Mobility Data Specification (**MDS**), a project of the [Open Mobility Found
 
 * The [`geography`][geography] API endpoints are intended to be implemented by regulatory agencies and consumed by mobility providers. Providers query the Policy API to get information about geographical regions for regulatory and other purposes. It was first released in October 2019, originally included as part of the Policy specification. Development takes place under the guidance of the OMF's City Services Working Group.
 
-* The [`jurisdiction`][jurisdiction] API endpoints are intended to be implemented by regulatory agencies that have a need to coordinate with each other. The jurisdiction endpoints allow cities to communicate boundaries between one another and to mobility providers. It was first released in November 2020, originally included as part of the Jurisdiction specification. Development takes place under the guidance of the OMF's City Services Working Group.
+* The [`jurisdiction`][jurisdiction] API endpoints are intended to be implemented by regulatory agencies that have a need to coordinate with each other. The jurisdiction endpoints allow cities to communicate boundaries between one another and to mobility providers. It was first released in November 2020. Development takes place under the guidance of the OMF's City Services Working Group.
 
-* The [`metrics`](metrics) API endpoints are intended to be implemented by regulatory agencies or their appointed third-party representatives to have a standard way to consistently describe available metrics, and create an extensible interface for querying MDS metrics. Development takes place under the guidance of the OMF's City Services Working Group.  
+* The [`metrics`](/metrics) API endpoints are intended to be implemented by regulatory agencies or their appointed third-party representatives to have a standard way to consistently describe available metrics, and create an extensible interface for querying MDS metrics. It was first released in December 2020. Development takes place under the guidance of the OMF's City Services Working Group.  
 
-MDS is designed to be a modular kit-of-parts. Regulatory agencies can use the components of the API that are appropriate for their needs. An agency may choose to use only `agency`, `provider`, or `policy`. Or they may select specific elements (endpoints) from each to help them implement their goals.
+MDS is designed to be a modular kit-of-parts. Regulatory agencies can use the components of the API that are appropriate for their needs. An agency may choose to use only `agency`, `provider`, or `policy`. Other APIs like `geography`, `jurisdiction`, and `metrics` can be used in coordination as described with these APIs or sometimes on their own. Or agencies may select specific elements (endpoints) from each API to help them implement their goals.
 
 Many parts of the MDS definitions and APIs align across each other. In these cases, consolidated information can be found on the [General Information](/general-information.md) page.
 
@@ -58,7 +58,7 @@ You can also get involved in development by joining an [OMF working group](https
 Working Group | Mailing List | Description
 --- | --- | ---
 Provider Services | [mds-provider-services](https://groups.google.com/a/groups.openmobilityfoundation.org/forum/#!forum/mds-provider-services) | Manages the [`provider`][provider] and [`metrics`](metrics) API within MDS.
-City Services | [mds-city-services](https://groups.google.com/a/groups.openmobilityfoundation.org/forum/#!forum/mds-city-services) | Manages the [`agency`][agency], [`policy`][policy] and [`metrics`](metrics) APIs within MDS, as well as the [`mds-core`](https://github.com/openmobilityfoundation/mds-core) and [`mds-compliance-mobile`](https://github.com/openmobilityfoundation/mds-compliance-mobile)  reference implementation.
+City Services | [mds-city-services](https://groups.google.com/a/groups.openmobilityfoundation.org/forum/#!forum/mds-city-services) | Manages the [`agency`][agency], [`policy`][policy] and [`metrics`](metrics) APIs within MDS, as well as the [`mds-core`](https://github.com/openmobilityfoundation/mds-core) and [`mds-compliance-mobile`](https://github.com/openmobilityfoundation/mds-compliance-mobile) reference implementation.
 
 You can view info about past releases and planning calls in the [wiki](https://github.com/openmobilityfoundation/mobility-data-specification/wiki).
 
