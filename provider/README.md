@@ -314,7 +314,7 @@ The authenticated reports are monthly, historic flat files that may be pre-gener
 
 | Name               | Type                                      | Comments                                         |
 | ------------------ | ----------------------------------------- | ------------------------------------------------ |
-| StartDate          | date                                      | Start date of the data row, ISO 8601 format, local timezone |
+| StartDate          | date                                      | Start date of trip the data row, ISO 8601 format, local timezone |
 | Duration           | string                                    | Value is always `P1M` for monthly. Based on [ISO 8601 duration](https://en.wikipedia.org/wiki/ISO_8601#Durations) |
 | Special Group Type | [Special Group Type](#special-group-type) | Type that applies to this row                    |
 | Geography ID       | [Geography](/geography)                   | ID that applies to this row. Includes all IDs in /geography. When there is no /geography then return `null` for this value and counts based on the entire operating area. |
@@ -326,7 +326,7 @@ The authenticated reports are monthly, historic flat files that may be pre-gener
 
 Report contents include every combination of special group types, geography IDs, and vehicle types in operation for each month since the provider began operations in the jurisdiction. New files are added monthly in addition to the previous monthly historic files. 
 
-Counts are calculated based the city's local time zone, and this time zone is returned within the `StartDate` value. For months where there is a Daylight Saving Time change, use the timezone that is in the majority of the month.
+Counts are calculated based the city's local time zone, and this time zone is returned within the `StartDate` value. For months where there is a Daylight Saving Time change, use the timezone that is in the majority of the month. Note that StartDate is based on the moment the trip starts.
 
 All geography IDs included in the city published [Geography](/geography) API endpoint are included in the report results. In lieu of serving an API, this can alternately be a [flat file](/geography#file-format) created by the city and sent to the provider via link. If there is no `/geography` available, then counts are for the entire agency operating area, and `null` is returned for Geography ID. 
 
