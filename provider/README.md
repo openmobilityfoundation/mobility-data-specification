@@ -403,7 +403,9 @@ Other special group types may be added in future MDS releases as relevant agency
 
 Some combinations of parameters may return a small count of trips, which could increase a privacy risk of re-identification. To correct for that, Reports does not return data below a certain count of results. This is called k-anonymity, and the threshold is set at a k-value of 10.
 
-If the report returns count values from 1 through 10, then a number of value `-1` is returned to represent redacted data. Counts of `0` are still returned as usual. This requirement is applied to both counts of trips and unique riders.
+**If the query returns less than `10` trips in a count, then that row's count value is returned as "-1".** Note "0" values are also returned as "-1" since the goal is to group low and no count values for privacy. 
+
+Using k-anonymity with this k-value and methodology will reduce, but not necessarily eliminate the risk that an individual could be reidentified in a dataset. Higher k-values have lower re-identification risk, but may result in less complete data depending on the duration of time periods and size of geographic areas for which the reports are calculated. Some use cases (such as sharing re with trusted parties who already have access to disaggregated trip data) may not require k-anonymization, while others (such as sharing with less trusted partners or extracts for the public) may require substantial k-anonymization. While reports with any k-value are likely to be substantially less sensitive than disaggregated trip records, they should still be treated as potentially sensitive unless a more detailed risk analysis is performed by the hosting organization.
 
 [Top][toc]
 
