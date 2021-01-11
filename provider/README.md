@@ -8,7 +8,6 @@ This specification contains a data standard for *mobility as a service* provider
 
 * [General Information](#general-information)
   * [Versioning](#versioning)
-  * [Response Format](#response-format)
   * [Responses and Error Messages](#responses-and-error-messages)
   * [JSON Schema](#json-schema)
   * [Pagination](#pagination)
