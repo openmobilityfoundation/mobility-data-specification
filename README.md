@@ -51,7 +51,7 @@ The [`geography`][geography] API endpoints are intended to be implemented by reg
 
 ---
 
-<a href="/jurisdiction/"><img src="https://i.imgur.com/y0mHbsa.png" width="80" align="left" alt="MDS Jurisdiction Icon" border="0"></a>
+<a href="/jurisdiction/"><img src="https://i.imgur.com/tCRCfxT.png" width="80" align="left" alt="MDS Jurisdiction Icon" border="0"></a>
 
 The [`jurisdiction`][jurisdiction] API endpoints are intended to be implemented by regulatory agencies that have a need to coordinate with each other. The jurisdiction endpoints allow cities to communicate boundaries between one another and to mobility providers. It was first released in February 2021. 
 
