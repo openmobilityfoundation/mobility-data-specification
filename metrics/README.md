@@ -100,7 +100,9 @@ Some combinations of dimensions, filters, time, and geography may return a small
 
 **If the query returns less than `10` trips in a count, then that row's count value is returned as "-1".** Note "0" values are also returned as "-1" since the goal is to group low and no count values for privacy. 
 
-The k-value is always returned in the Metrics Query API [response](/metrics#response-1) to provide important context for the data consumer on the data redaction that is occurring.
+A k-value of 10 is recommended here, but a city may need to use a different approach or k-value if the use case requires it. As Metrics is in [beta](#beta-feature), this value may be adjusted in future releases and/or may become dynamic to account for specific categories of use cases. 
+
+The k-value being used is always returned in the Metrics Query API [response](/metrics#response-1) to provide important context for the data consumer on the data redaction that is occurring.
 
 Using k-anonymity with this k-value and methodology will reduce, but not necessarily eliminate the risk that an individual could be reidentified in a dataset. Higher k-values have lower re-identification risk, but may result in less complete metrics depending on the duration of time periods and size of geographic areas for which the metrics are calculated. Some use cases (such as sharing metrics with trusted parties who already have access to disaggregated trip data) may not require k-anonymization, while others (such as sharing with less trusted partners or extracts for the public) may require substantial k-anonymization. While metrics with any k-value are likely to be substantially less sensitive than disaggregated trip records, they should still be treated as potentially sensitive unless a more detailed risk analysis is performed by the hosting organization.
 
