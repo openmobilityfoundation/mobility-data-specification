@@ -81,9 +81,7 @@ See the [Responses][responses] and [Error Messages][error-messages] sections.
 
 ### Authorization
 
-When making requests, the Geography API expects `provider_id` to include an `access_token` in the `Authorization` header, in the form `Authorization: Bearer <access_token>`. The token issuance, expiration and revocation policies are at the discretion of the Agency.
-
-Optionally, an Agency may decide to make these endpoints unauthenticated and public, which could be done in conjunction with the [/policy](/policy) endpoints.
+Authorization is not required. An agency may decide to make this endpoint unauthenticated and public. See [Optional Authentication](/general-information.md#optional-authentication) for details.
 
 [Top][toc]
 
@@ -99,7 +97,7 @@ Placeholder -- link to schema to be added later.
 | ----------------   | --------- | --- | --------------------------------------------------------------------------------------------- |
 | `name`             | String    | Required   | Name of geography                                                                      |
 | `description`      | String    | Optional   | Detailed description of geography                                                      |
-| `geography_type`   | Sting     | Optional   | Type of geography, e.g. `municipal_boundary` or `council_district` or custom text.  See [Geography Types](#geography-types). |
+| `geography_type`   | String     | Optional   | Type of geography, e.g. `municipal_boundary` or `council_district` or custom text.  See [Geography Types](#geography-types). |
 | `geography_id`     | UUID      | Required   | Unique ID of geography                                                                 |
 | `geography_json`   | UUID      | Required   | The GeoJSON that defines the geographical coordinates.                                 |
 | `effective_date`   | [timestamp][ts] | Optional   | The date at which a Geography is considered "live".  Must be at or after `published_date`. |

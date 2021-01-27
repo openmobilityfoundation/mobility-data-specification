@@ -8,6 +8,7 @@ This specification describes the digital relationship between _mobility as a ser
 
 - [General Information](#general-information)
   - [Versioning](#versioning)
+  - [Update Frequency](#update-frequency)  
 - [Background](#background)
 - [Distribution](#distribution)
   - [REST Endpoints](#rest-endpoints)
@@ -26,6 +27,12 @@ This specification describes the digital relationship between _mobility as a ser
 ## General information
 
 The following information applies to all `policy` API endpoints.
+
+[Top][toc]
+
+### Update Frequency
+
+The publishing agency should establish beforehand and communicate to providers how frequently the Policy endpoints are expected to change, how often they should be polled to get the latest information, and expectations around emergency updates.
 
 [Top][toc]
 
@@ -89,6 +96,10 @@ Responses must set the `Content-Type` header, as specified in the [versioning][v
 The response to a client request must include a valid HTTP status code defined in the [IANA HTTP Status Code Registry][iana].
 
 See the [Responses section][responses] for information on valid MDS response codes and the [Error Messages section][error-messages] for information on formatting error messages.
+
+### Authorization
+
+Authorization is not required. An agency may decide to make this endpoint unauthenticated and public. See [Optional Authentication](/general-information.md#optional-authentication) for details.
 
 #### Policies
 

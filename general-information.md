@@ -148,6 +148,14 @@ During the Beta period for this feature, location and telemtry data remain requi
 
 [Top][toc]
 
+## Optional Authentication
+
+Authorization of the Policy and Geography APIs is no longer required and will be deprecated in next major release with these endpoints becoming optionally private instead of optionally public. An agency may optionally decide to make both the Policy and Geography endpoints unauthenticated and public. This allows transparency for the public to see how the city is regulating, holds the city accountable for their policy decisions, and reduces the technical burden on providers to use these endpoints. A side benefit is that this allows third parties to ingest this information into their applications and services for public benefit.
+
+Note if implementing the beta features [Geography Driven Events](/general-information.md#geography-driven-events), both Policy and Geography must be public.
+
+[Top][toc]
+
 ## Propulsion Types
 
 | `propulsion`      | Description                                            |
