@@ -76,7 +76,7 @@ The Metrics API and all of its endpoints are marked as a [beta feature](https://
 
 All dates and times (datetime) are [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) formatted strings (YYYY-MM-DDTHHMM), with minute granularity supported and time zone (default UTC) or included offset. Dates and times may also be specified using a numeric *Unix epoch/timestamp* 
 
-All interval durations (duration) are [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) duration format strings (e.g. PT15M, PT1H, P1D).
+All interval durations (duration) are [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#Durations) duration format strings (e.g. PT15M, PT1H, P1D).
 
 [Top][toc]
 
@@ -166,9 +166,9 @@ Supports querying one or more metrics with the following parameters.
 | Name            | Type     | Required | Comments                                                                        |
 | --------------- | -------- | -------- | ------------------------------------------------------------------------------- |
 | `measures`      | string[] | Yes      | list of measures to return. [See metric names](core_metrics.md)                 |
-| `interval`      | duration | Yes      | Duration for metrics intervals.                                                 |
-| `start_date`    | datetime | Yes      | ISO 8601 formatted start date or numeric timestamp to fetch metrics.            |
-| `end_date`      | datetime | No       | ISI 8601 formatted end date or numeric timestamp to fetch metrics.             |
+| `interval`      | duration | Yes      | [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#Durations) duration for metrics intervals.                                                 |
+| `start_date`    | datetime | Yes      | [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) formatted start date or numeric timestamp to fetch metrics.            |
+| `end_date`      | datetime | No       | [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) formatted end date or numeric timestamp to fetch metrics.             |
 | `timezone`      | timezone | No       | TZ Database time zone name (default: "UTC")                                     |
 | `dimensions`    | string[] | No       | List of dimension names. [See dimensions.](core_metrics.md#dimensions)          |
 | `filters`       | filter[] | No       | Filters for metrics to return of format [See filters.](core_metrics.md#filters) |
