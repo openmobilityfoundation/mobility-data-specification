@@ -295,7 +295,6 @@ Without an `event_time` query parameter, `/status_changes` shall return a `400 B
 
 [Top][toc]
 
-
 ## Reports
 
 Reports are information that providers can send back to agencies containing aggregated data that is not contained within other MDS endpoints, like counts of special groups of riders.
@@ -404,7 +403,7 @@ Some combinations of parameters may return a small count of trips, which could i
 
 **If the query returns less than `10` trips in a count, then that row's count value is returned as "-1".** Note "0" values are also returned as "-1" since the goal is to group low and no count values for privacy. 
 
-As Reports is in [beta](beta), this value may be adjusted in future releases and/or may become dynamic to account for specific categories of use cases. 
+As Reports is in [beta](beta), the k-value of `10` may be adjusted in future releases and/or may become dynamic to account for specific categories of use cases. To improve the specification and to inform future guidance, beta users are encouraged to share their feedback and questions about k-values on this [discussion thread](https://github.com/openmobilityfoundation/mobility-data-specification/discussions/622).
 
 Using k-anonymity with this k-value and methodology will reduce, but not necessarily eliminate the risk that an individual could be reidentified in a dataset. Higher k-values have lower re-identification risk, but may result in less complete data depending on the duration of time periods and size of geographic areas for which the reports are calculated. Some use cases (such as sharing re with trusted parties who already have access to disaggregated trip data) may not require k-anonymization, while others (such as sharing with less trusted partners or extracts for the public) may require substantial k-anonymization. While reports with any k-value are likely to be substantially less sensitive than disaggregated trip records, they should still be treated as potentially sensitive unless a more detailed risk analysis is performed by the hosting organization.
 
