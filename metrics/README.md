@@ -98,9 +98,9 @@ Further scopes and requirements may be added at the discretion of the Agency, de
 
 Some combinations of dimensions, filters, time, and geography may return a small count of trips, which could increase a privacy risk of re-identification. To correct for that, Metrics does not return data below a certain count of results.  This is called k-anonymity, and the threshold is set at a k-value of 10. 
 
-**If the query returns less than `10` trips in a count, then that row's count value is returned as "-1".** Note "0" values are also returned as "-1" since the goal is to group low and no count values for privacy. 
+**If the query returns less than `10` trips in a count, then that row's count value is returned as "-1".** Note "0" values are also returned as "-1" since the goal is to group low and no count values together for privacy. 
 
-A k-value of 10 is recommended here, but a city may need to use a different approach or k-value if the use case requires it. As Metrics is in [beta](#beta-feature), this value may be adjusted in future releases and/or may become dynamic to account for specific categories of use cases. 
+The OMF suggests a k-value of 10 is an appropriate starting point for safe anonymization, absent analysis and a further decision from the agency. As Metrics is in [beta](#beta-feature), this value may be adjusted in future releases and/or may become dynamic to account for specific categories of use cases and users. To improve the specification and to inform future guidance, beta users are encouraged to share their feedback and questions about k-values on this [discussion thread](https://github.com/openmobilityfoundation/mobility-data-specification/discussions/622).
 
 The k-value being used is always returned in the Metrics Query API [response](/metrics#response-1) to provide important context for the data consumer on the data redaction that is occurring.
 
