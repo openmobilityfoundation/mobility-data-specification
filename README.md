@@ -17,27 +17,53 @@ The Mobility Data Specification (**MDS**), a project of the [Open Mobility Found
 
 **MDS** helps cities interact with companies who operate dockless scooters, bicycles, mopeds and carshare in the public right-of-way. MDS is a key piece of digital infrastructure that supports the effective implementation of mobility policies in cities around the world.
 
+![MDS Main Logo](https://i.imgur.com/AiUedl3.png)
+
 **MDS** is an open-source project. It was originally created by the [Los Angeles Department of Transportation](http://ladot.io) (LADOT). In November 2019, stewardship of MDS and the ownership of this repository was transferred to the Open Mobility Foundation. GitHub automatically redirects any links to this repository in the `CityOfLosAngeles` organization to the `openmobilityfoundation` instead. MDS continues to be used by LADOT and many other municipalities.
 
 [Top][toc]
 
 ## Endpoints
 
-**MDS** is currently comprised of five distinct components:
+**MDS** is comprised of six distinct API components:
 
-* The [`provider`][provider] API endpoints are intended to be implemented by mobility providers and consumed by regulatory agencies. When a municipality queries information from a mobility provider, the Provider API has a historical view of operations in a standard format. It was first released in June 2018. Development takes place under the guidance of the OMF's Provider Services Working Group.
+<a href="/provider/"><img src="https://i.imgur.com/yzXrKpo.png" width="80" align="left" alt="MDS Provider Icon" border="0"></a>
 
-* The [`agency`][agency] API endpoints are intended to be implemented by regulatory agencies and consumed by mobility providers. Providers query the Agency API when events (such as a trip start or vehicle status change) occur in their systems. It was first released in April 2019. Development takes place under the guidance of the OMF's City Services Working Group.
+The [`provider`][provider] API endpoints are intended to be implemented by mobility providers and consumed by regulatory agencies. When a municipality queries information from a mobility provider, the Provider API has a historical view of operations in a standard format. It was first released in June 2018. 
 
-* The [`policy`][policy] API endpoints are intended to be implemented by regulatory agencies and consumed by mobility providers. Providers query the Policy API to get information about local rules that may affect the operation of their mobility service or which may be used to determine compliance. It was first released in October 2019. Development takes place under the guidance of the OMF's City Services Working Group.
+---
 
-* The [`geography`][geography] API endpoints are intended to be implemented by regulatory agencies and consumed by mobility providers. Providers query the Policy API to get information about geographical regions for regulatory and other purposes. It was first released in October 2019, originally included as part of the Policy specification. Development takes place under the guidance of the OMF's City Services Working Group.
+<a href="/agency/"><img src="https://i.imgur.com/HzMWtaI.png" width="80" align="left" alt="MDS Agency Icon" border="0"></a>
 
-* The [`jurisdiction`][jurisdiction] API endpoints are intended to be implemented by regulatory agencies that have a need to coordinate with each other. The jurisdiction endpoints allow cities to communicate boundaries between one another and to mobility providers. It was first released in November 2020, originally included as part of the Jurisdiction specification. Development takes place under the guidance of the OMF's City Services Working Group.
+The [`agency`][agency] API endpoints are intended to be implemented by regulatory agencies and consumed by mobility providers. Providers query the Agency API when events (such as a trip start or vehicle status change) occur in their systems. It was first released in April 2019. 
 
-* The [`metrics`](metrics) API endpoints are intended to be implemented by regulatory agencies or their appointed third-party representatives to have a standard way to consistently describe available metrics, and create an extensible interface for querying MDS metrics. Development takes place under the guidance of the OMF's City Services Working Group.  
+---
 
-MDS is designed to be a modular kit-of-parts. Regulatory agencies can use the components of the API that are appropriate for their needs. An agency may choose to use only `agency`, `provider`, or `policy`. Or they may select specific elements (endpoints) from each to help them implement their goals.
+<a href="/policy/"><img src="https://i.imgur.com/66QXveN.png" width="80" align="left" alt="MDS Policy Icon" border="0"></a>
+
+The [`policy`][policy] API endpoints are intended to be implemented by regulatory agencies and consumed by mobility providers. Providers query the Policy API to get information about local rules that may affect the operation of their mobility service or which may be used to determine compliance. It was first released in October 2019.
+
+---
+
+<a href="/geography/"><img src="https://i.imgur.com/JJdKX8b.png" width="80" align="left" alt="MDS Geography Icon" border="0"></a>
+
+The [`geography`][geography] API endpoints are intended to be implemented by regulatory agencies and consumed by mobility providers. Providers query the Policy API to get information about geographical regions for regulatory and other purposes. It was first released in October 2019, originally included as part of the Policy specification. 
+
+---
+
+<a href="/jurisdiction/"><img src="https://i.imgur.com/tCRCfxT.png" width="80" align="left" alt="MDS Jurisdiction Icon" border="0"></a>
+
+The [`jurisdiction`][jurisdiction] API endpoints are intended to be implemented by regulatory agencies that have a need to coordinate with each other. The jurisdiction endpoints allow cities to communicate boundaries between one another and to mobility providers. It was first released in February 2021. 
+
+---
+
+<a href="/metrics/"><img src="https://i.imgur.com/ouijHLj.png" width="80" align="left" alt="MDS Metrics Icon" border="0"></a>
+
+The [`metrics`](/metrics) API endpoints are intended to be implemented by regulatory agencies or their appointed third-party representatives to have a standard way to consistently describe available metrics, and create an extensible interface for querying MDS metrics. It was first released in February 2021. 
+
+---
+
+MDS is designed to be a modular kit-of-parts. Regulatory agencies can use the components of the API that are appropriate for their needs. An agency may choose to use only `agency`, `provider`, or `policy`. Other APIs like `geography`, `jurisdiction`, and `metrics` can be used in coordination as described with these APIs or sometimes on their own. Or agencies may select specific elements (endpoints) from each API to help them implement their goals. Development of the APIs takes place under the guidance of either the OMF's [City Services](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-City-Services-Working-Group) or [Provider Services](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Provider-Services-Working-Group) Working Groups.
 
 Many parts of the MDS definitions and APIs align across each other. In these cases, consolidated information can be found on the [General Information](/general-information.md) page.
 
@@ -58,7 +84,7 @@ You can also get involved in development by joining an [OMF working group](https
 Working Group | Mailing List | Description
 --- | --- | ---
 Provider Services | [mds-provider-services](https://groups.google.com/a/groups.openmobilityfoundation.org/forum/#!forum/mds-provider-services) | Manages the [`provider`][provider] and [`metrics`](metrics) API within MDS.
-City Services | [mds-city-services](https://groups.google.com/a/groups.openmobilityfoundation.org/forum/#!forum/mds-city-services) | Manages the [`agency`][agency], [`policy`][policy] and [`metrics`](metrics) APIs within MDS, as well as the [`mds-core`](https://github.com/openmobilityfoundation/mds-core) and [`mds-compliance-mobile`](https://github.com/openmobilityfoundation/mds-compliance-mobile)  reference implementation.
+City Services | [mds-city-services](https://groups.google.com/a/groups.openmobilityfoundation.org/forum/#!forum/mds-city-services) | Manages the [`agency`][agency], [`policy`][policy] and [`metrics`](metrics) APIs within MDS, as well as the [`mds-core`](https://github.com/openmobilityfoundation/mds-core) and [`mds-compliance-mobile`](https://github.com/openmobilityfoundation/mds-compliance-mobile) reference implementation.
 
 You can view info about past releases and planning calls in the [wiki](https://github.com/openmobilityfoundation/mobility-data-specification/wiki).
 
@@ -89,6 +115,8 @@ More than 115 cities and public agencies around the world use MDS, and it has be
 for Shareable Dockless Mobility Device Permit Holders](https://www.atlantaga.gov/home/showdocument?id=46315) from [Department of City Planning](https://www.atlantaga.gov/government/departments/city-planning).
 * **Auckland, New Zealand**: See the [city council website](https://ourauckland.aucklandcouncil.govt.nz/media/26909/e-scooter-share-code-of-practice-april-october-2019.pdf) and the [Code of Practice document](https://ourauckland.aucklandcouncil.govt.nz/media/26909/e-scooter-share-code-of-practice-april-october-2019.pdf).
 * **Austin, TX**: The rules and guidelines for Austin's Micromobility Program can be found on Austin's [Shared Mobility Program](https://austintexas.gov/department/shared-mobility-services) website. See the [Director Rules](https://austintexas.gov/sites/default/files/files/Transportation/Dockless_Final_Accepted_Searchable.pdf) and [Application](http://austintexas.gov/sites/default/files/files/Transportation/Dockless_Mobility_License_Application.pdf) for more details.
+* **Baltimore, MD**: Read the city's [Dockless Vehicles page](https://transportation.baltimorecity.gov/bike-baltimore/dockless-vehicles) and the specifics in the [Dockless Vehicles for Hire: Rules and Regulations](https://transportation.baltimorecity.gov/sites/default/files/2019%20Rules%20&%20Regs%20SIGNED%20FINAL.pdf) Standards and Data Reporting section. 
+* **Bergen, Norway**: Running a [pilot project for shared scooters](https://www.bergen.kommune.no/innbyggerhjelpen/trafikk-reiser-vei/vei-og-veitrafikk/sykkel/elsparkesykler-i-bergen) where the operators must comply with [these guidelines - including data sharing employing MDS Agency API](https://www.bergen.kommune.no/publisering/api/filer/T543853092).
 * **Bogotá, Columbia**: Read the overview on the city government [website landing page](https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=83613) and see details on the [permit process page](https://www.movilidadbogota.gov.co/web/Noticia/avanza_proceso_de_solicitud_de_permisos_para_el_alquiler_de_patinetas_en_el_espacio_p%C3%BAblico) and they use Agency and Provider as seen in the [technical appendix](https://drive.google.com/file/d/13ejveplHxoj2sS9O0AqC1rNjVt6Grdwf/view?usp=sharing).
 * **Calgary, Canada**: Programs for a [Dockless Bike Share Pilot](https://www.calgary.ca/transportation/tp/cycling/cycling-strategy/bike-share-system.html?redirect=/bikeshare) and a [shared electric scooter pilot](https://www.calgary.ca/transportation/tp/cycling/cycling-strategy/shared-electric-scooter-pilot.html) that require [MDS in the application](https://www.calgary.ca/content/dam/www/transportation/tp/documents/cycling/cycling_strategy/framework-for-dockless-bike-share-permit-phase-2.pdf) and programs.
 * **Chicago, IL**: [E-Scooter Share Pilot Program](https://www.chicago.gov/city/en/depts/cdot/supp_info/escooter-share-pilot-project.html) information.
@@ -120,7 +148,7 @@ for Shareable Dockless Mobility Device Permit Holders](https://www.atlantaga.gov
 
 * _add a city here by [opening a pull request](https://github.com/openmobilityfoundation/mobility-data-specification/compare/dev...dev) or [making an issue](https://github.com/openmobilityfoundation/mobility-data-specification/issues/new?assignees=&labels=&template=feature-request---proposal.md&title=)_.
 
-Other cities include Baltimore, Bellevue, Charlotte, and Oakland, as mentioned in the [NACTO Guidelines for Regulating Shared Micromobility](https://nacto.org/wp-content/uploads/2019/09/NACTO_Shared_Micromobility_Guidelines_Web.pdf), page 48.
+Other cities include Bellevue, Charlotte, and Oakland, as mentioned in the [NACTO Guidelines for Regulating Shared Micromobility](https://nacto.org/wp-content/uploads/2019/09/NACTO_Shared_Micromobility_Guidelines_Web.pdf), page 48.
 
 [Top][toc]
 
