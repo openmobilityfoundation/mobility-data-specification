@@ -63,11 +63,15 @@ The [`metrics`](/metrics) API endpoints are intended to be implemented by regula
 
 ---
 
+### Modularity
+
 MDS is designed to be a modular kit-of-parts. Regulatory agencies can use the components of the API that are appropriate for their needs. An agency may choose to use only `agency`, `provider`, or `policy`. Other APIs like `geography`, `jurisdiction`, and `metrics` can be used in coordination as described with these APIs or sometimes on their own. Or agencies may select specific elements (endpoints) from each API to help them implement their goals. Development of the APIs takes place under the guidance of either the OMF's [City Services](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-City-Services-Working-Group) or [Provider Services](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Provider-Services-Working-Group) Working Groups.
 
 Many parts of the MDS definitions and APIs align across each other. In these cases, consolidated information can be found on the [General Information](/general-information.md) page.
 
-You can read more about the different APIs here: **[Understanding the different MDS APIs](https://github.com/openmobilityfoundation/governance/blob/main/technical/Understanding-MDS-APIs.md)**
+You can read more in our **[Understanding the different MDS APIs](https://github.com/openmobilityfoundation/governance/blob/main/technical/Understanding-MDS-APIs.md)** guide. 
+
+All MDS compatible feeds [must also expose](/provider/README.md#gbfs) a public [GBFS](https://github.com/NABSA/gbfs) feed. Compatibility with [GBFS 2.0](https://github.com/NABSA/gbfs/blob/v2.0/gbfs.md) or greater is advised due to privacy concerns and support for micromobility. See our [MDS Vehicles Guide](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Vehicles) for how Provider `/vehicles` can be used by regulators instead of GBFS `/free_bike_status`. Additional information on MDS and GBFS can be found in this [guidance document](https://github.com/openmobilityfoundation/governance/blob/main/technical/GBFS_and_MDS.md).
 
 [Top][toc]
 
