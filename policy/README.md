@@ -1,5 +1,7 @@
 # Mobility Data Specification: Policy
 
+<a href="/policy/"><img src="https://i.imgur.com/66QXveN.png" width="120" align="right" alt="MDS Policy Icon" border="0"></a>
+
 The Policy API endpoints are intended to be implemented by regulatory agencies and consumed by mobility providers. Providers query the Policy API to get information about local rules that may affect the operation of their mobility service or which may be used to determine compliance.
 
 This specification describes the digital relationship between _mobility as a service_ providers and the agencies that regulate them. The Policy API communicates municipal policies (such as as vehicle deployment caps and speed limits) in a clear, consistent manner.
