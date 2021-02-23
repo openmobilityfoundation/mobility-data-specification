@@ -1,5 +1,7 @@
 # Mobility Data Specification: Metrics
 
+<a href="/metrics/"><img src="https://i.imgur.com/ouijHLj.png" width="120" align="right" alt="MDS Metrics Icon" border="0"></a>
+
 The Metrics API endpoints are intended to be implemented by regulatory agencies, their third party appointed representatives, or city designated partners for requesting **historical** calculated [core metrics](core_metrics.md) and aggregations of MDS data. The Metrics API allows viewing of aggregate report data derived from some MDS endpoints that may be used for use cases like compliance, program effectiveness, and alignment on counts. The metrics [methodology](/metrics/metrics_methodology.md) definitions may be used by providers and third parties in their own calculations.
 
 [Metrics Examples](examples) are available with sample implementations.
