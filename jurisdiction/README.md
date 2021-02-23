@@ -1,6 +1,10 @@
 # Mobility Data Specification: Jurisdiction
 
+<a href="/jurisdiction/"><img src="https://i.imgur.com/tCRCfxT.png" width="120" align="right" alt="MDS Jurisdiction Icon" border="0"></a>
+
 This specification details the purpose, use cases, and schema for Jurisdictions, a beta feature. Jurisdictions are an optional service that, if implemented, must be authenticated, and served by a coordinated group of agencies.
+
+The Jursidiction API is to be served by agencies, that can optionally be made public. It is different from the [Geography](/geography) API, though it does reference Geography areas.
 
 ## Table of Contents
 
@@ -64,7 +68,7 @@ Those tools can be granted data access from the SaaS tool based on the jurisdict
 
 ## Distribution
 
-Jurisdictions can be served by agencies through the following REST API, or via [flat-files](#flat-files).
+Jurisdictions can be served by agencies through the following REST API, or via [flat-files](#flat-files). Agencies may choose to make the endpoints public and non-authenticated.
 
 ### REST
 
@@ -114,7 +118,7 @@ Formatted in JSON, a Jurisdiction object should look like this:
 
 ### GET /Jurisdictions
 
-Gets all of an agency's Jurisdictions.
+Gets all of an agency's Jurisdictions. Served by agencies.
 
 Parameters:
 | Name | Type | R/O | Description |
@@ -129,7 +133,7 @@ Response codes:
 
 ### GET /Jurisdictions/:jurisdiction_id
 
-Gets a single Jurisdictions.
+Gets a single Jurisdictions. Served by agencies
 
 Parameters:
 | Name | Type | R/O | Description |
