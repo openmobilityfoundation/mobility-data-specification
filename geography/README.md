@@ -1,5 +1,7 @@
 # Mobility Data Specification: Geography
 
+<a href="/geography/"><img src="https://i.imgur.com/JJdKX8b.png" width="120" align="right" alt="MDS Geography Icon" border="0"></a>
+
 This specification contains a collection of RESTful APIs used to read Geographies (descriptions of geographical information, e.g. multi-polygons, currently represented via GeoJSON).
 
 Geographical data has many applications in the context of mobility, such as the description of municipal boundaries, locations for pick-up and drop-off zones, and areas of temporary closure for special events or emergencies.  This API is intended to support a variety of other APIs, including the Policy API.
