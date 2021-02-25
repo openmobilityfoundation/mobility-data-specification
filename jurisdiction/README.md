@@ -4,7 +4,7 @@
 
 This specification details the purpose, use cases, and schema for Jurisdictions, a beta feature. Jurisdictions are an optional service that, if implemented, must be authenticated, and served by a coordinated group of agencies.
 
-The Jursidiction API is to be served by agencies, that can optionally be made public. It is different from the [Geography](/geography) API, though it does reference Geography areas.
+The Jursidiction API is to be served by agencies, and it can optionally be made public. It serves a different purpose from the [Geography](/geography) API, though it does reference areas within Geography by ID.
 
 ## Table of Contents
 
