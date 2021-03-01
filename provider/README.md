@@ -401,16 +401,15 @@ Other special group types may be added in future MDS releases as relevant agency
 
 ### Data Redaction
 
-Some combinations of parameters may return a small count of trips, which could increase a privacy risk of re-identification. To correct for that, Reports does not return data below a certain count of results. This is called k-anonymity, and the threshold is set at a k-value of 10.
+Some combinations of parameters may return a small count of trips, which could increase a privacy risk of re-identification. To correct for that, Reports does not return data below a certain count of results. This data redaction is called k-anonymity, and the threshold is set at a k-value of 10. For more explanation of this methodology, see our [Data Redaction Guidance document](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Data-Redaction).
 
-**If the query returns less than `10` trips in a count, then that row's count value is returned as "-1".** Note "0" values are also returned as "-1" since the goal is to group low and no count values for privacy. 
+**If the query returns less than `10` trips in a count, then that row's count value is returned as "-1".** Note "0" values are also returned as "-1" since the goal is to group both low and no count values for privacy. 
 
-As Reports is in [beta](beta), the k-value of `10` may be adjusted in future releases and/or may become dynamic to account for specific categories of use cases. To improve the specification and to inform future guidance, beta users are encouraged to share their feedback and questions about k-values on this [discussion thread](https://github.com/openmobilityfoundation/mobility-data-specification/discussions/622).
+As Reports is in [beta][beta], this value may be adjusted in future releases and/or may become dynamic to account for specific categories of use cases and users. To improve the specification and to inform future guidance, beta users are encouraged to share their feedback and questions about k-values on this [discussion thread](https://github.com/openmobilityfoundation/mobility-data-specification/discussions/622).
 
-Using k-anonymity with this k-value and methodology will reduce, but not necessarily eliminate the risk that an individual could be reidentified in a dataset. Higher k-values have lower re-identification risk, but may result in less complete data depending on the duration of time periods and size of geographic areas for which the reports are calculated. Some use cases (such as sharing re with trusted parties who already have access to disaggregated trip data) may not require k-anonymization, while others (such as sharing with less trusted partners or extracts for the public) may require substantial k-anonymization. While reports with any k-value are likely to be substantially less sensitive than disaggregated trip records, they should still be treated as potentially sensitive unless a more detailed risk analysis is performed by the hosting organization.
+Using k-anonymity will reduce, but not necessarily eliminate the risk that an individual could be re-identified in a dataset, and this data should still be treated as sensitive. This is just one part of good privacy protection principles, which you can read more about in our [MDS Privacy Guide for Cities](https://github.com/openmobilityfoundation/governance/blob/main/documents/OMF-MDS-Privacy-Guide-for-Cities.pdf). 
 
 [Top][toc]
-
 
 ## Realtime Data
 
@@ -537,7 +536,7 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 [Top][toc]
 
 [agps]: https://en.wikipedia.org/wiki/Assisted_GPS
-[beta]: /general-information.md#beta
+[beta]: /general-information.md#beta-features
 [costs-and-currencies]: /general-information.md#costs-and-currencies
 [data-latency]: #data-latency-requirements
 [dgps]: https://en.wikipedia.org/wiki/Differential_GPS
