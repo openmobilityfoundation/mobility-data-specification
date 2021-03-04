@@ -126,7 +126,7 @@
     },
     "propulsion_types": {
       "$id": "#/definitions/propulsion_types",
-      "type": "string",
+      "type": "array",
       "description": "Array of propulsion types, allowing multiple values",
       "enum": [
         "combustion",
