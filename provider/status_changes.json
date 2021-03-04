@@ -124,25 +124,16 @@
         }
       }
     },
-    "propulsion_type": {
-      "$id": "#/definitions/propulsion_type",
+    "propulsion_types": {
+      "$id": "#/definitions/propulsion_types",
       "type": "string",
-      "description": "The type of propulsion",
+      "description": "Array of propulsion types, allowing multiple values",
       "enum": [
         "combustion",
         "electric",
         "electric_assist",
         "human"
-      ]
-    },
-    "propulsion_types": {
-      "$id": "#/definitions/propulsion_types",
-      "type": "array",
-      "description": "Array of propulsion types, allowing multiple values",
-      "items": {
-        "$id": "#/definitions/propulsion_types/items",
-        "$ref": "#/definitions/propulsion_type"
-      },
+      ],
       "uniqueItems": true
     },
     "vehicle_type": {
