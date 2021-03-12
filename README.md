@@ -141,7 +141,8 @@ for Shareable Dockless Mobility Device Permit Holders](https://www.atlantaga.gov
 * **Miami, FL**: [Miami Scooter Program](https://www.miamigov.com/Services/Transportation/Miami-Scooter-Pilot-Program?BestBetMatch=scooters|d13b95b2-5146-4b00-9e3e-a80c73739a64|4f05f368-ecaa-4a93-b749-7ad6c4867c1f|en-US).
 * **Milwaukee, WI**: See the [Milwaukee city website](http://milwaukee.gov/docklessscooters) for the detailed [dockless study details](https://city.milwaukee.gov/ImageLibrary/Groups/cityBikePed/2019-Images/Dockless-Scooter/DocklessScooterPilotStudy-TermsandConditions-FINALRev2019.08.012.pdf).
 * **Minneapolis, MN**: [Mobility Data Methodology and Analysis](https://www2.minneapolismn.gov/media/content-assets/documents/departmentx2fdivisions/wcmsp-218311.pdf) and [Motorized Foot Scooters](http://www.minneapolismn.gov/publicworks/trans/WCMSP-212816) webpage.
-* **Philadelphia, PA**: [Dockless Bike Share Pilot](http://www.phillyotis.com/portfolio-item/dockless-bike-share-pilot/) and regulations, including [application](http://www.phillyotis.com/wp-content/uploads/2019/08/2019-Phila-Dockless-Bike-Share.pdf) and [regulations](http://www.phillyotis.com/wp-content/uploads/2019/08/City-of-Philadelphia-Dockless-Bike-Share-Regulations.pdf).
+* **Oakland, CA**: Visit the [shared e-scooters page](https://www.oaklandca.gov/topics/e-scooters) and read the full [Permit Applicaiton and Terms and Conditions](https://cao-94612.s3.amazonaws.com/documents/2020-Scooter-Sharing-Terms-and-Conditions_FInal.pdf) document.
+* * **Philadelphia, PA**: [Dockless Bike Share Pilot](http://www.phillyotis.com/portfolio-item/dockless-bike-share-pilot/) and regulations, including [application](http://www.phillyotis.com/wp-content/uploads/2019/08/2019-Phila-Dockless-Bike-Share.pdf) and [regulations](http://www.phillyotis.com/wp-content/uploads/2019/08/City-of-Philadelphia-Dockless-Bike-Share-Regulations.pdf).
 * **Pittsburgh, PA**: The city's [Bike+ Master Plan](https://pittsburghpa.gov/domi/bikeplan) includes multiple modes.
 * **Portland, OR**: [Administrative Rule and data sharing](https://www.portlandoregon.gov/citycode/article/690212) document from [PBOT](https://www.portlandoregon.gov/transportation/).
 * **San Diego, CA**: [Shared Mobility Device Operator Regulations](https://www.sandiego.gov/bicycling/bicycle-and-scooter-sharing/company-contacts) and [Ordinance with Data Sharing Provisions](https://docs.sandiego.gov/council_reso_ordinance/rao2019/O-21070.pdf).
@@ -156,7 +157,7 @@ for Shareable Dockless Mobility Device Permit Holders](https://www.atlantaga.gov
 
 * _add a city here by [opening a pull request](https://github.com/openmobilityfoundation/mobility-data-specification/compare/dev...dev) or [making an issue](https://github.com/openmobilityfoundation/mobility-data-specification/issues/new?assignees=&labels=&template=feature-request---proposal.md&title=)_.
 
-Other cities include Bellevue, Charlotte, and Oakland, as mentioned in the [NACTO Guidelines for Regulating Shared Micromobility](https://nacto.org/wp-content/uploads/2019/09/NACTO_Shared_Micromobility_Guidelines_Web.pdf), page 48.
+Other cities include Bellevue and Charlotte, as mentioned in the [NACTO Guidelines for Regulating Shared Micromobility](https://nacto.org/wp-content/uploads/2019/09/NACTO_Shared_Micromobility_Guidelines_Web.pdf), page 48.
 
 [Top][toc]
 
