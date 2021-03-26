@@ -8,6 +8,7 @@
 - [Versions](#versions)
 - [Cities Using MDS](#cities-using-mds)
 - [Providers Using MDS](#providers-using-mds)
+- [Software Companies Using MDS](#software-companies-using-mds)
 - [Use Cases](#use-cases)
 - [Related Projects](#related-projects)
 
@@ -169,7 +170,16 @@ Over two dozen mobility service providers around the world use MDS, allowing the
 
 [Top][toc]
 
+## Software Companies Using MDS
+
+An open source approach to data specifications benefits cities and companies by creating a space for collaborative development, reducing costs, and nurturing a healthy, competitive ecosystem for mobility services and software tools. The open model promotes a competitive ecosystem for software tools built by dozens of software companies providing their servives to cities, agencies, and providers.
+
+See our webpage about the [benefits of an open approach](https://www.openmobilityfoundation.org/why-open-behind-omfs-unique-open-source-model/) and our [list of third party software companies](#LINK-TBD). 
+
+[Top][toc]
+
 ## Use Cases
+
 Some examples of how cities are using MDS in practice:
 
 - Verify how many scooters are operating.
