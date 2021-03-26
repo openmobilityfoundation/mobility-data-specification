@@ -301,7 +301,7 @@ An individual `Rule` object is defined by the following fields:
 | `name`           | String    | Required   | Name of geography                                                                      |
 | `description`    | String    | Optional   | Detailed description of geography                                                                      |
 | `geography_id`   | UUID      | Required   | Unique ID of [Geography](/geography#general-information)                                               |
-| `geography_json`   | UUID      | Required   | The GeoJSON that defines the geographical coordinates.
+| `geography_json`   | JSON      | Required   | The GeoJSON that defines the geographical coordinates.
 | `effective_date`   | [timestamp][ts] | Optional   | `start_date` for first published policy that uses this geo.  Server should set this when policies are published.  This may be used on the client to distinguish between “logical” geographies that have the same name. E.g. if a policy publishes a geography on 5/1/2020, and then another policy is published which references that same geography is published on 4/1/2020, the effective_date will be set to 4/1/2020.
 | `publish_date`   | [timestamp][ts] | Required   | Timestamp that the policy was published, i.e. made immutable                                             |
 | `prev_geographies`  | UUID[]    | Optional   | Unique IDs of prior [geographies](/geography#general-information) replaced by this one                                   |
