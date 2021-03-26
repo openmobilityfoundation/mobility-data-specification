@@ -180,43 +180,19 @@ Some examples of how cities are using MDS in practice:
 - Ensure inform and help manage 311 / Service Request style operations.
 - Inform future capital investments such as dockless vehicle drop zones or furniture zones.
 - Inform infrastructure planning efforts such as the addition of bike lanes or street redesigns.
-- Provide visibility into the relationship between micromobility and other modes, such as public transit
+- Provide visibility into the relationship between micromobility and other modes, such as public transit.
 - Inform micromobility policy making – number of scooters, distribution, etc.
 - Develop ways to communicate dynamic information on unplanned events, such as emergency road closures, water main breaks, etc. to mobility providers to help them keep their users and contractors informed for better route planning and re-balancing efforts.
 
-More details and examples can be seen on our [Wiki](https://github.com/openmobilityfoundation/governance/wiki/MDS-Use-Cases).
+More details and examples can be seen on the [OMF website](https://www.openmobilityfoundation.org/whats-possible-with-mds/) and our [Wiki Database](https://github.com/openmobilityfoundation/governance/wiki/MDS-Use-Cases).
 
 [Top][toc]
 
 ## Related Projects
 
+Community projects are those efforts by individual contributors or informal groups that take place outside Open Mobility Foundation’s formalized process, complementing MDS. These releated projects often push new ideas forward through experimental or locally-focused development, and are an important part of a thriving open source community. Some of these projects may eventually be contributed to and managed by the Open Mobility Foundation.
+
 The OMF's [Communtiy Projects](https://www.openmobilityfoundation.org/community-projects/) page has an every growing list of projects releated to MDS, and see our [Privacy Committee's State of Practice](https://github.com/openmobilityfoundation/privacy-committee/blob/main/products/state-of-the-practice.md) for more examples.
-
-### Open Mobility Foundation
-* [`mds-core`](https://github.com/openmobilityfoundation/mds-core) - A reference implementation of an MDS Agency Server, built using PostgresQL, TypeScript, NodeJS.
-* [`mds-compliance-mobile`](https://github.com/openmobilityfoundation/mds-compliance-mobile) - A mobile app for performing in-the-field data validation and compliance monitoring.
-
-### City of Los Angeles
-* [`mds-dev`](https://github.com/cityoflosangeles/mds-dev) - Code to do cap checking, fake data generation and more with provider data.
-* [`mds-validator`](https://github.com/cityoflosangeles/mds-validator) - Code to validate MDS APIs using JSONSchema.
-* [`aqueduct`](https://github.com/cityoflosangeles/aqueduct) - ETL, Data Warehousing, and Machine Learning Platform for LA City Data Science team. Handles extracting MDS provider APIs and storing in data warehouse.
-* [`mds-agency-cli`](https://github.com/cityoflosangeles/mds-agency-cli) - Nodejs-based command-line interface to exercise the Agency API in the LADOT sandbox
-
-### City of Santa Monica
-* [`mds-provider`](https://github.com/cityofsantamonica/mds-provider) - Python package implementing a provider API client, validation using JSONSchema, data loading to multiple targets, and fake provider data generation.
-* [`mds-provider-services`](https://github.com/cityofsantamonica/mds-provider-services) - Python scripts wrapped in Docker containers implementing a MDS provider data ingestion flow, using `mds-provider` and handling the various dependencies.
-
-### City of Austin
-* [`transportation-dockless-dataviz`](https://github.com/cityofaustin/transportation-dockless-dataviz) - A hexbin origin/destintation web map of dockless trips using jQuery & Mapbox GL JS. See [http://dockless.austintexas.io/](http://dockless.austintexas.io/).
-* [`transportation-dockless-api`](https://github.com/cityofaustin/transportation-dockless-api) - Python Sanic-based API that provides an interface for retrieving anonymized and aggregated trip data. This API supplies data to our interactive [Dockless Mobility Explorer](https://dockless.austintexas.io). The source database for the API is our [Dockless Vehicle Trips](https://data.austintexas.gov/Transportation-and-Mobility/Dockless-Vehicle-Trips/7d8e-dm7r) dataset.
-* [`atd-mds`](https://github.com/cityofaustin/atd-mds) An MDS provider client and ETL framework.
-
-### City of Louisville
-* [`Dockless-Open-Data`](https://github.com/louisvillemetro-innovation/Dockless-Open-Data) - Convert MDS trip data to anonymized open data. See [https://data.louisvilleky.gov/](https://data.louisvilleky.gov/dataset/dockless-vehicles) for open data.
-
-### Others
-
-* [`django-mds`](https://github.com/polyconseil/django-mds) - Python/Django open source server for the [`agency`][agency] API, developed by BlueSystems.
 
 Please [let us know](https://www.openmobilityfoundation.org/get-in-touch/) if you create open source or private tools for implementing or working with MDS data.
 
