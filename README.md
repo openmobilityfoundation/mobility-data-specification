@@ -198,21 +198,16 @@ Please [let us know](https://www.openmobilityfoundation.org/get-in-touch/) if yo
 
 ## Use Cases
 
-Some examples of how cities are using MDS in practice:
+How cities use MDS depends on a variety of factors: their transportation goals, existing services and infrastructure, and the unique needs of their communities. Cities are using MDS to create policy, enforce rules, manage hundreds of devices, and ensure the safe operation of vehicles in the public right of way. Some examples of how cities are using MDS in practice are:
 
-- Verify how many scooters are operating.
-- Verify whether scooters are being deployed equitably across neighborhoods.
-- Determine whether scooters are dropped off outside of a service area.
-- Determine whether scooters are being parked in safe and appropriate parking areas.
-- Ensure compliance with device caps and operating regulations.
-- Ensure inform and help manage 311 / Service Request style operations.
-- Inform future capital investments such as dockless vehicle drop zones or furniture zones.
-- Inform infrastructure planning efforts such as the addition of bike lanes or street redesigns.
-- Provide visibility into the relationship between micromobility and other modes, such as public transit.
-- Inform micromobility policy making – number of scooters, distribution, etc.
-- Develop ways to communicate dynamic information on unplanned events, such as emergency road closures, water main breaks, etc. to mobility providers to help them keep their users and contractors informed for better route planning and re-balancing efforts.
+- **Vehicle Caps:** Determine total number of vehicles per operator in the right of way
+- **Distribution Requirements:** Ensure vehicles are distributed according to equity requirements
+- **Injury Investigation:** Investigate injuries and collisions with other objects and cars to determine roadway accident causes
+- **Restricted Area Rides:** Find locations where vehicles are operating or passing through restricted areas
+- **Resident Complaints:** Investigate and validate complaints from residents about operations, parking, riding, speed, etc, usually reported through 311
+- **Infrastructure Planning:** Determine where to place new bike/scooter lanes and drop zones based on usage and demand, start and end points, and trips taken
 
-More details and examples can be seen on the [OMF website](https://www.openmobilityfoundation.org/whats-possible-with-mds/) and our [Wiki Database](https://github.com/openmobilityfoundation/governance/wiki/MDS-Use-Cases).
+A list of use cases is useful to show what's possible with MDS, to list what other cities are accomplishing with the data, to see many use cases up front for privacy considerations, and to use for policy discussions and policy language. More details and examples can be seen on the [OMF website](https://www.openmobilityfoundation.org/whats-possible-with-mds/) and our [Wiki Database](https://github.com/openmobilityfoundation/governance/wiki/MDS-Use-Cases).
 
 Please [let us know](https://www.openmobilityfoundation.org/get-in-touch/) if you have recommended updates or use cases to add.
 
