@@ -113,7 +113,7 @@ Read about [how to become an OMF member](https://www.openmobilityfoundation.org/
 
 ## Versions
 
-MDS has a **current release** (version 1.1.0), **previous releases** (both recommended and longer recommended for use), and **upcoming releases** in development. For a full list of releases, their status, recommended versions, and timelines, see the [MDS Releases](https://github.com/openmobilityfoundation/governance/wiki/Releases) page.
+MDS has a **current release** (version 1.1.0), **previous releases** (both recommended and longer recommended for use), and **upcoming releases** in development. For a full list of releases, their status, recommended versions, and timelines, see the [Official MDS Releases](https://github.com/openmobilityfoundation/governance/wiki/Releases) page.
 
 The OMF provides guidance on upgrading for cities, providers, and software companies, and sample permit language for cities. See our [MDS Version Guidance](https://github.com/openmobilityfoundation/governance/blob/main/technical/OMF-MDS-Version-Guidance.md) for best practices on how and when to upgrade MDS as new versions become available. Our complimentary [MDS Policy Language Guidance](https://github.com/openmobilityfoundation/governance/blob/main/technical/OMF-MDS-Policy-Language-Guidance.md) document is for cities writing MDS into their operating policy and includes sample policy language.
 
@@ -126,7 +126,7 @@ The MDS specification is versioned using Git tags and [semantic versioning](http
 * [Latest Release Branch](https://github.com/openmobilityfoundation/mobility-data-specification/tree/main) (main)
 * [Development Branch](https://github.com/openmobilityfoundation/mobility-data-specification/tree/dev) (dev)
 * [All GitHub Releases](https://github.com/openmobilityfoundation/mobility-data-specification/releases)
-* [Release Versions](https://github.com/openmobilityfoundation/governance/wiki/Releases) and timeline
+* [MDS Releases](https://github.com/openmobilityfoundation/governance/wiki/Releases) - current/recommended versions, timeline
 * [Release Guidelines](https://github.com/openmobilityfoundation/governance/blob/main/technical/ReleaseGuidelines.md)
 
 [Top][toc]
