@@ -89,7 +89,7 @@ Authorization is not required. An agency may decide to make this endpoint unauth
 
 ## Schema
 
-Placeholder -- link to schema to be added later.  
+Link to schema will be defined and added in a future release.  
 
 [Top][toc]
 
