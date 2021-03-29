@@ -330,6 +330,8 @@ Counts are calculated based the agency's local time zone, and this time zone is 
 
 All geography IDs included in the city published [Geography](/geography) API endpoint are included in the report results. In lieu of serving an API, this can alternately be a [flat file](/geography#file-format) created by the city and sent to the provider via link. If there is no `/geography` available, then counts are for the entire agency operating area, and `null` is returned for each Geography ID. 
 
+[Top][toc]
+
 ### Reports - Example
 
 For 3 months of provider operation in a city (September 2019 through November 2019) for 3 geographies, 2 vehicle types, and 1 special group. Timezone is Eastern Time in the US which is _-4_ from UTC before November 3, 2019, and _-5_ after. Values of `-1` represent [redacted data](#data-redaction) counts.
@@ -388,6 +390,8 @@ StartDate,Duration,Special Group Type,Geography ID,Vehicle Type,Trip Count,Rider
 2019-11-01T00:00-05,P1M,low_income,8ad39dc3-005b-4348-9d61-c830c54c161b,bicycle,0,0
 ```
 
+[Top][toc]
+
 ### Special Group Type	
 
 Here are the possible values for the `special_group_type` dimension field:	
@@ -398,6 +402,8 @@ Here are the possible values for the `special_group_type` dimension field:
 | all_riders | All riders from any group                                                                                             |	
 
 Other special group types may be added in future MDS releases as relevant agency and provider use cases are identified. When additional special group types or metrics are proposed, a thorough review of utility and relevance in program oversight, evaluation, and policy development should be done by OMF Working Groups, as well as any privacy implications by the OMF Privacy Committee.
+
+[Top][toc]
 
 ### Data Redaction
 
