@@ -133,7 +133,7 @@ The MDS specification is versioned using Git tags and [semantic versioning](http
 
 # Cities Using MDS
 
-More than 115 cities and public agencies around the world use MDS, and it has been implemented by most major [mobility service providers](#providers-using-mds).  See our webpage for a list of known [cities using MDS](https://www.openmobilityfoundation.org/about-mds/mds-users/#cities-using-mds) with links to public mobility websites and policy/permit documents.
+More than 115 cities and public agencies around the world use MDS, and it has been implemented by most major [mobility service providers](#providers-using-mds).  See our webpage for a list of known [cities using MDS](https://www.openmobilityfoundation.org/mds-users/#cities-using-mds) with links to public mobility websites and policy/permit documents.
 
 Please let us know [via our website](https://www.openmobilityfoundation.org/get-in-touch/) or in the [public discussion area](https://github.com/openmobilityfoundation/mobility-data-specification/discussions) if you are an agency using MDS, especially if you have published your policies or documents publicly, so we can add you to the city resource list.
 
@@ -141,7 +141,7 @@ Please let us know [via our website](https://www.openmobilityfoundation.org/get-
 
 # Providers Using MDS
 
-Over two dozen mobility service providers (MSPs) around the world use MDS, allowing them to create tools around a single data standard for multiple cities. See our webpage for a [list of known MSPs](https://www.openmobilityfoundation.org/about-mds/mds-users/#mobility-providers-using-mds). For a table list with unique IDs, see the MDS [provider list](/providers.csv).
+Over two dozen mobility service providers (MSPs) around the world use MDS, allowing them to create tools around a single data standard for multiple cities. See our webpage for a [list of known MSPs](https://www.openmobilityfoundation.org/mds-users/#mobility-providers-using-mds). For a table list with unique IDs, see the MDS [provider list](/providers.csv).
 
 To add yourself to the provider list, please let us know [via our website](https://www.openmobilityfoundation.org/get-in-touch/) or open an [Issue](https://github.com/openmobilityfoundation/mobility-data-specification/issues) or [Pull Request](https://github.com/openmobilityfoundation/mobility-data-specification/pulls).
 
@@ -151,7 +151,7 @@ To add yourself to the provider list, please let us know [via our website](https
 
 An open source approach to data specifications benefits cities and companies by creating a space for collaborative development, reducing costs, and nurturing a healthy, competitive ecosystem for mobility services and software tools. The open model promotes a competitive ecosystem for software tools built by dozens of software companies providing their servives to cities, agencies, and providers.
 
-See our webpage about the [benefits of an open approach](https://www.openmobilityfoundation.org/why-open-behind-omfs-unique-open-source-model/) and our [list of third party software companies](https://www.openmobilityfoundation.org/about-mds/mds-users/#software-companies-using-mds). 
+See our webpage about the [benefits of an open approach](https://www.openmobilityfoundation.org/why-open-behind-omfs-unique-open-source-model/) and our [list of third party software companies](https://www.openmobilityfoundation.org/mds-users/#software-companies-using-mds). 
 
 Please [let us know](https://www.openmobilityfoundation.org/get-in-touch/) if you are using MDS in your company so we can add you to the list.
 
