@@ -1,6 +1,6 @@
 # Mobility Data Specification: **General information**
 
-This document contains specifications that are shared between the various MDS APIs such as [`agency`][agency], [`policy`][policy], and [`provider`][provider].
+This document contains specifications that are shared between the various MDS APIs such as [`agency`][agency], [`policy`][policy], [`provider`][provider], etc.
 
 ## Table of Contents
 
@@ -143,12 +143,9 @@ Here's how it works in practice:
 
 	*Agency adds rule disallowing parking on waterfront path, begins receiving data on events within area.*
 
-
-
 Agencies that wish to use Geography-Driven Events do so by requiring a new `event_geographies` field in status events. When an Agency is using Geography-Driven Events, Providers must emit a new `changed_geographies` status event whenever a vehicle in a trip enters or leaves a Geography managed by a Policy.
 
 During the Beta period for this feature, location and telemtry data remain required fields. This allows Aggencies to test Geography-Driven Events, measuring its accuracy and efficacy against regulatory systems based on precise location data. After the beta period, if Geography-Driven Events is deemed by OMF to be accurate and effective, the specification will evolve to allow cities to use Geography-Driven Events in lieu of location or telemtry data.
-
 
 [Top][toc]
 
@@ -156,7 +153,7 @@ During the Beta period for this feature, location and telemtry data remain requi
 
 Authorization of the Policy and Geography APIs is no longer required and will be deprecated in next major release with these endpoints becoming optionally private instead of optionally public. An agency may optionally decide to make both the Policy and Geography endpoints unauthenticated and public. This allows transparency for the public to see how the city is regulating, holds the city accountable for their policy decisions, and reduces the technical burden on providers to use these endpoints. A side benefit is that this allows third parties to ingest this information into their applications and services for public benefit.
 
-Note if implementing the beta features [Geography Driven Events](/general-information.md#geography-driven-events), both Policy and Geography must be public.
+Note if implementing the beta feature [Geography Driven Events](/general-information.md#geography-driven-events), both Policy and Geography must be public.
 
 [Top][toc]
 
