@@ -1,6 +1,6 @@
 # Geography Examples
 
-This file presents a series of example [Geography](/geography) files to use as reference and to see previews.
+This file presents a series of example [Geography](/geography) files to use as reference and to see previews online.
 
 ## Table of Contents
 
@@ -19,7 +19,8 @@ All of the examples below will be presented within the single [/geographies](/ge
 **File with full geometry**: [`geographies.json`](geographies.json)
 
 **GeoJSON sample to view all geometries together in a preview**: [`geographies.geojson`](geographies.geojson)
-Note this file is just for your reference to generate a preview on Github. It is not part of the spec.
+
+_Note GeoJSON example files are just for your reference and to generate a preview on Github. The GeoJSON files alone are not part of MDS._
 
 ## Municipal Boundary
 
