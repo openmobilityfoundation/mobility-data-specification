@@ -125,7 +125,7 @@ Policies will be returned in order of effective date (see schema below), with pa
 
 #### Geographies
 
-**Note:** see the new [Geography API](https://github.com/openmobilityfoundation/mobility-data-specification/blob/feature-geography/geography/README.md#transition-from-policy) to understand the transisiton away from this endpoint, and how to support both in the MDS 1.1.0 release.
+**Note:** see the new [Geography API](/geography#transition-from-policy) to understand the transisiton away from this endpoint, and how to support both in the MDS 1.1.0 release.
 
 Endpoint: `/geographies/{id}`  
 Method: `GET`  
