@@ -332,7 +332,7 @@ If `stop_id` is specified, `GET` will return an array with a single stop record,
 [general]: /general-information.md
 [geography-driven-events]: /general-information.md#geography-driven-events
 [error-messages]: /general-information.md#error-messages
-[hdop]: https://support.esri.com/en/other-resources/gis-dictionary/term/358112bd-b61c-4081-9679-4fca9e3eb926
+[hdop]: https://en.wikipedia.org/wiki/Dilution_of_precision_(navigation)
 [propulsion-types]: /general-information.md#propulsion-types
 [responses]: /general-information.md#responses
 [stops]: /general-information.md#stops
