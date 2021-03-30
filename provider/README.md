@@ -1,5 +1,7 @@
 # Mobility Data Specification: **Provider**
 
+<a href="/provider/"><img src="https://i.imgur.com/yzXrKpo.png" width="120" align="right" alt="MDS Provider Icon" border="0"></a>
+
 The Provider API endpoints are intended to be implemented by mobility providers and consumed by regulatory agencies. When a municipality queries information from a mobility provider, the Provider API has a historical view of operations in a standard format.
 
 This specification contains a data standard for *mobility as a service* providers to define a RESTful API for municipalities to access on-demand.
@@ -8,7 +10,6 @@ This specification contains a data standard for *mobility as a service* provider
 
 * [General Information](#general-information)
   * [Versioning](#versioning)
-  * [Response Format](#response-format)
   * [Responses and Error Messages](#responses-and-error-messages)
   * [JSON Schema](#json-schema)
   * [Pagination](#pagination)
@@ -20,6 +21,11 @@ This specification contains a data standard for *mobility as a service* provider
   * [Routes](#routes)
 * [Status Changes][status]
   * [Status Changes - Query Parameters](#status-changes---query-parameters)
+* [Reports](#reports)
+  * [Reports - Response](#reports---response)
+  * [Reports - Example](#reports---example)
+  * [Special Group Type](#special-group-type)
+  * [Data Redaction](#data-redaction)
 * [Realtime Data](#realtime-data)
   * [GBFS](#GBFS)
   * [Data Latency Requirements][data-latency]
@@ -116,7 +122,7 @@ At a minimum, paginated payloads must include a `next` key, which must be set to
 
 Municipalities requiring MDS Provider API compliance should provide an unambiguous digital source for the municipality boundary. This boundary must be used when determining which data each `provider` API endpoint will include.
 
-The boundary should be defined as a polygon or collection of polygons. The file defining the boundary should be provided in Shapefile or GeoJSON format and hosted online at a published address that all providers and `provider` API consumers can access and download. The boundary description can be sent as a reference to an GeoJSON object or flat-file, if the agency is using Geography.
+The boundary should be defined as a polygon or collection of polygons. The file defining the boundary should be provided in Shapefile or GeoJSON format and hosted online at a published address that all providers and `provider` API consumers can access and download. The boundary description can be sent as a reference to an GeoJSON object or flat-file, if the agency is using [Geography](/geography).
 
 Providers are not required to recalculate the set of historical data that is included when the municipality boundary changes. All new data must use the updated municipality boundary.
 
@@ -179,7 +185,11 @@ The `/trips` API should allow querying trips with the following query parameters
 | --------------- | ------ | --------------- |
 | `end_time` | `YYYY-MM-DDTHH`, an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) extended datetime representing an UTC hour between 00 and 23. | All trips with an end time occurring within the hour. For example, requesting `end_time=2019-10-01T07` returns all trips where `2019-10-01T07:00:00 <= trip.end_time < 2019-10-01T08:00:00` UTC. |
 
-If the data does not exist or the hour has not completed, `/trips` shall return a `404 Not Found` error.
+If the provider was operational during the requested hour the provider shall return
+a 200 response, even if there are no trips to report (in which case
+the response will contain an empty list of trips).
+If the requested hour occurs in a time period in which the provider was not operational
+or the hour is not yet in the past `/trips` shall return a `404 Not Found` error.
 
 Without an `end_time` query parameter, `/trips` shall return a `400 Bad Request` error.
 
@@ -261,7 +271,8 @@ Unless stated otherwise by the municipality, this endpoint must return only thos
 | `event_types` | Enum[] | Required | [Vehicle event(s)][vehicle-events] for state change, allowable values determined by `vehicle_state` |
 | `event_time` | [timestamp][ts] | Required | Date/time that event occurred at. See [Event Times][event-times] |
 | `publication_time` | [timestamp][ts] | Optional | Date/time that event became available through the status changes endpoint |
-| `event_location` | GeoJSON [Point Feature][geo] | Required | See also [Stop-based Geographic Data][stop-based-geo] |
+| `event_location` | GeoJSON [Point Feature][geo] | Required | See also [Stop-based Geographic Data][stop-based-geo]. |
+| `event_geographies` | UUID[] | Optional | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.1.0)*. Array of Geography UUIDs consisting of every Geography that contains the location of the status change. See [Geography Driven Events][geography-driven-events]. Required if `event_location` is not present. |
 | `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |
 | `trip_id` | UUID | Required if Applicable | Trip UUID (foreign key to Trips API), required if `event_types` contains `trip_start`, `trip_end`, `trip_cancel`, `trip_enter_jurisdiction`, or `trip_leave_jurisdiction` |
 | `associated_ticket` | String | Optional | Identifier for an associated ticket inside an Agency-maintained 311 or CRM system |
@@ -276,9 +287,133 @@ The `/status_changes` API should allow querying status changes with the followin
 | --------------- | ------ | --------------- |
 | `event_time` | `YYYY-MM-DDTHH`, an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) extended datetime representing an UTC hour between 00 and 23. | All status changes with an event time occurring within the hour. For example, requesting `event_time=2019-10-01T07` returns all status changes where `2019-10-01T07:00:00 <= status_change.event_time < 2019-10-01T08:00:00` UTC. |
 
-If the data does not exist or the hour has not completed, `/status_changes` shall return a `404 Not Found` error.
+If the provider was operational during the requested hour the provider shall return
+a 200 response, even if there are no status changes to report (in which case
+the response will contain an empty list of status changes).
+If the requested hour occurs in a time period in which the provider was not operational
+or the hour is not yet in the past `/status_changes` shall return a `404 Not Found` error.
 
 Without an `event_time` query parameter, `/status_changes` shall return a `400 Bad Request` error.
+
+[Top][toc]
+
+## Reports
+
+Reports are information that providers can send back to agencies containing aggregated data that is not contained within other MDS endpoints, like counts of special groups of riders. These supplemental reports are not a substitute for other MDS Provider endpoints.
+
+The authenticated reports are monthly, historic flat files that may be pre-generated by the provider. 
+
+### Reports - Response
+
+**Endpoint:** `/reports`  
+**Method:** `GET`  
+**[Beta feature][beta]:** Yes (as of 1.1.0)  
+**Schema:** TBD when out of beta  
+**`data` Filename:** monthly file named by year and month, e.g. `/reports/YYYY-MM.csv`  
+**`data` Payload:** monthly CSV files with the following structure: 
+
+| Name               | Type                                      | Comments                                         |
+| ------------------ | ----------------------------------------- | ------------------------------------------------ |
+| StartDate          | date                                      | Start date of trip the data row, ISO 8601 format, local timezone |
+| Duration           | string                                    | Value is always `P1M` for monthly. Based on [ISO 8601 duration](https://en.wikipedia.org/wiki/ISO_8601#Durations) |
+| Special Group Type | [Special Group Type](#special-group-type) | Type that applies to this row                    |
+| Geography ID       | [Geography](/geography)                   | ID that applies to this row. Includes all IDs in /geography. When there is no /geography then return `null` for this value and return counts based on the entire operating area. |
+| Vehicle Type       | [Vehicle Type](/agency#vehicle-type)      | Type that applies to this row                    |
+| Trip Count         | integer                                   | Count of trips taken for this row                |
+| Rider Count        | integer                                   | Count of unique riders for this row              |
+
+#### Data Notes
+
+Report contents include every combination of special group types, geography IDs, and vehicle types in operation for each month since the provider began operations in the jurisdiction. New files are added monthly in addition to the previous monthly historic files. 
+
+Counts are calculated based the agency's local time zone, and this time zone is returned within the `StartDate` value. For months where there is a Daylight Saving Time change, use the timezone that is in the majority of the month. Note that StartDate is based on the moment the trip starts.
+
+All geography IDs included in the city published [Geography](/geography) API endpoint are included in the report results. In lieu of serving an API, this can alternately be a [flat file](/geography#file-format) created by the city and sent to the provider via link. If there is no `/geography` available, then counts are for the entire agency operating area, and `null` is returned for each Geography ID. 
+
+[Top][toc]
+
+### Reports - Example
+
+For 3 months of provider operation in a city (September 2019 through November 2019) for 3 geographies, 2 vehicle types, and 1 special group. Timezone is Eastern Time in the US which is _-4_ from UTC before November 3, 2019, and _-5_ after. Values of `-1` represent [redacted data](#data-redaction) counts.
+
+**September 2019** `/reports/2019-09.csv`
+
+```csv
+StartDate,Duration,Special Group Type,Geography ID,Vehicle Type,Trip Count,Rider Count
+2019-09-01T00:00-04,P1M,all_riders,44428624-186b-4fc3-a7fb-124f487464a1,scooter,1302,983
+2019-09-01T00:00-04,P1M,low_income,44428624-186b-4fc3-a7fb-124f487464a1,scooter,201,104
+2019-09-01T00:00-04,P1M,all_riders,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,530,200
+2019-09-01T00:00-04,P1M,low_income,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,75,26
+2019-09-01T00:00-04,P1M,all_riders,03db06d0-3998-406a-92c7-25a83fc2784a,scooter,687,450
+2019-09-01T00:00-04,P1M,low_income,03db06d0-3998-406a-92c7-25a83fc2784a,scooter,98,45
+2019-09-01T00:00-04,P1M,all_riders,03db06d0-3998-406a-92c7-25a83fc2784a,bicycle,256,104
+2019-09-01T00:00-04,P1M,low_income,03db06d0-3998-406a-92c7-25a83fc2784a,bicycle,41,16
+2019-09-01T00:00-04,P1M,all_riders,8ad39dc3-005b-4348-9d61-c830c54c161b,scooter,201,140
+2019-09-01T00:00-04,P1M,low_income,8ad39dc3-005b-4348-9d61-c830c54c161b,scooter,35,21
+2019-09-01T00:00-04,P1M,all_riders,8ad39dc3-005b-4348-9d61-c830c54c161b,bicycle,103,39
+2019-09-01T00:00-04,P1M,low_income,8ad39dc3-005b-4348-9d61-c830c54c161b,bicycle,15,-1
+```
+
+**October 2019** `/reports/2019-10.csv`
+
+```csv
+StartDate,Duration,Special Group Type,Geography ID,Vehicle Type,Trip Count,Rider Count
+2019-10-01T00:00-04,P1M,all_riders,44428624-186b-4fc3-a7fb-124f487464a1,scooter,1042,786
+2019-10-01T00:00-04,P1M,low_income,44428624-186b-4fc3-a7fb-124f487464a1,scooter,161,83
+2019-10-01T00:00-04,P1M,all_riders,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,424,160
+2019-10-01T00:00-04,P1M,low_income,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,60,0
+2019-10-01T00:00-04,P1M,all_riders,03db06d0-3998-406a-92c7-25a83fc2784a,scooter,550,360
+2019-10-01T00:00-04,P1M,low_income,03db06d0-3998-406a-92c7-25a83fc2784a,scooter,78,36
+2019-10-01T00:00-04,P1M,all_riders,03db06d0-3998-406a-92c7-25a83fc2784a,bicycle,205,83
+2019-10-01T00:00-04,P1M,low_income,03db06d0-3998-406a-92c7-25a83fc2784a,bicycle,33,13
+2019-10-01T00:00-04,P1M,all_riders,8ad39dc3-005b-4348-9d61-c830c54c161b,scooter,161,112
+2019-10-01T00:00-04,P1M,low_income,8ad39dc3-005b-4348-9d61-c830c54c161b,scooter,28,-1
+2019-10-01T00:00-04,P1M,all_riders,8ad39dc3-005b-4348-9d61-c830c54c161b,bicycle,82,31
+2019-10-01T00:00-04,P1M,low_income,8ad39dc3-005b-4348-9d61-c830c54c161b,bicycle,-1,0
+```
+
+**November 2019** `/reports/2019-11.csv`
+
+```csv
+StartDate,Duration,Special Group Type,Geography ID,Vehicle Type,Trip Count,Rider Count
+2019-11-01T00:00-05,P1M,all_riders,44428624-186b-4fc3-a7fb-124f487464a1,scooter,834,629
+2019-11-01T00:00-05,P1M,low_income,44428624-186b-4fc3-a7fb-124f487464a1,scooter,129,66
+2019-11-01T00:00-05,P1M,all_riders,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,339,128
+2019-11-01T00:00-05,P1M,low_income,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,48,-1
+2019-11-01T00:00-05,P1M,all_riders,03db06d0-3998-406a-92c7-25a83fc2784a,scooter,440,288
+2019-11-01T00:00-05,P1M,low_income,03db06d0-3998-406a-92c7-25a83fc2784a,scooter,62,29
+2019-11-01T00:00-05,P1M,all_riders,03db06d0-3998-406a-92c7-25a83fc2784a,bicycle,164,66
+2019-11-01T00:00-05,P1M,low_income,03db06d0-3998-406a-92c7-25a83fc2784a,bicycle,26,0
+2019-11-01T00:00-05,P1M,all_riders,8ad39dc3-005b-4348-9d61-c830c54c161b,scooter,129,90
+2019-11-01T00:00-05,P1M,low_income,8ad39dc3-005b-4348-9d61-c830c54c161b,scooter,22,-1
+2019-11-01T00:00-05,P1M,all_riders,8ad39dc3-005b-4348-9d61-c830c54c161b,bicycle,-1,25
+2019-11-01T00:00-05,P1M,low_income,8ad39dc3-005b-4348-9d61-c830c54c161b,bicycle,0,0
+```
+
+[Top][toc]
+
+### Special Group Type	
+
+Here are the possible values for the `special_group_type` dimension field:	
+
+| Name       | Description                                                                                                           |	
+| ---------- | --------------------------------------------------------------------------------------------------------------------- |	
+| low_income | Trips where a low income discount is applied by the provider, e.g., a discount from a qualified provider equity plan. |	
+| all_riders | All riders from any group                                                                                             |	
+
+Other special group types may be added in future MDS releases as relevant agency and provider use cases are identified. When additional special group types or metrics are proposed, a thorough review of utility and relevance in program oversight, evaluation, and policy development should be done by OMF Working Groups, as well as any privacy implications by the OMF Privacy Committee.
+
+[Top][toc]
+
+### Data Redaction
+
+Some combinations of parameters may return a small count of trips, which could increase a privacy risk of re-identification. To correct for that, Reports does not return data below a certain count of results. This data redaction is called k-anonymity, and the threshold is set at a k-value of 10. For more explanation of this methodology, see our [Data Redaction Guidance document](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Data-Redaction).
+
+**If the query returns fewer than `10` trips in a count, then that row's count value is returned as "-1".** Note "0" values are also returned as "-1" since the goal is to group both low and no count values for privacy. 
+
+As Reports is in [beta][beta], this value may be adjusted in future releases and/or may become dynamic to account for specific categories of use cases and users. To improve the specification and to inform future guidance, beta users are encouraged to share their feedback and questions about k-values on this [discussion thread](https://github.com/openmobilityfoundation/mobility-data-specification/discussions/622).
+
+Using k-anonymity will reduce, but not necessarily eliminate the risk that an individual could be re-identified in a dataset, and this data should still be treated as sensitive. This is just one part of good privacy protection practices, which you can read more about in our [MDS Privacy Guide for Cities](https://github.com/openmobilityfoundation/governance/blob/main/documents/OMF-MDS-Privacy-Guide-for-Cities.pdf). 
 
 [Top][toc]
 
@@ -288,7 +423,7 @@ Without an `event_time` query parameter, `/status_changes` shall return a `400 B
 
 All MDS compatible `provider` APIs must expose a public [GBFS](https://github.com/NABSA/gbfs) feed as well. Compatibility with [GBFS 2.0](https://github.com/NABSA/gbfs/blob/v2.0/gbfs.md) or greater is advised due to privacy concerns and support for micromobility.
 
-GBFS 2.0 includes some changes that may make it less useful for regulatory purposes (specifically, the automatic rotation of vehicle IDs). The [`/vehicles`](#vehicles) endpoint offers an alternative to GBFS that may more effectively meet the use cases of regulators. Additional information on MDS and GBFS can be found in this [guidance document](https://github.com/openmobilityfoundation/governance/blob/main/technical/GBFS_and_MDS.md).
+GBFS 2.0 includes some changes that may make it less useful for regulatory purposes (specifically, the automatic rotation of vehicle IDs). The [`/vehicles`](#vehicles) endpoint offers an alternative to GBFS that may more effectively meet the use cases of regulators. See our [MDS Vehicles Guide](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Vehicles) for how this compares to GBFS `/free_bike_status`. Additional information on MDS and GBFS can be found in this [guidance document](https://github.com/openmobilityfoundation/governance/blob/main/technical/GBFS_and_MDS.md).
 
 [Top][toc]
 
@@ -307,7 +442,7 @@ ttl                 | Yes       | Integer representing the number of millisecond
 
 The `/events` endpoint is a near-realtime feed of status changes, designed to give access to as recent as possible series of events.
 
-The `/events` endpoint functions similarly to `/status_changes`, but shall not included data older than 2 weeks (that should live in `/status_changes.`)
+The `/events` endpoint functions similarly to `/status_changes`, but shall not include data older than 2 weeks (that should live in `/status_changes.`)
 
 Unless stated otherwise by the municipality, this endpoint must return only those events with an `event_location` that [intersects][intersection] with the [municipality boundary][muni-boundary].
 
@@ -366,7 +501,9 @@ In the case that a `stop_id` query parameter is specified, the `stops` array ret
 
 ### Vehicles
 
-The `/vehicles` endpoint returns the current status of vehicles on the PROW. Only vehicles that are currently in available, unavailable, or reserved states should be returned in this payload. Data in this endpoint should reconcile with data from the `/status_changes` enpdoint. As with other MDS APIs, `/vehicles` is intended for use by regulators, not by the general public. It does not replace the role of a [GBFS][gbfs] feed in enabling consumer-facing applications.
+The `/vehicles` endpoint returns the current status of vehicles on the [PROW](/general-information.md#definitions). Only vehicles that are currently in available, unavailable, or reserved states should be returned in this payload. Data in this endpoint should reconcile with data from the `/status_changes` enpdoint. 
+
+As with other MDS APIs, `/vehicles` is intended for use by regulators, not by the general public. `/vehicles` can be deployed by providers as a standalone MDS endpoint for agencies without requiring the use of other endpoints, due to the [modularity](/README.md#modularity) of MDS. See our [MDS Vehicles Guide](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Vehicles) for how this compares to GBFS `/free_bike_status`. Note that using authenticated `/vehicles` does not replace the role of a public [GBFS][gbfs] feed in enabling consumer-facing applications. 
 
 In addition to the standard [Provider payload wrapper](#response-format), responses from this endpoint should contain the last update timestamp and amount of time until the next update in accordance with the [Data Latency Requirements][data-latency]:
 
@@ -405,7 +542,7 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 [Top][toc]
 
 [agps]: https://en.wikipedia.org/wiki/Assisted_GPS
-[beta]: /general-information.md#beta
+[beta]: /general-information.md#beta-features
 [costs-and-currencies]: /general-information.md#costs-and-currencies
 [data-latency]: #data-latency-requirements
 [dgps]: https://en.wikipedia.org/wiki/Differential_GPS
@@ -416,6 +553,7 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 [gbfs]: https://github.com/NABSA/gbfs
 [general-information]: /general-information.md
 [geo]: /general-information.md#geographic-data
+[geography-driven-events]: /general-information.md#geography-driven-events
 [geojson-feature-collection]: https://tools.ietf.org/html/rfc7946#section-3.3
 [iana]: https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
 [intersection]: /general-information.md#intersection-operation

@@ -1,5 +1,7 @@
 # Mobility Data Specification: Policy
 
+<a href="/policy/"><img src="https://i.imgur.com/66QXveN.png" width="120" align="right" alt="MDS Policy Icon" border="0"></a>
+
 The Policy API endpoints are intended to be implemented by regulatory agencies and consumed by mobility providers. Providers query the Policy API to get information about local rules that may affect the operation of their mobility service or which may be used to determine compliance.
 
 This specification describes the digital relationship between _mobility as a service_ providers and the agencies that regulate them. The Policy API communicates municipal policies (such as as vehicle deployment caps and speed limits) in a clear, consistent manner.
@@ -8,6 +10,7 @@ This specification describes the digital relationship between _mobility as a ser
 
 - [General Information](#general-information)
   - [Versioning](#versioning)
+  - [Update Frequency](#update-frequency)  
 - [Background](#background)
 - [Distribution](#distribution)
   - [REST Endpoints](#rest-endpoints)
@@ -26,6 +29,12 @@ This specification describes the digital relationship between _mobility as a ser
 ## General information
 
 The following information applies to all `policy` API endpoints.
+
+[Top][toc]
+
+### Update Frequency
+
+The publishing agency should establish beforehand and communicate to providers how frequently the Policy endpoints are expected to change, how often they should be polled to get the latest information, and expectations around emergency updates.
 
 [Top][toc]
 
@@ -58,9 +67,9 @@ The machine-readable format allows Providers to obtain policies and compute comp
 
 Policies shall be published by regulatory bodies or their authorized delegates as JSON objects. These JSON objects shall be served by either [flat files](#flat-files) or via [REST API endpoints](#rest-endpoints). In either case, policy data shall follow the [schema](#schema) outlined below.
 
-Policies typically refer to one or more associated geographies. Each policy and geography shall have a unique ID (UUID).
+Policies typically refer to one or more associated geographies. Geographic information is obtained from the MDS [Geography](/geography#general-information) API.  Each policy and geography shall have a unique ID (UUID).
 
-Published policies and geographies should be treated as immutable data. Obsoleting or otherwise changing a policy is accomplished by publishing a new policy with a field named `prev_policies`, a list of UUID references to the policy or policies superseded by the new policy.
+Published policies, like geographies, should be treated as immutable data. Obsoleting or otherwise changing a policy is accomplished by publishing a new policy with a field named `prev_policies`, a list of UUID references to the policy or policies superseded by the new policy.
 
 Geographical data shall be represented as GeoJSON `Feature` objects. No part of the geographical data should be outside the [municipality boundary][muni-boundary].
 
@@ -82,13 +91,17 @@ Among other use-cases, configuring a REST API allows an Agency to:
 3) Adjust other attributes in closer to real time
 4) Enumerate when policies are set to change
 
-Responses must set the `Content-Type` header, as specified in the [Provider versioning][versioning] section.
+Responses must set the `Content-Type` header, as specified in the [versioning][versioning] section.
 
 #### Responses and Error Messages
 
 The response to a client request must include a valid HTTP status code defined in the [IANA HTTP Status Code Registry][iana].
 
 See the [Responses section][responses] for information on valid MDS response codes and the [Error Messages section][error-messages] for information on formatting error messages.
+
+### Authorization
+
+Authorization is not required. An agency may decide to make this endpoint unauthenticated and public. See [Optional Authentication](/general-information.md#optional-authentication) for details.
 
 #### Policies
 
@@ -112,17 +125,20 @@ Policies will be returned in order of effective date (see schema below), with pa
 
 #### Geographies
 
+**Note:** see the new [Geography API](/geography#transition-from-policy) to understand the transisiton away from this endpoint, and how to support both in the MDS 1.1.0 release.
+
 Endpoint: `/geographies/{id}`  
 Method: `GET`  
-`data` Payload: `{ geographies: [] }`, an array of GeoJSON `Feature` objects that follow the schema [outlined here](#geography).
+`data` Payload: `{ geographies: [] }`, an array of GeoJSON `Feature` objects that follow the schema [outlined here](#geography) or in [Geography](/geography#general-information).
 
 ##### Query Parameters
 
 | Name         | Type      | Required / Optional | Description                                    |
 | ------------ | --------- | --- | ---------------------------------------------- |
-| `id`         | UUID      | Optional    | If provided, returns one geography object with the matching UUID; default is to return all geography objects.               |
+| `id`         | UUID      | Optional    | If provided, returns one [Geography](/geography#general-information) object with the matching UUID; default is to return all geography objects.               |
 
 [Top][toc]
+
 
 ### Flat Files
 
@@ -215,7 +231,7 @@ An individual `Policy` object is defined by the following fields:
 | `provider_ids`   | UUID[]          | Optional    | Providers for whom this policy is applicable; empty arrays and `null`/absent implies all Providers. See MDS [provider list](/providers.csv). |
 | `description`    | String          | Required   | Description of policy                                                               |
 | `currency`       | String          | Optional   | An ISO 4217 Alphabetic Currency Code representing the [currency](../general-information.md#costs-and-currencies) of all Rules of [type](#rule-types) `rate`.|
-| `start_date`     | [timestamp][ts] | Required   | Beginning date/time of policy enforcement                                           |
+| `start_date`     | [timestamp][ts] | Required   | Beginning date/time of policy enforcement. In order to give providers sufficient time to poll, `start_date` must be at least 20 minutes after `published_date`.                                           |
 | `end_date`       | [timestamp][ts] | Optional    | End date/time of policy enforcement                                                 |
 | `published_date` | [timestamp][ts] | Required   | Timestamp that the policy was published                                             |
 | `prev_policies`  | UUID[]          | Optional    | Unique IDs of prior policies replaced by this one                                   |
@@ -232,7 +248,7 @@ An individual `Rule` object is defined by the following fields:
 | `name`             | String                      | Required   | Name of rule |
 | `rule_id`          | UUID                        | Required   | Unique ID of the rule |
 | `rule_type`        | enum                        | Required   | Type of policy (see [Rule Types](#rule-types)) |
-| `geographies`      | UUID[]                      | Required   | List of Geography UUIDs (non-overlapping) specifying the covered geography |
+| `geographies`      | UUID[]                      | Required   | List of [Geography](/geography#general-information) UUIDs (non-overlapping) specifying the covered geography |
 | `states`           | `{ state: event[] }`        | Required   | [Vehicle state][vehicle-states] to which this rule applies. Optionally provide a list of specific [vehicle events][#vehicle-events] as a subset of a given status for the rule to apply to. An empty list or `null`/absent defaults to "all". |
 | `rule_units`       | enum                        | Conditionally Required   | Measured units of policy (see [Rule Units](#rule-units)) |
 | `vehicle_types`    | `vehicle_type[]`            | Optional   | Applicable vehicle types, default "all". |
@@ -284,11 +300,11 @@ An individual `Rule` object is defined by the following fields:
 | ---------------- | --------- | --- | ----------------------------------------------------------------------------------- |
 | `name`           | String    | Required   | Name of geography                                                                      |
 | `description`    | String    | Optional   | Detailed description of geography                                                                      |
-| `geography_id`   | UUID      | Required   | Unique ID of geography                                                                 |
-| `geography_json`   | UUID      | Required   | The GeoJSON that defines the geographical coordinates.
+| `geography_id`   | UUID      | Required   | Unique ID of [Geography](/geography#general-information)                                               |
+| `geography_json`   | JSON      | Required   | The GeoJSON that defines the geographical coordinates.
 | `effective_date`   | [timestamp][ts] | Optional   | `start_date` for first published policy that uses this geo.  Server should set this when policies are published.  This may be used on the client to distinguish between “logical” geographies that have the same name. E.g. if a policy publishes a geography on 5/1/2020, and then another policy is published which references that same geography is published on 4/1/2020, the effective_date will be set to 4/1/2020.
 | `publish_date`   | [timestamp][ts] | Required   | Timestamp that the policy was published, i.e. made immutable                                             |
-| `prev_geographies`  | UUID[]    | Optional   | Unique IDs of prior geographies replaced by this one                                   |
+| `prev_geographies`  | UUID[]    | Optional   | Unique IDs of prior [geographies](/geography#general-information) replaced by this one                                   |
 
 [Top][toc]
 
@@ -348,6 +364,7 @@ Rules are a form of pattern matching; conditions under which a given rule is "me
 If a vehicle is matched with a rule, then it _will not_ be considered in the subsequent evaluation of rules within a given policy. This allows for expressing complex policies, such as a layer of "valid" geographies in an earlier rule, with overarching "invalid" geographies in later rules.
 
 The internal mechanics of ordering are up to the Policy editing and hosting software.
+
 
 [Top][toc]
 

@@ -1,6 +1,6 @@
 # Mobility Data Specification: **General information**
 
-This document contains specifications that are shared between the various MDS APIs such as [`agency`][agency], [`policy`][policy], and [`provider`][provider].
+This document contains specifications that are shared between the various MDS APIs such as [`agency`][agency], [`policy`][policy], [`provider`][provider], etc.
 
 ## Table of Contents
 
@@ -11,6 +11,8 @@ This document contains specifications that are shared between the various MDS AP
 * [Geographic Data][geo]
   * [Stop-based Geographic Data](#stop-based-geographic-data)
   * [Intersection Operation](#intersection-operation)
+* [Geography-Driven Events](#geography-driven-events)
+* [Optional Authentication](#optional-authentication)
 * [Propulsion Types](#propulsion-types)
 * [Responses](#responses)
   * [Error Messages](#error-messages)
@@ -32,9 +34,9 @@ This document contains specifications that are shared between the various MDS AP
 
 In some cases, features within MDS may be marked as "beta." These are typically recently added endpoints or fields. Because beta features are new, they may not yet be fully mature and proven in real-world operation. The design of beta features may have undiscovered gaps, ambiguities, or inconsistencies. Implementations of those features are typically also quite new and are more likely to contain bugs or other flaws. Beta features are likely to evolve more rapidly than other parts of the specification.
 
-Despite this, MDS users are highly encouraged to use beta features. New features can only become proven and trusted through implementation, use, and the learning that comes with it. Users should be thoughtful about the role of beta features in their operations. Beta features may be suitable for enabling some new tools and analysis, but may not be appropriate for mission-critical applications or regulatory decisions where certainty and reliability are essential.
+Despite this, MDS users are highly encouraged to use beta features. New features can only become proven and trusted through implementation, use, and the learning that comes with it. Users should be thoughtful about the role of beta features in their operations. Users of beta features are strongly encouraged to share their experiences, learnings, and challenges with the broader MDS community via GitHub issues or pull requests. This will inform the refinements that transform beta features into fully proven, stable parts of the specification.
 
-Users of beta features are strongly encouraged to share their experiences, learnings, and challenges with the broader MDS community via GitHub issues or pull requests. This will inform the refinements that transform beta features into fully proven, stable parts of the specification.
+Beta features may be suitable for enabling some new tools and analysis, but may not be appropriate for mission-critical applications or regulatory decisions where certainty and reliability are essential. In subsequent releases existing beta features may include breaking changes, even in a minor release. Note that [schemas](/schema) may not be defined for some beta features until they are promoted out of beta.
 
 Working Groups and their Steering Committees are expected to review beta designated features with each release cycle and determine whether the feature has reached the level of stability and maturity needed to remove the beta designation. In a case where a beta feature fails to reach substantial adoption after an extended time, Working Group Steering Committees should discuss whether or not the feature should remain in the specification.
 
@@ -69,7 +71,7 @@ Additionally, `device_id` must remain constant for the device's lifetime of serv
 
 ## Geographic Data
 
-References to geographic datatypes (Point, MultiPolygon, etc.) imply coordinates encoded in the [WGS 84 (EPSG:4326)][wgs84] standard GPS or GNSS projection expressed as [Decimal Degrees][decimal-degrees].
+References to geographic datatypes (Point, MultiPolygon, etc.) imply coordinates encoded in the [WGS 84 (EPSG:4326)][wgs84] standard GPS or GNSS projection expressed as [Decimal Degrees][decimal-degrees]. When points are used, you may assume a 20 meter buffer around the point when needed.
 
 Whenever an individual location coordinate measurement is presented, it must be
 represented as a GeoJSON [`Feature`][geojson-feature] object with a corresponding [`timestamp`][ts] property and [`Point`][geojson-point] geometry:
@@ -92,8 +94,7 @@ represented as a GeoJSON [`Feature`][geojson-feature] object with a correspondin
 
 ### Stop-based Geographic Data
 
-When an individual location coordinate measurement corresponds to a [Stop][general-stops],
-it must be presented with a `stop_id` property:
+When an individual location coordinate measurement (Point) corresponds to a [Stop][general-stops], it must be presented with a `stop_id` property:
 
 ```json
 {
@@ -119,6 +120,40 @@ For the purposes of this specification, the intersection of two geographic datat
 > If a geometry or geography shares any portion of space then they intersect. For geography -- tolerance is 0.00001 meters (so any points that are close are considered to intersect).
 >
 > Overlaps, Touches, Within all imply spatial intersection. If any of the aforementioned returns true, then the geometries also spatially intersect. Disjoint implies false for spatial intersection.
+
+[Top][toc]
+
+## Geography-Driven Events
+
+**[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.1.0)*
+
+Geography-Driven Events is a new MDS feature for Agencies to perform complete Policy compliance monitoring without precise location data. Geography-Driven Events describe individual vehicles in realtime – not just aggregate data. However, rather than receiving the exact location of a vehicle, Agencies receive information about the vehicle's current geographic region. The regions used for Geography-Driven Events correspond to the Geographies in an Agency's current Policy. In this way, the data-shared using Geography-Driven Events is matched to an Agency's particular regulatory needs.
+
+Here's how it works in practice:
+
+1. The Agency creates a geographic Policy Area for a local regulatory need
+
+	*Scooters traveling within downtown during peak hours incur a $0.20 fee.*
+
+2. Providers notify the Agency in real-time about events in the Policy Area.
+
+	*At 5:21pm scooter X7123 entered downtown.*
+
+3. The Agency can refine their data needs over time by revising their published Policy Areas.
+
+	*Agency adds rule disallowing parking on waterfront path, begins receiving data on events within area.*
+
+Agencies that wish to use Geography-Driven Events do so by requiring a new `event_geographies` field in status events. When an Agency is using Geography-Driven Events, Providers must emit a new `changed_geographies` status event whenever a vehicle in a trip enters or leaves a Geography managed by a Policy.
+
+During the Beta period for this feature, location and telemtry data remain required fields. This allows Aggencies to test Geography-Driven Events, measuring its accuracy and efficacy against regulatory systems based on precise location data. After the beta period, if Geography-Driven Events is deemed by OMF to be accurate and effective, the specification will evolve to allow cities to use Geography-Driven Events in lieu of location or telemtry data.
+
+[Top][toc]
+
+## Optional Authentication
+
+Authorization of the Policy and Geography APIs is no longer required and will be deprecated in next major release with these endpoints becoming optionally private instead of optionally public. An agency may optionally decide to make both the Policy and Geography endpoints unauthenticated and public. This allows transparency for the public to see how the city is regulating, holds the city accountable for their policy decisions, and reduces the technical burden on providers to use these endpoints. A side benefit is that this allows third parties to ingest this information into their applications and services for public benefit.
+
+Note if implementing the beta feature [Geography Driven Events](/general-information.md#geography-driven-events), both Policy and Geography must be public.
 
 [Top][toc]
 
@@ -176,15 +211,15 @@ Stops describe vehicle trip start and end locations in a pre-designated physical
 | Field                  | Type                                                        | Required/Optional | Description                                                                                  |
 |------------------------|-------------------------------------------------------------|-------------------|----------------------------------------------------------------------------------------------|
 | stop_id                | UUID                                                        | Required          | Unique ID for stop                                                                           |
-| name              | String                                                      | Required          | Name of stop                                                                                 |
+| name                   | String                                                      | Required          | Name of stop                                                                                 |
 | last_reported          | Timestamp                                                   | Required          | Date/Time that the stop was last updated                                                     |
-| location               | GeoJSON [Point Feature](provider/README.md#geographic-data) | Required          | Location of the Stop                                                                         |
+| location               | GeoJSON [Point Feature](#stop-based-geographic-data) | Required          | Simple centerpoint location of the Stop. The use of the optional `geography_id` is recommended to provide more detail.                                                                         |
 | status                 | [Stop Status](#stop-status)                                 | Required          | Object representing the status of the Stop. See [Stop Status](#stop-status).                 |
 | capacity               | {vehicle_type: number}                                      | Required          | Number of total places per vehicle_type                                                      |
 | num_vehicles_available | {vehicle_type: number}                                      | Required          | How many vehicles are available per vehicle_type at this stop?                               |
 | num_vehicles_disabled  | {vehicle_type: number}                                      | Required          | How many vehicles are unavailable/reserved per vehicle_type at this stop?                    |
 | provider_id            | UUID                                                        | Optional          | UUID for the Provider managing this stop. Null/undefined if managed by an Agency.  See MDS [provider list](/providers.csv).  |
-| geography_id           | UUID                                                        | Optional          | Pointer to the Geography that represents the Stop geospatially                               |
+| geography_id           | UUID                                                        | Optional          | Pointer to the [Geography](/geography) that represents the Stop geospatially via Polygon or MultiPolygon.                               |
 | region_id              | string                                                      | Optional          | ID of the region where station is located, see [GBFS Station Information][gbfs-station-info] |
 | short_name             | String                                                      | Optional          | Abbreviated stop name                                                                        |
 | address                | String                                                      | Optional          | Postal address (useful for directions)                                                       |
@@ -195,6 +230,8 @@ Stops describe vehicle trip start and end locations in a pre-designated physical
 | num_places_disabled    | {vehicle_type: number}                                      | Optional          | How many places are disabled and unable to accept vehicles at this stop?                     |
 | parent_stop            | UUID                                                        | Optional          | Describe a basic hierarchy of stops (e.g.a stop inside of a greater stop)                    |
 | devices               | UUID[]                                                      | Optional          | List of device_ids for vehicles which are currently at this stop                             |
+| image_url               | URL                                                      | Optional          | Link to an image, photo, or diagram of the stop. Could be used by providers to help riders find or use the stop.                            |
+
 
 ### Stop Status
 
@@ -337,6 +374,7 @@ Vehicles can enter the `unknown` state to and from any other state with the foll
 | `unknown` | `on_trip`   | `located`        | The vehicle has been located by the provider |
 | `unknown` | `on_trip`   | `unspecified`        | The provider cannot definitively state how a vehicle started a trip. |
 | `on_trip` | `elsewhere`   | `trip_leave_jurisdiction` | A vehicle on a trip left the jurisdiction |
+| `on_trip` | `on_trip `   | `changed_geographies` | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.1.0)*. The vehicle has entered or left one or more Geographies managed by a Policy. See [Geography Driven Events](#geography-driven-events).|
 | `unknown` | `elsewhere`   | `comms_restored` | The vehicle transmitted status information after a period of being out of communication. |
 | `unknown` | `elsewhere`   | `located`        | The vehicle has been located by the provider |
 | `unknown` | `elsewhere`   | `unspecified` | The provider cannot definitively state how a vehicle went `elsewhere`. |
