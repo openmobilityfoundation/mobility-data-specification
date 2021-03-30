@@ -1,5 +1,7 @@
 # Mobility Data Specification: **Agency**
 
+<a href="/agency/"><img src="https://i.imgur.com/HzMWtaI.png" width="120" align="right" alt="MDS Agency Icon" border="0"></a>
+
 The Agency API endpoints are intended to be implemented by regulatory agencies and consumed by mobility providers. Providers query the Agency API when events (such as a trip start or vehicle status change) occur in their systems.
 
 This specification contains a collection of RESTful APIs used to specify the digital relationship between *mobility as a service* providers and the agencies that regulate them.
@@ -184,7 +186,7 @@ Body Params:
 | `event_types`   | Enum[]                        | Required | see [Vehicle Events][vehicle-events] |
 | `timestamp`     | [timestamp][ts]                     | Required | Date of last event update |
 | `telemetry`     | [Telemetry](#telemetry-data)  | Required | Single point of telemetry. |
-| `event_geographies`  | UUID[] | Optional          | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.1.0)*. Array of Geography UUIDs consisting of every Geography that contains the location of the event. See [Geography Driven Events](#geography-driven-events). Required if `telemetry` is not present. |
+| `event_geographies`  | UUID[] | Optional          | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.1.0)*. Array of Geography UUIDs consisting of every Geography that contains the location of the event. See [Geography Driven Events][geography-driven-events]. Required if `telemetry` is not present. |
 | `trip_id`       | UUID                          | Optional | UUID provided by Operator to uniquely identify the trip. Required if `event_types` contains `trip_start`, `trip_end`, `trip_cancel`, `trip_enter_jurisdiction`, or `trip_leave_jurisdiction` |
 
 201 Success Response:
@@ -330,7 +332,7 @@ If `stop_id` is specified, `GET` will return an array with a single stop record,
 [general]: /general-information.md
 [geography-driven-events]: /general-information.md#geography-driven-events
 [error-messages]: /general-information.md#error-messages
-[hdop]: https://support.esri.com/en/other-resources/gis-dictionary/term/358112bd-b61c-4081-9679-4fca9e3eb926
+[hdop]: https://en.wikipedia.org/wiki/Dilution_of_precision_(navigation)
 [propulsion-types]: /general-information.md#propulsion-types
 [responses]: /general-information.md#responses
 [stops]: /general-information.md#stops
