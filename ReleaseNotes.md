@@ -1,6 +1,7 @@
 ## 1.1.0
 
 > Released: 2021-03-30 
+
 > [Release Plan](https://github.com/openmobilityfoundation/governance/wiki/Release-1.1.0)
 
 The 1.1.0 minor release adds new top level APIs (geography, jurisdictions), privacy options (provider reports, geography-driven events, metrics), and transparency features (public endpoints). 
@@ -23,6 +24,8 @@ _Minor Updates_
 - [Geography publish date field consistency](https://github.com/openmobilityfoundation/mobility-data-specification/pull/597)
 - [Adding more cities using MDS](https://github.com/openmobilityfoundation/mobility-data-specification/pull/591)
 - [Adding more providers using MDS](https://github.com/openmobilityfoundation/mobility-data-specification/blob/dev/providers.csv)
+- [Added a section for third party software companies using MDS](https://github.com/openmobilityfoundation/mobility-data-specification/issues/552) and cleaned up home page, moving list content to the OMF website
+- [Update geography_json field type](https://github.com/openmobilityfoundation/mobility-data-specification/issues/635)
 
 **_Provider_**
 
@@ -53,6 +56,8 @@ _Minor Updates_
 ## 1.0.0
 
 > Released: 2020-09-16
+
+> [Release Plan](https://github.com/openmobilityfoundation/governance/wiki/Release-1.0.0)
 
 The 1.0.0 release reconciles and aligns many parts of the MDS specification and adds features and updates requested by the community, including many new detailed vehicle states and event types, support for Stops (for docked vehicles, dockless corrals, parking areas), and adding rates (fees/subsidies) to Policy.
 
