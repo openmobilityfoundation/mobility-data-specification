@@ -1,6 +1,6 @@
 ## 1.1.0
 
-> Expected Released: 2021-02-28 (TBD)  
+> Released: 2021-03-30 
 > [Release Plan](https://github.com/openmobilityfoundation/governance/wiki/Release-1.1.0)
 
 The 1.1.0 minor release adds new top level APIs (geography, jurisdictions), privacy options (provider reports, geography-driven events, metrics), and transparency features (public endpoints). 
