@@ -13,8 +13,11 @@ This specification describes the digital relationship between _mobility as a ser
   - [Update Frequency](#update-frequency)  
 - [Background](#background)
 - [Distribution](#distribution)
-  - [REST Endpoints](#rest-endpoints)
-  - [Flat Files](#flat-files)
+- [REST Endpoints](#rest-endpoints)
+  - [Policies](#policies)
+  - [Geographies](#geographies)
+  - [Requirements](#requirements)
+- [Flat Files](#flat-files)
 - [Schema](#schema)
   - [Policy](#policy)
   - [Rules](#rules)
@@ -82,7 +85,7 @@ Flat files have an optional `end_date` field that will apply to the file as a wh
 
 [Top][toc]
 
-### REST Endpoints
+## REST Endpoints
 
 Among other use-cases, configuring a REST API allows an Agency to:
 
@@ -93,7 +96,7 @@ Among other use-cases, configuring a REST API allows an Agency to:
 
 Responses must set the `Content-Type` header, as specified in the [versioning][versioning] section.
 
-#### Responses and Error Messages
+### Responses and Error Messages
 
 The response to a client request must include a valid HTTP status code defined in the [IANA HTTP Status Code Registry][iana].
 
@@ -103,13 +106,13 @@ See the [Responses section][responses] for information on valid MDS response cod
 
 Authorization is not required. An agency may decide to make this endpoint unauthenticated and public. See [Optional Authentication](/general-information.md#optional-authentication) for details.
 
-#### Policies
+### Policies
 
 Endpoint: `/policies/{id}`  
 Method: `GET`  
 `data` Payload: `{ "policies": [] }`, an array of objects with the structure [outlined below](#policy).
 
-##### Query Parameters
+#### Query Parameters
 
 | Name         | Type      | Required / Optional | Description                                    |
 | ------------ | --------- | --- | ---------------------------------------------- |
@@ -123,7 +126,7 @@ Policies will be returned in order of effective date (see schema below), with pa
 
 `provider_id` is an implicit parameter and will be encoded in the authentication mechanism, or a complete list of policies should be produced. If the Agency decides that Provider-specific policy documents should not be shared with other Providers (e.g. punitive policy in response to violations), an Agency should filter policy objects before serving them via this endpoint.
 
-#### Geographies
+### Geographies
 
 **Note:** see the new [Geography API](/geography#transition-from-policy) to understand the transisiton away from this endpoint, and how to support both in the MDS 1.1.0 release.
 
@@ -131,7 +134,7 @@ Endpoint: `/geographies/{id}`
 Method: `GET`  
 `data` Payload: `{ geographies: [] }`, an array of GeoJSON `Feature` objects that follow the schema [outlined here](#geography) or in [Geography](/geography#general-information).
 
-##### Query Parameters
+#### Query Parameters
 
 | Name         | Type      | Required / Optional | Description                                    |
 | ------------ | --------- | --- | ---------------------------------------------- |
@@ -139,8 +142,15 @@ Method: `GET`
 
 [Top][toc]
 
+### Requirements
 
-### Flat Files
+Endpoint: `/requirements/`  
+Method: `GET`  
+`data` Payload: `{ requirements: [] }`, JSON objects that follow the schema [outlined here](#requirement).
+
+[Top][toc]
+
+## Flat Files
 
 To use flat files, policies shall be represented in two (2) files:
 
@@ -153,7 +163,7 @@ The publishing Agency should establish and communicate to providers how frequent
 
 The `updated` field in the payload wrapper should be set to the time of publishing a revision, so that it is simple to identify a changed file.
 
-#### Example `policies.json`
+### Example `policies.json`
 
 ```jsonc
 {
@@ -175,7 +185,7 @@ The `updated` field in the payload wrapper should be set to the time of publishi
 
 The optional `end_date` field applies to all policies represented in the file.
 
-#### Example `geographies.json`
+### Example `geographies.json`
 
 ```jsonc
 {
