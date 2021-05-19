@@ -128,7 +128,7 @@ Policies will be returned in order of effective date (see schema below), with pa
 
 ### Geographies
 
-**Note:** see the new [Geography API](/geography#transition-from-policy) to understand the transisiton away from this endpoint, and how to support both in the MDS 1.1.0 release.
+**Depreciated:** see the new [Geography API](/geography#transition-from-policy) to understand the transisiton away from this endpoint, and how to support both in a MDS 1.x.0 release.
 
 Endpoint: `/geographies/{id}`  
 Method: `GET`  
@@ -306,6 +306,8 @@ An individual `Rule` object is defined by the following fields:
 
 ### Geography
 
+**Depreciated:** see the new [Geography API](/geography#transition-from-policy) to understand the transisiton away from this endpoint, and how to support both in a MDS 1.x.0 release.
+
 | Name             | Type      | Required / Optional | Description                                                                         |
 | ---------------- | --------- | --- | ----------------------------------------------------------------------------------- |
 | `name`           | String    | Required   | Name of geography                                                                      |
@@ -379,30 +381,46 @@ The internal mechanics of ordering are up to the Policy editing and hosting soft
 
 ### Requirement
 
-An agency's requirements data feed contains a number of distinct parts, namely metadata and MDS version (with sub sections on applicable providers and relevant APIs). The basic structure looks like this.
+An agency's Requirements data feed contains a number of distinct parts, namely metadata and MDS version (with sub sections on applicable providers and relevant APIs). The basic structure looks like this.
 
-```
+```jsonc
 {
   "metadata": {
-    ...
+    // metadata fields
   },
   "[MDS VERSION NUMBER]": {
     "provider_ids": {
-      ...
+      // provider id list
     },
     "[MDS API]": {
-      ...
+      // MDS endpoints, urls, optional fields
     },
-    ...
-  }
+    // other MDS APIs
+  },
+  // other MDS versions
 }
 ```
 
 #### Metadata
 
-Contains metadata applicable to the agency and its requirements data feed. 
+Contains metadata applicable to the agency and its Requirements data feed. 
 
-...
+| Name                         | Type            | Required / Optional | Description              | Example |
+| ---------------------------- | --------------- | -------- | ----------------------------------- | ------- |
+| `mds_release`                | text            | Required | Release of MDS that the file applies to, based on official MDS releases. | "1.2.0" |
+| `version`                    | integer         | Required | Version of this file. Increment 1 with each modification. | "3" |
+| `last_updated`               | [timestamp][ts] | Required | When this file `version` was last updated. | "1611958740" |
+| `max_update_frequency`       | integer         | Required | The expected maximum frequency with which this file could be updated. | "P1D" |
+| `omf_review`                 | text            | Required | yes/no. Was this file reviewed by OMF Staff for accuracy? | "yes" |
+| `omf_review_date`            | [timestamp][ts] | Optional | If `omf_review`, add timestamp. | "1611958749" |
+| `agency_uuid`                | UUID            | Required | UUID of the agency this file applies to. Must come from agencies.csv file. | "737a9c62-c0cb-4c93-be43-271d21b784b5" |
+| `agency_name`                | text            | Required | Name of the agency this file applies to. | "Louisville Metro" |
+| `agency_time_zone`           | text            | Required | Timezone used for dates and times across all MDS endpoints. | "America/New_York" |
+| `agency_currency`            | text            | Required | Currency used for all monetary values across all MDS endpoints. | "USD" |
+| `agency_policy_website_url`  | URL             | Required | URL of the agency's transportation policy page. | "https://www.cityname.gov/transporation/shared-devices.htm" |
+| `agency_policy_document_url` | URL             | Optional | URL of the agency's operating permit rules that mention data requirements. | "https://www.cityname.gov/mds_data_policy.pdf" |
+| `gbfs_required`              | text            | Required | yes/no. Is public GBFS required explicitly by providers? | "yes" |
+| `url`                        | URL             | Required | URL of this file. |  "https://mds.cityname.gov/requirements/1.2.0" |
 
 #### MDS Version
 
