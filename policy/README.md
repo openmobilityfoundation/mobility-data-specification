@@ -375,6 +375,42 @@ If a vehicle is matched with a rule, then it _will not_ be considered in the sub
 
 The internal mechanics of ordering are up to the Policy editing and hosting software.
 
+[Top][toc]
+
+### Requirement
+
+An agency's requirements data feed contains a number of distinct parts, namely metadata and MDS version (with sub sections on applicable providers and relevant APIs). The basic structure looks like this.
+
+```
+{
+  "metadata": {
+    ...
+  },
+  "[MDS VERSION NUMBER]": {
+    "provider_ids": {
+      ...
+    },
+    "[MDS API]": {
+      ...
+    },
+    ...
+  }
+}
+```
+
+#### Metadata
+
+Contains metadata applicable to the agency and its requirements data feed. 
+
+...
+
+#### MDS Version
+
+...
+
+#### MDS APIs
+
+...
 
 [Top][toc]
 
