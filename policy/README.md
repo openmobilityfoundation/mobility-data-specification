@@ -28,7 +28,11 @@ This specification describes the digital relationship between _mobility as a ser
   - [Messages](#messages)
   - [Value URL](#value-url)
   - [Order of Operations](#order-of-operations)
-  
+  - [Requirement](#requirement)
+    - [Metadata](#requirement-metadata)
+    - [MDS Version](#requirement-mds-version)
+    - [MDS APIs](#requirement-mds-apis)
+ 
 ## General information
 
 The following information applies to all `policy` API endpoints.
@@ -401,7 +405,7 @@ An agency's Requirements data feed contains a number of distinct parts, namely m
 }
 ```
 
-#### Metadata
+#### Requirement Metadata
 
 Contains metadata applicable to the agency and its Requirements data feed. 
 
@@ -422,11 +426,11 @@ Contains metadata applicable to the agency and its Requirements data feed.
 | `gbfs_required`              | text            | Required | yes/no. Is public GBFS required explicitly by providers? | "yes" |
 | `url`                        | URL             | Required | URL of this file. |  "https://mds.cityname.gov/requirements/1.2.0" |
 
-#### MDS Version
+#### Requirement MDS Version
 
 ...
 
-#### MDS APIs
+#### Requirement MDS APIs
 
 ...
 
