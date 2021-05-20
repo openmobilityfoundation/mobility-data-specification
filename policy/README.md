@@ -151,6 +151,7 @@ Method: `GET`
 Endpoint: `/requirements/`  
 Method: `GET`  
 `data` Payload: `{ requirements: [] }`, JSON objects that follow the schema [outlined here](#requirement).
+[Beta feature](/general-information.md#beta-features): *Yes (as of 1.2.0)*.
 
 See [Policy Requierment Examples](/policy/examples/requirements.md) for how this can be implemented.
 
@@ -387,9 +388,13 @@ The internal mechanics of ordering are up to the Policy editing and hosting soft
 
 ### Requirement
 
-An agency's [Requirements](#requirements) data feed contains a number of distinct parts, namely [metadata](#requirement-metadata) and [MDS version](#requirement-mds-version) (with sub sections on applicable providers and relevant [MDS APIs](#requirement-mds-apis)). 
+The agency Policy Requirement file ennumerates all of the parts of MDS that an agency requires from providers, including APIs, endpoints, and optional fields, as well as information for providers about the APIs the agency is hosting. The requirements are specific to the needs and use cases of each agency, and ensures there is clarity on what data is being asked for in operating policy documents from providers, reducing the burden on both. This also allows additional public transparency and accountability around data requirements from agencies, and encourages privacy by allowing agencies to ask for only the data they need.
+
+This endpoint it not authenicated (ie. public), and allows the discovery of other public APIs like Geography, Policy, and Jurisdiction. The agency can host this as a file or API on their servers, on a third party server, or the OMF can host on behalf of an agency in the [agency requirements repo](#). See this [hosting guidance document](#) for more information.  This requirements file can be [referenced directly](https://github.com/openmobilityfoundation/governance/blob/main/technical/OMF-MDS-Policy-Language-Guidance.md) in an agency's operating permit/policy document when discussing program data requirements.
 
 See [Policy Requierment Examples](/policy/examples/requirements.md) for how this can be implemented.
+
+An agency's [Requirements](#requirements) endpoint contains a number of distinct parts, namely [metadata](#requirement-metadata) and [MDS version](#requirement-mds-version) (with sub sections on applicable providers and relevant [MDS APIs](#requirement-mds-apis)). 
 
 ```jsonc
 {
@@ -429,7 +434,7 @@ Contains metadata applicable to the agency and at the top of its [Requirement](#
 | `max_update_frequency`       | integer         | Required | The expected maximum frequency with which this file could be updated. E.g. "P1D" |
 | `omf_review`                 | Enum            | Required | yes/no. Was this file reviewed by OMF Staff for accuracy? E.g. "yes" |
 | `omf_review_date`            | [timestamp][ts] | Optional | If `omf_review`, add timestamp. E.g. "1611958749" |
-| `agency_uuid`                | UUID            | Required | UUID of the agency this file applies to. Must come from agencies.csv file. E.g. "737a9c62-c0cb-4c93-be43-271d21b784b5" |
+| `agency_uuid`                | UUID            | Required | UUID of the agency this file applies to. Must come from [agencies.csv](/agencies.csv) file. E.g. "737a9c62-c0cb-4c93-be43-271d21b784b5" |
 | `agency_name`                | text            | Required | Name of the agency this file applies to. E.g. "Louisville Metro" |
 | `agency_time_zone`           | text            | Required | Timezone used for dates and times across all MDS endpoints. E.g. "America/New_York" |
 | `agency_currency`            | text            | Required | Currency used for all monetary values across all MDS endpoints. E.g. "USD" |
@@ -486,7 +491,7 @@ For each combination of MDS version and provider list, you can specify the MDS A
             "endpoint_name" : "[ENDPOINT NAME]",
               "required_fields": [
                 "[FIELD NAME]",
-                "[FIELD NAME]"
+                // other field names
               ]
             } 
           ]
