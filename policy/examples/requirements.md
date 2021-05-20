@@ -102,7 +102,7 @@ Version 1.1.0 for one provider and 1.0.0 for another provider, requiring only th
       ],
       "mds_apis": [
         {
-          "api_name": "provider"
+          "api_name": "provider",
           "endpoints": [ 
             {
               "endpoint_name" : "vehicles"
