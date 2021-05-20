@@ -152,6 +152,8 @@ Endpoint: `/requirements/`
 Method: `GET`  
 `data` Payload: `{ requirements: [] }`, JSON objects that follow the schema [outlined here](#requirement).
 
+See [Policy Requierment Examples](/policy/examples/requirements.md) for how this can be implemented.
+
 [Top][toc]
 
 ## Flat Files
@@ -386,6 +388,8 @@ The internal mechanics of ordering are up to the Policy editing and hosting soft
 ### Requirement
 
 An agency's [Requirements](#requirements) data feed contains a number of distinct parts, namely [metadata](#requirement-metadata) and [MDS version](#requirement-mds-version) (with sub sections on applicable providers and relevant [MDS APIs](#requirement-mds-apis)). 
+
+See [Policy Requierment Examples](/policy/examples/requirements.md) for how this can be implemented.
 
 ```jsonc
 {
