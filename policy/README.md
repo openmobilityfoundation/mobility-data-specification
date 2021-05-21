@@ -30,7 +30,7 @@ This specification describes the digital relationship between _mobility as a ser
   - [Order of Operations](#order-of-operations)
   - [Requirement](#requirement)
     - [Metadata](#requirement-metadata)
-    - [MDS Version](#requirement-mds-version)
+    - [MDS Versions](#requirement-mds-versions)
     - [MDS APIs](#requirement-mds-apis)
  
 ## General information
@@ -132,7 +132,7 @@ Policies will be returned in order of effective date (see schema below), with pa
 
 ### Geographies
 
-**Depreciated:** see the new [Geography API](/geography#transition-from-policy) to understand the transisiton away from this endpoint, and how to support both in a MDS 1.x.0 release.
+**Deprecated:** see the new [Geography API](/geography#transition-from-policy) to understand the transistion away from this endpoint, and how to support both in a MDS 1.x.0 release.
 
 Endpoint: `/geographies/{id}`  
 Method: `GET`  
@@ -150,7 +150,7 @@ Method: `GET`
 
 Endpoint: `/requirements/`  
 Method: `GET`  
-`data` Payload: `{ requirements: [] }`, JSON objects that follow the schema [outlined here](#requirement).
+`data` Payload: `{ requirements: [] }`, JSON objects that follow the schema [outlined here](#requirement).  
 [Beta feature](/general-information.md#beta-features): *Yes (as of 1.2.0)*.
 
 See [Policy Requierment Examples](/policy/examples/requirements.md) for how this can be implemented.
@@ -388,13 +388,13 @@ The internal mechanics of ordering are up to the Policy editing and hosting soft
 
 ### Requirement
 
-The agency Policy Requirement file ennumerates all of the parts of MDS that an agency requires from providers, including APIs, endpoints, and optional fields, as well as information for providers about the APIs the agency is hosting. The requirements are specific to the needs and use cases of each agency, and ensures there is clarity on what data is being asked for in operating policy documents from providers, reducing the burden on both. This also allows additional public transparency and accountability around data requirements from agencies, and encourages privacy by allowing agencies to ask for only the data they need.
+The agency Policy Requirement file enumerates all of the parts of MDS that an agency requires from providers, including APIs, endpoints, and optional fields, as well as information for providers about the APIs the agency is hosting. The requirements are specific to the needs and use cases of each agency, and ensure there is clarity on what data is being asked for in operating policy documents from providers, reducing the burden on both. This also allows additional public transparency and accountability around data requirements from agencies, and encourages privacy by allowing agencies to ask for only the data they need.
 
-This endpoint it not authenicated (ie. public), and allows the discovery of other public APIs like Geography, Policy, and Jurisdiction. The agency can host this as a file or API on their servers, on a third party server, or the OMF can host on behalf of an agency in the [agency requirements repo](#). See this [hosting guidance document](#) for more information.  This requirements file can be [referenced directly](https://github.com/openmobilityfoundation/governance/blob/main/technical/OMF-MDS-Policy-Language-Guidance.md) in an agency's operating permit/policy document when discussing program data requirements.
+This endpoint is not authenticated (ie. public), and allows the discovery of other public APIs like Geography, Policy, and Jurisdiction. The agency can host this as a file or API on their servers, on a third party server, or the OMF can host on behalf of an agency in the [agency requirements repo](#). See this [hosting guidance document](#) for more information.  This requirements file can be [referenced directly](https://github.com/openmobilityfoundation/governance/blob/main/technical/OMF-MDS-Policy-Language-Guidance.md) in an agency's operating permit/policy document when discussing program data requirements.
 
-See [Policy Requierment Examples](/policy/examples/requirements.md) for how this can be implemented.
+See [Policy Requirement Examples](/policy/examples/requirements.md) for how this can be implemented.
 
-An agency's [Requirements](#requirements) endpoint contains a number of distinct parts, namely [metadata](#requirement-metadata) and [MDS version](#requirement-mds-version) (with sub sections on applicable providers and relevant [MDS APIs](#requirement-mds-apis)). 
+An agency's [Requirements](#requirements) endpoint contains a number of distinct parts, namely [metadata](#requirement-metadata) and [MDS versions](#requirement-mds-versions) (with sub sections on applicable providers and relevant [MDS APIs](#requirement-mds-apis)). 
 
 ```jsonc
 {
@@ -420,6 +420,13 @@ An agency's [Requirements](#requirements) endpoint contains a number of distinct
   }
 }
 ```
+
+| Name                         | Type            | Required / Optional | Description              | 
+| ---------------------------- | --------------- | -------- | ----------------------------------- | 
+| `metadata`                   | Array           | Required | Array of [Requirement Metadata](#requirement-metadata) fields. | 
+| `mds_versions`               | Array           | Required | Array of [Requirement MDS Versions](#requirement-mds-versions) data. | 
+| `mds_apis`                   | Array           | Required | Array of [Requirement MDS APIs](#requirement-mds-apis) data. | 
+
 [Top][toc]
 
 #### Requirement Metadata
@@ -431,12 +438,10 @@ Contains metadata applicable to the agency and at the top of its [Requirement](#
 | `mds_release`                | text            | Required | Release of MDS that the requirements data feed aligns to, based on official MDS releases. E.g. "1.2.0" |
 | `version`                    | integer         | Required | Version of this file. Increment 1 with each modification. E.g. "3" |
 | `last_updated`               | [timestamp][ts] | Required | When this file `version` was last updated. E.g. "1611958740" |
-| `max_update_frequency`       | integer         | Required | The expected maximum frequency with which this file could be updated. E.g. "P1D" |
-| `omf_review`                 | Enum            | Required | yes/no. Was this file reviewed by OMF Staff for accuracy? E.g. "yes" |
-| `omf_review_date`            | [timestamp][ts] | Optional | If `omf_review`, add timestamp. E.g. "1611958749" |
+| `max_update_interval`        | duration        | Required | The expected maximum frequency with which this file could be updated. [ISO 8601 duration](https://en.wikipedia.org/wiki/ISO_8601#Durations). E.g. "P1D" |
 | `agency_uuid`                | UUID            | Required | UUID of the agency this file applies to. Must come from [agencies.csv](/agencies.csv) file. E.g. "737a9c62-c0cb-4c93-be43-271d21b784b5" |
 | `agency_name`                | text            | Required | Name of the agency this file applies to. E.g. "Louisville Metro" |
-| `agency_time_zone`           | text            | Required | Timezone used for dates and times across all MDS endpoints. E.g. "America/New_York" |
+| `agency_timezone`            | timezone        | Required | [TZ Database Name](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) used for dates and times in Requirements and across all MDS endpoints. E.g. "America/New_York" |
 | `agency_currency`            | text            | Required | Currency used for all monetary values across all MDS endpoints. E.g. "USD" |
 | `agency_policy_website_url`  | URL             | Required | URL of the agency's transportation policy page. E.g. "https://www.cityname.gov/transporation/shared-devices.htm" |
 | `agency_policy_document_url` | URL             | Optional | URL of the agency's operating permit rules that mention data requirements. E.g. "https://www.cityname.gov/mds_data_policy.pdf" |
@@ -445,20 +450,22 @@ Contains metadata applicable to the agency and at the top of its [Requirement](#
 
 [Top][toc]
 
-#### Requirement MDS Version
+#### Requirement MDS Versions
 
-Contains a list of providers and APIs/endpoints/fields that a version of MDS applies to in its [Requirement](#requirement) data feed. Unique combinations for MDS versions and specific providers can be defined. For example an agency can devine MDS version 1.2.0 for Provider #1 in a pilot with beta endpoints and optional fields, version 1.2.0 for other providers without beta features, and version 1.1.0 for Provider #2 with docked bikeshare. 
+Contains a list of providers and APIs/endpoints/fields that a version of MDS applies to over a certain time frame in its [Requirement](#requirement) data feed in the `mds_versions` section. Unique combinations for MDS versions, specific providers, and dates (past, current, or future) can be defined. For example an agency can define MDS version 1.2.0 for Provider #1 in a pilot with beta endpoints and optional fields, version 1.2.0 for other providers without beta features starting a month from now, and version 1.1.0 for Provider #2 with docked bikeshare. 
 
 ```jsonc
 // ...  
   "mds_versions": [
     {
-      "version" : "[MDS VERSION NUMBER]",
+      "version": "[MDS VERSION NUMBER]",
       "provider_ids": [
         "[PROVIDER UUID]",
         "[PROVIDER UUID]"
       ],
-      "mds_apis" [
+      "start_date": [timestamp],
+      "end_date": [timestamp],
+      "required_mds_apis" [
         {
           // ...
         },
@@ -469,26 +476,29 @@ Contains a list of providers and APIs/endpoints/fields that a version of MDS app
 // ...
 ```
 
-| Name                         | Type           | Required / Optional | Description              | 
-| ---------------------------- | -------------- | -------- | ----------------------------------- | 
-| `version`                    | text           | Required | Version number of an official MDS release | 
-| `provider_ids`               | UUID[]         | Required | Array of providers that apply to this part of the requirements | 
+| Name                         | Type            | Required / Optional | Description              | 
+| ---------------------------- | --------------- | -------- | ----------------------------------- | 
+| `version`                    | text            | Required | Version number of an official MDS release | 
+| `provider_ids`               | UUID[]          | Required | Array of providers that apply to this part of the requirements | 
+| `start_date`                 | [timestamp][ts] | Required | Beginning date/time of requirements | 
+| `end_date`                   | [timestamp][ts] | Required | End date/time of requirements. Can be null. | 
+| `required_mds_api`           | Array           | Required | Array of required [MDS APIs](#requirement-mds-apis) |
 
 [Top][toc]
 
 #### Requirement MDS APIs
 
-For each combination of MDS version and provider list, you can specify the MDS APIs, endpoints, and optional fields that are required per your agency's policy. This is an array within the [Requirement MDS Version](#requirement-mds-version) `mds_apis` section in the [Requirement](#requirement) data feed.
+For each combination of MDS version and provider list, you can specify the MDS APIs, endpoints, and optional fields that are required per your agency's policy. This is an array within the [Requirement MDS Versions](#requirement-mds-versions) `mds_apis` section in the [Requirement](#requirement) data feed.
 
 ```jsonc
 // ...  
-      "mds_apis": [
+      "required_mds_apis": [
         {
           "api_name" : "[MDS API]",
-          "url": "[ENDPOINT ROOT URL]",
-          "endpoints": [ 
+          "required_endpoints": [ 
             {
             "endpoint_name" : "[ENDPOINT NAME]",
+              "url": "[ENDPOINT URL]",
               "required_fields": [
                 "[FIELD NAME]",
                 // other field names
@@ -501,13 +511,13 @@ For each combination of MDS version and provider list, you can specify the MDS A
 // ...
 ```
 
-| Name              | Type  | Required / Optional | Description              | 
-| ----------------- | ----- | -------- | ----------------------------------- | 
-| `api_name`        | Enum  | Required | Name of the applicable MDS API: provider, agency, policy, geography, jurisdiction, metrics. At least one is required. | 
-| `url`             | URL   | Required / Optional | Location of API root URL (minus the endpoint name) if the API is unauthenticated and public.   | 
-| `endpoints`       | Array | Required | Array of endpoints required. At least one is required. | 
-| `endpoint_name`   | Text  | Required | Name of required endpoint. At least one is required. | 
-| `required_fields` | Array | Optional | Array of optional field names required by the agency. Can be left empty if none are required. | 
+| Name                 | Type  | Required / Optional | Description              | 
+| -------------------- | ----- | -------- | ----------------------------------- | 
+| `api_name`           | Enum  | Required | Name of the applicable MDS API: provider, agency, policy, geography, jurisdiction, metrics. At least one is required. E.g. 'agency' | 
+| `url`                | URL   | Required / Optional | Location of API root URL (minus the endpoint name) if the API is unauthenticated and public. E.g. "https://mds.cityname.gov/geographies/geography/1.1.0"  | 
+| `required_endpoints` | Array | Required | Array of endpoints required. At least one is required. | 
+| `endpoint_name`      | Text  | Required | Name of required endpoint. At least one is required. E.g. "trips" | 
+| `required_fields`    | Array | Optional | Array of optional field names required by the agency. Can be left empty if none are required. | 
 
 [Top][toc]
 
