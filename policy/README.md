@@ -452,7 +452,9 @@ Contains metadata applicable to the agency and at the top of its [Requirement](#
 
 #### Requirement MDS Versions
 
-Contains a list of providers and APIs/endpoints/fields that a version of MDS applies to over a certain time frame in its [Requirement](#requirement) data feed in the `mds_versions` section. Unique combinations for MDS versions, specific providers, and dates (past, current, or future) can be defined. For example an agency can define MDS version 1.2.0 for Provider #1 in a pilot with beta endpoints and optional fields, version 1.2.0 for other providers without beta features starting a month from now, and version 1.1.0 for Provider #2 with docked bikeshare. 
+Contains a list of providers and APIs/endpoints/fields that a version of MDS applies to over a certain time frame in its [Requirement](#requirement) data feed in the `mds_versions` section. 
+
+Unique combinations for MDS versions, specific providers, and dates (past, current, or future) can be defined. For example an agency can define MDS version 1.2.0 for Provider #1 in a pilot with beta endpoints and optional fields, version 1.2.0 for other providers without beta features starting a month from now, and version 1.1.0 for Provider #2 with docked bikeshare. 
 
 ```jsonc
 // ...  
@@ -481,7 +483,7 @@ Contains a list of providers and APIs/endpoints/fields that a version of MDS app
 | `version`                    | text            | Required | Version number of an official MDS release | 
 | `provider_ids`               | UUID[]          | Required | Array of providers that apply to this part of the requirements | 
 | `start_date`                 | [timestamp][ts] | Required | Beginning date/time of requirements | 
-| `end_date`                   | [timestamp][ts] | Required | End date/time of requirements. Can be null. | 
+| `end_date`                   | [timestamp][ts] | Required | End date/time of requirements. Can be null. Keep data at least one year past `end_date` before removing. | 
 | `required_mds_api`           | Array           | Required | Array of required [MDS APIs](#requirement-mds-apis) |
 
 [Top][toc]
@@ -497,7 +499,7 @@ For each combination of MDS version and provider list, you can specify the MDS A
           "api_name" : "[MDS API]",
           "required_endpoints": [ 
             {
-            "endpoint_name" : "[ENDPOINT NAME]",
+              "endpoint_name" : "[ENDPOINT NAME]",
               "url": "[ENDPOINT URL]",
               "required_fields": [
                 "[FIELD NAME]",
@@ -514,10 +516,16 @@ For each combination of MDS version and provider list, you can specify the MDS A
 | Name                 | Type  | Required / Optional | Description              | 
 | -------------------- | ----- | -------- | ----------------------------------- | 
 | `api_name`           | Enum  | Required | Name of the applicable MDS API: provider, agency, policy, geography, jurisdiction, metrics. At least one is required. E.g. 'agency' | 
-| `url`                | URL   | Required / Optional | Location of API root URL (minus the endpoint name) if the API is unauthenticated and public. E.g. "https://mds.cityname.gov/geographies/geography/1.1.0"  | 
+| `url`                | URL   | Required / Optional | Location of API root URL (minus the endpoint name). Required if the API is unauthenticated and public, optional if endpoint is authenticated and private. E.g. "https://mds.cityname.gov/geographies/geography/1.1.0"  | 
 | `required_endpoints` | Array | Required | Array of endpoints required. At least one is required. | 
 | `endpoint_name`      | Text  | Required | Name of required endpoint. At least one is required. E.g. "trips" | 
-| `required_fields`    | Array | Optional | Array of optional field names required by the agency. Can be left empty if none are required. | 
+| `required_fields`    | Array | Optional | Array of optional field names required by the agency. Can be left empty if none are required. See **special notes** below. | 
+
+**Special notes about `required_fields`.** 
+
+- All fields marked 'Required' in MDS are still included by default and should not be enumerated in `required_fields`. They are not affected by the Requirements endpoint.
+- Fields in MDS marked 'Required if available' are still returned if available, and are not affected by the Requirements endpoint.
+- To require [Greography Driven Events](/general-information.md#geography-driven-events), simply include the `event_geographies` field for either the Agency or Provider API `api_name`. Per how GDEs work, `event_location` will then not be returned, and the `changed_geographies` vehicle state `event_type` will be used.
 
 [Top][toc]
 
