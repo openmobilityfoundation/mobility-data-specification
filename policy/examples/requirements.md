@@ -42,7 +42,6 @@ Version 1.1.0 for 2 providers requiring only Provider `/trips` with the optional
           "required_endpoints": [ 
             {
               "endpoint_name" : "trips",
-              "url": "https://mds.cityname.gov/provider/trips/1.1.0",
               "required_fields": [
                 "parking_verification_url"
               ]
@@ -91,7 +90,7 @@ Version 1.1.0 for one provider and 1.0.0 for another provider, requiring only th
           "required_endpoints": [ 
             {
               "endpoint_name" : "vehicles",
-              "url": "https://mds.cityname.gov/provider/vehicles/1.1.0",
+              "url": "https://mds.providername.com/provider/vehicles/1.1.0"
             } 
           ]
         }
@@ -104,13 +103,13 @@ Version 1.1.0 for one provider and 1.0.0 for another provider, requiring only th
       ],
       "start_date": 1611958740,
       "end_date": null,
-      "mds_apis": [
+      "required_mds_apis": [
         {
           "api_name": "provider",
-          "endpoints": [ 
+          "required_endpoints": [ 
             {
               "endpoint_name" : "vehicles",
-              "url": "https://mds.cityname.gov/provider/vehicles/1.0.0",
+              "url": "https://mds.providername.com/provider/vehicles/1.0.0"
             } 
           ]
         }
