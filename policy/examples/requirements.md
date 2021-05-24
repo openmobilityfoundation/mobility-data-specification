@@ -4,20 +4,23 @@ This file presents a series of example [Requirements](../README.md#requirement) 
 
 ## Table of Contents
 
-- [Trips Only](#trips-only)
+- [Policy and Geography](#policy-and-geography)
 - [Vehicles Only](#vehicles-only)
+- [Trips Only](#trips-only)
+- [Provider and Other APIs](#provider-and-other-apis)
+- [Agency](#agency)
 
-## Trips Only
+## Policy and Geography
 
-Version 1.1.0 for 2 providers requiring only Provider `/trips` with the optional `parking_verificaiton_url` field.  
+Version 1.2.0 of MDS Policy and Geography for agencies to publish rules/fees/incentives and operating/equity/no-ride/slow speed/parking areas to all providers.  
 
 ```json
 {
   "metadata": {
     "mds_release": "1.2.0",
-    "version": "3",
-    "last_updated": "1611958740",
-    "max_update_interval": "P1D",
+    "version": "4",
+    "last_updated": "1611729218",
+    "max_update_interval": "T1M",
     "agency_uuid": "737a9c62-c0cb-4c93-be43-271d21b784b5",
     "agency_name": "Louisville Metro",
     "agency_timezone": "America/New_York",
@@ -29,21 +32,35 @@ Version 1.1.0 for 2 providers requiring only Provider `/trips` with the optional
   },
   "mds_versions": [
     {
-      "version": "1.1.0",
+      "version": "1.2.0",
       "provider_ids": [
         "70aa475d-1fcd-4504-b69c-2eeb2107f7be",
-        "2411d395-04f2-47c9-ab66-d09e9e3c3251"
+        "2411d395-04f2-47c9-ab66-d09e9e3c3251",
+        "04ab5c86-ab6f-4abc-b866-e4c92da39a3e",
+        "bd530feb-936f-40eb-ae04-ce931de216e1",
+        "a8c54e3e-fe67-4c5a-90a6-4a1d2c2808da"
       ],
       "start_date": 1611958740,
-      "end_date": 1611970539,
+      "end_date": null,
       "required_mds_apis": [
         {
-          "api_name": "provider",
+          "api_name": "policy",
           "required_endpoints": [ 
             {
-              "endpoint_name" : "trips",
+              "endpoint_name" : "policies",
+              "url": "https://mds.providername.com/policy/policies/1.2.0"
+            } 
+          ]
+        },
+        {
+          "api_name": "geography",
+          "required_endpoints": [ 
+            {
+              "endpoint_name" : "geographies",
+              "url": "https://mds.providername.com/geography/geographies/1.2.0",
               "required_fields": [
-                "parking_verification_url"
+                "geography_type",
+                "description"
               ]
             } 
           ]
@@ -55,7 +72,7 @@ Version 1.1.0 for 2 providers requiring only Provider `/trips` with the optional
 ```
 
 [Top](#table-of-contents)
-  
+
 ## Vehicles Only
 
 Version 1.1.0 for one provider and 1.0.0 for another provider, requiring only the Provider `/vehicles` endpoint and no optional fields, as an authenticated [alternative to GBFS](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Vehicles) for internal use.
@@ -110,6 +127,55 @@ Version 1.1.0 for one provider and 1.0.0 for another provider, requiring only th
             {
               "endpoint_name" : "vehicles",
               "url": "https://mds.providername.com/provider/vehicles/1.0.0"
+            } 
+          ]
+        }
+      ]
+    }
+  ]
+}
+```
+
+[Top](#table-of-contents)
+
+## Trips Only
+
+Version 1.1.0 for 2 providers requiring only historic Provider `/trips` with the optional `parking_verificaiton_url` field.  
+
+```json
+{
+  "metadata": {
+    "mds_release": "1.2.0",
+    "version": "3",
+    "last_updated": "1611958740",
+    "max_update_interval": "P1D",
+    "agency_uuid": "737a9c62-c0cb-4c93-be43-271d21b784b5",
+    "agency_name": "Louisville Metro",
+    "agency_timezone": "America/New_York",
+    "agency_currency": "USD",
+    "agency_policy_website_url": "https:/www.cityname.gov/transporation/shared-devices.html",
+    "agency_policy_document_url": "https://www.cityname.gov/mds_data_policy.pdf",
+    "gbfs_required": "yes",
+    "url": "https://mds.cityname.gov/requirements/1.2.0"
+  },
+  "mds_versions": [
+    {
+      "version": "1.1.0",
+      "provider_ids": [
+        "70aa475d-1fcd-4504-b69c-2eeb2107f7be",
+        "2411d395-04f2-47c9-ab66-d09e9e3c3251"
+      ],
+      "start_date": 1611958740,
+      "end_date": 1611970539,
+      "required_mds_apis": [
+        {
+          "api_name": "provider",
+          "required_endpoints": [ 
+            {
+              "endpoint_name" : "trips",
+              "required_fields": [
+                "parking_verification_url"
+              ]
             } 
           ]
         }
