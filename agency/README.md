@@ -86,7 +86,7 @@ A vehicle record is as follows:
 | `accessibility_options` | Enum[]          | Accessibility options available for this vehicle, see [Accessibility Options][accessibility-options] |
 | `device_id`             | UUID            | Provided by Operator to uniquely identify a vehicle                                                  |
 | `provider_id`           | UUID            | Issued by Agency and [tracked](../providers.csv)                                                     |
-| `vehicle_id`            | String          | Vehicle Identification Number (vehicle_id) visible on vehicle                                        |
+| `vehicle_id`            | String          | License Plate (if present) or VIN visible on a vehicle                                               |
 | `vehicle_type`          | Enum            | [Vehicle Type][vehicle-types]                                                                        |
 | `propulsion_types`      | Enum[]          | Array of [Propulsion Type][propulsion-types]; allows multiple values                                 |
 | `year`                  | Integer         | Year Manufactured                                                                                    |
@@ -116,7 +116,7 @@ Body Params:
 |-------------------------|---------|-------------------|------------------------------------------------------------------------------------|
 | `accessibility_options` | Enum[]  | Optional          | Accessibility options available for this vehicle, see [Accessibility Options][accessibility-options]                                   |
 | `device_id`             | UUID    | Required          | Provided by Operator to uniquely identify a vehicle                                |
-| `vehicle_id`            | String  | Required          | Vehicle Identification Number (vehicle_id) visible on vehicle                      |
+| `vehicle_id`            | String  | Required          | License Plate (if present) or VIN visible on a vehicle                             |
 | `vehicle_type`          | Enum    | Required          | [Vehicle Type][vehicle-types]                                                      |
 | `propulsion_types`      | Enum[]  | Required          | Array of [Propulsion Type][propulsion-types]; allows multiple values               |
 | `provider_id`           | UUID    | Optional          | Provider to which the vehicle belongs if different from the authenticated provider |
@@ -155,7 +155,7 @@ Body Params:
 
 | Field        | Type    | Required/Optional | Field Description                                                    |
 | ------------ | ------- | ----------------- | -------------------------------------------------------------------- |
-| `vehicle_id` | String  | Required          | Vehicle Identification Number (vehicle_id) visible on vehicle               |
+| `vehicle_id` | String  | Required          | License Plate (if present) or VIN visible on a vehicle               |
 
 200 Success Response:
 
