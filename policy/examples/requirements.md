@@ -191,7 +191,7 @@ Version 1.1.0 for 2 providers requiring only historic Provider `/trips` with the
 
 Version 1.1.0 or 0.4.1 for 3 providers with many APIs and endpoints.  
 
-Note: by specifying geography, policy, jurisdiction, and metrics here, the agency is in effect saying that they have created and are hosting these, and they are available for use if public.
+Note: by specifying geography, policy, and jurisdiction here with a URL, the agency is in effect saying that they have created and are hosting these, and they are available for use if public.
 
 ```json
 {
@@ -270,7 +270,7 @@ Note: by specifying geography, policy, jurisdiction, and metrics here, the agenc
           "required_endpoints": [ 
             {
               "endpoint_name" : "policies",
-              "url" : "https://mds.cityname.gov/policy//policies/1.1.0"
+              "url" : "https://mds.cityname.gov/policy/policies/1.1.0"
             }
           ]
         },
@@ -335,6 +335,81 @@ Note: by specifying geography, policy, jurisdiction, and metrics here, the agenc
             },
             {
               "endpoint_name" : "vehicles"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+```
+
+[Top](#table-of-contents)
+
+## Agency Only
+
+Version 1.1.0 for 3 providers and serving Agency only. 
+
+```json
+{
+  "metadata": {
+    "mds_release": "1.2.0",
+    "version": "2",
+    "last_updated": "1611958740",
+    "max_update_interval": "P1D",
+    "agency_uuid": "737a9c62-c0cb-4c93-be43-271d21b784b5",
+    "agency_name": "Louisville Metro",
+    "agency_timezone": "America/New_York",
+    "agency_currency": "USD",
+    "agency_policy_website_url": "https:/www.cityname.gov/transporation/shared-devices.html",
+    "agency_policy_document_url": "https://www.cityname.gov/mds_data_policy.pdf",
+    "gbfs_required": "yes",
+    "url": "https://mds.cityname.gov/policy/requirements/1.2.0"
+  },
+  "mds_versions": [
+    {
+      "version": "1.1.0",
+      "provider_ids": [
+        "70aa475d-1fcd-4504-b69c-2eeb2107f7be",
+        "2411d395-04f2-47c9-ab66-d09e9e3c3251",
+        "420e6e94-55a6-4946-b6b3-4398fe22e912"
+      ],
+      "start_date": 1611958740,
+      "end_date": 1611970539,
+      "required_mds_apis": [
+        {
+          "api_name": "agency",
+          "required_endpoints": [ 
+            {
+              "endpoint_name" : "vehicles"
+            },
+            {
+              "endpoint_name" : "vehicle_register",
+              "required_fields": [
+                "year",
+                "mfg",
+                "model"
+              ]
+            },
+            {
+              "endpoint_name" : "vehicle_update"
+            },
+            {
+              "endpoint_name" : "vehicle_event",
+              "required_fields": [
+                "event_geographies",
+                "trip_id"
+              ]
+            },
+            {
+              "endpoint_name" : "vehicle_telemetry"
+            },
+            {
+              "endpoint_name" : "stops",
+              "required_fields": [
+                "status",
+                "num_spots_disabled"
+              ]
             }
           ]
         }
