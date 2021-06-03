@@ -446,7 +446,7 @@ Contains metadata applicable to the agency and at the top of its [Requirement](#
 | `agency_currency`            | text            | Required | Currency used for all monetary values across all MDS endpoints. E.g. "USD" |
 | `agency_policy_website_url`  | URL             | Required | URL of the agency's transportation policy page. E.g. "https://www.cityname.gov/transporation/shared-devices.htm" |
 | `agency_policy_document_url` | URL             | Optional | URL of the agency's operating permit rules that mention data requirements. E.g. "https://www.cityname.gov/mds_data_policy.pdf" |
-| `gbfs_required`              | Enum            | Required | yes/no. Is public GBFS required explicitly by providers? E.g. "yes" |
+| `gbfs_required`              | Boolean         | Required | true/false. Is public GBFS required explicitly from providers? E.g. "true" |
 | `url`                        | URL             | Required | URL of this file. E.g.  "https://mds.cityname.gov/requirements/1.2.0" |
 
 [Top][toc]
