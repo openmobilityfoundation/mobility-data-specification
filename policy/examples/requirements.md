@@ -29,7 +29,7 @@ Version 1.2.0 of MDS Policy and Geography for agencies to publish rules/fees/inc
     "agency_currency": "USD",
     "agency_policy_website_url": "https:/www.cityname.gov/transporation/shared-devices.html",
     "agency_policy_document_url": "https://www.cityname.gov/mds_data_policy.pdf",
-    "gbfs_required": "yes",
+    "gbfs_required": "true",
     "url": "https://mds.cityname.gov/policy/requirements/1.2.0"
   },
   "mds_versions": [
@@ -50,7 +50,7 @@ Version 1.2.0 of MDS Policy and Geography for agencies to publish rules/fees/inc
           "required_endpoints": [ 
             {
               "endpoint_name" : "policies",
-              "url": "https://mds.providername.com/policy/policies/1.2.0"
+              "url": "https://mds.cityname.com/policy/policies/1.2.0"
             } 
           ]
         },
@@ -59,7 +59,7 @@ Version 1.2.0 of MDS Policy and Geography for agencies to publish rules/fees/inc
           "required_endpoints": [ 
             {
               "endpoint_name" : "geographies",
-              "url": "https://mds.providername.com/geography/geographies/1.2.0",
+              "url": "https://mds.cityname.com/geography/geographies/1.2.0",
               "required_fields": [
                 "geography_type",
                 "description"
@@ -93,7 +93,7 @@ Version 1.1.0 for one provider and 1.0.0 for another provider, requiring only th
     "agency_currency": "USD",
     "agency_policy_website_url": "https:/www.cityname.gov/transporation/shared-devices.html",
     "agency_policy_document_url": "https://www.cityname.gov/mds_data_policy.pdf",
-    "gbfs_required": "yes",
+    "gbfs_required": "true",
     "url": "https://mds.cityname.gov/policy/requirements/1.2.0"
   },
   "mds_versions": [
@@ -109,8 +109,7 @@ Version 1.1.0 for one provider and 1.0.0 for another provider, requiring only th
           "api_name": "provider",
           "required_endpoints": [ 
             {
-              "endpoint_name" : "vehicles",
-              "url": "https://mds.providername.com/provider/vehicles/1.1.0"
+              "endpoint_name" : "vehicles"
             } 
           ]
         }
@@ -128,8 +127,7 @@ Version 1.1.0 for one provider and 1.0.0 for another provider, requiring only th
           "api_name": "provider",
           "required_endpoints": [ 
             {
-              "endpoint_name" : "vehicles",
-              "url": "https://mds.providername.com/provider/vehicles/1.0.0"
+              "endpoint_name" : "vehicles"
             } 
           ]
         }
@@ -159,7 +157,7 @@ Version 1.1.0 for 2 providers requiring only historic Provider `/trips` with the
     "agency_currency": "USD",
     "agency_policy_website_url": "https:/www.cityname.gov/transporation/shared-devices.html",
     "agency_policy_document_url": "https://www.cityname.gov/mds_data_policy.pdf",
-    "gbfs_required": "yes",
+    "gbfs_required": "true",
     "url": "https://mds.cityname.gov/policy/requirements/1.2.0"
   },
   "mds_versions": [
@@ -211,7 +209,7 @@ Note: by specifying geography, policy, and jurisdiction here with a URL, the age
     "agency_currency": "USD",
     "agency_policy_website_url": "https:/www.cityname.gov/transporation/shared-devices.html",
     "agency_policy_document_url": "https://www.cityname.gov/mds_data_policy.pdf",
-    "gbfs_required": "yes",
+    "gbfs_required": "true",
     "url": "https://mds.cityname.gov/policy/requirements/1.2.0"
   },
   "mds_versions": [
@@ -369,7 +367,7 @@ Version 1.1.0 for 3 providers and serving Agency only.
     "agency_currency": "USD",
     "agency_policy_website_url": "https:/www.cityname.gov/transporation/shared-devices.html",
     "agency_policy_document_url": "https://www.cityname.gov/mds_data_policy.pdf",
-    "gbfs_required": "yes",
+    "gbfs_required": "true",
     "url": "https://mds.cityname.gov/policy/requirements/1.2.0"
   },
   "mds_versions": [
@@ -445,7 +443,7 @@ Version 1.1.0 for 2 providers requiring Provider `/status_changes` with the mini
     "agency_currency": "USD",
     "agency_policy_website_url": "https:/www.cityname.gov/transporation/shared-devices.html",
     "agency_policy_document_url": "https://www.cityname.gov/mds_data_policy.pdf",
-    "gbfs_required": "yes",
+    "gbfs_required": "true",
     "url": "https://mds.cityname.gov/policy/requirements/1.2.0"
   },
   "mds_versions": [
