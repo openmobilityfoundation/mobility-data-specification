@@ -407,6 +407,9 @@ An agency's [Requirements](#requirements) endpoint contains a number of distinct
       "provider_ids": [
         // provider id array
       ],
+      "vehicle_types": [
+        // optional vehicle_type array
+      ],
       "mds_apis": [
         {
           "api_name" : "[MDS API]": {
@@ -466,6 +469,10 @@ Unique combinations for MDS versions, specific providers, and dates (past, curre
         "[PROVIDER UUID]",
         "[PROVIDER UUID]"
       ],
+      "vehicle_types": [
+        "[vehicle_type]",
+        "[vehicle_type]"
+      ],
       "start_date": [timestamp],
       "end_date": [timestamp],
       "required_mds_apis" [
@@ -483,6 +490,7 @@ Unique combinations for MDS versions, specific providers, and dates (past, curre
 | ---------------------------- | --------------- | -------- | ----------------------------------- | 
 | `version`                    | text            | Required | Version number of an official MDS release | 
 | `provider_ids`               | UUID[]          | Required | Array of providers that apply to this part of the requirements | 
+| `vehicle_type`               | Enum            | Optional | Array of [Vehicle Types](../general-information.md#vehicle-types) that apply to this part of the requirements. If absent it applies to all vehicle types. | 
 | `start_date`                 | [timestamp][ts] | Required | Beginning date/time of requirements | 
 | `end_date`                   | [timestamp][ts] | Required | End date/time of requirements. Can be null. Keep data at least one year past `end_date` before removing. | 
 | `required_mds_api`           | Array           | Required | Array of required [MDS APIs](#requirement-mds-apis) |
