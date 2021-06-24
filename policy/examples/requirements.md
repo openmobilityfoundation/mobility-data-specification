@@ -34,6 +34,7 @@ Version 1.2.0 of MDS Policy and Geography for agencies to publish rules/fees/inc
   },
   "mds_versions": [
     {
+      "description": "City Micromobility Program Policy Rules",
       "version": "1.2.0",
       "provider_ids": [
         "70aa475d-1fcd-4504-b69c-2eeb2107f7be",
@@ -98,6 +99,7 @@ Version 1.1.0 for one provider with scooters, and 1.0.0 for another provider for
   },
   "mds_versions": [
     {
+      "description": "City Vehicle Monitoring Program 2021",
       "version": "1.1.0",
       "provider_ids": [
         "70aa475d-1fcd-4504-b69c-2eeb2107f7be"
@@ -144,7 +146,7 @@ Version 1.1.0 for one provider with scooters, and 1.0.0 for another provider for
 
 ## Trips Only
 
-Version 1.1.0 for 2 providers requiring only historic Provider `/trips` with the optional `parking_verificaiton_url` field.  
+Version 1.1.0 for 2 providers requiring only historic Provider `/trips` with the optional `parking_verificaiton_url` field, linked to a specific MDS Policy.  
 
 ```json
 {
@@ -165,11 +167,13 @@ Version 1.1.0 for 2 providers requiring only historic Provider `/trips` with the
   },
   "mds_versions": [
     {
+      "description": "City Vehicle Program Pilot 2021",
       "version": "1.1.0",
       "provider_ids": [
         "70aa475d-1fcd-4504-b69c-2eeb2107f7be",
         "2411d395-04f2-47c9-ab66-d09e9e3c3251"
       ],
+      "policy_id": "39a653be-7180-4188-b1a6-cae33c280341",
       "start_date": 1611958740,
       "end_date": 1611970539,
       "required_mds_apis": [
@@ -217,6 +221,7 @@ Note: by specifying geography, policy, and jurisdiction here with a URL, the age
   },
   "mds_versions": [
     {
+      "description": "City Shared Device Program and Policies 2021",
       "version": "1.1.0",
       "provider_ids": [
         "70aa475d-1fcd-4504-b69c-2eeb2107f7be",
@@ -304,6 +309,7 @@ Note: by specifying geography, policy, and jurisdiction here with a URL, the age
       ]
     },
     {
+      "description": "City Docked Device Program 2021",
       "version": "0.4.1",
       "provider_ids": [
         "70aa475d-1fcd-4504-b69c-2eeb2107f7be",
@@ -354,7 +360,7 @@ Note: by specifying geography, policy, and jurisdiction here with a URL, the age
 
 ## Agency
 
-Version 1.1.0 for 3 providers and serving Agency only. 
+Version 1.1.0 for 3 providers and serving Agency only linking to a defined MDS Policy. 
 
 ```json
 {
@@ -375,12 +381,14 @@ Version 1.1.0 for 3 providers and serving Agency only.
   },
   "mds_versions": [
     {
+      "description": "City Shared Device Management Program 2021-2022",
       "version": "1.1.0",
       "provider_ids": [
         "70aa475d-1fcd-4504-b69c-2eeb2107f7be",
         "2411d395-04f2-47c9-ab66-d09e9e3c3251",
         "420e6e94-55a6-4946-b6b3-4398fe22e912"
       ],
+      "policy_id": "39a653be-7180-4188-b1a6-cae33c280341",
       "start_date": 1611958740,
       "end_date": 1611970539,
       "required_mds_apis": [
@@ -451,6 +459,7 @@ Version 1.1.0 for 2 providers requiring Provider `/status_changes` with the mini
   },
   "mds_versions": [
     {
+      "description": "City Shared Vehicle Program",
       "version": "1.1.0",
       "provider_ids": [
         "70aa475d-1fcd-4504-b69c-2eeb2107f7be",
