@@ -394,6 +394,12 @@ This endpoint is not authenticated (ie. public), and allows the discovery of oth
 
 See [Policy Requirement Examples](/policy/examples/requirements.md) for how this can be implemented.
 
+#### Update Frequency
+
+The OMF recommends updating the Requirements feed no more than monthly, and you may specify your expected timeframe with the `max_update_interval` in the [metadata](#requirement-metadata) section so providers have some idea of how often to check the feed. More specifically the OMF recommends giving the following notice to providers: 1 month for optional field additions, 3 months for endpoint/API changes/additions, 3 months for new minor releases, and 4 months for major releases. You should also communicate these future changes ahead of time with the `start_date` field. Finally, the OMF recommends any changes need to be part of a discussion between agencies and affected providers.
+
+#### Requirement Format
+
 An agency's [Requirements](#requirements) endpoint contains a number of distinct parts, namely [metadata](#requirement-metadata) and [MDS versions](#requirement-mds-versions) (with sub sections on applicable providers and relevant [MDS APIs](#requirement-mds-apis)). 
 
 ```jsonc
@@ -458,7 +464,7 @@ Contains metadata applicable to the agency and at the top of its [Requirement](#
 
 Contains a list of providers and APIs/endpoints/fields that a version of MDS applies to over a certain time frame in its [Requirement](#requirement) data feed in the `mds_versions` section. 
 
-Unique combinations for MDS versions, specific providers, and dates (past, current, or future) can be defined. For example an agency can define MDS version 1.2.0 for Provider #1 in a pilot with beta endpoints and optional fields, version 1.2.0 for other providers without beta features starting a month from now, and version 1.1.0 for Provider #2 with docked bikeshare. 
+Unique combinations for MDS versions, specific providers, vehicle types, and dates (past, current, or future) can be defined. For example an agency can define MDS version 1.2.0 for Provider #1 in a pilot with beta endpoints and optional fields, version 1.2.0 for other providers without beta features starting a month from now, and version 1.1.0 for Provider #2 with docked bikeshare. 
 
 ```jsonc
 // ...  
