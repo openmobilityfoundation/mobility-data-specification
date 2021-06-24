@@ -29,6 +29,8 @@ This specification describes the digital relationship between _mobility as a ser
   - [Value URL](#value-url)
   - [Order of Operations](#order-of-operations)
   - [Requirement](#requirement)
+    - [Update Frequency](#update-frequency)
+    - [Format](#requirement-format)
     - [Metadata](#requirement-metadata)
     - [MDS Versions](#requirement-mds-versions)
     - [MDS APIs](#requirement-mds-apis)
