@@ -411,6 +411,7 @@ An agency's [Requirements](#requirements) endpoint contains a number of distinct
   },
   "mds_versions" [ 
     {
+      "description" : "[PROGRAM DESCRIPTION]",
       "version" : "[MDS VERSION NUMBER]",
       "provider_ids": [
         // provider id array
@@ -418,6 +419,9 @@ An agency's [Requirements](#requirements) endpoint contains a number of distinct
       "vehicle_types": [
         // optional vehicle_type array
       ],
+      "policy_id" : "[OPTIONAL POLICY ID]",
+      "start_date": [timestamp],
+      "end_date": [timestamp],
       "mds_apis": [
         {
           "api_name" : "[MDS API]": {
@@ -444,9 +448,32 @@ An agency's [Requirements](#requirements) endpoint contains a number of distinct
 
 Contains metadata applicable to the agency and at the top of its [Requirement](#requirement) data feed in the `metadata` section. 
 
+```jsonc
+{
+  "metadata": {
+    "mds_release": "[TEXT]",
+    "version": "[INTEGER]",
+    "last_updated": "[TIMESTAMP]",
+    "max_update_interval": "[DURATION]",
+    "agency_uuid": "[UUID]",
+    "agency_name": "TECT]",
+    "agency_timezone": "[TIMEZONE]",
+    "agency_language": "[TEXT]",
+    "agency_currency": "[TEXT]",
+    "agency_policy_website_url": "[URL]",
+    "agency_policy_document_url": "[URL]",
+    "gbfs_required": "[BOOLEAN]",
+    "url": "[URL]"
+  },
+  "mds_versions" [ 
+    // Requirement MDS Versions
+  ]
+}
+```
+
 | Name                         | Type            | Required / Optional | Description              |
 | ---------------------------- | --------------- | -------- | ----------------------------------- |
-| `mds_release`                | text            | Required | Release of MDS that the requirements data feed aligns to, based on official MDS releases. E.g. "1.2.0" |
+| `mds_release`                | text            | Required | Release of MDS that the **requirements data feed** aligns to, based on official MDS releases. E.g. "1.2.0" |
 | `version`                    | integer         | Required | Version of this file. Increment 1 with each modification. E.g. "3" |
 | `last_updated`               | [timestamp][ts] | Required | When this file `version` was last updated. E.g. "1611958740" |
 | `max_update_interval`        | duration        | Required | The expected maximum frequency with which this file could be updated. [ISO 8601 duration](https://en.wikipedia.org/wiki/ISO_8601#Durations). E.g. "P1D" |
@@ -466,12 +493,13 @@ Contains metadata applicable to the agency and at the top of its [Requirement](#
 
 Contains a list of providers and APIs/endpoints/fields that a version of MDS applies to over a certain time frame in its [Requirement](#requirement) data feed in the `mds_versions` section. 
 
-Unique combinations for MDS versions, specific providers, vehicle types, and dates (past, current, or future) can be defined. For example an agency can define MDS version 1.2.0 for Provider #1 in a pilot with beta endpoints and optional fields, version 1.2.0 for other providers without beta features starting a month from now, and version 1.1.0 for Provider #2 with docked bikeshare. 
+Unique combinations for MDS versions, specific providers, vehicle types, policies, and dates (past, current, or future) can be defined. For example an agency can define MDS version 1.2.0 for Provider #1 in a pilot with beta endpoints and optional fields, version 1.2.0 for other providers without beta features starting a month from now, and version 1.1.0 for Provider #2 with docked bikeshare. 
 
 ```jsonc
 // ...  
   "mds_versions": [
     {
+      "description" : "[PROGRAM DESCRIPTION]",
       "version": "[MDS VERSION NUMBER]",
       "provider_ids": [
         "[PROVIDER UUID]",
@@ -481,6 +509,7 @@ Unique combinations for MDS versions, specific providers, vehicle types, and dat
         "[vehicle_type]",
         "[vehicle_type]"
       ],
+      "policy_id" : "[POLICY UUID]",
       "start_date": [timestamp],
       "end_date": [timestamp],
       "required_mds_apis" [
@@ -496,9 +525,11 @@ Unique combinations for MDS versions, specific providers, vehicle types, and dat
 
 | Name                         | Type            | Required / Optional | Description              | 
 | ---------------------------- | --------------- | -------- | ----------------------------------- | 
+| `description`                | text            | Required | Simple agency program description of this combination of MDS, providers, vehicles, and time frame. | 
 | `version`                    | text            | Required | Version number of an official MDS release | 
-| `provider_ids`               | UUID[]          | Required | Array of providers that apply to this part of the requirements | 
-| `vehicle_type`               | Enum            | Optional | Array of [Vehicle Types](../general-information.md#vehicle-types) that apply to this part of the requirements. If absent it applies to all vehicle types. | 
+| `provider_ids`               | UUID[]          | Required | Array of provider UUIDs that apply to this group the requirements | 
+| `vehicle_type`               | Enum            | Optional | Array of [Vehicle Types](../general-information.md#vehicle-types) that apply to this requirement. If absent it applies to all vehicle types. | 
+| `policy_id`                  | UUID            | Optional | Policy UUID that applies to this group of requirements, if applicable and there is an existing Policy feed. References the `[policy_id](#policy)` field. | 
 | `start_date`                 | [timestamp][ts] | Required | Beginning date/time of requirements | 
 | `end_date`                   | [timestamp][ts] | Required | End date/time of requirements. Can be null. Keep data at least one year past `end_date` before removing. | 
 | `required_mds_api`           | Array           | Required | Array of required [MDS APIs](#requirement-mds-apis) |
