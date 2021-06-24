@@ -29,7 +29,7 @@ This specification describes the digital relationship between _mobility as a ser
   - [Value URL](#value-url)
   - [Order of Operations](#order-of-operations)
   - [Requirement](#requirement)
-    - [Update Frequency](#update-frequency)
+    - [Update Frequency](#requirement-update-frequency)
     - [Format](#requirement-format)
     - [Metadata](#requirement-metadata)
     - [MDS Versions](#requirement-mds-versions)
@@ -396,7 +396,7 @@ This endpoint is not authenticated (ie. public), and allows the discovery of oth
 
 See [Policy Requirement Examples](/policy/examples/requirements.md) for how this can be implemented.
 
-#### Update Frequency
+#### Requirement Update Frequency
 
 The OMF recommends updating the Requirements feed no more than monthly, and you may specify your expected timeframe with the `max_update_interval` in the [metadata](#requirement-metadata) section so providers have some idea of how often to check the feed. More specifically the OMF recommends giving the following notice to providers: 1 month for optional field additions, 3 months for endpoint/API changes/additions, 3 months for new minor releases, and 4 months for major releases. You should also communicate these future changes ahead of time with the `start_date` field. Finally, the OMF recommends any changes need to be part of a discussion between agencies and affected providers.
 
