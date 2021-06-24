@@ -155,7 +155,7 @@ Method: `GET`
 `data` Payload: `{ requirements: [] }`, JSON objects that follow the schema [outlined here](#requirement).  
 [Beta feature](/general-information.md#beta-features): *Yes (as of 1.2.0)*.
 
-See [Policy Requierment Examples](/policy/examples/requirements.md) for how this can be implemented.
+See [Policy Requirement Examples](/policy/examples/requirements.md) for how this can be implemented.
 
 [Top][toc]
 
