@@ -77,7 +77,7 @@ Version 1.2.0 of MDS Policy and Geography for agencies to publish rules/fees/inc
 
 ## Vehicles Only
 
-Version 1.1.0 for one provider and 1.0.0 for another provider, requiring only the Provider `/vehicles` endpoint and no optional fields, as an authenticated [alternative to GBFS](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Vehicles) for internal use.
+Version 1.1.0 for one provider with scooters, and 1.0.0 for another provider for all vehicle types, requiring only the Provider `/vehicles` endpoint and no optional fields, as an authenticated [alternative to GBFS](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Vehicles) for internal use.
 
 ```json
 {
@@ -101,6 +101,9 @@ Version 1.1.0 for one provider and 1.0.0 for another provider, requiring only th
       "version": "1.1.0",
       "provider_ids": [
         "70aa475d-1fcd-4504-b69c-2eeb2107f7be"
+      ],
+      "vehicle_types": [
+        "scooter"
       ],
       "start_date": 1611958740,
       "end_date": null,
