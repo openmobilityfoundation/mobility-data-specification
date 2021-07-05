@@ -1,6 +1,63 @@
+## 1.1.0
+
+> Released: 2021-03-30 
+
+> [Release Plan](https://github.com/openmobilityfoundation/governance/wiki/Release-1.1.0)
+
+The 1.1.0 minor release adds new top level APIs (geography, jurisdictions), privacy options (provider reports, geography-driven events, metrics), and transparency features (public endpoints). 
+
+### CHANGES
+
+See the closed PRs tagged with [Milestone 1.1.0](https://github.com/openmobilityfoundation/mobility-data-specification/pulls?q=is%3Apr+is%3Aclosed+milestone%3A1.1.0) and [Issues](https://github.com/openmobilityfoundation/mobility-data-specification/issues?q=is%3Aissue+milestone%3A1.1.0+is%3Aclosed) for a full list of changes.
+
+**_MDS_**
+
+- [Policy and Geography can be public](https://github.com/openmobilityfoundation/mobility-data-specification/pull/585)
+- [Geography-Driven Events](https://github.com/openmobilityfoundation/mobility-data-specification/pull/503): [Issue](https://github.com/openmobilityfoundation/mobility-data-specification/issues/480)
+   
+_Minor Updates_
+
+- [Unregistered error](https://github.com/openmobilityfoundation/mobility-data-specification/pull/565)
+- [Geography updates](https://github.com/openmobilityfoundation/mobility-data-specification/issues/474)
+- [Stops updates](https://github.com/openmobilityfoundation/mobility-data-specification/pull/603)
+- [Response time expectations](https://github.com/openmobilityfoundation/mobility-data-specification/pull/563)
+- [Geography publish date field consistency](https://github.com/openmobilityfoundation/mobility-data-specification/pull/597)
+- [Adding more cities using MDS](https://github.com/openmobilityfoundation/mobility-data-specification/pull/591)
+- [Adding more providers using MDS](https://github.com/openmobilityfoundation/mobility-data-specification/blob/dev/providers.csv)
+- [Added a section for third party software companies using MDS](https://github.com/openmobilityfoundation/mobility-data-specification/issues/552) and cleaned up home page, moving list content to the OMF website
+- [Update geography_json field type](https://github.com/openmobilityfoundation/mobility-data-specification/issues/635)
+
+**_Provider_**
+
+- [New Reports](https://github.com/openmobilityfoundation/mobility-data-specification/pull/607): [Issue](https://github.com/openmobilityfoundation/mobility-data-specification/issues/569)
+
+**_Agency_**
+
+- N/A
+
+**_Policy_**
+
+- [Images of Stops](https://github.com/openmobilityfoundation/mobility-data-specification/issues/555)
+- [Clarify update frequency](https://github.com/openmobilityfoundation/mobility-data-specification/pull/609): [Issue](https://github.com/openmobilityfoundation/mobility-data-specification/issues/567)
+
+**_Geography_**
+
+- [Elevating Geography to a first class API](https://github.com/openmobilityfoundation/mobility-data-specification/pull/582): [PR](https://github.com/openmobilityfoundation/mobility-data-specification/pull/499), [Issue](https://github.com/openmobilityfoundation/mobility-data-specification/issues/500)
+- [Geography Types](https://github.com/openmobilityfoundation/mobility-data-specification/pull/581): [Issue](https://github.com/openmobilityfoundation/mobility-data-specification/issues/580), [Discussion](https://github.com/openmobilityfoundation/mobility-data-specification/discussions/588)
+
+**_Metrics_**
+
+- [New Agency Metrics API](https://github.com/openmobilityfoundation/mobility-data-specification/issues/485): [Definitions PR](https://github.com/openmobilityfoundation/mobility-data-specification/pull/487), [Spec PR](https://github.com/openmobilityfoundation/mobility-data-specification/pull/486), [Issue](https://github.com/openmobilityfoundation/mobility-data-specification/issues/485)
+
+**_Jurisdiction_**
+
+- [New Jurisdiction API](https://github.com/openmobilityfoundation/mobility-data-specification/pull/593): [Issue](https://github.com/openmobilityfoundation/mobility-data-specification/issues/474)
+
 ## 1.0.0
 
 > Released: 2020-09-16
+
+> [Release Plan](https://github.com/openmobilityfoundation/governance/wiki/Release-1.0.0)
 
 The 1.0.0 release reconciles and aligns many parts of the MDS specification and adds features and updates requested by the community, including many new detailed vehicle states and event types, support for Stops (for docked vehicles, dockless corrals, parking areas), and adding rates (fees/subsidies) to Policy.
 

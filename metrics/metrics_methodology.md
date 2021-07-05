@@ -8,35 +8,31 @@ This section provides methodologies and sample calculations of [MDS metrics](/me
 
 **Note 2:** While metrics are designed to be flexible, and allow calculations using any time interval (hourly, daily, monthly), samples in this document are aggregated into 15-mins intervals for simplicity and illustrative purposes. 
 
-```
-This document will be updated to match in accordance with MDS version 1.0.0
-```
-
 ## Table of Contents
 
-- [1. MDS Core Metrics](#1.-mds-core-metrics)
-  - [1.1 vehicles.[state].avg](#1.1-vehicles.[state].avg])
-  - [1.2 vehicles.[state].min](#1.2-vehicles.[state].min)
-  - [1.3 vehicles.[state].max](#1.3-vehicles.[state].max)
-  - [1.4 vehicles.[state].duration.sum](#1.4-vehicles.[state].duration.sum)
-  - [1.5 events.[event_type].count](#1.5-events.[event_type].count)
-  - [1.6 trips.[start_loc/end_loc].count](#1.6-trips.[start_loc/end_loc].count)
-  - [1.7 trips.[start_loc/end_loc]_duration.avg](#1.7-trips.[start_loc/end_loc]_duration.avg)
-  - [1.8 trips.[start_loc/end_loc]_duration.sum](#1.8-trips.[start_loc/end_loc]_duration.sum)
-  - [1.9 trips.[start_loc/end_loc]_distance.avg](#1.9-trips.[start_loc/end_loc]_distance.avg)
-  - [1.10 trips.[start_loc/end_loc]_distance.sum](#1.10-trips.[start_loc/end_loc]_distance.sum)
-- [2. MDS Dockless Metrics](#2.-MDS-Dockless-Metrics)
-  - [2.1 dockless.deployed.avg](#2.1-dockless.deployed.avg)
-  - [2.2 dockless.deployed.avg.min](#2.2-dockless.deployed.avg.min)
-  - [2.3 dockless.deployed.min](#2.3-dockless.deployed.min)
-  - [2.4 dockless.deployed.avg.max](#2.4-dockless.deployed.avg.max)
-  - [2.5 dockless.deployed.max](#2.5-dockless.deployed.max)
-  - [2.6 dockless.active.count](#2.6-dockless.active.count)
-  - [2.7 dockless.inactive.count](#2.7-dockless.inactive.count)
-  - [2.8 dockless.utilization.idle.percent](#2.8-dockless.utilization.idle.percent)
-  - [2.9 dockless.utilization.active.percent](#2.9-dockless.utilization.active.percent)
-  - [2.10 dockless.utilization.trips_per_vehicle.avg](#2.10-dockless.utilization.trips_per_vehicle.avg)
-- [Compatibility with Mobility Data Collaborative Metrics](#Compatibility-with-Mobility-Data-Collaborative-Metrics)
+- [1. MDS Core Metrics](#1-mds-core-metrics)
+  - [1.1 vehicles.[state].avg](#11-vehiclesstateavg)
+  - [1.2 vehicles.[state].min](#12-vehiclesstatemin)
+  - [1.3 vehicles.[state].max](#13-vehiclesstatemax)
+  - [1.4 vehicles.[state].duration.sum](#14-vehiclesstatedurationsum)
+  - [1.5 events.[event_type].count](#15-eventsevent_typecount)
+  - [1.6 trips.[start_loc/end_loc].count](#16-tripsstart_locend_loccount)
+  - [1.7 trips.[start_loc/end_loc]_duration.avg](#17-tripsstart_locend_loc_durationavg)
+  - [1.8 trips.[start_loc/end_loc]_duration.sum](#18-tripsstart_locend_loc_durationsum)
+  - [1.9 trips.[start_loc/end_loc]_distance.avg](#19-tripsstart_locend_loc_distanceavg)
+  - [1.10 trips.[start_loc/end_loc]_distance.sum](#110-tripsstart_locend_loc_distancesum)
+- [2. MDS Dockless Metrics](#2-mds-dockless-metrics)
+  - [2.1 dockless.deployed.avg](#21-docklessdeployedavg)
+  - [2.2 dockless.deployed.avg.min](#22-docklessdeployedavgmin)
+  - [2.3 dockless.deployed.min](#23-docklessdeployedmin)
+  - [2.4 dockless.deployed.avg.max](#24-docklessdeployedavgmax)
+  - [2.5 dockless.deployed.max](#25-docklessdeployedmax)
+  - [2.6 dockless.active.count](#26-docklessactivecount)
+  - [2.7 dockless.inactive.count](#27-docklessinactivecount)
+  - [2.8 dockless.utilization.idle.percent](#28-docklessutilizationidlepercent)
+  - [2.9 dockless.utilization.active.percent](#29-docklessutilizationactivepercent)
+  - [2.10 dockless.utilization.trips_per_vehicle.avg](#210-docklessutilizationtrips_per_vehicleavg)
+- [Compatibility with Mobility Data Collaborative Metrics](#compatibility-with-mobility-data-collaborative-metrics)
 
 ## 1. MDS Core Metrics
 
@@ -44,7 +40,7 @@ Reference to MDS Core Metrics specification in Github: [link](/metrics/core_metr
 
 ### 1.1 `vehicles.[state].avg`
 
-The average number of vehicles in an [MDS state](https://github.com/openmobilityfoundation/mobility-data-specification/tree/release-0.4.1/agency#vehicle-events) during the interval within a geographic area. To calculate **vehicles.[state].avg**, we will take a snapshot of vehicle status every N-period, and  average the number of vehicles shown to be in status. The default for N is a 1-minute snapshot, with the goal to compute metrics at the largest interval where the least amount of change will occur. Although depending on use cases and computational capabilities, the snapshot frequency can be configurable.
+The average number of vehicles in an [MDS state](../general-information.md#vehicle-states) during the interval within a geographic area. To calculate **vehicles.[state].avg**, we will take a snapshot of vehicle status every N-period, and  average the number of vehicles shown to be in status. The default for N is a 1-minute snapshot, with the goal to compute metrics at the largest interval where the least amount of change will occur. Although depending on use cases and computational capabilities, the snapshot frequency can be configurable.
 
 **Sample**
 
@@ -148,7 +144,7 @@ The sample dataset above will return **vehicles.[state].duration.sum** as shown 
 
 ### 1.5 `events.[event_type].count`
 
-The number of [MDS events](https://github.com/openmobilityfoundation/mobility-data-specification/tree/release-0.4.1/agency#vehicle-events) received during the time interval within a geographical area.
+The number of [MDS events]../agency#vehicle---event) received during the time interval within a geographical area.
 
 **Sample**
 
@@ -255,7 +251,7 @@ A sample metric output table for **trips.[start_loc/end_loc]_distance.sum**.
 
 ## 2. MDS Dockless Metrics
 
-Reference to MDS Dockless Metrics specification in Github: [link](https://github.com/lacuna-tech/mobility-data-specification/blob/add_metrics_definitions/metrics/dockless_metrics.md) 
+Reference to MDS Dockless Metrics specification in Github: [link](../metrics/dockless_metrics.md) 
 
 ### 2.1 `dockless.deployed.avg`
 

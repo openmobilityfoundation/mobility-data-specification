@@ -1,6 +1,6 @@
 # Mobility Data Specification: **General information**
 
-This document contains specifications that are shared between the various MDS APIs such as [`agency`][agency], [`policy`][policy], and [`provider`][provider].
+This document contains specifications that are shared between the various MDS APIs such as [`agency`][agency], [`policy`][policy], [`provider`][provider], etc.
 
 ## Table of Contents
 
@@ -11,6 +11,8 @@ This document contains specifications that are shared between the various MDS AP
 * [Geographic Data][geo]
   * [Stop-based Geographic Data](#stop-based-geographic-data)
   * [Intersection Operation](#intersection-operation)
+* [Geography-Driven Events](#geography-driven-events)
+* [Optional Authentication](#optional-authentication)
 * [Propulsion Types](#propulsion-types)
 * [Responses](#responses)
   * [Error Messages](#error-messages)
@@ -32,9 +34,9 @@ This document contains specifications that are shared between the various MDS AP
 
 In some cases, features within MDS may be marked as "beta." These are typically recently added endpoints or fields. Because beta features are new, they may not yet be fully mature and proven in real-world operation. The design of beta features may have undiscovered gaps, ambiguities, or inconsistencies. Implementations of those features are typically also quite new and are more likely to contain bugs or other flaws. Beta features are likely to evolve more rapidly than other parts of the specification.
 
-Despite this, MDS users are highly encouraged to use beta features. New features can only become proven and trusted through implementation, use, and the learning that comes with it. Users should be thoughtful about the role of beta features in their operations. Beta features may be suitable for enabling some new tools and analysis, but may not be appropriate for mission-critical applications or regulatory decisions where certainty and reliability are essential.
+Despite this, MDS users are highly encouraged to use beta features. New features can only become proven and trusted through implementation, use, and the learning that comes with it. Users should be thoughtful about the role of beta features in their operations. Users of beta features are strongly encouraged to share their experiences, learnings, and challenges with the broader MDS community via GitHub issues or pull requests. This will inform the refinements that transform beta features into fully proven, stable parts of the specification.
 
-Users of beta features are strongly encouraged to share their experiences, learnings, and challenges with the broader MDS community via GitHub issues or pull requests. This will inform the refinements that transform beta features into fully proven, stable parts of the specification.
+Beta features may be suitable for enabling some new tools and analysis, but may not be appropriate for mission-critical applications or regulatory decisions where certainty and reliability are essential. In subsequent releases existing beta features may include breaking changes, even in a minor release. Note that [schemas](/schema) may not be defined for some beta features until they are promoted out of beta.
 
 Working Groups and their Steering Committees are expected to review beta designated features with each release cycle and determine whether the feature has reached the level of stability and maturity needed to remove the beta designation. In a case where a beta feature fails to reach substantial adoption after an extended time, Working Group Steering Committees should discuss whether or not the feature should remain in the specification.
 
@@ -121,7 +123,9 @@ For the purposes of this specification, the intersection of two geographic datat
 
 [Top][toc]
 
-## Geography-Driven Events **[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.1.0)*
+## Geography-Driven Events
+
+**[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.1.0)*
 
 Geography-Driven Events is a new MDS feature for Agencies to perform complete Policy compliance monitoring without precise location data. Geography-Driven Events describe individual vehicles in realtime – not just aggregate data. However, rather than receiving the exact location of a vehicle, Agencies receive information about the vehicle's current geographic region. The regions used for Geography-Driven Events correspond to the Geographies in an Agency's current Policy. In this way, the data-shared using Geography-Driven Events is matched to an Agency's particular regulatory needs.
 
@@ -139,12 +143,9 @@ Here's how it works in practice:
 
 	*Agency adds rule disallowing parking on waterfront path, begins receiving data on events within area.*
 
-
-
 Agencies that wish to use Geography-Driven Events do so by requiring a new `event_geographies` field in status events. When an Agency is using Geography-Driven Events, Providers must emit a new `changed_geographies` status event whenever a vehicle in a trip enters or leaves a Geography managed by a Policy.
 
 During the Beta period for this feature, location and telemtry data remain required fields. This allows Aggencies to test Geography-Driven Events, measuring its accuracy and efficacy against regulatory systems based on precise location data. After the beta period, if Geography-Driven Events is deemed by OMF to be accurate and effective, the specification will evolve to allow cities to use Geography-Driven Events in lieu of location or telemtry data.
-
 
 [Top][toc]
 
@@ -152,7 +153,7 @@ During the Beta period for this feature, location and telemtry data remain requi
 
 Authorization of the Policy and Geography APIs is no longer required and will be deprecated in next major release with these endpoints becoming optionally private instead of optionally public. An agency may optionally decide to make both the Policy and Geography endpoints unauthenticated and public. This allows transparency for the public to see how the city is regulating, holds the city accountable for their policy decisions, and reduces the technical burden on providers to use these endpoints. A side benefit is that this allows third parties to ingest this information into their applications and services for public benefit.
 
-Note if implementing the beta features [Geography Driven Events](/general-information.md#geography-driven-events), both Policy and Geography must be public.
+Note if implementing the beta feature [Geography Driven Events](/general-information.md#geography-driven-events), both Policy and Geography must be public.
 
 [Top][toc]
 

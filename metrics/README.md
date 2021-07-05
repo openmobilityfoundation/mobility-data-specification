@@ -1,5 +1,7 @@
 # Mobility Data Specification: Metrics
 
+<a href="/metrics/"><img src="https://i.imgur.com/ouijHLj.png" width="120" align="right" alt="MDS Metrics Icon" border="0"></a>
+
 The Metrics API endpoints are intended to be implemented by regulatory agencies, their third party appointed representatives, or city designated partners for requesting **historical** calculated [core metrics](core_metrics.md) and aggregations of MDS data. The Metrics API allows viewing of aggregate report data derived from some MDS endpoints that may be used for use cases like compliance, program effectiveness, and alignment on counts. The metrics [methodology](/metrics/metrics_methodology.md) definitions may be used by providers and third parties in their own calculations.
 
 [Metrics Examples](examples) are available with sample implementations.
@@ -32,24 +34,27 @@ Objectives:
 
 Here are initial design use cases and scenarios for Metrics.
 
-### Cities
+### Agencies
 
-- Share aggregated data from Provider or Agency with other city employees, city departments, vendors, and academic researchers. 
-- Share their calculations back to providers to reduce disagreements about compliance, allowing shared understanding and alignment on billing, enforcement, and policy alignment, using a well-defined [methodology](/metrics/metrics_methodology.md).
-- Generating data which could then feed reports to the public.
-- For use in visualizations, analysis, or other applications.
+**_Note:_** Metrics is designed to be served by agencies or their designated third parties.
 
-### Third Parites
+- Use Metrics to share aggregate data derived from disaggregated MDS feeds (e.g., Provider or Agency) with other city employees, city departments, vendors, trusted partners, and academic researchers, either via authenticated API access or extracted metrics data. 
+- Share agency MDS calculations back to providers to reduce disagreements about compliance, allowing a shared understanding and alignment on billing, enforcement, and policy, using a well-defined [methodology](/metrics/metrics_methodology.md).
+- Generating data which could then be used to feed reports to the public.
+- For agency internal and external use in visualizations, analysis, or other applications.
+
+### Third Parties
 
 **_Note:_** Metrics is not designed as a substitute for disaggregated data. See the [Data Requirements](#data-requirements) section for details.
 
-- Aggregate MDS data consistently from providers and make metrics available to cities or research partners.
+- Agencies may designate third party partners to implement Metrics on their behalf.
+- Aggregate MDS data consistently from providers and make metrics available to agencies or research partners.
 
 ### Providers
 
-**_Note:_** Metrics is not designed to be served by providers.
+**_Note:_** Metrics is not designed to be served by providers, only by agencies and their designated partners.
 
-- The Metrics [methodology](/metrics/metrics_methodology.md) defintions for metrics may be referenced for consistency with report calculations.
+- The Metrics [methodology](/metrics/metrics_methodology.md) definitions may be referenced and used by providers for consistency in their own MDS calculations.
 
 [Top][toc]
 
@@ -73,7 +78,7 @@ The Metrics API and all of its endpoints are marked as a [beta feature](https://
 
 All dates and times (datetime) are [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) formatted strings (YYYY-MM-DDTHHMM), with minute granularity supported and time zone (default UTC) or included offset. Dates and times may also be specified using a numeric *Unix epoch/timestamp* 
 
-All interval durations (duration) are [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) duration format strings (e.g. PT15M, PT1H, P1D).
+All interval durations (duration) are [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#Durations) duration format strings (e.g. PT15M, PT1H, P1D).
 
 [Top][toc]
 
@@ -93,11 +98,15 @@ Further scopes and requirements may be added at the discretion of the Agency, de
 
 ## Data Redaction
 
-Some combinations of dimensions, filters, time, and geography may return a small count of trips, which could increase a privacy risk of re-identification. To correct for that, Metrics does not return data below a certain count of results.  This is called k-anonymity, and the threshold is set at a k-value of 10. 
+Some combinations of dimensions, filters, time, and geography may return a small count of trips, which could increase a privacy risk of re-identification. To correct for that, Metrics does not return data below a certain count of results.  This data redaction is called k-anonymity, and the threshold is set at a k-value of 10. For more explanation of this methodology, see our [Data Redaction Guidance document](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Data-Redaction).
 
-If the query returns less than `10` trips in its count, then a `rows` value `number` of `-1` is returned.
+**If the query returns fewer than `10` trips in a count, then that row's count value is returned as "-1".** Note "0" values are also returned as "-1" since the goal is to group both low and no count values together for privacy. 
 
-The k-value is always returned in the Metrics Query API [response](/metrics#response-1) to provide important context for the data consumer on the data redaction that is occuring.
+The OMF suggests a k-value of 10 is an appropriate starting point for safe anonymization, absent analysis and a further decision from the agency. As Metrics is in [beta](#beta-feature), this value may be adjusted in future releases and/or may become dynamic to account for specific categories of use cases and users. To improve the specification and to inform future guidance, beta users are encouraged to share their feedback and questions about k-values on this [discussion thread](https://github.com/openmobilityfoundation/mobility-data-specification/discussions/622).
+
+The k-value being used is always returned in the Metrics Query API [response](/metrics#response-1) to provide important context for the data consumer on the data redaction that is occurring.
+
+Using k-anonymity will reduce, but not necessarily eliminate the risk that an individual could be re-identified in a dataset, and this data should still be treated as sensitive. This is just one part of good privacy protection practices, which you can read more about in our [MDS Privacy Guide for Cities](https://github.com/openmobilityfoundation/governance/blob/main/documents/OMF-MDS-Privacy-Guide-for-Cities.pdf). 
 
 [Top][toc]
 
@@ -159,9 +168,9 @@ Supports querying one or more metrics with the following parameters.
 | Name            | Type     | Required | Comments                                                                        |
 | --------------- | -------- | -------- | ------------------------------------------------------------------------------- |
 | `measures`      | string[] | Yes      | list of measures to return. [See metric names](core_metrics.md)                 |
-| `interval`      | duration | Yes      | Duration for metrics intervals.                                                 |
-| `start_date`    | datetime | Yes      | ISO 8601 formatted start date or numeric timestamp to fetch metrics.            |
-| `end_date`      | datetime | No       | ISI 8601 formatted end date or numberic timestamp to fetch metrics.             |
+| `interval`      | duration | Yes      | [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#Durations) duration for metrics intervals.                                                 |
+| `start_date`    | datetime | Yes      | [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) formatted start date or numeric timestamp to fetch metrics.            |
+| `end_date`      | datetime | No       | [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) formatted end date or numeric timestamp to fetch metrics.             |
 | `timezone`      | timezone | No       | TZ Database time zone name (default: "UTC")                                     |
 | `dimensions`    | string[] | No       | List of dimension names. [See dimensions.](core_metrics.md#dimensions)          |
 | `filters`       | filter[] | No       | Filters for metrics to return of format [See filters.](core_metrics.md#filters) |
