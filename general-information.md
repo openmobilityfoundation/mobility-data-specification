@@ -9,6 +9,7 @@ This document contains specifications that are shared between the various MDS AP
 * [Definitions](#definitions)
 * [Devices](#devices)
 * [Geographic Data][geo]
+  * [Geographic Telemetry Data](#geographic-telemetry-data)
   * [Stop-based Geographic Data](#stop-based-geographic-data)
   * [Intersection Operation](#intersection-operation)
 * [Geography-Driven Events](#geography-driven-events)
@@ -73,14 +74,32 @@ Additionally, `device_id` must remain constant for the device's lifetime of serv
 
 References to geographic datatypes (Point, MultiPolygon, etc.) imply coordinates encoded in the [WGS 84 (EPSG:4326)][wgs84] standard GPS or GNSS projection expressed as [Decimal Degrees][decimal-degrees]. When points are used, you may assume a 20 meter buffer around the point when needed.
 
-Whenever an individual location coordinate measurement is presented, it must be
-represented as a GeoJSON [`Feature`][geojson-feature] object with a corresponding [`timestamp`][ts] property and [`Point`][geojson-point] geometry:
+### Geographic Telemetry Data
+
+Whenever a vehicle location coordinate measurement is presented, it must be
+represented as a GeoJSON [`Feature`][geojson-feature] object with a corresponding
+`properties` object with the following properties:
+
+
+| Field          | Type           | Required/Optional     | Field Description                                            |
+| -------------- | -------------- | --------------------- | ------------------------------------------------------------ |
+| `timestamp`    | [timestamp][ts]      | Required              | Date/time that event occurred. Based on GPS or GNSS clock            |
+| `altitude` | Double         | Required if Available | Altitude above mean sea level in meters                      |
+| `heading`  | Double         | Required if Available | Degrees - clockwise starting at 0 degrees at true North      |
+| `speed`    | Float          | Required if Available | Speed in meters / sec                                        |
+| `accuracy` | Float          | Required if Available | Accuracy in meters                                           |
+| `hdop`     | Float          | Required if Available | Horizontal GPS or GNSS accuracy value (see [hdop][hdop]) |
+| `satellites` | Integer      | Required if Available | Number of GPS or GNSS satellites
+
+Example of a vehicle location GeoJSON [`Feature`][geojson-feature] object:
 
 ```json
 {
     "type": "Feature",
     "properties": {
-        "timestamp": 1529968782421
+        "timestamp": 1529968782421,
+        "accuracy": 10,
+        "speed": 1.21
     },
     "geometry": {
         "type": "Point",
@@ -444,6 +463,7 @@ If an unsupported or invalid version is requested, the API must respond with a s
 
 [agency]: /agency/README.md
 [decimal-degrees]: https://en.wikipedia.org/wiki/Decimal_degrees
+[hdop]: https://en.wikipedia.org/wiki/Dilution_of_precision_(navigation)
 [gbfs-station-info]: https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_informationjson
 [gbfs-station-status]: https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_statusjson
 [general-stops]: /general-information.md#stops
