@@ -250,7 +250,7 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | `gps.lng`      | Double         | Required              | Longitude of the location                                    |
 | `gps.altitude` | Double         | Required if Available | Altitude above mean sea level in meters                      |
 | `gps.heading`  | Double         | Required if Available | Degrees - clockwise starting at 0 degrees at true North      |
-| `gps.speed`    | Float          | Required if Available | Speed in meters / sec                                        |
+| `gps.speed`    | Float          | Required if Available | Estimated speed in meters / sec as reported by the GPS chipset                                        |
 | `gps.accuracy` | Float          | Required if Available | Accuracy in meters                                           |
 | `gps.hdop`     | Float          | Required if Available | Horizontal GPS or GNSS accuracy value (see [hdop][hdop]) |
 | `gps.satellites` | Integer      | Required if Available | Number of GPS or GNSS satellites
