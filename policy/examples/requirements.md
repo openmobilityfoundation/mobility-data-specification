@@ -27,15 +27,14 @@ Version 1.2.0 of MDS Policy and Geography for agencies to publish rules/fees/inc
     "agency_timezone": "America/New_York",
     "agency_language": "en-US",
     "agency_currency": "USD",
-    "agency_policy_website_url": "https:/www.cityname.gov/transporation/shared-devices.html",
-    "agency_policy_document_url": "https://www.cityname.gov/mds_data_policy.pdf",
-    "gbfs_required": "true",
+    "agency_website_url": "https://www.cityname.gov/transporation/",
     "url": "https://mds.cityname.gov/policy/requirements/1.2.0"
   },
-  "mds_versions": [
+  "programs": [
     {
       "description": "City Micromobility Program Policy Rules",
-      "version": "1.2.0",
+      "policy_website_url": "https://www.cityname.gov/transporation/shared-devices.html",
+      "policy_document_url": "https://www.cityname.gov/mds_data_policy.pdf",
       "provider_ids": [
         "70aa475d-1fcd-4504-b69c-2eeb2107f7be",
         "2411d395-04f2-47c9-ab66-d09e9e3c3251",
@@ -45,27 +44,49 @@ Version 1.2.0 of MDS Policy and Geography for agencies to publish rules/fees/inc
       ],
       "start_date": 1611958740,
       "end_date": null,
-      "required_mds_apis": [
+      "required_data_specs": [
         {
-          "api_name": "policy",
-          "required_endpoints": [ 
+          "data_spec_name": "MDS",
+          "version": "1.2.0",
+          "required_apis": [
             {
-              "endpoint_name" : "policies",
-              "url": "https://mds.cityname.com/policy/policies/1.2.0"
-            } 
+              "api_name": "policy",
+              "required_endpoints": [
+                {
+                  "endpoint_name": "policies",
+                  "url": "https://mds.cityname.com/policy/policies/1.2.0"
+                }
+              ]
+            },
+            {
+              "api_name": "geography",
+              "required_endpoints": [
+                {
+                  "endpoint_name": "geographies",
+                  "url": "https://mds.cityname.com/geography/geographies/1.2.0",
+                  "required_fields": [
+                    "geography_type",
+                    "description"
+                  ]
+                }
+              ]
+            }
           ]
         },
         {
-          "api_name": "geography",
-          "required_endpoints": [ 
+          "data_spec_name": "GBFS",
+          "version": "2.2",
+          "required_apis": [
             {
-              "endpoint_name" : "geographies",
-              "url": "https://mds.cityname.com/geography/geographies/1.2.0",
-              "required_fields": [
-                "geography_type",
-                "description"
+              "required_endpoints": [
+                {
+                  "endpoint_name": "geofencing_zones.json",
+                  "required_fields": [
+                    "vehicle_type_id"
+                  ]
+                }
               ]
-            } 
+            }
           ]
         }
       ]
