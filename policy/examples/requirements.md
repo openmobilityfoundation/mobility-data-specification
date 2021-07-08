@@ -13,7 +13,7 @@ This file presents a series of example [Requirements](../README.md#requirement) 
 
 ## Policy and Geography
 
-Version 1.2.0 of MDS Policy and Geography for agencies to publish rules/fees/incentives and operating/equity/no-ride/slow speed/parking areas to all providers.  
+Version 1.2.0 of MDS Policy and Geography for agencies to publish rules/fees/incentives and operating/equity/no-ride/slow speed/parking areas to all providers, and require GBFS's geofencing_zones.  
 
 ```json
 {
@@ -99,7 +99,7 @@ Version 1.2.0 of MDS Policy and Geography for agencies to publish rules/fees/inc
 
 ## Vehicles Only
 
-Version 1.1.0 for one provider with scooters, and 1.0.0 for another provider for all vehicle types, requiring only the Provider `/vehicles` endpoint and no optional fields, as an authenticated [alternative to GBFS](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Vehicles) for internal use.
+Version 1.1.0 for one provider with scooters, and 1.0.0 for another provider for bicycles, requiring only the Provider `/vehicles` endpoint and no optional fields, as an authenticated [alternative to GBFS](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Vehicles) for internal use, while still requiring GBFS 2.1 for the public.
 
 ```json
 {
@@ -113,15 +113,14 @@ Version 1.1.0 for one provider with scooters, and 1.0.0 for another provider for
     "agency_timezone": "America/New_York",
     "agency_language": "en-US",
     "agency_currency": "USD",
-    "agency_policy_website_url": "https:/www.cityname.gov/transporation/shared-devices.html",
-    "agency_policy_document_url": "https://www.cityname.gov/mds_data_policy.pdf",
-    "gbfs_required": "true",
+    "agency_website_url": "https://www.cityname.gov/transporation/",
     "url": "https://mds.cityname.gov/policy/requirements/1.2.0"
   },
-  "mds_versions": [
+  "programs": [
     {
-      "description": "City Vehicle Monitoring Program 2021",
-      "version": "1.1.0",
+      "description": "City Scooter Monitoring Program 2021",
+      "policy_website_url": "https://www.cityname.gov/transporation/shared-devices.html",
+      "policy_document_url": "https://www.cityname.gov/mds_data_policy.pdf",
       "provider_ids": [
         "70aa475d-1fcd-4504-b69c-2eeb2107f7be"
       ],
@@ -130,32 +129,57 @@ Version 1.1.0 for one provider with scooters, and 1.0.0 for another provider for
       ],
       "start_date": 1611958740,
       "end_date": null,
-      "required_mds_apis": [
+      "required_data_specs": [
         {
-          "api_name": "provider",
-          "required_endpoints": [ 
+          "data_spec_name": "MDS",
+          "version": "1.1.0",
+          "required_apis": [
             {
-              "endpoint_name" : "vehicles"
-            } 
+              "api_name": "provider",
+              "required_endpoints": [
+                {
+                  "endpoint_name": "vehicles"
+                }
+              ]
+            }
           ]
+        },
+        {
+          "data_spec_name": "GBFS",
+          "version": "2.1"
         }
       ]
     },
     {
-      "version": "1.0.0",
+      "description": "City Bikeshare Monitoring Program 2021",
+      "policy_website_url": "https://www.cityname.gov/transporation/bikeshare.html",
+      "policy_document_url": "https://www.cityname.gov/mds_data_policy.pdf",
       "provider_ids": [
         "2411d395-04f2-47c9-ab66-d09e9e3c3251"
       ],
+      "vehicle_types": [
+        "bicycle"
+      ],
       "start_date": 1611958740,
       "end_date": null,
-      "required_mds_apis": [
+      "required_data_specs": [
         {
-          "api_name": "provider",
-          "required_endpoints": [ 
+          "data_spec_name": "MDS",
+          "version": "1.0.0",
+          "required_apis": [
             {
-              "endpoint_name" : "vehicles"
-            } 
+              "api_name": "provider",
+              "required_endpoints": [
+                {
+                  "endpoint_name": "vehicles"
+                }
+              ]
+            }
           ]
+        },
+        {
+          "data_spec_name": "GBFS",
+          "version": "2.1"
         }
       ]
     }
@@ -181,15 +205,14 @@ Version 1.1.0 for 2 providers requiring only historic Provider `/trips` with the
     "agency_timezone": "America/New_York",
     "agency_language": "en-US",
     "agency_currency": "USD",
-    "agency_policy_website_url": "https:/www.cityname.gov/transporation/shared-devices.html",
-    "agency_policy_document_url": "https://www.cityname.gov/mds_data_policy.pdf",
-    "gbfs_required": "true",
+    "agency_website_url": "https://www.cityname.gov/transporation/",
     "url": "https://mds.cityname.gov/policy/requirements/1.2.0"
   },
-  "mds_versions": [
+  "programs": [
     {
       "description": "City Vehicle Program Pilot 2021",
-      "version": "1.1.0",
+      "policy_website_url": "https://www.cityname.gov/transporation/shared-devices.html",
+      "policy_document_url": "https://www.cityname.gov/mds_data_policy.pdf",
       "provider_ids": [
         "70aa475d-1fcd-4504-b69c-2eeb2107f7be",
         "2411d395-04f2-47c9-ab66-d09e9e3c3251"
@@ -197,17 +220,27 @@ Version 1.1.0 for 2 providers requiring only historic Provider `/trips` with the
       "policy_id": "39a653be-7180-4188-b1a6-cae33c280341",
       "start_date": 1611958740,
       "end_date": 1611970539,
-      "required_mds_apis": [
+      "required_data_specs": [
         {
-          "api_name": "provider",
-          "required_endpoints": [ 
+          "data_spec_name": "MDS",
+          "version": "1.1.0",
+          "required_apis": [
             {
-              "endpoint_name" : "trips",
-              "required_fields": [
-                "parking_verification_url"
+              "api_name": "provider",
+              "required_endpoints": [
+                {
+                  "endpoint_name": "trips",
+                  "required_fields": [
+                    "parking_verification_url"
+                  ]
+                }
               ]
-            } 
+            }
           ]
+        },
+        {
+          "data_spec_name": "GBFS",
+          "version": "2.2"
         }
       ]
     }
@@ -235,15 +268,14 @@ Note: by specifying geography, policy, and jurisdiction here with a URL, the age
     "agency_timezone": "America/New_York",
     "agency_language": "en-US",
     "agency_currency": "USD",
-    "agency_policy_website_url": "https:/www.cityname.gov/transporation/shared-devices.html",
-    "agency_policy_document_url": "https://www.cityname.gov/mds_data_policy.pdf",
-    "gbfs_required": "true",
+    "agency_website_url": "https://www.cityname.gov/transporation/",
     "url": "https://mds.cityname.gov/policy/requirements/1.2.0"
   },
-  "mds_versions": [
+  "programs": [
     {
       "description": "City Shared Device Program and Policies 2021",
-      "version": "1.1.0",
+      "policy_website_url": "https://www.cityname.gov/transporation/shared-devices.html",
+      "policy_document_url": "https://www.cityname.gov/mds_data_policy.pdf",
       "provider_ids": [
         "70aa475d-1fcd-4504-b69c-2eeb2107f7be",
         "2411d395-04f2-47c9-ab66-d09e9e3c3251",
@@ -251,86 +283,98 @@ Note: by specifying geography, policy, and jurisdiction here with a URL, the age
       ],
       "start_date": 1611958740,
       "end_date": 1611970539,
-      "required_mds_apis": [
+      "required_data_specs": [
         {
-          "api_name": "provider",
-          "required_endpoints": [ 
+          "data_spec_name": "MDS",
+          "version": "1.1.0",
+          "required_apis": [
             {
-              "endpoint_name" : "trips",
-              "required_fields": [
-                "parking_verification_url",
-                "standard_cost",
-                "actual_cost"
+              "api_name": "provider",
+              "required_endpoints": [
+                {
+                  "endpoint_name": "trips",
+                  "required_fields": [
+                    "parking_verification_url",
+                    "standard_cost",
+                    "actual_cost"
+                  ]
+                },
+                {
+                  "endpoint_name": "status_changes",
+                  "required_fields": [
+                    "event_geographies",
+                    "trip_id"
+                  ]
+                },
+                {
+                  "endpoint_name": "reports"
+                },
+                {
+                  "endpoint_name": "events",
+                  "required_fields": [
+                    "trip_id",
+                    "associated_ticket"
+                  ]
+                },
+                {
+                  "endpoint_name": "stops",
+                  "required_fields": [
+                    "geography_id",
+                    "address",
+                    "devices",
+                    "image_url"
+                  ]
+                },
+                {
+                  "endpoint_name": "vehicles",
+                  "required_fields": [
+                    "current_location"
+                  ]
+                }
               ]
             },
             {
-              "endpoint_name" : "status_changes",
-              "required_fields": [
-                "event_geographies",
-                "trip_id"
+              "api_name": "policy",
+              "required_endpoints": [
+                {
+                  "endpoint_name": "policies",
+                  "url": "https://mds.cityname.gov/policy/policies/1.1.0"
+                }
               ]
             },
             {
-              "endpoint_name" : "reports"
-            },
-            {
-              "endpoint_name" : "events",
-              "required_fields": [
-                "trip_id",
-                "associated_ticket"
+              "api_name": "geography",
+              "required_endpoints": [
+                {
+                  "endpoint_name": "geographies",
+                  "url": "https://mds.cityname.gov/geography/geographies/1.1.0"
+                }
               ]
             },
             {
-              "endpoint_name" : "stops",
-              "required_fields": [
-                "geography_id",
-                "address",
-                "devices",
-                "image_url"
+              "api_name": "jurisdiction",
+              "required_endpoints": [
+                {
+                  "endpoint_name": "trips",
+                  "url": "https://mds.cityname.gov/jurisdiction/jurisdictions/1.1.0"
+                }
               ]
             },
             {
-              "endpoint_name" : "vehicles",
-              "required_fields": [
-                "current_location"
-              ]
+              "api_name": "metrics"
             }
           ]
         },
         {
-          "api_name" : "policy",
-          "required_endpoints": [ 
-            {
-              "endpoint_name" : "policies",
-              "url" : "https://mds.cityname.gov/policy/policies/1.1.0"
-            }
-          ]
-        },
-        {
-          "api_name" : "geography",
-          "required_endpoints": [ 
-            {
-              "endpoint_name" : "geographies",
-              "url" : "https://mds.cityname.gov/geography/geographies/1.1.0"
-            }
-          ]
-        },
-        {
-          "api_name" : "jurisdiction",
-          "required_endpoints": [ 
-            {
-              "endpoint_name" : "trips",
-              "url" : "https://mds.cityname.gov/jurisdiction/jurisdictions/1.1.0"
-            }
-          ]
-        },
-        {
-          "api_name" : "metrics"
+          "data_spec_name": "GBFS",
+          "version": "2.2"
         }
       ]
     },
     {
       "description": "City Docked Device Program 2021",
+      "policy_website_url": "https://www.cityname.gov/transporation/shared-devices.html",
+      "policy_document_url": "https://www.cityname.gov/mds_data_policy.pdf",
       "version": "0.4.1",
       "provider_ids": [
         "70aa475d-1fcd-4504-b69c-2eeb2107f7be",
@@ -339,37 +383,47 @@ Note: by specifying geography, policy, and jurisdiction here with a URL, the age
       ],
       "start_date": 1611958740,
       "end_date": 1611970539,
-      "required_mds_apis": [
+      "required_data_specs": [
         {
-          "api_name": "provider",
-          "required_endpoints": [ 
+          "data_spec_name": "MDS",
+          "version": "0.4.1",
+          "required_apis": [
             {
-              "endpoint_name" : "trips",
-              "required_fields": [
-                "parking_verification_url",
-                "standard_cost",
-                "actual_cost"
+              "api_name": "provider",
+              "required_endpoints": [
+                {
+                  "endpoint_name": "trips",
+                  "required_fields": [
+                    "parking_verification_url",
+                    "standard_cost",
+                    "actual_cost"
+                  ]
+                },
+                {
+                  "endpoint_name": "status_changes"
+                },
+                {
+                  "endpoint_name": "events"
+                },
+                {
+                  "endpoint_name": "stops",
+                  "required_fields": [
+                    "geography_id",
+                    "address",
+                    "devices",
+                    "image_url"
+                  ]
+                },
+                {
+                  "endpoint_name": "vehicles"
+                }
               ]
-            },
-            {
-              "endpoint_name" : "status_changes"
-            },
-            {
-              "endpoint_name" : "events"
-            },
-            {
-              "endpoint_name" : "stops",
-              "required_fields": [
-                "geography_id",
-                "address",
-                "devices",
-                "image_url"
-              ]
-            },
-            {
-              "endpoint_name" : "vehicles"
             }
           ]
+        },
+        {
+          "data_spec_name": "GBFS",
+          "version": "2.1"
         }
       ]
     }
@@ -395,15 +449,14 @@ Version 1.1.0 for 3 providers and serving Agency only linking to a defined MDS P
     "agency_timezone": "America/New_York",
     "agency_language": "en-US",
     "agency_currency": "USD",
-    "agency_policy_website_url": "https:/www.cityname.gov/transporation/shared-devices.html",
-    "agency_policy_document_url": "https://www.cityname.gov/mds_data_policy.pdf",
-    "gbfs_required": "true",
+    "agency_website_url": "https://www.cityname.gov/transporation/",
     "url": "https://mds.cityname.gov/policy/requirements/1.2.0"
   },
-  "mds_versions": [
+  "programs": [
     {
       "description": "City Shared Device Management Program 2021-2022",
-      "version": "1.1.0",
+      "policy_website_url": "https://www.cityname.gov/transporation/shared-devices.html",
+      "policy_document_url": "https://www.cityname.gov/mds_data_policy.pdf",
       "provider_ids": [
         "70aa475d-1fcd-4504-b69c-2eeb2107f7be",
         "2411d395-04f2-47c9-ab66-d09e9e3c3251",
@@ -412,42 +465,52 @@ Version 1.1.0 for 3 providers and serving Agency only linking to a defined MDS P
       "policy_id": "39a653be-7180-4188-b1a6-cae33c280341",
       "start_date": 1611958740,
       "end_date": 1611970539,
-      "required_mds_apis": [
+      "required_data_specs": [
         {
-          "api_name": "agency",
-          "required_endpoints": [ 
+          "data_spec_name": "MDS",
+          "version": "1.1.0",
+          "required_apis": [
             {
-              "endpoint_name" : "vehicles"
-            },
-            {
-              "endpoint_name" : "vehicle_register",
-              "required_fields": [
-                "year",
-                "mfg",
-                "model"
-              ]
-            },
-            {
-              "endpoint_name" : "vehicle_update"
-            },
-            {
-              "endpoint_name" : "vehicle_event",
-              "required_fields": [
-                "event_geographies",
-                "trip_id"
-              ]
-            },
-            {
-              "endpoint_name" : "vehicle_telemetry"
-            },
-            {
-              "endpoint_name" : "stops",
-              "required_fields": [
-                "status",
-                "num_spots_disabled"
+              "api_name": "agency",
+              "required_endpoints": [
+                {
+                  "endpoint_name": "vehicles"
+                },
+                {
+                  "endpoint_name": "vehicle_register",
+                  "required_fields": [
+                    "year",
+                    "mfg",
+                    "model"
+                  ]
+                },
+                {
+                  "endpoint_name": "vehicle_update"
+                },
+                {
+                  "endpoint_name": "vehicle_event",
+                  "required_fields": [
+                    "event_geographies",
+                    "trip_id"
+                  ]
+                },
+                {
+                  "endpoint_name": "vehicle_telemetry"
+                },
+                {
+                  "endpoint_name": "stops",
+                  "required_fields": [
+                    "status",
+                    "num_spots_disabled"
+                  ]
+                }
               ]
             }
           ]
+        },
+        {
+          "data_spec_name": "GBFS",
+          "version": "2.2"
         }
       ]
     }
@@ -473,32 +536,41 @@ Version 1.1.0 for 2 providers requiring Provider `/status_changes` with the mini
     "agency_timezone": "America/Los_Angeles",
     "agency_language": "en-US",
     "agency_currency": "USD",
-    "agency_policy_website_url": "https:/www.cityname.gov/transporation/shared-devices.html",
-    "agency_policy_document_url": "https://www.cityname.gov/mds_data_policy.pdf",
-    "gbfs_required": "true",
+    "agency_website_url": "https://www.cityname.gov/transporation/",
     "url": "https://mds.cityname.gov/policy/requirements/1.2.0"
   },
-  "mds_versions": [
+  "programs": [
     {
       "description": "City Shared Vehicle Program",
-      "version": "1.1.0",
+      "policy_website_url": "https://www.cityname.gov/transporation/shared-devices.html",
+      "policy_document_url": "https://www.cityname.gov/mds_data_policy.pdf",
       "provider_ids": [
         "70aa475d-1fcd-4504-b69c-2eeb2107f7be",
         "2411d395-04f2-47c9-ab66-d09e9e3c3251"
       ],
       "start_date": 1611958740,
       "end_date": 1611970539,
-      "required_mds_apis": [
+      "required_data_specs": [
         {
-          "api_name": "provider",
-          "required_endpoints": [ 
+          "data_spec_name": "MDS",
+          "version": "1.1.0",
+          "required_apis": [
             {
-              "endpoint_name" : "status_changes",
-              "required_fields": [
-                "event_geographies"
+              "api_name": "provider",
+              "required_endpoints": [
+                {
+                  "endpoint_name": "status_changes",
+                  "required_fields": [
+                    "event_geographies"
+                  ]
+                }
               ]
-            } 
+            }
           ]
+        },
+        {
+          "data_spec_name": "GBFS",
+          "version": "2.1"
         }
       ]
     }
