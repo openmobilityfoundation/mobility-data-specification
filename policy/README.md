@@ -419,7 +419,6 @@ An agency's program [Requirements](#requirements) endpoint contains a number of 
       "vehicle_types": [
         // optional vehicle_type array
       ],
-      "policy_id" : "[OPTIONAL POLICY ID]",
       "start_date": [timestamp],
       "end_date": [timestamp],
       "required_data_specs": [
@@ -459,7 +458,7 @@ Contains metadata applicable to the agency and at the top of its [Requirement](#
 {
   "metadata": {
     "mds_release": "[TEXT]",
-    "version": "[INTEGER]",
+    "file_version": "[INTEGER]",
     "last_updated": "[TIMESTAMP]",
     "max_update_interval": "[DURATION]",
     "agency_uuid": "[UUID]",
@@ -479,7 +478,7 @@ Contains metadata applicable to the agency and at the top of its [Requirement](#
 | Name                         | Type            | Required / Optional | Description              |
 | ---------------------------- | --------------- | -------- | ----------------------------------- |
 | `mds_release`                | text            | Required | Release of MDS that the **requirements data feed** aligns to, based on official MDS releases. E.g. "1.2.0" |
-| `version`                    | integer         | Required | Version of this file. Increment 1 with each modification. E.g. "3" |
+| `file_version`               | integer         | Required | Version of this file. Increment 1 with each modification. E.g. "3" |
 | `last_updated`               | [timestamp][ts] | Required | When this file `version` was last updated. E.g. "1611958740" |
 | `max_update_interval`        | duration        | Required | The expected maximum frequency with which this file could be updated. [ISO 8601 duration](https://en.wikipedia.org/wiki/ISO_8601#Durations). E.g. "P1D" |
 | `agency_uuid`                | UUID            | Required | UUID of the agency this file applies to. Must come from [agencies.csv](/agencies.csv) file. E.g. "737a9c62-c0cb-4c93-be43-271d21b784b5" |
@@ -487,7 +486,7 @@ Contains metadata applicable to the agency and at the top of its [Requirement](#
 | `agency_timezone`            | timezone        | Required | [TZ Database Name](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) used for dates and times in Requirements and across all MDS endpoints. E.g. "America/New_York" |
 | `agency_language`            | text            | Required | An [IETF BCP 47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language code, used across all MDS endpoints. E.g. "en-US" |
 | `agency_currency`            | text            | Required | Currency used for all monetary values across all MDS endpoints. E.g. "USD" |
-| `agency_website_url`         | URL             | Required | URL of the agency's general transportation page. E.g. "https://www.cityname.gov/transporation/" |
+| `agency_website_url`         | URL             | Required | URL of the agency's general transportation page. E.g. "https://www.cityname.gov/transportation/" |
 | `url`                        | URL             | Required | URL of this file. E.g.  "https://mds.cityname.gov/requirements/1.2.0" |
 
 [Top][toc]
@@ -503,8 +502,8 @@ Unique combinations for data specs, specific providers, vehicle types, policies,
   "programs": [
     {
       "description" : "[PROGRAM DESCRIPTION]",
-      "policy_website_url": "[URL]",
-      "policy_document_url": "[URL]",
+      "program_website_url": "[URL]",
+      "program_document_url": "[URL]",
       "provider_ids": [
         "[PROVIDER UUID]",
         // ...
@@ -513,7 +512,6 @@ Unique combinations for data specs, specific providers, vehicle types, policies,
         "[vehicle_type]",
         // ...
       ],
-      "policy_id" : "[POLICY UUID]",
       "start_date": [timestamp],
       "end_date": [timestamp],
       "required_data_specs" [
@@ -530,11 +528,10 @@ Unique combinations for data specs, specific providers, vehicle types, policies,
 | Name                         | Type            | Required / Optional | Description              | 
 | ---------------------------- | --------------- | -------- | ----------------------------------- | 
 | `description`                | text            | Required | Simple agency program description of this combination of MDS, providers, vehicles, and time frame. | 
-| `policy_website_url`         | URL             | Required | URL of the agency's transportation policy page. E.g. "https://www.cityname.gov/transporation/shared-devices.htm" |
-| `policy_document_url`        | URL             | Optional | URL of the agency's operating permit rules that mention data requirements. E.g. "https://www.cityname.gov/mds_data_policy.pdf" |
+| `program_website_url`        | URL             | Required | URL of the agency's transportation policy page. E.g. "https://www.cityname.gov/transportation/shared-devices.htm" |
+| `program_document_url`        | URL             | Optional | URL of the agency's operating permit rules that mention data requirements. E.g. "https://www.cityname.gov/mds_data_policy.pdf" |
 | `provider_ids`               | UUID[]          | Required | Array of provider UUIDs that apply to this group the requirements | 
 | `vehicle_type`               | Enum            | Optional | Array of [Vehicle Types](../general-information.md#vehicle-types) that apply to this requirement. If absent it applies to all vehicle types. | 
-| `policy_id`                  | UUID            | Optional | Policy UUID that applies to this group of requirements, if applicable and there is an existing Policy feed. References the [policy_id](#policy) field. | 
 | `start_date`                 | [timestamp][ts] | Required | Beginning date/time of requirements | 
 | `end_date`                   | [timestamp][ts] | Required | End date/time of requirements. Can be null. Keep data at least one year past `end_date` before removing. | 
 | `required_data_specs`        | Array           | Required | Array of required [Data Specs](#requirement-data-specs) |
