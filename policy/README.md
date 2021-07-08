@@ -552,6 +552,11 @@ For each combination of items in a program, you can specify the data specs, APIs
             {
               // Required APIs array
             }
+          ],
+          "available_apis": [
+            {
+              // Available APIs array
+            }
           ]
         },
         // other data specs
@@ -563,16 +568,21 @@ For each combination of items in a program, you can specify the data specs, APIs
 | -------------------- | ----- | -------- | ----------------------------------- | 
 | `data_spec_name`     | Enum  | Required | Name of the data spec required. Supported values are: '[MDS](https://github.com/openmobilityfoundation/mobility-data-specification/tree/ms-requirements)', '[GBFS](https://github.com/NABSA/gbfs/tree/v2.2)' | 
 | `version`            | Text  | Required | Version number of the data spec required. E.g. '1.2.0' | 
-| `required_apis`      | Enum  | Conditionally Required | Name of the [Requirement API](#requirement-apis). Required for MDS, one of: provider, agency, policy, geography, jurisdiction, metrics. For GBFS, this field is omitted since GBFS starts at the `endpoint` level. E.g. 'agency' | 
+| `required_apis`      | Enum  | Conditionally Required | Name of the [Requirement API](#requirement-apis) that need to be served by providers. For MDS, one of: provider, agency. For GBFS, this field is omitted since GBFS starts at the `endpoint` level. E.g. 'agency' | 
+| `available_apis`     | Enum  | Conditionally Required | Name of the [Requirement API](#requirement-apis) that are being served by agencies. For MDS, one of: policy, geography, jurisdiction, metrics. Not applicable to GBFS. | 
 
 [Top][toc]
 
 
 #### Requirement APIs
 
-For each data specification, you can require optional APIs, endpoints, and fields that you need per your agency's policy. This is an array within the [Requirement Data Specs](#requirement-data-specs) section in the [Requirement](#requirement) data feed.
+For each data specification, you can specify which APIs are required from providers and available from your agency.
 
-**Note: any APIs, endpoints, or fields that are required by a data specification are not to be listed here, and are still required. Only optional items are enumerated here.**
+An agency may require providers to serve optional APIs, endpoints, and fields that are needed for your agency's program. This is a `required_apis` array within the [Requirement Data Specs](#requirement-data-specs) section in the [Requirement](#requirement) data feed.
+
+You may also show which APIs, endpoints, and fields your agency is serving. This is a `available_apis` array within the [Requirement Data Specs](#requirement-data-specs) section in the [Requirement](#requirement) data feed.
+
+**Note: any APIs, endpoints, or fields that are required by a data specification are not to be listed, and are still required. Only optional items are enumerated here.**
 
 ```jsonc
 // ...  
@@ -582,7 +592,6 @@ For each data specification, you can require optional APIs, endpoints, and field
               "required_endpoints": [ 
                 {
                   "endpoint_name" : "[ENDPOINT NAME]",
-                  "url": "[ENDPOINT URL]",
                   "required_fields": [
                     "[FIELD NAME]",
                     // other field names
@@ -592,17 +601,45 @@ For each data specification, you can require optional APIs, endpoints, and field
               ]
             },
             // other APIs in same data spec
+          ],
+          "available_apis": [
+            {
+              "api_name" : "[API NAME]",
+              "available_endpoints": [ 
+                {
+                  "endpoint_name" : "[ENDPOINT NAME]",
+                  "url": "[ENDPOINT URL]",
+                  "available_fields": [
+                    "[FIELD NAME]",
+                    // other field names
+                  ]
+                },
+                // other endpoints
+              ]
+            }
           ]
 // ...
 ```
 
-| Name                 | Type  | Required / Optional | Description              | 
+| Name                 | Type  | Required/Optional | Description                | 
 | -------------------- | ----- | -------- | ----------------------------------- | 
 | `api_name`           | Enum  | Required | Name of the applicable MDS API: provider, agency, policy, geography, jurisdiction, metrics. At least one is required. E.g. 'agency' | 
-| `url`                | URL   | Required / Optional | Location of API root URL (minus the endpoint name). Required if the API is unauthenticated and public, optional if endpoint is authenticated and private. E.g. "https://mds.cityname.gov/geographies/geography/1.1.0"  | 
-| `required_endpoints` | Array | Required | Array of optional endpoints required by the agency. At least one is required. | 
 | `endpoint_name`      | Text  | Required | Name of required endpoint. At least one is required. E.g. "trips" | 
+
+**Provider Endpoints** - Specific to the `required_apis` array 
+
+| Name                 | Type  | Required/Optional | Description                | 
+| -------------------- | ----- | -------- | ----------------------------------- | 
+| `required_endpoints` | Array | Required | Array of optional endpoints required by the agency. At least one is required. | 
 | `required_fields`    | Array | Optional | Array of optional field names required by the agency. Can be omitted if none are required. Use dot notation for nested fields. See **special notes** below. | 
+
+**Agency Endpoints** - Specific to the `available_apis` array 
+
+| Name                 | Type  | Required/Optional | Description                | 
+| -------------------- | ----- | -------- | ----------------------------------- | 
+| `available_endpoints`| Array | Required | Array of endpoints provided by the agency. At least one is required. | 
+| `url`                | URL   | Optional | Location of API endpoint url. Required if the API is unauthenticated and public, optional if endpoint is authenticated and private. E.g. "https://mds.cityname.gov/geographies/geography/1.1.0"  | 
+| `available_fields`   | Array | Optional | Array of optional field names provided by the agency. Can be omitted if none are required. Use dot notation for nested fields. See **special notes** below. | 
 
 **Special notes about `required_fields`.** 
 
