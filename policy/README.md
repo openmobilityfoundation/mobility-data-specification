@@ -32,8 +32,9 @@ This specification describes the digital relationship between _mobility as a ser
     - [Update Frequency](#requirement-update-frequency)
     - [Format](#requirement-format)
     - [Metadata](#requirement-metadata)
-    - [MDS Versions](#requirement-mds-versions)
-    - [MDS APIs](#requirement-mds-apis)
+    - [Programs](#requirement-programs)
+    - [Data Specs](#requirement-data-specs)
+    - [APIs](#requirement-apis)
  
 ## General information
 
