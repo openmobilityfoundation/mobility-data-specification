@@ -28,13 +28,13 @@ Version 1.2.0 of MDS Policy and Geography for agencies to publish rules/fees/inc
     "agency_timezone": "America/New_York",
     "agency_language": "en-US",
     "agency_currency": "USD",
-    "agency_website_url": "https://www.cityname.gov/transporation/",
+    "agency_website_url": "https://www.cityname.gov/transportation/",
     "url": "https://mds.cityname.gov/policy/requirements/1.2.0"
   },
   "programs": [
     {
       "description": "City Micromobility Program Policy Rules",
-      "policy_website_url": "https://www.cityname.gov/transporation/shared-devices.html",
+      "policy_website_url": "https://www.cityname.gov/transportation/shared-devices.html",
       "policy_document_url": "https://www.cityname.gov/mds_data_policy.pdf",
       "provider_ids": [
         "70aa475d-1fcd-4504-b69c-2eeb2107f7be",
@@ -114,13 +114,13 @@ Version 1.1.0 for one provider with scooters, and 1.0.0 for another provider for
     "agency_timezone": "America/New_York",
     "agency_language": "en-US",
     "agency_currency": "USD",
-    "agency_website_url": "https://www.cityname.gov/transporation/",
+    "agency_website_url": "https://www.cityname.gov/transportation/",
     "url": "https://mds.cityname.gov/policy/requirements/1.2.0"
   },
   "programs": [
     {
       "description": "City Scooter Monitoring Program 2021",
-      "policy_website_url": "https://www.cityname.gov/transporation/shared-devices.html",
+      "policy_website_url": "https://www.cityname.gov/transportation/shared-devices.html",
       "policy_document_url": "https://www.cityname.gov/mds_data_policy.pdf",
       "provider_ids": [
         "70aa475d-1fcd-4504-b69c-2eeb2107f7be"
@@ -153,7 +153,7 @@ Version 1.1.0 for one provider with scooters, and 1.0.0 for another provider for
     },
     {
       "description": "City Bikeshare Monitoring Program 2021",
-      "policy_website_url": "https://www.cityname.gov/transporation/bikeshare.html",
+      "policy_website_url": "https://www.cityname.gov/transportation/bikeshare.html",
       "policy_document_url": "https://www.cityname.gov/mds_data_policy.pdf",
       "provider_ids": [
         "2411d395-04f2-47c9-ab66-d09e9e3c3251"
@@ -206,13 +206,13 @@ Version 1.1.0 for 2 providers requiring only historic Provider `/trips` with the
     "agency_timezone": "America/New_York",
     "agency_language": "en-US",
     "agency_currency": "USD",
-    "agency_website_url": "https://www.cityname.gov/transporation/",
+    "agency_website_url": "https://www.cityname.gov/transportation/",
     "url": "https://mds.cityname.gov/policy/requirements/1.2.0"
   },
   "programs": [
     {
       "description": "City Vehicle Program Pilot 2021",
-      "policy_website_url": "https://www.cityname.gov/transporation/shared-devices.html",
+      "policy_website_url": "https://www.cityname.gov/transportation/shared-devices.html",
       "policy_document_url": "https://www.cityname.gov/mds_data_policy.pdf",
       "provider_ids": [
         "70aa475d-1fcd-4504-b69c-2eeb2107f7be",
@@ -269,13 +269,13 @@ Note: by specifying geography, policy, and jurisdiction here with a URL, the age
     "agency_timezone": "America/New_York",
     "agency_language": "en-US",
     "agency_currency": "USD",
-    "agency_website_url": "https://www.cityname.gov/transporation/",
+    "agency_website_url": "https://www.cityname.gov/transportation/",
     "url": "https://mds.cityname.gov/policy/requirements/1.2.0"
   },
   "programs": [
     {
       "description": "City Shared Device Program and Policies 2021",
-      "policy_website_url": "https://www.cityname.gov/transporation/shared-devices.html",
+      "policy_website_url": "https://www.cityname.gov/transportation/shared-devices.html",
       "policy_document_url": "https://www.cityname.gov/mds_data_policy.pdf",
       "provider_ids": [
         "70aa475d-1fcd-4504-b69c-2eeb2107f7be",
@@ -374,7 +374,7 @@ Note: by specifying geography, policy, and jurisdiction here with a URL, the age
     },
     {
       "description": "City Docked Device Program 2021",
-      "policy_website_url": "https://www.cityname.gov/transporation/shared-devices.html",
+      "policy_website_url": "https://www.cityname.gov/transportation/shared-devices.html",
       "policy_document_url": "https://www.cityname.gov/mds_data_policy.pdf",
       "version": "0.4.1",
       "provider_ids": [
@@ -450,13 +450,13 @@ Version 1.1.0 for 3 providers and serving Agency only linking to a defined MDS P
     "agency_timezone": "America/New_York",
     "agency_language": "en-US",
     "agency_currency": "USD",
-    "agency_website_url": "https://www.cityname.gov/transporation/",
+    "agency_website_url": "https://www.cityname.gov/transportation/",
     "url": "https://mds.cityname.gov/policy/requirements/1.2.0"
   },
   "programs": [
     {
       "description": "City Shared Device Management Program 2021-2022",
-      "policy_website_url": "https://www.cityname.gov/transporation/shared-devices.html",
+      "policy_website_url": "https://www.cityname.gov/transportation/shared-devices.html",
       "policy_document_url": "https://www.cityname.gov/mds_data_policy.pdf",
       "provider_ids": [
         "70aa475d-1fcd-4504-b69c-2eeb2107f7be",
@@ -537,13 +537,13 @@ Version 1.1.0 for 2 providers requiring Provider `/status_changes` with the mini
     "agency_timezone": "America/Los_Angeles",
     "agency_language": "en-US",
     "agency_currency": "USD",
-    "agency_website_url": "https://www.cityname.gov/transporation/",
+    "agency_website_url": "https://www.cityname.gov/transportation/",
     "url": "https://mds.cityname.gov/policy/requirements/1.2.0"
   },
   "programs": [
     {
       "description": "City Shared Vehicle Program",
-      "policy_website_url": "https://www.cityname.gov/transporation/shared-devices.html",
+      "policy_website_url": "https://www.cityname.gov/transportation/shared-devices.html",
       "policy_document_url": "https://www.cityname.gov/mds_data_policy.pdf",
       "provider_ids": [
         "70aa475d-1fcd-4504-b69c-2eeb2107f7be",
@@ -597,13 +597,13 @@ Since Requirements allows the GBFS versions and optional endpoints and fields to
     "agency_timezone": "America/New_York",
     "agency_language": "en-US",
     "agency_currency": "USD",
-    "agency_website_url": "https://www.cityname.gov/transporation/",
+    "agency_website_url": "https://www.cityname.gov/transportation/",
     "url": "https://mds.cityname.gov/policy/requirements/1.2.0"
   },
   "programs": [
     {
       "description": "City Scooter Public Data Feeds 2021",
-      "policy_website_url": "https://www.cityname.gov/transporation/shared-devices.html",
+      "policy_website_url": "https://www.cityname.gov/transportation/shared-devices.html",
       "policy_document_url": "https://www.cityname.gov/data_policy.pdf",
       "provider_ids": [
         "70aa475d-1fcd-4504-b69c-2eeb2107f7be",
