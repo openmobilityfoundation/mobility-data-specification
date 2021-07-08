@@ -390,11 +390,11 @@ The internal mechanics of ordering are up to the Policy editing and hosting soft
 
 ### Requirement
 
-The agency Policy Requirement file enumerates all of the parts of MDS that an agency requires from providers, including APIs, endpoints, and optional fields, as well as information for providers about the APIs the agency is hosting. The requirements are specific to the needs and use cases of each agency, and ensure there is clarity on what data is being asked for in operating policy documents from providers, reducing the burden on both. This also allows additional public transparency and accountability around data requirements from agencies, and encourages privacy by allowing agencies to ask for only the data they need.
+The agency Policy program Requirement file enumerates all of the parts of MDS and GBFS that an agency requires from providers, including APIs, endpoints, and optional fields, as well as information for providers about the APIs the agency is hosting. The program requirements are specific to the needs and use cases of each agency, and ensure there is clarity on what data is being asked for in operating policy documents from providers, reducing the burden on both. This also allows additional public transparency and accountability around data requirements from agencies, and encourages privacy by allowing agencies to ask for only the data they need.
 
 This endpoint is not authenticated (ie. public), and allows the discovery of other public APIs like Geography, Policy, and Jurisdiction. The agency can host this as a file or API on their servers, on a third party server, or the OMF can host on behalf of an agency in the [agency requirements repo](#). See this [hosting guidance document](#) for more information.  This requirements file can be [referenced directly](https://github.com/openmobilityfoundation/governance/blob/main/technical/OMF-MDS-Policy-Language-Guidance.md) in an agency's operating permit/policy document when discussing program data requirements.
 
-See [Policy Requirement Examples](/policy/examples/requirements.md) for how this can be implemented.
+See [Policy Requirement Examples](/policy/examples/requirements.md) for ideas on how this can be implemented.
 
 #### Requirement Update Frequency
 
@@ -402,17 +402,16 @@ The OMF recommends updating the Requirements feed no more than monthly, and you 
 
 #### Requirement Format
 
-An agency's [Requirements](#requirements) endpoint contains a number of distinct parts, namely [metadata](#requirement-metadata) and [MDS versions](#requirement-mds-versions) (with sub sections on applicable providers and relevant [MDS APIs](#requirement-mds-apis)). 
+An agency's program [Requirements](#requirements) endpoint contains a number of distinct parts, namely [metadata](#requirement-metadata), [program definitions](#requirement-programs), and [data specs](#requirement-data-specs) (with sub sections on relevant [required APIs](#requirement-apis)). 
 
 ```jsonc
 {
   "metadata": {
     // metadata fields per the "Requirement Metadata" section
   },
-  "mds_versions" [ 
+  "programs" [ 
     {
       "description" : "[PROGRAM DESCRIPTION]",
-      "version" : "[MDS VERSION NUMBER]",
       "provider_ids": [
         // provider id array
       ],
@@ -422,13 +421,19 @@ An agency's [Requirements](#requirements) endpoint contains a number of distinct
       "policy_id" : "[OPTIONAL POLICY ID]",
       "start_date": [timestamp],
       "end_date": [timestamp],
-      "mds_apis": [
+      "required_data_specs": [
         {
-          "api_name" : "[MDS API]": {
-            // MDS endpoints, urls, optional fields
+          "data_spec_name": "[NAME OF DATA SPEC]",
+          "version": "[VERSION NUMBER]",
+          "required_apis": [
+            {
+              "api_name" : "[API NAME]": {
+                // Data spec endpoints, urls, optional fields
+              }
+            ]
           }
         },
-        // other MDS APIs per the "Requirement MDS APIs" section
+        // other data specs per the "Requirement Data Specs" section
       ]
     }, 
     // other MDS versions per the "Requriement MDS Version" section
@@ -439,8 +444,9 @@ An agency's [Requirements](#requirements) endpoint contains a number of distinct
 | Name                         | Type            | Required / Optional | Description              | 
 | ---------------------------- | --------------- | -------- | ----------------------------------- | 
 | `metadata`                   | Array           | Required | Array of [Requirement Metadata](#requirement-metadata) fields. | 
-| `mds_versions`               | Array           | Required | Array of [Requirement MDS Versions](#requirement-mds-versions) data. | 
-| `mds_apis`                   | Array           | Required | Array of [Requirement MDS APIs](#requirement-mds-apis) data. | 
+| `programs`                   | Array           | Required | Array of [Requirement Programs](#requirement-programs) data. | 
+| `required_data_specs`        | Array           | Required | Array of [Requirement Data Specs](#requirement-data-specs) data. | 
+| `required_apis`              | Array           | Required | Array of [Requirement APIs](#requirement-apis) data. | 
 
 [Top][toc]
 
@@ -456,13 +462,11 @@ Contains metadata applicable to the agency and at the top of its [Requirement](#
     "last_updated": "[TIMESTAMP]",
     "max_update_interval": "[DURATION]",
     "agency_uuid": "[UUID]",
-    "agency_name": "TECT]",
+    "agency_name": "[TEXT]",
     "agency_timezone": "[TIMEZONE]",
     "agency_language": "[TEXT]",
     "agency_currency": "[TEXT]",
-    "agency_policy_website_url": "[URL]",
-    "agency_policy_document_url": "[URL]",
-    "gbfs_required": "[BOOLEAN]",
+    "agency_website_url": "[URL]"
     "url": "[URL]"
   },
   "mds_versions" [ 
@@ -482,41 +486,40 @@ Contains metadata applicable to the agency and at the top of its [Requirement](#
 | `agency_timezone`            | timezone        | Required | [TZ Database Name](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) used for dates and times in Requirements and across all MDS endpoints. E.g. "America/New_York" |
 | `agency_language`            | text            | Required | An [IETF BCP 47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language code, used across all MDS endpoints. E.g. "en-US" |
 | `agency_currency`            | text            | Required | Currency used for all monetary values across all MDS endpoints. E.g. "USD" |
-| `agency_policy_website_url`  | URL             | Required | URL of the agency's transportation policy page. E.g. "https://www.cityname.gov/transporation/shared-devices.htm" |
-| `agency_policy_document_url` | URL             | Optional | URL of the agency's operating permit rules that mention data requirements. E.g. "https://www.cityname.gov/mds_data_policy.pdf" |
-| `gbfs_required`              | Boolean         | Required | true/false. Is public GBFS required explicitly from providers? E.g. "true" |
+| `agency_website_url`         | URL             | Required | URL of the agency's general transportation page. E.g. "https://www.cityname.gov/transporation/" |
 | `url`                        | URL             | Required | URL of this file. E.g.  "https://mds.cityname.gov/requirements/1.2.0" |
 
 [Top][toc]
 
-#### Requirement MDS Versions
+#### Requirement Programs
 
-Contains a list of providers and APIs/endpoints/fields that a version of MDS applies to over a certain time frame in its [Requirement](#requirement) data feed in the `mds_versions` section. 
+Contains information about an agency's programs, with links to policy documents, and a list of providers and data specs/APIs/endpoints/fields that the program applies to over a certain time frame in its [Requirement](#requirement) data feed in the `required_data_specs` section. 
 
-Unique combinations for MDS versions, specific providers, vehicle types, policies, and dates (past, current, or future) can be defined. For example an agency can define MDS version 1.2.0 for Provider #1 in a pilot with beta endpoints and optional fields, version 1.2.0 for other providers without beta features starting a month from now, and version 1.1.0 for Provider #2 with docked bikeshare. 
+Unique combinations for data specs, specific providers, vehicle types, policies, and dates (past, current, or future) can be defined. For example an agency can define MDS version 1.2.0 and GBFS 2.2 for Provider #1 in a pilot with beta endpoints and optional fields, MDS version 1.2.0 for other providers without beta features starting a month from now, and MDS version 1.1.0 for Provider #2 with docked bikeshare. 
 
 ```jsonc
 // ...  
-  "mds_versions": [
+  "programs": [
     {
       "description" : "[PROGRAM DESCRIPTION]",
-      "version": "[MDS VERSION NUMBER]",
+      "policy_website_url": "[URL]",
+      "policy_document_url": "[URL]",
       "provider_ids": [
         "[PROVIDER UUID]",
-        "[PROVIDER UUID]"
+        // ...
       ],
       "vehicle_types": [
         "[vehicle_type]",
-        "[vehicle_type]"
+        // ...
       ],
       "policy_id" : "[POLICY UUID]",
       "start_date": [timestamp],
       "end_date": [timestamp],
-      "required_mds_apis" [
+      "required_data_specs" [
         {
-          // ...
+          // Required Data Specs array
         },
-        // other MDS APIs
+        // other data specs
       ]
     }
   ]
@@ -526,38 +529,72 @@ Unique combinations for MDS versions, specific providers, vehicle types, policie
 | Name                         | Type            | Required / Optional | Description              | 
 | ---------------------------- | --------------- | -------- | ----------------------------------- | 
 | `description`                | text            | Required | Simple agency program description of this combination of MDS, providers, vehicles, and time frame. | 
-| `version`                    | text            | Required | Version number of an official MDS release | 
+| `policy_website_url`         | URL             | Required | URL of the agency's transportation policy page. E.g. "https://www.cityname.gov/transporation/shared-devices.htm" |
+| `policy_document_url`        | URL             | Optional | URL of the agency's operating permit rules that mention data requirements. E.g. "https://www.cityname.gov/mds_data_policy.pdf" |
 | `provider_ids`               | UUID[]          | Required | Array of provider UUIDs that apply to this group the requirements | 
 | `vehicle_type`               | Enum            | Optional | Array of [Vehicle Types](../general-information.md#vehicle-types) that apply to this requirement. If absent it applies to all vehicle types. | 
 | `policy_id`                  | UUID            | Optional | Policy UUID that applies to this group of requirements, if applicable and there is an existing Policy feed. References the `[policy_id](#policy)` field. | 
 | `start_date`                 | [timestamp][ts] | Required | Beginning date/time of requirements | 
 | `end_date`                   | [timestamp][ts] | Required | End date/time of requirements. Can be null. Keep data at least one year past `end_date` before removing. | 
-| `required_mds_api`           | Array           | Required | Array of required [MDS APIs](#requirement-mds-apis) |
+| `required_data_specs`        | Array           | Required | Array of required [Data Specs](#requirement-data-specs) |
 
 [Top][toc]
 
-#### Requirement MDS APIs
+#### Requirement Data Specs
 
-For each combination of MDS version and provider list, you can specify the MDS APIs, endpoints, and optional fields that are required per your agency's policy. This is an array within the [Requirement MDS Versions](#requirement-mds-versions) `mds_apis` section in the [Requirement](#requirement) data feed.
+For each combination of items in a program, you can specify the data specs, APIs, endpoints, and optional fields that are required per your agency's program policies. This is an array within the [Requirement MDS Versions](#requirement-mds-versions) `mds_apis` section in the [Requirement](#requirement) data feed.
 
 ```jsonc
 // ...  
-      "required_mds_apis": [
+      "required_data_specs": [
         {
-          "api_name" : "[MDS API]",
-          "required_endpoints": [ 
+          "data_spec_name": "[DATA SPEC NAME]",
+          "version": "[VERSION NUMBER]",
+          "required_apis": [
             {
-              "endpoint_name" : "[ENDPOINT NAME]",
-              "url": "[ENDPOINT URL]",
-              "required_fields": [
-                "[FIELD NAME]",
-                // other field names
-              ]
-            } 
+              // Required APIs array
+            }
           ]
         },
-        // other MDS APIs
+        // other data specs
       ]
+// ...
+```
+
+| Name                 | Type  | Required / Optional | Description              | 
+| -------------------- | ----- | -------- | ----------------------------------- | 
+| `data_spec_name`     | Enum  | Required | Name of the data spec required. Supported values are: '[MDS](https://github.com/openmobilityfoundation/mobility-data-specification/tree/ms-requirements)', '[GBFS](https://github.com/NABSA/gbfs/tree/v2.2)' | 
+| `version`            | Text  | Required | Version number of the data spec required. E.g. '1.2.0' | 
+| `required_apis`      | Enum  | Conditionally Required | Name of the [Requirement API](#requirement-apis). Required for MDS, one of: provider, agency, policy, geography, jurisdiction, metrics. For GBFS, this field is omitted since GBFS starts at the `endpoint` level. E.g. 'agency' | 
+
+[Top][toc]
+
+
+#### Requirement APIs
+
+For each data specification, you can require optional APIs, endpoints, and fields that you need per your agency's policy. This is an array within the [Requirement Data Specs](#requirement-data-specs) section in the [Requirement](#requirement) data feed.
+
+**Note: any APIs, endpoints, or fields that are required by a data specification are not listed here, and are still required. Only optional items are enumerated here.**
+
+```jsonc
+// ...  
+          "required_apis": [
+            {
+              "api_name" : "[API NAME]",
+              "required_endpoints": [ 
+                {
+                  "endpoint_name" : "[ENDPOINT NAME]",
+                  "url": "[ENDPOINT URL]",
+                  "required_fields": [
+                    "[FIELD NAME]",
+                    // other field names
+                  ]
+                },
+                // other endpoints
+              ]
+            },
+            // other APIs in same data spec
+          ]
 // ...
 ```
 
@@ -565,7 +602,7 @@ For each combination of MDS version and provider list, you can specify the MDS A
 | -------------------- | ----- | -------- | ----------------------------------- | 
 | `api_name`           | Enum  | Required | Name of the applicable MDS API: provider, agency, policy, geography, jurisdiction, metrics. At least one is required. E.g. 'agency' | 
 | `url`                | URL   | Required / Optional | Location of API root URL (minus the endpoint name). Required if the API is unauthenticated and public, optional if endpoint is authenticated and private. E.g. "https://mds.cityname.gov/geographies/geography/1.1.0"  | 
-| `required_endpoints` | Array | Required | Array of endpoints required. At least one is required. | 
+| `required_endpoints` | Array | Required | Array of optional endpoints required by the agency. At least one is required. | 
 | `endpoint_name`      | Text  | Required | Name of required endpoint. At least one is required. E.g. "trips" | 
 | `required_fields`    | Array | Optional | Array of optional field names required by the agency. Can be left empty if none are required. See **special notes** below. | 
 
