@@ -83,7 +83,7 @@ Version 1.2.0 of MDS Policy and Geography for agencies to publish rules/fees/inc
                 {
                   "endpoint_name": "geofencing_zones.json",
                   "required_fields": [
-                    "vehicle_type_id"
+                    "features.properties.rules.vehicle_type_id"
                   ]
                 }
               ]
@@ -619,9 +619,10 @@ Since Requirements allows the GBFS versions and optional endpoints and fields to
                 {
                   "endpoint_name": "geofencing_zones.json",
                   "required_fields": [
-                    "name",
-                    "rules",
-                    "vehicle_type_id"
+                    "features.properties.name",
+                    "features.properties.start",
+                    "features.properties.end",
+                    "features.properties.rules.vehicle_type_id"
                   ]
                 },
                 {
@@ -631,11 +632,8 @@ Since Requirements allows the GBFS versions and optional endpoints and fields to
                   "endpoint_name": "system_pricing_plans.json",
                   "required_fields": [
                     "per_km_pricing",
-                    "start",
-                    "rate",
-                    "interval",
-                    "end",
-                    "per_min_pricing"
+                    "per_km_pricing",
+                    "surge_pricing"
                   ]
                 }
               ]
