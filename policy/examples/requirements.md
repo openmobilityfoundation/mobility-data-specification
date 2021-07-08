@@ -10,6 +10,7 @@ This file presents a series of example [Requirements](../README.md#requirement) 
 - [Provider and Other APIs](#provider-and-other-apis)
 - [Agency](#agency)
 - [Geography Driven Events](#geography-driven-events)
+- [GBFS Only](#gbfs-only)
 
 ## Policy and Geography
 
@@ -571,6 +572,77 @@ Version 1.1.0 for 2 providers requiring Provider `/status_changes` with the mini
         {
           "data_spec_name": "GBFS",
           "version": "2.1"
+        }
+      ]
+    }
+  ]
+}
+```
+
+[Top](#table-of-contents)
+
+## GBFS Only
+
+Since Requirements allows the GBFS versions and optional endpoints and fields to be defined, an agency could use it to only require public GBFS feeds, and not require MDS at all.
+
+```json
+{
+  "metadata": {
+    "mds_release": "1.2.0",
+    "version": "2",
+    "last_updated": "1611958740",
+    "max_update_interval": "T1M",
+    "agency_uuid": "737a9c62-c0cb-4c93-be43-271d21b784b5",
+    "agency_name": "Louisville Metro",
+    "agency_timezone": "America/New_York",
+    "agency_language": "en-US",
+    "agency_currency": "USD",
+    "agency_website_url": "https://www.cityname.gov/transporation/",
+    "url": "https://mds.cityname.gov/policy/requirements/1.2.0"
+  },
+  "programs": [
+    {
+      "description": "City Scooter Public Data Feeds 2021",
+      "policy_website_url": "https://www.cityname.gov/transporation/shared-devices.html",
+      "policy_document_url": "https://www.cityname.gov/data_policy.pdf",
+      "provider_ids": [
+        "70aa475d-1fcd-4504-b69c-2eeb2107f7be",
+        "2411d395-04f2-47c9-ab66-d09e9e3c3251"
+      ],
+      "start_date": 1611958740,
+      "end_date": null,
+      "required_data_specs": [
+        {
+          "data_spec_name": "GBFS",
+          "version": "2.2",
+          "required_apis": [
+            {
+              "required_endpoints": [
+                {
+                  "endpoint_name": "geofencing_zones.json",
+                  "required_fields": [
+                    "name",
+                    "rules",
+                    "vehicle_type_id"
+                  ]
+                },
+                {
+                  "endpoint_name": "system_calendar.json"
+                },
+                {
+                  "endpoint_name": "system_pricing_plans.json",
+                  "required_fields": [
+                    "per_km_pricing",
+                    "start",
+                    "rate",
+                    "interval",
+                    "end",
+                    "per_min_pricing"
+                  ]
+                }
+              ]
+            }
+          ]
         }
       ]
     }
