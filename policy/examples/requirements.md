@@ -49,10 +49,10 @@ Version 1.2.0 of MDS Policy and Geography for agencies to publish rules/fees/inc
         {
           "data_spec_name": "MDS",
           "version": "1.2.0",
-          "required_apis": [
+          "available_apis": [
             {
               "api_name": "policy",
-              "required_endpoints": [
+              "available_endpoints": [
                 {
                   "endpoint_name": "policies",
                   "url": "https://mds.cityname.com/policy/policies/1.2.0"
@@ -61,11 +61,11 @@ Version 1.2.0 of MDS Policy and Geography for agencies to publish rules/fees/inc
             },
             {
               "api_name": "geography",
-              "required_endpoints": [
+              "available_endpoints": [
                 {
                   "endpoint_name": "geographies",
                   "url": "https://mds.cityname.com/geography/geographies/1.2.0",
-                  "required_fields": [
+                  "available_fields": [
                     "geography_type",
                     "description"
                   ]
@@ -332,10 +332,12 @@ Note: by specifying geography, policy, and jurisdiction here with a URL, the age
                   ]
                 }
               ]
-            },
+            }
+          ],
+          "available_apis": [
             {
               "api_name": "policy",
-              "required_endpoints": [
+              "available_endpoints": [
                 {
                   "endpoint_name": "policies",
                   "url": "https://mds.cityname.gov/policy/policies/1.1.0"
@@ -344,7 +346,7 @@ Note: by specifying geography, policy, and jurisdiction here with a URL, the age
             },
             {
               "api_name": "geography",
-              "required_endpoints": [
+              "available_endpoints": [
                 {
                   "endpoint_name": "geographies",
                   "url": "https://mds.cityname.gov/geography/geographies/1.1.0"
@@ -353,7 +355,7 @@ Note: by specifying geography, policy, and jurisdiction here with a URL, the age
             },
             {
               "api_name": "jurisdiction",
-              "required_endpoints": [
+              "available_endpoints": [
                 {
                   "endpoint_name": "trips",
                   "url": "https://mds.cityname.gov/jurisdiction/jurisdictions/1.1.0"
