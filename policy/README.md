@@ -572,7 +572,7 @@ For each combination of items in a program, you can specify the data specs, APIs
 
 For each data specification, you can require optional APIs, endpoints, and fields that you need per your agency's policy. This is an array within the [Requirement Data Specs](#requirement-data-specs) section in the [Requirement](#requirement) data feed.
 
-**Note: any APIs, endpoints, or fields that are required by a data specification are not listed here, and are still required. Only optional items are enumerated here.**
+**Note: any APIs, endpoints, or fields that are required by a data specification are not to be listed here, and are still required. Only optional items are enumerated here.**
 
 ```jsonc
 // ...  
@@ -602,12 +602,13 @@ For each data specification, you can require optional APIs, endpoints, and field
 | `url`                | URL   | Required / Optional | Location of API root URL (minus the endpoint name). Required if the API is unauthenticated and public, optional if endpoint is authenticated and private. E.g. "https://mds.cityname.gov/geographies/geography/1.1.0"  | 
 | `required_endpoints` | Array | Required | Array of optional endpoints required by the agency. At least one is required. | 
 | `endpoint_name`      | Text  | Required | Name of required endpoint. At least one is required. E.g. "trips" | 
-| `required_fields`    | Array | Optional | Array of optional field names required by the agency. Can be left empty if none are required. See **special notes** below. | 
+| `required_fields`    | Array | Optional | Array of optional field names required by the agency. Can be omitted if none are required. Use dot notation for nested fields. See **special notes** below. | 
 
 **Special notes about `required_fields`.** 
 
 - All fields marked 'Required' in MDS are still included by default and should not be enumerated in `required_fields`. They are not affected by the Requirements endpoint.
 - Fields in MDS marked 'Required if available' are still returned if available, and are not affected by the Requirements endpoint.
+- To reference fileds that are lower in a heirarchy, use [dot separated notation](https://docs.oracle.com/en/database/oracle/oracle-database/18/adjsn/simple-dot-notation-access-to-json-data.html#GUID-7249417B-A337-4854-8040-192D5CEFD576), where a dot between field names represents one nested level deeper into the data structure. E.g. 'gps.heading' or 'features.properties.rules.vehicle_type_id'.
 - To require [Greography Driven Events](/general-information.md#geography-driven-events), simply include the `event_geographies` field for either the Agency or Provider API `api_name`. Per how GDEs work, `event_location` will then not be returned, and the `changed_geographies` vehicle state `event_type` will be used.
 
 [Top][toc]
