@@ -534,7 +534,7 @@ Unique combinations for data specs, specific providers, vehicle types, policies,
 | `policy_document_url`        | URL             | Optional | URL of the agency's operating permit rules that mention data requirements. E.g. "https://www.cityname.gov/mds_data_policy.pdf" |
 | `provider_ids`               | UUID[]          | Required | Array of provider UUIDs that apply to this group the requirements | 
 | `vehicle_type`               | Enum            | Optional | Array of [Vehicle Types](../general-information.md#vehicle-types) that apply to this requirement. If absent it applies to all vehicle types. | 
-| `policy_id`                  | UUID            | Optional | Policy UUID that applies to this group of requirements, if applicable and there is an existing Policy feed. References the `[policy_id](#policy)` field. | 
+| `policy_id`                  | UUID            | Optional | Policy UUID that applies to this group of requirements, if applicable and there is an existing Policy feed. References the [policy_id](#policy) field. | 
 | `start_date`                 | [timestamp][ts] | Required | Beginning date/time of requirements | 
 | `end_date`                   | [timestamp][ts] | Required | End date/time of requirements. Can be null. Keep data at least one year past `end_date` before removing. | 
 | `required_data_specs`        | Array           | Required | Array of required [Data Specs](#requirement-data-specs) |
