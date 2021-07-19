@@ -316,7 +316,7 @@ An individual `Rule` object is defined by the following fields:
 
 ### Geography
 
-**Depreciated:** see the new [Geography API](/geography#transition-from-policy) to understand the transisiton away from this endpoint, and how to support both in a MDS 1.x.0 release.
+**Depreciated:** see the new [Geography API](/geography#transition-from-policy) to understand the transistion away from this endpoint, and how to support both in a MDS 1.x.0 release.
 
 | Name             | Type      | Required / Optional | Description                                                                         |
 | ---------------- | --------- | --- | ----------------------------------------------------------------------------------- |
@@ -645,7 +645,7 @@ You may also show which APIs, endpoints, and fields your agency is serving. This
 
 - All fields marked 'Required' in MDS are still included by default and should not be enumerated in `required_fields`. They are not affected by the Requirements endpoint.
 - Fields in MDS marked 'Required if available' are still returned if available, and are not affected by the Requirements endpoint.
-- To reference fileds that are lower in a heirarchy, use [dot separated notation](https://docs.oracle.com/en/database/oracle/oracle-database/18/adjsn/simple-dot-notation-access-to-json-data.html#GUID-7249417B-A337-4854-8040-192D5CEFD576), where a dot between field names represents one nested level deeper into the data structure. E.g. 'gps.heading' or 'features.properties.rules.vehicle_type_id'.
+- To reference fields that are lower in a heirarchy, use [dot separated notation](https://docs.oracle.com/en/database/oracle/oracle-database/18/adjsn/simple-dot-notation-access-to-json-data.html#GUID-7249417B-A337-4854-8040-192D5CEFD576), where a dot between field names represents one nested level deeper into the data structure. E.g. 'gps.heading' or 'features.properties.rules.vehicle_type_id'.
 - To require [Greography Driven Events](/general-information.md#geography-driven-events), simply include the `event_geographies` field for either the Agency or Provider API `api_name`. Per how GDEs work, `event_location` will then not be returned, and the `changed_geographies` vehicle state `event_type` will be used.
 
 [Top][toc]
