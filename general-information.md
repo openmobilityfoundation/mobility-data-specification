@@ -58,6 +58,7 @@ Defining terminology and abbreviations used throughout MDS.
 * **API** - Application Programming Interface - A function or set of functions that allow one software application to access or communicate with features of a different software application or service.
 * **API Endpoint** - A point at which an API connects with a software application or service.
 * **DOT** - Department of Transportation, usually a city-run agency.
+* **Jurisdiction** - An agency’s area of legal authority to manage and regulate a mobility program in the real world. Note there is also an MDS API called [Jurisdiction](/jurisdiction/, which is a way to digitally represent this.
 * **PROW** - Public Right of Way - the physical infrastructure reserved for transportation purposes, examples include sidewalks, curbs, bike lanes, transit lanes and stations, traffic lanes and signals, and public parking.
 
 [Top][toc]
