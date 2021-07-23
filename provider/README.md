@@ -218,7 +218,7 @@ For the near-ish real time use cases, please use the [events][events] endpoint.
 
 ### Routes
 
-To represent a route, MDS `provider` APIs must create a GeoJSON [`FeatureCollection`][geojson-feature-collection], which includes every [observed point][geo] in the route, even those which occur outside the [municipality boundary][muni-boundary].
+To represent a route, MDS `provider` APIs must create a GeoJSON [`FeatureCollection`][geojson-feature-collection], which includes every [observed point][point-geo] in the route, even those which occur outside the [municipality boundary][muni-boundary].
 
 Routes must include at least 2 points: the start point and end point. Routes must include all possible GPS or GNSS samples collected by a Provider. Providers may round the latitude and longitude to the level of precision representing the maximum accuracy of the specific measurement. For example, [a-GPS][agps] is accurate to 5 decimal places, [differential GPS][dgps] is generally accurate to 6 decimal places. Providers may round those readings to the appropriate number for their systems.
 
@@ -290,7 +290,7 @@ Unless stated otherwise by the municipality, this endpoint must return only thos
 | `event_types` | Enum[] | Required | [Vehicle event(s)][vehicle-events] for state change, allowable values determined by `vehicle_state` |
 | `event_time` | [timestamp][ts] | Required | Date/time that event occurred at. See [Event Times][event-times] |
 | `publication_time` | [timestamp][ts] | Optional | Date/time that event became available through the status changes endpoint |
-| `event_location` | GeoJSON [Point Feature][geo] | Required | See also [Stop-based Geographic Data][stop-based-geo]. |
+| `event_location` | GeoJSON [Point Feature][point-geo] | Required | See also [Stop-based Geographic Data][stop-based-geo]. |
 | `event_geographies` | UUID[] | Optional | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.1.0)*. Array of Geography UUIDs consisting of every Geography that contains the location of the status change. See [Geography Driven Events][geography-driven-events]. Required if `event_location` is not present. |
 | `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |
 | `trip_id` | UUID | Required if Applicable | Trip UUID (foreign key to Trips API), required if `event_types` contains `trip_start`, `trip_end`, `trip_cancel`, `trip_enter_jurisdiction`, or `trip_leave_jurisdiction` |
@@ -573,8 +573,8 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 | `last_event_time` | [timestamp][ts] | Required | Date/time when last state change occurred. See [Event Times][event-times] |
 | `last_vehicle_state` | Enum | Required | [Vehicle state][vehicle-states] of most recent state change. |
 | `last_event_types` | Enum[] | Required | [Vehicle event(s)][vehicle-events] of most recent state change, allowable values determined by `last_vehicle_state`. |
-| `last_event_location` | GeoJSON [Point Feature][geo]| Required | Location of vehicle's last event. See also [Stop-based Geographic Data][stop-based-geo]. |
-| `current_location` | GeoJSON [Point Feature][geo] | Required if Applicable | Current location of vehicle if different from last event, and the vehicle is not currently on a trip. See also [Stop-based Geographic Data][stop-based-geo]. |
+| `last_event_location` | GeoJSON [Point Feature][point-geo]| Required | Location of vehicle's last event. See also [Stop-based Geographic Data][stop-based-geo]. |
+| `current_location` | GeoJSON [Point Feature][point-geo] | Required if Applicable | Current location of vehicle if different from last event, and the vehicle is not currently on a trip. See also [Stop-based Geographic Data][stop-based-geo]. |
 | `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |
 
 [Top][toc]
@@ -590,7 +590,6 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 [event-times]: #event-times
 [gbfs]: https://github.com/NABSA/gbfs
 [general-information]: /general-information.md
-[geo]: /general-information.md#geographic-data
 [geography-driven-events]: /general-information.md#geography-driven-events
 [geojson-feature-collection]: https://tools.ietf.org/html/rfc7946#section-3.3
 [iana]: https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
@@ -599,6 +598,7 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 [json-api-pagination]: http://jsonapi.org/format/#fetching-pagination
 [json-schema]: https://json-schema.org
 [muni-boundary]: #municipality-boundary
+[point-geo]: /general-information.md#geographic-telemetry-data
 [propulsion-types]: /general-information.md#propulsion-types
 [responses]: /general-information.md#responses
 [status]: #status-changes
