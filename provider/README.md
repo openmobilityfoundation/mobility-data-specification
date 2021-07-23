@@ -558,7 +558,7 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 
 **Endpoint:** `/vehicles`  
 **Method:** `GET`  
-**[Beta feature][beta]:** Yes (as of 0.4.1)  
+**[Beta feature][beta]:** No (as of 1.2.0)  
 **Schema:** [`vehicles` schema][vehicles-schema]  
 **`data` Payload:** `{ "vehicles": [] }`, an array of objects with the following structure
 
