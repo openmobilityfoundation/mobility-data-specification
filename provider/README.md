@@ -539,7 +539,7 @@ In the case that a `stop_id` query parameter is specified, the `stops` array ret
 
 ### Vehicles
 
-The `/vehicles` endpoint returns the current status of vehicles on the [PROW](/general-information.md#definitions). Only vehicles that are currently in available, unavailable, or reserved states should be returned in this payload. Data in this endpoint should reconcile with data from the `/status_changes` enpdoint. 
+The `/vehicles` endpoint returns the current status of vehicles in an agency's [Jurisdiction](/general-information.md#definitions) and/or area of agency responsibility. Only vehicles that are currently in available, unavailable, or reserved states should be returned in this payload. Data in this endpoint should reconcile with data from the `/status_changes` enpdoint. 
 
 As with other MDS APIs, `/vehicles` is intended for use by regulators, not by the general public. `/vehicles` can be deployed by providers as a standalone MDS endpoint for agencies without requiring the use of other endpoints, due to the [modularity](/README.md#modularity) of MDS. See our [MDS Vehicles Guide](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Vehicles) for how this compares to GBFS `/free_bike_status`. Note that using authenticated `/vehicles` does not replace the role of a public [GBFS][gbfs] feed in enabling consumer-facing applications. 
 
