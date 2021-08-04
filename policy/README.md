@@ -10,7 +10,7 @@ This specification describes the digital relationship between _mobility as a ser
 
 - [General Information](#general-information)
   - [Versioning](#versioning)
-  - [Update Frequency](#update-frequency)  
+  - [Update Frequency](#update-frequency)
 - [Background](#background)
 - [Distribution](#distribution)
 - [REST Endpoints](#rest-endpoints)
@@ -37,7 +37,7 @@ This specification describes the digital relationship between _mobility as a ser
     - [Programs](#requirement-programs)
     - [Data Specs](#requirement-data-specs)
     - [APIs](#requirement-apis)
- 
+
 ## General information
 
 The following information applies to all `policy` API endpoints.
@@ -117,8 +117,8 @@ Authorization is not required. An agency may decide to make this endpoint unauth
 
 ### Policies
 
-Endpoint: `/policies/{id}`  
-Method: `GET`  
+Endpoint: `/policies/{id}`
+Method: `GET`
 `data` Payload: `{ "policies": [] }`, an array of objects with the structure [outlined below](#policy).
 
 #### Query Parameters
@@ -139,8 +139,8 @@ Policies will be returned in order of effective date (see schema below), with pa
 
 **Deprecated:** see the new [Geography API](/geography#transition-from-policy) to understand the transistion away from this endpoint, and how to support both in a MDS 1.x.0 release.
 
-Endpoint: `/geographies/{id}`  
-Method: `GET`  
+Endpoint: `/geographies/{id}`
+Method: `GET`
 `data` Payload: `{ geographies: [] }`, an array of GeoJSON `Feature` objects that follow the schema [outlined here](#geography) or in [Geography](/geography#general-information).
 
 #### Query Parameters
@@ -153,9 +153,9 @@ Method: `GET`
 
 ### Requirements
 
-Endpoint: `/requirements/`  
-Method: `GET`  
-`data` Payload: `{ requirements: [] }`, JSON objects that follow the schema [outlined here](#requirement).  
+Endpoint: `/requirements/`
+Method: `GET`
+`data` Payload: `{ requirements: [] }`, JSON objects that follow the schema [outlined here](#requirement).
 [Beta feature](/general-information.md#beta-features): *Yes (as of 1.2.0)*. [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/682)
 
 See [Policy Requirements Examples](/policy/examples/requirements.md) for how this can be implemented.
@@ -285,6 +285,12 @@ An individual `Rule` object is defined by the following fields:
 | `messages`         | `{ String:String }`         | Optional   | Message to rider user, if desired, in various languages, keyed by language tag (see [Messages](#messages)) |
 | `value_url`        | URL                         | Optional   | URL to an API endpoint that can provide dynamic information for the measured value (see [Value URL](#value-url)) |
 
+**Note:** When evaluating whether a rule matches a given event the
+`minimum` and `maximum` values are considered an
+*inclusive* (or closed) interval.
+For example, for a `count` rule with a `minimum` of 300 and a `maximum`
+of 500, a count of either 300 or 500 would be considered to match the rule.
+
 [Top][toc]
 
 ### Rule Types
@@ -345,8 +351,8 @@ Rate recurrences specify when a rate is applied – either once, or periodicall
 | Name                        | Description                                                                                                                                                       |
 | --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `once_on_match`             | Rate is applied once when a vehicle transitions **into** a matching status from a non-matching status.                                                            |
-| `once_on_unmatch`           | Rate is applied once a vehicle transitions **out of** a matching status to a non-matching status.                                                                 | 
-| `each_time_unit`            | During each `time_unit`, rate is applied once to vehicles entering or remaining in a matching status. Requires a `time_unit` to be specified using `rule_units`.  |  
+| `once_on_unmatch`           | Rate is applied once a vehicle transitions **out of** a matching status to a non-matching status.                                                                 |
+| `each_time_unit`            | During each `time_unit`, rate is applied once to vehicles entering or remaining in a matching status. Requires a `time_unit` to be specified using `rule_units`.  |
 | `per_complete_time_unit`    | Rate is applied once per complete `time_unit` that vehicles remain in a matching status. Requires a `time_unit` to be specified using `rule_units`.               |
 
 [Top][toc]
@@ -420,14 +426,14 @@ Note that while Requirements is in [beta](#Requirements) in this **minor**, non-
 
 #### Requirement Format
 
-An agency's program [Requirements](#requirements) endpoint contains a number of distinct parts, namely [metadata](#requirement-metadata), [program definitions](#requirement-programs), and [data specs](#requirement-data-specs) (with sub sections on relevant [required APIs](#requirement-apis)). 
+An agency's program [Requirements](#requirements) endpoint contains a number of distinct parts, namely [metadata](#requirement-metadata), [program definitions](#requirement-programs), and [data specs](#requirement-data-specs) (with sub sections on relevant [required APIs](#requirement-apis)).
 
 ```jsonc
 {
   "metadata": {
     // metadata fields per the "Requirement Metadata" section
   },
-  "programs" [ 
+  "programs" [
     {
       "description" : "[PROGRAM DESCRIPTION]",
       "provider_ids": [
@@ -452,24 +458,24 @@ An agency's program [Requirements](#requirements) endpoint contains a number of 
         },
         // other data specs per the "Requirement Data Specs" section
       ]
-    }, 
+    },
     // other MDS versions per the "Requriement MDS Version" section
   }
 }
 ```
 
-| Name                         | Type            | Required / Optional | Description              | 
-| ---------------------------- | --------------- | -------- | ----------------------------------- | 
-| `metadata`                   | Array           | Required | Array of [Requirement Metadata](#requirement-metadata) fields. | 
-| `programs`                   | Array           | Required | Array of [Requirement Programs](#requirement-programs) data. | 
-| `required_data_specs`        | Array           | Required | Array of [Requirement Data Specs](#requirement-data-specs) data. | 
-| `required_apis`              | Array           | Required | Array of [Requirement APIs](#requirement-apis) data. | 
+| Name                         | Type            | Required / Optional | Description              |
+| ---------------------------- | --------------- | -------- | ----------------------------------- |
+| `metadata`                   | Array           | Required | Array of [Requirement Metadata](#requirement-metadata) fields. |
+| `programs`                   | Array           | Required | Array of [Requirement Programs](#requirement-programs) data. |
+| `required_data_specs`        | Array           | Required | Array of [Requirement Data Specs](#requirement-data-specs) data. |
+| `required_apis`              | Array           | Required | Array of [Requirement APIs](#requirement-apis) data. |
 
 [Top][toc]
 
 #### Requirement Metadata
 
-Contains metadata applicable to the agency and at the top of its [Requirement](#requirement) data feed in the `metadata` section. 
+Contains metadata applicable to the agency and at the top of its [Requirement](#requirement) data feed in the `metadata` section.
 
 ```jsonc
 {
@@ -486,7 +492,7 @@ Contains metadata applicable to the agency and at the top of its [Requirement](#
     "agency_website_url": "[URL]"
     "url": "[URL]"
   },
-  "mds_versions" [ 
+  "mds_versions" [
     // Requirement MDS Versions
   ]
 }
@@ -510,12 +516,12 @@ Contains metadata applicable to the agency and at the top of its [Requirement](#
 
 #### Requirement Programs
 
-Contains information about an agency's programs, with links to policy documents, and a list of providers and data specs/APIs/endpoints/fields that the program applies to over a certain time frame in its [Requirement](#requirement) data feed in the `required_data_specs` section. 
+Contains information about an agency's programs, with links to policy documents, and a list of providers and data specs/APIs/endpoints/fields that the program applies to over a certain time frame in its [Requirement](#requirement) data feed in the `required_data_specs` section.
 
-Unique combinations for data specs, specific providers, vehicle types, policies, and dates (past, current, or future) can be defined. For example an agency can define MDS version 1.2.0 and GBFS 2.2 for Provider #1 in a pilot with beta endpoints and optional fields, MDS version 1.2.0 for other providers without beta features starting a month from now, and MDS version 1.1.0 for Provider #2 with docked bikeshare. 
+Unique combinations for data specs, specific providers, vehicle types, policies, and dates (past, current, or future) can be defined. For example an agency can define MDS version 1.2.0 and GBFS 2.2 for Provider #1 in a pilot with beta endpoints and optional fields, MDS version 1.2.0 for other providers without beta features starting a month from now, and MDS version 1.1.0 for Provider #2 with docked bikeshare.
 
 ```jsonc
-// ...  
+// ...
   "programs": [
     {
       "description" : "[PROGRAM DESCRIPTION]",
@@ -542,15 +548,15 @@ Unique combinations for data specs, specific providers, vehicle types, policies,
 // ...
 ```
 
-| Name                         | Type            | Required / Optional | Description              | 
-| ---------------------------- | --------------- | -------- | ----------------------------------- | 
-| `description`                | text            | Required | Simple agency program description of this combination of MDS, providers, vehicles, and time frame. | 
+| Name                         | Type            | Required / Optional | Description              |
+| ---------------------------- | --------------- | -------- | ----------------------------------- |
+| `description`                | text            | Required | Simple agency program description of this combination of MDS, providers, vehicles, and time frame. |
 | `program_website_url`        | URL             | Required | URL of the agency's transportation policy page. E.g. "https://www.cityname.gov/transportation/shared-devices.htm" |
 | `program_document_url`        | URL             | Optional | URL of the agency's operating permit rules that mention data requirements. E.g. "https://www.cityname.gov/mds_data_policy.pdf" |
-| `provider_ids`               | UUID[]          | Required | Array of provider UUIDs that apply to this group the requirements | 
-| `vehicle_type`               | Enum            | Optional | Array of [Vehicle Types](../general-information.md#vehicle-types) that apply to this requirement. If absent it applies to all vehicle types. | 
-| `start_date`                 | [timestamp][ts] | Required | Beginning date/time of requirements | 
-| `end_date`                   | [timestamp][ts] | Required | End date/time of requirements. Can be null. Keep data at least one year past `end_date` before removing. | 
+| `provider_ids`               | UUID[]          | Required | Array of provider UUIDs that apply to this group the requirements |
+| `vehicle_type`               | Enum            | Optional | Array of [Vehicle Types](../general-information.md#vehicle-types) that apply to this requirement. If absent it applies to all vehicle types. |
+| `start_date`                 | [timestamp][ts] | Required | Beginning date/time of requirements |
+| `end_date`                   | [timestamp][ts] | Required | End date/time of requirements. Can be null. Keep data at least one year past `end_date` before removing. |
 | `required_data_specs`        | Array           | Required | Array of required [Data Specs](#requirement-data-specs) |
 
 [Top][toc]
@@ -560,7 +566,7 @@ Unique combinations for data specs, specific providers, vehicle types, policies,
 For each combination of items in a program, you can specify the data specs, APIs, endpoints, and optional fields that are required per your agency's program policies. This is an array within the [Requirement MDS Versions](#requirement-mds-versions) `mds_apis` section in the [Requirement](#requirement) data feed.
 
 ```jsonc
-// ...  
+// ...
       "required_data_specs": [
         {
           "data_spec_name": "[DATA SPEC NAME]",
@@ -581,12 +587,12 @@ For each combination of items in a program, you can specify the data specs, APIs
 // ...
 ```
 
-| Name                 | Type   | Required / Optional | Description              | 
-| -------------------- | ------ | -------- | ----------------------------------- | 
-| `data_spec_name`     | Enum   | Required | Name of the data spec required. Supported values are: '[MDS](https://github.com/openmobilityfoundation/mobility-data-specification/tree/ms-requirements)', '[GBFS](https://github.com/NABSA/gbfs/tree/v2.2)'. Others like GOFS, GTFS, TOMP-API, etc can be tested by agencies and officially standardized here in the future -- leave your feedback on [this issue](https://github.com/openmobilityfoundation/mobility-data-specification/issues/682). | 
-| `version`            | Text   | Required | Version number of the data spec required. E.g. '1.2.0' | 
-| `required_apis`      | Array  | Conditionally Required | Name of the [Requirement APIs](#requirement-apis) that need to be served by providers. At least one API is required. APIs not listed will not be available to the agency. | 
-| `available_apis`     | Array  | Conditionally Required | Name of the [Requirement APIs](#requirement-apis) that are being served by agencies.  Not applicable to GBFS. APIs not listed will not be available to the provider. | 
+| Name                 | Type   | Required / Optional | Description              |
+| -------------------- | ------ | -------- | ----------------------------------- |
+| `data_spec_name`     | Enum   | Required | Name of the data spec required. Supported values are: '[MDS](https://github.com/openmobilityfoundation/mobility-data-specification/tree/ms-requirements)', '[GBFS](https://github.com/NABSA/gbfs/tree/v2.2)'. Others like GOFS, GTFS, TOMP-API, etc can be tested by agencies and officially standardized here in the future -- leave your feedback on [this issue](https://github.com/openmobilityfoundation/mobility-data-specification/issues/682). |
+| `version`            | Text   | Required | Version number of the data spec required. E.g. '1.2.0' |
+| `required_apis`      | Array  | Conditionally Required | Name of the [Requirement APIs](#requirement-apis) that need to be served by providers. At least one API is required. APIs not listed will not be available to the agency. |
+| `available_apis`     | Array  | Conditionally Required | Name of the [Requirement APIs](#requirement-apis) that are being served by agencies.  Not applicable to GBFS. APIs not listed will not be available to the provider. |
 
 [Top][toc]
 
@@ -601,11 +607,11 @@ An agency may require providers to serve optional APIs, endpoints, and fields th
 You may also show which APIs, endpoints, and fields your agency is serving to providers and the public. This is an `available_apis` array within the [Requirement Data Specs](#requirement-data-specs) section in the [Requirement](#requirement) data feed.
 
 ```jsonc
-// ...  
+// ...
           "required_apis": [
             {
               "api_name" : "[API NAME]",
-              "required_endpoints": [ 
+              "required_endpoints": [
                 {
                   "endpoint_name" : "[ENDPOINT NAME]",
                   "required_fields": [
@@ -625,7 +631,7 @@ You may also show which APIs, endpoints, and fields your agency is serving to pr
           "available_apis": [
             {
               "api_name" : "[API NAME]",
-              "available_endpoints": [ 
+              "available_endpoints": [
                 {
                   "endpoint_name" : "[ENDPOINT NAME]",
                   "url": "[ENDPOINT URL]",
@@ -641,28 +647,28 @@ You may also show which APIs, endpoints, and fields your agency is serving to pr
 // ...
 ```
 
-| Name                 | Type  | Required/Optional | Description                | 
-| -------------------- | ----- | -------- | ----------------------------------- | 
-| `api_name`           | Text  | Required | Name of the applicable API required. At least one API is required. APIs not listed will not be available to the agency. E.g. for MDS: 'provider', or 'agency'. For GBFS, this field is omitted since GBFS starts at the `endpoint` level. | 
-| `endpoint_name`      | Text  | Required | Name of the required endpoint under the API. At least one endpoint is required. E.g. for MDS 'provider': 'trips' | 
+| Name                 | Type  | Required/Optional | Description                |
+| -------------------- | ----- | -------- | ----------------------------------- |
+| `api_name`           | Text  | Required | Name of the applicable API required. At least one API is required. APIs not listed will not be available to the agency. E.g. for MDS: 'provider', or 'agency'. For GBFS, this field is omitted since GBFS starts at the `endpoint` level. |
+| `endpoint_name`      | Text  | Required | Name of the required endpoint under the API. At least one endpoint is required. E.g. for MDS 'provider': 'trips' |
 
-**Provider Endpoints** - Specific to the `required_apis` array 
+**Provider Endpoints** - Specific to the `required_apis` array
 
-| Name                 | Type  | Required/Optional | Description                | 
-| -------------------- | ----- | -------- | ----------------------------------- | 
-| `required_endpoints` | Array | Required | Array of optional endpoints required by the agency. At least one is required. Endpoints not listed will not be available to the agency. | 
-| `required_fields`    | Array | Optional | Array of optional field names required by the agency. Can be omitted if no optional fields are required. Use dot notation for nested fields. See **special notes** below. | 
-| `disallowed_fields`  | Array | Optional | Array of optional field names which must not be returned by in the endpoint, even if required in MDS. Use dot notation for nested fields. See **special notes** below. | 
+| Name                 | Type  | Required/Optional | Description                |
+| -------------------- | ----- | -------- | ----------------------------------- |
+| `required_endpoints` | Array | Required | Array of optional endpoints required by the agency. At least one is required. Endpoints not listed will not be available to the agency. |
+| `required_fields`    | Array | Optional | Array of optional field names required by the agency. Can be omitted if no optional fields are required. Use dot notation for nested fields. See **special notes** below. |
+| `disallowed_fields`  | Array | Optional | Array of optional field names which must not be returned by in the endpoint, even if required in MDS. Use dot notation for nested fields. See **special notes** below. |
 
-**Agency Endpoints** - Specific to the `available_apis` array 
+**Agency Endpoints** - Specific to the `available_apis` array
 
-| Name                 | Type  | Required/Optional | Description                | 
-| -------------------- | ----- | -------- | ----------------------------------- | 
-| `available_endpoints`| Array | Required | Array of endpoints provided by the agency. At least one is required. Endpoints not listed will not be available to the provider. | 
-| `url`                | URL   | Optional | Location of API endpoint url. Required if the API is unauthenticated and public, optional if endpoint is authenticated and private. E.g. "https://mds.cityname.gov/geographies/geography/1.1.0"  | 
-| `available_fields`   | Array | Optional | Array of optional field names provided by the agency. Can be omitted if none are required. Use dot notation for nested fields. See **special notes** below. | 
+| Name                 | Type  | Required/Optional | Description                |
+| -------------------- | ----- | -------- | ----------------------------------- |
+| `available_endpoints`| Array | Required | Array of endpoints provided by the agency. At least one is required. Endpoints not listed will not be available to the provider. |
+| `url`                | URL   | Optional | Location of API endpoint url. Required if the API is unauthenticated and public, optional if endpoint is authenticated and private. E.g. "https://mds.cityname.gov/geographies/geography/1.1.0"  |
+| `available_fields`   | Array | Optional | Array of optional field names provided by the agency. Can be omitted if none are required. Use dot notation for nested fields. See **special notes** below. |
 
-**Special notes about `required_fields` and `disallowed_fields`.** 
+**Special notes about `required_fields` and `disallowed_fields`.**
 
 - All fields marked 'Required' in MDS are still included by default and should not be enumerated in `required_fields`. They are not affected by the Requirements endpoint, unless explicitly listed in `disallowed_fields`.
 - Fields in MDS marked 'Required if available' are still returned if available, and are not affected by the Requirements endpoint, unless explicitly listed in `disallowed_fields`.
