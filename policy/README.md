@@ -404,7 +404,7 @@ The OMF recommends updating the Requirements feed no more than monthly, and you 
 
 #### Beta Limitations
 
-Note that while Requirements is in [beta](#Requirements) in this **minor**, non-breaking MDS 1.2.0 release, items listed as "required" or "disallowed" will be treated as a _request_ only by default (precluding intentional formal agency communications with providers) to prevent an _unintentional_ burden on providers. For the next **major**, breaking MDS 2.0.0 release, these items will be be required as documented.
+Note that while Requirements is in [beta](#Requirements) in this **minor**, non-breaking MDS 1.2.0 release, items listed as "required" or "disallowed" will be treated as a _request_ only by default (precluding intentional formal agency communications with providers) to prevent an _unintentional_ burden on providers. For the next **major**, breaking MDS 2.0.0 release, these items will be be required or diallowed as documented.
 
 #### Requirement Format
 
@@ -599,6 +599,10 @@ You may also show which APIs, endpoints, and fields your agency is serving to pr
                   "required_fields": [
                     "[FIELD NAME]",
                     // other field names
+                  ],
+                  "disallowed_fields": [
+                    "[FIELD NAME]",
+                    // other field names
                   ]
                 },
                 // other endpoints
@@ -635,7 +639,8 @@ You may also show which APIs, endpoints, and fields your agency is serving to pr
 | Name                 | Type  | Required/Optional | Description                | 
 | -------------------- | ----- | -------- | ----------------------------------- | 
 | `required_endpoints` | Array | Required | Array of optional endpoints required by the agency. At least one is required. | 
-| `required_fields`    | Array | Optional | Array of optional field names required by the agency. Can be omitted if none are required. Use dot notation for nested fields. See **special notes** below. | 
+| `required_fields`    | Array | Optional | Array of optional field names required by the agency. Can be omitted if no optional fields are required. Use dot notation for nested fields. See **special notes** below. | 
+| `disallowed_fields`  | Array | Optional | Array of optional field names who's values are to be returned by the agency as `null`, even if required in MDS. Use dot notation for nested fields. See **special notes** below. | 
 
 **Agency Endpoints** - Specific to the `available_apis` array 
 
@@ -645,13 +650,14 @@ You may also show which APIs, endpoints, and fields your agency is serving to pr
 | `url`                | URL   | Optional | Location of API endpoint url. Required if the API is unauthenticated and public, optional if endpoint is authenticated and private. E.g. "https://mds.cityname.gov/geographies/geography/1.1.0"  | 
 | `available_fields`   | Array | Optional | Array of optional field names provided by the agency. Can be omitted if none are required. Use dot notation for nested fields. See **special notes** below. | 
 
-**Special notes about `required_fields`.** 
+**Special notes about `required_fields` and `disallowed_fields`.** 
 
 - All fields marked 'Required' in MDS are still included by default and should not be enumerated in `required_fields`. They are not affected by the Requirements endpoint.
 - Fields in MDS marked 'Required if available' are still returned if available, and are not affected by the Requirements endpoint.
+- If a 'Required' or 'Required if available' or 'Optional' field in MDS is listed in `disallowed_fields`, those fields should not be returned by the provider in the endpoint. The field **names** must be returned to keep proper file structure, but the values must be `null`.
 - To reference fields that are lower in a heirarchy, use [dot separated notation](https://docs.oracle.com/en/database/oracle/oracle-database/18/adjsn/simple-dot-notation-access-to-json-data.html#GUID-7249417B-A337-4854-8040-192D5CEFD576), where a dot between field names represents one nested level deeper into the data structure. E.g. 'gps.heading' or 'features.properties.rules.vehicle_type_id'.
 - To require [Greography Driven Events](/general-information.md#geography-driven-events), simply include the `event_geographies` field for either the Agency or Provider API `api_name`. Per how GDEs work, `event_location` will then not be returned, and the `changed_geographies` vehicle state `event_type` will be used.
-- [While in beta](#beta-limitations), items marked as required will only be considered a 'request' by providers, unless agencies have communicated with providers outside of MDS.
+- [While in beta](#beta-limitations), items marked as required or disallowed will only be considered a 'request' by providers, unless agencies have communicated with providers outside of MDS.
 
 [Top][toc]
 
