@@ -157,7 +157,7 @@ Method: `GET`
 `data` Payload: `{ requirements: [] }`, JSON objects that follow the schema [outlined here](#requirement).  
 [Beta feature](/general-information.md#beta-features): *Yes (as of 1.2.0)*.
 
-See [Policy Requirement Examples](/policy/examples/requirements.md) for how this can be implemented.
+See [Policy Requirements Examples](/policy/examples/requirements.md) for how this can be implemented.
 
 [Top][toc]
 
@@ -392,11 +392,15 @@ The internal mechanics of ordering are up to the Policy editing and hosting soft
 
 ### Requirement
 
-The agency Policy program Requirement file enumerates all of the parts of MDS, GBFS, and other specifications that an agency requires from providers, including APIs, endpoints, and optional fields, as well as information for providers about the APIs the agency is hosting. The program requirements are specific to the needs and use cases of each agency, and ensure there is clarity on what data is being asked for in operating policy documents from providers, reducing the burden on both. This also allows additional public transparency and accountability around data requirements from agencies, and encourages privacy by allowing agencies to ask for only the data they need.
+A public agency's Policy program Requirements endpoint enumerates all of the parts of MDS, GBFS, and other specifications that an agency requires from providers for certain programs, including APIs, endpoints, and optional fields, as well as information for providers about the APIs the agency is hosting. The program requirements are specific to the needs and use cases of each agency, and ensure there is clarity on what data is being asked for in operating policy documents from providers, reducing the burden on both. This also allows additional public transparency and accountability around data requirements from agencies, and encourages privacy by allowing agencies to ask for only the data they need.
+
+Requirements can also be used to define a scaled-down MDS implementation in situations where an agency has more limited regulatory goals, has legal limitations on the types of data they can collect, or wants to use a lightweight version of MDS for a pilot project or other experiment where aspects of a full MDS implementation would be irrelevant or unnecessary.
+
+See [Policy Requirements Examples](/policy/examples/requirements.md) for ideas on how this can be implemented.
+
+#### Hosting
 
 This endpoint is not authenticated (ie. public), and allows the discovery of other public endpoints within Geography, Policy, and Jurisdiction. The agency can host this as a file or dynamic endpoint on their servers, on a third party server, or the OMF can host on behalf of an agency in the [agency program requirements repo](https://github.com/openmobilityfoundation/agency-program-requirements). See this [hosting guidance document](#) for more information.  This requirements file can be [referenced directly](https://github.com/openmobilityfoundation/governance/blob/main/technical/OMF-MDS-Policy-Language-Guidance.md) in an agency's operating permit/policy document when discussing program data requirements, and [updated digitally as needed](#requirement-update-frequency).
-
-See [Policy Requirement Examples](/policy/examples/requirements.md) for ideas on how this can be implemented.
 
 #### Requirement Update Frequency
 
