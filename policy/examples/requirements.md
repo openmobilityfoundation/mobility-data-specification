@@ -253,7 +253,7 @@ Version 1.1.0 for 2 providers requiring only historic Provider `/trips` with the
 
 ## Trips with No Routes, Vehicle IDs, or Dates
 
-Version 1.1.0 for 2 providers asking for only historic [Provider `/trips`](/provider#trips) with the typically required `device_id`, `vehicle_id`, `start_time`, `end_time`, and `route` array data not returned in the endpoint.
+Version 1.1.0 for 2 providers asking for only historic [Provider `/trips`](/provider#trips) with the typically required `device_id`, `vehicle_id`, `start_time`, `end_time`, and `route` array data, and the optional `parking_verification_url` photo URL, not returned in the endpoint.
 
 ```json
 {
@@ -296,7 +296,8 @@ Version 1.1.0 for 2 providers asking for only historic [Provider `/trips`](/prov
                     "device_id",
                     "vehicle_id",
                     "start_time",
-                    "end_time"
+                    "end_time",
+                    "parking_verification_url"
                   ]
                 }
               ]
