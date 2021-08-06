@@ -30,6 +30,7 @@ This specification describes the digital relationship between _mobility as a ser
   - [Order of Operations](#order-of-operations)
   - [Requirement](#requirement)
     - [Update Frequency](#requirement-update-frequency)
+    - [Beta Limitations](#beta-limitations)
     - [Format](#requirement-format)
     - [Metadata](#requirement-metadata)
     - [Programs](#requirement-programs)
@@ -393,13 +394,17 @@ The internal mechanics of ordering are up to the Policy editing and hosting soft
 
 The agency Policy program Requirement file enumerates all of the parts of MDS, GBFS, and other specifications that an agency requires from providers, including APIs, endpoints, and optional fields, as well as information for providers about the APIs the agency is hosting. The program requirements are specific to the needs and use cases of each agency, and ensure there is clarity on what data is being asked for in operating policy documents from providers, reducing the burden on both. This also allows additional public transparency and accountability around data requirements from agencies, and encourages privacy by allowing agencies to ask for only the data they need.
 
-This endpoint is not authenticated (ie. public), and allows the discovery of other public APIs like Geography, Policy, and Jurisdiction. The agency can host this as a file or API on their servers, on a third party server, or the OMF can host on behalf of an agency in the [agency requirements repo](https://github.com/openmobilityfoundation/agency-requirements). See this [hosting guidance document](#) for more information.  This requirements file can be [referenced directly](https://github.com/openmobilityfoundation/governance/blob/main/technical/OMF-MDS-Policy-Language-Guidance.md) in an agency's operating permit/policy document when discussing program data requirements.
+This endpoint is not authenticated (ie. public), and allows the discovery of other public endpoints within Geography, Policy, and Jurisdiction. The agency can host this as a file or dynamic endpoint on their servers, on a third party server, or the OMF can host on behalf of an agency in the [agency program requirements repo](https://github.com/openmobilityfoundation/agency-program-requirements). See this [hosting guidance document](#) for more information.  This requirements file can be [referenced directly](https://github.com/openmobilityfoundation/governance/blob/main/technical/OMF-MDS-Policy-Language-Guidance.md) in an agency's operating permit/policy document when discussing program data requirements, and [updated digitally as needed](#requirement-update-frequency).
 
 See [Policy Requirement Examples](/policy/examples/requirements.md) for ideas on how this can be implemented.
 
 #### Requirement Update Frequency
 
 The OMF recommends updating the Requirements feed no more than monthly, and you may specify your expected timeframe with the `max_update_interval` in the [metadata](#requirement-metadata) section so providers have some idea of how often to check the feed. More specifically the OMF recommends giving the following notice to providers: 1 month for optional field additions, 3 months for endpoint/API changes/additions, 3 months for new minor releases, and 4 months for major releases. You should also communicate these future changes ahead of time with the `start_date` field. Finally, the OMF recommends any changes need to be part of a discussion between agencies and affected providers.
+
+#### Beta Limitations
+
+Note that while Requirements is in [beta](#Requirements) in this **minor**, non-breaking MDS 1.2.0 release, items listed as "required" or "disallowed" will be treated as a _request_ only by default (precluding intentional formal agency communications with providers) to prevent an _unintentional_ burden on providers. For the next **major**, breaking MDS 2.0.0 release, these items will be be required as documented.
 
 #### Requirement Format
 
@@ -579,7 +584,7 @@ For each data specification, you can specify which APIs are required from provid
 
 An agency may require providers to serve optional APIs, endpoints, and fields that are needed for your agency's program. This is a `required_apis` array within the [Requirement Data Specs](#requirement-data-specs) section in the [Requirement](#requirement) data feed.
 
-You may also show which APIs, endpoints, and fields your agency is serving. This is a `available_apis` array within the [Requirement Data Specs](#requirement-data-specs) section in the [Requirement](#requirement) data feed.
+You may also show which APIs, endpoints, and fields your agency is serving to providers and the public. This is an `available_apis` array within the [Requirement Data Specs](#requirement-data-specs) section in the [Requirement](#requirement) data feed.
 
 **Note: any APIs, endpoints, or fields that are required by a data specification are not to be listed, and are still required. Only optional items are enumerated here.**
 
@@ -646,6 +651,7 @@ You may also show which APIs, endpoints, and fields your agency is serving. This
 - Fields in MDS marked 'Required if available' are still returned if available, and are not affected by the Requirements endpoint.
 - To reference fields that are lower in a heirarchy, use [dot separated notation](https://docs.oracle.com/en/database/oracle/oracle-database/18/adjsn/simple-dot-notation-access-to-json-data.html#GUID-7249417B-A337-4854-8040-192D5CEFD576), where a dot between field names represents one nested level deeper into the data structure. E.g. 'gps.heading' or 'features.properties.rules.vehicle_type_id'.
 - To require [Greography Driven Events](/general-information.md#geography-driven-events), simply include the `event_geographies` field for either the Agency or Provider API `api_name`. Per how GDEs work, `event_location` will then not be returned, and the `changed_geographies` vehicle state `event_type` will be used.
+- [While in beta](#beta-limitations), items marked as required will only be considered a 'request' by providers, unless agencies have communicated with providers outside of MDS.
 
 [Top][toc]
 
