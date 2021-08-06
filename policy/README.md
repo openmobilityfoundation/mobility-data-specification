@@ -30,6 +30,7 @@ This specification describes the digital relationship between _mobility as a ser
   - [Order of Operations](#order-of-operations)
   - [Requirement](#requirement)
     - [Update Frequency](#requirement-update-frequency)
+    - [Public Hosting](#public-hosting)
     - [Beta Limitations](#beta-limitations)
     - [Format](#requirement-format)
     - [Metadata](#requirement-metadata)
@@ -317,7 +318,7 @@ An individual `Rule` object is defined by the following fields:
 
 ### Geography
 
-**Depreciated:** see the new [Geography API](/geography#transition-from-policy) to understand the transistion away from this endpoint, and how to support both in a MDS 1.x.0 release.
+**Deprecated:** see the new [Geography API](/geography#transition-from-policy) to understand the transistion away from this endpoint, and how to support both in a MDS 1.x.0 release.
 
 | Name             | Type      | Required / Optional | Description                                                                         |
 | ---------------- | --------- | --- | ----------------------------------------------------------------------------------- |
@@ -398,7 +399,7 @@ Requirements can also be used to define a scaled-down MDS implementation in situ
 
 See [Policy Requirements Examples](/policy/examples/requirements.md) for ideas on how this can be implemented.
 
-#### Hosting
+#### Public Hosting
 
 This endpoint is not authenticated (ie. public), and allows the discovery of other public endpoints within Geography, Policy, and Jurisdiction. The agency can host this as a file or dynamic endpoint on their servers, on a third party server, or the OMF can host on behalf of an agency in the [agency program requirements repo](https://github.com/openmobilityfoundation/agency-program-requirements). See this [hosting guidance document](#) for more information.  This requirements file can be [referenced directly](https://github.com/openmobilityfoundation/governance/blob/main/technical/OMF-MDS-Policy-Language-Guidance.md) in an agency's operating permit/policy document when discussing program data requirements, and [updated digitally as needed](#requirement-update-frequency).
 
