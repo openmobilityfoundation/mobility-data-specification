@@ -7,6 +7,7 @@ This file presents a series of example [Requirements](../README.md#requirement) 
 - [Policy and Geography](#policy-and-geography)
 - [Vehicles Only](#vehicles-only)
 - [Trips Only](#trips-only)
+- [Trips with No Routes, Vehicles IDs, or Dates](#trips-with-no-routes-vehicle-ids-or-dates)
 - [Provider and Other APIs](#provider-and-other-apis)
 - [Agency](#agency)
 - [Geography Driven Events](#geography-driven-events)
@@ -232,6 +233,70 @@ Version 1.1.0 for 2 providers requiring only historic Provider `/trips` with the
                   "endpoint_name": "trips",
                   "required_fields": [
                     "parking_verification_url"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "data_spec_name": "GBFS",
+          "version": "2.2"
+        }
+      ]
+    }
+  ]
+}
+```
+
+[Top](#table-of-contents)
+
+## Trips with No Routes, Vehicle IDs, or Dates
+
+Version 1.1.0 for 2 providers asking for only historic [Provider `/trips`](/provider#trips) with the typically required `device_id`, `vehicle_id`, `start_time`, `end_time`, and `route` array data not returned in the endpoint.
+
+```json
+{
+  "metadata": {
+    "mds_release": "1.2.0",
+    "file_version": "3",
+    "last_updated": "1611958740",
+    "max_update_interval": "P1D",
+    "agency_uuid": "737a9c62-c0cb-4c93-be43-271d21b784b5",
+    "agency_name": "Louisville Metro",
+    "agency_timezone": "America/New_York",
+    "agency_language": "en-US",
+    "agency_currency": "USD",
+    "agency_website_url": "https://www.cityname.gov/transportation/",
+    "url": "https://mds.cityname.gov/policy/requirements/1.2.0"
+  },
+  "programs": [
+    {
+      "description": "City Vehicle Program Pilot Research for 2021",
+      "program_website_url": "https://www.cityname.gov/transportation/shared-devices.html",
+      "program_document_url": "https://www.cityname.gov/mds_data_policy.pdf",
+      "provider_ids": [
+        "70aa475d-1fcd-4504-b69c-2eeb2107f7be",
+        "2411d395-04f2-47c9-ab66-d09e9e3c3251"
+      ],
+      "start_date": 1611958740,
+      "end_date": 1611970539,
+      "required_data_specs": [
+        {
+          "data_spec_name": "MDS",
+          "version": "1.1.0",
+          "required_apis": [
+            {
+              "api_name": "provider",
+              "required_endpoints": [
+                {
+                  "endpoint_name": "trips",
+                  "disallowed_fields": [
+                    "route",
+                    "device_id",
+                    "vehicle_id",
+                    "start_time",
+                    "end_time"
                   ]
                 }
               ]
