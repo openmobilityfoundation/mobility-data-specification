@@ -391,7 +391,7 @@ The internal mechanics of ordering are up to the Policy editing and hosting soft
 
 ### Requirement
 
-The agency Policy program Requirement file enumerates all of the parts of MDS and GBFS that an agency requires from providers, including APIs, endpoints, and optional fields, as well as information for providers about the APIs the agency is hosting. The program requirements are specific to the needs and use cases of each agency, and ensure there is clarity on what data is being asked for in operating policy documents from providers, reducing the burden on both. This also allows additional public transparency and accountability around data requirements from agencies, and encourages privacy by allowing agencies to ask for only the data they need.
+The agency Policy program Requirement file enumerates all of the parts of MDS, GBFS, and other specifications that an agency requires from providers, including APIs, endpoints, and optional fields, as well as information for providers about the APIs the agency is hosting. The program requirements are specific to the needs and use cases of each agency, and ensure there is clarity on what data is being asked for in operating policy documents from providers, reducing the burden on both. This also allows additional public transparency and accountability around data requirements from agencies, and encourages privacy by allowing agencies to ask for only the data they need.
 
 This endpoint is not authenticated (ie. public), and allows the discovery of other public APIs like Geography, Policy, and Jurisdiction. The agency can host this as a file or API on their servers, on a third party server, or the OMF can host on behalf of an agency in the [agency requirements repo](https://github.com/openmobilityfoundation/agency-requirements). See this [hosting guidance document](#) for more information.  This requirements file can be [referenced directly](https://github.com/openmobilityfoundation/governance/blob/main/technical/OMF-MDS-Policy-Language-Guidance.md) in an agency's operating permit/policy document when discussing program data requirements.
 
@@ -566,13 +566,12 @@ For each combination of items in a program, you can specify the data specs, APIs
 
 | Name                 | Type  | Required / Optional | Description              | 
 | -------------------- | ----- | -------- | ----------------------------------- | 
-| `data_spec_name`     | Enum  | Required | Name of the data spec required. Supported values are: '[MDS](https://github.com/openmobilityfoundation/mobility-data-specification/tree/ms-requirements)', '[GBFS](https://github.com/NABSA/gbfs/tree/v2.2)' | 
+| `data_spec_name`     | Enum  | Required | Name of the data spec required. Supported values are: '[MDS](https://github.com/openmobilityfoundation/mobility-data-specification/tree/ms-requirements)', '[GBFS](https://github.com/NABSA/gbfs/tree/v2.2)', though others can be tested by agencies and officially standardized here in the future. | 
 | `version`            | Text  | Required | Version number of the data spec required. E.g. '1.2.0' | 
 | `required_apis`      | Enum  | Conditionally Required | Name of the [Requirement API](#requirement-apis) that need to be served by providers. For MDS, one of: provider, agency. For GBFS, this field is omitted since GBFS starts at the `endpoint` level. E.g. 'agency' | 
 | `available_apis`     | Enum  | Conditionally Required | Name of the [Requirement API](#requirement-apis) that are being served by agencies. For MDS, one of: policy, geography, jurisdiction, metrics. Not applicable to GBFS. | 
 
 [Top][toc]
-
 
 #### Requirement APIs
 
