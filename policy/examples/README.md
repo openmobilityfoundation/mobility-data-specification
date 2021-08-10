@@ -479,7 +479,7 @@ File: [`tiered-parking-fees-per-hour.json`](tiered-parking-fees-per-hour.json)
       "vehicle_types": ["bicycle", "scooter"],
       "maximum": 2,
       "rate_amount": 1000,
-"rate_recurrence": "each_time_unit"
+      "rate_recurrence": "each_time_unit"
     },
     {
       "name": "1-2 Hours",
@@ -491,7 +491,7 @@ File: [`tiered-parking-fees-per-hour.json`](tiered-parking-fees-per-hour.json)
       "vehicle_types": ["bicycle", "scooter"],
       "maximum": 1,
       "rate_amount": 400,
-"rate_recurrence": "each_time_unit"
+      "rate_recurrence": "each_time_unit"
     },
     {
       "name": "0-1 Hour",
@@ -503,7 +503,7 @@ File: [`tiered-parking-fees-per-hour.json`](tiered-parking-fees-per-hour.json)
       "vehicle_types": ["bicycle", "scooter"],
       "maximum": 0,
       "rate_amount": 200,
-"rate_recurrence": "each_time_unit"
+      "rate_recurrence": "each_time_unit"
     }
   ]
 }  
@@ -539,7 +539,7 @@ File: [`tiered-parking-fees-total.json`](tiered-parking-fees-total.json)
       "vehicle_types": ["bicycle", "scooter"],
       "maximum": 2,
       "rate_amount": 1000,
-"rate_recurrence": "once_on_unmatch"
+      "rate_recurrence": "once_on_unmatch"
     },
     {
       "name": "1-2 Hours",
@@ -551,7 +551,7 @@ File: [`tiered-parking-fees-total.json`](tiered-parking-fees-total.json)
       "vehicle_types": ["bicycle", "scooter"],
       "maximum": 1,
       "rate_amount": 400,
-"rate_recurrence": "once_on_unmatch"
+      "rate_recurrence": "once_on_unmatch"
     },
     {
       "name": "0-1 Hour",
@@ -563,7 +563,7 @@ File: [`tiered-parking-fees-total.json`](tiered-parking-fees-total.json)
       "vehicle_types": ["bicycle", "scooter"],
       "maximum": 0,
       "rate_amount": 200,
-"rate_recurrence": "once_on_unmatch"
+      "rate_recurrence": "once_on_unmatch"
     }
   ]
 }
