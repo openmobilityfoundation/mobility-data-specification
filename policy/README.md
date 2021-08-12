@@ -409,7 +409,7 @@ The OMF recommends updating the Requirements feed no more than monthly, and you 
 
 #### Beta Limitations
 
-Note that while Requirements is in [beta](#Requirements) in this **minor**, non-breaking MDS 1.2.0 release, items listed as "required" or "disallowed" will be treated as a _request_ only by default (precluding intentional formal agency communications with providers) to prevent an _unintentional_ burden on providers. For the next **major**, breaking MDS 2.0.0 release, these items will be be required or diallowed as documented.
+Note that while Requirements is in [beta](#Requirements) in this **minor**, non-breaking MDS 1.2.0 release, items listed as "required" or "disallowed" will be treated as a _request_ only by default (precluding intentional formal agency communications with providers) to prevent an _unintentional_ burden on providers. For the next **major**, breaking MDS 2.0.0 release, these items will be required or disallowed as documented.
 
 #### Requirement Format
 
