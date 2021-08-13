@@ -255,7 +255,7 @@ An individual `Rule` object is defined by the following fields:
 | `propulsion_types` | `propulsion_type[]`         | Optional   | Applicable vehicle [propulsion types][propulsion-types], default "all". |
 | `minimum`          | integer                     | Optional   | Minimum value, if applicable (default 0) |
 | `maximum`          | integer                     | Optional   | Maximum value, if applicable (default unlimited) |
-| `rate_amount`      | integer                     | Optional   | The amount of a rate applied when this rule applies, if applicable (default zero). A positive integer rate amount represents a fee, while a negative integer represents a subsidy. Rate amounts are given in the `currency` defined in the [Policy](#policy). |
+| `rate_amount`      | integer                     | Optional   | Amount of the rate (see [Rate Amounts](#rate-amounts)) |
 | `rate_recurrence`  | enum                        | Optional   | Recurrence of the rate (see [Rate Recurrences](#rate-recurrences)) |
 | `start_time`       | ISO 8601 time `hh:mm:ss`              | Optional   | Beginning time-of-day when the rule is in effect (default 00:00:00). |
 | `end_time`         | ISO 8601 time `hh:mm:ss`              | Optional   | Ending time-of-day when the rule is in effect (default 23:59:59). |
@@ -308,9 +308,15 @@ An individual `Rule` object is defined by the following fields:
 
 [Top][toc]
 
-### Rate Recurrences
+### Rates
+Rate-related properties can currently be specified on `rate` and `time` Rules. Note: A future MDS version will likely support rates for `count` and `speed` rules, but their behavior is currently undefined.
 
-Rate recurrences specify when a rate is applied – either once, or periodically according to a `time_unit` specified using [Rule Units](#rule-units). A `time_unit` refers to a unit of time as measured in local time for the juristiction – a day begins at midnight local time, an hour begins at the top of the hour, etc.
+#### Rate Amounts
+The amount of a rate applied when this rule applies, if applicable (default zero). A positive integer rate amount represents a fee, while a negative integer represents a subsidy. Rate amounts are given in the `currency` defined in the [Policy](#policy).
+
+#### Rate Recurrences
+
+Rate recurrences specify when a rate is applied – either once, or periodically according to a `time_unit` specified using [Rule Units](#rule-units). A `time_unit` refers to a unit of time as measured in local time for the jurisdiction – a day begins at midnight local time, an hour begins at the top of the hour, etc.
 
 | Name                        | Description                                                                                                                                                       |
 | --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
