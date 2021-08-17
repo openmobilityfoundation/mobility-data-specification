@@ -1,4 +1,4 @@
-agency_country_iso_code,agency_state_abbr,agency_city,agency_name,agency_id,department_url,requirement_url
+agency_country_iso_code,agency_state,agency_city,agency_name,agency_id,department_url,requirement_url
 CA,British Columbia,Kelowna,City of Kelowna,31e836fc-72da-4b2e-b553-8227d77a9b7a,https://www.kelowna.ca/roads-transportation/active-transportation/cycling/bikeshare-permit-program,
 CO,Cundinamarca,Bogotá,Bogotá,85eac875-ab70-469f-8a85-cc5ef22e78d0,https://www.movilidadbogota.gov.co/web/,
 DE,Baden-Württemberg,Ulm,Stadt Ulm,68f28fb8-d177-43f4-b7e8-a286fe0ddca0,https://www.ulm.de/de-de,
