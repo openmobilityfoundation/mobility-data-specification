@@ -464,7 +464,7 @@
       "examples": [
         "1.0.0"
       ],
-      "pattern": "^1\\.0\\.[0-9]+$"
+      "pattern": "^1\\.2\\.[0-9]+$"
     },
     "days": {
       "$id": "#/definitions/days",
