@@ -471,7 +471,7 @@ Contains metadata applicable to the agency and at the top of its [Requirement](#
     "file_version": "[INTEGER]",
     "last_updated": "[TIMESTAMP]",
     "max_update_interval": "[DURATION]",
-    "agency_uuid": "[UUID]",
+    "agency_id": "[UUID]",
     "agency_name": "[TEXT]",
     "agency_timezone": "[TIMEZONE]",
     "agency_language": "[TEXT]",
@@ -491,7 +491,7 @@ Contains metadata applicable to the agency and at the top of its [Requirement](#
 | `file_version`               | integer         | Required | Version of this file. Increment 1 with each modification. E.g. "3" |
 | `last_updated`               | [timestamp][ts] | Required | When this file `version` was last updated. E.g. "1611958740" |
 | `max_update_interval`        | duration        | Required | The expected maximum frequency with which this file could be updated. [ISO 8601 duration](https://en.wikipedia.org/wiki/ISO_8601#Durations). E.g. "P1D" |
-| `agency_uuid`                | UUID            | Required | UUID of the agency this file applies to. Must come from [agencies.csv](/agencies.csv) file. E.g. "737a9c62-c0cb-4c93-be43-271d21b784b5" |
+| `agency_id`                  | UUID            | Required | UUID of the agency this file applies to. Must come from [agencies.csv](/agencies.csv) file. E.g. "737a9c62-c0cb-4c93-be43-271d21b784b5" |
 | `agency_name`                | text            | Required | Name of the agency this file applies to. E.g. "Louisville Metro" |
 | `agency_timezone`            | timezone        | Required | [TZ Database Name](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) used for dates and times in Requirements and across all MDS endpoints. E.g. "America/New_York" |
 | `agency_language`            | text            | Required | An [IETF BCP 47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language code, used across all MDS endpoints. E.g. "en-US" |
