@@ -574,24 +574,24 @@ For each combination of items in a program, you can specify the data specs, APIs
 // ...
 ```
 
-| Name                 | Type  | Required / Optional | Description              | 
-| -------------------- | ----- | -------- | ----------------------------------- | 
-| `data_spec_name`     | Enum  | Required | Name of the data spec required. Supported values are: '[MDS](https://github.com/openmobilityfoundation/mobility-data-specification/tree/ms-requirements)', '[GBFS](https://github.com/NABSA/gbfs/tree/v2.2)'. Others like GOFS, GTFS, TOMP-API, etc can be tested by agencies and officially standardized here in the future -- leave your feedback on [this issue](https://github.com/openmobilityfoundation/mobility-data-specification/issues/682). | 
-| `version`            | Text  | Required | Version number of the data spec required. E.g. '1.2.0' | 
-| `required_apis`      | Enum  | Conditionally Required | Name of the [Requirement API](#requirement-apis) that need to be served by providers. For MDS, one of: provider, agency. For GBFS, this field is omitted since GBFS starts at the `endpoint` level. E.g. 'agency' | 
-| `available_apis`     | Enum  | Conditionally Required | Name of the [Requirement API](#requirement-apis) that are being served by agencies. For MDS, one of: policy, geography, jurisdiction, metrics. Not applicable to GBFS. | 
+| Name                 | Type   | Required / Optional | Description              | 
+| -------------------- | ------ | -------- | ----------------------------------- | 
+| `data_spec_name`     | Enum   | Required | Name of the data spec required. Supported values are: '[MDS](https://github.com/openmobilityfoundation/mobility-data-specification/tree/ms-requirements)', '[GBFS](https://github.com/NABSA/gbfs/tree/v2.2)'. Others like GOFS, GTFS, TOMP-API, etc can be tested by agencies and officially standardized here in the future -- leave your feedback on [this issue](https://github.com/openmobilityfoundation/mobility-data-specification/issues/682). | 
+| `version`            | Text   | Required | Version number of the data spec required. E.g. '1.2.0' | 
+| `required_apis`      | Array  | Conditionally Required | Name of the [Requirement APIs](#requirement-apis) that need to be served by providers. At least one API is required. APIs not listed will not be available to the agency. | 
+| `available_apis`     | Array  | Conditionally Required | Name of the [Requirement APIs](#requirement-apis) that are being served by agencies.  Not applicable to GBFS. APIs not listed will not be available to the provider. | 
 
 [Top][toc]
 
 #### Requirement APIs
 
-For each data specification, you can specify which APIs are required from providers and available from your agency.
+For each data specification, you can specify which APIs, endpoints, and fields are required from providers, and which are available from your agency.
 
 An agency may require providers to serve optional APIs, endpoints, and fields that are needed for your agency's program. This is a `required_apis` array within the [Requirement Data Specs](#requirement-data-specs) section in the [Requirement](#requirement) data feed.
 
-You may also show which APIs, endpoints, and fields your agency is serving to providers and the public. This is an `available_apis` array within the [Requirement Data Specs](#requirement-data-specs) section in the [Requirement](#requirement) data feed.
+**Note: any APIs, endpoints, or fields that are _required_ by a data specification are not to be listed, and are still required. Only optional items are enumerated here. You may however list `disallowed_fields` to exclude required fields. Optional APIs or endpoints should _NOT_ be returned unless specified.**
 
-**Note: any APIs, endpoints, or fields that are required by a data specification are not to be listed, and are still required. Only optional items are enumerated here.**
+You may also show which APIs, endpoints, and fields your agency is serving to providers and the public. This is an `available_apis` array within the [Requirement Data Specs](#requirement-data-specs) section in the [Requirement](#requirement) data feed.
 
 ```jsonc
 // ...  
@@ -636,14 +636,14 @@ You may also show which APIs, endpoints, and fields your agency is serving to pr
 
 | Name                 | Type  | Required/Optional | Description                | 
 | -------------------- | ----- | -------- | ----------------------------------- | 
-| `api_name`           | Enum  | Required | Name of the applicable MDS API: provider, agency, policy, geography, jurisdiction, metrics. At least one is required. E.g. 'agency' | 
-| `endpoint_name`      | Text  | Required | Name of required endpoint. At least one is required. E.g. "trips" | 
+| `api_name`           | Text  | Required | Name of the applicable API required. At least one API is required. APIs not listed will not be available to the agency. E.g. for MDS: 'provider', or 'agency'. For GBFS, this field is omitted since GBFS starts at the `endpoint` level. | 
+| `endpoint_name`      | Text  | Required | Name of the required endpoint under the API. At least one endpoint is required. E.g. for MDS 'provider': 'trips' | 
 
 **Provider Endpoints** - Specific to the `required_apis` array 
 
 | Name                 | Type  | Required/Optional | Description                | 
 | -------------------- | ----- | -------- | ----------------------------------- | 
-| `required_endpoints` | Array | Required | Array of optional endpoints required by the agency. At least one is required. | 
+| `required_endpoints` | Array | Required | Array of optional endpoints required by the agency. At least one is required. Endpoints not listed will not be available to the agency. | 
 | `required_fields`    | Array | Optional | Array of optional field names required by the agency. Can be omitted if no optional fields are required. Use dot notation for nested fields. See **special notes** below. | 
 | `disallowed_fields`  | Array | Optional | Array of optional field names who's values are to be returned by the agency as `null`, even if required in MDS. Use dot notation for nested fields. See **special notes** below. | 
 
@@ -651,14 +651,14 @@ You may also show which APIs, endpoints, and fields your agency is serving to pr
 
 | Name                 | Type  | Required/Optional | Description                | 
 | -------------------- | ----- | -------- | ----------------------------------- | 
-| `available_endpoints`| Array | Required | Array of endpoints provided by the agency. At least one is required. | 
+| `available_endpoints`| Array | Required | Array of endpoints provided by the agency. At least one is required. Endpoints not listed will not be available to the provider. | 
 | `url`                | URL   | Optional | Location of API endpoint url. Required if the API is unauthenticated and public, optional if endpoint is authenticated and private. E.g. "https://mds.cityname.gov/geographies/geography/1.1.0"  | 
 | `available_fields`   | Array | Optional | Array of optional field names provided by the agency. Can be omitted if none are required. Use dot notation for nested fields. See **special notes** below. | 
 
 **Special notes about `required_fields` and `disallowed_fields`.** 
 
-- All fields marked 'Required' in MDS are still included by default and should not be enumerated in `required_fields`. They are not affected by the Requirements endpoint.
-- Fields in MDS marked 'Required if available' are still returned if available, and are not affected by the Requirements endpoint.
+- All fields marked 'Required' in MDS are still included by default and should not be enumerated in `required_fields`. They are not affected by the Requirements endpoint, unless explicitly listed in `disallowed_fields`.
+- Fields in MDS marked 'Required if available' are still returned if available, and are not affected by the Requirements endpoint, unless explicitly listed in `disallowed_fields`.
 - If a 'Required' or 'Required if available' or 'Optional' field in MDS is listed in `disallowed_fields`, those fields should not be returned by the provider in the endpoint. The field **names** must be returned to keep proper file structure, but the values must be `null`.
 - To reference fields that are lower in a heirarchy, use [dot separated notation](https://docs.oracle.com/en/database/oracle/oracle-database/18/adjsn/simple-dot-notation-access-to-json-data.html#GUID-7249417B-A337-4854-8040-192D5CEFD576), where a dot between field names represents one nested level deeper into the data structure. E.g. 'gps.heading' or 'features.properties.rules.vehicle_type_id'.
 - To require [Greography Driven Events](/general-information.md#geography-driven-events), simply include the `event_geographies` field for either the Agency or Provider API `api_name`. Per how GDEs work, `event_location` will then not be returned, and the `changed_geographies` vehicle state `event_type` will be used.
