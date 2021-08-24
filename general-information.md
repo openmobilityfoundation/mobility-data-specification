@@ -293,7 +293,7 @@ In a multi-jurisdiction environment, the status of a vehicle is per-jurisdiction
 
 ### Event Types
 
-Event types are the possible transitions bewteen some vehicle states.  
+Event types are the possible transitions between some vehicle states.  
 
 | `event_type` | Description |
 |---|---|
