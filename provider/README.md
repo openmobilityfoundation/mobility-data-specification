@@ -185,11 +185,7 @@ The `/trips` API should allow querying trips with the following query parameters
 | --------------- | ------ | --------------- |
 | `end_time` | `YYYY-MM-DDTHH`, an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) extended datetime representing an UTC hour between 00 and 23. | All trips with an end time occurring within the hour. For example, requesting `end_time=2019-10-01T07` returns all trips where `2019-10-01T07:00:00 <= trip.end_time < 2019-10-01T08:00:00` UTC. |
 
-If the provider was operational during the requested hour the provider shall return
-a 200 response, even if there are no trips to report (in which case
-the response will contain an empty list of trips).
-If the requested hour occurs in a time period in which the provider was not operational
-or the hour is not yet in the past `/trips` shall return a `404 Not Found` error.
+If the provider was operational during the requested hour the provider shall return a 200 response, even if there are no trips to report (in which case the response will contain an empty list of trips). If the requested hour occurs in a time period in which the provider was not operational, or the hour has passed but the provider has not yet processed data for that hour `/trips` shall return a `404 Not Found` error.
 
 Without an `end_time` query parameter, `/trips` shall return a `400 Bad Request` error.
 
