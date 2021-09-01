@@ -464,7 +464,7 @@
       "examples": [
         "1.0.0"
       ],
-      "pattern": "^1\\.0\\.[0-9]+$"
+      "pattern": "^1\\.2\\.[0-9]+$"
     },
     "days": {
       "$id": "#/definitions/days",
@@ -545,7 +545,7 @@
       ],
       "description": "Integer milliseconds since Unix epoch",
       "multipleOf": 1.0,
-      "minimum": 0
+      "minimum": 1514764800000
     },
     "null_uuid_array": {
       "$id": "#/definitions/null_uuid_array",
