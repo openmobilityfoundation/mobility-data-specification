@@ -277,7 +277,7 @@ An individual `Rule` object is defined by the following fields:
 | `propulsion_types` | `propulsion_type[]`         | Optional   | Applicable vehicle [propulsion types][propulsion-types], default "all". |
 | `minimum`          | integer                     | Optional   | Minimum value, if applicable (default 0) |
 | `maximum`          | integer                     | Optional   | Maximum value, if applicable (default unlimited) |
-| `rate_amount`      | integer                     | Optional   | The amount of a rate applied when this rule applies, if applicable (default zero). A positive integer rate amount represents a fee, while a negative integer represents a subsidy. Rate amounts are given in the `currency` defined in the [Policy](#policy). |
+| `rate_amount`      | integer                     | Optional   | Amount of the rate (see [Rate Amounts](#rate-amounts)) |
 | `rate_recurrence`  | enum                        | Optional   | Recurrence of the rate (see [Rate Recurrences](#rate-recurrences)) |
 | `start_time`       | ISO 8601 time `hh:mm:ss`              | Optional   | Beginning time-of-day when the rule is in effect (default 00:00:00). |
 | `end_time`         | ISO 8601 time `hh:mm:ss`              | Optional   | Ending time-of-day when the rule is in effect (default 23:59:59). |
@@ -292,7 +292,7 @@ An individual `Rule` object is defined by the following fields:
 | Name    | Description                                                                                                   |
 | ------- | ------------------------------------------------------------------------------------------------------------- |
 | `count` | Fleet counts based on regions. Rule `minimum`/`maximum` refers to number of devices in [Rule Units](#rule-units).                                  |
-| `time`  | Individual limitations on time spent in one or more vehicle-states. Rule `minimum`/`maximum` refers to increments of time in [Rule Units](#rule-units). |
+| `time`  | Individual limitations or fees based upon time spent in one or more vehicle-states. Rule `minimum`/`maximum` refers to increments of time in [Rule Units](#rule-units). |
 | `speed` | Global or local speed limits. Rule `minimum`/`maximum` refers to speed in [Rule Units](#rule-units).                  |
 | `rate`  | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.0.0)*. Fees or subsidies based on regions and time spent in one or more vehicle-states. Rule `rate_amount` refers to the rate charged according to the [Rate Recurrences](#rate_recurrences) and the [currency requirements](/general-information.md#costs-and-currencies) in [Rule Units](#rule-units). *Prior to implementation agencies should consult with providers to discuss how the `rate` rule will be used. Most agencies do this as a matter of course, but it is particularly important to communicate in advance how frequently and in what ways rates might change over time.*    |
 | `user`  | Information for users, e.g. about helmet laws. Generally can't be enforced via events and telemetry.          |
@@ -332,15 +332,22 @@ An individual `Rule` object is defined by the following fields:
 
 [Top][toc]
 
-### Rate Recurrences
+### Rates
+Rate-related properties can currently be specified on `rate` and `time` Rules. Note: A future MDS version will likely support rates for `count` and `speed` rules, but their behavior is currently undefined.
 
-Rate recurrences specify when a rate is applied – either once, or periodically according to a `time_unit` specified using [Rule Units](#rule-units). A `time_unit` refers to a unit of time as measured in local time for the juristiction – a day begins at midnight local time, an hour begins at the top of the hour, etc.
+#### Rate Amounts
+The amount of a rate applied when this rule applies, if applicable (default zero). A positive integer rate amount represents a fee, while a negative integer represents a subsidy. Rate amounts are given in the `currency` defined in the [Policy](#policy).
 
-| Name      | Description         |
-| --------- | ------------------- |
-| `once`                      |  Rate is applied once to vehicles entering a matching status from a non-matching status.   |
-| `each_time_unit`            |  During each `time_unit`, rate is applied once to vehicles entering or remaining in a matching status. Requires a `time_unit` to be specified using `rule_units`.  |  
-| `per_complete_time_unit`    | Rate is applied once per complete `time_unit` that vehicles remain in a matching status. Requires a `time_unit` to be specified using `rule_units`.  |
+#### Rate Recurrences
+
+Rate recurrences specify when a rate is applied – either once, or periodically according to a `time_unit` specified using [Rule Units](#rule-units). A `time_unit` refers to a unit of time as measured in local time for the jurisdiction – a day begins at midnight local time, an hour begins at the top of the hour, etc.
+
+| Name                        | Description                                                                                                                                                       |
+| --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `once_on_match`             | Rate is applied once when a vehicle transitions **into** a matching status from a non-matching status.                                                            |
+| `once_on_unmatch`           | Rate is applied once a vehicle transitions **out of** a matching status to a non-matching status.                                                                 | 
+| `each_time_unit`            | During each `time_unit`, rate is applied once to vehicles entering or remaining in a matching status. Requires a `time_unit` to be specified using `rule_units`.  |  
+| `per_complete_time_unit`    | Rate is applied once per complete `time_unit` that vehicles remain in a matching status. Requires a `time_unit` to be specified using `rule_units`.               |
 
 [Top][toc]
 
