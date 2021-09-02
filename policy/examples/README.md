@@ -1,6 +1,6 @@
 # Policy Examples
 
-This file presents a series of example [Policy documents](../README.md#schema) for Agencies to use as templates.
+This file presents a series of example [Policy documents](../README.md#policy) for Agencies to use as templates.
 
 ## Table of Contents
 
