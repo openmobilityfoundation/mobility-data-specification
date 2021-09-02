@@ -274,7 +274,7 @@ File: [`per-trip-fees.json`](per-trip-fees.json)
       "rule_type": "rate",
       "rule_units": "amount",
       "rate_amount": 25,
-      "rate_recurrence": "once",
+      "rate_recurrence": "once_on_match",
       "geographies": [
         "b4bcc213-4888-48ce-a33d-4dd6c3384bda"
       ],
@@ -457,7 +457,8 @@ This policy states parking fees as such:
 
 For example, say a vehicle is parked for 6.5 hours. It will be charged `$2 (0-1hr) + $4 (1-2hr) + $10 (2-3hr) + $10 (3-4hr) + $10 (4-5hr) + $10 (5-6hr) + $10 (6-6.5hr) = $56`
 File: [`tiered-parking-fees-per-hour.json`](tiered-parking-fees-per-hour.json)
-```
+
+```json
 {
   "name": "Tiered Dwell Time Example",
   "description": "First hour $2, second hour $4, every hour onwards $10",
@@ -506,7 +507,7 @@ File: [`tiered-parking-fees-per-hour.json`](tiered-parking-fees-per-hour.json)
       "rate_recurrence": "each_time_unit"
     }
   ]
-}  
+}
 ```
 
 ## Tiered Parking Fees Total
@@ -517,7 +518,8 @@ This policy states parking fees as such:
 
 For example, if a vehicle is parked for 6.5 hours, it will be charged $10 on exit.
 File: [`tiered-parking-fees-total.json`](tiered-parking-fees-total.json)
-```
+
+```json
 {
   "name": "Tiered Dwell Time Example",
   "description": "If parked for <1hr $2 upon exit, if parked for 1-2 hours $4 upon exit, if parked for longer than 2 hours $10 upon exit",
@@ -568,5 +570,5 @@ File: [`tiered-parking-fees-total.json`](tiered-parking-fees-total.json)
   ]
 }
 ```
-[Top](#table-of-contents)
 
+[Top](#table-of-contents)
