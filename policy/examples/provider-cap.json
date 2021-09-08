@@ -2,7 +2,7 @@
   "updated": 0,
   "version": "1.0.0",
   "data": {
-    "policy": [
+    "policies": [
       {
         "name": "Test City Mobility Caps: Company X",
         "description": "Mobility caps as described in the One-Year Permit",

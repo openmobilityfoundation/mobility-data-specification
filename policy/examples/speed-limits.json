@@ -2,7 +2,7 @@
   "updated": 0,
   "version": "1.0.0",
   "data": {
-    "policy": [
+    "policies": [
       {
         "policy_id": "95645117-fd85-463e-a2c9-fc95ea47463e",
         "name": "Speed Limits",

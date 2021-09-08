@@ -2,7 +2,7 @@
   "updated": 0,
   "version": "1.2.0",
   "data": {
-    "policy": [
+    "policies": [
       {
         "name": "Tiered Dwell Time Example",
         "description": "If parked for <1hr $2 upon exit, if parked for 1-2 hours $4 upon exit, if parked for longer than 2 hours $10 upon exit",
