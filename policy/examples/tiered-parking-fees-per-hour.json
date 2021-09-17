@@ -2,7 +2,7 @@
   "updated": 0,
   "version": "1.2.0",
   "data": {
-    "policy": [
+    "policies": [
       {
         "name": "Tiered Dwell Time Example",
         "description": "First hour $2, second hour $4, every hour onwards $10",

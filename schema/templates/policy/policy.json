@@ -319,7 +319,7 @@
         "policy"
       ],
       "properties": {
-        "policy": {
+        "policies": {
           "$id": "#/properties/data/properties/policy",
           "type": "array",
           "title": "The policy payload",
