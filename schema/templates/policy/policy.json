@@ -171,6 +171,16 @@
           "type": ["null", "integer"],
           "description": "Maximum value, if applicable (default unlimited)"
         },
+        "inclusive_minimum": {
+          "$id": "#/definitions/rule/properties/inclusive_minimum",
+          "type": ["null", "boolean"],
+          "description": "Whether the rule minimum is considered in-bounds (default true)"
+        },
+        "inclusive_maximum": {
+          "$id": "#/definitions/rule/properties/inclusive_maximum",
+          "type": ["null", "boolean"],
+          "description": "Whether the rule maximum is considered in-bounds (default true)"
+        },
         "rate_amount": {
           "$id": "#/definitions/rule/properties/rate_amount",
           "type": ["null", "integer"],
