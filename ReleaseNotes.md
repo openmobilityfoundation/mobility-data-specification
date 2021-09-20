@@ -1,3 +1,14 @@
+## 1.1.1
+
+> Released: 2021-09-24 
+
+The 1.1.1 support release fixes the version validation for 1.1.0 in the JSON schema, and adds comms_restored to removed state. 
+
+### CHANGES
+
+- ["removed" missing "comms_restored" option in provider schemas](https://github.com/openmobilityfoundation/mobility-data-specification/issues/690)
+- [Version number is 1.0.x for 1.1.0 release](https://github.com/openmobilityfoundation/mobility-data-specification/issues/669)
+
 ## 1.1.0
 
 > Released: 2021-03-30 
