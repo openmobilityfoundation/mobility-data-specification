@@ -431,12 +431,13 @@ The *State Machine Diagram* shows how `vehicle_state` and `event_type` relate to
 The list of allowed `vehicle_type` values in MDS. Aligning with [GBFS vehicle types form factors](https://github.com/NABSA/gbfs/blob/master/gbfs.md#vehicle_typesjson-added-in-v21-rc).
 
 | `vehicle_type` | Description |
-|--------------| --- |
-| bicycle      | Anything with pedals, including recumbents; can include powered assist |
-| car          | Any automobile |
-| scooter      | Any motorized mobility device intended for one rider |
-| moped        | A motorcycle/bicycle hybrid that can be powered or pedaled |
-| other        | A device that does not fit in the other categories |
+|---------------| --- |
+| bicycle       | A two-wheeled mobility device intended for personal transportation that can be operated via pedals, with or without a motorized assist (includes e-bikes, recumbents, and tandems) |
+| cargo_bicycle | A two- or three-wheeled bicycle intended for transporting larger, heavier cargo than a standard bicycle (such as goods or passengers), with or without motorized assist (includes bakfiets/front-loaders, cargo trikes, and long-tails) |
+| car           | A passenger car or similar light-duty vehicle |
+| scooter       | A standing or seated fully-motorized mobility device intended for one rider, capable of travel at low or moderate speeds, and suited for operation in infrastructure shared with motorized bicycles |
+| moped         | A seated fully-motorized mobility device capable of travel at moderate or high speeds and suited for operation in general urban traffic |
+| other         | A device that does not fit in the other categories |
 
 [Top][toc]
 
