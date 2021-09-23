@@ -281,8 +281,9 @@ An individual `Rule` object is defined by the following fields:
 | `inclusive_maximum` | boolean                    | Optional   | Whether the rule `maximum` is considered in-bounds (default `true`) |
 | `rate_amount`      | integer                     | Optional   | Amount of the rate (see [Rate Amounts](#rate-amounts)) |
 | `rate_recurrence`  | enum                        | Optional   | Recurrence of the rate (see [Rate Recurrences](#rate-recurrences)) |
-| `start_time`       | ISO 8601 time `hh:mm:ss`              | Optional   | Beginning time-of-day when the rule is in effect (default 00:00:00). |
-| `end_time`         | ISO 8601 time `hh:mm:ss`              | Optional   | Ending time-of-day when the rule is in effect (default 23:59:59). |
+| `rate_applies_when` | enum                       | Optional   | Specifies when a rate is applied to a rule (see [Rate Applies When](#rate-applies-when)) (defaults to `out_of_bounds`) |
+| `start_time`       | ISO 8601 time `hh:mm:ss`    | Optional   | Beginning time-of-day when the rule is in effect (default 00:00:00). |
+| `end_time`         | ISO 8601 time `hh:mm:ss`    | Optional   | Ending time-of-day when the rule is in effect (default 23:59:59). |
 | `days`             | day[]                       | Optional   | Days `["sun", "mon", "tue", "wed", "thu", "fri", "sat"]` when the rule is in effect (default all) |
 | `messages`         | `{ String:String }`         | Optional   | Message to rider user, if desired, in various languages, keyed by language tag (see [Messages](#messages)) |
 | `value_url`        | URL                         | Optional   | URL to an API endpoint that can provide dynamic information for the measured value (see [Value URL](#value-url)) |
@@ -342,7 +343,7 @@ The amount of a rate applied when this rule applies, if applicable (default zero
 
 #### Rate Recurrences
 
-Rate recurrences specify when a rate is applied – either once, or periodically according to a `time_unit` specified using [Rule Units](#rule-units). A `time_unit` refers to a unit of time as measured in local time for the jurisdiction – a day begins at midnight local time, an hour begins at the top of the hour, etc.
+Rate recurrences specify how a rate is applied – either once, or periodically according to a `time_unit` specified using [Rule Units](#rule-units). A `time_unit` refers to a unit of time as measured in local time for the jurisdiction – a day begins at midnight local time, an hour begins at the top of the hour, etc.
 
 | Name                        | Description                                                                                                                                                       |
 | --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -352,6 +353,19 @@ Rate recurrences specify when a rate is applied – either once, or periodicall
 | `per_complete_time_unit`    | Rate is applied once per complete `time_unit` that vehicles remain in a matching status. Requires a `time_unit` to be specified using `rule_units`.               |
 
 [Top][toc]
+
+#### Rate Applies When
+
+The `rate_applies_when` field specifies when a rate should be applied to an event or count,
+e.g. is it when the event is within the Rule bounds or when it is outside?
+It defaults to `out_of_bounds`.
+
+The `rate_applies_when` field may take the following values:
+
+| Name            | Description |
+| --------------- | ----------- |
+| `in_bounds`     | Rate applies when an event or count is within the rule `minimum` and `maximum` |
+| `out_of_bounds` | Rate applies when an event or count is outside of the rule `minimum` and `maximum` |
 
 ### Messages
 

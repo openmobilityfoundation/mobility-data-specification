@@ -274,7 +274,7 @@ File: [`per-trip-fees.json`](per-trip-fees.json)
       "rule_type": "rate",
       "rule_units": "amount",
       "rate_amount": 25,
-      "rate_recurrence": "once",
+      "rate_recurrence": "once_on_match",
       "geographies": [
         "b4bcc213-4888-48ce-a33d-4dd6c3384bda"
       ],
@@ -456,8 +456,19 @@ This policy states parking fees as such:
 - Parking every hour onwards costs $10
 
 For example, say a vehicle is parked for 6.5 hours. It will be charged `$2 (0-1hr) + $4 (1-2hr) + $10 (2-3hr) + $10 (3-4hr) + $10 (4-5hr) + $10 (5-6hr) + $10 (6-6.5hr) = $56`
+
+This policy may be specified different ways using the `rate_applies_when` field.
+Both examples are shown here.
+
+### With default `rate_applies_when = "out_of_bounds"`
+
+By default the `rate_applies_when` field has the value `out_of_bounds`,
+meaning the rate should take effect when an event is outside the bounds
+of a rule's `minimum` and `maximum` values.
+
 File: [`tiered-parking-fees-per-hour.json`](tiered-parking-fees-per-hour.json)
-```
+
+```json
 {
   "name": "Tiered Dwell Time Example",
   "description": "First hour $2, second hour $4, every hour onwards $10",
@@ -506,7 +517,76 @@ File: [`tiered-parking-fees-per-hour.json`](tiered-parking-fees-per-hour.json)
       "rate_recurrence": "each_time_unit"
     }
   ]
-}  
+}
+```
+
+### With `rate_applies_when = "in_bounds"`
+
+When the `rate_applies_when` field has the value `in_bounds`,
+the rate takes effect when an event is within a rule's `minimum` and
+`maximum` values. Note that this also uses the `inclusive_minimum` and
+`inclusive_maximum` fields to create non-overlapping ranges for the rules.
+
+File: [`tiered-parking-fees-per-hour-in-bounds.json`](tiered-parking-fees-per-hour-in-bounds.json)
+
+```json
+{
+  "name": "Tiered Dwell Time Example",
+  "description": "First hour $2, second hour $4, every hour onwards $10",
+  "policy_id": "2800cd0a-7827-4110-9713-b9e5bf29e9a1",
+  "start_date": 1558389669540,
+  "publish_date": 1558389669540,
+  "end_date": null,
+  "prev_policies": null,
+  "provider_ids": [],
+  "currency": "USD",
+  "rules": [
+    {
+      "name": "0-1 Hour",
+      "rule_id": "6b6fe61b-dbe5-4367-8e35-84fb14d23c54",
+      "rule_type": "time",
+      "rule_units": "hours",
+      "geographies": ["0c77c813-bece-4e8a-84fd-f99af777d198"],
+      "statuses": { "available": [], "non_operational": [] },
+      "vehicle_types": ["bicycle", "scooter"],
+      "maximum": 1,
+      "inclusive_maximum": false,
+      "rate_applies_when": "in_bounds",
+      "rate_amount": 200,
+      "rate_recurrence": "each_time_unit"
+    },
+    {
+      "name": "1-2 Hours",
+      "rule_id": "edd6a195-bb30-4eb5-a2cc-44e5a18798a2",
+      "rule_type": "time",
+      "rule_units": "hours",
+      "geographies": ["0c77c813-bece-4e8a-84fd-f99af777d198"],
+      "statuses": { "available": [], "non_operational": [] },
+      "vehicle_types": ["bicycle", "scooter"],
+      "minimum": 1,
+      "maximum": 2,
+      "inclusive_minimum": true,
+      "inclusive_maximum": false,
+      "rate_applies_when": "in_bounds",
+      "rate_amount": 400,
+      "rate_recurrence": "each_time_unit"
+    },
+    {
+      "name": "> 2 hours",
+      "rule_id": "9cd1768c-ab9e-484c-93f8-72a7078aa7b9",
+      "rule_type": "time",
+      "rule_units": "hours",
+      "geographies": ["0c77c813-bece-4e8a-84fd-f99af777d198"],
+      "statuses": { "available": [], "non_operational": [] },
+      "vehicle_types": ["bicycle", "scooter"],
+      "minimum": 2,
+      "inclusive_minimum": true,
+      "rate_applies_when": "in_bounds",
+      "rate_amount": 1000,
+      "rate_recurrence": "each_time_unit"
+    }
+  ]
+}
 ```
 
 ## Tiered Parking Fees Total
@@ -517,7 +597,8 @@ This policy states parking fees as such:
 
 For example, if a vehicle is parked for 6.5 hours, it will be charged $10 on exit.
 File: [`tiered-parking-fees-total.json`](tiered-parking-fees-total.json)
-```
+
+```json
 {
   "name": "Tiered Dwell Time Example",
   "description": "If parked for <1hr $2 upon exit, if parked for 1-2 hours $4 upon exit, if parked for longer than 2 hours $10 upon exit",
@@ -568,5 +649,5 @@ File: [`tiered-parking-fees-total.json`](tiered-parking-fees-total.json)
   ]
 }
 ```
-[Top](#table-of-contents)
 
+[Top](#table-of-contents)
