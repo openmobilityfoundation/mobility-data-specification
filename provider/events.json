@@ -37,9 +37,9 @@
       "type": "string",
       "description": "The version of MDS this data represents",
       "examples": [
-        "1.0.0"
+        "1.1.0"
       ],
-      "pattern": "^1\\.0\\.[0-9]+$"
+      "pattern": "^1\\.1\\.[0-9]+$"
     },
     "Point": {
       "$id": "#/definitions/Point",
