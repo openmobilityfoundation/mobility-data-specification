@@ -20,7 +20,7 @@
       "type": "number",
       "description": "Integer milliseconds since Unix epoch",
       "multipleOf": 1.0,
-      "minimum": 0
+      "minimum": 1514764800000
     },
     "uuid": {
       "$id": "#/definitions/uuid",
@@ -37,9 +37,9 @@
       "type": "string",
       "description": "The version of MDS this data represents",
       "examples": [
-        "1.1.0"
+        "1.2.0"
       ],
-      "pattern": "^1\\.1\\.[0-9]+$"
+      "pattern": "^1\\.2\\.[0-9]+$"
     },
     "Point": {
       "$id": "#/definitions/Point",

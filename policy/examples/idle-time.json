@@ -2,7 +2,7 @@
   "updated": 0,
   "version": "1.0.0",
   "data": {
-    "policy": [
+    "policies": [
       {
         "policy_id": "a2c9a65f-fd85-463e-9564-fc95ea473f7d",
         "name": "Idle Times",

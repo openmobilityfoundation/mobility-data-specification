@@ -185,13 +185,32 @@ The `/trips` API should allow querying trips with the following query parameters
 | --------------- | ------ | --------------- |
 | `end_time` | `YYYY-MM-DDTHH`, an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) extended datetime representing an UTC hour between 00 and 23. | All trips with an end time occurring within the hour. For example, requesting `end_time=2019-10-01T07` returns all trips where `2019-10-01T07:00:00 <= trip.end_time < 2019-10-01T08:00:00` UTC. |
 
-If the provider was operational during the requested hour the provider shall return
-a 200 response, even if there are no trips to report (in which case
-the response will contain an empty list of trips).
-If the requested hour occurs in a time period in which the provider was not operational
-or the hour is not yet in the past `/trips` shall return a `404 Not Found` error.
-
 Without an `end_time` query parameter, `/trips` shall return a `400 Bad Request` error.
+
+### Trips - Responses
+
+The API's response will depend on the hour queried and the status of data
+processing for that hour:
+
+* For hours that are not yet in the past the API shall return a `404 Not Found`
+  response.
+* For hours in which the provider was not operating the API shall return a
+  `404 Not Found` response.
+* For hours that are in the past but for which data is not yet available
+  the API shall return a `102 Processing` response.
+* For all other hours the API shall return a `200 OK` response with a fully
+  populated body, even for hours that contain no trips to report.
+  If the hour has no trips to report the response shall contain an empty
+  array of trips:
+  
+    ```json
+    {
+        "version": "x.y.z",
+        "data": {
+            "trips": []
+        }
+    }
+    ```
 
 For the near-ish real time use cases, please use the [events][events] endpoint.
 
@@ -199,7 +218,7 @@ For the near-ish real time use cases, please use the [events][events] endpoint.
 
 ### Routes
 
-To represent a route, MDS `provider` APIs must create a GeoJSON [`FeatureCollection`][geojson-feature-collection], which includes every [observed point][geo] in the route, even those which occur outside the [municipality boundary][muni-boundary].
+To represent a route, MDS `provider` APIs must create a GeoJSON [`FeatureCollection`][geojson-feature-collection], which includes every [observed point][point-geo] in the route, even those which occur outside the [municipality boundary][muni-boundary].
 
 Routes must include at least 2 points: the start point and end point. Routes must include all possible GPS or GNSS samples collected by a Provider. Providers may round the latitude and longitude to the level of precision representing the maximum accuracy of the specific measurement. For example, [a-GPS][agps] is accurate to 5 decimal places, [differential GPS][dgps] is generally accurate to 6 decimal places. Providers may round those readings to the appropriate number for their systems.
 
@@ -271,7 +290,7 @@ Unless stated otherwise by the municipality, this endpoint must return only thos
 | `event_types` | Enum[] | Required | [Vehicle event(s)][vehicle-events] for state change, allowable values determined by `vehicle_state` |
 | `event_time` | [timestamp][ts] | Required | Date/time that event occurred at. See [Event Times][event-times] |
 | `publication_time` | [timestamp][ts] | Optional | Date/time that event became available through the status changes endpoint |
-| `event_location` | GeoJSON [Point Feature][geo] | Required | See also [Stop-based Geographic Data][stop-based-geo]. |
+| `event_location` | GeoJSON [Point Feature][point-geo] | Required | See also [Stop-based Geographic Data][stop-based-geo]. |
 | `event_geographies` | UUID[] | Optional | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.1.0)*. Array of Geography UUIDs consisting of every Geography that contains the location of the status change. See [Geography Driven Events][geography-driven-events]. Required if `event_location` is not present. |
 | `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |
 | `trip_id` | UUID | Required if Applicable | Trip UUID (foreign key to Trips API), required if `event_types` contains `trip_start`, `trip_end`, `trip_cancel`, `trip_enter_jurisdiction`, or `trip_leave_jurisdiction` |
@@ -287,13 +306,32 @@ The `/status_changes` API should allow querying status changes with the followin
 | --------------- | ------ | --------------- |
 | `event_time` | `YYYY-MM-DDTHH`, an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) extended datetime representing an UTC hour between 00 and 23. | All status changes with an event time occurring within the hour. For example, requesting `event_time=2019-10-01T07` returns all status changes where `2019-10-01T07:00:00 <= status_change.event_time < 2019-10-01T08:00:00` UTC. |
 
-If the provider was operational during the requested hour the provider shall return
-a 200 response, even if there are no status changes to report (in which case
-the response will contain an empty list of status changes).
-If the requested hour occurs in a time period in which the provider was not operational
-or the hour is not yet in the past `/status_changes` shall return a `404 Not Found` error.
-
 Without an `event_time` query parameter, `/status_changes` shall return a `400 Bad Request` error.
+
+### Status Changes - Responses
+
+The API's response will depend on the hour queried and the status of data
+processing for that hour:
+
+* For hours that are not yet in the past the API shall return a `404 Not Found`
+  response.
+* For hours in which the provider was not operating the API shall return a
+  `404 Not Found` response.
+* For hours that are in the past but for which data is not yet available
+  the API shall return a `102 Processing` response.
+* For all other hours the API shall return a `200 OK` response with a fully
+  populated body, even for hours that contain no status changes to report.
+  If the hour has no status changes to report the response shall contain an
+  empty array of status changes:
+  
+    ```json
+    {
+        "version": "x.y.z",
+        "data": {
+            "status_changes": []
+        }
+    }
+    ```
 
 [Top][toc]
 
@@ -501,9 +539,11 @@ In the case that a `stop_id` query parameter is specified, the `stops` array ret
 
 ### Vehicles
 
-The `/vehicles` endpoint returns the current status of vehicles on the [PROW](/general-information.md#definitions). Only vehicles that are currently in available, unavailable, or reserved states should be returned in this payload. Data in this endpoint should reconcile with data from the `/status_changes` enpdoint. 
+The `/vehicles` endpoint returns the current status of vehicles in an agency's [Jurisdiction](/general-information.md#definitions) and/or area of agency responsibility. All vehicles that are currently in any [`vehicle_state`](/general-information.md#vehicle-states) should be returned in this payload. Since all states are returned, care should be taken to filter out states not in the [PROW](/general-information.md#definitions) if doing vehicle counts. For the states `elsewhere` and `removed` which include vehicles not in the [PROW](/general-information.md#definitions) but provide some operational clarity for agencies, these must only persist in the feed for 90 minutes before being removed. 
 
-As with other MDS APIs, `/vehicles` is intended for use by regulators, not by the general public. `/vehicles` can be deployed by providers as a standalone MDS endpoint for agencies without requiring the use of other endpoints, due to the [modularity](/README.md#modularity) of MDS. See our [MDS Vehicles Guide](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Vehicles) for how this compares to GBFS `/free_bike_status`. Note that using authenticated `/vehicles` does not replace the role of a public [GBFS][gbfs] feed in enabling consumer-facing applications. 
+Data in this endpoint should reconcile with data from the historic [`/status_changes`](/provider#status-changes) enpdoint, though `/status_changes` is the source of truth if there are discrepancies. 
+
+As with other MDS APIs, `/vehicles` is intended for use by regulators, not by the general public. `/vehicles` can be deployed by providers as a standalone MDS endpoint for agencies without requiring the use of other endpoints, due to the [modularity](/README.md#modularity) of MDS. See our [MDS Vehicles Guide](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Vehicles) for how this compares to GBFS `/free_bike_status`. Note that using authenticated `/vehicles` does not replace the role of a public [GBFS][gbfs] feed in enabling consumer-facing applications. If a provider is using both `/vehicles` and GBFS endpoints, the `/vehicles` endpoint should be considered source of truth regarding an agency's compliance checks.
 
 In addition to the standard [Provider payload wrapper](#response-format), responses from this endpoint should contain the last update timestamp and amount of time until the next update in accordance with the [Data Latency Requirements][data-latency]:
 
@@ -520,7 +560,7 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 
 **Endpoint:** `/vehicles`  
 **Method:** `GET`  
-**[Beta feature][beta]:** Yes (as of 0.4.1)  
+**[Beta feature][beta]:** No (as of 1.2.0)  
 **Schema:** [`vehicles` schema][vehicles-schema]  
 **`data` Payload:** `{ "vehicles": [] }`, an array of objects with the following structure
 
@@ -535,8 +575,8 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 | `last_event_time` | [timestamp][ts] | Required | Date/time when last state change occurred. See [Event Times][event-times] |
 | `last_vehicle_state` | Enum | Required | [Vehicle state][vehicle-states] of most recent state change. |
 | `last_event_types` | Enum[] | Required | [Vehicle event(s)][vehicle-events] of most recent state change, allowable values determined by `last_vehicle_state`. |
-| `last_event_location` | GeoJSON [Point Feature][geo]| Required | Location of vehicle's last event. See also [Stop-based Geographic Data][stop-based-geo]. |
-| `current_location` | GeoJSON [Point Feature][geo] | Required if Applicable | Current location of vehicle if different from last event, and the vehicle is not currently on a trip. See also [Stop-based Geographic Data][stop-based-geo]. |
+| `last_event_location` | GeoJSON [Point Feature][point-geo]| Required | Location of vehicle's last event. See also [Stop-based Geographic Data][stop-based-geo]. |
+| `current_location` | GeoJSON [Point Feature][point-geo] | Required if Applicable | Current location of vehicle if different from last event, and the vehicle is not currently on a trip. See also [Stop-based Geographic Data][stop-based-geo]. |
 | `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |
 
 [Top][toc]
@@ -552,7 +592,6 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 [event-times]: #event-times
 [gbfs]: https://github.com/NABSA/gbfs
 [general-information]: /general-information.md
-[geo]: /general-information.md#geographic-data
 [geography-driven-events]: /general-information.md#geography-driven-events
 [geojson-feature-collection]: https://tools.ietf.org/html/rfc7946#section-3.3
 [iana]: https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
@@ -561,6 +600,7 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 [json-api-pagination]: http://jsonapi.org/format/#fetching-pagination
 [json-schema]: https://json-schema.org
 [muni-boundary]: #municipality-boundary
+[point-geo]: /general-information.md#geographic-telemetry-data
 [propulsion-types]: /general-information.md#propulsion-types
 [responses]: /general-information.md#responses
 [status]: #status-changes

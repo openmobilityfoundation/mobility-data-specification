@@ -60,8 +60,12 @@
             "last_vehicle_state": {
               "enum": [
                 "available",
+                "elsewhere",
                 "non_operational",
-                "reserved"
+                "on_trip",
+                "removed",
+                "reserved",
+                "unknown"
               ]
             }
           }

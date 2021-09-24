@@ -380,7 +380,7 @@
       "type": "number",
       "description": "Integer milliseconds since Unix epoch",
       "multipleOf": 1.0,
-      "minimum": 0
+      "minimum": 1514764800000
     },
     "trip_id_reference": {
       "description": "Conditionally require a trip_id reference",
@@ -683,6 +683,7 @@
       "description": "The type of vehicle",
       "enum": [
         "bicycle",
+        "cargo_bicycle",
         "car",
         "scooter",
         "moped",
@@ -704,9 +705,9 @@
       "type": "string",
       "description": "The version of MDS this data represents",
       "examples": [
-        "1.1.0"
+        "1.2.0"
       ],
-      "pattern": "^1\\.1\\.[0-9]+$"
+      "pattern": "^1\\.2\\.[0-9]+$"
     }
   }
 }

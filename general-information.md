@@ -9,6 +9,7 @@ This document contains specifications that are shared between the various MDS AP
 * [Definitions](#definitions)
 * [Devices](#devices)
 * [Geographic Data][geo]
+  * [Geographic Telemetry Data](#geographic-telemetry-data)
   * [Stop-based Geographic Data](#stop-based-geographic-data)
   * [Intersection Operation](#intersection-operation)
 * [Geography-Driven Events](#geography-driven-events)
@@ -57,6 +58,7 @@ Defining terminology and abbreviations used throughout MDS.
 * **API** - Application Programming Interface - A function or set of functions that allow one software application to access or communicate with features of a different software application or service.
 * **API Endpoint** - A point at which an API connects with a software application or service.
 * **DOT** - Department of Transportation, usually a city-run agency.
+* **Jurisdiction** - An agency’s area of legal authority to manage and regulate a mobility program in the real world. Note there is also an MDS API called [Jurisdiction](/jurisdiction/, which is a way to digitally represent this.
 * **PROW** - Public Right of Way - the physical infrastructure reserved for transportation purposes, examples include sidewalks, curbs, bike lanes, transit lanes and stations, traffic lanes and signals, and public parking.
 
 [Top][toc]
@@ -73,14 +75,32 @@ Additionally, `device_id` must remain constant for the device's lifetime of serv
 
 References to geographic datatypes (Point, MultiPolygon, etc.) imply coordinates encoded in the [WGS 84 (EPSG:4326)][wgs84] standard GPS or GNSS projection expressed as [Decimal Degrees][decimal-degrees]. When points are used, you may assume a 20 meter buffer around the point when needed.
 
-Whenever an individual location coordinate measurement is presented, it must be
-represented as a GeoJSON [`Feature`][geojson-feature] object with a corresponding [`timestamp`][ts] property and [`Point`][geojson-point] geometry:
+### Geographic Telemetry Data
+
+Whenever a vehicle location coordinate measurement is presented, it must be
+represented as a GeoJSON [`Feature`][geojson-feature] object with a corresponding
+`properties` object with the following properties:
+
+
+| Field          | Type           | Required/Optional     | Field Description                                            |
+| -------------- | -------------- | --------------------- | ------------------------------------------------------------ |
+| `timestamp`    | [timestamp][ts]      | Required              | Date/time that event occurred. Based on GPS or GNSS clock            |
+| `altitude` | Double         | Required if Available | Altitude above mean sea level in meters                      |
+| `heading`  | Double         | Required if Available | Degrees - clockwise starting at 0 degrees at true North      |
+| `speed`    | Float          | Required if Available | Estimated speed in meters / sec as reported by the GPS chipset                                         |
+| `accuracy` | Float          | Required if Available | Horizontal accuracy, in meters                                           |
+| `hdop`     | Float          | Required if Available | Horizontal GPS or GNSS accuracy value (see [hdop][hdop]) |
+| `satellites` | Integer      | Required if Available | Number of GPS or GNSS satellites
+
+Example of a vehicle location GeoJSON [`Feature`][geojson-feature] object:
 
 ```json
 {
     "type": "Feature",
     "properties": {
-        "timestamp": 1529968782421
+        "timestamp": 1529968782421,
+        "accuracy": 10,
+        "speed": 1.21
     },
     "geometry": {
         "type": "Point",
@@ -127,7 +147,9 @@ For the purposes of this specification, the intersection of two geographic datat
 
 **[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.1.0)*
 
-Geography-Driven Events is a new MDS feature for Agencies to perform complete Policy compliance monitoring without precise location data. Geography-Driven Events describe individual vehicles in realtime – not just aggregate data. However, rather than receiving the exact location of a vehicle, Agencies receive information about the vehicle's current geographic region. The regions used for Geography-Driven Events correspond to the Geographies in an Agency's current Policy. In this way, the data-shared using Geography-Driven Events is matched to an Agency's particular regulatory needs.
+Geography-Driven Events (GDE) is a new MDS feature for Agencies to perform complete Policy compliance monitoring without precise location data. Geography-Driven Events describe individual vehicles in realtime – not just aggregate data. However, rather than receiving the exact location of a vehicle, Agencies receive information about the vehicle's current geographic region. The regions used for Geography-Driven Events correspond to the Geographies in an Agency's current Policy. In this way, the data-shared using Geography-Driven Events is matched to an Agency's particular regulatory needs. 
+
+See [this example](/policy/examples/requirements.md#geography-driven-events) for how to implement GDE using [Policy Requirements](/policy#requirement).
 
 Here's how it works in practice:
 
@@ -143,9 +165,9 @@ Here's how it works in practice:
 
 	*Agency adds rule disallowing parking on waterfront path, begins receiving data on events within area.*
 
-Agencies that wish to use Geography-Driven Events do so by requiring a new `event_geographies` field in status events. When an Agency is using Geography-Driven Events, Providers must emit a new `changed_geographies` status event whenever a vehicle in a trip enters or leaves a Geography managed by a Policy.
+Agencies that wish to use Geography-Driven Events do so by requiring a new `event_geographies` field in status events. When an Agency is using Geography-Driven Events, Providers must emit a new `changed_geographies` status event whenever a vehicle in a trip enters or leaves a Geography managed by a Policy. 
 
-During the Beta period for this feature, location and telemtry data remain required fields. This allows Aggencies to test Geography-Driven Events, measuring its accuracy and efficacy against regulatory systems based on precise location data. After the beta period, if Geography-Driven Events is deemed by OMF to be accurate and effective, the specification will evolve to allow cities to use Geography-Driven Events in lieu of location or telemtry data.
+During the Beta period for this feature, location and telemetry data remain required fields. This allows Agencies to test Geography-Driven Events, measuring its accuracy and efficacy against regulatory systems based on precise location data. After the beta period, if Geography-Driven Events is deemed by the OMF to be accurate and effective, the specification will evolve to allow cities to use Geography-Driven Events in lieu of location or telemetry data.
 
 [Top][toc]
 
@@ -293,7 +315,7 @@ In a multi-jurisdiction environment, the status of a vehicle is per-jurisdiction
 
 ### Event Types
 
-Event types are the possible transitions bewteen some vehicle states.  
+Event types are the possible transitions between some vehicle states.  
 
 | `event_type` | Description |
 |---|---|
@@ -409,12 +431,13 @@ The *State Machine Diagram* shows how `vehicle_state` and `event_type` relate to
 The list of allowed `vehicle_type` values in MDS. Aligning with [GBFS vehicle types form factors](https://github.com/NABSA/gbfs/blob/master/gbfs.md#vehicle_typesjson-added-in-v21-rc).
 
 | `vehicle_type` | Description |
-|--------------| --- |
-| bicycle      | Anything with pedals, including recumbents; can include powered assist |
-| car          | Any automobile |
-| scooter      | Any motorized mobility device intended for one rider |
-| moped        | A motorcycle/bicycle hybrid that can be powered or pedaled |
-| other        | A device that does not fit in the other categories |
+|---------------| --- |
+| bicycle       | A two-wheeled mobility device intended for personal transportation that can be operated via pedals, with or without a motorized assist (includes e-bikes, recumbents, and tandems) |
+| cargo_bicycle | A two- or three-wheeled bicycle intended for transporting larger, heavier cargo than a standard bicycle (such as goods or passengers), with or without motorized assist (includes bakfiets/front-loaders, cargo trikes, and long-tails) |
+| car           | A passenger car or similar light-duty vehicle |
+| scooter       | A standing or seated fully-motorized mobility device intended for one rider, capable of travel at low or moderate speeds, and suited for operation in infrastructure shared with motorized bicycles |
+| moped         | A seated fully-motorized mobility device capable of travel at moderate or high speeds and suited for operation in general urban traffic |
+| other         | A device that does not fit in the other categories |
 
 [Top][toc]
 
@@ -444,6 +467,7 @@ If an unsupported or invalid version is requested, the API must respond with a s
 
 [agency]: /agency/README.md
 [decimal-degrees]: https://en.wikipedia.org/wiki/Decimal_degrees
+[hdop]: https://en.wikipedia.org/wiki/Dilution_of_precision_(navigation)
 [gbfs-station-info]: https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_informationjson
 [gbfs-station-status]: https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_statusjson
 [general-stops]: /general-information.md#stops
