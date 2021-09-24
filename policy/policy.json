@@ -491,7 +491,7 @@
       "type": "string",
       "description": "The version of MDS this data represents",
       "examples": [
-        "1.0.0"
+        "1.2.0"
       ],
       "pattern": "^1\\.2\\.[0-9]+$"
     },
