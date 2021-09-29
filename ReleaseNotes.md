@@ -1,3 +1,49 @@
+## 1.2.0
+
+> Release Candidate submitted 2021-09-29
+
+> [Release Plan](https://github.com/openmobilityfoundation/governance/wiki/Release-1.2.0)
+
+The 1.2.0 minor release adds digital program Requirements, new options for policies, better GPS telemetry data, and moves Provider Vehicles out of beta. 
+
+### CHANGES
+
+See the closed PRs tagged with [Milestone 1.2.0](https://github.com/openmobilityfoundation/mobility-data-specification/pulls?q=is%3Apr+is%3Aclosed+milestone%3A1.2.0) and [Issues](https://github.com/openmobilityfoundation/mobility-data-specification/issues?q=is%3Aissue+milestone%3A1.2.0+is%3Aclosed) for a full list of changes.
+
+**_General MDS_**
+
+- [Richer telemetry data](https://github.com/openmobilityfoundation/mobility-data-specification/issues/589), including [616](https://github.com/openmobilityfoundation/mobility-data-specification/issues/616), [73](https://github.com/openmobilityfoundation/mobility-data-specification/pull/73), [51](https://github.com/openmobilityfoundation/mobility-data-specification/pull/51)
+- [Add cargo_bike vehicle type](https://github.com/openmobilityfoundation/mobility-data-specification/pull/698)
+
+**_Policy_**
+
+- [Program Requiements](https://github.com/openmobilityfoundation/mobility-data-specification/issues/646) - For agencies to describe program requirements digitally to allow providers and the public to see what MDS and GBFS versions, APIs, endpoints, and fields are required, and communicate available MDS agency information to providers.
+  - [Ability to express data sharing requirements in Policy](https://github.com/openmobilityfoundation/mobility-data-specification/issues/608) 
+  - [Method to Exclude some Provider Fields from Response](https://github.com/openmobilityfoundation/mobility-data-specification/issues/507)
+  - [Retrieve operational zones from operators](https://github.com/openmobilityfoundation/mobility-data-specification/issues/639)
+  - [Make Trip 'route' field optional for privacy](https://github.com/openmobilityfoundation/mobility-data-specification/issues/504)
+
+- [Multiple options added to Policy](https://github.com/openmobilityfoundation/mobility-data-specification/pull/658)
+   - [Add rate options to other rules types](https://github.com/openmobilityfoundation/mobility-data-specification/issues/633)
+   - [Support parking fees by duration](https://github.com/openmobilityfoundation/mobility-data-specification/issues/631)
+   - [Min and max clarity on Rules](https://github.com/openmobilityfoundation/mobility-data-specification/issues/689)
+   - [Add a "rate applies when" field to Rules](https://github.com/openmobilityfoundation/mobility-data-specification/issues/666)
+
+**_Provider_**
+
+- [Vehicles out of beta](https://github.com/openmobilityfoundation/mobility-data-specification/issues/637)
+- [Clarify use cases between MDS Vehicles and GBFS](https://github.com/openmobilityfoundation/mobility-data-specification/issues/641)
+
+**_Agency_**
+
+- N/A
+
+_Minor Updates_
+
+- [Clarify single object response on policy/geography](https://github.com/openmobilityfoundation/mobility-data-specification/issues/599)
+- [Schema updates](https://github.com/openmobilityfoundation/mobility-data-specification/issues/693), including [645](https://github.com/openmobilityfoundation/mobility-data-specification/issues/645), [687](https://github.com/openmobilityfoundation/mobility-data-specification/issues/687), [683](https://github.com/openmobilityfoundation/mobility-data-specification/issues/683)
+- Add VeoRide, Boaz Bikes, and update Superpedestrian provider IDs
+
 ## 1.1.1
 
 > Released: 2021-09-24 
