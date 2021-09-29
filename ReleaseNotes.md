@@ -13,7 +13,7 @@ See the closed PRs tagged with [Milestone 1.2.0](https://github.com/openmobility
 **_General MDS_**
 
 - [Richer telemetry data](https://github.com/openmobilityfoundation/mobility-data-specification/issues/589), including [616](https://github.com/openmobilityfoundation/mobility-data-specification/issues/616), [73](https://github.com/openmobilityfoundation/mobility-data-specification/pull/73), [51](https://github.com/openmobilityfoundation/mobility-data-specification/pull/51)
-- [Add cargo_bike vehicle type](https://github.com/openmobilityfoundation/mobility-data-specification/pull/698)
+- [Add cargo_bicycle vehicle type](https://github.com/openmobilityfoundation/mobility-data-specification/pull/698)
 
 **_Policy_**
 
@@ -33,10 +33,6 @@ See the closed PRs tagged with [Milestone 1.2.0](https://github.com/openmobility
 
 - [Vehicles out of beta](https://github.com/openmobilityfoundation/mobility-data-specification/issues/637)
 - [Clarify use cases between MDS Vehicles and GBFS](https://github.com/openmobilityfoundation/mobility-data-specification/issues/641)
-
-**_Agency_**
-
-- N/A
 
 _Minor Updates_
 
