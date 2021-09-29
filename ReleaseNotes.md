@@ -17,7 +17,7 @@ See the closed PRs tagged with [Milestone 1.2.0](https://github.com/openmobility
 
 **_Policy_**
 
-- [Program Requiements](https://github.com/openmobilityfoundation/mobility-data-specification/issues/646) - For agencies to describe program requirements digitally to allow providers and the public to see what MDS and GBFS versions, APIs, endpoints, and fields are required, and communicate available MDS agency information to providers.
+- [Program Requirements](https://github.com/openmobilityfoundation/mobility-data-specification/issues/646) - For agencies to describe program requirements digitally to allow providers and the public to see what MDS and GBFS versions, APIs, endpoints, and fields are required, and communicate available MDS agency information to providers.
   - [Ability to express data sharing requirements in Policy](https://github.com/openmobilityfoundation/mobility-data-specification/issues/608) 
   - [Method to Exclude some Provider Fields from Response](https://github.com/openmobilityfoundation/mobility-data-specification/issues/507)
   - [Retrieve operational zones from operators](https://github.com/openmobilityfoundation/mobility-data-specification/issues/639)
