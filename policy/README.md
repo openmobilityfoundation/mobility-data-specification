@@ -518,8 +518,8 @@ Contains metadata applicable to the agency and at the top of its [Requirement](#
 | Name                         | Type            | Required / Optional | Description              |
 | ---------------------------- | --------------- | -------- | ----------------------------------- |
 | `mds_release`                | text            | Required | Release of MDS that the **requirements data feed** aligns to, based on official MDS releases. E.g. "1.2.0" |
-| `file_version`               | integer         | Required | Version of this file. Increment 1 with each modification. E.g. "3" |
-| `last_updated`               | [timestamp][ts] | Required | When this file `version` was last updated. E.g. "1611958740" |
+| `file_version`               | integer         | Required | Version of this file. Increment 1 with each modification. See [version tracking](#version-tracking] for details. E.g. "3" |
+| `last_updated`               | [timestamp][ts] | Required | When this file `version` was last updated. See [version tracking](#version-tracking] for details. E.g. "1611958740" |
 | `max_update_interval`        | duration        | Required | The expected maximum frequency with which this file could be updated. [ISO 8601 duration](https://en.wikipedia.org/wiki/ISO_8601#Durations). E.g. "P1M" |
 | `agency_id`                  | UUID            | Required | UUID of the agency this file applies to. Must come from [agencies.csv](/agencies.csv) file. E.g. "737a9c62-c0cb-4c93-be43-271d21b784b5" |
 | `agency_name`                | text            | Required | Name of the agency this file applies to. E.g. "Louisville Metro" |
