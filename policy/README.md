@@ -31,6 +31,7 @@ This specification describes the digital relationship between _mobility as a ser
   - [Requirement](#requirement)
     - [Update Frequency](#requirement-update-frequency)
     - [Public Hosting](#public-hosting)
+    - [Version Tracking](#version-tracking)
     - [Beta Limitations](#beta-limitations)
     - [Format](#requirement-format)
     - [Metadata](#requirement-metadata)
@@ -429,6 +430,12 @@ This endpoint is not authenticated (ie. public), and allows the discovery of oth
 #### Requirement Update Frequency
 
 The OMF recommends updating the Requirements feed no more than monthly, and you may specify your expected timeframe with the `max_update_interval` in the [metadata](#requirement-metadata) section so providers have some idea of how often to check the feed. More specifically the OMF recommends giving the following notice to providers: 1 month for optional field additions, 3 months for endpoint/API changes/additions, 3 months for new minor releases, and 4 months for major releases. You should also communicate these future changes ahead of time with the `start_date` field. Finally, the OMF recommends any changes need to be part of a discussion between agencies and affected providers.
+
+#### Version Tracking
+
+If you are upgrading to a new MDS version, it is recommended to create a new requirements file at a new URL, since field names and available options may have changed. To make this more obvious, the MDS version number could be part of your URL, e.g. "https://mds.cityname.gov/requirements/**1.2.0**". 
+
+When requirements are updated within the same MDS version, in the [metadata](#requirement-metadata) section, increment the `file_version` value by one and update the `last_updated` timestamp. Though not required, you may choose to use the  `start_date` and `end_date` fields to keep retired requirements visible. We also recommend hosting your requirements file in a location that has a publicly-accessible version history, like GitHub or Bitbucket, or keeping previous versions accessible with a versioned URL, e.g. "https://mds.cityname.gov/requirements/1.2.0/**v3**". 
 
 #### Beta Limitations
 
