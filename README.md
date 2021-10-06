@@ -76,7 +76,7 @@ Many parts of the MDS definitions and APIs align across each other. In these cas
 
 You can read more in our **[Understanding the different MDS APIs](https://github.com/openmobilityfoundation/governance/blob/main/technical/Understanding-MDS-APIs.md)** guide. 
 
-![MDS APIs and Endpoints](https://i.imgur.com/L5s927a.png)
+![MDS APIs and Endpoints](https://i.imgur.com/bfUtCif.png)
 
 ## GBFS Requirement
 
