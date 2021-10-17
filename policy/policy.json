@@ -617,11 +617,11 @@
       ],
       "properties": {
         "policy": {
-          "$id": "#/properties/data/properties/policy",
+          "$id": "#/properties/data/properties/policies",
           "type": "array",
           "title": "The policy payload",
           "items": {
-            "$id": "#/properties/data/properties/policy/items",
+            "$id": "#/properties/data/properties/policies/items",
             "$ref": "#/definitions/policy"
           }
         }
