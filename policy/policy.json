@@ -616,7 +616,7 @@
         "policies"
       ],
       "properties": {
-        "policy": {
+        "policies": {
           "$id": "#/properties/data/properties/policies",
           "type": "array",
           "title": "The array of policy objects in this payload",
