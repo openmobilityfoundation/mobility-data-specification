@@ -619,7 +619,7 @@
         "policy": {
           "$id": "#/properties/data/properties/policies",
           "type": "array",
-          "title": "The policy payload",
+          "title": "The array of policy objects in this payload",
           "items": {
             "$id": "#/properties/data/properties/policies/items",
             "$ref": "#/definitions/policy"
