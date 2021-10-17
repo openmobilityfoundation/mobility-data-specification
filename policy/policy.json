@@ -613,7 +613,7 @@
       "type": "object",
       "description": "The data records in this payload",
       "required": [
-        "policy"
+        "policies"
       ],
       "properties": {
         "policy": {
