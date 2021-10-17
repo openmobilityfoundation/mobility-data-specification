@@ -14,9 +14,17 @@
       "rule_id": "6b6fe61b-dbe5-4367-8e35-84fb14d23c54",
       "rule_type": "time",
       "rule_units": "hours",
-      "geographies": ["0c77c813-bece-4e8a-84fd-f99af777d198"],
-      "statuses": { "available": [], "non_operational": [] },
-      "vehicle_types": ["bicycle", "scooter"],
+      "geographies": [
+        "0c77c813-bece-4e8a-84fd-f99af777d198"
+      ],
+      "statuses": {
+        "available": [],
+        "non_operational": []
+      },
+      "vehicle_types": [
+        "bicycle",
+        "scooter"
+      ],
       "maximum": 1,
       "inclusive_maximum": false,
       "rate_applies_when": "in_bounds",
@@ -28,9 +36,17 @@
       "rule_id": "edd6a195-bb30-4eb5-a2cc-44e5a18798a2",
       "rule_type": "time",
       "rule_units": "hours",
-      "geographies": ["0c77c813-bece-4e8a-84fd-f99af777d198"],
-      "statuses": { "available": [], "non_operational": [] },
-      "vehicle_types": ["bicycle", "scooter"],
+      "geographies": [
+        "0c77c813-bece-4e8a-84fd-f99af777d198"
+      ],
+      "statuses": {
+        "available": [],
+        "non_operational": []
+      },
+      "vehicle_types": [
+        "bicycle",
+        "scooter"
+      ],
       "minimum": 1,
       "maximum": 2,
       "inclusive_minimum": true,
@@ -44,9 +60,17 @@
       "rule_id": "9cd1768c-ab9e-484c-93f8-72a7078aa7b9",
       "rule_type": "time",
       "rule_units": "hours",
-      "geographies": ["0c77c813-bece-4e8a-84fd-f99af777d198"],
-      "statuses": { "available": [], "non_operational": [] },
-      "vehicle_types": ["bicycle", "scooter"],
+      "geographies": [
+        "0c77c813-bece-4e8a-84fd-f99af777d198"
+      ],
+      "statuses": {
+        "available": [],
+        "non_operational": []
+      },
+      "vehicle_types": [
+        "bicycle",
+        "scooter"
+      ],
       "minimum": 2,
       "inclusive_minimum": true,
       "rate_applies_when": "in_bounds",
