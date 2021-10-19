@@ -184,9 +184,9 @@ Body Params:
 | -----------     | ----------------------------- | -------- | -------------------------------------------------------------------------------- |
 | `vehicle_state` | Enum                          | Required | see [Vehicle States][vehicle-states] |
 | `event_types`   | Enum[]                        | Required | see [Vehicle Events][vehicle-events] |
-| `timestamp`     | [timestamp][ts]                     | Required | Date of last event update |
+| `timestamp`     | [timestamp][ts]               | Required | Date of last event update |
 | `telemetry`     | [Telemetry](#telemetry-data)  | Required | Single point of telemetry. |
-| `event_geographies`  | UUID[] | Optional          | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.1.0)*. Array of Geography UUIDs consisting of every Geography that contains the location of the event. See [Geography Driven Events][geography-driven-events]. Required if `telemetry` is not present. |
+| `event_geographies`  | UUID[] | Optional        | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.1.0)*. Array of Geography UUIDs consisting of every Geography that contains the location of the event. See [Geography Driven Events][geography-driven-events]. Required if `telemetry` is not present. |
 | `trip_id`       | UUID                          | Optional | UUID provided by Operator to uniquely identify the trip. Required if `event_types` contains `trip_start`, `trip_end`, `trip_cancel`, `trip_enter_jurisdiction`, or `trip_leave_jurisdiction` |
 
 201 Success Response:
@@ -223,7 +223,7 @@ Body Params:
 | Field      | Type                           | Field Description                                                                                       |
 | ---------- | ------------------------------ | ------------------------------------------------------------------------------------------------------- |
 | `success`  | Integer                        | Number of successfully written telemetry data points.                                                   |
-| `total`    | Integer                        | Ttotal number of provided points.                                                                       |
+| `total`    | Integer                        | Total number of provided points.                                                                       |
 | `failures` | [Telemetry](#telemetry-data)[] | Array of failed telemetry for zero or more vehicles (empty if all successful).                          |
 
 400 Failure Response:
@@ -244,7 +244,7 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | Field          | Type           | Required/Optional     | Field Description                                            |
 | -------------- | -------------- | --------------------- | ------------------------------------------------------------ |
 | `device_id`    | UUID           | Required              | ID used in [Register](#vehicle---register)                     |
-| `timestamp`    | [timestamp][ts]      | Required              | Date/time that event occurred. Based on GPS or GNSS clock            |
+| `timestamp`    | [timestamp][ts]| Required              | Date/time that event occurred. Based on GPS or GNSS clock            |
 | `gps`          | Object         | Required              | Telemetry position data                                      |
 | `gps.lat`      | Double         | Required              | Latitude of the location                                     |
 | `gps.lng`      | Double         | Required              | Longitude of the location                                    |
