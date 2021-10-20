@@ -186,6 +186,11 @@
           "type": "integer",
           "minimum": 0
         },
+        "cargo_bicycle": {
+          "$id": "#/definitions/vehicle_type_counts/properties/cargo_bicycle",
+          "type": "integer",
+          "minimum": 0
+        },
         "car": {
           "$id": "#/definitions/vehicle_type_counts/properties/car",
           "type": "integer",
