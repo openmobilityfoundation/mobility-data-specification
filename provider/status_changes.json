@@ -98,6 +98,16 @@
             "Feature"
           ]
         },
+        "id": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
         "properties": {
           "type": "object",
           "required": [
