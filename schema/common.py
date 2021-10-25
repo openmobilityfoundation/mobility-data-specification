@@ -74,14 +74,14 @@ def vehicle_state_machine(vehicle_state=None, vehicle_events=None):
     return (state_machine_defs, transitions)
 
 
-def vehicle_type_counts_definition(definitions=None):
+def vehicle_type_counts_definition(definitions):
     """
     Generate a definition for a dict of vehicle_type: int.
     """
     vehicle_type_counts = {}
     def_name = "vehicle_type_counts"
     def_id = definition_id(def_name)
-    vehicle_types = definitions["vehicle_type"] if definitions else load_definitions("vehicle_type")
+    vehicle_types = definitions["vehicle_type"]
 
     for vehicle_type in vehicle_types["enum"]:
         vehicle_type_counts[vehicle_type] = {
@@ -131,7 +131,7 @@ def point_definition():
     }
 
 
-def mds_feature_point_definition():
+def mds_feature_point_definition(definitions):
     """
     Create a customized definition of the GeoJSON Feature schema for MDS Points.
     """
@@ -163,6 +163,10 @@ def mds_feature_point_definition():
             "$ref": definition_id("uuid")
         }
     }
+
+    # merge telemetry props
+    telemetry = definitions["telemetry"]
+    f_properties["properties"].update(telemetry["properties"])
 
     return {MDS_FEATURE_POINT: feature}
 
@@ -216,7 +220,7 @@ def load_definitions(*args, allow_null=False):
         common_definitions = common["definitions"]
 
         # MDS specific geography definition
-        mds_feature = mds_feature_point_definition()
+        mds_feature = mds_feature_point_definition(common_definitions)
         common_definitions.update(mds_feature)
 
         # vehicle_type -> count definition
