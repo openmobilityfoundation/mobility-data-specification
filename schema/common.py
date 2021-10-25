@@ -128,65 +128,42 @@ def point_definition():
     }
 
 
-def feature_schema(id=None, title=None, geometry=None, properties=None, required=None):
-    """
-    Get the canonical schema for a GeoJSON Feature,
-    and make any given modifications.
-
-    :id: overrides the `$id` metadata
-    :title: overrides the `title` metadata
-    :geometry: overrides the allowed `geometry` for the Feature
-    :properties: overrides the `properties` definitions for this Feature
-    :required: is a list of required :properties:
-    """
-    # Get the canonical Feature schema
-    feature = requests.get("http://geojson.org/schema/Feature.json").json()
-
-    # Modify some metadata
-    feature.pop("$schema")
-    if id is not None:
-        feature["$id"] = id
-    if title is not None:
-        feature["title"] = title
-
-    if geometry is not None:
-        feature["properties"]["geometry"] = geometry
-
-    f_properties = feature["properties"]["properties"]
-    if required is not None:
-        del f_properties["oneOf"]
-        f_properties["type"] = "object"
-        f_properties["required"] = required
-    if properties is not None:
-        f_properties["properties"] = properties
-
-    return feature
-
-
 def mds_feature_point_definition():
     """
     Create a customized definition of the GeoJSON Feature schema for MDS Points.
     """
     name = "MDS_Feature_Point"
-    return {
-        name: feature_schema(
-            id = definition_id(name),
-            title = "MDS GeoJSON Feature Point",
-            # Only allow GeoJSON Point feature geometry
-            geometry = { "$ref": definition_id("Point") },
-            properties = {
-                "timestamp": {
-                    "$ref": definition_id("timestamp")
-                },
-                # Locations corresponding to Stops must include a `stop_id` reference
-                "stop_id": {
-                    "$ref": definition_id("uuid")
-                }
-            },
-            # Point features *must* include the `timestamp`
-            required = ["timestamp"]
-        )
+
+    # Get the canonical Feature schema
+    feature = requests.get("http://geojson.org/schema/Feature.json").json()
+
+    # Modify metadata
+    feature.pop("$schema")
+    feature["$id"] = definition_id(name)
+    feature["title"] = "MDS GeoJSON Feature Point"
+
+    # Only allow GeoJSON Point feature geometry
+    feature["properties"]["geometry"] = { "$ref": definition_id("Point") }
+
+    # Modfy properties definition/requirements
+    f_properties = feature["properties"]["properties"]
+    del f_properties["oneOf"]
+    f_properties["type"] = "object"
+
+    # Point features must include the timestamp
+    f_properties["required"] = ["timestamp"]
+
+    f_properties["properties"] = {
+        "timestamp": {
+            "$ref": definition_id("timestamp")
+        },
+        # Locations corresponding to Stops must include a stop_id reference
+        "stop_id": {
+            "$ref": definition_id("uuid")
+        }
     }
+
+    return {name: feature}
 
 
 def stop_definitions():
