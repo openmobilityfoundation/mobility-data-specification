@@ -11,6 +11,9 @@ import requests
 COMMON_DEFINITIONS = {}
 
 
+MDS_FEATURE_POINT = "MDS_Feature_Point"
+
+
 def load_json(path):
     """
     Load a JSON file from disk.
@@ -132,14 +135,12 @@ def mds_feature_point_definition():
     """
     Create a customized definition of the GeoJSON Feature schema for MDS Points.
     """
-    name = "MDS_Feature_Point"
-
     # Get the canonical Feature schema
     feature = requests.get("http://geojson.org/schema/Feature.json").json()
 
     # Modify metadata
     feature.pop("$schema")
-    feature["$id"] = definition_id(name)
+    feature["$id"] = definition_id(MDS_FEATURE_POINT)
     feature["title"] = "MDS GeoJSON Feature Point"
 
     # Only allow GeoJSON Point feature geometry
@@ -163,7 +164,7 @@ def mds_feature_point_definition():
         }
     }
 
-    return {name: feature}
+    return {MDS_FEATURE_POINT: feature}
 
 
 def stop_definitions():
@@ -177,9 +178,9 @@ def stop_definitions():
         "timestamp",
         "uuid",
         "uuid_array",
-        "vehicle_type_counts"
+        "vehicle_type_counts",
+        MDS_FEATURE_POINT
     )
-    definitions.update(mds_feature_point_definition())
 
     return definitions
 
