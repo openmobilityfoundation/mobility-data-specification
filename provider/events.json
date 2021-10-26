@@ -517,6 +517,7 @@
                         "contains": {
                           "enum": [
                             "agency_pick_up",
+                            "comms_restored",
                             "compliance_pick_up",
                             "decommissioned",
                             "located",
