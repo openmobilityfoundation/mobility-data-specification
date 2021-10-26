@@ -246,6 +246,30 @@
             },
             "stop_id": {
               "$ref": "#/definitions/uuid"
+            },
+            "altitude": {
+              "type": "number",
+              "description": "Altitude above mean sea level in meters"
+            },
+            "heading": {
+              "type": "number",
+              "description": "Degrees - clockwise starting at 0 degrees at true North"
+            },
+            "speed": {
+              "type": "number",
+              "description": "Estimated speed in meters / sec as reported by the GPS chipset"
+            },
+            "accuracy": {
+              "type": "number",
+              "description": "Horizontal accuracy, in meters"
+            },
+            "hdop": {
+              "type": "number",
+              "description": "Horizontal GPS or GNSS accuracy value"
+            },
+            "satellites": {
+              "type": "integer",
+              "description": "Number of GPS or GNSS satellites"
             }
           }
         },
