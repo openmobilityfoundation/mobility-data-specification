@@ -336,15 +336,15 @@
       "type": "object",
       "description": "The data records in this payload",
       "required": [
-        "policy"
+        "policies"
       ],
       "properties": {
         "policies": {
-          "$id": "#/properties/data/properties/policy",
+          "$id": "#/properties/data/properties/policies",
           "type": "array",
-          "title": "The policy payload",
+          "title": "The array of policy objects in this payload",
           "items": {
-            "$id": "#/properties/data/properties/policy/items",
+            "$id": "#/properties/data/properties/policies/items",
             "$ref": "#/definitions/policy"
           }
         }
