@@ -11,7 +11,7 @@
     "data": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/telemetry"
+        "$ref": "#/definitions/vehicle_telemetry"
       }
     }
   },

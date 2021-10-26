@@ -7,6 +7,16 @@ import json
 import common
 
 
+def vehicle_telemetry():
+    telemetry = common.load_definitions("telemetry")
+    vehicle_telemetry = common.load_definitions("vehicle_telemetry")
+
+    # merge the standard telemetry props into vehicle_telemetry.gps
+    vehicle_telemetry["properties"]["gps"]["properties"].update(telemetry["properties"])
+
+    return vehicle_telemetry
+
+
 def get_stops_schema():
     """
     Create the schema for the Agency GET /stops endpoint.
@@ -113,10 +123,10 @@ def post_vehicle_event_schema():
     # load schema template and insert definitions
     schema = common.load_json("./templates/agency/post_vehicle_event.json")
     definitions = common.load_definitions(
-        "telemetry",
         "timestamp",
         "uuid"
     )
+    definitions["vehicle_telemetry"] = vehicle_telemetry()
     schema["definitions"].update(definitions)
 
     # merge the state machine definitions and transition combinations rule
@@ -139,10 +149,10 @@ def post_vehicle_telemetry_schema():
     # load schema template and insert definitions
     schema = common.load_json("./templates/agency/post_vehicle_telemetry.json")
     definitions = common.load_definitions(
-        "telemetry",
         "timestamp",
         "uuid"
     )
+    definitions["vehicle_telemetry"] = vehicle_telemetry()
     schema["definitions"].update(definitions)
 
     # verify and return

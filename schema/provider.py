@@ -48,10 +48,10 @@ def endpoint_schema(endpoint, extra_definitions={}):
         "string",
         "timestamp",
         "uuid",
-        "version"
+        "version",
+        common.MDS_FEATURE_POINT
     )
     definitions.update(common.point_definition())
-    definitions.update(common.mds_feature_point_definition())
     definitions.update(extra_definitions)
 
     endpoint_schema = common.load_json(f"./templates/provider/{endpoint}.json")
