@@ -92,12 +92,7 @@ The Mobility Data Specification is an open source project with all development t
 
 You can learn more about the polices, methodologies, and tools in the MDS ecosystem in the [Mobility Data Management State of Practice](https://github.com/openmobilityfoundation/privacy-committee/blob/main/products/state-of-the-practice.md) wiki. To help cities put the right privacy policies in place, the OMF [Privacy, Security, and Transparency Committee](https://github.com/openmobilityfoundation/privacy-committee) has created a comprehensive best-practices document called the [MDS Privacy Guide for Cities](https://github.com/openmobilityfoundation/governance/raw/main/documents/OMF-MDS-Privacy-Guide-for-Cities.pdf).
 
-You can also get involved in development by joining an [OMF working group](https://github.com/openmobilityfoundation/mobility-data-specification/wiki#omf-meetings). The working groups maintain the OMF GitHub repositories and work through issues and pull requests. Each working group has its own mailing list for non-technical discussion and planning:
-
-Working Group | Mailing List | Description
---- | --- | ---
-Provider Services | [mds-provider-services](https://groups.google.com/a/groups.openmobilityfoundation.org/forum/#!forum/mds-provider-services) | Manages the [`provider`][provider] API within MDS.
-City Services | [mds-city-services](https://groups.google.com/a/groups.openmobilityfoundation.org/forum/#!forum/mds-city-services) | Manages the [`agency`][agency], [`policy`][policy], [`geography`][geography], [`jurisdiction`][jurisdiction], and [`metrics`](metrics) APIs within MDS, as well as the [`mds-core`](https://github.com/openmobilityfoundation/mds-core) and [`mds-compliance-mobile`](https://github.com/openmobilityfoundation/mds-compliance-mobile) reference implementations.
+You can also get involved in development by joining the [MDS Working Group](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Working-Group). The working group maintains the OMF GitHub repositories and works through issues and pull requests. To receive relevant emails and calendar invites for meetings, please sign up for the [MDS Mailing List](https://groups.google.com/a/openmobilityfoundation.org/g/wg-mds).
 
 You can view info about current and past releases, the public OMF calendar, and review planning calls in the [wiki](https://github.com/openmobilityfoundation/mobility-data-specification/wiki).
 
