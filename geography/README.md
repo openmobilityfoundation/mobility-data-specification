@@ -89,7 +89,7 @@ Authorization is not required. An agency may decide to make this endpoint unauth
 
 ## Schema
 
-Link to schema will be defined and added in a future release.  
+See the [Endpoints](#endpoints) below for links to their specific JSON Schema documents.
 
 [Top][toc]
 
@@ -173,9 +173,9 @@ The Geography Author API consists of the following endpoints:
 
 ### Geography
 
-**Endpoint**:  `/geographies/{geography_id}`
-
-**Method**: `GET`
+**Endpoint**:  `/geographies/{geography_id}`  
+**Method**: `GET`  
+**Schema:** [`geography` schema](./geography.json)  
 
 Path Params:
 
@@ -213,15 +213,9 @@ Response codes:
 
 ### Geographies
 
-**Endpoint**:  `/geographies`
-
-**Method**: `GET`
-
-Path Params: 
-
-| Name         | Type      | Required/Optional | Description                                    |
-| ------------ | --------- | --- | ---------------------------------------------- |
-| `summary`    | string    | Optional   | Return geographies, including the GeoJSON in each geography object     |
+**Endpoint**:  `/geographies`  
+**Method**: `GET`  
+**Schema:** [`geographies` schema](./geographies.json)  
 
 Returns: All geography objects
 
