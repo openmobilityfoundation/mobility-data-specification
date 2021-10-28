@@ -227,7 +227,7 @@ Response body:
 
 ```jsonc
 {
-    "version": "1.1.0",
+    "version": "1.2.0",
     "updated": "1570035222868",
     "geographies": [
         {
