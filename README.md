@@ -100,7 +100,7 @@ For questions about MDS please contact by email at [info@openmobilityfoundation.
 
 ## Membership
 
-OMF Members (public agencies and commercial companies) have additional participation opportunities with leadership roles on our:
+OMF Members (public agencies and commercial companies) have additional participation opportunities with leadership roles within our OMF [governance](https://github.com/openmobilityfoundation/governance#omf-scope-of-work):
 
 - [Board of Directors](https://www.openmobilityfoundation.org/about/)
 - [Privacy, Security, and Transparency Committee](https://github.com/openmobilityfoundation/privacy-committee)
@@ -111,7 +111,7 @@ OMF Members (public agencies and commercial companies) have additional participa
   - [MDS Working Group](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Working-Group)
   - [Curb Working Group](https://github.com/openmobilityfoundation/curb-data-specification/wiki)
 
-Read about [how to become an OMF member](https://www.openmobilityfoundation.org/how-to-become-a-member/) and [contact us](https://mailchi.mp/openmobilityfoundation/membership) for more details. 
+Read about [how to become an OMF member](https://www.openmobilityfoundation.org/how-to-become-a-member/), [how to get involved and our governance model](https://www.openmobilityfoundation.org/how-to-get-involved-in-the-open-mobility-foundation/), and [contact us](https://mailchi.mp/openmobilityfoundation/membership) for more details. 
 
 [Top][toc]
 
