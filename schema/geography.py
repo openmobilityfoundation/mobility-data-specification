@@ -30,3 +30,14 @@ def geography_schema():
     return common.check_schema(schema)
 
 
+def geographies_schema():
+    """
+    Create the schema for the Geographies endpoint.
+    """
+    # load schema template and insert definitions from geography
+    geography = geography_schema()
+    schema = common.load_json("./templates/geography/geographies.json")
+    schema["definitions"].update(geography["definitions"])
+
+    return common.check_schema(schema)
+
