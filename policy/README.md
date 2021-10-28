@@ -120,7 +120,7 @@ Authorization is not required. An agency may decide to make this endpoint unauth
 
 **Endpoint**: `/policies/{id}`  
 **Method**: `GET`  
-**Schema:** [`policy` schema](#policy)  
+**Schema:** [`policy` schema][json-schema]  
 **`data` Payload**: `{ "policies": [] }`, an array of objects with the structure [outlined below](#policy).
 
 #### Query Parameters
@@ -143,7 +143,7 @@ Policies will be returned in order of effective date (see schema below), with pa
 
 **Endpoint**: `/geographies/{id}`  
 **Method**: `GET`  
-**Schema:** [`geography` schema](#geography)  
+**Schema:** [`policy` schema][json-schema]  
 **`data` Payload**: `{ geographies: [] }`, an array of GeoJSON `Feature` objects that follow the schema [outlined here](#geography) or in [Geography](/geography#general-information).
 
 #### Query Parameters
@@ -159,7 +159,7 @@ Policies will be returned in order of effective date (see schema below), with pa
 **Endpoint**: `/requirements/`  
 **Method**: `GET`  
 **[Beta feature](/general-information.md#beta-features)**: *Yes (as of 1.2.0)*. [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/682)  
-**Schema:** [`requirement` schema](#requirement)  
+**Schema:** TBD when out of beta
 **`data` Payload**: `{ requirements: [] }`, JSON objects that follow the schema [outlined here](#requirement).  
 
 See [Policy Requirements Examples](/policy/examples/requirements.md) for how this can be implemented.
@@ -704,6 +704,7 @@ You may also show which APIs, endpoints, and fields your agency is serving to pr
 [beta]: /general-information.md#beta
 [error-messages]: /general-information.md#error-messages
 [iana]: https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
+[json-schema]: #json-schema
 [muni-boundary]: ../provider/README.md#municipality-boundary
 [propulsion-types]: /general-information.md#propulsion-types
 [responses]: /general-information.md#responses
