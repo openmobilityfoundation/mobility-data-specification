@@ -100,7 +100,16 @@ For questions about MDS please contact by email at [info@openmobilityfoundation.
 
 ## Membership
 
-OMF Members (public agencies and commercial companies) have additional participation opportunities with leadership roles on our [Board of Directors](https://www.openmobilityfoundation.org/about/), [Privacy, Security, and Transparency Committee](https://github.com/openmobilityfoundation/privacy-committee), [Technology Council](https://github.com/openmobilityfoundation/governance/wiki/Technology-Council), and [Strategy Committee](https://github.com/openmobilityfoundation/governance/wiki/Strategy-Committee), as well as the steering committees of all [Working Groups](https://github.com/openmobilityfoundation/mobility-data-specification/wiki#omf-meetings). 
+OMF Members (public agencies and commercial companies) have additional participation opportunities with leadership roles on our:
+
+- [Board of Directors](https://www.openmobilityfoundation.org/about/)
+- [Privacy, Security, and Transparency Committee](https://github.com/openmobilityfoundation/privacy-committee)
+- [Technology Council](https://github.com/openmobilityfoundation/governance/wiki/Technology-Council)
+- [Strategy Committee](https://github.com/openmobilityfoundation/governance/wiki/Strategy-Committee)
+- [Advisory Committee](https://github.com/openmobilityfoundation/governance/wiki/Advisory-Committee)
+- Steering committees of all [Working Groups](https://github.com/openmobilityfoundation/mobility-data-specification/wiki#omf-meetings), currently:
+  - [MDS Working Group](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Working-Group)
+  - [Curb Working Group](https://github.com/openmobilityfoundation/curb-data-specification/wiki)
 
 Read about [how to become an OMF member](https://www.openmobilityfoundation.org/how-to-become-a-member/) and [contact us](https://mailchi.mp/openmobilityfoundation/membership) for more details. 
 
