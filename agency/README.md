@@ -265,7 +265,7 @@ The `/stops` endpoint allows an agency to register city-managed Stops, or a prov
 
 **Endpoint:** `/stops`  
 **Method:** `POST`  
-**[Beta feature][beta]:** Yes (as of 1.0.0)  
+**[Beta feature][beta]:** Yes (as of 1.0.0). [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/638)    
 **Request Body**: An array of [Stops][stops]
 
 201 Success Response:
@@ -287,7 +287,7 @@ _No content returned on success._
 
 **Endpoint:** `/stops`  
 **Method:** `PUT`  
-**[Beta feature][beta]:** Yes (as of 1.0.0)  
+**[Beta feature][beta]:** Yes (as of 1.0.0). [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/638)  
 **Request Body**: An array of subsets of [Stop][stops] information, where the permitted subset fields are defined as:
 
 | Field               | Required/Optional | Description                                 |
@@ -313,7 +313,7 @@ _No content returned if no vehicle matching `stop_id` is found._
 
 **Endpoint:** `/stops/:stop_id`  
 **Method:** `GET`  
-**[Beta feature][beta]:** Yes (as of 1.0.0)  
+**[Beta feature][beta]:** Yes (as of 1.0.0). [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/638)  
 **Payload:** `{ "stops": [] }`, an array of [Stops][stops]
 
 Path Params:
