@@ -118,9 +118,10 @@ Authorization is not required. An agency may decide to make this endpoint unauth
 
 ### Policies
 
-Endpoint: `/policies/{id}`
-Method: `GET`
-`data` Payload: `{ "policies": [] }`, an array of objects with the structure [outlined below](#policy).
+**Endpoint**: `/policies/{id}`  
+**Method**: `GET`  
+**Schema:** [`policy` schema](#policy)  
+**`data` Payload**: `{ "policies": [] }`, an array of objects with the structure [outlined below](#policy).
 
 #### Query Parameters
 
@@ -140,9 +141,10 @@ Policies will be returned in order of effective date (see schema below), with pa
 
 **Deprecated:** see the new [Geography API](/geography#transition-from-policy) to understand the transistion away from this endpoint, and how to support both in a MDS 1.x.0 release.
 
-Endpoint: `/geographies/{id}`
-Method: `GET`
-`data` Payload: `{ geographies: [] }`, an array of GeoJSON `Feature` objects that follow the schema [outlined here](#geography) or in [Geography](/geography#general-information).
+**Endpoint**: `/geographies/{id}`  
+**Method**: `GET`  
+**Schema:** [`geography` schema](#geography)  
+**`data` Payload**: `{ geographies: [] }`, an array of GeoJSON `Feature` objects that follow the schema [outlined here](#geography) or in [Geography](/geography#general-information).
 
 #### Query Parameters
 
@@ -154,10 +156,11 @@ Method: `GET`
 
 ### Requirements
 
-Endpoint: `/requirements/`
-Method: `GET`
-`data` Payload: `{ requirements: [] }`, JSON objects that follow the schema [outlined here](#requirement).
-[Beta feature](/general-information.md#beta-features): *Yes (as of 1.2.0)*. [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/682)
+**Endpoint**: `/requirements/`  
+**Method**: `GET`  
+**[Beta feature](/general-information.md#beta-features)**: *Yes (as of 1.2.0)*. [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/682)  
+**Schema:** [`requirement` schema](#requirement)  
+**`data` Payload**: `{ requirements: [] }`, JSON objects that follow the schema [outlined here](#requirement).  
 
 See [Policy Requirements Examples](/policy/examples/requirements.md) for how this can be implemented.
 
