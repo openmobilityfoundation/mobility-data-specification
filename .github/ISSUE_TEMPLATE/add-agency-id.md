@@ -2,7 +2,7 @@
 name: Add Agency ID
 about: Create Agency ID for use in MDS
 title: 'Add Agency ID: [Agency Name]'
-labels: 'admin'
+labels: admin
 assignees: ''
 
 ---
