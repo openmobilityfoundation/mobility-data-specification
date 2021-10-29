@@ -11,12 +11,12 @@ Geographical data will be stored as GeoJSON and read from either `geographies.js
 ## Table of Contents
 
 * [General Information](#general-information)
-   * [Versioning](#versioning)
-   * [Transition from Policy](#transition-from-policy)
+  * [Versioning](#versioning)
+  * [Transition from Policy](#transition-from-policy)
 * [Distribution](#distribution)
-   * [Flat Files](#flat-files)
-   * [Response Format](#response-format)
-   * [Authorization](#authorization)
+  * [Flat Files](#flat-files)
+  * [Response Format](#response-format)
+  * [Authorization](#authorization)
 * [Schema](#schema)
   * [Geography Fields](#geography-fields)
   * [Previous Geographies](#previous-geographies)
@@ -45,7 +45,7 @@ Versioning must be implemented as specified in the [Versioning section][versioni
 
 To ensure this Geography API is not creating a breaking change for the 1.1.0 release, it's expected that the data contained in the [`/geographies`](/policy#geography) endpoint in the Policy API is identical to this Geography API. This will ensure that when a Geography ID is used anywhere in this release, the data could be retrieved from either location.
 
-This temporary requirement is to ensure backwards compatibility, but the overall intent is to remove the /policy/geographies endpoint at the next major MDS release. 
+This temporary requirement is to ensure backwards compatibility, but the overall intent is to remove the /policy/geographies endpoint at the next major MDS release.
 
 [Top][toc]
 
@@ -65,7 +65,7 @@ Geographies should be re-fetched at an agreed upon interval between providers an
 
 To use a flat file, geographies shall be represented in one (1) file equivalent to the /geographies endpoint:
 
-- `geographies.json`
+* `geographies.json`
 
 The files shall be structured like the output of the [REST endpoints](#rest-endpoints) above.
 
@@ -89,7 +89,7 @@ Authorization is not required. An agency may decide to make this endpoint unauth
 
 ## Schema
 
-Link to schema will be defined and added in a future release.  
+See the [Endpoints](#endpoints) below for links to their specific JSON Schema documents.
 
 [Top][toc]
 
@@ -114,6 +114,8 @@ Link to schema will be defined and added in a future release.
 Obsoleting or otherwise changing a geography is accomplished by publishing a new geography with the `prev_geographies` field, which is a list of UUID references to the geography or geographies superseded by the new geography. The previous geographies are also published in the `/geographies` endpoint.  Using it allows agencies to look back historically at previously published geographies, for analysis, historic reference, or an auditable change trail.
 
 This field is optional can be omitted by the publishing Agency.  
+
+[Top][toc]
 
 ### Geography Type
 
@@ -148,16 +150,17 @@ Type of geography. These specific types are recommendations based on ones common
 Note: to use flat files rather than REST endpoints, Geography objects should be stored in `geographies.json`.  The `geographies.json` file will look like the output of `GET /geographies`.  
 
 Example `geographies.json`
-```json
+
+```jsonc
 {
-    "version": "1.1.0",
+    "version": "1.2.0",
     "updated": "1570035222868",
     "geographies": [
         {
-            // GeoJSON 1
+            // Geography 1
         },
         {
-            // GeoJSON 2
+            // Geography 2
         }
     ]
 }
@@ -173,26 +176,26 @@ The Geography Author API consists of the following endpoints:
 
 ### Geography
 
-**Endpoint**:  `/geographies/{geography_id}`
+**Endpoint**:  `/geographies/{geography_id}`  
+**Method**: `GET`  
+**Schema:** [`geography` schema](./geography.json)  
 
-**Method**: `GET`
-
-Path Params:
+#### Query Parameters
 
 | Name          | Type | Required/Optional | Description                                       |
 | ------------- | ---- | --- | --------------------------------------------------- |
-| geography_id  | UUID | Required   | Unique identifier for a single specific Geography |
+| `geography_id`  | UUID | Required   | Unique identifier for a single specific Geography |
 
-Returns: Details of a single Geography based on a UUID.  
+Returns: Details of a single Geography based on a UUID.
 
 Response body:
 
 ```js
 {
-  "version": '1.1.0',
+  "version": '1.2.0',
   "geography": {
     "geography_id": UUID,
-    "geography_type": Enum,
+    "geography_type": string,
     "name": string,
     "description": string,
     "published_date": timestamp,
@@ -204,31 +207,27 @@ Response body:
 ```
 
 Response codes:
-- 200 - success
-- 401 - unauthorized
-- 404 - no geography found
-- 403 - user is attempting to read an unpublished geography, but only has the `geographies:read:published` scope.
+
+* 200 - success
+* 401 - unauthorized
+* 404 - no geography found
+* 403 - user is attempting to read an unpublished geography, but only has the `geographies:read:published` scope.
 
 [Top][toc]
 
 ### Geographies
 
-**Endpoint**:  `/geographies`
-
-**Method**: `GET`
-
-Path Params: 
-
-| Name         | Type      | Required/Optional | Description                                    |
-| ------------ | --------- | --- | ---------------------------------------------- |
-| `summary`    | string    | Optional   | Return geographies, including the GeoJSON in each geography object     |
+**Endpoint**:  `/geographies`  
+**Method**: `GET`  
+**Schema:** [`geographies` schema](./geographies.json)  
 
 Returns: All geography objects
 
 Response body:
-```js
+
+```jsonc
 {
-    "version": "1.1.0",
+    "version": "1.2.0",
     "updated": "1570035222868",
     "geographies": [
         {
@@ -242,8 +241,9 @@ Response body:
 ```
 
 Response codes:
-- 200 - success
-- 401 - unauthorized
+
+* 200 - success
+* 401 - unauthorized
 
 [Top][toc]
 
