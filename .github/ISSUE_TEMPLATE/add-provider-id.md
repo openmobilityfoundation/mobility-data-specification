@@ -11,7 +11,7 @@ assignees: ''
 
 Opening this issue will allow you as a mobility service provider get an official provider ID for use across MDS globally.
 
-## Fields needed from you for the [providers.csv file](https://github.com/openmobilityfoundation/mobility-data-specification/blob/main/providers.csv).
+**Fields needed from you for the [providers.csv file](https://github.com/openmobilityfoundation/mobility-data-specification/blob/main/providers.csv).**
 
 _All fields are required._
 
