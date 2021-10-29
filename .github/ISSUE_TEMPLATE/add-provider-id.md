@@ -3,7 +3,7 @@ name: Add Provider ID
 about: Create Provider ID for use in MDS
 title: 'Add Provider ID: [Provider Name]'
 labels: admin
-assignees: schnuerle
+assignees: ''
 
 ---
 
