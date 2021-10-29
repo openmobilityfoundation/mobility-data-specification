@@ -134,7 +134,7 @@ Version 1.1.0 for one provider with scooters, and 1.0.0 for another provider for
       "required_data_specs": [
         {
           "data_spec_name": "MDS",
-          "version": "1.1.0",
+          "version": "1.2.0",
           "required_apis": [
             {
               "api_name": "provider",
@@ -167,7 +167,7 @@ Version 1.1.0 for one provider with scooters, and 1.0.0 for another provider for
       "required_data_specs": [
         {
           "data_spec_name": "MDS",
-          "version": "1.0.0",
+          "version": "1.2.0",
           "required_apis": [
             {
               "api_name": "provider",
@@ -224,7 +224,7 @@ Version 1.1.0 for 2 providers requiring only historic Provider `/trips` with the
       "required_data_specs": [
         {
           "data_spec_name": "MDS",
-          "version": "1.1.0",
+          "version": "1.2.0",
           "required_apis": [
             {
               "api_name": "provider",
@@ -284,7 +284,7 @@ Version 1.1.0 for 2 providers asking for only historic [Provider `/trips`](/prov
       "required_data_specs": [
         {
           "data_spec_name": "MDS",
-          "version": "1.1.0",
+          "version": "1.2.0",
           "required_apis": [
             {
               "api_name": "provider",
@@ -352,7 +352,7 @@ Note: by specifying geography, policy, and jurisdiction here with a URL, the age
       "required_data_specs": [
         {
           "data_spec_name": "MDS",
-          "version": "1.1.0",
+          "version": "1.2.0",
           "required_apis": [
             {
               "api_name": "provider",
@@ -535,7 +535,7 @@ Version 1.1.0 for 3 providers and serving Agency only linking to a defined MDS P
       "required_data_specs": [
         {
           "data_spec_name": "MDS",
-          "version": "1.1.0",
+          "version": "1.2.0",
           "required_apis": [
             {
               "api_name": "agency",
@@ -620,7 +620,7 @@ Version 1.1.0 for 2 providers requiring Provider `/status_changes` with the mini
       "required_data_specs": [
         {
           "data_spec_name": "MDS",
-          "version": "1.1.0",
+          "version": "1.2.0",
           "required_apis": [
             {
               "api_name": "provider",
