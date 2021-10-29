@@ -6,7 +6,7 @@ This file presents an example of how to format a flat file, should an agency pre
 
 ```js
 {
-    "version": "1.1.0",
+    "version": "1.2.0",
     "updated": "1570035222868",
     "end_date": "1570035222868",
     "jurisdictions": 
