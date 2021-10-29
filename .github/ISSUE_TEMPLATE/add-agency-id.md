@@ -1,8 +1,8 @@
 ---
 name: Add Agency ID
 about: Create Agency ID for use in MDS
-title: ''
-labels: ''
+title: 'Add Agency ID: [Agency Name]'
+labels: 'admin'
 assignees: ''
 
 ---
