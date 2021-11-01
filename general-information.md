@@ -58,7 +58,7 @@ Defining terminology and abbreviations used throughout MDS.
 * **API** - Application Programming Interface - A function or set of functions that allow one software application to access or communicate with features of a different software application or service.
 * **API Endpoint** - A point at which an API connects with a software application or service.
 * **DOT** - Department of Transportation, usually a city-run agency.
-* **Jurisdiction** - An agency’s area of legal authority to manage and regulate a mobility program in the real world. Note there is also an MDS API called [Jurisdiction](/jurisdiction/, which is a way to digitally represent this.
+* **Jurisdiction** - An agency’s area of legal authority to manage and regulate a mobility program in the real world. Note there is also an MDS API called [Jurisdiction](/jurisdiction), which is a way to digitally represent this.
 * **PROW** - Public Right of Way - the physical infrastructure reserved for transportation purposes, examples include sidewalks, curbs, bike lanes, transit lanes and stations, traffic lanes and signals, and public parking.
 
 [Top][toc]
@@ -77,20 +77,18 @@ References to geographic datatypes (Point, MultiPolygon, etc.) imply coordinates
 
 ### Geographic Telemetry Data
 
-Whenever a vehicle location coordinate measurement is presented, it must be
-represented as a GeoJSON [`Feature`][geojson-feature] object with a corresponding
-`properties` object with the following properties:
+Whenever a vehicle location coordinate measurement is presented, it must be represented as a GeoJSON [`Feature`][geojson-feature] object with a corresponding `properties` object with the following properties:
 
 
-| Field          | Type           | Required/Optional     | Field Description                                            |
-| -------------- | -------------- | --------------------- | ------------------------------------------------------------ |
-| `timestamp`    | [timestamp][ts]      | Required              | Date/time that event occurred. Based on GPS or GNSS clock            |
-| `altitude` | Double         | Required if Available | Altitude above mean sea level in meters                      |
-| `heading`  | Double         | Required if Available | Degrees - clockwise starting at 0 degrees at true North      |
-| `speed`    | Float          | Required if Available | Estimated speed in meters / sec as reported by the GPS chipset                                         |
-| `accuracy` | Float          | Required if Available | Horizontal accuracy, in meters                                           |
-| `hdop`     | Float          | Required if Available | Horizontal GPS or GNSS accuracy value (see [hdop][hdop]) |
-| `satellites` | Integer      | Required if Available | Number of GPS or GNSS satellites
+| Field          | Type            | Required/Optional     | Field Description                                            |
+| -------------- | --------------- | --------------------- | ------------------------------------------------------------ |
+| `timestamp`    | [timestamp][ts] | Required              | Date/time that event occurred. Based on GPS or GNSS clock |
+| `altitude`     | Double          | Required if Available | Altitude above mean sea level in meters |
+| `heading`      | Double          | Required if Available | Degrees - clockwise starting at 0 degrees at true North |
+| `speed`        | Float           | Required if Available | Estimated speed in meters / sec as reported by the GPS chipset |
+| `accuracy`     | Float           | Required if Available | Horizontal accuracy, in meters |
+| `hdop`         | Float           | Required if Available | Horizontal GPS or GNSS accuracy value (see [hdop][hdop]) |
+| `satellites`   | Integer         | Required if Available | Number of GPS or GNSS satellites |
 
 Example of a vehicle location GeoJSON [`Feature`][geojson-feature] object:
 
@@ -173,7 +171,7 @@ During the Beta period for this feature, location and telemetry data remain requ
 
 ## Optional Authentication
 
-Authorization of the Policy and Geography APIs is no longer required and will be deprecated in next major release with these endpoints becoming 'optionally private' instead of 'optionally public'. An agency may optionally decide to make the Policy and Geography endpoints, as well as Jursidictions, unauthenticated and public. This allows transparency for the public to see how the city is regulating, holds the city accountable for their policy decisions, and reduces the technical burden on providers to use these endpoints. A side benefit is that this allows third parties to ingest this information into their applications and services for public benefit.
+Authorization of the Policy and Geography APIs is no longer required and will be deprecated in next major release with these endpoints (plus Jursidictions) becoming 'optionally private' instead of 'optionally public'. An agency may optionally decide to make the Policy and Geography endpoints, as well as Jursidictions, unauthenticated and public. This allows transparency for the public to see how the city is regulating, holds the city accountable for their policy decisions, and reduces the technical burden on providers to use these endpoints. A side benefit is that this allows third parties to ingest this information into their applications and services for public benefit.
 
 Note if implementing the beta feature [Geography Driven Events](/general-information.md#geography-driven-events), both Policy and Geography must be public.
 
@@ -230,29 +228,29 @@ All String fields, such as `vehicle_id`, are limited to a maximum of 255 charact
 
 Stops describe vehicle trip start and end locations in a pre-designated physical place. They can vary from docking stations with or without charging, corrals with lock-to railings, or suggested parking areas marked with spray paint. Stops are used in both [Provider](/provider#stops) (including routes and event locations) and [Agency](/agency#stops) (including telemetry data).
 
-| Field                  | Type                                                        | Required/Optional | Description                                                                                  |
-|------------------------|-------------------------------------------------------------|-------------------|----------------------------------------------------------------------------------------------|
-| stop_id                | UUID                                                        | Required          | Unique ID for stop                                                                           |
-| name                   | String                                                      | Required          | Name of stop                                                                                 |
-| last_reported          | Timestamp                                                   | Required          | Date/Time that the stop was last updated                                                     |
-| location               | GeoJSON [Point Feature](#stop-based-geographic-data) | Required          | Simple centerpoint location of the Stop. The use of the optional `geography_id` is recommended to provide more detail.                                                                         |
-| status                 | [Stop Status](#stop-status)                                 | Required          | Object representing the status of the Stop. See [Stop Status](#stop-status).                 |
-| capacity               | {vehicle_type: number}                                      | Required          | Number of total places per vehicle_type                                                      |
-| num_vehicles_available | {vehicle_type: number}                                      | Required          | How many vehicles are available per vehicle_type at this stop?                               |
-| num_vehicles_disabled  | {vehicle_type: number}                                      | Required          | How many vehicles are unavailable/reserved per vehicle_type at this stop?                    |
-| provider_id            | UUID                                                        | Optional          | UUID for the Provider managing this stop. Null/undefined if managed by an Agency.  See MDS [provider list](/providers.csv).  |
-| geography_id           | UUID                                                        | Optional          | Pointer to the [Geography](/geography) that represents the Stop geospatially via Polygon or MultiPolygon.                               |
-| region_id              | string                                                      | Optional          | ID of the region where station is located, see [GBFS Station Information][gbfs-station-info] |
-| short_name             | String                                                      | Optional          | Abbreviated stop name                                                                        |
-| address                | String                                                      | Optional          | Postal address (useful for directions)                                                       |
-| post_code              | String                                                      | Optional          | Postal code (e.g. `10036`)                                                                   |
-| rental_methods         | [Enum[]][gbfs-station-info]                                 | Optional          | List of payment methods accepted at stop, see [GBFS Rental Methods][gbfs-station-info]               |
-| cross_street           | String                                                      | Optional          | Cross street of where the station is located.                                                |
-| num_places_available   | {vehicle_type: number}                                      | Optional          | How many places are free to be populated with vehicles at this stop?                         |
-| num_places_disabled    | {vehicle_type: number}                                      | Optional          | How many places are disabled and unable to accept vehicles at this stop?                     |
-| parent_stop            | UUID                                                        | Optional          | Describe a basic hierarchy of stops (e.g.a stop inside of a greater stop)                    |
-| devices               | UUID[]                                                      | Optional          | List of device_ids for vehicles which are currently at this stop                             |
-| image_url               | URL                                                      | Optional          | Link to an image, photo, or diagram of the stop. Could be used by providers to help riders find or use the stop.                            |
+| Field                  | Type                                                  | Required/Optional | Description |
+|------------------------|-------------------------------------------------------|-------------------|-------------|
+| stop_id                | UUID                                                  | Required | Unique ID for stop |
+| name                   | String                                                | Required | Name of stop |
+| last_reported          | Timestamp                                             | Required | Date/Time that the stop was last updated |
+| location               | GeoJSON [Point Feature](#stop-based-geographic-data)  | Required | Simple centerpoint location of the Stop. The use of the optional `geography_id` is recommended to provide more detail. |
+| status                 | [Stop Status](#stop-status)                           | Required | Object representing the status of the Stop. See [Stop Status](#stop-status). |
+| capacity               | {vehicle_type: number}                                | Required | Number of total places per vehicle_type |
+| num_vehicles_available | {vehicle_type: number}                                | Required | How many vehicles are available per vehicle_type at this stop? |
+| num_vehicles_disabled  | {vehicle_type: number}                                | Required | How many vehicles are unavailable/reserved per vehicle_type at this stop? |
+| provider_id            | UUID                                                  | Optional | UUID for the Provider managing this stop. Null/undefined if managed by an Agency.  See MDS [provider list](/providers.csv). |
+| geography_id           | UUID                                                  | Optional | Pointer to the [Geography](/geography) that represents the Stop geospatially via Polygon or MultiPolygon. |
+| region_id              | string                                                | Optional | ID of the region where station is located, see [GBFS Station Information][gbfs-station-info] |
+| short_name             | String                                                | Optional | Abbreviated stop name |
+| address                | String                                                | Optional | Postal address (useful for directions) |
+| post_code              | String                                                | Optional | Postal code (e.g. `10036`) |
+| rental_methods         | [Enum[]][gbfs-station-info]                           | Optional | List of payment methods accepted at stop, see [GBFS Rental Methods][gbfs-station-info] |
+| cross_street           | String                                                | Optional | Cross street of where the station is located. |
+| num_places_available   | {vehicle_type: number}                                | Optional | How many places are free to be populated with vehicles at this stop? |
+| num_places_disabled    | {vehicle_type: number}                                | Optional | How many places are disabled and unable to accept vehicles at this stop? |
+| parent_stop            | UUID                                                  | Optional | Describe a basic hierarchy of stops (e.g.a stop inside of a greater stop) |
+| devices                | UUID[]                                                | Optional | List of device_ids for vehicles which are currently at this stop |
+| image_url              | URL                                                   | Optional | Link to an image, photo, or diagram of the stop. Could be used by providers to help riders find or use the stop. |
 
 
 ### Stop Status
@@ -301,14 +299,14 @@ This table describes the list of vehicle conditions that may be used by regulato
 
 In a multi-jurisdiction environment, the status of a vehicle is per-jurisdiction.  For example, a vehicle may be in the `on_trip` status for a county that contains five cities, and also in the `on_trip` status for one of those cities, but `elsewhere` for the other four cities.  In such a condition, generally a Provider would send the device data to the over-arching jurisdiction (the county) and the vehicle state with respect to each city would be determined by the Agency managing the jurisdictions.
 
-| `vehicle_state` | In PROW? | Description |
-| --- | --- | --- |
-| `removed`         | no | Examples include: at the Provider's warehouse, in a Provider's truck, or destroyed and in a landfill. |
-| `available`       | yes | Available for rental via the Provider's app. In PROW. |
-| `non_operational` | yes | Not available for rent.  Examples include: vehicle has low battery, or currently outside legal operating hours. |
-| `reserved`        | yes | Reserved via Provider's app, waiting to be picked up by a rider. |
-| `on_trip`         | yes | In possession of renter.  May or may not be in motion. |
-| `elsewhere`       | no | Outside of regulator's jurisdiction, and thus not subject to cap-counts or other regulations. Example: a vehicle that started a trip in L.A. has transitioned to Santa Monica.  |
+| `vehicle_state`   | In PROW? | Description |
+| ----------------- | -------- | ----------- |
+| `removed`         | no      | Examples include: at the Provider's warehouse, in a Provider's truck, or destroyed and in a landfill. |
+| `available`       | yes     | Available for rental via the Provider's app. In PROW. |
+| `non_operational` | yes     | Not available for rent.  Examples include: vehicle has low battery, or currently outside legal operating hours. |
+| `reserved`        | yes     | Reserved via Provider's app, waiting to be picked up by a rider. |
+| `on_trip`         | yes     | In possession of renter.  May or may not be in motion. |
+| `elsewhere`       | no      | Outside of regulator's jurisdiction, and thus not subject to cap-counts or other regulations. Example: a vehicle that started a trip in L.A. has transitioned to Santa Monica.  |
 | `unknown`         | unknown | Provider has lost contact with the vehicle and its disposition is unknown.  Examples include: taken into a private residence, thrown in river. |
 
 [Top][toc]
@@ -318,7 +316,7 @@ In a multi-jurisdiction environment, the status of a vehicle is per-jurisdiction
 Event types are the possible transitions between some vehicle states.  
 
 | `event_type` | Description |
-|---|---|
+|--------------|-------------|
 | `agency_drop_off` |	Drop off by the agency	|
 | `agency_pick_up` |	Pick up by the agency	|
 | `battery_charged` |	Battery charged	|
@@ -372,8 +370,8 @@ Note that to handle out-of-order events, the validity of the prior-state shall n
 
 Vehicles can enter the `unknown` state to and from any other state with the following event types: any state can go to `unknown` with event type `comms_lost`, `missing`, or `unspecified`, and `unknown` can go to any state with event type `comms_restored` of `unspecified`.
 
-| Valid prior `vehicle_state` values | `vehicle_state` | `event_type` |  Description |
-| --- | --- | --- | --- |
+| Valid prior `vehicle_state` values | `vehicle_state` | `event_type` | Description |
+| ---------------------------------- | --------------- | ------------ | ----------- |
 | `non_operational` | `available`   | `battery_charged`    | The vehicle became available because its battery is now charged. |
 | `non_operational` | `available`   | `on_hours`           | The vehicle has entered operating hours (per the regulator or per the provider) |
 | `removed`,  `unknown` | `available`   | `provider_drop_off`  | The vehicle was placed in the PROW by the provider |
@@ -431,13 +429,13 @@ The *State Machine Diagram* shows how `vehicle_state` and `event_type` relate to
 The list of allowed `vehicle_type` values in MDS. Aligning with [GBFS vehicle types form factors](https://github.com/NABSA/gbfs/blob/master/gbfs.md#vehicle_typesjson-added-in-v21-rc).
 
 | `vehicle_type` | Description |
-|---------------| --- |
-| bicycle       | A two-wheeled mobility device intended for personal transportation that can be operated via pedals, with or without a motorized assist (includes e-bikes, recumbents, and tandems) |
-| cargo_bicycle | A two- or three-wheeled bicycle intended for transporting larger, heavier cargo than a standard bicycle (such as goods or passengers), with or without motorized assist (includes bakfiets/front-loaders, cargo trikes, and long-tails) |
-| car           | A passenger car or similar light-duty vehicle |
-| scooter       | A standing or seated fully-motorized mobility device intended for one rider, capable of travel at low or moderate speeds, and suited for operation in infrastructure shared with motorized bicycles |
-| moped         | A seated fully-motorized mobility device capable of travel at moderate or high speeds and suited for operation in general urban traffic |
-| other         | A device that does not fit in the other categories |
+|----------------| ----------- |
+| bicycle        | A two-wheeled mobility device intended for personal transportation that can be operated via pedals, with or without a motorized assist (includes e-bikes, recumbents, and tandems) |
+| cargo_bicycle  | A two- or three-wheeled bicycle intended for transporting larger, heavier cargo than a standard bicycle (such as goods or passengers), with or without motorized assist (includes bakfiets/front-loaders, cargo trikes, and long-tails) |
+| car            | A passenger car or similar light-duty vehicle |
+| scooter        | A standing or seated fully-motorized mobility device intended for one rider, capable of travel at low or moderate speeds, and suited for operation in infrastructure shared with motorized bicycles |
+| moped          | A seated fully-motorized mobility device capable of travel at moderate or high speeds and suited for operation in general urban traffic |
+| other          | A device that does not fit in the other categories |
 
 [Top][toc]
 
@@ -452,7 +450,7 @@ The version parameter specifies the dot-separated combination of major and minor
 Clients must specify the version they are targeting through the `Accept` header. For example:
 
 ```http
-Accept: application/vnd.mds+json;version=0.3
+Accept: application/vnd.mds+json;version=1.2.0
 ```
 
 Since versioning was not available from the start, the following APIs provide a fallback version if the `Accept` header is not set as specified above:
