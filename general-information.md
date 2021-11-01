@@ -289,7 +289,7 @@ A `timestamp` refers to integer milliseconds since Unix epoch.
 
 Object identifiers are described via Universally Unique Identifiers [(UUIDs)](https://en.wikipedia.org/wiki/Universally_unique_identifier). For example, the `device_id` field used to uniquely identify a vehicle is a UUID.
 
-MDS uses Version 1 UUIDs.
+MDS uses Version 1 UUIDs by default. Version 4 UUIDs may be used where noted.
 
 [Top][toc]
 
