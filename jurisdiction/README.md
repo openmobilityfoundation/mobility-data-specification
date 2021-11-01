@@ -2,9 +2,7 @@
 
 <a href="/jurisdiction/"><img src="https://i.imgur.com/tCRCfxT.png" width="120" align="right" alt="MDS Jurisdiction Icon" border="0"></a>
 
-This specification details the purpose, use cases, and schema for Jurisdictions, a beta feature. Jurisdictions are an optional service that, if implemented, must be authenticated, and served by a coordinated group of agencies.
-
-The Jursidiction API is to be served by agencies, and it can optionally be made public. It serves a different purpose from the [Geography](/geography) API, though it does reference areas within Geography by ID.
+This specification details the purpose, use cases, and schema for Jurisdictions. Jurisdictions are an optional service that are served by a coordinated group of agencies. Jurisdictions can be '[optionally authenticated](/general-information.md#optional-authentication)', making the endpoints unauthenticated and public. In the future this will shift to 'optionally private', where Jursidictions will be public by default. Note that it serves a different purpose from the [Geography](/geography) API, though it does reference areas within Geography by ID.
 
 ## Table of Contents
 
@@ -163,6 +161,8 @@ The format and content of `jurisdictions.json` should resemble the responses fro
 The publishing Agency should establish and communicate to interested parties how frequently these files should be polled.
 
 The `updated` field in the payload wrapper should be set to the time of publishing a revision, so that it is simple to identify a changed file.
+
+[Top](#table-of-contents)
 
 ## Examples
 
