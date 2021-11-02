@@ -166,6 +166,22 @@ Please [let us know](https://www.openmobilityfoundation.org/get-in-touch/) if yo
 
 [Top][toc]
 
+# Data Privacy
+
+MDS includes information about vehicles, their location, and trips taken on those vehicles to allow agencies to regulate their use in the public right of way and to conduct transportation planning and analysis. While MDS is not designed to convey personal information about the users of shared mobility services, data collected about mobility can be sensitive. The OMF and MDS community have created a number of resources to help cities, mobility providers, and software companies handle vehicle data safely:
+
+* [MDS Privacy Guide for Cities](https://github.com/openmobilityfoundation/governance/raw/main/documents/OMF-MDS-Privacy-Guide-for-Cities.pdf) - guide that covers essential privacy topics and best practices
+* [The Privacy Principles for Mobility Data](https://www.mobilitydataprivacyprinciples.org/) - principles endorsed by the OMF and other mobility organizations to guide the mobility ecosystem in the responsible use of data and the protection of individual privacy
+* [Mobility Data State of Practice](https://github.com/openmobilityfoundation/privacy-committee/blob/main/products/state-of-the-practice.md) -  real-world examples related to the handling and protection of MDS and other types of mobility data
+* [Understanding the Data in MDS](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/Understanding-the-Data-in-MDS) - technical document outlining what data is (and is not) in MDS
+* [Use Case Database](https://github.com/openmobilityfoundation/mobility-data-specification/blob/main/README.md#use-cases) - a starting point for understanding how MDS can be used, and what parts of MDS is required to meet those use cases
+* [Policy Requirements](https://github.com/openmobilityfoundation/mobility-data-specification/tree/main/policy#requirement) - built into MDS, allowing agencies to specify only the endpoints and fields needed for program regulation
+* Using MDS Under GDPR (link coming soon) - how to use MDS in the context of GDPR in Europe
+
+Thank you to OMF’s [Privacy, Security, and Transparency Committee](https://github.com/openmobilityfoundation/privacy-committee#welcome-to-the-privacy-security-and-transparency-committee) for creating many of these resources, and for advising the OMF on principles and practices that ensure the secure handling of mobility data. The committee – which is composed of both private and public sector OMF members – also holds regular public meetings, which provide additional resources and an opportunity to discuss issues related to privacy and mobility data. Learn more [here](https://github.com/openmobilityfoundation/privacy-committee#welcome-to-the-privacy-security-and-transparency-committee).
+
+[Top][toc]
+
 # Use Cases
 
 How cities use MDS depends on a variety of factors: their transportation goals, existing services and infrastructure, and the unique needs of their communities. Cities are using MDS to create policy, enforce rules, manage hundreds of devices, and ensure the safe operation of vehicles in the public right of way. Some examples of how cities are using MDS in practice are:
