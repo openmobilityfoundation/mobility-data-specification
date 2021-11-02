@@ -13,6 +13,7 @@
 - [Cities Using MDS](#cities-using-mds)
 - [Providers Using MDS](#providers-using-mds)
 - [Software Companies Using MDS](#software-companies-using-mds)
+- [Data Privacy](#data-privacy)
 - [Use Cases](#use-cases)
 - [Related Projects](#related-projects)
 
