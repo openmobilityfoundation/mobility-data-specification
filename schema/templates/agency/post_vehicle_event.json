@@ -21,7 +21,7 @@
       "$ref": "#/definitions/timestamp"
     },
     "telemetry": {
-      "$ref": "#/definitions/telemetry"
+      "$ref": "#/definitions/vehicle_telemetry"
     },
     "trip_id": {
       "$ref": "#/definitions/uuid"

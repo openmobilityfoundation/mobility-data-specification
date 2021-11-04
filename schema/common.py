@@ -11,6 +11,9 @@ import requests
 COMMON_DEFINITIONS = {}
 
 
+MDS_FEATURE_POINT = "MDS_Feature_Point"
+
+
 def load_json(path):
     """
     Load a JSON file from disk.
@@ -71,14 +74,14 @@ def vehicle_state_machine(vehicle_state=None, vehicle_events=None):
     return (state_machine_defs, transitions)
 
 
-def vehicle_type_counts_definition(definitions=None):
+def vehicle_type_counts_definition(definitions):
     """
     Generate a definition for a dict of vehicle_type: int.
     """
     vehicle_type_counts = {}
     def_name = "vehicle_type_counts"
     def_id = definition_id(def_name)
-    vehicle_types = definitions["vehicle_type"] if definitions else load_definitions("vehicle_type")
+    vehicle_types = definitions["vehicle_type"]
 
     for vehicle_type in vehicle_types["enum"]:
         vehicle_type_counts[vehicle_type] = {
@@ -128,65 +131,44 @@ def point_definition():
     }
 
 
-def feature_schema(id=None, title=None, geometry=None, properties=None, required=None):
+def mds_feature_point_definition(definitions):
     """
-    Get the canonical schema for a GeoJSON Feature,
-    and make any given modifications.
-
-    :id: overrides the `$id` metadata
-    :title: overrides the `title` metadata
-    :geometry: overrides the allowed `geometry` for the Feature
-    :properties: overrides the `properties` definitions for this Feature
-    :required: is a list of required :properties:
+    Create a customized definition of the GeoJSON Feature schema for MDS Points.
     """
     # Get the canonical Feature schema
     feature = requests.get("http://geojson.org/schema/Feature.json").json()
 
-    # Modify some metadata
+    # Modify metadata
     feature.pop("$schema")
-    if id is not None:
-        feature["$id"] = id
-    if title is not None:
-        feature["title"] = title
+    feature["$id"] = definition_id(MDS_FEATURE_POINT)
+    feature["title"] = "MDS GeoJSON Feature Point"
 
-    if geometry is not None:
-        feature["properties"]["geometry"] = geometry
+    # Only allow GeoJSON Point feature geometry
+    feature["properties"]["geometry"] = { "$ref": definition_id("Point") }
 
+    # Modfy properties definition/requirements
     f_properties = feature["properties"]["properties"]
-    if required is not None:
-        del f_properties["oneOf"]
-        f_properties["type"] = "object"
-        f_properties["required"] = required
-    if properties is not None:
-        f_properties["properties"] = properties
+    del f_properties["oneOf"]
+    f_properties["type"] = "object"
 
-    return feature
+    # Point features must include the timestamp
+    f_properties["required"] = ["timestamp"]
 
-
-def mds_feature_point_definition():
-    """
-    Create a customized definition of the GeoJSON Feature schema for MDS Points.
-    """
-    name = "MDS_Feature_Point"
-    return {
-        name: feature_schema(
-            id = definition_id(name),
-            title = "MDS GeoJSON Feature Point",
-            # Only allow GeoJSON Point feature geometry
-            geometry = { "$ref": definition_id("Point") },
-            properties = {
-                "timestamp": {
-                    "$ref": definition_id("timestamp")
-                },
-                # Locations corresponding to Stops must include a `stop_id` reference
-                "stop_id": {
-                    "$ref": definition_id("uuid")
-                }
-            },
-            # Point features *must* include the `timestamp`
-            required = ["timestamp"]
-        )
+    f_properties["properties"] = {
+        "timestamp": {
+            "$ref": definition_id("timestamp")
+        },
+        # Locations corresponding to Stops must include a stop_id reference
+        "stop_id": {
+            "$ref": definition_id("uuid")
+        }
     }
+
+    # merge telemetry props
+    telemetry = definitions["telemetry"]
+    f_properties["properties"].update(telemetry["properties"])
+
+    return {MDS_FEATURE_POINT: feature}
 
 
 def stop_definitions():
@@ -200,9 +182,9 @@ def stop_definitions():
         "timestamp",
         "uuid",
         "uuid_array",
-        "vehicle_type_counts"
+        "vehicle_type_counts",
+        MDS_FEATURE_POINT
     )
-    definitions.update(mds_feature_point_definition())
 
     return definitions
 
@@ -238,7 +220,7 @@ def load_definitions(*args, allow_null=False):
         common_definitions = common["definitions"]
 
         # MDS specific geography definition
-        mds_feature = mds_feature_point_definition()
+        mds_feature = mds_feature_point_definition(common_definitions)
         common_definitions.update(mds_feature)
 
         # vehicle_type -> count definition

@@ -41,6 +41,82 @@
       ],
       "pattern": "^1\\.2\\.[0-9]+$"
     },
+    "MDS_Feature_Point": {
+      "$id": "#/definitions/MDS_Feature_Point",
+      "title": "MDS GeoJSON Feature Point",
+      "type": "object",
+      "required": [
+        "type",
+        "properties",
+        "geometry"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "Feature"
+          ]
+        },
+        "id": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "properties": {
+          "type": "object",
+          "required": [
+            "timestamp"
+          ],
+          "properties": {
+            "timestamp": {
+              "$ref": "#/definitions/timestamp"
+            },
+            "stop_id": {
+              "$ref": "#/definitions/uuid"
+            },
+            "altitude": {
+              "type": "number",
+              "description": "Altitude above mean sea level in meters"
+            },
+            "heading": {
+              "type": "number",
+              "description": "Degrees - clockwise starting at 0 degrees at true North"
+            },
+            "speed": {
+              "type": "number",
+              "description": "Estimated speed in meters / sec as reported by the GPS chipset"
+            },
+            "accuracy": {
+              "type": "number",
+              "description": "Horizontal accuracy, in meters"
+            },
+            "hdop": {
+              "type": "number",
+              "description": "Horizontal GPS or GNSS accuracy value"
+            },
+            "satellites": {
+              "type": "integer",
+              "description": "Number of GPS or GNSS satellites"
+            }
+          }
+        },
+        "geometry": {
+          "$ref": "#/definitions/Point"
+        },
+        "bbox": {
+          "type": "array",
+          "minItems": 4,
+          "items": {
+            "type": "number"
+          }
+        }
+      }
+    },
     "Point": {
       "$id": "#/definitions/Point",
       "title": "GeoJSON Point",
@@ -82,48 +158,6 @@
         }
       }
     },
-    "MDS_Feature_Point": {
-      "$id": "#/definitions/MDS_Feature_Point",
-      "title": "MDS GeoJSON Feature Point",
-      "type": "object",
-      "required": [
-        "type",
-        "properties",
-        "geometry"
-      ],
-      "properties": {
-        "type": {
-          "type": "string",
-          "enum": [
-            "Feature"
-          ]
-        },
-        "properties": {
-          "type": "object",
-          "required": [
-            "timestamp"
-          ],
-          "properties": {
-            "timestamp": {
-              "$ref": "#/definitions/timestamp"
-            },
-            "stop_id": {
-              "$ref": "#/definitions/uuid"
-            }
-          }
-        },
-        "geometry": {
-          "$ref": "#/definitions/Point"
-        },
-        "bbox": {
-          "type": "array",
-          "minItems": 4,
-          "items": {
-            "type": "number"
-          }
-        }
-      }
-    },
     "propulsion_type": {
       "$id": "#/definitions/propulsion_type",
       "type": "string",
@@ -151,6 +185,7 @@
       "description": "The type of vehicle",
       "enum": [
         "bicycle",
+        "cargo_bicycle",
         "car",
         "scooter",
         "moped",
@@ -482,6 +517,7 @@
                         "contains": {
                           "enum": [
                             "agency_pick_up",
+                            "comms_restored",
                             "compliance_pick_up",
                             "decommissioned",
                             "located",

@@ -345,7 +345,7 @@ The authenticated reports are monthly, historic flat files that may be pre-gener
 
 **Endpoint:** `/reports`  
 **Method:** `GET`  
-**[Beta feature][beta]:** Yes (as of 1.1.0)  
+**[Beta feature][beta]:** Yes (as of 1.1.0). [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/672)  
 **Schema:** TBD when out of beta  
 **`data` Filename:** monthly file named by year and month, e.g. `/reports/YYYY-MM.csv`  
 **`data` Payload:** monthly CSV files with the following structure: 
@@ -530,7 +530,8 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 
 **Endpoint:** `/stops/:stop_id`  
 **Method:** `GET`  
-**[Beta feature][beta]:** Yes (as of 1.0.0)  
+**[Beta feature][beta]:** Yes (as of 1.0.0). [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/638)  
+**Schema:** [`stops` schema][stops-schema]  
 **`data` Payload:** `{ "stops": [] }`, an array of [Stops][stops]
 
 In the case that a `stop_id` query parameter is specified, the `stops` array returned will only have one entry. In the case that no `stop_id` query parameter is specified, all stops will be returned.
@@ -539,7 +540,7 @@ In the case that a `stop_id` query parameter is specified, the `stops` array ret
 
 ### Vehicles
 
-The `/vehicles` endpoint returns the current status of vehicles in an agency's [Jurisdiction](/general-information.md#definitions) and/or area of agency responsibility. All vehicles that are currently in any [`vehicle_state`](/general-information.md#vehicle-states) should be returned in this payload. Since all states are returned, care should be taken to filter out states not in the [PROW](/general-information.md#definitions) if doing vehicle counts. For the states `elsewhere` and `removed` which include vehicles not in the [PROW](/general-information.md#definitions) but provide some operational clarity for agencies, these must only persist in the feed for 90 minutes before being removed. 
+The `/vehicles` is a near-realtime endpoint and returns the current status of vehicles in an agency's [Jurisdiction](/general-information.md#definitions) and/or area of agency responsibility. All vehicles that are currently in any [`vehicle_state`](/general-information.md#vehicle-states) should be returned in this payload. Since all states are returned, care should be taken to filter out states not in the [PROW](/general-information.md#definitions) if doing vehicle counts. For the states `elsewhere` and `removed` which include vehicles not in the [PROW](/general-information.md#definitions) but provide some operational clarity for agencies, these must only persist in the feed for 90 minutes before being removed. 
 
 Data in this endpoint should reconcile with data from the historic [`/status_changes`](/provider#status-changes) enpdoint, though `/status_changes` is the source of truth if there are discrepancies. 
 

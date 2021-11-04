@@ -31,6 +31,7 @@ This specification describes the digital relationship between _mobility as a ser
   - [Requirement](#requirement)
     - [Update Frequency](#requirement-update-frequency)
     - [Public Hosting](#public-hosting)
+    - [Version Tracking](#version-tracking)
     - [Beta Limitations](#beta-limitations)
     - [Format](#requirement-format)
     - [Metadata](#requirement-metadata)
@@ -60,7 +61,7 @@ Versioning must be implemented as specified in the [Versioning section][versioni
 
 ## Background
 
-The goal of this specification is to enable Agencies to create, revise, and publish machine-readable policies, as sets of rules for individual and collective device behavior exhibited by both _mobility as a service_ Providers and riders / users. [Examples](./examples/README.md) of policies include:
+The goal of the Policy API specification is to enable agencies to create, revise, and publish machine-readable policies, as sets of rules for individual and collective device behavior exhibited by both _mobility as a service_ providers and riders / users. [Examples](./examples/README.md) of policies include:
 
 - City-wide and localized caps (e.g. "Minimum 500 and maximum 3000 scooters within city boundaries")
 - Exclusion zones (e.g. "No scooters are permitted in this district on weekends")
@@ -69,7 +70,7 @@ The goal of this specification is to enable Agencies to create, revise, and publ
 - Idle-time and disabled-time limitations (e.g. "5 days idle while rentable, 12 hours idle while unrentable, per device")
 - Trip fees and subsidies (e.g. "A 25 cent fee applied when a trip ends downtown")
 
-The machine-readable format allows Providers to obtain policies and compute compliance where it can be determined entirely by data obtained internally.
+The machine-readable format allows Providers to obtain policies and compute compliance where it can be determined entirely by data obtained internally, and know what data is required from them and provided to them.
 
 **See the [Policy Examples](./examples/README.md) for ways these can be implemented.**
 
@@ -113,13 +114,14 @@ See the [Responses section][responses] for information on valid MDS response cod
 
 ### Authorization
 
-Authorization is not required. An agency may decide to make this endpoint unauthenticated and public. See [Optional Authentication](/general-information.md#optional-authentication) for details.
+Authorization is not required and agencies are encouraged to make these endpoints unauthenticated and public. See [Optional Authentication](/general-information.md#optional-authentication) for details.
 
 ### Policies
 
-Endpoint: `/policies/{id}`
-Method: `GET`
-`data` Payload: `{ "policies": [] }`, an array of objects with the structure [outlined below](#policy).
+**Endpoint**: `/policies/{id}`  
+**Method**: `GET`  
+**Schema:** [`policy` schema][json-schema]  
+**`data` Payload**: `{ "policies": [] }`, an array of objects with the structure [outlined below](#policy).
 
 #### Query Parameters
 
@@ -137,11 +139,12 @@ Policies will be returned in order of effective date (see schema below), with pa
 
 ### Geographies
 
-**Deprecated:** see the new [Geography API](/geography#transition-from-policy) to understand the transistion away from this endpoint, and how to support both in a MDS 1.x.0 release.
+**Deprecated:** see the new [Geography API](/geography#transition-from-policy) to understand the transistion away from this endpoint, and how to support both in MDS 1.x.0 releases.
 
-Endpoint: `/geographies/{id}`
-Method: `GET`
-`data` Payload: `{ geographies: [] }`, an array of GeoJSON `Feature` objects that follow the schema [outlined here](#geography) or in [Geography](/geography#general-information).
+**Endpoint**: `/geographies/{id}`  
+**Method**: `GET`  
+**Schema:** [`policy` schema][json-schema]  
+**`data` Payload**: `{ geographies: [] }`, an array of GeoJSON `Feature` objects that follow the schema [outlined here](#geography) or in [Geography](/geography#general-information).
 
 #### Query Parameters
 
@@ -153,10 +156,11 @@ Method: `GET`
 
 ### Requirements
 
-Endpoint: `/requirements/`
-Method: `GET`
-`data` Payload: `{ requirements: [] }`, JSON objects that follow the schema [outlined here](#requirement).
-[Beta feature](/general-information.md#beta-features): *Yes (as of 1.2.0)*. [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/682)
+**Endpoint**: `/requirements/`  
+**Method**: `GET`  
+**[Beta feature](/general-information.md#beta-features)**: *Yes (as of 1.2.0)*. [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/682)  
+**Schema:** TBD when out of beta
+**`data` Payload**: `{ requirements: [] }`, JSON objects that follow the schema [outlined here](#requirement).  
 
 See [Policy Requirements Examples](/policy/examples/requirements.md) for how this can be implemented.
 
@@ -338,6 +342,8 @@ An individual `Rule` object is defined by the following fields:
 ### Rates
 Rate-related properties can currently be specified on `rate` and `time` Rules. Note: A future MDS version will likely support rates for `count` and `speed` rules, but their behavior is currently undefined.
 
+**[Beta feature](/general-information.md#beta-features)**: *Yes (as of 1.0.0)*. [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/674)  
+
 #### Rate Amounts
 The amount of a rate applied when this rule applies, if applicable (default zero). A positive integer rate amount represents a fee, while a negative integer represents a subsidy. Rate amounts are given in the `currency` defined in the [Policy](#policy).
 
@@ -424,11 +430,17 @@ See [Policy Requirements Examples](/policy/examples/requirements.md) for ideas o
 
 #### Public Hosting
 
-This endpoint is not authenticated (ie. public), and allows the discovery of other public endpoints within Geography, Policy, and Jurisdiction. The agency can host this as a file or dynamic endpoint on their servers, on a third party server, or the OMF can host on behalf of an agency in the [agency program requirements repo](https://github.com/openmobilityfoundation/agency-program-requirements). See this [hosting guidance document](#) for more information.  This requirements file can be [referenced directly](https://github.com/openmobilityfoundation/governance/blob/main/technical/OMF-MDS-Policy-Language-Guidance.md) in an agency's operating permit/policy document when discussing program data requirements, and [updated digitally as needed](#requirement-update-frequency).
+This endpoint is not authenticated (ie. public), and allows the discovery of other public endpoints within Geography, Policy, and Jurisdiction. The agency can host this as a file or dynamic endpoint on their servers, on a third party server, or the OMF can host on behalf of an agency in the [agency program requirements repo](https://github.com/openmobilityfoundation/agency-program-requirements). See this [hosting guidance document](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/Policy-Requirements-OMF-Hosting-Guidance) for more information.  This requirements file can be [referenced directly](https://github.com/openmobilityfoundation/governance/blob/main/technical/OMF-MDS-Policy-Language-Guidance.md) in an agency's operating permit/policy document when discussing program data requirements, and [updated digitally as needed](#requirement-update-frequency). To be compliant with MDS you must obtain an `agency_id` and list your public URL in [agencies.csv](/agencies.csv), per our [guidance document](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/Adding-an-MDS-Agency-ID).
 
 #### Requirement Update Frequency
 
 The OMF recommends updating the Requirements feed no more than monthly, and you may specify your expected timeframe with the `max_update_interval` in the [metadata](#requirement-metadata) section so providers have some idea of how often to check the feed. More specifically the OMF recommends giving the following notice to providers: 1 month for optional field additions, 3 months for endpoint/API changes/additions, 3 months for new minor releases, and 4 months for major releases. You should also communicate these future changes ahead of time with the `start_date` field. Finally, the OMF recommends any changes need to be part of a discussion between agencies and affected providers.
+
+#### Version Tracking
+
+If you are upgrading to a new MDS version, it is recommended to create a new requirements file at a new URL, since field names and available options may have changed. To make this more obvious, the MDS version number could be part of your URL, e.g. "https://mds.cityname.gov/requirements/1.2.0". 
+
+When requirements are updated within the same MDS version, in the [metadata](#requirement-metadata) section, increment the `file_version` value by one and update the `last_updated` timestamp. Though not required, you may choose to use the  `start_date` and `end_date` fields in the [programs](#requirement-programs) section to keep retired requirements accessible. We also recommend hosting your requirements file in a location that has a publicly-accessible version history, like GitHub or Bitbucket, or keeping previous versions accessible with a versioned URL, e.g. "https://mds.cityname.gov/requirements/1.2.0/v3". 
 
 #### Beta Limitations
 
@@ -511,16 +523,16 @@ Contains metadata applicable to the agency and at the top of its [Requirement](#
 | Name                         | Type            | Required / Optional | Description              |
 | ---------------------------- | --------------- | -------- | ----------------------------------- |
 | `mds_release`                | text            | Required | Release of MDS that the **requirements data feed** aligns to, based on official MDS releases. E.g. "1.2.0" |
-| `file_version`               | integer         | Required | Version of this file. Increment 1 with each modification. E.g. "3" |
-| `last_updated`               | [timestamp][ts] | Required | When this file `version` was last updated. E.g. "1611958740" |
+| `file_version`               | integer         | Required | Version of this file. Increment 1 with each modification. See [version tracking](#version-tracking) for details. E.g. "3" |
+| `last_updated`               | [timestamp][ts] | Required | When this file `version` was last updated. See [version tracking](#version-tracking) for details. E.g. "1611958740" |
 | `max_update_interval`        | duration        | Required | The expected maximum frequency with which this file could be updated. [ISO 8601 duration](https://en.wikipedia.org/wiki/ISO_8601#Durations). E.g. "P1M" |
-| `agency_id`                  | UUID            | Required | UUID of the agency this file applies to. Must come from [agencies.csv](/agencies.csv) file. E.g. "737a9c62-c0cb-4c93-be43-271d21b784b5" |
+| `agency_id`                  | UUID            | Required | UUID of the agency this file applies to. Must come from [agencies.csv](/agencies.csv) file, per [guidance](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/Adding-an-MDS-Agency-ID). E.g. "737a9c62-c0cb-4c93-be43-271d21b784b5" |
 | `agency_name`                | text            | Required | Name of the agency this file applies to. E.g. "Louisville Metro" |
 | `agency_timezone`            | timezone        | Required | [TZ Database Name](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) used for dates and times in Requirements and across all MDS endpoints. E.g. "America/New_York" |
 | `agency_language`            | text            | Required | An [IETF BCP 47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language code, used across all MDS endpoints. E.g. "en-US" |
 | `agency_currency`            | text            | Required | Currency used for all monetary values across all MDS endpoints. E.g. "USD" |
 | `agency_website_url`         | URL             | Required | URL of the agency's general transportation page. E.g. "https://www.cityname.gov/transportation/" |
-| `url`                        | URL             | Required | URL of this file. E.g.  "https://mds.cityname.gov/requirements/1.2.0" |
+| `url`                        | URL             | Required | URL of this file. Must be added to [agencies.csv](/agencies.csv), per [guidance](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/Adding-an-MDS-Agency-ID). E.g.  "https://mds.cityname.gov/requirements/1.2.0" |
 
 [Top][toc]
 
@@ -692,6 +704,7 @@ You may also show which APIs, endpoints, and fields your agency is serving to pr
 [beta]: /general-information.md#beta
 [error-messages]: /general-information.md#error-messages
 [iana]: https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
+[json-schema]: #json-schema
 [muni-boundary]: ../provider/README.md#municipality-boundary
 [propulsion-types]: /general-information.md#propulsion-types
 [responses]: /general-information.md#responses
