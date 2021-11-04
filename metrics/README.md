@@ -68,7 +68,7 @@ Metrics may be a supplement for other more granular MDS data, and may be used to
 
 ## Beta Feature
 
-[Beta feature](https://github.com/openmobilityfoundation/mobility-data-specification/blob/feature-metrics/general-information.md#beta-features): Yes (as of 1.0.0)
+**[Beta feature](https://github.com/openmobilityfoundation/mobility-data-specification/blob/feature-metrics/general-information.md#beta-features)**: _Yes (as of 1.0.0)_. [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/671) 
 
 The Metrics API and all of its endpoints are marked as a [beta feature](https://github.com/openmobilityfoundation/mobility-data-specification/blob/feature-metrics/general-information.md#beta-features). It has not been tested in real world scenarios, and may be adjusted in future releases.
 

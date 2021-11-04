@@ -176,6 +176,22 @@
           ],
           "description": "Maximum value, if applicable (default unlimited)"
         },
+        "inclusive_minimum": {
+          "$id": "#/definitions/rule/properties/inclusive_minimum",
+          "type": [
+            "null",
+            "boolean"
+          ],
+          "description": "Whether the rule minimum is considered in-bounds (default true)"
+        },
+        "inclusive_maximum": {
+          "$id": "#/definitions/rule/properties/inclusive_maximum",
+          "type": [
+            "null",
+            "boolean"
+          ],
+          "description": "Whether the rule maximum is considered in-bounds (default true)"
+        },
         "rate_amount": {
           "$id": "#/definitions/rule/properties/rate_amount",
           "type": [
@@ -190,11 +206,24 @@
             "string",
             "null"
           ],
-          "description": "Specify when a rate is applied \u00e2\u20ac\u201c either once, or periodically according to a time unit specified using rule_units",
+          "description": "Specify how a rate is applied \u00e2\u20ac\u201c either once, or periodically according to a time unit specified using rule_units",
           "enum": [
-            "once",
+            "once_on_match",
+            "once_on_unmatch",
             "each_time_unit",
             "per_complete_time_unit"
+          ]
+        },
+        "rate_applies_when": {
+          "$id": "#/definitions/rule/properties/rate_applies_when",
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Specify when a rate is applicable to an event or count: when it's within rule bounds or when it is not",
+          "enum": [
+            "in_bounds",
+            "out_of_bounds"
           ]
         },
         "start_time": {
@@ -377,7 +406,7 @@
       "type": "number",
       "description": "Integer milliseconds since Unix epoch",
       "multipleOf": 1.0,
-      "minimum": 0
+      "minimum": 1514764800000
     },
     "uuid": {
       "$id": "#/definitions/uuid",
@@ -451,6 +480,7 @@
       "description": "The type of vehicle",
       "enum": [
         "bicycle",
+        "cargo_bicycle",
         "car",
         "scooter",
         "moped",
@@ -462,9 +492,9 @@
       "type": "string",
       "description": "The version of MDS this data represents",
       "examples": [
-        "1.1.0"
+        "1.2.0"
       ],
-      "pattern": "^1\\.1\\.[0-9]+$"
+      "pattern": "^1\\.2\\.[0-9]+$"
     },
     "days": {
       "$id": "#/definitions/days",
@@ -584,15 +614,15 @@
       "type": "object",
       "description": "The data records in this payload",
       "required": [
-        "policy"
+        "policies"
       ],
       "properties": {
-        "policy": {
-          "$id": "#/properties/data/properties/policy",
+        "policies": {
+          "$id": "#/properties/data/properties/policies",
           "type": "array",
-          "title": "The policy payload",
+          "title": "The array of policy objects in this payload",
           "items": {
-            "$id": "#/properties/data/properties/policy/items",
+            "$id": "#/properties/data/properties/policies/items",
             "$ref": "#/definitions/policy"
           }
         }

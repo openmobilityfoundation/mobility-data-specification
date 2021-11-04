@@ -1,8 +1,8 @@
 {
   "updated": 0,
-  "version": "1.0.0",
+  "version": "1.2.0",
   "data": {
-    "policy": [
+    "policies": [
       {
         "policy_id": "39a653be-7180-4188-b1a6-cae33c280341",
         "name": "Prohibited Dockless Zones",

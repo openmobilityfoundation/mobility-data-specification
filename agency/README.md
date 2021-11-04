@@ -184,9 +184,9 @@ Body Params:
 | -----------     | ----------------------------- | -------- | -------------------------------------------------------------------------------- |
 | `vehicle_state` | Enum                          | Required | see [Vehicle States][vehicle-states] |
 | `event_types`   | Enum[]                        | Required | see [Vehicle Events][vehicle-events] |
-| `timestamp`     | [timestamp][ts]                     | Required | Date of last event update |
+| `timestamp`     | [timestamp][ts]               | Required | Date of last event update |
 | `telemetry`     | [Telemetry](#telemetry-data)  | Required | Single point of telemetry. |
-| `event_geographies`  | UUID[] | Optional          | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.1.0)*. Array of Geography UUIDs consisting of every Geography that contains the location of the event. See [Geography Driven Events][geography-driven-events]. Required if `telemetry` is not present. |
+| `event_geographies`  | UUID[] | Optional        | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.1.0)*. Array of Geography UUIDs consisting of every Geography that contains the location of the event. See [Geography Driven Events][geography-driven-events]. Required if `telemetry` is not present. |
 | `trip_id`       | UUID                          | Optional | UUID provided by Operator to uniquely identify the trip. Required if `event_types` contains `trip_start`, `trip_end`, `trip_cancel`, `trip_enter_jurisdiction`, or `trip_leave_jurisdiction` |
 
 201 Success Response:
@@ -223,7 +223,7 @@ Body Params:
 | Field      | Type                           | Field Description                                                                                       |
 | ---------- | ------------------------------ | ------------------------------------------------------------------------------------------------------- |
 | `success`  | Integer                        | Number of successfully written telemetry data points.                                                   |
-| `total`    | Integer                        | Ttotal number of provided points.                                                                       |
+| `total`    | Integer                        | Total number of provided points.                                                                       |
 | `failures` | [Telemetry](#telemetry-data)[] | Array of failed telemetry for zero or more vehicles (empty if all successful).                          |
 
 400 Failure Response:
@@ -244,14 +244,14 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | Field          | Type           | Required/Optional     | Field Description                                            |
 | -------------- | -------------- | --------------------- | ------------------------------------------------------------ |
 | `device_id`    | UUID           | Required              | ID used in [Register](#vehicle---register)                     |
-| `timestamp`    | [timestamp][ts]      | Required              | Date/time that event occurred. Based on GPS or GNSS clock            |
+| `timestamp`    | [timestamp][ts]| Required              | Date/time that event occurred. Based on GPS or GNSS clock            |
 | `gps`          | Object         | Required              | Telemetry position data                                      |
 | `gps.lat`      | Double         | Required              | Latitude of the location                                     |
 | `gps.lng`      | Double         | Required              | Longitude of the location                                    |
 | `gps.altitude` | Double         | Required if Available | Altitude above mean sea level in meters                      |
 | `gps.heading`  | Double         | Required if Available | Degrees - clockwise starting at 0 degrees at true North      |
-| `gps.speed`    | Float          | Required if Available | Speed in meters / sec                                        |
-| `gps.accuracy` | Float          | Required if Available | Accuracy in meters                                           |
+| `gps.speed`    | Float          | Required if Available | Estimated speed in meters / sec as reported by the GPS chipset                                        |
+| `gps.accuracy` | Float          | Required if Available | Horizontal accuracy, in meters                                           |
 | `gps.hdop`     | Float          | Required if Available | Horizontal GPS or GNSS accuracy value (see [hdop][hdop]) |
 | `gps.satellites` | Integer      | Required if Available | Number of GPS or GNSS satellites
 | `charge`       | Float          | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 1 |
@@ -265,7 +265,7 @@ The `/stops` endpoint allows an agency to register city-managed Stops, or a prov
 
 **Endpoint:** `/stops`  
 **Method:** `POST`  
-**[Beta feature][beta]:** Yes (as of 1.0.0)  
+**[Beta feature][beta]:** Yes (as of 1.0.0). [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/638)    
 **Request Body**: An array of [Stops][stops]
 
 201 Success Response:
@@ -287,7 +287,7 @@ _No content returned on success._
 
 **Endpoint:** `/stops`  
 **Method:** `PUT`  
-**[Beta feature][beta]:** Yes (as of 1.0.0)  
+**[Beta feature][beta]:** Yes (as of 1.0.0). [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/638)  
 **Request Body**: An array of subsets of [Stop][stops] information, where the permitted subset fields are defined as:
 
 | Field               | Required/Optional | Description                                 |
@@ -313,7 +313,7 @@ _No content returned if no vehicle matching `stop_id` is found._
 
 **Endpoint:** `/stops/:stop_id`  
 **Method:** `GET`  
-**[Beta feature][beta]:** Yes (as of 1.0.0)  
+**[Beta feature][beta]:** Yes (as of 1.0.0). [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/638)  
 **Payload:** `{ "stops": [] }`, an array of [Stops][stops]
 
 Path Params:

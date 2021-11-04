@@ -1,8 +1,8 @@
 {
   "updated": 0,
-  "version": "1.0.0",
+  "version": "1.2.0",
   "data": {
-    "policy": [
+    "policies": [
       {
         "policy_id": "d2567b3c-3071-48a6-bbeb-3424721dbd12",
         "published_date": 1586736000000,

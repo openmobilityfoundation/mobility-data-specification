@@ -156,7 +156,7 @@
       "type": "number",
       "description": "Integer milliseconds since Unix epoch",
       "multipleOf": 1.0,
-      "minimum": 0
+      "minimum": 1514764800000
     },
     "uuid": {
       "$id": "#/definitions/uuid",
@@ -183,6 +183,11 @@
       "properties": {
         "bicycle": {
           "$id": "#/definitions/vehicle_type_counts/properties/bicycle",
+          "type": "integer",
+          "minimum": 0
+        },
+        "cargo_bicycle": {
+          "$id": "#/definitions/vehicle_type_counts/properties/cargo_bicycle",
           "type": "integer",
           "minimum": 0
         },
@@ -225,6 +230,16 @@
             "Feature"
           ]
         },
+        "id": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
         "properties": {
           "type": "object",
           "required": [
@@ -236,6 +251,30 @@
             },
             "stop_id": {
               "$ref": "#/definitions/uuid"
+            },
+            "altitude": {
+              "type": "number",
+              "description": "Altitude above mean sea level in meters"
+            },
+            "heading": {
+              "type": "number",
+              "description": "Degrees - clockwise starting at 0 degrees at true North"
+            },
+            "speed": {
+              "type": "number",
+              "description": "Estimated speed in meters / sec as reported by the GPS chipset"
+            },
+            "accuracy": {
+              "type": "number",
+              "description": "Horizontal accuracy, in meters"
+            },
+            "hdop": {
+              "type": "number",
+              "description": "Horizontal GPS or GNSS accuracy value"
+            },
+            "satellites": {
+              "type": "integer",
+              "description": "Number of GPS or GNSS satellites"
             }
           }
         },

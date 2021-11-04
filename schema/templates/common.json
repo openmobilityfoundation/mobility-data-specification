@@ -307,71 +307,32 @@
     "telemetry": {
       "$id": "#/definitions/telemetry",
       "type": "object",
-      "description": "A vehicle telemetry datum",
-      "required": [
-        "device_id",
-        "timestamp",
-        "gps"
-      ],
+      "description": "A telemetry datum",
       "additionalProperties": false,
       "properties": {
-        "device_id": {
-          "$ref": "#/definitions/uuid"
-        },
-        "timestamp": {
-          "$ref": "#/definitions/timestamp"
-        },
-        "gps": {
-          "type": "object",
-          "required": [
-            "lat",
-            "lng"
-          ],
-          "additionalProperties": false,
-          "properties": {
-            "lat": {
-              "type": "number",
-              "description": "Latitude of the location",
-              "minimum": -90,
-              "maximum": 90
-            },
-            "lng": {
-              "type": "number",
-              "description": "Longitude of the location",
-              "minimum": -180,
-              "maximum": 180
-            },
-            "altitude": {
-              "type": "number",
-              "description": "Altitude above mean sea level in meters"
-            },
-            "heading": {
-              "type": "number",
-              "description": "Degrees clockwise from true north"
-            },
-            "speed": {
-              "type": "number",
-              "description": "Speed in meters/sec"
-            },
-            "accuracy": {
-              "type": "number",
-              "description": "Accuracy in meters"
-            },
-            "hdop": {
-              "type": "number",
-              "description": "Horizontal GPS or GNSS accuracy value"
-            },
-            "satellites": {
-              "type": "integer",
-              "description": "Number of GPS or GNSS satellites"
-            }
-          }
-        },
-        "charge": {
+        "altitude": {
           "type": "number",
-          "description": "Fraction of charge of the vehicle (required if applicable",
-          "minimum": 0,
-          "maximum": 1
+          "description": "Altitude above mean sea level in meters"
+        },
+        "heading": {
+          "type": "number",
+          "description": "Degrees - clockwise starting at 0 degrees at true North"
+        },
+        "speed": {
+          "type": "number",
+          "description": "Estimated speed in meters / sec as reported by the GPS chipset"
+        },
+        "accuracy": {
+          "type": "number",
+          "description": "Horizontal accuracy, in meters"
+        },
+        "hdop": {
+          "type": "number",
+          "description": "Horizontal GPS or GNSS accuracy value"
+        },
+        "satellites": {
+          "type": "integer",
+          "description": "Number of GPS or GNSS satellites"
         }
       }
     },
@@ -380,7 +341,7 @@
       "type": "number",
       "description": "Integer milliseconds since Unix epoch",
       "multipleOf": 1.0,
-      "minimum": 0
+      "minimum": 1514764800000
     },
     "trip_id_reference": {
       "description": "Conditionally require a trip_id reference",
@@ -631,6 +592,7 @@
               "contains": {
                 "enum": [
                   "agency_pick_up",
+                  "comms_restored",
                   "compliance_pick_up",
                   "decommissioned",
                   "located",
@@ -677,12 +639,60 @@
         }
       ]
     },
+    "vehicle_telemetry": {
+      "$id": "#/definitions/vehicle_telemetry",
+      "type": "object",
+      "description": "A telemetry datum for a specific vehicle at a specific time",
+      "required": [
+        "device_id",
+        "timestamp",
+        "gps"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "device_id": {
+          "$ref": "#/definitions/uuid"
+        },
+        "timestamp": {
+          "$ref": "#/definitions/timestamp"
+        },
+        "gps": {
+          "type": "object",
+          "required": [
+            "lat",
+            "lng"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "lat": {
+              "type": "number",
+              "description": "Latitude of the location",
+              "minimum": -90,
+              "maximum": 90
+            },
+            "lng": {
+              "type": "number",
+              "description": "Longitude of the location",
+              "minimum": -180,
+              "maximum": 180
+            }
+          }
+        },
+        "charge": {
+          "type": "number",
+          "description": "Fraction of charge of the vehicle (required if applicable)",
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    },
     "vehicle_type": {
       "$id": "#/definitions/vehicle_type",
       "type": "string",
       "description": "The type of vehicle",
       "enum": [
         "bicycle",
+        "cargo_bicycle",
         "car",
         "scooter",
         "moped",
@@ -704,9 +714,9 @@
       "type": "string",
       "description": "The version of MDS this data represents",
       "examples": [
-        "1.1.0"
+        "1.2.0"
       ],
-      "pattern": "^1\\.1\\.[0-9]+$"
+      "pattern": "^1\\.2\\.[0-9]+$"
     }
   }
 }

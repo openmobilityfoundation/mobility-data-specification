@@ -32,7 +32,7 @@ Shows the muncipal boundaries of a regulating entity, which may be larger than t
 
 ```json
 {
-  "version": "1.0.0",
+  "version": "1.2.0",
   "geography": {
   "geography_id": "e00535dd-d8ff-4b1b-920d-34e7404d0208",
   "geography_type": "municipal_boundary",
@@ -60,7 +60,7 @@ Boundaries of a city's permitted operating area for provider vehicles.
 
 ```json
 {
-  "version": "1.0.0",
+  "version": "1.2.0",
   "geography": {
     "geography_id": "8ad39dc3-005b-4348-9d61-c830c54c161b",
     "geography_type": "operating_area",
@@ -89,7 +89,7 @@ Boundaries of one of 9 areas in a city where vehicles can be distibuted and rebl
 
 ```json
 {
-  "version": "1.0.0",
+  "version": "1.2.0",
   "geography": {
     "geography_id": "70a91abc-0d9f-43a9-8e6a-763142dc6c94",
     "geography_type": "distribution_zone",
@@ -119,7 +119,7 @@ Boundaries of areas in a city where vehicles are not allowed be ridden by riders
 
 ```json
 {
-  "version": "1.0.0",
+  "version": "1.2.0",
   "geography": {
     "geography_id": "fc277865-79d3-4f0e-8459-53e9a647db99",
     "geography_type": "slow_ride_zone",
@@ -144,7 +144,7 @@ Boundaries of areas in a city where vehicles are to be ridden at a slower top sp
 
 ```json
 {
-  "version": "1.0.0",
+  "version": "1.2.0",
   "geography": {
     "geography_id": "8ad39dc3-005b-4348-9d61-c830c54c161b",
     "geography_type": "operating_area",
@@ -174,7 +174,7 @@ Designated stoping areas for vehicles. In this example the recommended parking l
 
 ```json
 {
-  "version": "1.0.0",
+  "version": "1.2.0",
   "geography": {
     "geography_id": "d1328cdb-92fe-4267-85e0-a9fe5653268e",
     "geography_type": "stop",

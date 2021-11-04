@@ -13,18 +13,19 @@
 - [Cities Using MDS](#cities-using-mds)
 - [Providers Using MDS](#providers-using-mds)
 - [Software Companies Using MDS](#software-companies-using-mds)
+- [Data Privacy](#data-privacy)
 - [Use Cases](#use-cases)
 - [Related Projects](#related-projects)
 
 # About
 
-The Mobility Data Specification (**MDS**), a project of the [Open Mobility Foundation](http://www.openmobilityfoundation.org) (OMF), is a set of Application Programming Interfaces (APIs) focused on dockless e-scooters, bicycles, mopeds and carshare. Inspired by projects like [GTFS](https://developers.google.com/transit/gtfs/reference/) and [GBFS](https://github.com/NABSA/gbfs), the goals of MDS are to provide a standardized way for municipalities or other regulatory agencies to ingest, compare and analyze data from mobility service providers, and to give municipalities the ability to express regulation in machine-readable formats.
+The Mobility Data Specification (**MDS**), a project of the [Open Mobility Foundation](http://www.openmobilityfoundation.org) (**OMF**), is a set of Application Programming Interfaces (APIs) focused on shared mobility services such as dockless scooters, bicycles, mopeds, and carshare, and inspired by projects like [GTFS](https://developers.google.com/transit/gtfs/reference/) and [GBFS](https://github.com/NABSA/gbfs). MDS is a digital tool that helps cities better manage transportation in the public right of way, standardizing communication and data-sharing between cities and private mobility providers, allowing cities to share and validate policy digitally, and enabling vehicle management and better outcomes for residents. 
 
-**MDS** helps cities interact with companies who operate dockless scooters, bicycles, mopeds and carshare in the public right-of-way. MDS is a key piece of digital infrastructure that supports the effective implementation of mobility policies in cities around the world. For a high level overview, see the [About MDS](https://www.openmobilityfoundation.org/about-mds/) page on the OMF website.
+**MDS** is a key piece of digital infrastructure that supports the effective implementation of mobility policies in cities around the world. For a high level overview and visuals, see the [About MDS](https://www.openmobilityfoundation.org/about-mds/) page on the OMF website.
 
 ![MDS Main Logo](https://i.imgur.com/AiUedl3.png)
 
-**MDS** is an open-source project. It was originally created by the [Los Angeles Department of Transportation](http://ladot.io) (LADOT). In November 2019, stewardship of MDS and the ownership of this repository were transferred to the Open Mobility Foundation. GitHub automatically redirects any links to this repository in the `CityOfLosAngeles` organization to the `openmobilityfoundation` instead. MDS continues to be used by LADOT and [many other municipalities](#cities-using-mds).
+**MDS** is an open-source project originally created by the [Los Angeles Department of Transportation](http://ladot.io) (LADOT). In November 2019, stewardship of MDS and the ownership of this repository were transferred to the [Open Mobility Foundation](http://www.openmobilityfoundation.org). GitHub automatically redirects any links to this repository from the `CityOfLosAngeles` organization to the `openmobilityfoundation` instead. MDS continues to be used by LADOT and [many other municipalities](#cities-using-mds) and companies.
 
 [Top][toc]
 
@@ -70,13 +71,13 @@ The [`metrics`](/metrics) API endpoints are intended to be implemented by regula
 
 ## Modularity
 
-MDS is designed to be a modular kit-of-parts. Regulatory agencies can use the components of the API that are appropriate for their needs. An agency may choose to use only `agency`, `provider`, or `policy`. Other APIs like `geography`, `jurisdiction`, and `metrics` can be used in coordination as described with these APIs or sometimes on their own. Or agencies may select specific elements (endpoints) from each API to help them implement their goals. Development of the APIs takes place under the guidance of either the OMF's [City Services](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-City-Services-Working-Group) or [Provider Services](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Provider-Services-Working-Group) Working Groups.
+MDS is designed to be a modular kit-of-parts. Regulatory agencies can use the components of the API that are appropriate for their needs. An agency may choose to use only `agency`, `provider`, or `policy`. Other APIs like `geography`, `jurisdiction`, and `metrics` can be used in coordination as described with these APIs or sometimes on their own. Or agencies may select specific elements (endpoints) from each API to help them implement their goals. Development of the APIs takes place under the guidance of the OMF's [MDS Working Group](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Working-Group).
 
 Many parts of the MDS definitions and APIs align across each other. In these cases, consolidated information can be found on the [General Information](/general-information.md) page.
 
 You can read more in our **[Understanding the different MDS APIs](https://github.com/openmobilityfoundation/governance/blob/main/technical/Understanding-MDS-APIs.md)** guide. 
 
-![MDS APIs and Endpoints](https://i.imgur.com/L5s927a.png)
+![MDS APIs and Endpoints](https://i.imgur.com/bfUtCif.png)
 
 ## GBFS Requirement
 
@@ -86,34 +87,34 @@ All MDS compatible Provider feeds [must also expose](/provider/README.md#gbfs) a
 
 # Get Involved
 
-To stay up to date on MDS releases, meetings, and events, please **subscribe to the [mds-announce](https://groups.google.com/a/groups.openmobilityfoundation.org/forum/#!forum/mds-announce) mailing list** and read our **[Community Wiki](https://github.com/openmobilityfoundation/mobility-data-specification/wiki)**.
+To stay up to date on MDS, please **subscribe to the [mds-announce](https://groups.google.com/a/groups.openmobilityfoundation.org/g/mds-announce) mailing list** for general updates, the **[wg-mds](https://groups.google.com/a/groups.openmobilityfoundation.org/g/wg-mds) mailing list** for Working Group details and meetings, and read our **[Community Wiki](https://github.com/openmobilityfoundation/mobility-data-specification/wiki)**.
 
-The Mobility Data Specification is an open source project with all development taking place on GitHub. Comments and ideas can be shared by [starting a discussion](https://github.com/openmobilityfoundation/mobility-data-specification/discussions), [creating an issue](https://github.com/openmobilityfoundation/mobility-data-specification/issues), and specific changes can be suggested by [opening a pull request](https://github.com/openmobilityfoundation/mobility-data-specification/pulls). Before contributing, please review our OMF [CONTRIBUTING page](https://github.com/openmobilityfoundation/governance/blob/main/CONTRIBUTING.md) and our [CODE OF CONDUCT page](https://github.com/openmobilityfoundation/governance/blob/main/CODE_OF_CONDUCT.md) to understand guidelines and policies for participation .
+The Mobility Data Specification is an open source project with all development taking place on GitHub and public meetings through our [MDS Working Group](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Working-Group). Comments and ideas can be shared by [starting a discussion](https://github.com/openmobilityfoundation/mobility-data-specification/discussions), [creating an issue](https://github.com/openmobilityfoundation/mobility-data-specification/issues), suggesting changes with [a pull request](https://github.com/openmobilityfoundation/mobility-data-specification/pulls), and attending meetings. Before contributing, please review our OMF [CONTRIBUTING](https://github.com/openmobilityfoundation/governance/blob/main/CONTRIBUTING.md) and [CODE OF CONDUCT](https://github.com/openmobilityfoundation/governance/blob/main/CODE_OF_CONDUCT.md) pages to understand guidelines and policies for participation.
 
-You can learn more about the polices, methodologies, and tools in the MDS ecosystem in the [Mobility Data Management State of Practice](https://github.com/openmobilityfoundation/privacy-committee/blob/main/products/state-of-the-practice.md) wiki. To help cities put the right privacy policies in place, the OMF [Privacy, Security, and Transparency Committee](https://github.com/openmobilityfoundation/privacy-committee) has created a comprehensive best-practices document called the [MDS Privacy Guide for Cities](https://github.com/openmobilityfoundation/governance/raw/main/documents/OMF-MDS-Privacy-Guide-for-Cities.pdf).
+**Read our [How to Get Involved in the Open Mobility Foundation](https://www.openmobilityfoundation.org/how-to-get-involved-in-the-open-mobility-foundation/) blog post for more detail and an overview of how the OMF is organized.**
 
-You can also get involved in development by joining an [OMF working group](https://github.com/openmobilityfoundation/mobility-data-specification/wiki#omf-meetings). The working groups maintain the OMF GitHub repositories and work through issues and pull requests. Each working group has its own mailing list for non-technical discussion and planning:
-
-Working Group | Mailing List | Description
---- | --- | ---
-Provider Services | [mds-provider-services](https://groups.google.com/a/groups.openmobilityfoundation.org/forum/#!forum/mds-provider-services) | Manages the [`provider`][provider] API within MDS.
-City Services | [mds-city-services](https://groups.google.com/a/groups.openmobilityfoundation.org/forum/#!forum/mds-city-services) | Manages the [`agency`][agency], [`policy`][policy], [`geography`][geography], [`jurisdiction`][jurisdiction], and [`metrics`](metrics) APIs within MDS, as well as the [`mds-core`](https://github.com/openmobilityfoundation/mds-core) and [`mds-compliance-mobile`](https://github.com/openmobilityfoundation/mds-compliance-mobile) reference implementations.
-
-You can view info about current and past releases, the public OMF calendar, and review planning calls in the [wiki](https://github.com/openmobilityfoundation/mobility-data-specification/wiki).
-
-For questions about MDS please contact by email at [info@openmobilityfoundation.org](mailto:info@openmobilityfoundation.org) or [on our website](https://www.openmobilityfoundation.org/get-in-touch/). Media inquiries to [media@openmobilityfoundation.org](mailto:media@openmobilityfoundation.org).
+For other questions about MDS or media inquiries please contact the OMF directly [on our website](https://www.openmobilityfoundation.org/get-in-touch/). 
 
 ## Membership
 
-OMF Members (public agencies and commercial companies) have additional participation opportunities with leadership roles on our [Board of Directors](https://www.openmobilityfoundation.org/about/), [Privacy, Security, and Transparency Committee](https://github.com/openmobilityfoundation/privacy-committee), [Technology Council](https://github.com/openmobilityfoundation/governance/wiki/Technology-Council), and [Strategy Committee](https://github.com/openmobilityfoundation/governance/wiki/Strategy-Committee), as well as the steering committees of all [Working Groups](https://github.com/openmobilityfoundation/mobility-data-specification/wiki#omf-meetings). 
+OMF Members (public agencies and commercial companies) have additional participation opportunities with leadership roles within our OMF [governance](https://github.com/openmobilityfoundation/governance#omf-scope-of-work):
 
-Read about [how to become an OMF member](https://www.openmobilityfoundation.org/how-to-become-a-member/) and [contact us](https://mailchi.mp/openmobilityfoundation/membership) for more details. 
+- [Board of Directors](https://www.openmobilityfoundation.org/about/)
+- [Privacy, Security, and Transparency Committee](https://github.com/openmobilityfoundation/privacy-committee)
+- [Technology Council](https://github.com/openmobilityfoundation/governance/wiki/Technology-Council)
+- [Strategy Committee](https://github.com/openmobilityfoundation/governance/wiki/Strategy-Committee)
+- [Advisory Committee](https://github.com/openmobilityfoundation/governance/wiki/Advisory-Committee)
+- Steering committees of all [Working Groups](https://github.com/openmobilityfoundation/mobility-data-specification/wiki#omf-meetings), currently:
+  - [MDS Working Group](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Working-Group)
+  - [Curb Working Group](https://github.com/openmobilityfoundation/curb-data-specification/wiki)
+
+Read about [how to become an OMF member](https://www.openmobilityfoundation.org/how-to-become-a-member/), [how to get involved and our governance model](https://www.openmobilityfoundation.org/how-to-get-involved-in-the-open-mobility-foundation/), and [contact us](https://mailchi.mp/openmobilityfoundation/membership) for more details. 
 
 [Top][toc]
 
 # Versions
 
-MDS has a **current release** (version 1.1.0), **previous releases** (both recommended and longer recommended for use), and **upcoming releases** in development. For a full list of releases, their status, recommended versions, and timelines, see the [Official MDS Releases](https://github.com/openmobilityfoundation/governance/wiki/Releases) page.
+MDS has a **current release** (version 1.2.0), **previous releases** (both recommended and longer recommended for use), and **upcoming releases** in development. For a full list of releases, their status, recommended versions, and timelines, see the [Official MDS Releases](https://github.com/openmobilityfoundation/governance/wiki/Releases) page.
 
 The OMF provides guidance on upgrading for cities, providers, and software companies, and sample permit language for cities. See our [MDS Version Guidance](https://github.com/openmobilityfoundation/governance/blob/main/technical/OMF-MDS-Version-Guidance.md) for best practices on how and when to upgrade MDS as new versions become available. Our complimentary [MDS Policy Language Guidance](https://github.com/openmobilityfoundation/governance/blob/main/technical/OMF-MDS-Policy-Language-Guidance.md) document is for cities writing MDS into their operating policy and includes sample policy language.
 
@@ -133,10 +134,12 @@ The MDS specification is versioned using Git tags and [semantic versioning](http
 
 # Cities Using MDS
 
-More than 115 cities and public agencies around the world use MDS, and it has been implemented by most major [mobility service providers](#providers-using-mds).  
+More than 150 cities and public agencies across 6 continents around the world use MDS, and it has been implemented by most major [mobility service providers](#providers-using-mds).  
 - See our **[list of cities using MDS](https://www.openmobilityfoundation.org/mds-users/#cities-using-mds)** with links to public mobility websites and policy/permit documents.
 
 Please let us know [via our website](https://www.openmobilityfoundation.org/get-in-touch/) or in the [public discussion area](https://github.com/openmobilityfoundation/mobility-data-specification/discussions) if you are an agency using MDS so we can add you to the city resource list, especially if you have published your policies or documents publicly.
+
+To add yourself to the [agency list](/agencies.csv) and add your [Policy Requirement link](/provider.md#requirements), please let us know [via our website](https://www.openmobilityfoundation.org/get-in-touch/) or open an [Issue](https://github.com/openmobilityfoundation/mobility-data-specification/issues) or [Pull Request](https://github.com/openmobilityfoundation/mobility-data-specification/pulls). Find out how in our [Adding an Agency ID](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/Adding-an-MDS-Agency-ID) help document.
 
 [Top][toc]
 
@@ -146,7 +149,7 @@ Over two dozen mobility service providers (MSPs) around the world use MDS, allow
 
 - See our **[list of providers using MDS](https://www.openmobilityfoundation.org/mds-users/#mobility-providers-using-mds)**. For a table list with unique IDs, see the MDS [provider list](/providers.csv).
 
-To add yourself to the provider list, please let us know [via our website](https://www.openmobilityfoundation.org/get-in-touch/) or open an [Issue](https://github.com/openmobilityfoundation/mobility-data-specification/issues) or [Pull Request](https://github.com/openmobilityfoundation/mobility-data-specification/pulls).
+To add yourself to the provider list, please let us know [via our website](https://www.openmobilityfoundation.org/get-in-touch/) or open an [Issue](https://github.com/openmobilityfoundation/mobility-data-specification/issues) or [Pull Request](https://github.com/openmobilityfoundation/mobility-data-specification/pulls). Find out how in our [Adding an Provider ID](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/Adding-an-MDS-Provider-ID) help document.
 
 [Top][toc]
 
@@ -157,6 +160,22 @@ An open source approach to data specifications benefits cities and companies by 
 - See our **[list of third party software companies using MDS](https://www.openmobilityfoundation.org/mds-users/#software-companies-using-mds)** and an article about the [benefits of an open approach](https://www.openmobilityfoundation.org/why-open-behind-omfs-unique-open-source-model/). 
 
 Please [let us know](https://www.openmobilityfoundation.org/get-in-touch/) if you are using MDS in your company so we can add you to the list.
+
+[Top][toc]
+
+# Data Privacy
+
+MDS includes information about vehicles, their location, and trips taken on those vehicles to allow agencies to regulate their use in the public right of way and to conduct transportation planning and analysis. While MDS is not designed to convey personal information about the users of shared mobility services, data collected about mobility can be sensitive. The OMF and MDS community have created a number of resources to help cities, mobility providers, and software companies handle vehicle data safely:
+
+* [MDS Privacy Guide for Cities](https://github.com/openmobilityfoundation/governance/raw/main/documents/OMF-MDS-Privacy-Guide-for-Cities.pdf) - guide that covers essential privacy topics and best practices
+* [The Privacy Principles for Mobility Data](https://www.mobilitydataprivacyprinciples.org/) - principles endorsed by the OMF and other mobility organizations to guide the mobility ecosystem in the responsible use of data and the protection of individual privacy
+* [Mobility Data State of Practice](https://github.com/openmobilityfoundation/privacy-committee/blob/main/products/state-of-the-practice.md) -  real-world examples related to the handling and protection of MDS and other types of mobility data
+* [Understanding the Data in MDS](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/Understanding-the-Data-in-MDS) - technical document outlining what data is (and is not) in MDS
+* [Use Case Database](https://www.openmobilityfoundation.org/whats-possible-with-mds/) - a starting point for understanding how MDS can be used, and what parts of MDS is required to meet those use cases
+* [Policy Requirements](https://github.com/openmobilityfoundation/mobility-data-specification/tree/main/policy#requirement) - built into MDS, allowing agencies to specify only the endpoints and fields needed for program regulation
+* Using MDS Under GDPR (link coming soon) - how to use MDS in the context of GDPR in Europe
+
+The OMF’s [Privacy, Security, and Transparency Committee](https://github.com/openmobilityfoundation/privacy-committee#welcome-to-the-privacy-security-and-transparency-committee) creates many of these resources, and advises the OMF on principles and practices that ensure the secure handling of mobility data. The committee – which is composed of both private and public sector OMF members – also holds regular public meetings, which provide additional resources and an opportunity to discuss issues related to privacy and mobility data. Learn more [here](https://github.com/openmobilityfoundation/privacy-committee#welcome-to-the-privacy-security-and-transparency-committee).
 
 [Top][toc]
 
@@ -173,7 +192,7 @@ How cities use MDS depends on a variety of factors: their transportation goals, 
 
 A list of use cases is useful to show what's possible with MDS, to list what other cities are accomplishing with the data, to see many use cases up front for privacy considerations, and to use for policy discussions and policy language. More details and examples can be seen on the [OMF website](https://www.openmobilityfoundation.org/whats-possible-with-mds/) and our [Wiki Database](https://github.com/openmobilityfoundation/governance/wiki/MDS-Use-Cases).
 
-Please [let us know](https://www.openmobilityfoundation.org/get-in-touch/) if you have recommended updates or use cases to add.
+Please [let us know](https://docs.google.com/forms/d/e/1FAIpQLScrMPgeb1TKMYCjjKsJh3y1TPTJO8HR_y1NByrf1rDmTEJS7Q/viewform) if you have recommended updates or use cases to add.
 
 [Top][toc]
 

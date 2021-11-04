@@ -30,7 +30,7 @@
       "type": "number",
       "description": "Integer milliseconds since Unix epoch",
       "multipleOf": 1.0,
-      "minimum": 0
+      "minimum": 1514764800000
     },
     "vehicle_type": {
       "$id": "#/definitions/vehicle_type",
@@ -38,6 +38,7 @@
       "description": "The type of vehicle",
       "enum": [
         "bicycle",
+        "cargo_bicycle",
         "car",
         "scooter",
         "moped",
@@ -280,6 +281,7 @@
               "contains": {
                 "enum": [
                   "agency_pick_up",
+                  "comms_restored",
                   "compliance_pick_up",
                   "decommissioned",
                   "located",

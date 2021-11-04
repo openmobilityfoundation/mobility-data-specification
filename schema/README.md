@@ -7,10 +7,10 @@ This directory contains the templates and code that _generate_ the official JSON
 At a command prompt within this `schema` directory run:
 
 ```bash
-python generate_schemas.py [--agency] [--policy] [--provider]
+python generate_schemas.py [--agency] [--geography] [--policy] [--provider]
 ```
 
-The optional flags `--agency`, `--policy`, and `--provider` can be used to specify which
+The optional flags `--agency`, `--geography`, `--policy`, and `--provider` can be used to specify which
 set of schemas to generate. The default is to generate all schemas.
 
 ## Updating Schemas
