@@ -1,6 +1,6 @@
 ## 1.2.0
 
-> Release Candidate submitted 2021-09-29
+> Released: 2021-11-04
 
 > [Release Plan](https://github.com/openmobilityfoundation/governance/wiki/Release-1.2.0)
 
