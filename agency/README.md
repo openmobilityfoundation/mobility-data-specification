@@ -95,7 +95,7 @@ A vehicle record is as follows:
 | `propulsion_types`      | Enum[]          | Array of [Propulsion Type][propulsion-types]; allows multiple values                                 |
 | `year`                  | Integer         | Year Manufactured                                                                                    |
 | `mfgr`                  | String          | Vehicle Manufacturer                                                                                 |
-| `modality`              | Enum            | Modality the vehicle is operating under, see [Modalities][modalities]                                |
+| `mode`              | Enum            | Mode the vehicle is operating under, see [Modes][modes]                                |
 | `model`                 | String          | Vehicle Model                                                                                        |
 | `state`                 | Enum            | Current vehicle state. See [Vehicle State][vehicle-states]                                           |
 | `prev_events`           | Enum[]          | Last [Vehicle Event][vehicle-event]                                                                  |
@@ -124,7 +124,7 @@ Body Params:
 | `vehicle_type`          | Enum    | Required          | [Vehicle Type][vehicle-types]                                                      |
 | `propulsion_types`      | Enum[]  | Required          | Array of [Propulsion Type][propulsion-types]; allows multiple values               |
 | `provider_id`           | UUID    | Optional          | Provider to which the vehicle belongs if different from the authenticated provider |
-| `modality`              | Enum    | Required          | Modality the vehicle is operating under, see [Modalities][modalities]              |
+| `mode`              | Enum    | Required          | Mode the vehicle is operating under, see [Modes][modes]              |
 | `year`                  | Integer | Optional          | Year Manufactured                                                                  |
 | `mfgr`                  | String  | Optional          | Vehicle Manufacturer                                                               |
 | `model`                 | String  | Optional          | Vehicle Model                                                                      |
@@ -416,7 +416,7 @@ Payload which was POST'd
 [geography-driven-events]: /general-information.md#geography-driven-events
 [error-messages]: /general-information.md#error-messages
 [hdop]: https://en.wikipedia.org/wiki/Dilution_of_precision_(navigation)
-[modalities]: /general-information.md#modalities
+[modes]: /general-information.md#modes
 [propulsion-types]: /general-information.md#propulsion-types
 [responses]: /general-information.md#responses
 [stops]: /general-information.md#stops

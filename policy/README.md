@@ -294,7 +294,7 @@ An individual `Rule` object is defined by the following fields:
 | `propulsion_types` | `propulsion_type[]`         | Optional   | Applicable vehicle [propulsion types][propulsion-types], default "all". |
 | `minimum`          | integer                     | Optional   | Minimum value, if applicable (default 0) |
 | `maximum`          | integer                     | Optional   | Maximum value, if applicable (default unlimited) |
-| `modality`         | [Modality][modalities]      | Optional   | Modality this rule should apply to (default `micromobility` for backwards compatibility, this default will likely be removed in a subsequent MDS release) |
+| `mode`         | [Mode][modes]      | Optional   | Mode this rule should apply to (default `micromobility` for backwards compatibility, this default will likely be removed in a subsequent MDS release) |
 | `inclusive_minimum` | boolean                    | Optional   | Whether the rule `minimum` is considered in-bounds (default `true`) |
 | `inclusive_maximum` | boolean                    | Optional   | Whether the rule `maximum` is considered in-bounds (default `true`) |
 | `rate_amount`      | integer                     | Optional   | Amount of the rate (see [Rate Amounts](#rate-amounts)) |
@@ -729,4 +729,4 @@ You may also show which APIs, endpoints, and fields your agency is serving to pr
 [vehicle-states]: /general-information.md#vehicle-states
 [vehicle-types]: /general-information.md#vehicle-types
 [versioning]: /general-information.md#versioning
-[modalities]: /general-information.md#modalities
+[modes]: /general-information.md#modes
