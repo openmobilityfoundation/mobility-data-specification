@@ -264,9 +264,10 @@ An individual `Policy` object is defined by the following fields:
 
 | Name             | Type            | Required / Optional | Description                                                                         |
 | ---------------- | --------------- | ---------- | ----------------------------------------------------------------------------------- |
+| `mode`           | [Mode][modes]   | Optional   | Mode this rule should apply to (default `micromobility` for backwards compatibility, this default will likely be removed in a subsequent MDS release) |
 | `name`           | String          | Required   | Name of policy                                                                      |
 | `policy_id`      | UUID            | Required   | Unique ID of policy                                                                 |
-| `provider_ids`   | UUID[]          | Optional    | Providers for whom this policy is applicable; empty arrays and `null`/absent implies all Providers. See MDS [provider list](/providers.csv). |
+| `provider_ids`   | UUID[]          | Optional   | Providers for whom this policy is applicable; empty arrays and `null`/absent implies all Providers. See MDS [provider list](/providers.csv). |
 | `description`    | String          | Required   | Description of policy                                                               |
 | `currency`       | String          | Optional   | An ISO 4217 Alphabetic Currency Code representing the [currency](../general-information.md#costs-and-currencies) of all Rules of [type](#rule-types) `rate`.|
 | `start_date`     | [timestamp][ts] | Required   | Beginning date/time of policy enforcement. In order to give providers sufficient time to poll, `start_date` must be at least 20 minutes after `published_date`.                                           |
@@ -294,7 +295,6 @@ An individual `Rule` object is defined by the following fields:
 | `propulsion_types` | `propulsion_type[]`         | Optional   | Applicable vehicle [propulsion types][propulsion-types], default "all". |
 | `minimum`          | integer                     | Optional   | Minimum value, if applicable (default 0) |
 | `maximum`          | integer                     | Optional   | Maximum value, if applicable (default unlimited) |
-| `mode`         | [Mode][modes]      | Optional   | Mode this rule should apply to (default `micromobility` for backwards compatibility, this default will likely be removed in a subsequent MDS release) |
 | `inclusive_minimum` | boolean                    | Optional   | Whether the rule `minimum` is considered in-bounds (default `true`) |
 | `inclusive_maximum` | boolean                    | Optional   | Whether the rule `maximum` is considered in-bounds (default `true`) |
 | `rate_amount`      | integer                     | Optional   | Amount of the rate (see [Rate Amounts](#rate-amounts)) |
