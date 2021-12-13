@@ -570,7 +570,6 @@ If an unsupported or invalid version is requested, the API must respond with a s
 [toc]: #table-of-contents
 [ts]: /general-information.md#timestamps
 [wgs84]: https://en.wikipedia.org/wiki/World_Geodetic_System
-ral-information.md#stops
 [geo]: #geographic-data
 [geojson-feature]: https://tools.ietf.org/html/rfc7946#section-3.2
 [geojson-point]: https://tools.ietf.org/html/rfc7946#section-3.1.2
