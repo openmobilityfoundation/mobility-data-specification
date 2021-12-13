@@ -2,12 +2,14 @@
 
 ## Table of Contents
 
+- [Mobility Data Specification](#mobility-data-specification)
+  - [Table of Contents](#table-of-contents)
 - [About](#about)
 - [Endpoints](#endpoints)
   - [Modularity](#modularity)
   - [GBFS Requirement](#gbfs-requirement)
 - [Get Involved](#get-involved)
-  - [Membership](#membership)  
+  - [Membership](#membership)
 - [Versions](#versions)
   - [Technical Information](#technical-information)
 - [Cities Using MDS](#cities-using-mds)
