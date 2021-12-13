@@ -1,22 +1,131 @@
-## 1.0.0
+## 1.2.0
 
-> Release Date: TBD
+> Released: 2021-11-04
 
-> Release Candidate Date: week of June 29, 2020
+> [Release Plan](https://github.com/openmobilityfoundation/governance/wiki/Release-1.2.0)
 
-The 1.0.0 release reconciles many parts of the MDS specifiction and adds features and updates requested by the community, including support for Stops (for docked vehicles, dockless corrals, parking areas) and adding rates to Policy.
+The 1.2.0 minor release adds digital program Requirements, new options for policies, better GPS telemetry data, and moves Provider Vehicles out of beta. 
 
 ### CHANGES
 
-See the PRs tagged with [Milestone 1.0.0](https://github.com/openmobilityfoundation/mobility-data-specification/milestone/9) for a full list of changes.
+See the closed PRs tagged with [Milestone 1.2.0](https://github.com/openmobilityfoundation/mobility-data-specification/pulls?q=is%3Apr+is%3Aclosed+milestone%3A1.2.0) and [Issues](https://github.com/openmobilityfoundation/mobility-data-specification/issues?q=is%3Aissue+milestone%3A1.2.0+is%3Aclosed) for a full list of changes.
 
-_Here is some of what was added or changed._
+**_General MDS_**
+
+- [Richer telemetry data](https://github.com/openmobilityfoundation/mobility-data-specification/issues/589), including [616](https://github.com/openmobilityfoundation/mobility-data-specification/issues/616), [73](https://github.com/openmobilityfoundation/mobility-data-specification/pull/73), [51](https://github.com/openmobilityfoundation/mobility-data-specification/pull/51)
+- [Add cargo_bicycle vehicle type](https://github.com/openmobilityfoundation/mobility-data-specification/pull/698)
+
+**_Policy_**
+
+- [Program Requirements](https://github.com/openmobilityfoundation/mobility-data-specification/issues/646) - For agencies to describe program requirements digitally to allow providers and the public to see what MDS and GBFS versions, APIs, endpoints, and fields are required, and communicate available MDS agency information to providers.
+  - [Ability to express data sharing requirements in Policy](https://github.com/openmobilityfoundation/mobility-data-specification/issues/608) 
+  - [Method to Exclude some Provider Fields from Response](https://github.com/openmobilityfoundation/mobility-data-specification/issues/507)
+  - [Retrieve operational zones from operators](https://github.com/openmobilityfoundation/mobility-data-specification/issues/639)
+  - [Make Trip 'route' field optional for privacy](https://github.com/openmobilityfoundation/mobility-data-specification/issues/504)
+
+- [Multiple options added to Policy](https://github.com/openmobilityfoundation/mobility-data-specification/pull/658)
+   - [Add rate options to other rules types](https://github.com/openmobilityfoundation/mobility-data-specification/issues/633)
+   - [Support parking fees by duration](https://github.com/openmobilityfoundation/mobility-data-specification/issues/631)
+   - [Min and max clarity on Rules](https://github.com/openmobilityfoundation/mobility-data-specification/issues/689)
+   - [Add a "rate applies when" field to Rules](https://github.com/openmobilityfoundation/mobility-data-specification/issues/666)
+
+**_Provider_**
+
+- [Vehicles out of beta](https://github.com/openmobilityfoundation/mobility-data-specification/issues/637)
+- [Clarify use cases between MDS Vehicles and GBFS](https://github.com/openmobilityfoundation/mobility-data-specification/issues/641)
+
+_Minor Updates_
+
+- [Clarify single object response on policy/geography](https://github.com/openmobilityfoundation/mobility-data-specification/issues/599)
+- [Schema updates](https://github.com/openmobilityfoundation/mobility-data-specification/issues/693), including [645](https://github.com/openmobilityfoundation/mobility-data-specification/issues/645), [687](https://github.com/openmobilityfoundation/mobility-data-specification/issues/687), [683](https://github.com/openmobilityfoundation/mobility-data-specification/issues/683)
+- Add VeoRide, Boaz Bikes, and update Superpedestrian provider IDs
+
+## 1.1.1
+
+> Released: 2021-09-24 
+
+The 1.1.1 support release fixes the version validation for 1.1.0 in the JSON schema, and adds comms_restored to removed state. 
+
+### CHANGES
+
+- ["removed" missing "comms_restored" option in provider schemas](https://github.com/openmobilityfoundation/mobility-data-specification/issues/690)
+- [Version number is 1.0.x for 1.1.0 release](https://github.com/openmobilityfoundation/mobility-data-specification/issues/669)
+
+## 1.1.0
+
+> Released: 2021-03-30 
+
+> [Release Plan](https://github.com/openmobilityfoundation/governance/wiki/Release-1.1.0)
+
+The 1.1.0 minor release adds new top level APIs (geography, jurisdictions), privacy options (provider reports, geography-driven events, metrics), and transparency features (public endpoints). 
+
+### CHANGES
+
+See the closed PRs tagged with [Milestone 1.1.0](https://github.com/openmobilityfoundation/mobility-data-specification/pulls?q=is%3Apr+is%3Aclosed+milestone%3A1.1.0) and [Issues](https://github.com/openmobilityfoundation/mobility-data-specification/issues?q=is%3Aissue+milestone%3A1.1.0+is%3Aclosed) for a full list of changes.
+
+**_MDS_**
+
+- [Policy and Geography can be public](https://github.com/openmobilityfoundation/mobility-data-specification/pull/585)
+- [Geography-Driven Events](https://github.com/openmobilityfoundation/mobility-data-specification/pull/503): [Issue](https://github.com/openmobilityfoundation/mobility-data-specification/issues/480)
+   
+_Minor Updates_
+
+- [Unregistered error](https://github.com/openmobilityfoundation/mobility-data-specification/pull/565)
+- [Geography updates](https://github.com/openmobilityfoundation/mobility-data-specification/issues/474)
+- [Stops updates](https://github.com/openmobilityfoundation/mobility-data-specification/pull/603)
+- [Response time expectations](https://github.com/openmobilityfoundation/mobility-data-specification/pull/563)
+- [Geography publish date field consistency](https://github.com/openmobilityfoundation/mobility-data-specification/pull/597)
+- [Adding more cities using MDS](https://github.com/openmobilityfoundation/mobility-data-specification/pull/591)
+- [Adding more providers using MDS](https://github.com/openmobilityfoundation/mobility-data-specification/blob/dev/providers.csv)
+- [Added a section for third party software companies using MDS](https://github.com/openmobilityfoundation/mobility-data-specification/issues/552) and cleaned up home page, moving list content to the OMF website
+- [Update geography_json field type](https://github.com/openmobilityfoundation/mobility-data-specification/issues/635)
+
+**_Provider_**
+
+- [New Reports](https://github.com/openmobilityfoundation/mobility-data-specification/pull/607): [Issue](https://github.com/openmobilityfoundation/mobility-data-specification/issues/569)
+
+**_Agency_**
+
+- N/A
+
+**_Policy_**
+
+- [Images of Stops](https://github.com/openmobilityfoundation/mobility-data-specification/issues/555)
+- [Clarify update frequency](https://github.com/openmobilityfoundation/mobility-data-specification/pull/609): [Issue](https://github.com/openmobilityfoundation/mobility-data-specification/issues/567)
+
+**_Geography_**
+
+- [Elevating Geography to a first class API](https://github.com/openmobilityfoundation/mobility-data-specification/pull/582): [PR](https://github.com/openmobilityfoundation/mobility-data-specification/pull/499), [Issue](https://github.com/openmobilityfoundation/mobility-data-specification/issues/500)
+- [Geography Types](https://github.com/openmobilityfoundation/mobility-data-specification/pull/581): [Issue](https://github.com/openmobilityfoundation/mobility-data-specification/issues/580), [Discussion](https://github.com/openmobilityfoundation/mobility-data-specification/discussions/588)
+
+**_Metrics_**
+
+- [New Agency Metrics API](https://github.com/openmobilityfoundation/mobility-data-specification/issues/485): [Definitions PR](https://github.com/openmobilityfoundation/mobility-data-specification/pull/487), [Spec PR](https://github.com/openmobilityfoundation/mobility-data-specification/pull/486), [Issue](https://github.com/openmobilityfoundation/mobility-data-specification/issues/485)
+
+**_Jurisdiction_**
+
+- [New Jurisdiction API](https://github.com/openmobilityfoundation/mobility-data-specification/pull/593): [Issue](https://github.com/openmobilityfoundation/mobility-data-specification/issues/474)
+
+## 1.0.0
+
+> Released: 2020-09-16
+
+> [Release Plan](https://github.com/openmobilityfoundation/governance/wiki/Release-1.0.0)
+
+The 1.0.0 release reconciles and aligns many parts of the MDS specification and adds features and updates requested by the community, including many new detailed vehicle states and event types, support for Stops (for docked vehicles, dockless corrals, parking areas), and adding rates (fees/subsidies) to Policy.
+
+### CHANGES
+
+See the closed PRs tagged with [Milestone 1.0.0](https://github.com/openmobilityfoundation/mobility-data-specification/pulls?q=is%3Apr+is%3Aclosed+milestone%3A1.0.0) for a full list of changes.
 
 *_MDS_*
 
 * [Reconcile the Provider and Agency language differences](https://github.com/openmobilityfoundation/mobility-data-specification/pull/506)
   * [New State Machine Diagram](https://github.com/openmobilityfoundation/mobility-data-specification/pull/530)
   * [JSON Schema updates](https://github.com/openmobilityfoundation/mobility-data-specification/pull/534)
+  * [Add 'located' event_type](https://github.com/openmobilityfoundation/mobility-data-specification/pull/570)
+  * [Update Unknown/Unspecified transitions](https://github.com/openmobilityfoundation/mobility-data-specification/pull/558)
+  * [Add 'unspecified' events where needed](https://github.com/openmobilityfoundation/mobility-data-specification/pull/560)
 * [Adding Stops](https://github.com/openmobilityfoundation/mobility-data-specification/pull/427) - Beta
    
 * Minor Updates 
@@ -24,11 +133,12 @@ _Here is some of what was added or changed._
   * Update [Austin](https://github.com/openmobilityfoundation/mobility-data-specification/pull/488), [Louisville](https://github.com/openmobilityfoundation/mobility-data-specification/pull/515) links
   * [Add link to State of Practice](https://github.com/openmobilityfoundation/mobility-data-specification/pull/477)
   * [Update GBFS references and links](https://github.com/openmobilityfoundation/mobility-data-specification/pull/508)
-  * Move [Code of Conduct](https://github.com/openmobilityfoundation/mobility-data-specification/pull/514), [Contributing Guide](https://github.com/openmobilityfoundation/mobility-data-specification/pull/513), and [Release Guidelines](https://github.com/openmobilityfoundation/mobility-data-specification/pull/512) to new [Governace repo](https://github.com/openmobilityfoundation/governance)
+  * Move [Code of Conduct](https://github.com/openmobilityfoundation/mobility-data-specification/pull/514), [Contributing Guide](https://github.com/openmobilityfoundation/mobility-data-specification/pull/513), and [Release Guidelines](https://github.com/openmobilityfoundation/mobility-data-specification/pull/512) to new [Governance repo](https://github.com/openmobilityfoundation/governance)
    * [Updating 'master' to 'main' as default branch name](https://github.com/openmobilityfoundation/mobility-data-specification/pull/522)
-   * [Update providers.csv to add Superpedestrian](https://github.com/openmobilityfoundation/mobility-data-specification/pull/535)
+   * [Add Superpedestrian to providers.csv](https://github.com/openmobilityfoundation/mobility-data-specification/pull/535)
+   * [Add Circ to providers.csv](https://github.com/openmobilityfoundation/mobility-data-specification/pull/553)
    * [Removed Options version negotiation](https://github.com/openmobilityfoundation/mobility-data-specification/pull/536#pullrequestreview-439364663)
-   * [Added 'other' vechicle type](https://github.com/openmobilityfoundation/mobility-data-specification/issues/518)
+   * [Added 'other' vehicle type](https://github.com/openmobilityfoundation/mobility-data-specification/issues/518)
 
 *_Provider_*
 
@@ -46,6 +156,7 @@ _Here is some of what was added or changed._
 * [Add Rates (fees + subsidies)](https://github.com/openmobilityfoundation/mobility-data-specification/pull/484)
 * [Rearrange Speed Limit Example](https://github.com/openmobilityfoundation/mobility-data-specification/pull/482)
 * [Added Geography schema](https://github.com/openmobilityfoundation/mobility-data-specification/pull/533)
+* [Add Policy JSON Schema](https://github.com/openmobilityfoundation/mobility-data-specification/pull/576)
 
 ## 0.4.1
 

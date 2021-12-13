@@ -1,0 +1,55 @@
+{
+  "updated": 0,
+  "version": "1.2.0",
+  "data": {
+    "policies": [
+      {
+        "policy_id": "a2c9a65f-fd85-463e-9564-fc95ea473f7d",
+        "name": "Idle Times",
+        "description": "LADOT Idle Time Limitations",
+        "start_date": 1552678594428,
+        "end_date": null,
+        "published_date": 1558389669540,
+        "prev_policies": null,
+        "rules": [
+          {
+            "name": "Greater LA (rentable)",
+            "rule_id": "e1942f2d-e5c7-46c4-94c7-293d4e481ed0",
+            "rule_type": "time",
+            "rule_units": "hours",
+            "geographies": [
+              "b4bcc213-4888-48ce-a33d-4dd6c3384bda"
+            ],
+            "states": {
+              "available": [],
+              "reserved": []
+            },
+            "vehicle_types": [
+              "bicycle",
+              "scooter"
+            ],
+            "maximum": 72
+          },
+          {
+            "name": "Greater LA (non-rentable)",
+            "rule_id": "a7eb28b9-969e-4c52-b18c-4243a96f7143",
+            "rule_type": "time",
+            "rule_units": "hours",
+            "geographies": [
+              "12b3fcf5-22af-4b0d-a169-ac7ac903d3b9"
+            ],
+            "states": {
+              "non_operational": [],
+              "on_trip": []
+            },
+            "vehicle_types": [
+              "bicycle",
+              "scooter"
+            ],
+            "maximum": 24
+          }
+        ]
+      }
+    ]
+  }
+}

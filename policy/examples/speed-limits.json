@@ -1,0 +1,63 @@
+{
+  "updated": 0,
+  "version": "1.2.0",
+  "data": {
+    "policies": [
+      {
+        "policy_id": "95645117-fd85-463e-a2c9-fc95ea47463e",
+        "name": "Speed Limits",
+        "description": "LADOT Pilot Speed Limit Limitations",
+        "start_date": 1552678594428,
+        "end_date": null,
+        "published_date": 1552678594428,
+        "prev_policies": null,
+        "rules": [
+          {
+            "name": "Venice Beach on weekend afternoons",
+            "rule_id": "d4c0f42f-3f79-4eb4-850a-430b9701d5cf",
+            "rule_type": "speed",
+            "rule_units": "mph",
+            "geographies": [
+              "ec551174-f324-4251-bfed-28d9f3f473fc"
+            ],
+            "states": {
+              "on_trip": []
+            },
+            "vehicle_types": [
+              "bicycle",
+              "scooter"
+            ],
+            "days": [
+              "sat",
+              "sun"
+            ],
+            "start_time": "12:00:00",
+            "end_time": "23:59:59",
+            "maximum": 10,
+            "messages": {
+              "en-US": "Remember to stay under 10 MPH on Venice Beach on weekends!",
+              "es-US": "¡Recuerda permanecer menos de 10 millas por hora en Venice Beach los fines de semana!"
+            }
+          },
+          {
+            "name": "Greater LA",
+            "rule_id": "529b6cd7-0e0d-4439-babf-c5908a664ecf",
+            "rule_type": "speed",
+            "rule_units": "mph",
+            "geographies": [
+              "b4bcc213-4888-48ce-a33d-4dd6c3384bda"
+            ],
+            "states": {
+              "on_trip": []
+            },
+            "vehicle_types": [
+              "bicycle",
+              "scooter"
+            ],
+            "maximum": 15
+          }
+        ]
+      }
+    ]
+  }
+}

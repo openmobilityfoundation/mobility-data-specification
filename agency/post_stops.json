@@ -47,7 +47,7 @@
         "capacity": {
           "$id": "#/definitions/stop/properties/capacity",
           "$ref": "#/definitions/vehicle_type_counts",
-          "description": "Number of total spaces per vehicle_type"
+          "description": "Number of total places per vehicle_type"
         },
         "num_vehicles_available": {
           "$id": "#/definitions/stop/properties/num_vehicles_available",
@@ -94,15 +94,15 @@
           "$ref": "#/definitions/string",
           "description": "Cross street of where Stop is located"
         },
-        "num_spaces_available": {
-          "$id": "#/definitions/stop/properties/num_spaces_available",
+        "num_places_available": {
+          "$id": "#/definitions/stop/properties/num_places_available",
           "$ref": "#/definitions/vehicle_type_counts",
-          "description": "Number of spaces free to be populated per vehicle_type"
+          "description": "Number of places free to be populated per vehicle_type"
         },
-        "num_spaces_disabled": {
-          "$id": "#/definitions/stop/properties/num_spaces_disabled",
+        "num_places_disabled": {
+          "$id": "#/definitions/stop/properties/num_places_disabled",
           "$ref": "#/definitions/vehicle_type_counts",
-          "description": "Number of spaces disabled an unable to accept vehicles per vehicle_type"
+          "description": "Number of places disabled an unable to accept vehicles per vehicle_type"
         },
         "parent_stop": {
           "$id": "#/definitions/stop/properties/parent_stop",
@@ -111,11 +111,8 @@
         },
         "devices": {
           "$id": "#/definitions/stop/properties/devices",
-          "type": "array",
-          "description": "List of device_id for vehicles currently at this Stop.",
-          "items": {
-            "$ref": "#/definitions/uuid"
-          }
+          "$ref": "#/definitions/uuid_array",
+          "description": "List of device_id for vehicles currently at this Stop."
         }
       }
     },
@@ -159,7 +156,7 @@
       "type": "number",
       "description": "Integer milliseconds since Unix epoch",
       "multipleOf": 1.0,
-      "minimum": 0
+      "minimum": 1514764800000
     },
     "uuid": {
       "$id": "#/definitions/uuid",
@@ -171,12 +168,26 @@
       ],
       "pattern": "^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$"
     },
+    "uuid_array": {
+      "$id": "#/definitions/uuid_array",
+      "type": "array",
+      "description": "Array of UUID",
+      "items": {
+        "$id": "#/definitions/uuid_array/items",
+        "$ref": "#/definitions/uuid"
+      }
+    },
     "vehicle_type_counts": {
       "$id": "#/definitions/vehicle_type_counts",
       "type": "object",
       "properties": {
         "bicycle": {
           "$id": "#/definitions/vehicle_type_counts/properties/bicycle",
+          "type": "integer",
+          "minimum": 0
+        },
+        "cargo_bicycle": {
+          "$id": "#/definitions/vehicle_type_counts/properties/cargo_bicycle",
           "type": "integer",
           "minimum": 0
         },
@@ -219,6 +230,16 @@
             "Feature"
           ]
         },
+        "id": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
         "properties": {
           "type": "object",
           "required": [
@@ -230,6 +251,30 @@
             },
             "stop_id": {
               "$ref": "#/definitions/uuid"
+            },
+            "altitude": {
+              "type": "number",
+              "description": "Altitude above mean sea level in meters"
+            },
+            "heading": {
+              "type": "number",
+              "description": "Degrees - clockwise starting at 0 degrees at true North"
+            },
+            "speed": {
+              "type": "number",
+              "description": "Estimated speed in meters / sec as reported by the GPS chipset"
+            },
+            "accuracy": {
+              "type": "number",
+              "description": "Horizontal accuracy, in meters"
+            },
+            "hdop": {
+              "type": "number",
+              "description": "Horizontal GPS or GNSS accuracy value"
+            },
+            "satellites": {
+              "type": "integer",
+              "description": "Number of GPS or GNSS satellites"
             }
           }
         },

@@ -1,0 +1,62 @@
+{
+  "updated": 0,
+  "version": "1.2.0",
+  "data": {
+    "policies": [
+      {
+        "name": "Test City Mobility Caps: Company X",
+        "description": "Mobility caps as described in the One-Year Permit",
+        "policy_id": "99f7a469-6e3a-4981-9313-c2f6c0bbd5ce",
+        "provider_ids": [
+          "2411d395-04f2-47c9-ab66-d09e9e3c3251"
+        ],
+        "start_date": 1558389669540,
+        "end_date": null,
+        "published_date": 1558389669540,
+        "prev_policies": null,
+        "rules": [
+          {
+            "name": "Disadvantaged Community",
+            "rule_id": "8a61de66-d9fa-4cba-a38d-5d948e2373fe",
+            "rule_type": "count",
+            "rule_units": "devices",
+            "geographies": [
+              "e3ed0a0e-61d3-4887-8b6a-4af4f3769c14"
+            ],
+            "states": {
+              "available": [],
+              "non_operational": [],
+              "reserved": [],
+              "on_trip": []
+            },
+            "vehicle_types": [
+              "bicycle",
+              "scooter"
+            ],
+            "maximum": 10000
+          },
+          {
+            "name": "Not Disadvantaged Communities",
+            "rule_id": "57d47e74-6aef-4f41-b0c5-79bb35aa5b9d",
+            "rule_type": "count",
+            "rule_units": "devices",
+            "geographies": [
+              "1f943d59-ccc9-4d91-b6e2-0c5e771cbc49"
+            ],
+            "states": {
+              "available": [],
+              "non_operational": [],
+              "reserved": [],
+              "on_trip": []
+            },
+            "vehicle_types": [
+              "bicycle",
+              "scooter"
+            ],
+            "maximum": 3000
+          }
+        ]
+      }
+    ]
+  }
+}

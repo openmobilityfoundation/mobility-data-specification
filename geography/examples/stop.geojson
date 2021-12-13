@@ -1,0 +1,129 @@
+{
+  "type": "FeatureCollection",
+  "name": "stop",
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+    }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 1
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.72414507,
+          38.24042011
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 2
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.72437939,
+          38.24011916
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 3
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.72069195,
+          38.23832865
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 4
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.71587376,
+          38.23551889
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 5
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.70957051,
+          38.23219427
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 6
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.70925854,
+          38.23187126
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 7
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.70439811,
+          38.23076038
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 8
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.70500586,
+          38.23066181
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 9
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -85.69432105,
+          38.22454108
+        ]
+      }
+    }
+  ]
+}

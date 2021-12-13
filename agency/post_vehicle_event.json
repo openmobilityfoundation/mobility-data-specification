@@ -4,10 +4,27 @@
   "title": "The MDS Agency Schema, POST vehicle status body",
   "type": "object",
   "definitions": {
-    "telemetry": {
-      "$id": "#/definitions/telemetry",
+    "timestamp": {
+      "$id": "#/definitions/timestamp",
+      "type": "number",
+      "description": "Integer milliseconds since Unix epoch",
+      "multipleOf": 1.0,
+      "minimum": 1514764800000
+    },
+    "uuid": {
+      "$id": "#/definitions/uuid",
+      "type": "string",
+      "description": "A UUID used to uniquely identifty an object",
+      "default": "",
+      "examples": [
+        "3c9604d6-b5ee-11e8-96f8-529269fb1459"
+      ],
+      "pattern": "^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$"
+    },
+    "vehicle_telemetry": {
+      "$id": "#/definitions/vehicle_telemetry",
       "type": "object",
-      "description": "A vehicle telemetry datum",
+      "description": "A telemetry datum for a specific vehicle at a specific time",
       "required": [
         "device_id",
         "timestamp",
@@ -47,15 +64,15 @@
             },
             "heading": {
               "type": "number",
-              "description": "Degrees clockwise from true north"
+              "description": "Degrees - clockwise starting at 0 degrees at true North"
             },
             "speed": {
               "type": "number",
-              "description": "Speed in meters/sec"
+              "description": "Estimated speed in meters / sec as reported by the GPS chipset"
             },
             "accuracy": {
               "type": "number",
-              "description": "Accuracy in meters"
+              "description": "Horizontal accuracy, in meters"
             },
             "hdop": {
               "type": "number",
@@ -69,28 +86,11 @@
         },
         "charge": {
           "type": "number",
-          "description": "Fraction of charge of the vehicle (required if applicable",
+          "description": "Fraction of charge of the vehicle (required if applicable)",
           "minimum": 0,
           "maximum": 1
         }
       }
-    },
-    "timestamp": {
-      "$id": "#/definitions/timestamp",
-      "type": "number",
-      "description": "Integer milliseconds since Unix epoch",
-      "multipleOf": 1.0,
-      "minimum": 0
-    },
-    "uuid": {
-      "$id": "#/definitions/uuid",
-      "type": "string",
-      "description": "A UUID used to uniquely identifty an object",
-      "default": "",
-      "examples": [
-        "3c9604d6-b5ee-11e8-96f8-529269fb1459"
-      ],
-      "pattern": "^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$"
     },
     "vehicle_state": {
       "$id": "#/definitions/vehicle_state",
@@ -119,6 +119,7 @@
         "comms_restored",
         "compliance_pick_up",
         "decommissioned",
+        "located",
         "maintenance",
         "maintenance_pick_up",
         "missing",
@@ -166,7 +167,7 @@
       "$ref": "#/definitions/timestamp"
     },
     "telemetry": {
-      "$ref": "#/definitions/telemetry"
+      "$ref": "#/definitions/vehicle_telemetry"
     },
     "trip_id": {
       "$ref": "#/definitions/uuid"
@@ -188,6 +189,7 @@
                   "agency_drop_off",
                   "battery_charged",
                   "comms_restored",
+                  "located",
                   "maintenance",
                   "on_hours",
                   "provider_drop_off",
@@ -210,7 +212,9 @@
               "contains": {
                 "enum": [
                   "comms_restored",
-                  "trip_leave_jurisdiction"
+                  "located",
+                  "trip_leave_jurisdiction",
+                  "unspecified"
                 ]
               }
             }
@@ -226,6 +230,7 @@
                 "enum": [
                   "battery_low",
                   "comms_restored",
+                  "located",
                   "maintenance",
                   "off_hours",
                   "system_suspend",
@@ -244,8 +249,10 @@
               "contains": {
                 "enum": [
                   "comms_restored",
+                  "located",
                   "trip_enter_jurisdiction",
-                  "trip_start"
+                  "trip_start",
+                  "unspecified"
                 ]
               }
             }
@@ -260,8 +267,10 @@
               "contains": {
                 "enum": [
                   "agency_pick_up",
+                  "comms_restored",
                   "compliance_pick_up",
                   "decommissioned",
+                  "located",
                   "maintenance_pick_up",
                   "rebalance_pick_up",
                   "unspecified"
@@ -279,7 +288,9 @@
               "contains": {
                 "enum": [
                   "comms_restored",
-                  "reservation_start"
+                  "located",
+                  "reservation_start",
+                  "unspecified"
                 ]
               }
             }

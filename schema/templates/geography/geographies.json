@@ -1,0 +1,35 @@
+{
+  "$id": "https://raw.githubusercontent.com/openmobilityfoundation/mobility-data-specification/main/geography/geographies.json",
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "title": "The MDS Geographies Schema",
+  "type": "object",
+  "definitions": {
+  },
+  "required": [
+    "geographies",
+    "updated",
+    "version"
+  ],
+  "properties": {
+    "geographies": {
+      "$id": "#/properties/geographies",
+      "type": "array",
+      "title": "The array of policy objects in this payload",
+      "items": {
+        "$id": "#/properties/geographies/items",
+        "$ref": "#/definitions/geography"
+      }
+    },
+    "updated": {
+      "$id": "#/properties/updated",
+      "$ref": "#/definitions/timestamp",
+      "description": "The timestamp when geographies was last updated"
+    },
+    "version": {
+      "$id": "#/properties/version",
+      "$ref": "#/definitions/version",
+      "description": "The version of MDS that the geographies represents"
+    }
+  },
+  "additionalProperties": false
+}

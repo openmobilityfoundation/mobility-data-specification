@@ -20,7 +20,7 @@
       "type": "number",
       "description": "Integer milliseconds since Unix epoch",
       "multipleOf": 1.0,
-      "minimum": 0
+      "minimum": 1514764800000
     },
     "uuid": {
       "$id": "#/definitions/uuid",
@@ -37,9 +37,85 @@
       "type": "string",
       "description": "The version of MDS this data represents",
       "examples": [
-        "1.0.0"
+        "1.2.0"
       ],
-      "pattern": "^1\\.0\\.[0-9]+$"
+      "pattern": "^1\\.2\\.[0-9]+$"
+    },
+    "MDS_Feature_Point": {
+      "$id": "#/definitions/MDS_Feature_Point",
+      "title": "MDS GeoJSON Feature Point",
+      "type": "object",
+      "required": [
+        "type",
+        "properties",
+        "geometry"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "Feature"
+          ]
+        },
+        "id": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "properties": {
+          "type": "object",
+          "required": [
+            "timestamp"
+          ],
+          "properties": {
+            "timestamp": {
+              "$ref": "#/definitions/timestamp"
+            },
+            "stop_id": {
+              "$ref": "#/definitions/uuid"
+            },
+            "altitude": {
+              "type": "number",
+              "description": "Altitude above mean sea level in meters"
+            },
+            "heading": {
+              "type": "number",
+              "description": "Degrees - clockwise starting at 0 degrees at true North"
+            },
+            "speed": {
+              "type": "number",
+              "description": "Estimated speed in meters / sec as reported by the GPS chipset"
+            },
+            "accuracy": {
+              "type": "number",
+              "description": "Horizontal accuracy, in meters"
+            },
+            "hdop": {
+              "type": "number",
+              "description": "Horizontal GPS or GNSS accuracy value"
+            },
+            "satellites": {
+              "type": "integer",
+              "description": "Number of GPS or GNSS satellites"
+            }
+          }
+        },
+        "geometry": {
+          "$ref": "#/definitions/Point"
+        },
+        "bbox": {
+          "type": "array",
+          "minItems": 4,
+          "items": {
+            "type": "number"
+          }
+        }
+      }
     },
     "Point": {
       "$id": "#/definitions/Point",
@@ -82,47 +158,20 @@
         }
       }
     },
-    "MDS_Feature_Point": {
-      "$id": "#/definitions/MDS_Feature_Point",
-      "title": "MDS GeoJSON Feature Point",
-      "type": "object",
-      "required": [
-        "type",
-        "properties",
-        "geometry"
+    "currency": {
+      "$id": "#/definitions/currency",
+      "type": [
+        "string",
+        "null"
       ],
-      "properties": {
-        "type": {
-          "type": "string",
-          "enum": [
-            "Feature"
-          ]
-        },
-        "properties": {
-          "type": "object",
-          "required": [
-            "timestamp"
-          ],
-          "properties": {
-            "timestamp": {
-              "$ref": "#/definitions/timestamp"
-            },
-            "stop_id": {
-              "$ref": "#/definitions/uuid"
-            }
-          }
-        },
-        "geometry": {
-          "$ref": "#/definitions/Point"
-        },
-        "bbox": {
-          "type": "array",
-          "minItems": 4,
-          "items": {
-            "type": "number"
-          }
-        }
-      }
+      "pattern": "^[A-Z]{3}$",
+      "default": "USD",
+      "description": "An ISO 4217 Alphabetic Currency Code representing currency of the payee. If null, USD cents is implied.",
+      "examples": [
+        "USD",
+        "EUR",
+        "GBP"
+      ]
     },
     "MDS_FeatureCollection_Route": {
       "$id": "#/definitions/MDS_FeatureCollection_Route",
@@ -155,21 +204,26 @@
         }
       }
     },
+    "propulsion_type": {
+      "$id": "#/definitions/propulsion_type",
+      "type": "string",
+      "description": "The type of propulsion",
+      "enum": [
+        "combustion",
+        "electric",
+        "electric_assist",
+        "human"
+      ]
+    },
     "propulsion_types": {
       "$id": "#/definitions/propulsion_types",
       "type": "array",
-      "description": "The type of propulsion; allows multiple values",
+      "description": "Array of propulsion types, allowing multiple values",
       "items": {
-        "type": "string",
-        "enum": [
-          "combustion",
-          "electric",
-          "electric_assist",
-          "human"
-        ]
+        "$id": "#/definitions/propulsion_types/items",
+        "$ref": "#/definitions/propulsion_type"
       },
-      "uniqueItems": true,
-      "minItems": 1
+      "uniqueItems": true
     },
     "vehicle_type": {
       "$id": "#/definitions/vehicle_type",
@@ -177,6 +231,7 @@
       "description": "The type of vehicle",
       "enum": [
         "bicycle",
+        "cargo_bicycle",
         "car",
         "scooter",
         "moped",
@@ -250,7 +305,8 @@
               "propulsion_types": {
                 "$id": "#/definitions/vehicle/properties/propulsion_types",
                 "$ref": "#/definitions/propulsion_types",
-                "description": "The type of propulsion; allows multiple values"
+                "description": "The type of propulsion; allows multiple values",
+                "minItems": 1
               },
               "trip_id": {
                 "$id": "#/properties/data/properties/trips/items/properties/trip_id",
@@ -340,18 +396,7 @@
               },
               "currency": {
                 "$id": "#/properties/data/properties/trips/items/properties/currency",
-                "type": [
-                  "string",
-                  "null"
-                ],
-                "pattern": "^[A-Z]{3}$",
-                "default": "USD",
-                "description": "An ISO 4217 Alphabetic Currency Code representing the currency of the payee. If null, USD cents is implied.",
-                "examples": [
-                  "USD",
-                  "EUR",
-                  "GBP"
-                ]
+                "$ref": "#/definitions/currency"
               }
             }
           }

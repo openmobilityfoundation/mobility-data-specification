@@ -1,0 +1,43 @@
+{
+  "updated": 0,
+  "version": "1.2.0",
+  "data": {
+    "policies": [
+      {
+        "policy_id": "6a3dd008-836a-11ea-bc55-0242ac130003",
+        "published_date": 1586736000000,
+        "name": "Parking Fees",
+        "description": "This policy sets a 10 cent per hour metered parking charge that is applied while a vehicle is parked in a congested area during rush hour.",
+        "start_date": 1586822400000,
+        "end_date": 1587427200000,
+        "prev_policies": null,
+        "rules": [
+          {
+            "rule_id": "0da40491-73eb-418f-9b3c-cf5f150775e8",
+            "name": "Downtown Peak-Hour Parking Fee",
+            "rule_type": "rate",
+            "rate_amount": 10,
+            "rate_recurrence": "per_complete_time_unit",
+            "rule_units": "hours",
+            "geographies": [
+              "5473e836-b38a-4940-8b5e-0d506ca4e4a8"
+            ],
+            "days": [
+              "mon",
+              "tue",
+              "wed",
+              "thu",
+              "fri"
+            ],
+            "start_time": "07:00:00",
+            "end_time": "08:30:00",
+            "states": {
+              "available": [],
+              "non_operational": []
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

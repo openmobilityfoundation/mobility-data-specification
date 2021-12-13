@@ -1,6 +1,10 @@
 # Mobility Data Specification: **Agency**
 
-This specification contains a collection of RESTful APIs used to specify the digital relationship between *mobility as a service* Providers and the Agencies that regulate them.
+<a href="/agency/"><img src="https://i.imgur.com/HzMWtaI.png" width="120" align="right" alt="MDS Agency Icon" border="0"></a>
+
+The Agency API endpoints are intended to be implemented by regulatory agencies and consumed by mobility providers. Providers query the Agency API when events (such as a trip start or vehicle status change) occur in their systems.
+
+This specification contains a collection of RESTful APIs used to specify the digital relationship between *mobility as a service* providers and the agencies that regulate them.
 
 ## Table of Contents
 
@@ -195,6 +199,7 @@ Body Params:
 | `event_types`   | Enum[]                       | Required               | see [Micromobility Vehicle Events][mm-vehicle-events] and [Taxi Vehicle Events][taxi-vehicle-events]       |
 | `timestamp`     | [timestamp][ts]              | Required               | Date of last event update                                                                                  |
 | `telemetry`     | [Telemetry](#telemetry-data) | Required               | Single point of telemetry                                                                                  |
+| `event_geographies`  | UUID[] | Optional        | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.1.0)*. Array of Geography UUIDs consisting of every Geography that contains the location of the event. See [Geography Driven Events][geography-driven-events]. Required if `telemetry` is not present. |
 | `trip_id`       | UUID                         | Conditionally required | UUID provided by Operator to uniquely identify the trip. See [trip_id requirements](#trip_id-requirements) |
 
 201 Success Response:
@@ -239,16 +244,17 @@ Body Params:
 | Field      | Type                           | Field Description                                                                                       |
 | ---------- | ------------------------------ | ------------------------------------------------------------------------------------------------------- |
 | `success`  | Integer                        | Number of successfully written telemetry data points.                                                   |
-| `total`    | Integer                        | Ttotal number of provided points.                                                                       |
+| `total`    | Integer                        | Total number of provided points.                                                                       |
 | `failures` | [Telemetry](#telemetry-data)[] | Array of failed telemetry for zero or more vehicles (empty if all successful).                          |
 
 400 Failure Response:
 
-| `error`         | `error_description`                  | `error_details`[]               |
-| --------------- | ------------------------------------ | ------------------------------- |
-| `bad_param`     | A validation error occurred.         | Array of parameters with errors |
-| `invalid_data`  | None of the provided data was valid. |                                 |
-| `missing_param` | A required parameter is missing.     | Array of missing parameters     |
+| `error`         | `error_description`                  | `error_details`[]                 |
+| --------------- | ------------------------------------ | --------------------------------- |
+| `bad_param`     | A validation error occurred.         | Array of parameters with errors   |
+| `invalid_data`  | None of the provided data was valid. |                                   |
+| `missing_param` | A required parameter is missing.     | Array of missing parameters       |
+| `unregistered`  | Some of the devices are unregistered | Array of unregistered `device_id` |
 
 [Top][toc]
 
@@ -259,14 +265,14 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | Field          | Type           | Required/Optional     | Field Description                                            |
 | -------------- | -------------- | --------------------- | ------------------------------------------------------------ |
 | `device_id`    | UUID           | Required              | ID used in [Register](#vehicle---register)                     |
-| `timestamp`    | [timestamp][ts]      | Required              | Date/time that event occurred. Based on GPS or GNSS clock            |
+| `timestamp`    | [timestamp][ts]| Required              | Date/time that event occurred. Based on GPS or GNSS clock            |
 | `gps`          | Object         | Required              | Telemetry position data                                      |
 | `gps.lat`      | Double         | Required              | Latitude of the location                                     |
 | `gps.lng`      | Double         | Required              | Longitude of the location                                    |
 | `gps.altitude` | Double         | Required if Available | Altitude above mean sea level in meters                      |
 | `gps.heading`  | Double         | Required if Available | Degrees - clockwise starting at 0 degrees at true North      |
-| `gps.speed`    | Float          | Required if Available | Speed in meters / sec                                        |
-| `gps.accuracy` | Float          | Required if Available | Accuracy in meters                                           |
+| `gps.speed`    | Float          | Required if Available | Estimated speed in meters / sec as reported by the GPS chipset                                        |
+| `gps.accuracy` | Float          | Required if Available | Horizontal accuracy, in meters                                           |
 | `gps.hdop`     | Float          | Required if Available | Horizontal GPS or GNSS accuracy value (see [hdop][hdop]) |
 | `gps.satellites` | Integer      | Required if Available | Number of GPS or GNSS satellites
 | `charge`       | Float          | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 1 |
@@ -280,7 +286,7 @@ The `/stops` endpoint allows an agency to register city-managed Stops, or a prov
 
 **Endpoint:** `/stops`  
 **Method:** `POST`  
-**[Beta feature][beta]:** Yes (as of 1.0.0)  
+**[Beta feature][beta]:** Yes (as of 1.0.0). [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/638)    
 **Request Body**: An array of [Stops][stops]
 
 201 Success Response:
@@ -302,7 +308,7 @@ _No content returned on success._
 
 **Endpoint:** `/stops`  
 **Method:** `PUT`  
-**[Beta feature][beta]:** Yes (as of 1.0.0)  
+**[Beta feature][beta]:** Yes (as of 1.0.0). [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/638)  
 **Request Body**: An array of subsets of [Stop][stops] information, where the permitted subset fields are defined as:
 
 | Field               | Required/Optional | Description                                 |
@@ -328,7 +334,7 @@ _No content returned if no vehicle matching `stop_id` is found._
 
 **Endpoint:** `/stops/:stop_id`  
 **Method:** `GET`  
-**[Beta feature][beta]:** Yes (as of 1.0.0)  
+**[Beta feature][beta]:** Yes (as of 1.0.0). [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/638)  
 **Payload:** `{ "stops": [] }`, an array of [Stops][stops]
 
 Path Params:
@@ -407,8 +413,9 @@ Payload which was POST'd
 [accessibility-options]: /general-information.md#accessibility-options
 [beta]: /general-information.md#beta-features
 [general]: /general-information.md
+[geography-driven-events]: /general-information.md#geography-driven-events
 [error-messages]: /general-information.md#error-messages
-[hdop]: https://support.esri.com/en/other-resources/gis-dictionary/term/358112bd-b61c-4081-9679-4fca9e3eb926
+[hdop]: https://en.wikipedia.org/wiki/Dilution_of_precision_(navigation)
 [modalities]: /general-information.md#modalities
 [propulsion-types]: /general-information.md#propulsion-types
 [responses]: /general-information.md#responses

@@ -1,0 +1,40 @@
+{
+  "updated": 0,
+  "version": "1.2.0",
+  "data": {
+    "policies": [
+      {
+        "policy_id": "39a653be-7180-4188-b1a6-cae33c280341",
+        "name": "Prohibited Dockless Zones",
+        "description": "Prohibited areas for dockless vehicles within the City of Los Angeles for the LADOT Dockless On-Demand Personal Mobility Program",
+        "provider_ids": null,
+        "start_date": 1552678594428,
+        "end_date": null,
+        "published_date": 1552678594428,
+        "prev_policies": null,
+        "rules": [
+          {
+            "name": "Prohibited Dockless Zones",
+            "rule_id": "8ad39dc3-005b-4348-9d61-c830c54c161b",
+            "rule_type": "count",
+            "rule_units": "devices",
+            "geographies": [
+              "c0591267-bb6a-4f28-a612-ff7f4a8f8b2a"
+            ],
+            "states": {
+              "available": [],
+              "non_operational": [],
+              "reserved": [],
+              "on_trip": []
+            },
+            "vehicle_types": [
+              "bicycle",
+              "scooter"
+            ],
+            "maximum": 0
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "updated": 0,
+  "version": "1.2.0",
+  "data": {
+    "policies": [
+      {
+        "policy_id": "d2567b3c-3071-48a6-bbeb-3424721dbd12",
+        "published_date": 1586736000000,
+        "name": "Trip Fees",
+        "description": "This policy sets a 25 cent per-trip fee that is applied for trips that start in the municipal boundary.",
+        "start_date": 1586822400000,
+        "end_date": 1587427200000,
+        "prev_policies": null,
+        "rules": [
+          {
+            "name": "City Wide Trip Fee",
+            "rule_id": "4137a47c-836a-11ea-bc55-0242ac130003",
+            "rule_type": "rate",
+            "rule_units": "amount",
+            "rate_amount": 25,
+            "rate_recurrence": "once",
+            "geographies": [
+              "b4bcc213-4888-48ce-a33d-4dd6c3384bda"
+            ],
+            "states": {
+              "on_trip": [
+                "trip_start"
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
