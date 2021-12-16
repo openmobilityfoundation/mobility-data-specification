@@ -1,0 +1,1 @@
+(Defines all things that are specific to the micromobilty mode, including state machine, vehicle attributes, and related trips rules. Much of the existing state transition documentation as well as the accompanying state machine diagram will end up here.)
