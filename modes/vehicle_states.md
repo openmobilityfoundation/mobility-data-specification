@@ -1,0 +1,1 @@
+(This file defines all possible vehicle states that can be used in mode-specific state machines. It does not assign states to modes, but simply lists all possible values. As with all global definitions, they should be described in a way that maximizes their relevance to multiple modes. Descriptions can be further refined in the mode-specific state machine definitions.)
