@@ -488,10 +488,8 @@ An agency's program [Requirements](#requirements) endpoint contains a number of 
 
 | Name                         | Type            | Required / Optional | Description              |
 | ---------------------------- | --------------- | -------- | ----------------------------------- |
-| `metadata`                   | Array           | Required | Array of [Requirement Metadata](#requirement-metadata) fields. |
+| `metadata`                   | JSON           | Required | [Requirement Metadata](#requirement-metadata) object. |
 | `programs`                   | Array           | Required | Array of [Requirement Programs](#requirement-programs) data. |
-| `required_data_specs`        | Array           | Required | Array of [Requirement Data Specs](#requirement-data-specs) data. |
-| `required_apis`              | Array           | Required | Array of [Requirement APIs](#requirement-apis) data. |
 
 [Top][toc]
 
