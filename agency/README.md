@@ -111,6 +111,7 @@ Body Params:
 | `device_id`  | UUID    | Required          | Provided by Operator to uniquely identify a vehicle                  |
 | `vehicle_id` | String  | Required          | Vehicle Identification Number (vehicle_id) visible on vehicle        |
 | `vehicle_type`       | Enum    | Required          | [Vehicle Type][vehicle-types]                                        |
+| `mode`       | Enum    | Required          | [Mobility Mode][modes]                                        |
 | `propulsion_types` | Enum[]  | Required          | Array of [Propulsion Type][propulsion-types]; allows multiple values |
 | `year`       | Integer | Optional          | Year Manufactured                                                    |
 | `mfgr`       | String  | Optional          | Vehicle Manufacturer                                                 |
@@ -333,6 +334,7 @@ If `stop_id` is specified, `GET` will return an array with a single stop record,
 [geography-driven-events]: /general-information.md#geography-driven-events
 [error-messages]: /general-information.md#error-messages
 [hdop]: https://en.wikipedia.org/wiki/Dilution_of_precision_(navigation)
+[modes]: /modes/README.md
 [propulsion-types]: /general-information.md#propulsion-types
 [responses]: /general-information.md#responses
 [stops]: /general-information.md#stops
