@@ -253,6 +253,7 @@ An individual `Policy` object is defined by the following fields:
 | Name             | Type            | Required / Optional | Description                                                                         |
 | ---------------- | --------------- | ---------- | ----------------------------------------------------------------------------------- |
 | `name`           | String          | Required   | Name of policy                                                                      |
+| `mode`           | Mode            | Required   | Applicable mode, see MDS [mode list][modes]                                                                 |
 | `policy_id`      | UUID            | Required   | Unique ID of policy                                                                 |
 | `provider_ids`   | UUID[]          | Optional    | Providers for whom this policy is applicable; empty arrays and `null`/absent implies all Providers. See MDS [provider list](/providers.csv). |
 | `description`    | String          | Required   | Description of policy                                                               |
@@ -705,6 +706,7 @@ You may also show which APIs, endpoints, and fields your agency is serving to pr
 [error-messages]: /general-information.md#error-messages
 [iana]: https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
 [json-schema]: #json-schema
+[modes]: /modes/README.md
 [muni-boundary]: ../provider/README.md#municipality-boundary
 [propulsion-types]: /general-information.md#propulsion-types
 [responses]: /general-information.md#responses
