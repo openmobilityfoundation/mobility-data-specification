@@ -47,6 +47,10 @@ This specification uses data types including timestamps, UUIDs, and vehicle stat
 
 Versioning must be implemented as specified in the [Versioning section][versioning].
 
+### Modes
+
+MDS is intended to be used for multiple transportation modes, including its original micromobility (e-scooters, bikes, etc.) as well as additional modes such as taxis and delivery bots.  A given `provider_id` shall be associated with a single mobility [mode], so that the mode does not have to be specified in each data structure and API call.  A provider implementing more than one mode shall register a `provider_id` for each mode.
+
 [Top][toc]
 
 ### Responses and Error Messages
@@ -162,6 +166,7 @@ Unless stated otherwise by the municipality, the trips endpoint must return all 
 | `vehicle_id` | String | Required | The Vehicle Identification Number visible on the vehicle itself |
 | `vehicle_type` | Enum | Required | See [vehicle types][vehicle-types] table |
 | `propulsion_types` | Enum[] | Required | Array of [propulsion types][propulsion-types]; allows multiple values |
+| `journey_id` | UUID | Optional | A unique ID for associating collections of events |
 | `trip_id` | UUID | Required | A unique ID for each trip |
 | `trip_duration` | Integer | Required | Time, in Seconds |
 | `trip_distance` | Integer | Required | Trip Distance, in Meters |
@@ -601,6 +606,7 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 [json-api-pagination]: http://jsonapi.org/format/#fetching-pagination
 [json-schema]: https://json-schema.org
 [muni-boundary]: #municipality-boundary
+[mode]: /modes/README.md
 [point-geo]: /general-information.md#geographic-telemetry-data
 [propulsion-types]: /general-information.md#propulsion-types
 [responses]: /general-information.md#responses

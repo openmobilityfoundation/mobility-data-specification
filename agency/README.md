@@ -327,6 +327,43 @@ Path Params:
 
 If `stop_id` is specified, `GET` will return an array with a single stop record, otherwise it will be a list of all stop records.
 
+## Trip Metadata
+The Trips endpoint serves multiple purposes: 
+* Definitively indicating that a Trip (a sequence of events linked by a trip_id) has been completed. For example, from analyzing only the raw Vehicle Events feed, if a trip crosses an Agency's jurisdictional boundaries but does not end within the jurisdiction (last event_type seen is a `leave_jurisdiction`), this can result in a 'dangling trip'. The Trips endpoint satisfies this concern, by acting as a final indication that a trip has been finished, even if it ends outside of jurisdictional boundaries; if a trip has intersected an Agency's jurisdictional boundaries at all during a trip, it is expected that a Provider will send a Trip payload to the Agency following the trip's completion.
+* Providing information to an Agency regarding an entire trip, without extending any of the Vehicle Event payloads, or changing any requirements on when Vehicle Events should be sent.
+
+| Field                         | Type                           | Required/Optional      | Field Description                                                                                                                                                                                                                                                                                                             |
+|-------------------------------|--------------------------------|------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| trip_id                       | UUID                           | Required               | UUID for the trip this payload pertains to                                                                                                                                                                                                                                                                                    |
+| provider_id                   | UUID                           | Required               | Provider which managed this trip                                                                                                                                                                                                                                                                                              |
+| reservation_method            | Enum                           | Required               | Way the customer created their reservation, see [reservation-method](#reservation-method)                                                                                                                                                                                                                                     |
+| reservation_time              | Timestamp                      | Required               | Time the customer *requested* a reservation                                                                                                                                                                                                                                                                                   |
+| reservation_type              | Enum                           | Required               | Type of reservation, see [reservation-type](#reservation-type)                                                                                                                                                                                                                                                                |
+| quoted_trip_start_time        | Timestamp                      | Required               | Time the trip was estimated or scheduled to start, that was provided to the passenger                                                                                                                                                                                                                                         |
+| requested_trip_start_location | `{ lat: number, lng: number }` | Conditionally Required | Location where the customer requested the trip to start (required if this is within jurisdictional boundaries)                                                                                                                                                                                                                |
+| dispatch_time                 | Timestamp                      | Conditionally Required | Time the vehicle was dispatched to the customer (required if trip was dispatched)                                                                                                                                                                                                                                             |
+| trip_start_time               | Timestamp                      | Conditionally Required | Time the trip started (required if trip started)                                                                                                                                                                                                                                                                              |
+| trip_end_time                 | Timestamp                      | Conditionally Required | Time the trip ended (required if trip was completed)                                                                                                                                                                                                                                                                          |
+| distance                      | Float                          | Conditionally Required | Total distance of the trip in meters (required if trip was completed)                                                                                                                                                                                                                                                         |
+| cancellation_reason           | string                         | Conditionally Required | The reason why a *driver* cancelled a reservation. (required if a driver cancelled a trip, and a `driver_cancellation` event_type was part of the trip)                                                                                                                                                                       |
+| fare                          | [Fare](#fare)                  | Conditionally Required | Fare for the trip (required if trip was completed)                                                                                                                                                                                                                                                                            |
+| accessibility_options         | Enum[]                         | Optional               | The **union** of any accessibility options requested, and used. E.g. if the passenger requests a vehicle with `wheelchair_accessible`, but doesn’t utilize the features during the trip, the trip payload will include `accessibility_options: ['wheelchair_accessible']`. See [accessibility-options][accessibility-options] |
+
+**Endpoint:** `/trip_metadata`  
+**Method:** `POST`  
+**[Beta feature][beta]:** Yes (as of 1.0.0)  
+**Request Body**: A [Trip](#trips)
+
+201 Success Response:
+Payload which was POST'd
+
+400 Failure Response:
+| `error`              | `error_description`                               | `error_details`[]               |
+| -------------------- | ------------------------------------------------- | ------------------------------- |
+| `bad_param`          | A validation error occurred.                      | Array of parameters with errors |
+| `missing_param`      | A required parameter is missing.                  | Array of missing parameters     |
+
+
 [Top][toc]
 
 [beta]: /general-information.md#beta-features

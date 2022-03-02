@@ -15,3 +15,15 @@ There will be some gray areas and some differences from one jurisdiction to anot
 We should err on the side of treating highly similar services as one mode, but should consult with our members and community to inform each decision about how to integrate a new service and whether it needs to be designated as its own mode. This is a policy implementation question as much as it is a technical one.
 
 Each mode defined in MDS shall include key descriptive information, such as journey type (e.g. point-to-point, multi-segment, multi-segment overlapping), primary purpose (goods, single passenger, multi-passenger, etc.), and a description of the service being offered that aligns with terminology commonly understood by the public (e.g. “e-scooter” or “ridehailing”). 
+
+## List of Supported Modes
+
+* [Micromobility][micro]: single-occupancy modes of transportation such as e-scooters, e-bikes, and regular bikes
+
+[Top][modes]
+
+[Home][home]
+
+[home]: /README.md
+[modes]: /modes/README.md
+[micro]: /modes/micromobility.md
