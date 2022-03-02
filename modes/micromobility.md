@@ -1,8 +1,8 @@
-(Defines all things that are specific to the micromobilty mode, including state machine, vehicle attributes, and related trips rules. Much of the existing state transition documentation as well as the accompanying state machine diagram will end up here.)
+# Mobility Data Specification: **Micromobility Definitions**
 
-TODO define micromobility
+"Micromobility" refers to single-occupancy modes of transportation such as e-scooters, e-bikes, and regular bikes.
 
-### Micromobility Vehicle States
+## Micromobility Vehicle States
 
 Valid micromobility vehicle states are 
 `removed`, 
@@ -13,11 +13,9 @@ Valid micromobility vehicle states are
 `elsewhere`, and 
 `unknown`.  
 
-TODO do we need to get into more clarifying detail?
-
 See [Vehicle States][vehicle-states] for descriptions.
 
-### Micromobility Event Types
+## Micromobility Event Types
 
 Valid micromobility vehicle event types are 
 
@@ -48,9 +46,11 @@ Valid micromobility vehicle event types are
 `trip_start`, and
 `unspecified`.
 
+Note that Providers should make best-effort to map their business logic onto these states, which are meant to provide a view of the fleet to an Agency.  But if an Agency does not perform `agency_drop_off` or `agency_pick_up`, for example, they need not be included in the Provider's implementation.
+
 See [Vehicle Events][vehicle-events] for descriptions.
 
-### Micromobility Vehicle State Events
+## Micromobility Vehicle State Events
 
 This is the list of `vehicle_state` and `event_type` pairings that constitute the valid transitions of the vehicle state machine.
 
@@ -110,14 +110,14 @@ Vehicles can enter the `unknown` state to and from any other state with the foll
 ### Micromobility State Machine Diagram
 
 The *State Machine Diagram* shows how `vehicle_state` and `event_type` relate to each other and how vehicles can transition between states. See [Google Slides](https://docs.google.com/presentation/d/1Ar2-ju8YlddSsTATvQw4YjsSa5108XtidtnJNk-UAfA/edit) for the source file.
-![MDS State Machine Diagram](/MDS-state-machine-diagram.svg)
+![MDS State Machine Diagram](/modes/MDS-micromobility-state-machine-diagram.svg)
 
 [Back to Modes Overview][modes]
 
 [Home][home]
 
 [toc]: #table-of-contents
-[vehicle-states]: /general-information.md#vehicle-states
-[vehicle-events]: /general-information.md#vehicle-events
+[vehicle-states]: /modes/vehicle_states.md
+[vehicle-events]: /modes/event_types.md
 [home]: /README.md
 [modes]: /modes/README.md
