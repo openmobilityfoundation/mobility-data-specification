@@ -19,7 +19,7 @@
 
 # About
 
-The Mobility Data Specification (**MDS**), a project of the [Open Mobility Foundation](http://www.openmobilityfoundation.org) (**OMF**), is a set of Application Programming Interfaces (APIs) focused on shared mobility services such as dockless scooters, bicycles, mopeds, and carshare, and inspired by projects like [GTFS](https://developers.google.com/transit/gtfs/reference/) and [GBFS](https://github.com/NABSA/gbfs). MDS is a digital tool that helps cities better manage transportation in the public right of way, standardizing communication and data-sharing between cities and private mobility providers, allowing cities to share and validate policy digitally, and enabling vehicle management and better outcomes for residents. 
+The Mobility Data Specification (**MDS**), a project of the [Open Mobility Foundation](http://www.openmobilityfoundation.org) (**OMF**), is a set of Application Programming Interfaces (APIs) that helps cities better manage transportation in the public right of way, standardizing communication and data-sharing between cities and mobility providers, allowing cities to share and validate policy digitally, and enabling vehicle management and better outcomes for residents. Inspired in part by projects like [GTFS](https://developers.google.com/transit/gtfs/reference/) and [GBFS](https://github.com/NABSA/gbfs), MDS initially focused on managing mobility services such as dockless scooters, bicycles, mopeds, and carshare, and is now expanding into new [modes] such as delivery robots and taxi services. 
 
 **MDS** is a key piece of digital infrastructure that supports the effective implementation of mobility policies in cities around the world. For a high level overview and visuals, see the [About MDS](https://www.openmobilityfoundation.org/about-mds/) page on the OMF website.
 
@@ -212,4 +212,5 @@ Please [let us know](https://www.openmobilityfoundation.org/get-in-touch/) if yo
 [geography]: /geography/README.md
 [jurisdiction]: /jurisdiction/README.md
 [metrics]: /metrics/README.md
+[modes]: /modes/README.md
 [toc]: #table-of-contents

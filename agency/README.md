@@ -77,14 +77,14 @@ If `device_id` is specified, `GET` will return an array with a single vehicle re
 
 A vehicle record is as follows:
 
-| Field         | Type      | Field Description                                                             |
+| Field         | Type      | Field Description                       |
 | ------------- | --------- | ----------------------------------------------------------------------------- |
 | `device_id`   | UUID      | Provided by Operator to uniquely identify a vehicle                           |
 | `provider_id` | UUID      | Issued by Agency and [tracked](../providers.csv)                              |
 | `vehicle_id`  | String    | Vehicle Identification Number (vehicle_id) visible on vehicle                 |
-| `vehicle_type`        | Enum      | [Vehicle Type][vehicle-types]                                                 |
+| `vehicle_type`        | Enum      | [Vehicle Type][vehicle-types]           |
 | `propulsion_types`  | Enum[]    | Array of [Propulsion Type][propulsion-types]; allows multiple values          |
-| `year`        | Integer   | Year Manufactured                                                             |
+| `year`        | Integer   | Year Manufactured                       |
 | `mfgr`        | String    | Vehicle Manufacturer                                                          |
 | `model`       | String    | Vehicle Model                                                                 |
 | `state`       | Enum      | Current vehicle state. See [Vehicle State][vehicle-states]                    |
@@ -327,32 +327,59 @@ Path Params:
 
 If `stop_id` is specified, `GET` will return an array with a single stop record, otherwise it will be a list of all stop records.
 
+## Reservation Type
+The reservation type enum expresses the urgency of a given reservation. This can be useful when attempting to quantify metrics around trips: for example, computing passenger wait-time. In the `on_demand` case, passenger wait-time may be quantified by the delta between the `reservation_time`, and the pick-up time; however, in the `scheduled` case, the wait time may be quantified based on the delta between the `scheduled_trip_start_time` found in the Trips payload, and the actual `trip_start_time`. 
+| `reservation_type` | Description                                                            |
+|--------------------|------------------------------------------------------------------------|
+| `on_demand`        | The passenger requested the vehicle as soon as possible                |
+| `scheduled`        | The passenger requested the vehicle for a scheduled time in the future |
+
+## Reservation Method
+The reservation method enum describes the different ways in which a passenger can create their reservation.
+| `reservation_method` | Description                                               |
+|----------------------|-----------------------------------------------------------|
+| `app`                | Reservation was made through an application (mobile/web)  |
+| `street_hail`        | Reservation was made by the passenger hailing the vehicle |
+| `phone_dispatch`     | Reservation was made by calling the dispatch operator     |
+
+## Fare
+The Fare object describes a fare for a Trip. 
+| Field           | Type                  | Required/Optional | Field Description                                                                       |
+|-----------------|-----------------------|-------------------|-----------------------------------------------------------------------------------------|
+| quoted_cost     | Float                 | Required          | Cost quoted to the customer at the time of booking                                      |
+| actual_cost     | Float                 | Required          | Actual cost after a trip was completed                                                  |
+| components      | `{ [string]: float }` | Optional          | Breakdown of the different fees that composed a fare, e.g. tolls                        |
+| currency        | string                | Required          | ISO 4217 currency code                                                                  |
+| payment_methods | `string[]`            | Optional          | Breakdown of different payment methods used for a trip, e.g. cash, card, equity_program |
+
 ## Trip Metadata
-The Trips endpoint serves multiple purposes: 
+The Trips endpoint serves two purposes: 
 * Definitively indicating that a Trip (a sequence of events linked by a trip_id) has been completed. For example, from analyzing only the raw Vehicle Events feed, if a trip crosses an Agency's jurisdictional boundaries but does not end within the jurisdiction (last event_type seen is a `leave_jurisdiction`), this can result in a 'dangling trip'. The Trips endpoint satisfies this concern, by acting as a final indication that a trip has been finished, even if it ends outside of jurisdictional boundaries; if a trip has intersected an Agency's jurisdictional boundaries at all during a trip, it is expected that a Provider will send a Trip payload to the Agency following the trip's completion.
 * Providing information to an Agency regarding an entire trip, without extending any of the Vehicle Event payloads, or changing any requirements on when Vehicle Events should be sent.
 
-| Field                         | Type                           | Required/Optional      | Field Description                                                                                                                                                                                                                                                                                                             |
-|-------------------------------|--------------------------------|------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| trip_id                       | UUID                           | Required               | UUID for the trip this payload pertains to                                                                                                                                                                                                                                                                                    |
-| provider_id                   | UUID                           | Required               | Provider which managed this trip                                                                                                                                                                                                                                                                                              |
-| reservation_method            | Enum                           | Required               | Way the customer created their reservation, see [reservation-method](#reservation-method)                                                                                                                                                                                                                                     |
-| reservation_time              | Timestamp                      | Required               | Time the customer *requested* a reservation                                                                                                                                                                                                                                                                                   |
-| reservation_type              | Enum                           | Required               | Type of reservation, see [reservation-type](#reservation-type)                                                                                                                                                                                                                                                                |
-| quoted_trip_start_time        | Timestamp                      | Required               | Time the trip was estimated or scheduled to start, that was provided to the passenger                                                                                                                                                                                                                                         |
-| requested_trip_start_location | `{ lat: number, lng: number }` | Conditionally Required | Location where the customer requested the trip to start (required if this is within jurisdictional boundaries)                                                                                                                                                                                                                |
-| dispatch_time                 | Timestamp                      | Conditionally Required | Time the vehicle was dispatched to the customer (required if trip was dispatched)                                                                                                                                                                                                                                             |
-| trip_start_time               | Timestamp                      | Conditionally Required | Time the trip started (required if trip started)                                                                                                                                                                                                                                                                              |
-| trip_end_time                 | Timestamp                      | Conditionally Required | Time the trip ended (required if trip was completed)                                                                                                                                                                                                                                                                          |
-| distance                      | Float                          | Conditionally Required | Total distance of the trip in meters (required if trip was completed)                                                                                                                                                                                                                                                         |
-| cancellation_reason           | string                         | Conditionally Required | The reason why a *driver* cancelled a reservation. (required if a driver cancelled a trip, and a `driver_cancellation` event_type was part of the trip)                                                                                                                                                                       |
-| fare                          | [Fare](#fare)                  | Conditionally Required | Fare for the trip (required if trip was completed)                                                                                                                                                                                                                                                                            |
+| Field                         | Type                           | Required/Optional      | Field Description |
+|-------------------------------|--------------------------------|------------------------| ----------------- |
+| trip_id                       | UUID                           | Required               | UUID for the trip this payload pertains to |
+| journey_id                    | UUID                           | Optional               | A unique ID for associating collections of trips |
+| trip_attributes               | `{ [String]: String}`          | Optional               | Trip attributes, given as mode-specific key-value pairs |
+| provider_id                   | UUID                           | Required               | Provider which managed this trip |
+| reservation_method            | Enum                           | Required               | Way the customer created their reservation, see [reservation-method](#reservation-method) |
+| reservation_time              | Timestamp                      | Required               | Time the customer *requested* a reservation |
+| reservation_type              | Enum                           | Required               | Type of reservation, see [reservation-type](#reservation-type) |
+| quoted_trip_start_time        | Timestamp                      | Required               | Time the trip was estimated or scheduled to start, that was provided to the passenger |
+| requested_trip_start_location | `{ lat: number, lng: number }` | Conditionally Required | Location where the customer requested the trip to start (required if this is within jurisdictional boundaries) |
+| dispatch_time                 | Timestamp                      | Conditionally Required | Time the vehicle was dispatched to the customer (required if trip was dispatched) |
+| trip_start_time               | Timestamp                      | Conditionally Required | Time the trip started (required if trip started)               |
+| trip_end_time                 | Timestamp                      | Conditionally Required | Time the trip ended (required if trip was completed)           |
+| distance                      | Float                          | Conditionally Required | Total distance of the trip in meters (required if trip was completed) |
+| cancellation_reason           | string                         | Conditionally Required | The reason why a *driver* cancelled a reservation. (required if a driver cancelled a trip, and a `driver_cancellation` event_type was part of the trip) |
+| fare                          | [Fare](#fare)                  | Conditionally Required | Fare for the trip (required if trip was completed)             |
 | accessibility_options         | Enum[]                         | Optional               | The **union** of any accessibility options requested, and used. E.g. if the passenger requests a vehicle with `wheelchair_accessible`, but doesn’t utilize the features during the trip, the trip payload will include `accessibility_options: ['wheelchair_accessible']`. See [accessibility-options][accessibility-options] |
 
 **Endpoint:** `/trip_metadata`  
 **Method:** `POST`  
-**[Beta feature][beta]:** Yes (as of 1.0.0)  
-**Request Body**: A [Trip](#trips)
+**[Beta feature][beta]:** Yes (as of 2.0.0)  
+**Request Body**: A [Trip Metadata](#trip_metadata) object
 
 201 Success Response:
 Payload which was POST'd
