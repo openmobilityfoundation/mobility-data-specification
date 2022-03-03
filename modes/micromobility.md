@@ -32,7 +32,7 @@ The `trip_attributes` array is not used with the micromobility mode.
 
 The `vehicle_attributes` array may have the following key value pairs:
 
-- `year` (string)
+- `year` (integer)
 - `manufacturer` (string)
 - `model` (string)
 
