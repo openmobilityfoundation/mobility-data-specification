@@ -8,8 +8,8 @@ All MDS APIs should be mode-agnostic.
 
 * [Modes](#modes)
 * [List of Supported Modes](#list-of-supported-modes)
-* [Unique Mode Properties](#unique-mode-properties)
 * [Mode Attributes](#mode-attributes)
+* [Unique Mode Properties](#unique-mode-properties)
 
 ## Modes
 
@@ -34,28 +34,6 @@ Each mode defined in MDS shall include key descriptive information, such as jour
 
 [Top][toc]
 
-## Unique Mode Properties
-
-While each mode is unique in its operational and business models, there are several areas where there are significant differences from one mode to the next. Each of these areas is defined in more detail within the mode, and each pull from a base of options defined in a global location.
-
-### Vehicle States
-
-Vehicle states are used to define the disposition of individual vehicles and fleets of vehicles. See [vehicle states](/modes/vehicle_states.md) for a list of possible values, and each [mode definition](#list-of-supported-modes) for details about which are used per mode. 
-
-### Event Types
-
-Event types are the possible transitions between vehicle states. See [event types](/modes/event_types.md) for a list of possible values, and each [mode definition](#list-of-supported-modes) for details about which are used per mode. 
-
-### State Transitions
-
-Possible combinations of how the `vehicle_state` changes in response to each `event_type`. See each [mode definition](#list-of-supported-modes) for a table of possible transition combinations.
-
-### State Machine Diagram
-
-The State Machine Diagram visually shows the state transitions. See each [mode definition](#list-of-supported-modes) for a diagram.
-
-[Top][toc]
-
 ## Mode Attributes
 
 Some fields used across MDS APIs are defined in more detail within each mode.
@@ -75,6 +53,28 @@ The `trip_attributes` array allows additional mode-specific information about th
 ### Vehicle Attributes
 
 The `vehicle_attributes` array returns a list of JSON-formatted key/value pairs which correspond to the allowed attributes and values for the operative mode. For each mode, the allowed attributes and corresponding values are defined in the [mode definition](#list-of-supported-modes).
+
+[Top][toc]
+
+## Unique Mode Properties
+
+While each mode is unique in its operational and business models, there are several areas where there are significant differences from one mode to the next. Each of these areas is defined in more detail within the mode, and each pull from a base of options defined in a global location.
+
+### Vehicle States
+
+Vehicle states are used to define the disposition of individual vehicles and fleets of vehicles. See [vehicle states](/modes/vehicle_states.md) for a list of possible values, and each [mode definition](#list-of-supported-modes) for details about which are used per mode. 
+
+### Event Types
+
+Event types are the possible transitions between vehicle states. See [event types](/modes/event_types.md) for a list of possible values, and each [mode definition](#list-of-supported-modes) for details about which are used per mode. 
+
+### State Transitions
+
+Possible combinations of how the `vehicle_state` changes in response to each `event_type`. See each [mode definition](#list-of-supported-modes) for a table of possible transition combinations.
+
+### State Machine Diagram
+
+The State Machine Diagram visually shows the state transitions. See each [mode definition](#list-of-supported-modes) for a diagram.
 
 [Top][toc]
 
