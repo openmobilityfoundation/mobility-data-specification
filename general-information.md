@@ -25,7 +25,6 @@ This document contains specifications that are shared between the various MDS AP
 * [UUIDs](#uuids)
 * [Vehicle States](#vehicle-states)
   * [Event Types](#event-types)
-  * [Limitations on the Use of Certain Values](#limitations-on-the-use-of-certain-values)
   * [Vehicle State Events](#vehicle-state-events)
   * [State Machine Diagram](#state-machine-diagram)
 * [Vehicle Types](#vehicle-types)
@@ -295,25 +294,25 @@ MDS uses Version 1 UUIDs by default. Version 4 UUIDs may be used where noted.
 
 ## Vehicle States
 
-See new location in [/modes/vehicle_states.md](/modes/vehicle_states.md) within Modes.
+See new location in [vehicle states](/modes/vehicle_states.md) within [modes](/modes#vehicle-states).
 
 [Top][toc]
 
 ### Event Types
 
-See new location in [/modes/event_types.md](/modes/event_types.md) within Modes.
+See new location in [event types](/modes/event_types.md) within [modes](/modes#event-types).
 
 [Top][toc]
 
 ### Vehicle State Events
 
-See new location within [individual modes](r/modes#list-of-supported-modes).
+See new location within [individual modes](/modes#list-of-supported-modes) in [modes](/modes#state-transitions).
 
 [Top][toc]
 
 ### State Machine Diagram
 
-See new location within [individual modes](r/modes#list-of-supported-modes).
+See new location within [individual modes](/modes#list-of-supported-modes) in [modes](/modes#state-machine-diagram).
 
 [Top][toc]
 
