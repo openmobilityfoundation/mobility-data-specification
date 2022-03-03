@@ -1,6 +1,8 @@
 # Mobility Data Specification: **Micromobility**
 
-"Micromobility" refers to single-occupancy modes of docked or dockless transportation such as e-scooters, e-bikes, and regular bikes.
+"**Micromobility**" refers to single-occupancy modes of docked or dockless transportation such as e-scooters, e-bikes, and regular bikes.
+
+See the [modes overview](/modes) for how the mode specific information below applies across MDS.
 
 ## Table of Contents
 
@@ -85,9 +87,9 @@ Valid micromobility vehicle event types are
 - `trip_start`
 - `unspecified`
 
-Note that Providers should make best-effort to map their business logic onto these states, which are meant to provide a view of the fleet to an Agency.  But if an Agency does not perform `agency_drop_off` or `agency_pick_up`, for example, they need not be included in the Provider's implementation.
+Note that providers should make best-effort to map their business logic onto these states, which are meant to provide a view of the fleet to an agency.  But if an agency does not perform `agency_drop_off` or `agency_pick_up`, for example, they need not be included in the parovider's implementation.
 
-See [Vehicle Events][vehicle-events] for descriptions.
+See vehicle [Event Types][vehicle-events] for descriptions.
 
 [Top][toc]
 
@@ -150,7 +152,7 @@ Vehicles can enter the `unknown` state to and from any other state with the foll
 
 ### State Machine Diagram
 
-The *State Machine Diagram* shows how `vehicle_state` and `event_type` relate to each other and how vehicles can transition between states. See [Google Slides](https://docs.google.com/presentation/d/1Ar2-ju8YlddSsTATvQw4YjsSa5108XtidtnJNk-UAfA/edit) for the source file.
+This *State Machine Diagram* shows how `vehicle_state` and `event_type` relate to each other and how vehicles can transition between states. See [Google Slides](https://docs.google.com/presentation/d/1Ar2-ju8YlddSsTATvQw4YjsSa5108XtidtnJNk-UAfA/edit) for the source file.
 ![MDS State Machine Diagram](/modes/MDS-micromobility-state-machine-diagram.svg)
 
 [Top][toc]
@@ -164,7 +166,7 @@ The *State Machine Diagram* shows how `vehicle_state` and `event_type` relate to
 [MDS Home][home]
 
 [home]: /README.md
+[modes]: /modes/README.md
 [toc]: #table-of-contents
 [vehicle-states]: /modes/vehicle_states.md
 [vehicle-events]: /modes/event_types.md
-[modes]: /modes/README.md
