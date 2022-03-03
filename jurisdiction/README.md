@@ -96,22 +96,24 @@ An individual `Jurisdiction` object is defined by the following fields:
 | ----------------- | --------- | ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `jurisdiction_id` | UUID      | Required            | Unique ID of Jurisdiction. This field is immutable.                                                                                                                                                                                                                                                                   |
 | `agency_key`      | String    | Required            | A unique string key for the Jurisdiction. This field must also be immutable. Allows for easier management of Jurisdiction-based access control in JWTs.                                                                                                                                                               |
-| `mode`            | Mode      | Required            | Which transit modes are managed in this Jurisdiction.  See MDS [mode list][modes]. |
 | `agency_name`     | String    | Optional            | Human-readable agency name for display purposes.                                                                                                                                                                                                                                                                      |
 | `description`     | String    | Required            | Description of Jurisdiction.                                                                                                                                                                                                                                                                                          |
 | `geography_id`    | UUID      | Optional            | The unique ID of the geography covered by this Jurisdiction.                                                                                                                                                                                                                                                          |
-| `mobility_modes`  | String[]  | Optional            | Set this field to specify what mobility modes a jurisdiction applies to. Valid values are left up to the agency to determine, but a couple examples that we think might be useful are 'taxi' and 'micromobility'. An empty array or undefined field indicates all mobility modes are covered under this jurisdiction. |
+| `mobility_modes`  | String[]  | Required            | Use this field to specify an array of what mobility [modes][modes] a jurisdiction applies to. |
 | `timestamp`       | timestamp | Required            | Creation or update time of a Jurisdiction.                                                                                                                                                                                                                                                                            |
 
 Formatted in JSON, a Jurisdiction object should look like this:
 
 ```
 {
-  jurisdiction_id: UUID
-  agency_key: string
-  agency_name: string
-  geography_id: UUID
-  timestamp: Timestamp
+	"jurisdiction_id": UUID,
+	"agency_key": string,
+	"agency_name": string,
+	"geography_id": UUID,
+	"mobility_modes": [
+		string
+	],
+	"timestamp": Timestamp
 }
 ```
 
@@ -173,4 +175,4 @@ See the [Geography Examples](/geography/examples/README.md) for an example `geog
 
 [Top](#table-of-contents)
 
-[modes]: /modes/README.md
+[modes]: /modes#list-of-supported-modes
