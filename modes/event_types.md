@@ -1,6 +1,6 @@
 # Mobility Data Specification: **Event Types**
 
-This file defines all possible `event_type`s that can be used in state machines across all MDS modes. Each mode will use some subset of these states. See individual [mode definitions](/modes#list-of-supported-modes) for additional details specific to that mode.
+This file defines all possible `event_type`s that can be used in state machines across all MDS modes. Each mode will use some subset of these events. See individual [mode definitions](/modes#list-of-supported-modes) for additional details specific to that mode.
 
 As with all MDS definitions, they should be described in a way that maximizes their relevance to multiple modes whenever possible.
 
@@ -37,7 +37,7 @@ As with all MDS definitions, they should be described in a way that maximizes th
 
 MDS is intended to communicate the provider's best available information to regulators. However there may be legitimate circumstances where providers do not have definitive or current information about devices on the ground. MDS incorporates some values to convey these situations.  These vehicle state and event type values are to be used sparingly and temporarily, and are not meant for repeated or prolonged use. These values exist to create logical coherence within MDS about vehicles that are operating abnormally or are out of communication. When a more accurate value is known, the MDS API should be updated with the latest information. Cities may add language to their Service Level Agreements (SLAs) that minimize the use of these values by providers. 
 
-**Event Type: Unspecified**
+#### Event Type: Unspecified
 
 The `unspecified` event type state transition means that the vehicle has moved from one state to another for an unspecified or unknown reason. It is used when there are multiple possible event types between states, but the reason for the transition is not clear. It is expected that `unspecified` will not be used frequently, and only for short periods of time. Cities may put in place specific limitations via an SLA. When more accurate information becomes available to the provider, it should be updated in the MDS data by sending a new event type state transition with the current timestamp.
 
