@@ -1,6 +1,6 @@
 # Mobility Data Specification: **Event Types**
 
-This file defines all possible `event_type`s that can be used in state machines across all MDS modes. Each mode will use some subset of these states.
+This file defines all possible `event_type`s that can be used in state machines across all MDS modes. Each mode will use some subset of these states. See individual [mode definitions](/modes#list-of-supported-modes) for additional details specific to that mode.
 
 As with all MDS definitions, they should be described in a way that maximizes their relevance to multiple modes whenever possible.
 
@@ -41,9 +41,13 @@ MDS is intended to communicate the provider's best available information to regu
 
 The `unspecified` event type state transition means that the vehicle has moved from one state to another for an unspecified or unknown reason. It is used when there are multiple possible event types between states, but the reason for the transition is not clear. It is expected that `unspecified` will not be used frequently, and only for short periods of time. Cities may put in place specific limitations via an SLA. When more accurate information becomes available to the provider, it should be updated in the MDS data by sending a new event type state transition with the current timestamp.
 
-[Back to Modes Overview][modes]
+---
 
-[Home][home]
+[Modes Overview][modes]
+
+---
+
+[MDS Home][home]
 
 [home]: /README.md
 [modes]: /modes/README.md
