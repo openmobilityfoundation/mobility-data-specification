@@ -1,6 +1,6 @@
-(This file defines all possible vehicle states that can be used in mode-specific state machines. It does not assign states to modes, but simply lists all possible values. As with all global definitions, they should be described in a way that maximizes their relevance to multiple modes. Descriptions can be further refined in the mode-specific state machine definitions.)
+# Mobility Data Specification: **Vehicle States**
 
-TODO add verbiage for non-micro modes
+This file defines all possible `vehicle_state`s that can be used in state machines across all MDS modes. Each mode will use some subset of these states.  It does not assign states to modes, but simply lists all possible values. As with all global definitions, they are described in a way that maximizes their relevance to multiple modes. See individual [mode definitions](/modes#list-of-supported-modes) for additional details specific to that mode.
 
 | `vehicle_state`   | In PROW? | Description |
 | ----------------- | -------- | ----------- |
@@ -16,13 +16,17 @@ TODO add verbiage for non-micro modes
 
 MDS is intended to communicate the provider's best available information to regulators. However there may be legitimate circumstances where providers do not have definitive or current information about devices on the ground. MDS incorporates some values to convey these situations.  These vehicle state and event type values are to be used sparingly and temporarily, and are not meant for repeated or prolonged use. These values exist to create logical coherence within MDS about vehicles that are operating abnormally or are out of communication. When a more accurate value is known, the MDS API should be updated with the latest information. Cities may add language to their Service Level Agreements (SLAs) that minimize the use of these values by providers. 
 
-**Vehicle State: Unknown**
+#### Vehicle State: Unknown
 
 The `unknown` vehicle state means that the vehicle cannot be reliably placed into any of the other available states by the provider. This could be due to connectivity loss, GPS issues, missing vehicles, or other operational variances. It is expected that `unknown` will not be used frequently, and only for short periods of time. Cities may put in place specific limitations via an SLA. As vehicles regain connectivity or are located by providers they should return to their prior state, and then send additional events to reflect any subsequent changes to that state.
 
-[Back to Modes Overview][modes]
+---
 
-[Home][home]
+[Modes Overview][modes]
+
+---
+
+[MDS Home][home]
 
 [home]: /README.md
 [modes]: /modes/README.md
