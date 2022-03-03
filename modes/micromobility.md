@@ -1,56 +1,97 @@
-# Mobility Data Specification: **Micromobility Definitions**
+# Mobility Data Specification: **Micromobility**
 
-"Micromobility" refers to single-occupancy modes of transportation such as e-scooters, e-bikes, and regular bikes.
+"Micromobility" refers to single-occupancy modes of docked or dockless transportation such as e-scooters, e-bikes, and regular bikes.
 
-## Micromobility Vehicle States
+## Table of Contents
+
+* [Mode Attributes](#mode-attributes)
+* [Vehicle States](#vehicle-states)
+* [Event Types](#event-types)
+* [Vehicle State Events](#vehicle-state-events)
+* [State Machine Diagram](#state-machine-diagram)
+
+## Mode Attributes
+
+Some fields used across MDS APIs are defined in more detail within each mode.
+
+### Journey ID
+
+The `journey_id` field is not used with the micromobility mode.
+
+### Trip Type
+
+The `trip_type` field may have one of the following values:
+
+- `rider`: a single rider is taking a trip
+
+### Trip Attributes
+
+The `trip_attributes` array is not used with the micromobility mode.
+
+### Vehicle Attributes
+
+The `vehicle_attributes` array may have the following key value pairs:
+
+- `year` (string)
+- `manufacturer` (string)
+- `model` (string)
+
+[Top][toc]
+
+## Vehicle States
 
 Valid micromobility vehicle states are 
-`removed`, 
-`available`, 
-`non_operational`, 
-`reserved`, 
-`on_trip`, 
-`elsewhere`, and 
-`unknown`.  
+
+- `removed`
+- `available` 
+- `non_operational` 
+- `reserved` 
+- `on_trip` 
+- `elsewhere` 
+- `unknown`  
 
 See [Vehicle States][vehicle-states] for descriptions.
 
-## Micromobility Event Types
+[Top][toc]
+
+## Event Types
 
 Valid micromobility vehicle event types are 
 
-`agency_drop_off`, 
-`agency_pick_up`, 
-`battery_charged`, 
-`battery_low`, 
-`comms_lost`, 
-`comms_restored`, 
-`compliance_pick_up`, 
-`decommissioned`, 
-`located`, 
-`maintenance`, 
-`maintenance_pick_up`, 
-`missing`, 
-`off_hours`, 
-`on_hours`, 
-`provider_drop_off`, 
-`rebalance_pick_up`, 
-`reservation_cancel`, 
-`reservation_start`, 
-`system_resume`, 
-`system_suspend`, 
-`trip_cancel`, 
-`trip_end`, 
-`trip_enter_jurisdiction`, 
-`trip_leave_jurisdiction`, 
-`trip_start`, and
-`unspecified`.
+- `agency_drop_off`
+- `agency_pick_up`
+- `battery_charged`
+- `battery_low`
+- `comms_lost`
+- `comms_restored`
+- `compliance_pick_up`
+- `decommissioned`
+- `located`
+- `maintenance`
+- `maintenance_pick_up`
+- `missing`
+- `off_hours`
+- `on_hours`
+- `provider_drop_off`
+- `rebalance_pick_up`
+- `reservation_cancel`
+- `reservation_start`
+- `system_resume`
+- `system_suspend`
+- `trip_cancel`
+- `trip_end`
+- `trip_enter_jurisdiction`
+- `trip_leave_jurisdiction`
+- `trip_start`
+- `unspecified`
 
 Note that Providers should make best-effort to map their business logic onto these states, which are meant to provide a view of the fleet to an Agency.  But if an Agency does not perform `agency_drop_off` or `agency_pick_up`, for example, they need not be included in the Provider's implementation.
 
 See [Vehicle Events][vehicle-events] for descriptions.
 
-## Micromobility Vehicle State Events
+[Top][toc]
+
+## Vehicle State Events
 
 This is the list of `vehicle_state` and `event_type` pairings that constitute the valid transitions of the vehicle state machine.
 
@@ -107,17 +148,23 @@ Vehicles can enter the `unknown` state to and from any other state with the foll
 | `available`, `elsewhere`, `non_operational`, `on_trip`, `removed`, `reserved` | `unknown`     | `comms_lost`       | The vehicle is unable to transmit its GPS location or other status information |
 | `available`, `elsewhere`, `non_operational`, `on_trip`, `removed`, `reserved` | `unknown`     | `unspecified`       | The provider cannot definitively (yet) specify the reason for the unknown state |
 
-### Micromobility State Machine Diagram
+### State Machine Diagram
 
 The *State Machine Diagram* shows how `vehicle_state` and `event_type` relate to each other and how vehicles can transition between states. See [Google Slides](https://docs.google.com/presentation/d/1Ar2-ju8YlddSsTATvQw4YjsSa5108XtidtnJNk-UAfA/edit) for the source file.
 ![MDS State Machine Diagram](/modes/MDS-micromobility-state-machine-diagram.svg)
 
-[Back to Modes Overview][modes]
+[Top][toc]
 
-[Home][home]
+---
 
+[Modes Overview][modes]
+
+---
+
+[MDS Home][home]
+
+[home]: /README.md
 [toc]: #table-of-contents
 [vehicle-states]: /modes/vehicle_states.md
 [vehicle-events]: /modes/event_types.md
-[home]: /README.md
 [modes]: /modes/README.md
