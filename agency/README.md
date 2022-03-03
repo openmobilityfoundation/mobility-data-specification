@@ -84,11 +84,9 @@ A vehicle record is as follows:
 | `vehicle_id`  | String    | Vehicle Identification Number (vehicle_id) visible on vehicle                 |
 | `vehicle_type`        | Enum      | [Vehicle Type][vehicle-types]           |
 | `propulsion_types`  | Enum[]    | Array of [Propulsion Type][propulsion-types]; allows multiple values          |
-| `year`        | Integer   | Year Manufactured                       |
-| `mfgr`        | String    | Vehicle Manufacturer                                                          |
-| `model`       | String    | Vehicle Model                                                                 |
+| `vehicle_attributes`        | Array of [vehicle attributes](/modes/#vehicle-attributes)   | Vehicle attributes appropriate for the current mode |
 | `state`       | Enum      | Current vehicle state. See [Vehicle State][vehicle-states]                    |
-| `prev_events`  | Enum[]      | Last [Vehicle Event][vehicle-event]                                           |
+| `prev_events`  | Enum[]      | Last [Vehicle Event][vehicle---event]                                           |
 | `updated`     | [timestamp][ts] | Date of last event update                                                     |
 
 404 Failure Response:
@@ -113,9 +111,7 @@ Body Params:
 | `vehicle_type`       | Enum    | Required          | [Vehicle Type][vehicle-types]                                        |
 | `mode`       | Enum    | Required          | [Mobility Mode][modes]                                        |
 | `propulsion_types` | Enum[]  | Required          | Array of [Propulsion Type][propulsion-types]; allows multiple values |
-| `year`       | Integer | Optional          | Year Manufactured                                                    |
-| `mfgr`       | String  | Optional          | Vehicle Manufacturer                                                 |
-| `model`      | String  | Optional          | Vehicle Model                                                        |
+| `vehicle_attributes`        | Array of [vehicle attributes](/modes/#vehicle-attributes)   | Vehicle attributes appropriate for the current mode |
 
 201 Success Response:
 
