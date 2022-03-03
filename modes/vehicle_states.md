@@ -12,6 +12,14 @@ TODO add verbiage for non-micro modes
 | `elsewhere`       | no       | Outside of regulator's jurisdiction, and thus not subject to cap-counts or other regulations. Example: a vehicle that started a trip in L.A. has transitioned to Santa Monica.  |
 | `unknown`         | unknown  | Provider has lost contact with the vehicle and its disposition is unknown.  Examples include: scooter taken into a private residence, bike thrown in river. |
 
+### Limitations on the Use of Certain Values
+
+MDS is intended to communicate the provider's best available information to regulators. However there may be legitimate circumstances where providers do not have definitive or current information about devices on the ground. MDS incorporates some values to convey these situations.  These vehicle state and event type values are to be used sparingly and temporarily, and are not meant for repeated or prolonged use. These values exist to create logical coherence within MDS about vehicles that are operating abnormally or are out of communication. When a more accurate value is known, the MDS API should be updated with the latest information. Cities may add language to their Service Level Agreements (SLAs) that minimize the use of these values by providers. 
+
+**Vehicle State: Unknown**
+
+The `unknown` vehicle state means that the vehicle cannot be reliably placed into any of the other available states by the provider. This could be due to connectivity loss, GPS issues, missing vehicles, or other operational variances. It is expected that `unknown` will not be used frequently, and only for short periods of time. Cities may put in place specific limitations via an SLA. As vehicles regain connectivity or are located by providers they should return to their prior state, and then send additional events to reflect any subsequent changes to that state.
+
 [Back to Modes Overview][modes]
 
 [Home][home]
