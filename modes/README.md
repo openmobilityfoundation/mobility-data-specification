@@ -27,10 +27,10 @@ Each mode defined in MDS shall include key descriptive information, such as jour
 
 ## List of Supported Modes
 
-* [Micromobility][micro]: single-occupancy modes of docked or dockless transportation such as e-scooters, e-bikes, and regular bikes.
-* Car Share: ...
-* Passenger Services: ...
-* Delivery Robots: ...
+* [Micromobility][micromobility] (`micromobility`): single-occupancy modes of docked or dockless transportation such as e-scooters, e-bikes, and regular bikes.
+* Car Share (`car-share`): ...
+* Passenger Services (`passenger-services`): ...
+* Delivery Robots (`delivery-robots`): ...
 
 [Top][toc]
 
@@ -84,5 +84,5 @@ The State Machine Diagram visually shows the state transitions. See each [mode d
 
 [home]: /README.md
 [modes]: /modes/README.md
-[micro]: /modes/micromobility.md
+[micromobility]: /modes/micromobility.md
 [toc]: #table-of-contents
