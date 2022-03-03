@@ -86,7 +86,7 @@ A vehicle record is as follows:
 | `propulsion_types`  | Enum[]    | Array of [Propulsion Type][propulsion-types]; allows multiple values          |
 | `vehicle_attributes`        | Array of [vehicle attributes](/modes/#vehicle-attributes)   | Vehicle attributes appropriate for the current mode |
 | `state`       | Enum      | Current vehicle state. See [Vehicle State][vehicle-states]                    |
-| `prev_events`  | Enum[]      | Last [Vehicle Event][vehicle---event]                                           |
+| `prev_events`  | Enum[]      | Last [Vehicle Event][vehicle-events]                                           |
 | `updated`     | [timestamp][ts] | Date of last event update                                                     |
 
 404 Failure Response:
@@ -324,14 +324,18 @@ Path Params:
 If `stop_id` is specified, `GET` will return an array with a single stop record, otherwise it will be a list of all stop records.
 
 ## Reservation Type
+
 The reservation type enum expresses the urgency of a given reservation. This can be useful when attempting to quantify metrics around trips: for example, computing passenger wait-time. In the `on_demand` case, passenger wait-time may be quantified by the delta between the `reservation_time`, and the pick-up time; however, in the `scheduled` case, the wait time may be quantified based on the delta between the `scheduled_trip_start_time` found in the Trips payload, and the actual `trip_start_time`. 
+
 | `reservation_type` | Description                                                            |
 |--------------------|------------------------------------------------------------------------|
 | `on_demand`        | The passenger requested the vehicle as soon as possible                |
 | `scheduled`        | The passenger requested the vehicle for a scheduled time in the future |
 
 ## Reservation Method
+
 The reservation method enum describes the different ways in which a passenger can create their reservation.
+
 | `reservation_method` | Description                                               |
 |----------------------|-----------------------------------------------------------|
 | `app`                | Reservation was made through an application (mobile/web)  |
@@ -339,7 +343,9 @@ The reservation method enum describes the different ways in which a passenger ca
 | `phone_dispatch`     | Reservation was made by calling the dispatch operator     |
 
 ## Fare
+
 The Fare object describes a fare for a Trip. 
+
 | Field           | Type                  | Required/Optional | Field Description                                                                       |
 |-----------------|-----------------------|-------------------|-----------------------------------------------------------------------------------------|
 | quoted_cost     | Float                 | Required          | Cost quoted to the customer at the time of booking                                      |
@@ -349,7 +355,9 @@ The Fare object describes a fare for a Trip.
 | payment_methods | `string[]`            | Optional          | Breakdown of different payment methods used for a trip, e.g. cash, card, equity_program |
 
 ## Trip Metadata
+
 The Trips endpoint serves two purposes: 
+
 * Definitively indicating that a Trip (a sequence of events linked by a trip_id) has been completed. For example, from analyzing only the raw Vehicle Events feed, if a trip crosses an Agency's jurisdictional boundaries but does not end within the jurisdiction (last event_type seen is a `leave_jurisdiction`), this can result in a 'dangling trip'. The Trips endpoint satisfies this concern, by acting as a final indication that a trip has been finished, even if it ends outside of jurisdictional boundaries; if a trip has intersected an Agency's jurisdictional boundaries at all during a trip, it is expected that a Provider will send a Trip payload to the Agency following the trip's completion.
 * Providing information to an Agency regarding an entire trip, without extending any of the Vehicle Event payloads, or changing any requirements on when Vehicle Events should be sent.
 
@@ -401,6 +409,6 @@ Payload which was POST'd
 [toc]: #table-of-contents
 [ts]: /general-information.md#timestamps
 [vehicle-types]: /general-information.md#vehicle-types
-[vehicle-states]: /general-information.md#vehicle-states
-[vehicle-events]: /general-information.md#vehicle-state-events
+[vehicle-states]: /modes#vehicle-states
+[vehicle-events]: /modes#event-types
 [versioning]: /general-information.md#versioning
