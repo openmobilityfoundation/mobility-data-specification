@@ -33,7 +33,16 @@ As with all MDS definitions, they should be described in a way that maximizes th
 | `trip_start`          | Start trip |
 | `unspecified`         | Unspecified |
 
+### Limitations on the Use of Certain Values
+
+MDS is intended to communicate the provider's best available information to regulators. However there may be legitimate circumstances where providers do not have definitive or current information about devices on the ground. MDS incorporates some values to convey these situations.  These vehicle state and event type values are to be used sparingly and temporarily, and are not meant for repeated or prolonged use. These values exist to create logical coherence within MDS about vehicles that are operating abnormally or are out of communication. When a more accurate value is known, the MDS API should be updated with the latest information. Cities may add language to their Service Level Agreements (SLAs) that minimize the use of these values by providers. 
+
+**Event Type: Unspecified**
+
+The `unspecified` event type state transition means that the vehicle has moved from one state to another for an unspecified or unknown reason. It is used when there are multiple possible event types between states, but the reason for the transition is not clear. It is expected that `unspecified` will not be used frequently, and only for short periods of time. Cities may put in place specific limitations via an SLA. When more accurate information becomes available to the provider, it should be updated in the MDS data by sending a new event type state transition with the current timestamp.
+
 [Back to Modes Overview][modes]
+
 [Home][home]
 
 [home]: /README.md
