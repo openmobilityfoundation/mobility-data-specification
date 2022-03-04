@@ -1,4 +1,4 @@
-# Mobility Data Specification: Policy and Immutible Data
+# Mobility Data Specification: Policy and Immutable Data
 
 The MDS Policy specification contains a note as to how a given Policy is updated:
 
