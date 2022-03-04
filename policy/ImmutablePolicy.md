@@ -29,7 +29,7 @@ This raises a number of questions about the practical implications of using this
 **Q:** Why not make just `end_date` immutable? <br/>
 **A**: Picking-and-choosing which fields are immutable seems perilous, and this document should make it easier to understand the way to reason about immutable policy data without resorting to short-cuts.
 
-**Q:** Have you thought about digitially signing Policy objects to make sure that they haven't changed, and that the publisher is verifyable?
+**Q:** Have you thought about digitially signing Policy objects to make sure that they haven't changed, and that the publisher is verifyable? <br/>
 **A:** It has come up in discussions, but thus far no action has been taken.  No standard for digitally signing JSON has been established, as JSON does not specify a field-ordering within objects.
 
 **Q**: What if I accidentally terminate a Policy?  How do I un-terminate it? <br/>
