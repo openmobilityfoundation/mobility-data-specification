@@ -1,5 +1,7 @@
 # Mobility Data Specification: **Micromobility**
 
+<img src="https://i.imgur.com/YFlUSfz.png" width="120" align="right" alt="MDS Modes - Micromobility" border="0">
+
 "**Micromobility**" refers to single-occupancy modes of docked or dockless transportation such as e-scooters, e-bikes, and regular bikes.
 
 See the [modes overview](/modes) for how the mode specific information below applies across MDS.
