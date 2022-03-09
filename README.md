@@ -77,7 +77,7 @@ Many parts of the MDS definitions and APIs align across each other. In these cas
 
 You can read more in our **[Understanding the different MDS APIs](https://github.com/openmobilityfoundation/governance/blob/main/technical/Understanding-MDS-APIs.md)** guide. 
 
-![MDS APIs and Endpoints](https://i.imgur.com/bfUtCif.png)
+![MDS APIs and Endpoints](https://i.imgur.com/cCjI0RS.png)
 
 ## GBFS Requirement
 
@@ -173,7 +173,7 @@ MDS includes information about vehicles, their location, and trips taken on thos
 * [Understanding the Data in MDS](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/Understanding-the-Data-in-MDS) - technical document outlining what data is (and is not) in MDS
 * [Use Case Database](https://www.openmobilityfoundation.org/whats-possible-with-mds/) - a starting point for understanding how MDS can be used, and what parts of MDS is required to meet those use cases
 * [Policy Requirements](https://github.com/openmobilityfoundation/mobility-data-specification/tree/main/policy#requirement) - built into MDS, allowing agencies to specify only the endpoints and fields needed for program regulation
-* Using MDS Under GDPR (link coming soon) - how to use MDS in the context of GDPR in Europe
+* [Using MDS Under GDPR](https://www.openmobilityfoundation.org/using-mds-under-gdpr/) - how to use MDS in the context of GDPR in Europe
 
 The OMF’s [Privacy, Security, and Transparency Committee](https://github.com/openmobilityfoundation/privacy-committee#welcome-to-the-privacy-security-and-transparency-committee) creates many of these resources, and advises the OMF on principles and practices that ensure the secure handling of mobility data. The committee – which is composed of both private and public sector OMF members – also holds regular public meetings, which provide additional resources and an opportunity to discuss issues related to privacy and mobility data. Learn more [here](https://github.com/openmobilityfoundation/privacy-committee#welcome-to-the-privacy-security-and-transparency-committee).
 
