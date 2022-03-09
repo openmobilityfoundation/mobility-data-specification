@@ -91,9 +91,9 @@ All MDS compatible Provider feeds [must also expose](/provider/README.md#gbfs) a
 MDS supports multiple "modes", defined as a distinct regulatory framework for a type of mobility service. See the [modes overview](/modes) or get started with a specific mode:
 
 - **[Micromobility](/modes/micromobility.md)** - dockless or docked small devices such as e-scooters and bikes.
-- **Car share** - shared point-to-point and station-based mutli-passenger vehicles.
-- **Delivery robots** - autonomous and remotely driven goods delivery devices
-- **Passenger services** - transporting individuals with a vehicle driven by another entity, including taxis, TNCs, and microtransit
+- **[Passenger services](/modes/passenger-services.md)** - transporting individuals with a vehicle driven by another entity, including taxis, TNCs, and microtransit
+- **[Car share](/modes/car-share.md)** - shared point-to-point and station-based mutli-passenger vehicles.
+- **[Delivery robots](/modes/delivery-robots.md)** - autonomous and remotely driven goods delivery devices
 
 <p align="center">
 <a href="/modes/micromobility.md"><img src="https://i.imgur.com/tl99weM.png" alt="MDS Mode - Micromobility" style="float: left; border: 0; width: 150px;"></a> &nbsp; &nbsp; &nbsp;
