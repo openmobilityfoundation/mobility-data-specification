@@ -27,10 +27,18 @@ Each mode defined in MDS shall include key descriptive information, such as jour
 
 ## List of Supported Modes
 
-* [Micromobility][micromobility] (`micromobility`): single-occupancy modes of docked or dockless transportation such as e-scooters, e-bikes, and regular bikes.
-* Car Share (`car-share`): ...
-* Passenger Services (`passenger-services`): ...
-* Delivery Robots (`delivery-robots`): ...
+- **[Micromobility](/modes/micromobility.md)** (`micromobility`) - dockless or docked small devices such as e-scooters and bikes.
+- **[Passenger services](/modes/passenger-services.md)** (`passenger-services`) - transporting individuals with a vehicle driven by another entity, including taxis, TNCs, and microtransit
+- **[Car share](/modes/car-share.md)** (`car-share`) - shared point-to-point and station-based mutli-passenger vehicles.
+- **[Delivery robots](/modes/delivery-robots.md)** (`delivery-robots`) - autonomous and remotely driven goods delivery devices
+
+<p align="center">
+<a href="/modes/micromobility.md"><img src="https://i.imgur.com/tl99weM.png" alt="MDS Mode - Micromobility" style="float: left; border: 0; width: 150px;"></a> &nbsp; &nbsp; &nbsp;
+<a href="/modes/passenger-services.md"><img src="https://i.imgur.com/mzbughz.png" alt="MDS Mode - Passenger Services" style="float: left; border: 0; width: 150px;"></a> &nbsp; &nbsp; &nbsp; 
+<a href="/modes/car-share.md"><img src="https://i.imgur.com/cCQTge5.png" alt="MDS Mode - Car Share" style="float: left; border: 0; width: 150px;"></a> &nbsp; &nbsp; &nbsp;
+<a href="/modes/delivery-robots.md"><img src="https://i.imgur.com/u2HgctV.png" alt="MDS Mode - Delivery Robots" style="float: left; border: 0; width: 150px;"></a>
+</p>
+<br clear="both"/>
 
 [Top][toc]
 
