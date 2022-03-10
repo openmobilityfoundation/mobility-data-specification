@@ -6,10 +6,11 @@
 - [Endpoints](#endpoints)
   - [Modularity](#modularity)
   - [GBFS Requirement](#gbfs-requirement)
-- [Get Involved](#get-involved)
-  - [Membership](#membership)  
+- [Modes](#modes)
 - [Versions](#versions)
   - [Technical Information](#technical-information)
+- [Get Involved](#get-involved)
+  - [Membership](#membership)  
 - [Cities Using MDS](#cities-using-mds)
 - [Providers Using MDS](#providers-using-mds)
 - [Software Companies Using MDS](#software-companies-using-mds)
@@ -19,7 +20,7 @@
 
 # About
 
-The Mobility Data Specification (**MDS**), a project of the [Open Mobility Foundation](http://www.openmobilityfoundation.org) (**OMF**), is a set of Application Programming Interfaces (APIs) focused on shared mobility services such as dockless scooters, bicycles, mopeds, and carshare, and inspired by projects like [GTFS](https://developers.google.com/transit/gtfs/reference/) and [GBFS](https://github.com/NABSA/gbfs). MDS is a digital tool that helps cities better manage transportation in the public right of way, standardizing communication and data-sharing between cities and private mobility providers, allowing cities to share and validate policy digitally, and enabling vehicle management and better outcomes for residents. 
+The Mobility Data Specification (**MDS**), a project of the [Open Mobility Foundation](http://www.openmobilityfoundation.org) (**OMF**), is a set of Application Programming Interfaces (APIs) that helps cities better manage transportation in the public right of way, standardizing communication and data-sharing between cities and mobility providers, allowing cities to share and validate policy digitally, and enabling vehicle management and better outcomes for residents. Inspired in part by projects like [GTFS](https://developers.google.com/transit/gtfs/reference/) and [GBFS](https://github.com/NABSA/gbfs), MDS is focused on managing mobility services such as dockless scooters, bicycles, mopeds, car share, delivery robots, and passenger services. 
 
 **MDS** is a key piece of digital infrastructure that supports the effective implementation of mobility policies in cities around the world. For a high level overview and visuals, see the [About MDS](https://www.openmobilityfoundation.org/about-mds/) page on the OMF website.
 
@@ -85,6 +86,45 @@ All MDS compatible Provider feeds [must also expose](/provider/README.md#gbfs) a
 
 [Top][toc]
 
+# Modes
+
+MDS supports multiple "modes", defined as a distinct regulatory framework for a type of mobility service. See the [modes overview](/modes) or get started with a specific mode:
+
+- **[Micromobility](/modes/micromobility.md)** - dockless or docked small devices such as e-scooters and bikes.
+- **[Passenger services](/modes/passenger-services.md)** - transporting individuals with a vehicle driven by another entity, including taxis, TNCs, and microtransit
+- **[Car share](/modes/car-share.md)** - shared point-to-point and station-based mutli-passenger vehicles.
+- **[Delivery robots](/modes/delivery-robots.md)** - autonomous and remotely driven goods delivery devices
+
+<p align="center">
+<a href="/modes/micromobility.md"><img src="https://i.imgur.com/tl99weM.png" alt="MDS Mode - Micromobility" style="float: left; border: 0; width: 150px;"></a> &nbsp; &nbsp; &nbsp;
+<a href="/modes/passenger-services.md"><img src="https://i.imgur.com/mzbughz.png" alt="MDS Mode - Passenger Services" style="float: left; border: 0; width: 150px;"></a> &nbsp; &nbsp; &nbsp; 
+<a href="/modes/car-share.md"><img src="https://i.imgur.com/cCQTge5.png" alt="MDS Mode - Car Share" style="float: left; border: 0; width: 150px;"></a> &nbsp; &nbsp; &nbsp;
+<a href="/modes/delivery-robots.md"><img src="https://i.imgur.com/u2HgctV.png" alt="MDS Mode - Delivery Robots" style="float: left; border: 0; width: 150px;"></a>
+</p>
+<br clear="both"/>
+
+[Top][toc]
+
+# Versions
+
+MDS has a **current release** (version 1.2.0), **previous releases** (both recommended and longer recommended for use), and **upcoming releases** in development. For a full list of releases, their status, recommended versions, and timelines, see the [Official MDS Releases](https://github.com/openmobilityfoundation/governance/wiki/Releases) page.
+
+The OMF provides guidance on upgrading for cities, providers, and software companies, and sample permit language for cities. See our [MDS Version Guidance](https://github.com/openmobilityfoundation/governance/blob/main/technical/OMF-MDS-Version-Guidance.md) for best practices on how and when to upgrade MDS as new versions become available. Our complimentary [MDS Policy Language Guidance](https://github.com/openmobilityfoundation/governance/blob/main/technical/OMF-MDS-Policy-Language-Guidance.md) document is for cities writing MDS into their operating policy and includes sample policy language.
+
+## Technical Information
+
+The latest MDS release is in the [`main`](https://github.com/openmobilityfoundation/mobility-data-specification/tree/main) branch, and development for the next release occurs in the [`dev`](https://github.com/openmobilityfoundation/mobility-data-specification/tree/dev) branch.
+
+The MDS specification is versioned using Git tags and [semantic versioning](https://semver.org/). See prior [releases](https://github.com/openmobilityfoundation/mobility-data-specification/releases) and the [Release Guidelines](https://github.com/openmobilityfoundation/governance/blob/main/technical/ReleaseGuidelines.md) for more information and [version support](https://github.com/openmobilityfoundation/governance/blob/main/technical/ReleaseGuidelines.md#ongoing-version-support).
+
+* [Latest Release Branch](https://github.com/openmobilityfoundation/mobility-data-specification/tree/main) (main)
+* [Development Branch](https://github.com/openmobilityfoundation/mobility-data-specification/tree/dev) (dev)
+* [All GitHub Releases](https://github.com/openmobilityfoundation/mobility-data-specification/releases)
+* [MDS Releases](https://github.com/openmobilityfoundation/governance/wiki/Releases) - current/recommended versions, timeline
+* [Release Guidelines](https://github.com/openmobilityfoundation/governance/blob/main/technical/ReleaseGuidelines.md)
+
+[Top][toc]
+
 # Get Involved
 
 To stay up to date on MDS, please **subscribe to the [mds-announce](https://groups.google.com/a/groups.openmobilityfoundation.org/g/mds-announce) mailing list** for general updates, the **[wg-mds](https://groups.google.com/a/groups.openmobilityfoundation.org/g/wg-mds) mailing list** for Working Group details and meetings, and read our **[Community Wiki](https://github.com/openmobilityfoundation/mobility-data-specification/wiki)**.
@@ -109,26 +149,6 @@ OMF Members (public agencies and commercial companies) have additional participa
   - [Curb Working Group](https://github.com/openmobilityfoundation/curb-data-specification/wiki)
 
 Read about [how to become an OMF member](https://www.openmobilityfoundation.org/how-to-become-a-member/), [how to get involved and our governance model](https://www.openmobilityfoundation.org/how-to-get-involved-in-the-open-mobility-foundation/), and [contact us](https://mailchi.mp/openmobilityfoundation/membership) for more details. 
-
-[Top][toc]
-
-# Versions
-
-MDS has a **current release** (version 1.2.0), **previous releases** (both recommended and longer recommended for use), and **upcoming releases** in development. For a full list of releases, their status, recommended versions, and timelines, see the [Official MDS Releases](https://github.com/openmobilityfoundation/governance/wiki/Releases) page.
-
-The OMF provides guidance on upgrading for cities, providers, and software companies, and sample permit language for cities. See our [MDS Version Guidance](https://github.com/openmobilityfoundation/governance/blob/main/technical/OMF-MDS-Version-Guidance.md) for best practices on how and when to upgrade MDS as new versions become available. Our complimentary [MDS Policy Language Guidance](https://github.com/openmobilityfoundation/governance/blob/main/technical/OMF-MDS-Policy-Language-Guidance.md) document is for cities writing MDS into their operating policy and includes sample policy language.
-
-## Technical Information
-
-The latest MDS release is in the [`main`](https://github.com/openmobilityfoundation/mobility-data-specification/tree/main) branch, and development for the next release occurs in the [`dev`](https://github.com/openmobilityfoundation/mobility-data-specification/tree/dev) branch.
-
-The MDS specification is versioned using Git tags and [semantic versioning](https://semver.org/). See prior [releases](https://github.com/openmobilityfoundation/mobility-data-specification/releases) and the [Release Guidelines](https://github.com/openmobilityfoundation/governance/blob/main/technical/ReleaseGuidelines.md) for more information and [version support](https://github.com/openmobilityfoundation/governance/blob/main/technical/ReleaseGuidelines.md#ongoing-version-support).
-
-* [Latest Release Branch](https://github.com/openmobilityfoundation/mobility-data-specification/tree/main) (main)
-* [Development Branch](https://github.com/openmobilityfoundation/mobility-data-specification/tree/dev) (dev)
-* [All GitHub Releases](https://github.com/openmobilityfoundation/mobility-data-specification/releases)
-* [MDS Releases](https://github.com/openmobilityfoundation/governance/wiki/Releases) - current/recommended versions, timeline
-* [Release Guidelines](https://github.com/openmobilityfoundation/governance/blob/main/technical/ReleaseGuidelines.md)
 
 [Top][toc]
 
@@ -212,4 +232,5 @@ Please [let us know](https://www.openmobilityfoundation.org/get-in-touch/) if yo
 [geography]: /geography/README.md
 [jurisdiction]: /jurisdiction/README.md
 [metrics]: /metrics/README.md
+[modes]: /modes/README.md
 [toc]: #table-of-contents
