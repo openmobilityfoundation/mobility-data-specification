@@ -52,6 +52,21 @@ The `vehicle_attributes` array may have the following key value pairs:
 - `model` (string)
 - TODO others?
 
+### Propulsion Types
+
+#### Valid for vehicle_types: car
+
+| `propulsion`      | Description                         |
+| ----------------- | ----------------------------------- |
+| `electric`        | Contains a battery-powered motor    |
+| `combustion`      | Contains a gas engine-powered motor |
+
+### Accessibility Options
+
+This enum represents the accessibility options available on a given vehicle, or the accessibility options utilized for a given trip. This enum is currently only used by the Taxi mode, and is not used by micromobility.
+| `accessibility_option`  | Description                           |
+|-------------------------|---------------------------------------|
+| `wheelchair_accessible` | This vehicle is wheelchair accessible |
 ## Vehicle States
 
 Valid passenger services vehicle states are 

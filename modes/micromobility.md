@@ -48,6 +48,21 @@ The `vehicle_attributes` array may have the following key value pairs:
 - `make` (string)
 - `model` (string)
 
+### Propulsion Types
+
+#### Valid for vehicle_types: bicycle, scooter, moped, other
+
+| `propulsion`      | Description                                            |
+| ----------------- | ------------------------------------------------------ |
+| `human`           | Pedal or foot propulsion                               |
+| `electric_assist` | Provides power only alongside human propulsion         |
+| `electric`        | Contains throttle mode with a battery-powered motor    |
+| `combustion`      | Contains throttle mode with a gas engine-powered motor |
+
+### Accessibility Options
+
+Accessibility options are not used in micromobility.
+
 [Top][toc]
 
 ## Vehicle States

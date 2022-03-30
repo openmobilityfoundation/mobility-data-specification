@@ -70,13 +70,6 @@ Additionally, `device_id` must remain constant for the device's lifetime of serv
 
 [Top][toc]
 
-## Modes
-A Mode is an operational model for a form of transportation in MDS. Given the nature of the differing operational flows, and need for regulators to capture this information, each mode may have different state machines, and different data requirements throughout MDS. 
-| `mode`      | Description                                                                                                                                                       |
-|-----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `micromobility` | This mode includes e-scooters, and dockless pedal bikes that are available for rent by consumers through a micromobility operator within an agency's jurisdiction |
-| `taxi`          | This mode includes franchise taxi service operators who operate and are regulated within an agency's jurisdiction                                                 |
-
 ## Geographic Data
 
 References to geographic datatypes (Point, MultiPolygon, etc.) imply coordinates encoded in the [WGS 84 (EPSG:4326)][wgs84] standard GPS or GNSS projection expressed as [Decimal Degrees][decimal-degrees]. When points are used, you may assume a 20 meter buffer around the point when needed.
@@ -184,9 +177,7 @@ Note if implementing the beta feature [Geography Driven Events](/general-informa
 [Top][toc]
 
 ## Propulsion Types
-A vehicle may have one or more values from the `propulsion_types`, depending on the number of modes of operation. For example, a scooter that can be powered by foot or by electric motor would have the `propulsion_types` represented by the array `['human', 'electric']`. A bicycle with pedal-assist would have the `propulsion_types` represented by the array `['human', 'electric_assist']` if it can also be operated as a traditional bicycle. A hybrid car would have the `propulsion_types` represented by the array `['electric', 'combustion']`.
 
-### Valid for vehicle_types: bicycle, scooter, moped, other
 | `propulsion`      | Description                                            |
 | ----------------- | ------------------------------------------------------ |
 | `human`           | Pedal or foot propulsion                               |
@@ -194,12 +185,7 @@ A vehicle may have one or more values from the `propulsion_types`, depending on 
 | `electric`        | Contains throttle mode with a battery-powered motor    |
 | `combustion`      | Contains throttle mode with a gas engine-powered motor |
 
-
-### Valid for vehicle_types: car
-| `propulsion`      | Description                         |
-| ----------------- | ----------------------------------- |
-| `electric`        | Contains a battery-powered motor    |
-| `combustion`      | Contains a gas engine-powered motor |
+A vehicle may have one or more values from the `propulsion`, depending on the number of modes of operation. For example, a scooter that can be powered by foot or by electric motor would have the `propulsion` represented by the array `['human', 'electric']`. A bicycle with pedal-assist would have the `propulsion` represented by the array `['human', 'electric_assist']` if it can also be operated as a traditional bicycle.
 
 [Top][toc]
 
@@ -306,12 +292,6 @@ MDS uses Version 1 UUIDs by default. Version 4 UUIDs may be used where noted.
 
 [Top][toc]
 
-## Accessibility Options
-This enum represents the accessibility options available on a given vehicle, or the accessibility options utilized for a given trip. This enum is currently only used by the Taxi mode, and is not used by micromobility.
-| `accessibility_option`  | Description                           |
-|-------------------------|---------------------------------------|
-| `wheelchair_accessible` | This vehicle is wheelchair accessible |
-
 ## Vehicle States
 
 See new location in [vehicle states](/modes/vehicle_states.md) within [modes](/modes#vehicle-states).
@@ -351,7 +331,6 @@ The list of allowed `vehicle_type` values in MDS. Aligning with [GBFS vehicle ty
 
 [Top][toc]
 
-
 ## Versioning
 
 MDS APIs must handle requests for specific versions of the specification from clients.
@@ -382,15 +361,6 @@ If an unsupported or invalid version is requested, the API must respond with a s
 [gbfs-station-info]: https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_informationjson
 [gbfs-station-status]: https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_statusjson
 [general-stops]: /general-information.md#stops
-[geo]: #geographic-data
-[geojson-feature]: https://tools.ietf.org/html/rfc7946#section-3.2
-[geojson-point]: https://tools.ietf.org/html/rfc7946#section-3.1.2
-[policy]: /policy/README.md
-[provider]: /provider/README.md
-[st-intersects]: https://postgis.net/docs/ST_Intersects.html
-[toc]: #table-of-contents
-[ts]: /general-information.md#timestamps
-[wgs84]: https://en.wikipedia.org/wiki/World_Geodetic_System
 [geo]: #geographic-data
 [geojson-feature]: https://tools.ietf.org/html/rfc7946#section-3.2
 [geojson-point]: https://tools.ietf.org/html/rfc7946#section-3.1.2
