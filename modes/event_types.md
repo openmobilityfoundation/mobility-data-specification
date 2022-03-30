@@ -14,12 +14,14 @@ As with all MDS definitions, they should be described in a way that maximizes th
 | `comms_restored`      | Communications restored |
 | `compliance_pick_up`  | Pick up for compliance (rule violation) |
 | `decommissioned`      | Decommissioned |
+| `driver_cancellation` | Driver canceled a trip |
 | `located`             | Located (opposite of Missing) |
 | `maintenance`         | General maintenance |
 | `maintenance_pick_up` | Pick up for maintenance |
 | `missing`             | Missing |
 | `off_hours`           | Off hours - end of service |
 | `on_hours`            | On hours - start of service |
+| `passenger_cancellation` | Passenger canceled a trip |
 | `provider_drop_off`   | Drop off by the provider |
 | `rebalance_pick_up`   | Pick up for rebalancing |
 | `reservation_cancel`  | Reservation canceled |

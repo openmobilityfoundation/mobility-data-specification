@@ -1,20 +1,102 @@
-# Taxi Mode
+# Mobility Data Specification: **Passenger Servies**
 
-## Taxi Vehicle States
+Passenger Services refers to taxis and transportation network companies (TNCs).  Passenger Services typically have a driver, one or more passengers, and multiple passengers may be on different trips.  The state machine tracks the trip states of the passengers separately from the vehicle state.  
 
-| `state`           | In PROW? | Description                                                                                                                                                                    |
-|-------------------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `removed`         | no       | Vehicle is explicitly removed from the PROW. Examples include: at the shop receiving maintenance, vehicle moved to another fleet                                               |
-| `available`       | yes      | Available for-hire by a passenger.                                                                                                                                             |
-| `non_operational` | yes      | Not available for-hire.  Example: driver's shift ends and vehicle goes out of service                                                                                          |
-| `reserved`        | yes      | Reserved via Provider's app, waiting to be picked up by a rider.                                                                                                               |
-| `on_trip`         | yes      | On a trip with passengers in the vehicle.  May or may not be in motion.                                                                                                        |
-| `stopped`         | yes      | Vehicle is stopped to either pick-up, or drop-off a passenger.                                                                                                                 |
-| `elsewhere`       | no       | Outside of regulator's jurisdiction, and thus not subject to cap-counts or other regulations. Example: a vehicle that started a trip in L.A. has transitioned to Santa Monica. |
-| `unknown`         | unknown  | Provider has lost contact with the vehicle and its disposition is unknown.  Examples include: driving in a tunnel, hardware malfunction                                        |
+See the [modes overview](/modes) for how the mode specific information below applies across MDS.
 
+## Taxi vs. TNC implementation differences
 
-## Taxi Vehicle States & Events
+Taxis typically require explicit tracking of maintenance.
+TNCs typically do not.
+
+TODO `provider_cancellation` (more common in TNC) vs `driver_cancellation` (more common in taxi)
+
+## Table of Contents
+
+* [Mode Attributes](#mode-attributes)
+* [Vehicle States](#vehicle-states)
+* [Event Types](#event-types)
+* [Vehicle State Events](#vehicle-states-events)
+* [State Machine Diagram](#state-machine-diagram)
+
+## Mode Attributes
+
+### Mode ID
+
+TODO `passenger-services`
+
+### Journey ID
+
+The `journey_id` field shall have a consistent value in overlapping trips, e.g. "pooled" or "shared" rides with different start and/or end locations.
+
+### Trip Type
+
+The `trip_type` field is not currently used in passenger services.
+
+### Trip Attributes
+
+The `trip_attributes` array is not (yet? TODO) used with in passenger services.
+
+### Vehicle Attributes
+
+The `vehicle_attributes` array may have the following key value pairs:
+
+- `year` (integer)
+- `make` (string)
+- `model` (string)
+- TODO others?
+
+## Vehicle States
+
+Valid passenger services vehicle states are 
+
+- `removed`
+- `available` 
+- `non_operational` 
+- `reserved` 
+- `on_trip` 
+- `stopped`
+- `elsewhere` 
+- `unknown`  
+
+See [Vehicle States][vehicle-states] for descriptions.
+
+[Top][toc]
+
+## Event Types
+
+Valid passenger services vehicle event types are 
+
+- `comms_lost`
+- `comms_restored`
+- `decommission`
+- `maintenance_end`
+- `maintenance_start`
+- `recommission`
+- `reservation_cancel`
+- `reservation_start`
+- `service_end`
+- `service_start`
+- `trip_cancel`
+- `trip_end`
+- `trip_enter_jurisdiction`
+- `trip_leave_jurisdiction`
+- `trip_resume`
+- `trip_start`
+- `trip_stop`
+- `unspecified`
+
+This list is somewhat shorter than the micromobility event list,
+as passenger service vehicles are controlled by a driver or potentially an AI.
+They are not picked up or dropped off for rebalancing or compliance, for example, and they do not go out of service because of a low battery.
+
+See vehicle [Event Types][vehicle-events] for descriptions.
+
+[Top][toc]
+
+## Vehicle States & Events
+
+This is the list of `vehicle_state` and `event_type` pairings that constitute the valid transitions of the vehicle state machine.
 
 | **Previous** `vehicle_state` | `vehicle_state`   | `trip_state` | `event_type`             | Description                                                                                                      |
 |------------------------------|-------------------|--------------|--------------------------|------------------------------------------------------------------------------------------------------------------|
@@ -34,17 +116,17 @@
 | `non_operational`            | `unknown`         | N/A          | `comms_lost`             | The vehicle has went out of comms while not operating commercially                                               |
 | `on_trip`                    | `elsewhere`       | N/A          | `leave_jurisdiction`     | The vehicle has left jurisdictional boundaries while on a trip                                                   |
 | `on_trip`                    | `stopped`         | `stopped`    | `trip_stop`              | The vehicle has stopped while on a trip                                                                          |
-| `on_trip`                    | `unknown`         | N/A          | `comms_lost`             | The vehicle has went out of comms while on a trip                                                                |
+| `on_trip`                    | `unknown`         | N/A          | `comms_lost`             | The vehicle has gone out of comms while on a trip                                                                |
 | `removed`                    | `non_operational` | N/A          | `maintenance_end`        | The vehicle has left the depot                                                                                   |
 | `removed`                    | `non_operational` | N/A          | `recommissioned`         | The vehicle has been re-added to the Provider's fleet after being previously `decommissioned`                    |
-| `removed`                    | `unknown`         | N/A          | `comms_lost`             | The vehicle has went out of comms while removed                                                                  |
-| `reserved`                   | `available`       | N/A          | `driver_cancellation`    | The driver has cancelled the reservation                                                                         |
-| `reserved`                   | `available`       | N/A          | `passenger_cancellation` | The passenger has cancelled the reservation                                                                      |
+| `removed`                    | `unknown`         | N/A          | `comms_lost`             | The vehicle has gone out of comms while removed                                                                  |
+| `reserved`                   | `available`       | N/A          | `driver_cancellation`    | The driver has canceled the reservation                                                                         |
+| `reserved`                   | `available`       | N/A          | `passenger_cancellation` | The passenger has canceled the reservation                                                                      |
 | `reserved`                   | `elsewhere`       | N/A          | `leave_jurisdiction`     | The vehicle has left the jurisdiction while in a reservation                                                     |
 | `reserved`                   | `stopped`         | `stopped`    | `reserve_stop`           | The vehicle has stopped to pick up the passenger                                                                 |
 | `reserved`                   | `unknown`         | N/A          | `comms_lost`             | The vehicle went out of comms while being reserved by a passenger                                                |
-| `stopped`                    | `available`       | N/A          | `driver_cancellation`    | The driver has cancelled the trip while either waiting for the passenger, or dropping them off                   |
-| `stopped`                    | `available`       | N/A          | `passenger_cancellation` | The passenger has cancelled the trip while the vehicle is waiting to pick them up, or they are being dropped off |
+| `stopped`                    | `available`       | N/A          | `driver_cancellation`    | The driver has canceled the trip while either waiting for the passenger, or dropping them off                   |
+| `stopped`                    | `available`       | N/A          | `passenger_cancellation` | The passenger has canceled the trip while the vehicle is waiting to pick them up, or they are being dropped off |
 | `stopped`                    | `available`       | N/A          | `trip_end`               | The trip has been successfully completed                                                                         |
 | `stopped`                    | `on_trip`         | `on_trip`    | `trip_resume`            | Resume a trip that was previously stopped (e.g. picking up a friend to go to the airport with)                   |
 | `stopped`                    | `on_trip`         | `on_trip`    | `trip_start`             | Start a trip                                                                                                     |
@@ -57,11 +139,11 @@
 | `unknown`                    | `reserved`        | `reserved`   | `comms_restored`         | The vehicle has come back into comms while reserved by a passenger                                               |
 | `unknown`                    | `stopped`         | `stopped`    | `comms_restored`         | The vehicle has come back into comms while stopped                                                               |
 
-The *Taxi State Machine Diagram* shows how the `vehicle_state` and `event_type` relate to each other and how taxi vehicles can transition between states.
+The *Passenger Services State Machine Diagram* shows how the `vehicle_state` and `event_type` relate to each other and how taxi vehicles can transition between states.
 
-![Taxi State Machine Diagram](/taxi-state-machine-diagram.svg)
+![Passenger Services State Machine Diagram](MDS-passenger-services-state-machine-diagram.svg)
 
-#### Trip State Notes
+#### Passenger Services State Notes
 
 When there is only one trip ongoing, `trip_state == vehicle_state`
 

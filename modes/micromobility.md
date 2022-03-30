@@ -18,6 +18,10 @@ See the [modes overview](/modes) for how the mode specific information below app
 
 Some fields used across MDS APIs are defined in more detail within each mode.
 
+### Mode ID
+
+TODO `micromobility`
+
 ### Journey ID
 
 The `journey_id` field is not used with the micromobility mode.
@@ -26,7 +30,7 @@ The `journey_id` field is not used with the micromobility mode.
 
 The `trip_type` field may have one of the following values:
 
-- `rider`: a single rider is taking a trip
+- `rider`: a single rider is taking a trip (TODO is this necessary if there is only one valid value?)
 
 ### Trip Attributes
 
@@ -37,7 +41,7 @@ The `trip_attributes` array is not used with the micromobility mode.
 The `vehicle_attributes` array may have the following key value pairs:
 
 - `year` (integer)
-- `manufacturer` (string)
+- `make` (string)
 - `model` (string)
 
 [Top][toc]
