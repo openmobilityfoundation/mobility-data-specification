@@ -26,6 +26,10 @@ TODO `micromobility`
 
 The `journey_id` field is not used with the micromobility mode.
 
+### Trip ID Requirements
+
+Required in events if `event_types` contains `trip_start`, `trip_end`, `trip_cancel`, `trip_enter_jurisdiction`, or `trip_leave_jurisdiction`.
+
 ### Trip Type
 
 The `trip_type` field may have one of the following values:

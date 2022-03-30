@@ -29,6 +29,12 @@ TODO `passenger-services`
 
 The `journey_id` field shall have a consistent value in overlapping trips, e.g. "pooled" or "shared" rides with different start and/or end locations.
 
+### Trip ID Requirements
+
+Events require a valid `trip_id` in events where `event_types` contains `reservation_start`, `reservation_stop`, `trip_start`, `trip_stop`, `trip_end`, `passenger_cancellation`, or `driver_cancellation`. 
+
+Additionally, `trip_id` is required if `event_types` contains a `enter_jurisdiction` or `leave_jurisdiction` event pertaining to a passenger trip. 
+
 ### Trip Type
 
 The `trip_type` field is not currently used in passenger services.
