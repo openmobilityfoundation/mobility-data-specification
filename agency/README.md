@@ -180,11 +180,11 @@ Body Params:
 | Field           | Type                         | Required/Optional      | Field Description                                                                                          |
 |-----------------|------------------------------|------------------------|------------------------------------------------------------------------------------------------------------|
 | `vehicle_state` | Enum                         | Required               | see [Vehicle States][vehicle-states]                                                                       |
-| `event_types`   | Enum[]                       | Required               | see [Micromobility Vehicle Events][mm-vehicle-events] and [Taxi Vehicle Events][taxi-vehicle-events]       |
+| `event_types`   | Enum[]                       | Required               | see [Vehicle Events]       |
 | `timestamp`     | [timestamp][ts]              | Required               | Date of last event update                                                                                  |
 | `telemetry`     | [Telemetry](#telemetry-data) | Required               | Single point of telemetry                                                                                  |
 | `event_geographies`  | UUID[] | Optional        | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.1.0)*. Array of Geography UUIDs consisting of every Geography that contains the location of the event. See [Geography Driven Events][geography-driven-events]. Required if `telemetry` is not present. |
-| `trip_id`       | UUID                         | Conditionally required | UUID provided by Operator to uniquely identify the trip. See [trip_id requirements](#trip_id-requirements) |
+| `trip_id`       | UUID                         | Conditionally required | UUID provided by Operator to uniquely identify the trip. See `trip_id` requirements for each mode. |
 
 201 Success Response:
 
