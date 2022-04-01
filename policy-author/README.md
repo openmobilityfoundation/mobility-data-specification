@@ -69,7 +69,7 @@ Response codes:
 - 409 - conflict (if immutable)
 - 500 - server error
 
-### POST /policies/{policy_id}/publish
+### PUT /policies/{policy_id}/publish
 
 Publish (make immutable) a Policy. Must be unpublished.
 
