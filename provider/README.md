@@ -169,6 +169,8 @@ Unless stated otherwise by the municipality, the trips endpoint must return all 
 | `accuracy` | Integer | Required | The approximate level of accuracy, in meters, of `Points` within `route` |
 | `start_time` | [timestamp][ts] | Required | |
 | `end_time` | [timestamp][ts] | Required | |
+| `start_location` |  GeoJSON [Point Feature][point-geo] | Optional | See also [Stop-based Geographic Data][stop-based-geo]. |
+| `end_location` |  GeoJSON [Point Feature][point-geo] | Optional | See also [Stop-based Geographic Data][stop-based-geo]. |
 | `publication_time` | [timestamp][ts] | Optional | Date/time that trip became available through the trips endpoint |
 | `parking_verification_url` | String | Optional | A URL to a photo (or other evidence) of proper vehicle parking |
 | `standard_cost` | Integer | Optional | The cost, in the currency defined in `currency`, that it would cost to perform that trip in the standard operation of the System (see [Costs & Currencies][costs-and-currencies]) |
