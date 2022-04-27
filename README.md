@@ -12,7 +12,7 @@
 - [Versions](#versions)
   - [Technical Information](#technical-information)
 - [Get Involved](#get-involved)
-  - [Membership](#membership)  
+  - [Membership](#membership)
 - [Cities Using MDS](#cities-using-mds)
 - [Providers Using MDS](#providers-using-mds)
 - [Software Companies Using MDS](#software-companies-using-mds)
@@ -24,7 +24,7 @@
 
 The Mobility Data Specification (**MDS**), a project of the [Open Mobility Foundation](http://www.openmobilityfoundation.org) (**OMF**), is a set of Application Programming Interfaces (APIs) that helps cities better manage transportation in the public right of way, standardizing communication and data-sharing between cities and mobility providers, allowing cities to share and validate policy digitally, and enabling vehicle management and better outcomes for residents. Inspired in part by projects like [GTFS](https://developers.google.com/transit/gtfs/reference/) and [GBFS](https://github.com/NABSA/gbfs), MDS is focused on managing mobility services such as dockless scooters, bicycles, mopeds, car share, delivery robots, and passenger services. 
 
-**MDS** helps cities interact with companies who operate dockless scooters, bicycles, mopeds, carshare, and taxis in the public right-of-way. MDS is a key piece of digital infrastructure that supports the effective implementation of mobility policies in cities around the world.
+**MDS** is a key piece of digital infrastructure that supports the effective implementation of mobility policies in cities around the world. For a high level overview and visuals, see the [About MDS](https://www.openmobilityfoundation.org/about-mds/) page on the OMF website.
 
 ![MDS Main Logo](https://i.imgur.com/AiUedl3.png)
 
