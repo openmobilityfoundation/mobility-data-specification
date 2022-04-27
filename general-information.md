@@ -4,31 +4,31 @@ This document contains specifications that are shared between the various MDS AP
 
 ## Table of Contents
 
-* [Beta Features](#beta-features)
-* [Costs and Currencies](#costs-and-currencies)
-* [Definitions](#definitions)
-* [Devices](#devices)
-* [Geographic Data][geo]
-  * [Geographic Telemetry Data](#geographic-telemetry-data)
-  * [Stop-based Geographic Data](#stop-based-geographic-data)
-  * [Intersection Operation](#intersection-operation)
-* [Geography-Driven Events](#geography-driven-events)
-* [Optional Authentication](#optional-authentication)
-* [Propulsion Types](#propulsion-types)
-* [Responses](#responses)
-  * [Error Messages](#error-messages)
-* [Strings](#strings)
-* [Stops](#stops)
-  * [Stop Status](#stop-status)
-  * [GBFS Compatibility](#gbfs-compatibility)
-* [Timestamps](#timestamps)
-* [UUIDs](#uuids)
-* [Vehicle States](#vehicle-states)
-  * [Event Types](#event-types)
-  * [Vehicle State Events](#vehicle-state-events)
-  * [State Machine Diagram](#state-machine-diagram)
-* [Vehicle Types](#vehicle-types)
-* [Versioning](#versioning)
+- [Beta Features](#beta-features)
+- [Costs and currencies](#costs-and-currencies)
+- [Definitions](#definitions)
+- [Devices](#devices)
+- [Geographic Data](#geographic-data)
+  - [Geographic Telemetry Data](#geographic-telemetry-data)
+  - [Stop-based Geographic Data](#stop-based-geographic-data)
+  - [Intersection Operation](#intersection-operation)
+- [Geography-Driven Events](#geography-driven-events)
+- [Optional Authentication](#optional-authentication)
+- [Propulsion Types](#propulsion-types)
+- [Responses](#responses)
+  - [Error Messages](#error-messages)
+- [Strings](#strings)
+- [Stops](#stops)
+  - [Stop Status](#stop-status)
+  - [GBFS Compatibility](#gbfs-compatibility)
+- [Timestamps](#timestamps)
+- [UUIDs](#uuids)
+- [Vehicle States](#vehicle-states)
+  - [Event Types](#event-types)
+  - [Vehicle State Events](#vehicle-state-events)
+  - [State Machine Diagram](#state-machine-diagram)
+- [Vehicle Types](#vehicle-types)
+- [Versioning](#versioning)
 
 ## Beta Features
 
@@ -188,6 +188,12 @@ Note if implementing the beta feature [Geography Driven Events](/general-informa
 A vehicle may have one or more values from the `propulsion`, depending on the number of modes of operation. For example, a scooter that can be powered by foot or by electric motor would have the `propulsion` represented by the array `['human', 'electric']`. A bicycle with pedal-assist would have the `propulsion` represented by the array `['human', 'electric_assist']` if it can also be operated as a traditional bicycle.
 
 [Top][toc]
+
+#### Accessibility Options
+This enum represents the accessibility options available on a given vehicle, or the accessibility options utilized for a given trip. This enum is currently only used by the Taxi mode, and is not used by micromobility.
+| `accessibility_option`  | Description                           |
+|-------------------------|---------------------------------------|
+| `wheelchair_accessible` | This vehicle is wheelchair accessible |
 
 ## Responses
 
