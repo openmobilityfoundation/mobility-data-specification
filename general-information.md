@@ -190,7 +190,7 @@ A vehicle may have one or more values from the `propulsion`, depending on the nu
 [Top][toc]
 
 #### Accessibility Options
-This enum represents the accessibility options available on a given vehicle, or the accessibility options utilized for a given trip. This enum is currently only used by the Taxi mode, and is not used by micromobility.
+This enum represents the accessibility options available on a given vehicle, or the accessibility options utilized for a given trip. This enum is currently only used by the Passenger Services mode, and is not used by micromobility.
 | `accessibility_option`  | Description                           |
 |-------------------------|---------------------------------------|
 | `wheelchair_accessible` | This vehicle is wheelchair accessible |
