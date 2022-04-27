@@ -52,12 +52,12 @@ The `vehicle_attributes` array may have the following key value pairs:
 
 #### Valid for vehicle_types: bicycle, scooter, moped, other
 
-| `propulsion`      | Description                                            |
-| ----------------- | ------------------------------------------------------ |
-| `human`           | Pedal or foot propulsion                               |
-| `electric_assist` | Provides power only alongside human propulsion         |
-| `electric`        | Contains throttle mode with a battery-powered motor    |
-| `combustion`      | Contains throttle mode with a gas engine-powered motor |
+| `propulsion`      |
+| ----------------- |
+| `human`           |
+| `electric_assist` |
+| `electric`        |
+| `combustion`      |
 
 ### Accessibility Options
 

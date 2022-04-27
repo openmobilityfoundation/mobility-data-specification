@@ -56,10 +56,10 @@ The `vehicle_attributes` array may have the following key value pairs:
 
 #### Valid for vehicle_types: car
 
-| `propulsion`      | Description                         |
-| ----------------- | ----------------------------------- |
-| `electric`        | Contains a battery-powered motor    |
-| `combustion`      | Contains a gas engine-powered motor |
+| `propulsion`      |
+| ----------------- |
+| `electric`        |
+| `combustion`      |
 
 ### Accessibility Options
 
