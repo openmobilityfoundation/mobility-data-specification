@@ -162,7 +162,7 @@ This is the list of `vehicle_state` and `event_type` pairings that constitute th
 
 The *Passenger Services State Machine Diagram* shows how the `vehicle_state` and `event_type` relate to each other and how taxi vehicles can transition between states.
 
-![Passenger Services State Machine Diagram](MDS-passenger-services-state-machine-diagram.svg)
+![Passenger Services State Machine Diagram](passenger-services-state-machine-diagram.svg)
 
 #### Passenger Services State Notes
 
