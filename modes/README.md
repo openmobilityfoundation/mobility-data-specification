@@ -13,13 +13,13 @@ All MDS APIs should be mode-agnostic.
 
 ## Modes
 
-The `mode` value is used to specify the applicable mobility category in MDS Policy, MDS Jurisdictions, and other parts of the spec. The only currently supported mode is `micromobility`, but others such as taxi and delivery robots are planned.
+The `mode` value is used to specify the applicable mobility category in MDS Policy, MDS Jurisdictions, and many other parts of MDS. 
 
 A `mode` is defined as: A distinct regulatory framework for a type of mobility service, as distinguished by a combination of a) the data needed by regulators, b) the operating rules under which the service functions, c) the legal authority under which it is regulated, and the d) design and operating model of the service itself.
 
-There will be some gray areas and some differences from one jurisdiction to another (e.g. taxis and ridehail may be regulated under the same rules on one place, but different rules in another). We do not need to pre-define a complete taxonomy of modes, or identify every modal boundary upfront, but would instead add modes on an as-needed basis, maintaining as much consistency of naming as possible.
+There will be some gray areas and some differences from one jurisdiction to another (e.g. taxis and ridehail may be regulated under the same rules on one place, but different rules in another). MDS will not pre-define a complete taxonomy of modes, or identify every modal boundary upfront, but will instead add modes on an as-needed basis, maintaining as much consistency of naming as possible.
 
-We should err on the side of treating highly similar services as one mode, but should consult with our members and community to inform each decision about how to integrate a new service and whether it needs to be designated as its own mode. This is a policy implementation question as much as it is a technical one.
+We err on the side of treating highly similar services as one mode, but consult with our members and community to inform each decision about how to integrate a new service and whether it needs to be designated as its own mode. This is a policy implementation question as much as it is a technical one.
 
 Each mode defined in MDS shall include key descriptive information, such as journey type (e.g. point-to-point, multi-segment, multi-segment overlapping), primary purpose (goods, single passenger, multi-passenger, etc.), and a description of the service being offered that aligns with terminology commonly understood by the public (e.g. “e-scooter” or “ridehailing”). 
 
