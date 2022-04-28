@@ -20,7 +20,7 @@ Some fields used across MDS APIs are defined in more detail within each mode.
 
 ### Mode ID
 
-TODO `micromobility`
+The short name identifier for Micromobility used across MDS is `micromobility`.
 
 ### Journey ID
 
@@ -32,9 +32,9 @@ Required in events if `event_types` contains `trip_start`, `trip_end`, `trip_can
 
 ### Trip Type
 
-The `trip_type` field may have one of the following values:
+The `trip_type` field **may** have one of the following values:
 
-- `rider`: a single rider is taking a trip (TODO is this necessary if there is only one valid value?)
+- `rider`: a single rider is taking a trip
 
 ### Trip Attributes
 
