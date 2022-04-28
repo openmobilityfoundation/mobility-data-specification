@@ -143,7 +143,7 @@ Body Params:
 
 | Field        | Type    | Required/Optional | Field Description                                                    |
 | ------------ | ------- | ----------------- | -------------------------------------------------------------------- |
-| `vehicle_id` | String  | Required          | Vehicle Identification Number (vehicle_id) visible on vehicle               |
+| `vehicle_id` | String  | Required          | License Plate (if present) or VIN visible on a vehicle               |
 
 200 Success Response:
 
@@ -164,7 +164,7 @@ _No content returned if no vehicle matching `device_id` is found._
 
 ## Vehicle - Event
 
-The vehicle `/event` endpoint allows the Provider to control the state of the vehicle including deregister a vehicle from the fleet.
+The vehicle `/event` endpoint allows the Provider to control the state of the vehicle.
 
 Endpoint: `/vehicles/{device_id}/event`
 Method: `POST`
@@ -177,14 +177,14 @@ Path Params:
 
 Body Params:
 
-| Field           | Type                          | Required/Optional | Field Description |
-| -----------     | ----------------------------- | -------- | -------------------------------------------------------------------------------- |
-| `vehicle_state` | Enum                          | Required | see [Vehicle States][vehicle-states] |
-| `event_types`   | Enum[]                        | Required | see [Vehicle Events][vehicle-events] |
-| `timestamp`     | [timestamp][ts]               | Required | Date of last event update |
-| `telemetry`     | [Telemetry](#telemetry-data)  | Required | Single point of telemetry. |
+| Field           | Type                         | Required/Optional      | Field Description                                                                                          |
+|-----------------|------------------------------|------------------------|------------------------------------------------------------------------------------------------------------|
+| `vehicle_state` | Enum                         | Required               | see [Vehicle States][vehicle-states]                                                                       |
+| `event_types`   | Enum[]                       | Required               | see [Vehicle Events][vehicle-events]       |
+| `timestamp`     | [timestamp][ts]              | Required               | Date of last event update                                                                                  |
+| `telemetry`     | [Telemetry](#telemetry-data) | Required               | Single point of telemetry                                                                                  |
 | `event_geographies`  | UUID[] | Optional        | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.1.0)*. Array of Geography UUIDs consisting of every Geography that contains the location of the event. See [Geography Driven Events][geography-driven-events]. Required if `telemetry` is not present. |
-| `trip_id`       | UUID                          | Optional | UUID provided by Operator to uniquely identify the trip. Required if `event_types` contains `trip_start`, `trip_end`, `trip_cancel`, `trip_enter_jurisdiction`, or `trip_leave_jurisdiction` |
+| `trip_id`       | UUID                         | Conditionally required | UUID provided by Operator to uniquely identify the trip. See `trip_id` requirements for each mode. |
 
 201 Success Response:
 
@@ -199,8 +199,6 @@ Body Params:
 | `bad_param`         | A validation error occurred     | Array of parameters with errors |
 | `missing_param`     | A required parameter is missing | Array of missing parameters     |
 | `unregistered`      | Vehicle is not registered       |                                 |
-
-[Top][toc]
 
 ## Vehicle - Telemetry
 
@@ -394,9 +392,9 @@ Payload which was POST'd
 | `bad_param`          | A validation error occurred.                      | Array of parameters with errors |
 | `missing_param`      | A required parameter is missing.                  | Array of missing parameters     |
 
-
 [Top][toc]
 
+[accessibility-options]: /general-information.md#accessibility-options
 [beta]: /general-information.md#beta-features
 [general]: /general-information.md
 [geography-driven-events]: /general-information.md#geography-driven-events
@@ -409,6 +407,6 @@ Payload which was POST'd
 [toc]: #table-of-contents
 [ts]: /general-information.md#timestamps
 [vehicle-types]: /general-information.md#vehicle-types
-[vehicle-states]: /modes#vehicle-states
-[vehicle-events]: /modes#event-types
+[vehicle-states]: /modes/vehicle_states.md
+[vehicle-events]: /modes/event_types.md
 [versioning]: /general-information.md#versioning

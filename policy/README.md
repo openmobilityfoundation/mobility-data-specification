@@ -8,36 +8,46 @@ This specification describes the digital relationship between _mobility as a ser
 
 ## Table of Contents
 
-- [General Information](#general-information)
-  - [Versioning](#versioning)
-  - [Update Frequency](#update-frequency)
-- [Background](#background)
-- [Distribution](#distribution)
-- [REST Endpoints](#rest-endpoints)
-  - [Policies](#policies)
-  - [Geographies](#geographies)
-  - [Requirements](#requirements)
-- [Flat Files](#flat-files)
-- [Schema](#schema)
-  - [Policy](#policy)
-  - [Rules](#rules)
-  - [Rule Types](#rule-types)
-  - [Rule Units](#rule-units)
-  - [Geography](#geography)
-  - [Rate Recurrences](#rate-recurrences)
-  - [Messages](#messages)
-  - [Value URL](#value-url)
-  - [Order of Operations](#order-of-operations)
-  - [Requirement](#requirement)
-    - [Update Frequency](#requirement-update-frequency)
-    - [Public Hosting](#public-hosting)
-    - [Version Tracking](#version-tracking)
-    - [Beta Limitations](#beta-limitations)
-    - [Format](#requirement-format)
-    - [Metadata](#requirement-metadata)
-    - [Programs](#requirement-programs)
-    - [Data Specs](#requirement-data-specs)
-    - [APIs](#requirement-apis)
+* [General information](#general-information)
+  * [Update Frequency](#update-frequency)
+  * [Versioning](#versioning)
+* [Background](#background)
+* [Distribution](#distribution)
+* [REST Endpoints](#rest-endpoints)
+  * [Responses and Error Messages](#responses-and-error-messages)
+  * [Authorization](#authorization)
+  * [Policies](#policies)
+    * [Query Parameters](#query-parameters)
+  * [Geographies](#geographies)
+    * [Query Parameters](#query-parameters-1)
+  * [Requirements](#requirements)
+* [Flat Files](#flat-files)
+  * [Example `policies.json`](#example-policiesjson)
+  * [Example `geographies.json`](#example-geographiesjson)
+* [Schema](#schema)
+  * [JSON Schema](#json-schema)
+  * [Policy](#policy)
+  * [Rules](#rules)
+  * [Rule Types](#rule-types)
+  * [Rule Units](#rule-units)
+  * [Geography](#geography)
+  * [Rates](#rates)
+    * [Rate Amounts](#rate-amounts)
+    * [Rate Recurrences](#rate-recurrences)
+    * [Rate Applies When](#rate-applies-when)
+  * [Messages](#messages)
+  * [Value URL](#value-url)
+  * [Order of Operations](#order-of-operations)
+  * [Requirement](#requirement)
+    * [Public Hosting](#public-hosting)
+    * [Requirement Update Frequency](#requirement-update-frequency)
+    * [Version Tracking](#version-tracking)
+    * [Beta Limitations](#beta-limitations)
+    * [Requirement Format](#requirement-format)
+    * [Requirement Metadata](#requirement-metadata)
+    * [Requirement Programs](#requirement-programs)
+    * [Requirement Data Specs](#requirement-data-specs)
+    * [Requirement APIs](#requirement-apis)
 
 ## General information
 
@@ -252,10 +262,11 @@ An individual `Policy` object is defined by the following fields:
 
 | Name             | Type            | Required / Optional | Description                                                                         |
 | ---------------- | --------------- | ---------- | ----------------------------------------------------------------------------------- |
+| `mode`           | [Mode][modes]   | Optional   | Mode this rule should apply to (default `micromobility` for backwards compatibility, this default will likely be removed in a subsequent MDS release) |
 | `name`           | String          | Required   | Name of policy                                                                      |
 | `mode`           | Mode            | Required   | Applicable mode, see MDS [mode list][modes]                                                                 |
 | `policy_id`      | UUID            | Required   | Unique ID of policy                                                                 |
-| `provider_ids`   | UUID[]          | Optional    | Providers for whom this policy is applicable; empty arrays and `null`/absent implies all Providers. See MDS [provider list](/providers.csv). |
+| `provider_ids`   | UUID[]          | Optional   | Providers for whom this policy is applicable; empty arrays and `null`/absent implies all Providers. See MDS [provider list](/providers.csv). |
 | `description`    | String          | Required   | Description of policy                                                               |
 | `currency`       | String          | Optional   | An ISO 4217 Alphabetic Currency Code representing the [currency](../general-information.md#costs-and-currencies) of all Rules of [type](#rule-types) `rate`.|
 | `start_date`     | [timestamp][ts] | Required   | Beginning date/time of policy enforcement. In order to give providers sufficient time to poll, `start_date` must be at least 20 minutes after `published_date`.                                           |
@@ -278,6 +289,7 @@ An individual `Rule` object is defined by the following fields:
 | `geographies`      | UUID[]                      | Required   | List of [Geography](/geography#general-information) UUIDs (non-overlapping) specifying the covered geography |
 | `states`           | `{ state: event[] }`        | Required   | [Vehicle state][vehicle-states] to which this rule applies. Optionally provide a list of specific [vehicle events][vehicle-events] as a subset of a given status for the rule to apply to. An empty list or `null`/absent defaults to "all". |
 | `rule_units`       | enum                        | Conditionally Required   | Measured units of policy (see [Rule Units](#rule-units)) |
+| `accessibility_options` | [AccessibilityOption][accessibility-options][] | Applicable vehicle [accessibility options][accessibility-options], default any (or none) |
 | `vehicle_types`    | `vehicle_type[]`            | Optional   | Applicable vehicle types, default "all". |
 | `propulsion_types` | `propulsion_type[]`         | Optional   | Applicable vehicle [propulsion types][propulsion-types], default "all". |
 | `minimum`          | integer                     | Optional   | Minimum value, if applicable (default 0) |
@@ -702,6 +714,7 @@ You may also show which APIs, endpoints, and fields your agency is serving to pr
 
 [Top][toc]
 
+[accessibility-options]: /general-information.md#accessibility-options
 [beta]: /general-information.md#beta
 [error-messages]: /general-information.md#error-messages
 [iana]: https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
@@ -716,3 +729,4 @@ You may also show which APIs, endpoints, and fields your agency is serving to pr
 [vehicle-states]: /modes#vehicle-states
 [vehicle-types]: /general-information.md#vehicle-types
 [versioning]: /general-information.md#versioning
+[modes]: /general-information.md#modes

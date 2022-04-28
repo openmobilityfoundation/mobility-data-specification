@@ -2,21 +2,21 @@
 
 ## Table of Contents
 
-- [About](#about)
-- [Endpoints](#endpoints)
-  - [Modularity](#modularity)
-  - [GBFS Requirement](#gbfs-requirement)
-- [Modes](#modes)
-- [Versions](#versions)
-  - [Technical Information](#technical-information)
-- [Get Involved](#get-involved)
-  - [Membership](#membership)  
-- [Cities Using MDS](#cities-using-mds)
-- [Providers Using MDS](#providers-using-mds)
-- [Software Companies Using MDS](#software-companies-using-mds)
-- [Data Privacy](#data-privacy)
-- [Use Cases](#use-cases)
-- [Related Projects](#related-projects)
+* [About](#about)
+* [Endpoints](#endpoints)
+  * [Modularity](#modularity)
+  * [GBFS Requirement](#gbfs-requirement)
+* [Modes](#modes)
+* [Versions](#versions)
+  * [Technical Information](#technical-information)
+* [Get Involved](#get-involved)
+  * [Membership](#membership)
+* [Cities Using MDS](#cities-using-mds)
+* [Providers Using MDS](#providers-using-mds)
+* [Software Companies Using MDS](#software-companies-using-mds)
+* [Data Privacy](#data-privacy)
+* [Use Cases](#use-cases)
+* [Related Projects](#related-projects)
 
 # About
 

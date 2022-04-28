@@ -18,15 +18,23 @@ See the [modes overview](/modes) for how the mode specific information below app
 
 Some fields used across MDS APIs are defined in more detail within each mode.
 
+### Mode ID
+
+TODO `micromobility`
+
 ### Journey ID
 
 The `journey_id` field is not used with the micromobility mode.
+
+### Trip ID Requirements
+
+Required in events if `event_types` contains `trip_start`, `trip_end`, `trip_cancel`, `trip_enter_jurisdiction`, or `trip_leave_jurisdiction`.
 
 ### Trip Type
 
 The `trip_type` field may have one of the following values:
 
-- `rider`: a single rider is taking a trip
+- `rider`: a single rider is taking a trip (TODO is this necessary if there is only one valid value?)
 
 ### Trip Attributes
 
@@ -37,8 +45,23 @@ The `trip_attributes` array is not used with the micromobility mode.
 The `vehicle_attributes` array may have the following key value pairs:
 
 - `year` (integer)
-- `manufacturer` (string)
+- `make` (string)
 - `model` (string)
+
+### Propulsion Types
+
+#### Valid for vehicle_types: bicycle, scooter, moped, other
+
+| `propulsion`      |
+| ----------------- |
+| `human`           |
+| `electric_assist` |
+| `electric`        |
+| `combustion`      |
+
+### Accessibility Options
+
+Accessibility options are not used in micromobility.
 
 [Top][toc]
 
@@ -155,7 +178,7 @@ Vehicles can enter the `unknown` state to and from any other state with the foll
 ### State Machine Diagram
 
 This *State Machine Diagram* shows how `vehicle_state` and `event_type` relate to each other and how vehicles can transition between states. See [Google Slides](https://docs.google.com/presentation/d/1Ar2-ju8YlddSsTATvQw4YjsSa5108XtidtnJNk-UAfA/edit) for the source file.
-![MDS State Machine Diagram](/modes/MDS-micromobility-state-machine-diagram.svg)
+![MDS State Machine Diagram](/modes/micromobility-state-machine-diagram.svg)
 
 [Top][toc]
 
