@@ -147,7 +147,8 @@ For Timestamps, Vehicle Types, Propulsion Types, UUIDs, Costs, and Currencies, r
 
 ## Trips
 
-A trip represents a journey taken by a *mobility as a service* customer with a geo-tagged start and stop point.
+A [trip][trips-general-info] represents a journey taken by a *mobility as a service* customer with
+a geo-tagged start and stop point.
 
 The trips endpoint allows a user to query historical trip data.
 
@@ -635,6 +636,7 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 [stops-schema]: stops.json
 [toc]: #table-of-contents
 [trips]: #trips
+[trips-general-info]: /general-information.md#stop-based-geographic-data
 [trips-schema]: trips.json
 [ts]: /general-information.md#timestamps
 [vehicles]: #vehicles
