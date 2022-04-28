@@ -5,7 +5,7 @@ This document contains specifications that are shared between the various MDS AP
 ## Table of Contents
 
 - [Beta Features](#beta-features)
-- [Costs and currencies](#costs-and-currencies)
+- [Costs and Currencies](#costs-and-currencies)
 - [Definitions](#definitions)
 - [Devices](#devices)
 - [Geographic Data](#geographic-data)
