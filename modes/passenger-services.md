@@ -12,13 +12,17 @@ Taxis typically require explicit tracking of maintenance while TNCs typically do
 
 ## Table of Contents
 
-* [Mode Attributes](#mode-attributes)
-* [Vehicle States](#vehicle-states)
-* [Event Types](#event-types)
-* [Vehicle State Events](#vehicle-states-events)
-* [State Machine Diagram](#state-machine-diagram)
+- [Mode Attributes](#mode-attributes)
+- [Vehicle States](#vehicle-states)
+- [Event Types](#event-types)
+- [Vehicle State Events](#vehicle-states-events)
+- [State Machine Diagram](#state-machine-diagram)
 
 ## Mode Attributes
+
+### Mode ID
+
+The short name identifier for Passenger Services used across MDS is `passenger-services`.
 
 ### Journey ID
 
