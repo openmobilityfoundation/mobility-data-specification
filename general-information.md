@@ -1,6 +1,6 @@
 # Mobility Data Specification: **General information**
 
-This document contains specifications that are shared between the various MDS APIs such as [`agency`][agency], [`policy`][policy], [`provider`][provider], etc.
+This document contains specifications that are shared between the various MDS [APIs and endpoints](/README.md#endpoints).
 
 ## Table of Contents
 
