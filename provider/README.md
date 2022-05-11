@@ -10,6 +10,7 @@ This specification contains a data standard for *mobility as a service* provider
 
 * [General Information](#general-information)
   * [Versioning](#versioning)
+  * [Modes](#modes)
   * [Responses and Error Messages](#responses-and-error-messages)
   * [JSON Schema](#json-schema)
   * [Pagination](#pagination)
@@ -49,7 +50,7 @@ Versioning must be implemented as specified in the [Versioning section][versioni
 
 ### Modes
 
-MDS is intended to be used for multiple transportation modes, including its original micromobility (e-scooters, bikes, etc.) as well as additional modes such as taxis and delivery bots.  A given `provider_id` shall be associated with a single mobility [mode], so that the mode does not have to be specified in each data structure and API call.  A provider implementing more than one mode shall register a `provider_id` for each mode.
+MDS is intended to be used for multiple transportation modes, including its original micromobility (e-scooters, bikes, etc.) as well as additional modes such as taxis and delivery bots.  A given `provider_id` shall be associated with a single mobility [mode], so that the mode does not have to be specified in each data structure and API call.  A provider implementing more than one mode shall [register](/README.md#providers-using-mds) a `provider_id` for each mode.
 
 [Top][toc]
 
@@ -167,7 +168,7 @@ Unless stated otherwise by the municipality, the trips endpoint must return all 
 | `vehicle_type` | Enum | Required | See [vehicle types][vehicle-types] table |
 | `vehicle_attributes` | Array | Optional | [Vehicle attributes](/modes#vehicle-attributes) given as mode-specific unordered key-value pairs |
 | `propulsion_types` | Enum[] | Required | Array of [propulsion types][propulsion-types]; allows multiple values |
-| `journey_id` | UUID | Optional | A unique [journey ID](/modes#journey-id) for associating collections of trips |
+| `journey_id` | UUID | Optional | A unique [journey ID](/modes#journey-id) for associating collections of trips for its [mode] |
 | `trip_type` | Enum | Optional | The [trip type](/modes#trip-type) describing the purpose of a trip segment |
 | `trip_id` | UUID | Required | A unique ID for each trip |
 | `trip_duration` | Integer | Required | Time, in Seconds |
