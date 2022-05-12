@@ -35,6 +35,8 @@ Required in events if `event_types` contains `trip_start`, `trip_end`, `trip_can
 The `trip_type` field **may** have one of the following values:
 
 - `rider`: a single rider is taking a trip
+- `rebalance`: vehicle ridden by operator to rebalance
+- `maintenance`: vehicles ridden by operator to perform maintenance or check operation
 
 ### Trip Attributes
 
