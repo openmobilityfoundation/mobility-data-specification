@@ -2,7 +2,7 @@
 
 <img src="https://i.imgur.com/YFlUSfz.png" width="120" align="right" alt="MDS Modes - Micromobility" border="0">
 
-"**Micromobility**" refers to single-occupancy modes of docked or dockless transportation such as e-scooters, e-bikes, and regular bikes.
+"**Micromobility**" refers to single-occupancy modes of docked or dockless transportation such as e-scooters, e-bikes, and human-powered bikes.
 
 See the [modes overview](/modes) for how the mode specific information below applies across MDS.
 
@@ -24,7 +24,7 @@ The short name identifier for Micromobility used across MDS is `micromobility`.
 
 ### Journey ID
 
-The `journey_id` field is not used with the micromobility mode.
+The `journey_id` field is not used with the micromobility mode. Trips are point-to-point.
 
 ### Trip ID Requirements
 
