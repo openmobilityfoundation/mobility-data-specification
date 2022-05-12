@@ -2,7 +2,7 @@
 
 <img src="https://i.imgur.com/plW2Hon.png" width="120" align="right" alt="MDS Modes - Passenger Services" border="0">
 
-**Passenger Services** refers to taxis and transportation network companies (TNCs).  Passenger Services typically have a driver, one or more passengers, and multiple passengers may be on different trips.  The state machine tracks the trip states of the passengers separately from the vehicle state.  
+**Passenger Services** refers to taxis, transportation network companies (TNCs), commercial transport apps (CTAs), and private hire vehicles (PHVs).  Passenger Services typically have a driver, one or more passengers, and multiple passengers may be on different trips.  The state machine tracks the trip states of the passengers separately from the vehicle state.  
 
 See the [modes overview](/modes) for how the mode specific information below applies across MDS.
 
@@ -26,7 +26,7 @@ The short name identifier for Passenger Services used across MDS is `passenger-s
 
 ### Journey ID
 
-The `journey_id` field shall have a consistent value in overlapping trips, e.g. "pooled" or "shared" rides with different start and/or end locations.
+The `journey_id` field shall have a consistent value in overlapping trips, e.g. "pooled" or "shared" rides with different start and/or end locations. Journeys may be point-to-point, multi-segment, or multi-segment overlapping.
 
 ### Trip ID Requirements
 
