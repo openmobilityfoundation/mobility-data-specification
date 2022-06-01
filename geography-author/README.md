@@ -41,7 +41,7 @@ Since an unpublished Geography may not be ready for viewing by a broader audienc
 | `name`           | String    | R   | Name of geography                                                                      |
 | `description`    | String    | O   | Detailed description of geography                                                                      |
 | `geography_id`   | UUID      | R   | Unique ID of geography                                                                 |
-| `geography_json`   | UUID      | R   | The GeoJSON FeatureCollection that defines the geographical coordinates.
+| `geography_json`   | UUID      | R   | The GeoJSON FeatureCollection that defines the geospatial area.
 | `effective_date`   | timestamp | O   | `start_date` for first published policy that uses this geo.  Server should set this when policies are published.  This may be used on the client to distinguish between “logical” geographies that have the same name. E.g. if a policy publishes a geography on 5/1/2020, and then another policy is published which references that same geography is published on 4/1/2020, the effective_date will be set to 4/1/2020.
 | `publish_date`   | timestamp | R   | Timestamp that the policy was published, i.e. made immutable                                             |
 | `prev_geographies`  | UUID[]    | O   | Unique IDs of prior geographies replaced by this one                                   |
