@@ -89,6 +89,31 @@ Valid passenger services vehicle event types are
 - `trip_stop`
 - `unspecified`
 
+[//]: <> (Add by JCTR)
+
+- `maintenance_end`
+- `maintenance_start`
+- `bot_out_work`
+- `spare_part_request`
+
+| Field | Type    | Required/Optional | Comments |
+| ----- | -------- | ----------------- | ----- |
+| `maintenance_end` | [timestamp][ts] | Required | Date/time that maintenance finish |
+| `maintenance_start`| [timestamp][ts] | Required | Date/time that maintenance start |
+| `bot_out_work` | Enum[] | Required | See [Out of work][Out of work] |
+| `spare_part_request` | String | Optional | Electronic device neccesary for specific robot |
+
+[Top][toc]
+
+### Out of work 
+| Type | Description |
+| ---- | ------------|
+| `Long_time` | Long time bot out of work (more than one day). For instance, when the robot need a specifit part for the robot  |
+| `Short_time` | Short time bot out of work (less than one day). It is when maintenance can solve itself |
+
+[//]: <> (FINISH Add by JCTR)
+
+
 This list is somewhat shorter than the micromobility event list, as delivery robots are controlled by a remote driver or potentially an AI. They are not picked up or dropped off for rebalancing or compliance, for example.
 
 See vehicle [Event Types][vehicle-events] for descriptions.
@@ -103,12 +128,12 @@ This is the list of `vehicle_state` and `event_type` pairings that constitute th
 |------------------------------|-------------------|--------------|--------------------------|------------------------------------------------------------------------------------------------------------------|
 | `available`                  | `elsewhere`       | N/A          | `leave_jurisdiction`     | The vehicle has left jurisdictional boundaries while available for-hire                                          |
 | `available`                  | `non_operational` | N/A          | `service_end`            | The vehicle has went out of service (is unavailable for-hire)                                                    |
-| `available`                  | `reserved`        | `reserved`   | `reserve`                | The vehicle was reserved by a passenger                                                                          |
+| `available`                  | `reserved`        | `reserved`   | `reserve`                | |
 | `available`                  | `unknown`         | N/A          | `comms_lost`             | The vehicle has went out of comms while available for-use                                                        |
 | `elsewhere`                  | `available`       | N/A          | `enter_jurisdiction`     | The vehicle has entered jurisdictional boundaries while available for-hire                                       |
 | `elsewhere`                  | `non_operational` | N/A          | `enter_jurisdiction`     | The vehicle has entered jurisdictional boundaries while not operating commercially                               |
 | `elsewhere`                  | `on_trip`         | `on_trip`    | `enter_jurisdiction`     | The vehicle has entered jurisdictional boundaries while on a trip                                                |
-| `elsewhere`                  | `reserved`        | N/A          | `enter_jurisdiction`     | The vehicle has entered jurisdictional boundaries while reserved by a customer                                   |
+| `elsewhere`                  | `reserved`        | N/A          | `enter_jurisdiction`     | |
 | `elsewhere`                  | `unknown`         | N/A          | `comms_lost`             | The vehicle has went out of comms while outside of jurisdictional boundaries                                     |
 | `non_operational`            | `available`       | N/A          | `service_start`          | The vehicle has went into service (is available for-hire)                                                        |
 | `non_operational`            | `elsewhere`       | N/A          | `leave_jurisdiction`     | The vehicle has left jurisdictional boundaries while not operating commercially                                  |
@@ -126,12 +151,12 @@ This is the list of `vehicle_state` and `event_type` pairings that constitute th
 | `reserved`                   | `available`       | N/A          | `provider_cancellation` | The provider has canceled the reservation                                                                      |
 | `reserved`                   | `elsewhere`       | N/A          | `leave_jurisdiction`     | The vehicle has left the jurisdiction while in a reservation                                                     |
 | `reserved`                   | `stopped`         | `stopped`    | `reserve_stop`           | The vehicle has stopped to pick up the passenger                                                                 |
-| `reserved`                   | `unknown`         | N/A          | `comms_lost`             | The vehicle went out of comms while being reserved by a passenger                                                |
+| `reserved`                   | `unknown`         | N/A          | `comms_lost`             | |
 | `stopped`                    | `available`       | N/A          | `driver_cancellation`    | The driver has canceled the trip while either waiting for the passenger, or dropping them off                   |
-| `stopped`                    | `available`       | N/A          | `passenger_cancellation` | The passenger has canceled the trip while the vehicle is waiting to pick them up, or they are being dropped off |
+| `stopped`                    | `available`       | N/A          | `customer_cancellation` |  |
 | `stopped`                    | `available`       | N/A          | `provider_cancellation` | The provider has canceled the trip while the vehicle is waiting for a passenger, or dropping them off |
 | `stopped`                    | `available`       | N/A          | `trip_end`               | The trip has been successfully completed                                                                         |
-| `stopped`                    | `on_trip`         | `on_trip`    | `trip_resume`            | Resume a trip that was previously stopped (e.g. picking up a friend to go to the airport with)                   |
+| `stopped`                    | `on_trip`         | `on_trip`    | `trip_resume`            | Resume a trip that was previously stopped |
 | `stopped`                    | `on_trip`         | `on_trip`    | `trip_start`             | Start a trip                                                                                                     |
 | `stopped`                    | `unknown`         | N/A          | `comms_lost`             | The vehicle has went out of comms while stopped                                                                  |
 | `unknown`                    | `available`       | N/A          | `comms_restored`         | The vehicle has come back into comms while available for-hire                                                    |
@@ -141,6 +166,13 @@ This is the list of `vehicle_state` and `event_type` pairings that constitute th
 | `unknown`                    | `removed`         | N/A          | `comms_restored`         | The vehicle has come back into comms while removed                                                               |
 | `unknown`                    | `reserved`        | `reserved`   | `comms_restored`         | The vehicle has come back into comms while reserved by a passenger                                               |
 | `unknown`                    | `stopped`         | `stopped`    | `comms_restored`         | The vehicle has come back into comms while stopped                                                               |
+|`offline`|`stopped`|`on_trip`|`trip_start`|The vehicle has come offline while was on trip start|
+|`offline`|`stopped`|`on_trip`|`trip_end`|The vehicle has come offline while was on trip end|
+|`offline`|`stopped`|`reserved`|`reserve`|The vehicle has come offline while was reserved|
+|`offline`|`stopped`|`stopped`|`wait_order`|The vehicle has come offline while was waiting order|
+
+
+
 
 ### State Machine Diagram
 
