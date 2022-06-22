@@ -1,6 +1,10 @@
 # Mobility Data Specification: **Delivery Robots**
 
-<img src="https://i.imgur.com/plW2Hon.png" width="120" align="right" alt="MDS Modes - Passenger Services" border="0">
+[//]: <> (<img src="https://i.imgur.com/plW2Hon.png" width="120" align="right" alt="MDS Modes - Passenger Services" border="0">)
+
+<img src="https://i.imgur.com/u2HgctV.png" width="120" align="right" alt="MDS Modes - Passenger Services" border="0">
+
+[//]: <>  (<img src="https://i.imgur.com/u2HgctV.png" alt="MDS Mode - Delivery Robots" style="float: right; border: 0; width: 150px;"></a>)
 
 **Delivery Robots** refers to robots that deliver goods.
 See the [modes overview](/modes) for how the mode specific information below applies across MDS.
@@ -47,11 +51,43 @@ The `vehicle_attributes` array may have the following key value pairs:
 
 ### Propulsion Types
 
+#### Valid for vehicle_types: "bicycle", "cargo_bicycle", 
+
+
+| `propulsion`      |
+| ----------------- |
+| `electric assist` |
+| `human`           |
+
+#### Valid for vehicle_types: "scooter"
+
+| `propulsion`      |
+| ----------------- |
+| `electric`        |
+| `electric assist` |
+| `human`           |
+
+#### Valid for vehicle_types: "car"; "moped"
+
+| `propulsion`      |
+| ----------------- |
+| `electric`        |
+| `electric assist` |
+| `combustion`      |
+
 #### Valid for vehicle_types: delivery_robot
 
 | `propulsion`      |
 | ----------------- |
 | `electric`        |
+
+#### Valid for vehicle_types: "other"
+| `propulsion`      |
+| ----------------- |
+| `electric`        |
+| `electric assist` |
+| `combustion`      |
+| `human`           |
 
 ## Vehicle States
 
