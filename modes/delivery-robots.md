@@ -66,6 +66,31 @@ Valid passenger services vehicle states are
 - `elsewhere` 
 - `unknown`  
 
+[//]: <> (Add by JCTR)
+- `roaming`
+- `advertising`
+- `tests`
+
+[//]: <>
+
+#### Fields descriptions for Vehicle States
+
+| Field | Type    | Required/Optional | Comments |
+| ----- | -------- | ----------------- | ----- |
+| `roaming` | String | Required | roaming |
+| `advertising`| String | Required | The vehicle is used for advertising purposes  |
+| `non_operational` | Enum[] | Optional | See [Non operational](#non-operational) types|
+
+[Top][toc]
+
+### Non Operational  
+| Type | Description |
+| ---- | ------------|
+| `Long_time` | Long time bot out of work (more than one day). For instance, when the robot need a specifit part for the robot  |
+| `Short_time` | Short time bot out of work (less than one day). It is when maintenance can solve itself |
+
+[//]: <> (FINISH Add by JCTR)
+
 See [Vehicle States][vehicle-states] for descriptions.
 
 [Top][toc]
@@ -93,23 +118,18 @@ Valid passenger services vehicle event types are
 
 - `maintenance_end`
 - `maintenance_start`
-- `bot_out_work`
-- `spare_part_request`
+- `return`
+
+[//]: <>
+
+#### Fields descriptions for Event Types
 
 | Field | Type    | Required/Optional | Comments |
 | ----- | -------- | ----------------- | ----- |
 | `maintenance_end` | [timestamp][ts] | Required | Date/time that maintenance finish |
 | `maintenance_start`| [timestamp][ts] | Required | Date/time that maintenance start |
-| `bot_out_work` | Enum[] | Required | See [Out of work][Out of work] |
-| `spare_part_request` | String | Optional | Electronic device neccesary for specific robot |
+| `return` | String | Optional | Detail about why the customer return the product |
 
-[Top][toc]
-
-### Out of work 
-| Type | Description |
-| ---- | ------------|
-| `Long_time` | Long time bot out of work (more than one day). For instance, when the robot need a specifit part for the robot  |
-| `Short_time` | Short time bot out of work (less than one day). It is when maintenance can solve itself |
 
 [//]: <> (FINISH Add by JCTR)
 
@@ -146,17 +166,17 @@ This is the list of `vehicle_state` and `event_type` pairings that constitute th
 | `removed`                    | `non_operational` | N/A          | `maintenance_end`        | The vehicle has left the depot                                                                                   |
 | `removed`                    | `non_operational` | N/A          | `recommissioned`         | The vehicle has been re-added to the Provider's fleet after being previously `decommissioned`                    |
 | `removed`                    | `unknown`         | N/A          | `comms_lost`             | The vehicle has gone out of comms while removed                                                                  |
-| `reserved`                   | `available`       | N/A          | `driver_cancellation`    | The driver has canceled the reservation                                                                         |
-| `reserved`                   | `available`       | N/A          | `passenger_cancellation` | The passenger has canceled the reservation                                                                      |
-| `reserved`                   | `available`       | N/A          | `provider_cancellation` | The provider has canceled the reservation                                                                      |
+| `reserved`                   | `available`       | N/A          | `driver_cancellation`    | The driver has canceled the reservation                                                                          |
+| `reserved`                   | `available`       | N/A          | `passenger_cancellation` | The passenger has canceled the reservation                                                                       |
+| `reserved`                   | `available`       | N/A          | `provider_cancellation`  | The provider has canceled the reservation                                                                        |
 | `reserved`                   | `elsewhere`       | N/A          | `leave_jurisdiction`     | The vehicle has left the jurisdiction while in a reservation                                                     |
 | `reserved`                   | `stopped`         | `stopped`    | `reserve_stop`           | The vehicle has stopped to pick up the passenger                                                                 |
 | `reserved`                   | `unknown`         | N/A          | `comms_lost`             | |
-| `stopped`                    | `available`       | N/A          | `driver_cancellation`    | The driver has canceled the trip while either waiting for the passenger, or dropping them off                   |
-| `stopped`                    | `available`       | N/A          | `customer_cancellation` |  |
-| `stopped`                    | `available`       | N/A          | `provider_cancellation` | The provider has canceled the trip while the vehicle is waiting for a passenger, or dropping them off |
+| `stopped`                    | `available`       | N/A          | `driver_cancellation`    | The driver has canceled the trip while either waiting for the passenger, or dropping them off                    |
+| `stopped`                    | `available`       | N/A          | `customer_cancellation`  |  |
+| `stopped`                    | `available`       | N/A          | `provider_cancellation`  | The provider has canceled the trip while the vehicle is waiting for a passenger, or dropping them off            |
 | `stopped`                    | `available`       | N/A          | `trip_end`               | The trip has been successfully completed                                                                         |
-| `stopped`                    | `on_trip`         | `on_trip`    | `trip_resume`            | Resume a trip that was previously stopped |
+| `stopped`                    | `on_trip`         | `on_trip`    | `trip_resume`            | Resume a trip that was previously stopped                                                                        |
 | `stopped`                    | `on_trip`         | `on_trip`    | `trip_start`             | Start a trip                                                                                                     |
 | `stopped`                    | `unknown`         | N/A          | `comms_lost`             | The vehicle has went out of comms while stopped                                                                  |
 | `unknown`                    | `available`       | N/A          | `comms_restored`         | The vehicle has come back into comms while available for-hire                                                    |
@@ -166,10 +186,27 @@ This is the list of `vehicle_state` and `event_type` pairings that constitute th
 | `unknown`                    | `removed`         | N/A          | `comms_restored`         | The vehicle has come back into comms while removed                                                               |
 | `unknown`                    | `reserved`        | `reserved`   | `comms_restored`         | The vehicle has come back into comms while reserved by a passenger                                               |
 | `unknown`                    | `stopped`         | `stopped`    | `comms_restored`         | The vehicle has come back into comms while stopped                                                               |
-|`offline`|`stopped`|`on_trip`|`trip_start`|The vehicle has come offline while was on trip start|
-|`offline`|`stopped`|`on_trip`|`trip_end`|The vehicle has come offline while was on trip end|
-|`offline`|`stopped`|`reserved`|`reserve`|The vehicle has come offline while was reserved|
-|`offline`|`stopped`|`stopped`|`wait_order`|The vehicle has come offline while was waiting order|
+
+
+[//]: <> (Add by JCTR)
+## Vehicle States Events
+
+This is the list of `vehicle_state` and `event_type` pairings that constitute the valid transitions (Electric vehicles).
+
+| **Previous** `vehicle_state` | `vehicle_state`   | `trip_state` | `event_type`             | Description                                                                                                      |
+|------------------------------|-------------------|--------------|--------------------------|------------------------------------------------------------------------------------------------------------------|
+| `roaming`                    | `elsewhere`       | N\A          | `enter_jurisdiction`     | The vehicle has entered jurisdictional boundaries while on roaming                                               |
+| `roaming`                    | `stopped`         | `stopped`    | `roaming_stop`           | The vehicle has stopped while on a roaming                                                                       |
+| `roaming`                    | `uknown `         | N\A          | `comms_lost`             | The vehicle has gone out of comms while on a roaming                                                             |
+| `advertising`                | `elsewhere`       | N\A          | `enter_jurisdiction`     | The vehicle has entered jurisdictional boundaries while on roaming                                               |
+| `advertising`                | `stopped`         | `stopped`    | `roaming_stop`           | The vehicle has stopped while on a roaming                                                                       |
+| `advertising`                | `uknown `         | N\A          | `comms_lost`             | The vehicle has gone out of comms while on a roaming                                                             |
+| `tests`                      | `elsewhere`       | N\A          | `enter_jurisdiction`     | The vehicle has entered jurisdictional boundaries while on roaming                                               |
+| `tests`                      | `stopped`         | `stopped`    | `roaming_stop`           | The vehicle has stopped while on a roaming                                                                       |
+| `tests`                      | `uknown `         | N\A          | `comms_lost`             | The vehicle has gone out of comms while on a roaming                                                             |
+
+[//]: <> (FINISH Add by JCTR)
+
 
 
 
@@ -215,3 +252,4 @@ if t.any(state == ‘reserved’):
 [toc]: #table-of-contents
 [vehicle-states]: /modes/vehicle_states.md
 [vehicle-events]: /modes/event_types.md
+[ts]: /general-information.md#timestamps
