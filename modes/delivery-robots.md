@@ -2,7 +2,7 @@
 
 [//]: <> (<img src="https://i.imgur.com/plW2Hon.png" width="120" align="right" alt="MDS Modes - Passenger Services" border="0">)
 
-<img src="https://i.imgur.com/u2HgctV.png" width="120" align="right" alt="MDS Modes - Passenger Services" border="0">
+<img src="https://i.imgur.com/u2HgctV.png" width="150" align="right" alt="MDS Modes - Passenger Services" border="0">
 
 [//]: <>  (<img src="https://i.imgur.com/u2HgctV.png" alt="MDS Mode - Delivery Robots" style="float: right; border: 0; width: 150px;"></a>)
 
