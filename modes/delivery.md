@@ -7,7 +7,7 @@ See the [modes overview](/modes) for how the mode specific information below app
 
 ## Robots Vs Other modes
 
-Robots require a driver whereas other forms of deliveries do not. For most of the robots delivery operators, there is only one order at once. The accepts here is to anticipate all forms of deliveries and to accept having many orders at once on one vehicle.
+Robots does not require a driver whereas other forms of deliveries do. For most of the robots delivery operators, there is only one order at once. The accepts here is to anticipate all forms of deliveries and to accept having many orders at once on one vehicle.
 
 ## Table of Contents
 
@@ -78,6 +78,12 @@ The `vehicle_attributes` array may have the following key value pairs:
 | `electric assist` |
 | `combustion`      |
 
+#### Valid for vehicle_types: "delivery_robot"
+| `propulsion`      |
+| ----------------- |
+| `electric`        |
+
+
 #### Valid for vehicle_types: "other"
 | `propulsion`      |
 | ----------------- |
@@ -85,6 +91,8 @@ The `vehicle_attributes` array may have the following key value pairs:
 | `electric assist` |
 | `combustion`      |
 | `human`           |
+
+
 
 
 ## Vehicle States
@@ -110,7 +118,7 @@ Valid delivery vehicle event types are
 
 - `comms_lost`
 - `comms_restored`
-- `driver_cancellation` (if we widen to all forms of deliveries)
+- `driver_cancellation`
 - `decommission`
 - `maintenance_end`
 - `maintenance_start`
@@ -121,7 +129,7 @@ Valid delivery vehicle event types are
 - `reservation_start`
 - `service_end`
 - `service_start`
-- `trip_cancel` (why another type of cancellation ?)
+- `trip_cancel`
 - `trip_end`
 - `trip_enter_jurisdiction`
 - `trip_leave_jurisdiction`
