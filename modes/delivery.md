@@ -7,7 +7,7 @@ See the [modes overview](/modes) for how the mode specific information below app
 
 ## Robots Vs Other modes
 
-Robots does not require a driver whereas other forms of deliveries do. For most of the robots delivery operators, there is only one order at once. The accepts here is to anticipate all forms of deliveries and to accept having many orders at once on one vehicle.
+Robots do not require a driver whereas other forms of deliveries do. For most of the robots delivery operators, there is only one order at once. The idea here is to anticipate all forms of deliveries and to accept having many orders at once on one vehicle.
 
 ## Table of Contents
 
