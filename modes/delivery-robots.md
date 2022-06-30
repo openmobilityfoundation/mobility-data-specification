@@ -34,6 +34,13 @@ Additionally, `trip_id` is required if `event_types` contains a `enter_jurisdict
 
 The `trip_type` field is not currently used in passenger services.
 
+| Field | Type    | Required/Optional | Comments |
+| ----- | -------- | ----------------- | ----- |
+| `roaming` | String | Required | roaming |
+| `advertising`| String | Required | The vehicle is used for advertising purposes  |
+| `mapping` | String | Required | Mapping campuses |
+| `tests` | String | Required | test in charge of companies |
+
 ### Trip Attributes
 
 The `trip_attributes` array is not used with in passenger services.
@@ -110,8 +117,6 @@ Valid passenger services vehicle states are
 
 | Field | Type    | Required/Optional | Comments |
 | ----- | -------- | ----------------- | ----- |
-| `roaming` | String | Required | roaming |
-| `advertising`| String | Required | The vehicle is used for advertising purposes  |
 | `non_operational` | Enum[] | Optional | See [Non operational](#non-operational) types|
 
 [Top][toc]
