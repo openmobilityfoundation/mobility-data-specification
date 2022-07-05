@@ -125,8 +125,8 @@ Valid passenger services vehicle states are
 ### Non Operational  
 | Type | Description |
 | ---- | ------------|
-| `Long_time` | Long time bot out of work (more than one day). For instance, when the robot need a specifit part for the robot  |
-| `Short_time` | Short time bot out of work (less than one day). It is when maintenance can solve itself |
+| `Long_time` | Long time bot out of work (more than one day)|
+| `Short_time` | Short time bot out of work (less than one day)|
 
 [//]: <> (FINISH Add by JCTR)
 
