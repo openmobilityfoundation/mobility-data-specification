@@ -4,7 +4,7 @@ CO,Cundinamarca,Bogotá,Bogotá,85eac875-ab70-469f-8a85-cc5ef22e78d0,https://www
 DE,Baden-Württemberg,Ulm,Stadt Ulm,68f28fb8-d177-43f4-b7e8-a286fe0ddca0,https://www.ulm.de/de-de,
 US,CA,Long Beach,City of Long Beach,188ed65d-a81e-40b9-b0b2-aeb85436610a,https://www.longbeach.gov/goactivelb/,
 US,CA,Los Angeles,Los Angeles,d82d8584-dfa6-4396-93f0-5a36288b9eb1,https://ladot.lacity.org/projects/transportation-services/shared-mobility/micromobility,
-US,CA,San Francisco,San Francisco,8e03693b-0153-446c-8bc0-c31f8a5a7ed8,https://www.sfmta.com/projects/powered-scooter-share-permit-and-pilot-program,
+US,CA,San Francisco,San Francisco Municipal Transportation Agency,8e03693b-0153-446c-8bc0-c31f8a5a7ed8,https://www.sfmta.com/projects/powered-scooter-share-permit-and-pilot-program,https://github.com/openmobilityfoundation/agency-program-requirements/raw/main/requirement/SFMTA-1.2.0.json
 US,CA,San Jose,San Jose,801cb4b8-8725-449c-bdb9-7e9ac0e10b5b,https://www.sanjoseca.gov/your-government/departments-offices/transportation/micro-mobility,
 US,CA,Santa Monica,Santa Monica,e4e7c0f6-c6aa-4919-a4de-565e4fe9fa57,https://www.smgov.net/Departments/PCD/Transportation/Shared-Mobility-Services/,
 US,CO,Denver,Denver,c3d07b63-f602-4837-9525-7285f5ef286b,https://www.denvergov.org/content/denvergov/en/transportation-infrastructure/programs-services/dockless-mobility.html,
