@@ -5,8 +5,7 @@
 
 See the [modes overview](/modes) for how the mode specific information below applies across MDS.
 
-## Robots Vs Other modes
-
+## Robots Vs Other vehicles types
 Robots do not require a driver whereas other forms of deliveries do. For most of the robots delivery operators, there is only one order at once. The idea here is to anticipate all forms of deliveries and to accept having many orders at once on one vehicle.
 
 ## Table of Contents
@@ -36,7 +35,7 @@ Additionally, `trip_id` is required if `event_types` contains a `enter_jurisdict
 
 ### Trip Type
 
-The `trip_type` field is used to describe the trip itself. It can be 'delivery' or 'roaming' or 'return' or 'advertising'
+The `trip_type` field is used to describe the trip itself. It can be 'delivery', 'roaming', 'return' or 'advertising'
 
 ### Trip Attributes
 
@@ -116,9 +115,22 @@ See [Vehicle States][vehicle-states] for descriptions.
 
 Valid delivery vehicle event types are 
 
+- `agency_drop_off`
+- `agency_pick_up`
+- `battery_charged`
+- `battery_low`
 - `comms_lost`
 - `comms_restored`
+- `compliance_pick_up`
+- `decommissioned`
+- `located`
+- `maintenance`
+- `maintenance_pick_up`
+- `missing`
+- `off_hours`
+- `on_hours`
 - `driver_cancellation`
+- 'delivery'(same as trip_end ?)
 - `decommission`
 - `maintenance_end`
 - `maintenance_start`
@@ -150,19 +162,19 @@ This is the list of `vehicle_state` and `event_type` pairings that constitute th
 | **Previous** `vehicle_state` | `vehicle_state`   | `trip_state` | `event_type`             | Description                                                                                                      |
 |------------------------------|-------------------|--------------|--------------------------|------------------------------------------------------------------------------------------------------------------|
 | `available`                  | `elsewhere`       | N/A          | `leave_jurisdiction`     | The vehicle has left jurisdictional boundaries while available for-hire                                          |
-| `available`                  | `non_operational` | N/A          | `service_end`            | The vehicle has went out of service (is unavailable for-hire)                                                    |
+| `available`                  | `non_operational` | N/A          | `service_end`            | The vehicle has gone out of service (is unavailable for-hire)                                                    |
 | `available`                  | `reserved`        | `reserved`   | `reserve`                | The vehicle was reserved by a customer                                                                       |
-| `available`                  | `unknown`         | N/A          | `comms_lost`             | The vehicle has went out of comms while available for-use                                                        |
+| `available`                  | `unknown`         | N/A          | `comms_lost`             | The vehicle has gone out of comms while available for-use                                                        |
 | `elsewhere`                  | `available`       | N/A          | `enter_jurisdiction`     | The vehicle has entered jurisdictional boundaries while available for-hire                                       |
 | `elsewhere`                  | `non_operational` | N/A          | `enter_jurisdiction`     | The vehicle has entered jurisdictional boundaries while not operating commercially                               |
 | `elsewhere`                  | `on_trip`         | `on_trip`    | `enter_jurisdiction`     | The vehicle has entered jurisdictional boundaries while on a trip                                                |
 | `elsewhere`                  | `reserved`        | N/A          | `enter_jurisdiction`     | The vehicle has entered jurisdictional boundaries while reserved by a customer                                   |
-| `elsewhere`                  | `unknown`         | N/A          | `comms_lost`             | The vehicle has went out of comms while outside of jurisdictional boundaries                                     |
-| `non_operational`            | `available`       | N/A          | `service_start`          | The vehicle has went into service (is available for-hire)                                                        |
+| `elsewhere`                  | `unknown`         | N/A          | `comms_lost`             | The vehicle has gone out of comms while outside of jurisdictional boundaries                                     |
+| `non_operational`            | `available`       | N/A          | `service_start`          | The vehicle has gone into service (is available for-hire)                                                        |
 | `non_operational`            | `elsewhere`       | N/A          | `leave_jurisdiction`     | The vehicle has left jurisdictional boundaries while not operating commercially                                  |
 | `non_operational`            | `removed`         | N/A          | `decommissioned`         | The vehicle has been removed from the Provider's fleet                                                           |
 | `non_operational`            | `removed`         | N/A          | `maintenance_start`      | The vehicle has entered the depot for maintenance                                                                |
-| `non_operational`            | `unknown`         | N/A          | `comms_lost`             | The vehicle has went out of comms while not operating commercially                                               |
+| `non_operational`            | `unknown`         | N/A          | `comms_lost`             | The vehicle has gone out of comms while not operating commercially                                               |
 | `on_trip`                    | `elsewhere`       | N/A          | `leave_jurisdiction`     | The vehicle has left jurisdictional boundaries while on a trip                                                   |
 | `on_trip`                    | `stopped`         | `stopped`    | `trip_stop`              | The vehicle has stopped while on a trip                                                                          |
 | `on_trip`                    | `unknown`         | N/A          | `comms_lost`             | The vehicle has gone out of comms while on a trip                                                                |
@@ -174,14 +186,14 @@ This is the list of `vehicle_state` and `event_type` pairings that constitute th
 | `reserved`                   | `available`       | N/A          | `provider_cancellation` | The provider has canceled the reservation                                                                      |
 | `reserved`                   | `elsewhere`       | N/A          | `leave_jurisdiction`     | The vehicle has left the jurisdiction while in a reservation                                                     |
 | `reserved`                   | `stopped`         | `stopped`    | `reserve_stop`           | The vehicle has stopped to pick up the delivery                                                                 |
-| `reserved`                   | `unknown`         | N/A          | `comms_lost`             | The vehicle went out of comms while being reserved by a customer                                                |
+| `reserved`                   | `unknown`         | N/A          | `comms_lost`             | The vehicle has gone of comms while being reserved by a customer                                                |
 | `stopped`                    | `available`       | N/A          | `driver_cancellation`    | The driver has canceled the trip while waiting |
 | `stopped`                    | `available`       | N/A          | `customer_cancellation` | The customer has canceled the trip while the vehicle is waiting |
 | `stopped`                    | `available`       | N/A          | `provider_cancellation` | The provider has canceled the trip while the vehicle is waiting |
 | `stopped`                    | `available`       | N/A          | `trip_end`               | The trip has been successfully completed                                                                         |
 | `stopped`                    | `on_trip`         | `on_trip`    | `trip_resume`            | Resume a trip that was previously stopped (e.g. picking up a friend to go to the airport with)                   |
 | `stopped`                    | `on_trip`         | `on_trip`    | `trip_start`             | Start a trip                                                                                                     |
-| `stopped`                    | `unknown`         | N/A          | `comms_lost`             | The vehicle has went out of comms while stopped                                                                  |
+| `stopped`                    | `unknown`         | N/A          | `comms_lost`             | The vehicle has gone out of comms while stopped                                                                  |
 | `unknown`                    | `available`       | N/A          | `comms_restored`         | The vehicle has come back into comms while available for-hire                                                    |
 | `unknown`                    | `elsewhere`       | N/A          | `comms_restored`         | The vehicle has come back into comms while outside of jurisdictional boundaries                                  |
 | `unknown`                    | `non_operational` | N/A          | `comms_restored`         | The vehicle has come back into comms while not operating commercially                                            |
