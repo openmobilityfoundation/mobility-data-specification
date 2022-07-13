@@ -28,7 +28,7 @@ Journeys may be point-to-point, multi-segment, or multi-segment overlapping.
 
 ### Trip ID Requirements
 
-Events require a valid `trip_id` in events where `event_types` contains `reservation_start`, `reservation_stop`, `trip_start`, `trip_stop`, `trip_end`, `client_cancellation`, `provider_cancellation`, or `driver_cancellation`. 
+Events require a valid `trip_id` in events where `event_types` contains `reservation_start`, `reservation_stop`, `trip_start`, `trip_stop`, `trip_end`, `customer_cancellation`, `provider_cancellation`, or `driver_cancellation`. 
 For the robots, the notion of driver does not exist
 
 Additionally, `trip_id` is required if `event_types` contains a `enter_jurisdiction` or `leave_jurisdiction` event pertaining to a delivery trip. 
@@ -39,7 +39,7 @@ The `trip_type` field is used to describe the trip itself. It can be 'delivery',
 
 ### Trip Attributes
 
-The `trip_attributes` array is used with in delivery.
+The `trip_attributes` array is not used with in delivery.
 
 ### Vehicle Attributes
 
@@ -49,7 +49,6 @@ The `vehicle_attributes` array may have the following key value pairs:
 - `year` (integer)
 - `make` (string)
 - `model` (string)
-- `capacity` (int)
 
 ### Propulsion Types
 
@@ -130,7 +129,8 @@ Valid delivery vehicle event types are
 - `off_hours`
 - `on_hours`
 - `driver_cancellation`
-- 'delivery'(same as trip_end ?)
+- 'order_delivery'(this or trip end ?)
+- 'order_pick_up' (this or trip stop ?)
 - `decommission`
 - `maintenance_end`
 - `maintenance_start`
@@ -177,7 +177,8 @@ This is the list of `vehicle_state` and `event_type` pairings that constitute th
 | `non_operational`            | `unknown`         | N/A          | `comms_lost`             | The vehicle has gone out of comms while not operating commercially                                               |
 | `on_trip`                    | `elsewhere`       | N/A          | `leave_jurisdiction`     | The vehicle has left jurisdictional boundaries while on a trip                                                   |
 | `on_trip`                    | `stopped`         | `stopped`    | `trip_stop`              | The vehicle has stopped while on a trip                                                                          |
-| `on_trip`                    | `unknown`         | N/A          | `comms_lost`             | The vehicle has gone out of comms while on a trip                                                                |
+| `on_trip`                    | `stopped`         | `stopped`    | `order_pick_up`          | The vehicle has stopped while on a trip                                                                          |
+| `on_trip`                    | `unknown`         | N/A          | `comms_lost`             | The vehicle has gone out of comms while on a trip to pick up the order                                          |
 | `removed`                    | `non_operational` | N/A          | `maintenance_end`        | The vehicle has left the depot                                                                                   |
 | `removed`                    | `non_operational` | N/A          | `recommissioned`         | The vehicle has been re-added to the Provider's fleet after being previously `decommissioned`                    |
 | `removed`                    | `unknown`         | N/A          | `comms_lost`             | The vehicle has gone out of comms while removed                                                                  |
@@ -190,8 +191,9 @@ This is the list of `vehicle_state` and `event_type` pairings that constitute th
 | `stopped`                    | `available`       | N/A          | `driver_cancellation`    | The driver has canceled the trip while waiting |
 | `stopped`                    | `available`       | N/A          | `customer_cancellation` | The customer has canceled the trip while the vehicle is waiting |
 | `stopped`                    | `available`       | N/A          | `provider_cancellation` | The provider has canceled the trip while the vehicle is waiting |
+| `on_trip`                    | `available`       | `stopped`    | `order_delivery`           | The delivery vehicle has stopped to wait for the customer to pick up the order                              |
 | `stopped`                    | `available`       | N/A          | `trip_end`               | The trip has been successfully completed                                                                         |
-| `stopped`                    | `on_trip`         | `on_trip`    | `trip_resume`            | Resume a trip that was previously stopped (e.g. picking up a friend to go to the airport with)                   |
+| `stopped`                    | `on_trip`         | `on_trip`    | `trip_resume`            | Resume a trip that was previously stopped (e.g. picking up an order                    |
 | `stopped`                    | `on_trip`         | `on_trip`    | `trip_start`             | Start a trip                                                                                                     |
 | `stopped`                    | `unknown`         | N/A          | `comms_lost`             | The vehicle has gone out of comms while stopped                                                                  |
 | `unknown`                    | `available`       | N/A          | `comms_restored`         | The vehicle has come back into comms while available for-hire                                                    |
