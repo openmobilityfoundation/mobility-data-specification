@@ -134,7 +134,7 @@ Valid delivery vehicle event types are
 - `decommission`
 - `maintenance_end`
 - `maintenance_start`
-- `client_cancellation`
+- `customer_cancellation`
 - `provider_cancellation`
 - `recommission`
 - `reservation_cancel`
