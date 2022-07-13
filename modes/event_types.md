@@ -21,7 +21,7 @@ As with all MDS definitions, they should be described in a way that maximizes th
 | `missing`             | Missing |
 | `off_hours`           | Off hours - end of service |
 | `on_hours`            | On hours - start of service |
-| `passenger_cancellation` | Passenger cancelled a trip |
+| `customer_cancellation` | Customer cancelled a trip |
 | `provider_cancellation` | Provider cancelled a trip |
 | `provider_drop_off`   | Drop off by the provider |
 | `rebalance_pick_up`   | Pick up for rebalancing |
