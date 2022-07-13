@@ -35,7 +35,7 @@ Additionally, `trip_id` is required if `event_types` contains a `enter_jurisdict
 
 ### Trip Type
 
-The `trip_type` field is used to describe the trip itself. It can be 'delivery', 'roaming', 'return' or 'advertising'
+The `trip_type` field is used to describe the trip itself. It can be `delivery`, `roaming`, `return` or `advertising`
 
 ### Trip Attributes
 
@@ -129,8 +129,9 @@ Valid delivery vehicle event types are
 - `off_hours`
 - `on_hours`
 - `driver_cancellation`
-- 'order_delivery'(this or trip end ?)
-- 'order_pick_up' (this or trip stop ?)
+- `order_delivery`
+- `order_pick_up`
+- `order_receipt`
 - `decommission`
 - `maintenance_end`
 - `maintenance_start`
@@ -203,15 +204,18 @@ This is the list of `vehicle_state` and `event_type` pairings that constitute th
 | `unknown`                    | `removed`         | N/A          | `comms_restored`         | The vehicle has come back into comms while removed                                                               |
 | `unknown`                    | `reserved`        | `reserved`   | `comms_restored`         | The vehicle has come back into comms while reserved by a customer                                            |
 | `unknown`                    | `stopped`         | `stopped`    | `comms_restored`         | The vehicle has come back into comms while stopped                                                               |
+| `on_trip`                    | `stopped`         | `stopped`    | `order_pick_up`         | The vehicle has come to pick up the order at the restaurant                                                               |
+| `on_trip`                    | `stopped`         | `stopped`    | `order_delivery`         | The vehicle is at the customer's place and is waiting for them                                                       |
+| `on_trip`                    | `stopped`         | `stopped`    | `order_pick_up`         | The vehicle has come to pick up the order at the restaurant                                                        |
+| `stopped`                    | `available`         | `N/A`    | `order_receipt`         | The customer received their order                                                                                    |
+| `on_trip`                    | `available`         | `N/A`    | `order_receipt`         | The customer received their order                                                                                    |
 
 
 
 
 ### State Machine Diagram
 
-The *Delivery Diagram* shows how the `vehicle_state` and `event_type` relate to each other and how delivery vehicles can transition between states. See this [text-editable EPS](https://drive.google.com/file/d/1WusVpFK1Vm7HSJgNcA_10T74TEzuCpTB/view?usp=sharing) for the source file.
-
-![Passenger Services State Machine Diagram](passenger-services-state-machine-diagram.svg)
+The *Delivery Diagram* shows how the `vehicle_state` and `event_type` relate to each other and how delivery vehicles can transition between states. 
 
 #### Delivery State Notes
 
@@ -219,16 +223,19 @@ When there is only one trip ongoing, `trip_state == vehicle_state`
 
 In cases where there are multiple trips ongoing, please follow the trip state model pseudocode for determining what the vehicle state should be:
 ```
-t = all on-going trips for vehicle
+t = for the one vehicle, all on-going trips which are 'delivey' or undefined trips (we do not take into account 'roaming', 'return' or 'advertising' trips)
 v = vehicle state
 if t.any(state == ‘stopped’):
-v = ‘stopped’ 
+    v = ‘stopped’ 
 else:
 if t.any(state == ‘on_trip’):      
-v = ‘on_trip’
+    v = ‘on_trip’
 else:
 if t.any(state == ‘reserved’):
     v = ‘reserved’
+else:
+if t=[]:
+    v = ‘available’
 ```
 `trip_state` mappings should be the same as in the table above.
 
