@@ -15,7 +15,6 @@ As with all MDS definitions, they should be described in a way that maximizes th
 | `compliance_pick_up`  | Pick up for compliance (rule violation) |
 | `order_drop_off`      | Pick up of the order at the restaurant or shop or warehouse |
 | `order_pick_up`       | Delivery of the order at the customer's |
-| `order_receipt`       | Receipt of the order / package by the customer |
 | `decommissioned`      | Decommissioned |
 | `driver_cancellation` | Driver cancelled a trip |
 | `located`             | Located (opposite of Missing) |
