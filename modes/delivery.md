@@ -129,9 +129,8 @@ Valid delivery vehicle event types are
 - `off_hours`
 - `on_hours`
 - `driver_cancellation`
-- `order_delivery`
+- `order_drop_off`
 - `order_pick_up`
-- `order_receipt`
 - `decommission`
 - `maintenance_end`
 - `maintenance_start`
@@ -192,7 +191,7 @@ This is the list of `vehicle_state` and `event_type` pairings that constitute th
 | `stopped`                    | `available`       | N/A          | `driver_cancellation`    | The driver has canceled the trip while waiting |
 | `stopped`                    | `available`       | N/A          | `customer_cancellation` | The customer has canceled the trip while the vehicle is waiting |
 | `stopped`                    | `available`       | N/A          | `provider_cancellation` | The provider has canceled the trip while the vehicle is waiting |
-| `on_trip`                    | `available`       | `stopped`    | `order_delivery`           | The delivery vehicle has stopped to wait for the customer to pick up the order                              |
+| `on_trip`                    | `available`       | N/A          | `order_drop_off`           | The delivery vehicle has stopped to wait for the customer to pick up the order                              |
 | `stopped`                    | `available`       | N/A          | `trip_end`               | The trip has been successfully completed                                                                         |
 | `stopped`                    | `on_trip`         | `on_trip`    | `trip_resume`            | Resume a trip that was previously stopped (e.g. picking up an order                    |
 | `stopped`                    | `on_trip`         | `on_trip`    | `trip_start`             | Start a trip                                                                                                     |
@@ -205,10 +204,9 @@ This is the list of `vehicle_state` and `event_type` pairings that constitute th
 | `unknown`                    | `reserved`        | `reserved`   | `comms_restored`         | The vehicle has come back into comms while reserved by a customer                                            |
 | `unknown`                    | `stopped`         | `stopped`    | `comms_restored`         | The vehicle has come back into comms while stopped                                                               |
 | `on_trip`                    | `stopped`         | `stopped`    | `order_pick_up`         | The vehicle has come to pick up the order at the restaurant                                                               |
-| `on_trip`                    | `stopped`         | `stopped`    | `order_delivery`         | The vehicle is at the customer's place and is waiting for them                                                       |
+| `on_trip`                    |`available`          | N/A   | `order_drop_off`         | The vehicle is at the customer's place and is waiting for them                                                       |
 | `on_trip`                    | `stopped`         | `stopped`    | `order_pick_up`         | The vehicle has come to pick up the order at the restaurant                                                        |
-| `stopped`                    | `available`         | `N/A`    | `order_receipt`         | The customer received their order                                                                                    |
-| `on_trip`                    | `available`         | `N/A`    | `order_receipt`         | The customer received their order                                                                                    |
+
 
 
 
