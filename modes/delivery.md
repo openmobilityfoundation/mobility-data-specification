@@ -100,7 +100,7 @@ Valid delivery vehicle states are
 - `removed`
 - `available` 
 - `non_operational` 
-- `reserved` (necessary ?)
+- `reserved`
 - `on_trip` 
 - `stopped`
 - `elsewhere` 
