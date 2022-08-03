@@ -165,12 +165,12 @@ Unless stated otherwise by the municipality, the trips endpoint must return all 
 | `trip_id` | UUID | Required | A unique ID for each trip |
 | `trip_duration` | Integer | Required | Time, in Seconds |
 | `trip_distance` | Integer | Required | Trip Distance, in Meters |
-| `route` | GeoJSON `FeatureCollection` | Required | See [Routes](#routes) detail below |
+| `route` | GeoJSON `FeatureCollection` | Required | See [Routes](#routes) detail below. Note the `start_location` and `end_location` fields in this object are duplicated in the `route` data. |
 | `accuracy` | Integer | Required | The approximate level of accuracy, in meters, of `Points` within `route` |
-| `start_time` | [timestamp][ts] | Required | |
-| `end_time` | [timestamp][ts] | Required | |
-| `start_location` |  GeoJSON [Point Feature][point-geo] | Optional | See also [Stop-based Geographic Data][stop-based-geo]. |
-| `end_location` |  GeoJSON [Point Feature][point-geo] | Optional | See also [Stop-based Geographic Data][stop-based-geo]. |
+| `start_time` | [timestamp][ts] | Required | The time the trip starts |
+| `end_time` | [timestamp][ts] | Required | The time the trip ends |
+| `start_location` | GeoJSON [Point Feature][point-geo] | Required | Location of the start of the trip. See also [Stop-based Geographic Data][stop-based-geo]. |
+| `end_location` | GeoJSON [Point Feature][point-geo] | Required | Location of the end of the trip. See also [Stop-based Geographic Data][stop-based-geo]. |
 | `publication_time` | [timestamp][ts] | Optional | Date/time that trip became available through the trips endpoint |
 | `parking_verification_url` | String | Optional | A URL to a photo (or other evidence) of proper vehicle parking |
 | `standard_cost` | Integer | Optional | The cost, in the currency defined in `currency`, that it would cost to perform that trip in the standard operation of the System (see [Costs & Currencies][costs-and-currencies]) |
