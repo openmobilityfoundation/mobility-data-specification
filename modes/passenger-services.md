@@ -28,6 +28,12 @@ The short name identifier for Passenger Services used across MDS is `passenger-s
 
 The `journey_id` field shall have a consistent value in overlapping trips, e.g. "pooled" or "shared" rides with different start and/or end locations. Journeys may be point-to-point, multi-segment, or multi-segment overlapping.
 
+### Jouney Attributes
+
+The `journey_attributes` array **may** have the following key value pairs:
+
+- ...
+
 ### Trip ID Requirements
 
 Events require a valid `trip_id` in events where `event_types` contains `reservation_start`, `reservation_stop`, `trip_start`, `trip_stop`, `trip_end`, `passenger_cancellation`, `provider_cancellation`, or `driver_cancellation`. 
@@ -36,15 +42,27 @@ Additionally, `trip_id` is required if `event_types` contains a `enter_jurisdict
 
 ### Trip Type
 
-The `trip_type` field is not currently used in passenger services.
+The `trip_type` field **may** have one of the following values:
+
+- `private`: a private trip made by one paying customer with one or more guests
+- `shared`: a shared or pooled trip maybe more than one paying customer 
 
 ### Trip Attributes
 
-The `trip_attributes` array is not used with in passenger services.
+The `trip_attributes` array **may** have the following key value pairs:
+
+- `hail_type` (ennumerated, required): `street_hail`, `phone_dispatch`, `phone`, `text`, `app`
+- `app_name` (text, optional): name of the app used to reserve the trip which could be provider's app or 3rd party app
+- `passenger_count` (integer, required): unique count of passengers transported during trip duration
+- `payment_type` (ennumerated, required): `cash`, `credit_card`, `mobile`, `voucher`, `paratransit`, `no payment`, `test`
+- `fare_type` (ennumerated, required): `standard_calculated` (e.g. time, distance, flag drop, tolls, fees), `upfront_pricing`, `flat_rate`. Indicator of which rate was charged.
+- `quoted_trip_start_time` (timestamp, required): when the passenger requested the trip
+- `pickup_address` (text, optional): street address where the trip originated from
+- `fare_properties` - TBD
 
 ### Vehicle Attributes
 
-The `vehicle_attributes` array may have the following key value pairs:
+The `vehicle_attributes` array **may** have the following key value pairs:
 
 - `year` (integer)
 - `make` (string)
