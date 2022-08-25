@@ -42,31 +42,34 @@ Additionally, `trip_id` is required if `event_types` contains a `enter_jurisdict
 
 ### Trip Type
 
-The `trip_type` field **may** have one of the following values:
+The `trip_type` field **must** have one of the following enumerated values:
 
 - `private`: a private trip made by one paying customer with one or more guests
-- `shared`: a shared or pooled trip maybe more than one paying customer 
+- `shared`: a shared or pooled trip with more than one paying customer
+- `reservation`: en route to pickup a customer who has made a reservation, with no passengers in the vehicle
+- `empty`: vehicle movement with no passengers (outside of other `trip_type` values) that may need to be reported, e.g. for deadheading
 
 ### Trip Attributes
 
 The `trip_attributes` array **may** have the following key value pairs:
 
-- `hail_type` (ennumerated, required): `street_hail`, `phone_dispatch`, `phone`, `text`, `app`
+- `hail_type` (enumerated, required): `street_hail`, `phone_dispatch`, `phone`, `text`, `app`
 - `app_name` (text, optional): name of the app used to reserve the trip which could be provider's app or 3rd party app
 - `passenger_count` (integer, required): unique count of passengers transported during trip duration
-- `payment_type` (ennumerated, required): `cash`, `credit_card`, `mobile`, `voucher`, `paratransit`, `no payment`, `test`
-- `fare_type` (ennumerated, required): `standard_calculated` (e.g. time, distance, flag drop, tolls, fees), `upfront_pricing`, `flat_rate`. Indicator of which rate was charged.
-- `quoted_trip_start_time` (timestamp, required): when the passenger requested the trip
+- `payment_type` (enumerated, required): `cash`, `credit_card`, `mobile`, `voucher`, `paratransit`, `no payment`, `test`
+- `fare_type` (enumerated, required): `standard_calculated` (e.g. time, distance, flag drop, tolls, fees), `upfront_pricing`, `flat_rate`. Indicator of which rate was charged.
+- `request_time` (timestamp, required): when the passenger requested the trip
 - `pickup_address` (text, optional): street address where the trip originated from
 - `fare_properties` - TBD
+- `driver_trip_pay` (currency, optional) - The payment the driver received for the trip 
 
 ### Vehicle Attributes
 
 The `vehicle_attributes` array **may** have the following key value pairs:
 
-- `year` (integer)
-- `make` (string)
-- `model` (string)
+- `year` (integer, optional)
+- `make` (string, optional)
+- `model` (string, optional)
 
 ### Propulsion Types
 
@@ -80,9 +83,11 @@ The `vehicle_attributes` array **may** have the following key value pairs:
 ### Accessibility Options
 
 This enum represents the accessibility options available on a given vehicle, or the accessibility options utilized for a given trip. This enum is currently only used by the Passenger Services mode, and is not used by micromobility.
+
 | `accessibility_option`  | Description                           |
 |-------------------------|---------------------------------------|
 | `wheelchair_accessible` | This vehicle is wheelchair accessible |
+
 ## Vehicle States
 
 Valid passenger services vehicle states are 
