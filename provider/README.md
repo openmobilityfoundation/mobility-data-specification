@@ -166,14 +166,14 @@ Unless stated otherwise by the municipality, the trips endpoint must return all 
 | `device_id` | UUID | Required | A unique device ID in UUID format |
 | `vehicle_id` | String | Required | The Vehicle Identification Number visible on the vehicle itself |
 | `vehicle_type` | Enum | Required | See [vehicle types][vehicle-types] table |
-| `vehicle_attributes` | Array | Optional | [Vehicle attributes](/modes#vehicle-attributes) given as mode-specific unordered key-value pairs |
+| `vehicle_attributes` | Array | Optional | **[Mode](/modes#list-of-supported-modes) Specific**. [Vehicle attributes](/modes#vehicle-attributes) given as unordered key-value pairs |
 | `propulsion_types` | Enum[] | Required | Array of [propulsion types][propulsion-types]; allows multiple values |
 | `journey_id` | UUID | Optional | A unique [journey ID](/modes#journey-id) for associating collections of trips for its [mode] |
-| `trip_type` | Enum | Optional | The [trip type](/modes#trip-type) describing the purpose of a trip segment |
+| `trip_type` | Enum | Optional | **[Mode](/modes#list-of-supported-modes) Specific**. The [trip type](/modes#trip-type) describing the purpose of a trip segment |
 | `trip_id` | UUID | Required | A unique ID for each trip |
 | `trip_duration` | Integer | Required | Time, in Seconds |
 | `trip_distance` | Integer | Required | Trip Distance, in Meters |
-| `trip_attributes` | Array | Optional | [Trip attributes](/modes#trip-attributes) given as mode-specific unordered key-value pairs |
+| `trip_attributes` | Array | Optional | **[Mode](/modes#list-of-supported-modes) Specific**. [Trip attributes](/modes#trip-attributes) given as unordered key-value pairs |
 | `route` | GeoJSON `FeatureCollection` | Required | See [Routes](#routes) detail below |
 | `accuracy` | Integer | Required | The approximate level of accuracy, in meters, of `Points` within `route` |
 | `start_time` | [timestamp][ts] | Required | |
