@@ -13,10 +13,21 @@ Taxis typically require explicit tracking of maintenance while TNCs typically do
 ## Table of Contents
 
 - [Mode Attributes](#mode-attributes)
-- [Vehicle States](#vehicle-states)
-- [Event Types](#event-types)
-- [Vehicle State Events](#vehicle-states-events)
-- [State Machine Diagram](#state-machine-diagram)
+   - [Mode ID](#mode-id)
+- [Trip Properties](#trip-properties)
+   - [Journey ID](#journey-id)
+   - [Journey Attributes](#journey-attributes)
+   - [Trip ID Requirements](#trip-id-requirements)
+   - [Trip Type](#trip-type)
+   - [Trip Attributes](#trip-attributes)
+- [Vehicle Properties](#vehicle-properties)
+  - [Vehicle Attributes](#vehicle-attributes)
+  - [Accessibility Options](#accessibility-options)
+- [State Machine](#state-machine)
+  - [Vehicle States](#vehicle-states)
+  - [Event Types](#event-types)
+  - [Vehicle State Events](#vehicle-states-events)
+  - [State Machine Diagram](#state-machine-diagram)
 
 ## Mode Attributes
 
@@ -24,17 +35,19 @@ Taxis typically require explicit tracking of maintenance while TNCs typically do
 
 The short name identifier for Passenger Services used across MDS is `passenger-services`.
 
+## Trip Properties
+
 ### Journey ID
 
 The `journey_id` field shall have a consistent value in overlapping trips, e.g. "pooled" or "shared" rides with different start and/or end locations. Journeys may be point-to-point, multi-segment, or multi-segment overlapping.
 
-### Jouney Attributes
+### Journey Attributes
 
 The `journey_attributes` array **may** have the following key value pairs:
 
 - ...
 
-### Trip ID Requirements
+#### Trip ID Requirements
 
 Events require a valid `trip_id` in events where `event_types` contains `reservation_start`, `reservation_stop`, `trip_start`, `trip_stop`, `trip_end`, `passenger_cancellation`, `provider_cancellation`, or `driver_cancellation`. 
 
@@ -63,6 +76,8 @@ The `trip_attributes` array **may** have the following key value pairs:
 - `fare_properties` - TBD
 - `driver_trip_pay` (currency, optional) - The payment the driver received for the trip 
 
+## Vehicle Properties
+
 ### Vehicle Attributes
 
 The `vehicle_attributes` array **may** have the following key value pairs:
@@ -71,24 +86,17 @@ The `vehicle_attributes` array **may** have the following key value pairs:
 - `make` (string, optional)
 - `model` (string, optional)
 
-### Propulsion Types
-
-#### Valid for vehicle_types: car
-
-| `propulsion`      |
-| ----------------- |
-| `electric`        |
-| `combustion`      |
-
 ### Accessibility Options
 
-This enum represents the accessibility options available on a given vehicle, or the accessibility options utilized for a given trip. This enum is currently only used by the Passenger Services mode, and is not used by micromobility.
+This enum represents the accessibility options available on a given vehicle, or the accessibility options utilized for a given trip. 
 
 | `accessibility_option`  | Description                           |
 |-------------------------|---------------------------------------|
 | `wheelchair_accessible` | This vehicle is wheelchair accessible |
 
-## Vehicle States
+## State Machine
+
+### Vehicle States
 
 Valid passenger services vehicle states are 
 
@@ -105,7 +113,7 @@ See [Vehicle States][vehicle-states] for descriptions.
 
 [Top][toc]
 
-## Event Types
+### Event Types
 
 Valid passenger services vehicle event types are 
 
@@ -137,7 +145,7 @@ See vehicle [Event Types][vehicle-events] for descriptions.
 
 [Top][toc]
 
-## Vehicle States Events
+### Vehicle States Events
 
 This is the list of `vehicle_state` and `event_type` pairings that constitute the valid transitions of the vehicle state machine.
 
