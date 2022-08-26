@@ -176,8 +176,8 @@ Unless stated otherwise by the municipality, the trips endpoint must return all 
 | `trip_attributes` | Array | Optional | **[Mode](/modes#list-of-supported-modes) Specific**. [Trip attributes](/modes#trip-attributes) given as unordered key-value pairs |
 | `route` | GeoJSON `FeatureCollection` | Required | See [Routes](#routes) detail below |
 | `accuracy` | Integer | Required | The approximate level of accuracy, in meters, of `Points` within `route` |
-| `start_time` | [timestamp][ts] | Required | |
-| `end_time` | [timestamp][ts] | Required | |
+| `start_time` | [timestamp][ts] | Required | Start of the passenger/driver trip |
+| `end_time` | [timestamp][ts] | Required | End of the passenger/driver trip |
 | `publication_time` | [timestamp][ts] | Optional | Date/time that trip became available through the trips endpoint |
 | `parking_verification_url` | String | Optional | A URL to a photo (or other evidence) of proper vehicle parking |
 | `standard_cost` | Integer | Optional | The cost, in the currency defined in `currency`, that it would cost to perform that trip in the standard operation of the System (see [Costs & Currencies][costs-and-currencies]) |
@@ -294,7 +294,7 @@ Unless stated otherwise by the municipality, this endpoint must return only thos
 | `device_id` | UUID | Required | A unique device ID in UUID format |
 | `vehicle_id` | String | Required | The Vehicle Identification Number visible on the vehicle itself |
 | `vehicle_type` | Enum | Required | see [vehicle types][vehicle-types] table |
-| `vehicle_attributes` | Array | Optional | [Vehicle attributes](/modes#vehicle-attributes) given as mode-specific unordered key-value pairs |
+| `vehicle_attributes` | Array | Optional | **[Mode](/modes#list-of-supported-modes) Specific**. [Vehicle attributes](/modes#vehicle-attributes) given as mode-specific unordered key-value pairs |
 | `propulsion_types` | Enum[] | Required | Array of [propulsion types][propulsion-types]; allows multiple values |
 | `vehicle_state` | Enum | Required | See [vehicle state][vehicle-states] table |
 | `event_types` | Enum[] | Required | Vehicle [event types][vehicle-events] for state change, with allowable values determined by `vehicle_state` |
@@ -582,7 +582,7 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 | `device_id` | UUID | Required | A unique device ID in UUID format, should match this device in Provider |
 | `vehicle_id` | String | Required | The Vehicle Identification Number visible on the vehicle itself, should match this device in provider |
 | `vehicle_type` | Enum | Required | see [vehicle types][vehicle-types] table |
-| `vehicle_attributes` | Array | Optional | [Vehicle attributes](/modes#vehicle-attributes) given as mode-specific unordered key-value pairs |
+| `vehicle_attributes` | Array | Optional | **[Mode](/modes#list-of-supported-modes) Specific**. [Vehicle attributes](/modes#vehicle-attributes) given as mode-specific unordered key-value pairs |
 | `propulsion_types` | Enum[] | Required | Array of [propulsion types][propulsion-types]; allows multiple values |
 | `last_event_time` | [timestamp][ts] | Required | Date/time when last state change occurred. See [Event Times][event-times] |
 | `last_vehicle_state` | Enum | Required | [Vehicle state][vehicle-states] of most recent state change. |
