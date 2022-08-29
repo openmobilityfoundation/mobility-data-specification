@@ -96,15 +96,15 @@ The `fare_attributes` array **may** have the following key value pairs:
 
 - `payment_type` (enumerated, required): `cash`, `credit_card`, `mobile`, `voucher`, `paratransit`, `no payment`, `test`
 - `fare_type` (enumerated, required): `standard_calculated` (e.g. time, distance, flag drop, tolls, fees), `upfront_pricing`, `flat_rate`. Indicator of which rate was charged.
-- `tolls` (currency, optional) - TBD
-- `flag_drop_amount` (currency, optional) - TBD
-- `exit_fee` (currency, optional) - TBD
-- `other_fees` (currency, optional) - TBD
-- `tip` (currency, optional) - TBD
-- `extra_amount` (currency, optional) - TBD
-- `taxes` (currency, optional) - TBD
-- `surcharge` (currency, optional) - TBD
-- `commission` (currency, optional) - TBD
+- `tolls` (currency, optional) - Sum of any and all tolls charged for the trip, such as bridge tolls
+- `flag_drop_amount` (currency, optional) - Amount from the meter that results from “flag drop”
+- `exit_fee` (currency, optional) - Fee to exit airport
+- `other_fees` (currency, optional) - amount of any fees charged to the customer. Includes baggage fees, cleaning fee. Excludes other fees returned.
+- `tip` (currency, optional) - amount of tip paid by customer
+- `extra_amount` (currency, optional) - miscellaneous extra amounts charged to customer not covered by other fields.
+- `taxes` (currency, optional) - amount of taxes paid for the ride
+- `surcharge` (currency, optional) - any surcharge pricing
+- `commission` (currency, optional) - any extra commission for the ride
 - `driver_trip_pay` (currency, optional) - The payment the driver received for the trip 
 - `rate_code_id` (enumerated, optional) - one of `meter_fare`, `shared`, `out_of_town`, `disabled`, `upfront_pricing`, `promo_rate`
 
