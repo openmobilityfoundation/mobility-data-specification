@@ -41,6 +41,20 @@ The short name identifier for Passenger Services used across MDS is `passenger-s
 
 The `journey_id` field shall have a consistent value in overlapping trips, e.g. "pooled" or "shared" rides with different start and/or end locations. Journeys may be point-to-point, multi-segment, or multi-segment overlapping.
 
+Example 1: one private trip with reservation, then return to depot
+```
+<-                            Journey                           ->
+<- Trip: reservation -><-    Trip: private    -><- Trip: empty  ->
+```
+
+Example 2: three shared trips, some overlapping
+```
+<-                            Journey                           ->
+<- Trip: reservation -><- Trip: shared ->
+            <- Trip: reservation -><- Trip: shared ->
+                         <- Trip: reservation -><- Trip: shared ->
+```
+
 ### Journey Attributes
 
 The `journey_attributes` array **may** have the following key value pairs:
