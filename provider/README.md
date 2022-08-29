@@ -164,7 +164,7 @@ Unless stated otherwise by the municipality, the trips endpoint must return all 
 | `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
 | `provider_name` | String | Required | The public-facing name of the Provider |
 | `device_id` | UUID | Required | A unique device ID in UUID format |
-| `vehicle_id` | String | Required | A unique vehicle identifier, visible on the vehicle itself |
+| `vehicle_id` | String | Required | A unique vehicle identifier (visible code, licence plate, etc), visible on the vehicle itself. |
 | `vehicle_type` | Enum | Required | See [vehicle types][vehicle-types] table |
 | `vehicle_attributes` | Array | Optional | **[Mode](/modes#list-of-supported-modes) Specific**. [Vehicle attributes](/modes#vehicle-attributes) given as unordered key-value pairs |
 | `propulsion_types` | Enum[] | Required | Array of [propulsion types][propulsion-types]; allows multiple values |
@@ -292,7 +292,7 @@ Unless stated otherwise by the municipality, this endpoint must return only thos
 | `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
 | `provider_name` | String | Required | The public-facing name of the Provider |
 | `device_id` | UUID | Required | A unique device ID in UUID format |
-| `vehicle_id` | String | Required | A unique vehicle identifier, visible on the vehicle itself |
+| `vehicle_id` | String | Required | A unique vehicle identifier (visible code, licence plate, etc), visible on the vehicle itself |
 | `vehicle_type` | Enum | Required | see [vehicle types][vehicle-types] table |
 | `vehicle_attributes` | Array | Optional | **[Mode](/modes#list-of-supported-modes) Specific**. [Vehicle attributes](/modes#vehicle-attributes) given as mode-specific unordered key-value pairs |
 | `propulsion_types` | Enum[] | Required | Array of [propulsion types][propulsion-types]; allows multiple values |
@@ -580,7 +580,7 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 | `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
 | `provider_name` | String | Required | The public-facing name of the Provider |
 | `device_id` | UUID | Required | A unique device ID in UUID format, should match this device in Provider |
-| `vehicle_id` | String | Required | A unique vehicle identifier, visible on the vehicle itself |
+| `vehicle_id` | String | Required | A unique vehicle identifier (visible code, licence plate, etc), visible on the vehicle itself |
 | `vehicle_type` | Enum | Required | see [vehicle types][vehicle-types] table |
 | `vehicle_attributes` | Array | Optional | **[Mode](/modes#list-of-supported-modes) Specific**. [Vehicle attributes](/modes#vehicle-attributes) given as mode-specific unordered key-value pairs |
 | `propulsion_types` | Enum[] | Required | Array of [propulsion types][propulsion-types]; allows multiple values |
