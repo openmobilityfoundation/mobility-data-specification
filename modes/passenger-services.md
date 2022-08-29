@@ -20,6 +20,7 @@ Taxis typically require explicit tracking of maintenance while TNCs typically do
    - [Trip ID Requirements](#trip-id-requirements)
    - [Trip Type](#trip-type)
    - [Trip Attributes](#trip-attributes)
+   - [Fare Attributes](#fare-attributes)
 - [Vehicle Properties](#vehicle-properties)
   - [Vehicle Attributes](#vehicle-attributes)
   - [Accessibility Options](#accessibility-options)
@@ -83,12 +84,29 @@ The `trip_attributes` array **may** have the following key value pairs:
 - `hail_type` (enumerated, required): `street_hail`, `phone_dispatch`, `phone`, `text`, `app`
 - `app_name` (text, optional): name of the app used to reserve the trip which could be provider's app or 3rd party app
 - `passenger_count` (integer, required): unique count of passengers transported during trip duration
+- `request_time` (timestamp, required): when the passenger requested the trip
+- `trip_wait_time` (milliseconds, optional): part of the passenger trip where the vehicle was moving slow or stopped (e.g. <12mph), which is a different rate in some jurisdictions
+- `pickup_address` (text, optional): street address where the trip originated from
+- `permit_licence_number` (string, optional) - The permit licence number of the organization that dispatched the vehicle
+- `driver_id` (uuid, optional): Unique identifier of a specific driver. Could be used as a lookup for an internal system.
+
+### Fare Attributes
+
+The `fare_attributes` array **may** have the following key value pairs:
+
 - `payment_type` (enumerated, required): `cash`, `credit_card`, `mobile`, `voucher`, `paratransit`, `no payment`, `test`
 - `fare_type` (enumerated, required): `standard_calculated` (e.g. time, distance, flag drop, tolls, fees), `upfront_pricing`, `flat_rate`. Indicator of which rate was charged.
-- `request_time` (timestamp, required): when the passenger requested the trip
-- `pickup_address` (text, optional): street address where the trip originated from
-- `fare_properties` - TBD
+- `tolls` (currency, optional) - TBD
+- `flag_drop_amount` (currency, optional) - TBD
+- `exit_fee` (currency, optional) - TBD
+- `other_fees` (currency, optional) - TBD
+- `tip` (currency, optional) - TBD
+- `extra_amount` (currency, optional) - TBD
+- `taxes` (currency, optional) - TBD
+- `surcharge` (currency, optional) - TBD
+- `commission` (currency, optional) - TBD
 - `driver_trip_pay` (currency, optional) - The payment the driver received for the trip 
+- `rate_code_id` (enumerated, optional) - one of `meter_fare`, `shared`, `out_of_town`, `disabled`, `upfront_pricing`, `promo_rate`
 
 ## Vehicle Properties
 
@@ -99,12 +117,16 @@ The `vehicle_attributes` array **may** have the following key value pairs:
 - `year` (integer, optional)
 - `make` (string, optional)
 - `model` (string, optional)
+- `color` (string, optional)
+- `vin` (string, optional) - the Vehicle Identification Number of the vehicle
+- `placard_number` (string, optional) - the registered placard number of the vehicle
+- `inspection_date` (date YYYY-MM-DD, optional) - the date of the last inspection of the vehicle
 
 ### Accessibility Options
 
-This enum represents the accessibility options available on a given vehicle, or the accessibility options utilized for a given trip. 
+This `accessibility_options` enum represents the accessibility options available on a given vehicle, or the accessibility options utilized for a given trip. 
 
-| `accessibility_option`  | Description                           |
+| `accessibility_options`  | Description                           |
 |-------------------------|---------------------------------------|
 | `wheelchair_accessible` | This vehicle is wheelchair accessible |
 
