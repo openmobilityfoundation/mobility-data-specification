@@ -88,17 +88,17 @@ The `trip_attributes` array **may** have the following key value pairs:
 - `trip_wait_time` (milliseconds, optional): part of the passenger trip where the vehicle was moving slow or stopped (e.g. <12mph), which is a different rate in some jurisdictions
 - `pickup_address` (text, optional): street address where the trip originated from
 - `permit_licence_number` (string, optional) - The permit licence number of the organization that dispatched the vehicle
-- `driver_id` (uuid, optional): Unique identifier of a specific driver. Could be used as a lookup for an internal system.
+- `driver_id` (string, optional): Universal identifier of a specific driver, static across operators, like a driver's license number. Could also be used as a lookup in an agency's internal driver system.
 
 ### Fare Attributes
 
 The `fare_attributes` array **may** have the following key value pairs:
 
 - `payment_type` (enumerated, required): `cash`, `credit_card`, `mobile`, `voucher`, `paratransit`, `no payment`, `test`
-- `fare_type` (enumerated, required): `standard_calculated` (e.g. time, distance, flag drop, tolls, fees), `upfront_pricing`, `flat_rate`. Indicator of which rate was charged.
+- `fare_type` (enumerated, required): `meter_fare`, `upfront_pricing`, `flat_rate`. Indicator of which rate was charged.
 - `tolls` (currency, optional) - Sum of any and all tolls charged for the trip, such as bridge tolls
-- `flag_drop_amount` (currency, optional) - Amount from the meter that results from “flag drop”
-- `exit_fee` (currency, optional) - Fee to exit airport
+- `base_rate` (currency, optional) - Minimum fare to be charged as soon as the trip starts.
+- `exit_fee` (currency, optional) - Fee to exit location, like an airport
 - `other_fees` (currency, optional) - amount of any fees charged to the customer. Includes baggage fees, cleaning fee. Excludes other fees returned.
 - `tip` (currency, optional) - amount of tip paid by customer
 - `extra_amount` (currency, optional) - miscellaneous extra amounts charged to customer not covered by other fields.
