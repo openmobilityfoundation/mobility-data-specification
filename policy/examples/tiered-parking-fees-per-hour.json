@@ -8,7 +8,7 @@
         "description": "First hour $2, second hour $4, every hour onwards $10",
         "policy_id": "2800cd0a-7827-4110-9713-b9e5bf29e9a1",
         "start_date": 1558389669540,
-        "publish_date": 1558389669540,
+        "published_date": 1558389669540,
         "end_date": null,
         "prev_policies": null,
         "provider_ids": [],
