@@ -173,6 +173,7 @@ Unless stated otherwise by the municipality, the trips endpoint must return all 
 | `trip_id` | UUID | Required | A unique ID for each trip |
 | `trip_duration` | Integer | Required | Time, in Seconds |
 | `trip_distance` | Integer | Required | Trip Distance, in Meters |
+| `trip_attributes` | Array | Optional | **[Mode](/modes#list-of-supported-modes) Specific**. [Trip attributes](/modes#trip-attributes) given as unordered key-value pairs |
 | `start_time` | [timestamp][ts] | Required | Start of the passenger/driver trip |
 | `end_time` | [timestamp][ts] | Required | End of the passenger/driver trip |
 | `start_location` | GeoJSON [Point Feature][point-geo] | Required | Location of the start of the trip. See also [Stop-based Geographic Data][stop-based-geo]. |
