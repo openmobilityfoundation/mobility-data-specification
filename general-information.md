@@ -240,7 +240,6 @@ Stops describe vehicle trip start and end locations in a pre-designated physical
 | devices                | UUID[]                                                | Optional | List of device_ids for vehicles which are currently at this stop |
 | image_url              | URL                                                   | Optional | Link to an image, photo, or diagram of the stop. Could be used by providers to help riders find or use the stop. |
 
-
 ### Stop Status
 
 **Stop Status** returns information about the current status of a **[Stop](#stops)**.
@@ -260,6 +259,8 @@ Example of the **Stop Status** object with properties listed:
   "is_returning": true
 }
 ```
+
+[Top][toc]
 
 ### GBFS Compatibility
 
@@ -283,13 +284,13 @@ MDS uses Version 1 UUIDs by default. Version 4 UUIDs may be used where noted.
 
 ## Vehicle States
 
-See new location in [vehicle states](/modes/vehicle_states.md) within [modes](/modes#vehicle-states).
+See new location within [vehicle states](/modes/vehicle_states.md) in [modes](/modes#vehicle-states).
 
 [Top][toc]
 
 ### Event Types
 
-See new location in [event types](/modes/event_types.md) within [modes](/modes#event-types).
+See new location within [event types](/modes/event_types.md) in [modes](/modes#event-types).
 
 [Top][toc]
 
@@ -312,11 +313,8 @@ Properties and characteristics of vehicles and devices.
 [Top][toc]
 
 ### Accessibility Options
-This enum represents the accessibility options available on a given vehicle, or the accessibility options utilized for a given trip. Optional and applicable only to certain [modes][modes].
 
-| `accessibility_option`  | Description                           |
-|-------------------------|---------------------------------------|
-| `wheelchair_accessible` | This vehicle is wheelchair accessible |
+See new location within [individual modes](/modes#list-of-supported-modes) in [modes](/modes#accessibility-options).
 
 [Top][toc]
 
