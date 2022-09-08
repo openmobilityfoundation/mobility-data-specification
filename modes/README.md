@@ -6,10 +6,10 @@ All MDS APIs should be mode-agnostic.
 
 ## Table of Contents
 
-* [Modes](#modes)
-* [List of Supported Modes](#list-of-supported-modes)
-* [Mode Attributes](#mode-attributes)
-* [Unique Mode Properties](#unique-mode-properties)
+- [Modes](#modes)
+- [List of Supported Modes](#list-of-supported-modes)
+- [Mode Attributes](#mode-attributes)
+- [Unique Mode Properties](#unique-mode-properties)
 
 ## Modes
 
@@ -61,6 +61,10 @@ The `trip_attributes` array allows additional mode-specific information about th
 ### Vehicle Attributes
 
 The `vehicle_attributes` array returns a list of JSON-formatted key/value pairs which correspond to the allowed attributes and values for the operative mode. For each mode, the allowed attributes and corresponding values are defined in the [mode definition](#list-of-supported-modes).
+
+### Accessibility Options
+
+The `accessibility_options` array returns a list of JSON-formatted key/value pairs which correspond to the allowed accessibility attributes and values for the operative mode. For each mode, the allowed attributes and corresponding values are defined in the [mode definition](#list-of-supported-modes).
 
 [Top][toc]
 
