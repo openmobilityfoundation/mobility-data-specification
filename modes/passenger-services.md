@@ -36,6 +36,8 @@ Taxis typically require explicit tracking of maintenance while TNCs typically do
 
 The short name identifier for Passenger Services used across MDS is `passenger-services`.
 
+[Top][toc]
+
 ## Trip Properties
 
 ### Journey ID
@@ -56,17 +58,23 @@ Example 2: three shared trips, some overlapping
                          <- Trip: reservation -><- Trip: shared ->
 ```
 
+[Top][toc]
+
 ### Journey Attributes
 
 The `journey_attributes` array **may** have the following key value pairs:
 
 - ...
 
-#### Trip ID Requirements
+[Top][toc]
+
+### Trip ID Requirements
 
 Events require a valid `trip_id` in events where `event_types` contains `reservation_start`, `reservation_stop`, `trip_start`, `trip_stop`, `trip_end`, `passenger_cancellation`, `provider_cancellation`, or `driver_cancellation`. 
 
 Additionally, `trip_id` is required if `event_types` contains a `enter_jurisdiction` or `leave_jurisdiction` event pertaining to a passenger trip. 
+
+[Top][toc]
 
 ### Trip Type
 
@@ -76,6 +84,8 @@ The `trip_type` field **must** have one of the following enumerated values:
 - `shared`: a shared or pooled trip with more than one paying customer
 - `reservation`: en route to pickup a customer who has made a reservation, with no passengers in the vehicle
 - `empty`: vehicle movement with no passengers (outside of other `trip_type` values) that may need to be reported, e.g. for deadheading
+
+[Top][toc]
 
 ### Trip Attributes
 
@@ -89,6 +99,8 @@ The `trip_attributes` array **may** have the following key value pairs:
 - `pickup_address` (text, optional): street address where the trip originated from
 - `permit_licence_number` (string, optional) - The permit licence number of the organization that dispatched the vehicle
 - `driver_id` (string, optional): Universal identifier of a specific driver, static across operators, like a driver's license number. Could also be used as a lookup in an agency's internal driver system.
+
+[Top][toc]
 
 ### Fare Attributes
 
@@ -108,6 +120,8 @@ The `fare_attributes` array **may** have the following key value pairs:
 - `driver_trip_pay` (currency, optional) - The payment the driver received for the trip 
 - `rate_code_id` (enumerated, optional) - one of `meter_fare`, `shared`, `out_of_town`, `disabled`, `upfront_pricing`, `promo_rate`
 
+[Top][toc]
+
 ## Vehicle Properties
 
 ### Vehicle Attributes
@@ -122,13 +136,17 @@ The `vehicle_attributes` array **may** have the following key value pairs:
 - `placard_number` (string, optional) - the registered placard number of the vehicle
 - `inspection_date` (date YYYY-MM-DD, optional) - the date of the last inspection of the vehicle
 
+[Top][toc]
+
 ### Accessibility Options
 
 This `accessibility_options` enum represents the accessibility options available on a given vehicle, or the accessibility options utilized for a given trip. 
 
-| `accessibility_options`  | Description                           |
+| `accessibility_options` | Description                           |
 |-------------------------|---------------------------------------|
 | `wheelchair_accessible` | This vehicle is wheelchair accessible |
+
+[Top][toc]
 
 ## State Machine
 
@@ -228,11 +246,15 @@ This is the list of `vehicle_state` and `event_type` pairings that constitute th
 | `unknown`                    | `reserved`        | `reserved`   | `comms_restored`         | The vehicle has come back into comms while reserved by a passenger                                               |
 | `unknown`                    | `stopped`         | `stopped`    | `comms_restored`         | The vehicle has come back into comms while stopped                                                               |
 
+[Top][toc]
+
 ### State Machine Diagram
 
 The *Passenger Services State Machine Diagram* shows how the `vehicle_state` and `event_type` relate to each other and how taxi vehicles can transition between states. See this [text-editable EPS](https://drive.google.com/file/d/1WusVpFK1Vm7HSJgNcA_10T74TEzuCpTB/view?usp=sharing) for the source file.
 
 ![Passenger Services State Machine Diagram](passenger-services-state-machine-diagram.svg)
+
+[Top][toc]
 
 #### Passenger Services State Notes
 
