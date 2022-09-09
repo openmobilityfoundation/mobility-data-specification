@@ -346,7 +346,7 @@ An individual `Rule` object is defined by the following fields:
 | `geography_id`   | UUID      | Required   | Unique ID of [Geography](/geography#general-information)                                               |
 | `geography_json`   | JSON      | Required   | The GeoJSON that defines the geographical coordinates.
 | `effective_date`   | [timestamp][ts] | Optional   | `start_date` for first published policy that uses this geo.  Server should set this when policies are published.  This may be used on the client to distinguish between “logical” geographies that have the same name. E.g. if a policy publishes a geography on 5/1/2020, and then another policy is published which references that same geography is published on 4/1/2020, the effective_date will be set to 4/1/2020.
-| `publish_date`   | [timestamp][ts] | Required   | Timestamp that the policy was published, i.e. made immutable                                             |
+| `published_date`   | [timestamp][ts] | Required   | Timestamp that the policy was published, i.e. made immutable                                             |
 | `prev_geographies`  | UUID[]    | Optional   | Unique IDs of prior [geographies](/geography#general-information) replaced by this one                                   |
 
 [Top][toc]
@@ -500,10 +500,8 @@ An agency's program [Requirements](#requirements) endpoint contains a number of 
 
 | Name                         | Type            | Required / Optional | Description              |
 | ---------------------------- | --------------- | -------- | ----------------------------------- |
-| `metadata`                   | Array           | Required | Array of [Requirement Metadata](#requirement-metadata) fields. |
+| `metadata`                   | JSON           | Required | [Requirement Metadata](#requirement-metadata) object. |
 | `programs`                   | Array           | Required | Array of [Requirement Programs](#requirement-programs) data. |
-| `required_data_specs`        | Array           | Required | Array of [Requirement Data Specs](#requirement-data-specs) data. |
-| `required_apis`              | Array           | Required | Array of [Requirement APIs](#requirement-apis) data. |
 
 [Top][toc]
 
