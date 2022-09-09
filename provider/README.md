@@ -10,6 +10,7 @@ This specification contains a data standard for *mobility as a service* provider
 
 * [General Information](#general-information)
   * [Versioning](#versioning)
+  * [Modes](#modes)
   * [Responses and Error Messages](#responses-and-error-messages)
   * [JSON Schema](#json-schema)
   * [Pagination](#pagination)
@@ -46,6 +47,10 @@ This specification uses data types including timestamps, UUIDs, and vehicle stat
 `provider` APIs must handle requests for specific versions of the specification from clients.
 
 Versioning must be implemented as specified in the [Versioning section][versioning].
+
+### Modes
+
+MDS is intended to be used for multiple transportation modes, including its original micromobility (e-scooters, bikes, etc.) as well as additional modes such as taxis and delivery bots.  A given `provider_id` shall be associated with a single mobility [mode], so that the mode does not have to be specified in each data structure and API call.  A provider implementing more than one mode shall [register](/README.md#providers-using-mds) a `provider_id` for each mode.
 
 [Top][toc]
 
@@ -159,16 +164,22 @@ Unless stated otherwise by the municipality, the trips endpoint must return all 
 | `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
 | `provider_name` | String | Required | The public-facing name of the Provider |
 | `device_id` | UUID | Required | A unique device ID in UUID format |
-| `vehicle_id` | String | Required | The Vehicle Identification Number visible on the vehicle itself |
+| `vehicle_id` | String | Required | A unique vehicle identifier (visible code, licence plate, etc), visible on the vehicle itself. |
 | `vehicle_type` | Enum | Required | See [vehicle types][vehicle-types] table |
+| `vehicle_attributes` | Array | Optional | **[Mode](/modes#list-of-supported-modes) Specific**. [Vehicle attributes](/modes#vehicle-attributes) given as unordered key-value pairs |
 | `propulsion_types` | Enum[] | Required | Array of [propulsion types][propulsion-types]; allows multiple values |
+| `journey_id` | UUID | Optional | A unique [journey ID](/modes#journey-id) for associating collections of trips for its [mode] |
+| `trip_type` | Enum | Optional | **[Mode](/modes#list-of-supported-modes) Specific**. The [trip type](/modes#trip-type) describing the purpose of a trip segment |
 | `trip_id` | UUID | Required | A unique ID for each trip |
 | `trip_duration` | Integer | Required | Time, in Seconds |
 | `trip_distance` | Integer | Required | Trip Distance, in Meters |
-| `route` | GeoJSON `FeatureCollection` | Required | See [Routes](#routes) detail below |
+| `trip_attributes` | Array | Optional | **[Mode](/modes#list-of-supported-modes) Specific**. [Trip attributes](/modes#trip-attributes) given as unordered key-value pairs |
+| `start_time` | [timestamp][ts] | Required | Start of the passenger/driver trip |
+| `end_time` | [timestamp][ts] | Required | End of the passenger/driver trip |
+| `start_location` | GeoJSON [Point Feature][point-geo] | Required | Location of the start of the trip. See also [Stop-based Geographic Data][stop-based-geo]. |
+| `end_location` | GeoJSON [Point Feature][point-geo] | Required | Location of the end of the trip. See also [Stop-based Geographic Data][stop-based-geo]. |
+| `route` | GeoJSON `FeatureCollection` | Required | See [Routes](#routes) detail below. Note the `start_location` and `end_location` fields in this object are duplicated in the `route` data. |
 | `accuracy` | Integer | Required | The approximate level of accuracy, in meters, of `Points` within `route` |
-| `start_time` | [timestamp][ts] | Required | |
-| `end_time` | [timestamp][ts] | Required | |
 | `publication_time` | [timestamp][ts] | Optional | Date/time that trip became available through the trips endpoint |
 | `parking_verification_url` | String | Optional | A URL to a photo (or other evidence) of proper vehicle parking |
 | `standard_cost` | Integer | Optional | The cost, in the currency defined in `currency`, that it would cost to perform that trip in the standard operation of the System (see [Costs & Currencies][costs-and-currencies]) |
@@ -283,17 +294,18 @@ Unless stated otherwise by the municipality, this endpoint must return only thos
 | `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
 | `provider_name` | String | Required | The public-facing name of the Provider |
 | `device_id` | UUID | Required | A unique device ID in UUID format |
-| `vehicle_id` | String | Required | The Vehicle Identification Number visible on the vehicle itself |
+| `vehicle_id` | String | Required | A unique vehicle identifier (visible code, licence plate, etc), visible on the vehicle itself |
 | `vehicle_type` | Enum | Required | see [vehicle types][vehicle-types] table |
+| `vehicle_attributes` | Array | Optional | **[Mode](/modes#list-of-supported-modes) Specific**. [Vehicle attributes](/modes#vehicle-attributes) given as mode-specific unordered key-value pairs |
 | `propulsion_types` | Enum[] | Required | Array of [propulsion types][propulsion-types]; allows multiple values |
 | `vehicle_state` | Enum | Required | See [vehicle state][vehicle-states] table |
-| `event_types` | Enum[] | Required | [Vehicle event(s)][vehicle-events] for state change, allowable values determined by `vehicle_state` |
+| `event_types` | Enum[] | Required | Vehicle [event types][vehicle-events] for state change, with allowable values determined by `vehicle_state` |
 | `event_time` | [timestamp][ts] | Required | Date/time that event occurred at. See [Event Times][event-times] |
 | `publication_time` | [timestamp][ts] | Optional | Date/time that event became available through the status changes endpoint |
 | `event_location` | GeoJSON [Point Feature][point-geo] | Required | See also [Stop-based Geographic Data][stop-based-geo]. |
 | `event_geographies` | UUID[] | Optional | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.1.0)*. Array of Geography UUIDs consisting of every Geography that contains the location of the status change. See [Geography Driven Events][geography-driven-events]. Required if `event_location` is not present. |
 | `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |
-| `trip_id` | UUID | Required if Applicable | Trip UUID (foreign key to Trips API), required if `event_types` contains `trip_start`, `trip_end`, `trip_cancel`, `trip_enter_jurisdiction`, or `trip_leave_jurisdiction` |
+| `trip_id` | UUID | Required if Applicable | Trip UUID (foreign key to /trips endpoint), required if `event_types` contains `trip_start`, `trip_end`, `trip_cancel`, `trip_enter_jurisdiction`, or `trip_leave_jurisdiction` |
 | `associated_ticket` | String | Optional | Identifier for an associated ticket inside an Agency-maintained 311 or CRM system |
 
 [Top][toc]
@@ -540,7 +552,7 @@ In the case that a `stop_id` query parameter is specified, the `stops` array ret
 
 ### Vehicles
 
-The `/vehicles` is a near-realtime endpoint and returns the current status of vehicles in an agency's [Jurisdiction](/general-information.md#definitions) and/or area of agency responsibility. All vehicles that are currently in any [`vehicle_state`](/general-information.md#vehicle-states) should be returned in this payload. Since all states are returned, care should be taken to filter out states not in the [PROW](/general-information.md#definitions) if doing vehicle counts. For the states `elsewhere` and `removed` which include vehicles not in the [PROW](/general-information.md#definitions) but provide some operational clarity for agencies, these must only persist in the feed for 90 minutes before being removed. 
+The `/vehicles` is a near-realtime endpoint and returns the current status of vehicles in an agency's [Jurisdiction](/general-information.md#definitions) and/or area of agency responsibility. All vehicles that are currently in any [`vehicle_state`][vehicle-states] should be returned in this payload. Since all states are returned, care should be taken to filter out states not in the [PROW](/general-information.md#definitions) if doing vehicle counts. For the states `elsewhere` and `removed` which include vehicles not in the [PROW](/general-information.md#definitions) but provide some operational clarity for agencies, these must only persist in the feed for 90 minutes before being removed. 
 
 Data in this endpoint should reconcile with data from the historic [`/status_changes`](/provider#status-changes) enpdoint, though `/status_changes` is the source of truth if there are discrepancies. 
 
@@ -570,8 +582,9 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 | `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
 | `provider_name` | String | Required | The public-facing name of the Provider |
 | `device_id` | UUID | Required | A unique device ID in UUID format, should match this device in Provider |
-| `vehicle_id` | String | Required | The Vehicle Identification Number visible on the vehicle itself, should match this device in provider |
+| `vehicle_id` | String | Required | A unique vehicle identifier (visible code, licence plate, etc), visible on the vehicle itself |
 | `vehicle_type` | Enum | Required | see [vehicle types][vehicle-types] table |
+| `vehicle_attributes` | Array | Optional | **[Mode](/modes#list-of-supported-modes) Specific**. [Vehicle attributes](/modes#vehicle-attributes) given as mode-specific unordered key-value pairs |
 | `propulsion_types` | Enum[] | Required | Array of [propulsion types][propulsion-types]; allows multiple values |
 | `last_event_time` | [timestamp][ts] | Required | Date/time when last state change occurred. See [Event Times][event-times] |
 | `last_vehicle_state` | Enum | Required | [Vehicle state][vehicle-states] of most recent state change. |
@@ -601,6 +614,7 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 [json-api-pagination]: http://jsonapi.org/format/#fetching-pagination
 [json-schema]: https://json-schema.org
 [muni-boundary]: #municipality-boundary
+[mode]: /modes/README.md
 [point-geo]: /general-information.md#geographic-telemetry-data
 [propulsion-types]: /general-information.md#propulsion-types
 [responses]: /general-information.md#responses
@@ -615,7 +629,7 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 [ts]: /general-information.md#timestamps
 [vehicles]: #vehicles
 [vehicle-types]: /general-information.md#vehicle-types
-[vehicle-states]: /general-information.md#vehicle-states
-[vehicle-events]: /general-information.md#vehicle-state-events
+[vehicle-states]: /modes#vehicle-states
+[vehicle-events]: /modes#event-types
 [vehicles-schema]: vehicles.json
 [versioning]: /general-information.md#versioning

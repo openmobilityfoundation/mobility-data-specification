@@ -8,29 +8,39 @@ This specification describes the digital relationship between _mobility as a ser
 
 ## Table of Contents
 
-- [General Information](#general-information)
-  - [Versioning](#versioning)
+- [General information](#general-information)
   - [Update Frequency](#update-frequency)
+  - [Versioning](#versioning)
 - [Background](#background)
 - [Distribution](#distribution)
 - [REST Endpoints](#rest-endpoints)
+  - [Responses and Error Messages](#responses-and-error-messages)
+  - [Authorization](#authorization)
   - [Policies](#policies)
+    - [Query Parameters](#query-parameters)
   - [Geographies](#geographies)
+    - [Query Parameters](#query-parameters-1)
   - [Requirements](#requirements)
 - [Flat Files](#flat-files)
+  - [Example `policies.json`](#example-policiesjson)
+  - [Example `geographies.json`](#example-geographiesjson)
 - [Schema](#schema)
+  - [JSON Schema](#json-schema)
   - [Policy](#policy)
   - [Rules](#rules)
   - [Rule Types](#rule-types)
   - [Rule Units](#rule-units)
   - [Geography](#geography)
-  - [Rate Recurrences](#rate-recurrences)
+  - [Rates](#rates)
+    - [Rate Amounts](#rate-amounts)
+    - [Rate Recurrences](#rate-recurrences)
+    - [Rate Applies When](#rate-applies-when)
   - [Messages](#messages)
   - [Value URL](#value-url)
   - [Order of Operations](#order-of-operations)
   - [Requirement](#requirement)
-    - [Update Frequency](#requirement-update-frequency)
     - [Public Hosting](#public-hosting)
+    - [Update Frequency](#requirement-update-frequency)
     - [Version Tracking](#version-tracking)
     - [Beta Limitations](#beta-limitations)
     - [Format](#requirement-format)
@@ -253,8 +263,9 @@ An individual `Policy` object is defined by the following fields:
 | Name             | Type            | Required / Optional | Description                                                                         |
 | ---------------- | --------------- | ---------- | ----------------------------------------------------------------------------------- |
 | `name`           | String          | Required   | Name of policy                                                                      |
+| `mode`           | [Mode][modes]            | Required   | Mode this rule should apply, see MDS [mode list][modes] for options. Default `micromobility` for backwards compatibility (this default will likely be removed in a subsequent MDS release)                                                               |
 | `policy_id`      | UUID            | Required   | Unique ID of policy                                                                 |
-| `provider_ids`   | UUID[]          | Optional    | Providers for whom this policy is applicable; empty arrays and `null`/absent implies all Providers. See MDS [provider list](/providers.csv). |
+| `provider_ids`   | UUID[]          | Optional   | Providers for whom this policy is applicable; empty arrays and `null`/absent implies all Providers. See MDS [provider list](/providers.csv). |
 | `description`    | String          | Required   | Description of policy                                                               |
 | `currency`       | String          | Optional   | An ISO 4217 Alphabetic Currency Code representing the [currency](../general-information.md#costs-and-currencies) of all Rules of [type](#rule-types) `rate`.|
 | `start_date`     | [timestamp][ts] | Required   | Beginning date/time of policy enforcement. In order to give providers sufficient time to poll, `start_date` must be at least 20 minutes after `published_date`.                                           |
@@ -275,8 +286,9 @@ An individual `Rule` object is defined by the following fields:
 | `rule_id`          | UUID                        | Required   | Unique ID of the rule |
 | `rule_type`        | enum                        | Required   | Type of policy (see [Rule Types](#rule-types)) |
 | `geographies`      | UUID[]                      | Required   | List of [Geography](/geography#general-information) UUIDs (non-overlapping) specifying the covered geography |
-| `states`           | `{ state: event[] }`        | Required   | [Vehicle state][vehicle-states] to which this rule applies. Optionally provide a list of specific [vehicle events][#vehicle-events] as a subset of a given status for the rule to apply to. An empty list or `null`/absent defaults to "all". |
+| `states`           | `{ state: event[] }`        | Required   | [Vehicle state][vehicle-states] to which this rule applies. Optionally provide a list of specific [vehicle events][vehicle-events] as a subset of a given status for the rule to apply to. An empty list or `null`/absent defaults to "all". |
 | `rule_units`       | enum                        | Conditionally Required   | Measured units of policy (see [Rule Units](#rule-units)) |
+| `accessibility_options` | [AccessibilityOption][accessibility-options][] | Applicable vehicle [accessibility options][accessibility-options], default any (or none) |
 | `vehicle_types`    | `vehicle_type[]`            | Optional   | Applicable vehicle types, default "all". |
 | `propulsion_types` | `propulsion_type[]`         | Optional   | Applicable vehicle [propulsion types][propulsion-types], default "all". |
 | `minimum`          | integer                     | Optional   | Minimum value, if applicable (default 0) |
@@ -299,9 +311,9 @@ An individual `Rule` object is defined by the following fields:
 | Name    | Description                                                                                                   |
 | ------- | ------------------------------------------------------------------------------------------------------------- |
 | `count` | Fleet counts based on regions. Rule `minimum`/`maximum` refers to number of devices in [Rule Units](#rule-units).                                  |
-| `time`  | Individual limitations or fees based upon time spent in one or more vehicle-states. Rule `minimum`/`maximum` refers to increments of time in [Rule Units](#rule-units). |
+| `time`  | Individual limitations or fees based upon time spent in one or more vehicle states. Rule `minimum`/`maximum` refers to increments of time in [Rule Units](#rule-units). |
 | `speed` | Global or local speed limits. Rule `minimum`/`maximum` refers to speed in [Rule Units](#rule-units).                  |
-| `rate`  | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.0.0)*. Fees or subsidies based on regions and time spent in one or more vehicle-states. Rule `rate_amount` refers to the rate charged according to the [Rate Recurrences](#rate_recurrences) and the [currency requirements](/general-information.md#costs-and-currencies) in [Rule Units](#rule-units). *Prior to implementation agencies should consult with providers to discuss how the `rate` rule will be used. Most agencies do this as a matter of course, but it is particularly important to communicate in advance how frequently and in what ways rates might change over time.*    |
+| `rate`  | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.0.0)*. Fees or subsidies based on regions and time spent in one or more vehicle states. Rule `rate_amount` refers to the rate charged according to the [Rate Recurrences](#rate_recurrences) and the [currency requirements](/general-information.md#costs-and-currencies) in [Rule Units](#rule-units). *Prior to implementation agencies should consult with providers to discuss how the `rate` rule will be used. Most agencies do this as a matter of course, but it is particularly important to communicate in advance how frequently and in what ways rates might change over time.*    |
 | `user`  | Information for users, e.g. about helmet laws. Generally can't be enforced via events and telemetry.          |
 
 [Top][toc]
@@ -574,7 +586,7 @@ Unique combinations for data specs, specific providers, vehicle types, policies,
 | `program_website_url`        | URL             | Required | URL of the agency's transportation policy page. E.g. "https://www.cityname.gov/transportation/shared-devices.htm" |
 | `program_document_url`        | URL             | Optional | URL of the agency's operating permit rules that mention data requirements. E.g. "https://www.cityname.gov/mds_data_policy.pdf" |
 | `provider_ids`               | UUID[]          | Required | Array of provider UUIDs that apply to this group the requirements |
-| `vehicle_type`               | Enum            | Optional | Array of [Vehicle Types](../general-information.md#vehicle-types) that apply to this requirement. If absent it applies to all vehicle types. |
+| `vehicle_type`               | Enum            | Optional | Array of [Vehicle Types](/general-information.md#vehicle-types) that apply to this requirement. If absent it applies to all vehicle types. |
 | `start_date`                 | [timestamp][ts] | Required | Beginning date/time of requirements |
 | `end_date`                   | [timestamp][ts] | Required | End date/time of requirements. Can be null. Keep data at least one year past `end_date` before removing. |
 | `required_data_specs`        | Array           | Required | Array of required [Data Specs](#requirement-data-specs) |
@@ -699,16 +711,19 @@ You may also show which APIs, endpoints, and fields your agency is serving to pr
 
 [Top][toc]
 
+[accessibility-options]: /general-information.md#accessibility-options
 [beta]: /general-information.md#beta
 [error-messages]: /general-information.md#error-messages
 [iana]: https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
 [json-schema]: #json-schema
-[muni-boundary]: ../provider/README.md#municipality-boundary
+[modes]: /modes/README.md
+[muni-boundary]: /provider/README.md#municipality-boundary
 [propulsion-types]: /general-information.md#propulsion-types
 [responses]: /general-information.md#responses
 [ts]: /general-information.md#timestamps
 [toc]: #table-of-contents
-[vehicle-events]: /general-information.md#vehicle-state-events
-[vehicle-states]: /general-information.md#vehicle-states
+[vehicle-events]: /modes#event-types
+[vehicle-states]: /modes#vehicle-states
 [vehicle-types]: /general-information.md#vehicle-types
 [versioning]: /general-information.md#versioning
+[modes]: /general-information.md#modes
