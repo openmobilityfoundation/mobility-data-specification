@@ -84,7 +84,7 @@ A vehicle record is as follows:
 | `vehicle_id`  | String    | Vehicle Identification Number (vehicle_id) visible on vehicle                 |
 | `vehicle_type`        | Enum      | [Vehicle Type][vehicle-types]           |
 | `propulsion_types`  | Enum[]    | Array of [Propulsion Type][propulsion-types]; allows multiple values          |
-| `vehicle_attributes`        | Array of [vehicle attributes](/modes/#vehicle-attributes)   | Vehicle attributes appropriate for the current mode |
+| `vehicle_attributes`        | Array of [vehicle attributes](/modes/#vehicle-attributes)   | Vehicle attributes appropriate for the current [mode][modes] |
 | `state`       | Enum      | Current vehicle state. See [Vehicle State][vehicle-states]                    |
 | `prev_events`  | Enum[]      | Last [Vehicle Event][vehicle-events]                                           |
 | `updated`     | [timestamp][ts] | Date of last event update                                                     |
@@ -111,7 +111,7 @@ Body Params:
 | `vehicle_type`       | Enum    | Required          | [Vehicle Type][vehicle-types]                                        |
 | `mode`       | Enum    | Required          | [Mobility Mode][modes]                                        |
 | `propulsion_types` | Enum[]  | Required          | Array of [Propulsion Type][propulsion-types]; allows multiple values |
-| `vehicle_attributes`        | Array of [vehicle attributes](/modes/#vehicle-attributes)   | Vehicle attributes appropriate for the current mode |
+| `vehicle_attributes` | Conditionally Required | Array of [vehicle attributes](/modes/#vehicle-attributes)   | Vehicle attributes appropriate for the current [mode][modes] |
 
 201 Success Response:
 
@@ -143,7 +143,7 @@ Body Params:
 
 | Field        | Type    | Required/Optional | Field Description                                                    |
 | ------------ | ------- | ----------------- | -------------------------------------------------------------------- |
-| `vehicle_id` | String  | Required          | Vehicle Identification Number (vehicle_id) visible on vehicle               |
+| `vehicle_id` | String  | Required          | License Plate (if present) or VIN visible on a vehicle               |
 
 200 Success Response:
 
@@ -164,7 +164,7 @@ _No content returned if no vehicle matching `device_id` is found._
 
 ## Vehicle - Event
 
-The vehicle `/event` endpoint allows the Provider to control the state of the vehicle including deregister a vehicle from the fleet.
+The vehicle `/event` endpoint allows the Provider to control the state of the vehicle.
 
 Endpoint: `/vehicles/{device_id}/event`
 Method: `POST`
@@ -177,14 +177,14 @@ Path Params:
 
 Body Params:
 
-| Field           | Type                          | Required/Optional | Field Description |
-| -----------     | ----------------------------- | -------- | -------------------------------------------------------------------------------- |
-| `vehicle_state` | Enum                          | Required | see [Vehicle States][vehicle-states] |
-| `event_types`   | Enum[]                        | Required | see [Vehicle Events][vehicle-events] |
-| `timestamp`     | [timestamp][ts]               | Required | Date of last event update |
-| `telemetry`     | [Telemetry](#telemetry-data)  | Required | Single point of telemetry. |
+| Field           | Type                         | Required/Optional      | Field Description                                                                                          |
+|-----------------|------------------------------|------------------------|------------------------------------------------------------------------------------------------------------|
+| `vehicle_state` | Enum                         | Required               | see [Vehicle States][vehicle-states]                                                                       |
+| `event_types`   | Enum[]                       | Required               | see [Vehicle Events][vehicle-events]       |
+| `timestamp`     | [timestamp][ts]              | Required               | Date of last event update                                                                                  |
+| `telemetry`     | [Telemetry](#telemetry-data) | Required               | Single point of telemetry                                                                                  |
 | `event_geographies`  | UUID[] | Optional        | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.1.0)*. Array of Geography UUIDs consisting of every Geography that contains the location of the event. See [Geography Driven Events][geography-driven-events]. Required if `telemetry` is not present. |
-| `trip_id`       | UUID                          | Optional | UUID provided by Operator to uniquely identify the trip. Required if `event_types` contains `trip_start`, `trip_end`, `trip_cancel`, `trip_enter_jurisdiction`, or `trip_leave_jurisdiction` |
+| `trip_id`       | UUID                         | Conditionally required | UUID provided by Operator to uniquely identify the trip. See `trip_id` requirements for each [mode][modes]. |
 
 201 Success Response:
 
@@ -323,6 +323,8 @@ Path Params:
 
 If `stop_id` is specified, `GET` will return an array with a single stop record, otherwise it will be a list of all stop records.
 
+[Top][toc]
+
 ## Reservation Type
 
 The reservation type enum expresses the urgency of a given reservation. This can be useful when attempting to quantify metrics around trips: for example, computing passenger wait-time. In the `on_demand` case, passenger wait-time may be quantified by the delta between the `reservation_time`, and the pick-up time; however, in the `scheduled` case, the wait time may be quantified based on the delta between the `scheduled_trip_start_time` found in the Trips payload, and the actual `trip_start_time`. 
@@ -331,6 +333,8 @@ The reservation type enum expresses the urgency of a given reservation. This can
 |--------------------|------------------------------------------------------------------------|
 | `on_demand`        | The passenger requested the vehicle as soon as possible                |
 | `scheduled`        | The passenger requested the vehicle for a scheduled time in the future |
+
+[Top][toc]
 
 ## Reservation Method
 
@@ -341,6 +345,8 @@ The reservation method enum describes the different ways in which a passenger ca
 | `app`                | Reservation was made through an application (mobile/web)  |
 | `street_hail`        | Reservation was made by the passenger hailing the vehicle |
 | `phone_dispatch`     | Reservation was made by calling the dispatch operator     |
+
+[Top][toc]
 
 ## Fare
 
@@ -353,6 +359,8 @@ The Fare object describes a fare for a Trip.
 | components      | `{ [string]: float }` | Optional          | Breakdown of the different fees that composed a fare, e.g. tolls                        |
 | currency        | string                | Required          | ISO 4217 currency code                                                                  |
 | payment_methods | `string[]`            | Optional          | Breakdown of different payment methods used for a trip, e.g. cash, card, equity_program |
+
+[Top][toc]
 
 ## Trip Metadata
 
@@ -394,9 +402,9 @@ Payload which was POST'd
 | `bad_param`          | A validation error occurred.                      | Array of parameters with errors |
 | `missing_param`      | A required parameter is missing.                  | Array of missing parameters     |
 
-
 [Top][toc]
 
+[accessibility-options]: /general-information.md#accessibility-options
 [beta]: /general-information.md#beta-features
 [general]: /general-information.md
 [geography-driven-events]: /general-information.md#geography-driven-events
@@ -409,6 +417,6 @@ Payload which was POST'd
 [toc]: #table-of-contents
 [ts]: /general-information.md#timestamps
 [vehicle-types]: /general-information.md#vehicle-types
-[vehicle-states]: /modes#vehicle-states
-[vehicle-events]: /modes#event-types
+[vehicle-states]: /modes/vehicle_states.md
+[vehicle-events]: /modes/event_types.md
 [versioning]: /general-information.md#versioning

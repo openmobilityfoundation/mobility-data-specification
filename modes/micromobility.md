@@ -2,47 +2,105 @@
 
 <img src="https://i.imgur.com/YFlUSfz.png" width="120" align="right" alt="MDS Modes - Micromobility" border="0">
 
-"**Micromobility**" refers to single-occupancy modes of docked or dockless transportation such as e-scooters, e-bikes, and regular bikes.
+"**Micromobility**" refers to single-occupancy modes of docked or dockless transportation such as e-scooters, e-bikes, and human-powered bikes.
 
 See the [modes overview](/modes) for how the mode specific information below applies across MDS.
 
 ## Table of Contents
 
-* [Mode Attributes](#mode-attributes)
-* [Vehicle States](#vehicle-states)
-* [Event Types](#event-types)
-* [Vehicle State Events](#vehicle-state-events)
-* [State Machine Diagram](#state-machine-diagram)
+- [Mode Attributes](#mode-attributes)
+   - [Mode ID](#mode-id)
+- [Trip Properties](#trip-properties)
+   - [Journey ID](#journey-id)
+   - [Journey Attributes](#journey-attributes)
+   - [Trip ID Requirements](#trip-id-requirements)
+   - [Trip Type](#trip-type)
+   - [Trip Attributes](#trip-attributes)
+   - [Fare Attributes](#fare-attributes)
+- [Vehicle Properties](#vehicle-properties)
+  - [Vehicle Attributes](#vehicle-attributes)
+  - [Accessibility Options](#accessibility-options)
+- [State Machine](#state-machine)
+  - [Vehicle States](#vehicle-states)
+  - [Event Types](#event-types)
+  - [Vehicle State Events](#vehicle-states-events)
+  - [State Machine Diagram](#state-machine-diagram)
 
 ## Mode Attributes
 
-Some fields used across MDS APIs are defined in more detail within each mode.
+### Mode ID
 
-### Journey ID
-
-The `journey_id` field is not used with the micromobility mode.
-
-### Trip Type
-
-The `trip_type` field may have one of the following values:
-
-- `rider`: a single rider is taking a trip
-
-### Trip Attributes
-
-The `trip_attributes` array is not used with the micromobility mode.
-
-### Vehicle Attributes
-
-The `vehicle_attributes` array may have the following key value pairs:
-
-- `year` (integer)
-- `manufacturer` (string)
-- `model` (string)
+The short name identifier for Micromobility used across MDS is `micromobility`.
 
 [Top][toc]
 
-## Vehicle States
+## Trip Properties
+
+### Journey ID
+
+The `journey_id` field is not used in this mode. Trips are point-to-point.
+
+[Top][toc]
+
+### Journey Attributes
+
+The `journey_attributes` array is not used in this mode.
+
+[Top][toc]
+
+### Trip ID Requirements
+
+Required in events if `event_types` contains `trip_start`, `trip_end`, `trip_cancel`, `trip_enter_jurisdiction`, or `trip_leave_jurisdiction`.
+
+[Top][toc]
+
+### Trip Type
+
+The `trip_type` field **may** have one of the following values:
+
+- `rider`: a single rider is taking a trip
+- `rebalance`: vehicle ridden by operator to rebalance
+- `maintenance`: vehicles ridden by operator to perform maintenance or check operation
+
+[Top][toc]
+
+### Trip Attributes
+
+The `trip_attributes` array is not used in this mode.
+
+[Top][toc]
+
+### Fare Attributes
+
+The `fare_attributes` array is not used in this mode.
+
+[Top][toc]
+
+## Vehicle Properties
+
+### Vehicle Attributes
+
+The `vehicle_attributes` array **may** have the following key value pairs:
+
+- `year` (integer, optional)
+- `make` (string, optional)
+- `model` (string, optional)
+
+[Top][toc]
+
+### Accessibility Options
+
+This `accessibility_options` enum represents the accessibility options available on a given vehicle, or the accessibility options utilized for a given trip. 
+
+| `accessibility_options` | Description                           |
+|-------------------------|---------------------------------------|
+| `adaptive`              | This vehicle is accessible to people with various physical disabilities, and may include three wheels or be self balancing, a seat, or a basket or storage area  |
+
+[Top][toc]
+
+## State Machine
+
+### Vehicle States
 
 Valid micromobility vehicle states are 
 
@@ -58,7 +116,7 @@ See [Vehicle States][vehicle-states] for descriptions.
 
 [Top][toc]
 
-## Event Types
+### Event Types
 
 Valid micromobility vehicle event types are 
 
@@ -95,7 +153,7 @@ See vehicle [Event Types][vehicle-events] for descriptions.
 
 [Top][toc]
 
-## Vehicle State Events
+### Vehicle State Events
 
 This is the list of `vehicle_state` and `event_type` pairings that constitute the valid transitions of the vehicle state machine.
 
@@ -152,10 +210,12 @@ Vehicles can enter the `unknown` state to and from any other state with the foll
 | `available`, `elsewhere`, `non_operational`, `on_trip`, `removed`, `reserved` | `unknown`     | `comms_lost`       | The vehicle is unable to transmit its GPS location or other status information |
 | `available`, `elsewhere`, `non_operational`, `on_trip`, `removed`, `reserved` | `unknown`     | `unspecified`       | The provider cannot definitively (yet) specify the reason for the unknown state |
 
+[Top][toc]
+
 ### State Machine Diagram
 
 This *State Machine Diagram* shows how `vehicle_state` and `event_type` relate to each other and how vehicles can transition between states. See [Google Slides](https://docs.google.com/presentation/d/1Ar2-ju8YlddSsTATvQw4YjsSa5108XtidtnJNk-UAfA/edit) for the source file.
-![MDS State Machine Diagram](/modes/MDS-micromobility-state-machine-diagram.svg)
+![MDS State Machine Diagram](/modes/micromobility-state-machine-diagram.svg)
 
 [Top][toc]
 

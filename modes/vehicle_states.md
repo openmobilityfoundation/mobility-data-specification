@@ -9,6 +9,7 @@ This file defines all possible `vehicle_state`s that can be used in state machin
 | `non_operational` | yes      | Not available for hire.  Examples include: vehicle has low battery, or currently outside legal operating hours. |
 | `reserved`        | yes      | Reserved via Provider's app.  A scooter waiting to be picked up by a rider, a taxi en route to a pickup. |
 | `on_trip`         | yes      | In a trip.  For micromobility, in possession of renter.  May or may not be in motion. |
+| `stopped`         | yes      | In a trip, but stopped for some purpose, e.g. to pick up or drop off passengers, or if a driver is on break. |
 | `elsewhere`       | no       | Outside of regulator's jurisdiction, and thus not subject to cap-counts or other regulations. Example: a vehicle that started a trip in L.A. has transitioned to Santa Monica.  |
 | `unknown`         | unknown  | Provider has lost contact with the vehicle and its disposition is unknown.  Examples include: scooter taken into a private residence, bike thrown in river. |
 

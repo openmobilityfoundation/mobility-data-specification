@@ -10,7 +10,7 @@
 - [Versions](#versions)
   - [Technical Information](#technical-information)
 - [Get Involved](#get-involved)
-  - [Membership](#membership)  
+  - [Membership](#membership)
 - [Cities Using MDS](#cities-using-mds)
 - [Providers Using MDS](#providers-using-mds)
 - [Software Companies Using MDS](#software-companies-using-mds)

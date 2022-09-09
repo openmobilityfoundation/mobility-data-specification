@@ -1,34 +1,36 @@
 # Mobility Data Specification: **General information**
 
-This document contains specifications that are shared between the various MDS APIs such as [`agency`][agency], [`policy`][policy], [`provider`][provider], etc.
+This document contains specifications that are shared between the various MDS [APIs and endpoints](/README.md#endpoints).
 
 ## Table of Contents
 
-* [Beta Features](#beta-features)
-* [Costs and Currencies](#costs-and-currencies)
-* [Definitions](#definitions)
-* [Devices](#devices)
-* [Geographic Data][geo]
-  * [Geographic Telemetry Data](#geographic-telemetry-data)
-  * [Stop-based Geographic Data](#stop-based-geographic-data)
-  * [Intersection Operation](#intersection-operation)
-* [Geography-Driven Events](#geography-driven-events)
-* [Optional Authentication](#optional-authentication)
-* [Propulsion Types](#propulsion-types)
-* [Responses](#responses)
-  * [Error Messages](#error-messages)
-* [Strings](#strings)
-* [Stops](#stops)
-  * [Stop Status](#stop-status)
-  * [GBFS Compatibility](#gbfs-compatibility)
-* [Timestamps](#timestamps)
-* [UUIDs](#uuids)
-* [Vehicle States](#vehicle-states)
-  * [Event Types](#event-types)
-  * [Vehicle State Events](#vehicle-state-events)
-  * [State Machine Diagram](#state-machine-diagram)
-* [Vehicle Types](#vehicle-types)
-* [Versioning](#versioning)
+- [Beta Features](#beta-features)
+- [Costs and Currencies](#costs-and-currencies)
+- [Definitions](#definitions)
+- [Devices](#devices)
+- [Geographic Data](#geographic-data)
+  - [Geographic Telemetry Data](#geographic-telemetry-data)
+  - [Stop-based Geographic Data](#stop-based-geographic-data)
+  - [Intersection Operation](#intersection-operation)
+- [Geography-Driven Events](#geography-driven-events)
+- [Optional Authentication](#optional-authentication)
+- [Responses](#responses)
+  - [Error Messages](#error-messages)
+- [Strings](#strings)
+- [Stops](#stops)
+  - [Stop Status](#stop-status)
+  - [GBFS Compatibility](#gbfs-compatibility)
+- [Timestamps](#timestamps)
+- [UUIDs](#uuids)
+- [Vehicle Characteristics](#vehicle-characteristics)
+  - [Accessibility Options](#accessibility-options)
+  - [Propulsion Types](#propulsion-types)
+  - [Vehicle Types](#vehicle-types)
+- [Vehicle States](#vehicle-states)
+  - [Event Types](#event-types)
+  - [Vehicle State Events](#vehicle-state-events)
+  - [State Machine Diagram](#state-machine-diagram)
+- [Versioning](#versioning)
 
 ## Beta Features
 
@@ -176,19 +178,6 @@ Note if implementing the beta feature [Geography Driven Events](/general-informa
 
 [Top][toc]
 
-## Propulsion Types
-
-| `propulsion`      | Description                                            |
-| ----------------- | ------------------------------------------------------ |
-| `human`           | Pedal or foot propulsion                               |
-| `electric_assist` | Provides power only alongside human propulsion         |
-| `electric`        | Contains throttle mode with a battery-powered motor    |
-| `combustion`      | Contains throttle mode with a gas engine-powered motor |
-
-A vehicle may have one or more values from the `propulsion`, depending on the number of modes of operation. For example, a scooter that can be powered by foot or by electric motor would have the `propulsion` represented by the array `['human', 'electric']`. A bicycle with pedal-assist would have the `propulsion` represented by the array `['human', 'electric_assist']` if it can also be operated as a traditional bicycle.
-
-[Top][toc]
-
 ## Responses
 
 * **200:** OK: operation successful.
@@ -251,7 +240,6 @@ Stops describe vehicle trip start and end locations in a pre-designated physical
 | devices                | UUID[]                                                | Optional | List of device_ids for vehicles which are currently at this stop |
 | image_url              | URL                                                   | Optional | Link to an image, photo, or diagram of the stop. Could be used by providers to help riders find or use the stop. |
 
-
 ### Stop Status
 
 **Stop Status** returns information about the current status of a **[Stop](#stops)**.
@@ -271,6 +259,8 @@ Example of the **Stop Status** object with properties listed:
   "is_returning": true
 }
 ```
+
+[Top][toc]
 
 ### GBFS Compatibility
 
@@ -294,13 +284,13 @@ MDS uses Version 1 UUIDs by default. Version 4 UUIDs may be used where noted.
 
 ## Vehicle States
 
-See new location in [vehicle states](/modes/vehicle_states.md) within [modes](/modes#vehicle-states).
+See new location within [vehicle states](/modes/vehicle_states.md) in [modes](/modes#vehicle-states).
 
 [Top][toc]
 
 ### Event Types
 
-See new location in [event types](/modes/event_types.md) within [modes](/modes#event-types).
+See new location within [event types](/modes/event_types.md) in [modes](/modes#event-types).
 
 [Top][toc]
 
@@ -316,7 +306,32 @@ See new location within [individual modes](/modes#list-of-supported-modes) in [m
 
 [Top][toc]
 
-## Vehicle Types
+## Vehicle Characteristics
+
+Properties and characteristics of vehicles and devices.
+
+[Top][toc]
+
+### Accessibility Options
+
+See new location within [individual modes](/modes#list-of-supported-modes) in [modes](/modes#accessibility-options).
+
+[Top][toc]
+
+### Propulsion Types
+
+| `propulsion`      | Description                                            |
+| ----------------- | ------------------------------------------------------ |
+| `human`           | Pedal or foot propulsion                               |
+| `electric_assist` | Provides power only alongside human propulsion         |
+| `electric`        | Contains throttle mode with a battery-powered motor    |
+| `combustion`      | Contains throttle mode with a gas engine-powered motor |
+
+A vehicle may have one or more values from the `propulsion`, depending on the number of modes of operation. For example, a scooter that can be powered by foot or by electric motor would have the `propulsion` represented by the array `['human', 'electric']`. A bicycle with pedal-assist would have the `propulsion` represented by the array `['human', 'electric_assist']` if it can also be operated as a traditional bicycle.
+
+[Top][toc]
+
+### Vehicle Types
 
 The list of allowed `vehicle_type` values in MDS. Aligning with [GBFS vehicle types form factors](https://github.com/NABSA/gbfs/blob/master/gbfs.md#vehicle_typesjson-added-in-v21-rc).
 
@@ -364,6 +379,7 @@ If an unsupported or invalid version is requested, the API must respond with a s
 [geo]: #geographic-data
 [geojson-feature]: https://tools.ietf.org/html/rfc7946#section-3.2
 [geojson-point]: https://tools.ietf.org/html/rfc7946#section-3.1.2
+[modes]: /modes/README.md
 [policy]: /policy/README.md
 [provider]: /provider/README.md
 [st-intersects]: https://postgis.net/docs/ST_Intersects.html
