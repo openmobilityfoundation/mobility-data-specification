@@ -372,7 +372,7 @@ The Trips endpoint serves two purposes:
 | Field                         | Type                           | Required/Optional      | Field Description |
 |-------------------------------|--------------------------------|------------------------| ----------------- |
 | trip_id                       | UUID                           | Required               | UUID for the trip this payload pertains to |
-| journey_id                    | UUID                           | Optional               | A unique ID for associating collections of trips |
+| trip_type                     | Enum                           | Optional               | The type of the trip |
 | trip_attributes               | `{ [String]: String}`          | Optional               | Trip attributes, given as mode-specific key-value pairs |
 | provider_id                   | UUID                           | Required               | Provider which managed this trip |
 | reservation_method            | Enum                           | Required               | Way the customer created their reservation, see [reservation-method](#reservation-method) |
