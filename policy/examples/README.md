@@ -453,18 +453,150 @@ File: [`distribution-policies.json`](distribution-policies.json)
  "description":"A minimum of 3 vehicles must be available in each equity zone every day. "
 }
 
+
+
+#patch-1
+
+For example, say a vehicle is parked for 6.5 hours. It will be charged `$2 (0-1hr) + $4 (1-2hr) + $10 (2-3hr) + $10 (3-4hr) + $10 (4-5hr) + $10 (5-6hr) + $10 (6-6.5hr) = $56`
+
+This policy may be specified different ways using the `rate_applies_when` field.
+Both examples are shown here.
+
+### With default `rate_applies_when = "out_of_bounds"`
+
+By default the `rate_applies_when` field has the value `out_of_bounds`,
+meaning the rate should take effect when an event is outside the bounds
+of a rule's `minimum` and `maximum` values.
+
+File: [`tiered-parking-fees-per-hour.json`](tiered-parking-fees-per-hour.json)
+
+```json
+{
+  "name": "Tiered Dwell Time Example",
+  "description": "First hour $2, second hour $4, every hour onwards $10",
+  "policy_id": "2800cd0a-7827-4110-9713-b9e5bf29e9a1",
+  "start_date": 1558389669540,
+  "published_date": 1558389669540,
+  "end_date": null,
+  "prev_policies": null,
+  "provider_ids": [],
+  "currency": "USD",
+  "rules": [
+    {
+      "name": "> 2 hours",
+      "rule_id": "9cd1768c-ab9e-484c-93f8-72a7078aa7b9",
+      "rule_type": "time",
+      "rule_units": "hours",
+      "geographies": ["0c77c813-bece-4e8a-84fd-f99af777d198"],
+      "statuses": { "available": [], "non_operational": [] },
+      "vehicle_types": ["bicycle", "scooter"],
+      "maximum": 2,
+      "rate_amount": 1000,
+      "rate_recurrence": "each_time_unit"
+    },
+    {
+      "name": "1-2 Hours",
+      "rule_id": "edd6a195-bb30-4eb5-a2cc-44e5a18798a2",
+      "rule_type": "time",
+      "rule_units": "hours",
+      "geographies": ["0c77c813-bece-4e8a-84fd-f99af777d198"],
+      "statuses": { "available": [], "non_operational": [] },
+      "vehicle_types": ["bicycle", "scooter"],
+      "maximum": 1,
+      "rate_amount": 400,
+      "rate_recurrence": "each_time_unit"
+    },
+    {
+      "name": "0-1 Hour",
+      "rule_id": "6b6fe61b-dbe5-4367-8e35-84fb14d23c54",
+      "rule_type": "time",
+      "rule_units": "hours",
+      "geographies": ["0c77c813-bece-4e8a-84fd-f99af777d198"],
+      "statuses": { "available": [], "non_operational": [] },
+      "vehicle_types": ["bicycle", "scooter"],
+      "maximum": 0,
+      "rate_amount": 200,
+      "rate_recurrence": "each_time_unit"
+    }
+  ]
+}
 ```
 
 [Top](#table-of-contents)
 
+
+#Patch-1
 ## Provider Caps or Minimums
+=======
+```json
+{
+  "name": "Tiered Dwell Time Example",
+  "description": "First hour $2, second hour $4, every hour onwards $10",
+  "policy_id": "2800cd0a-7827-4110-9713-b9e5bf29e9a1",
+  "start_date": 1558389669540,
+  "published_date": 1558389669540,
+  "end_date": null,
+  "prev_policies": null,
+  "provider_ids": [],
+  "currency": "USD",
+  "rules": [
+    {
+      "name": "0-1 Hour",
+      "rule_id": "6b6fe61b-dbe5-4367-8e35-84fb14d23c54",
+      "rule_type": "time",
+      "rule_units": "hours",
+      "geographies": ["0c77c813-bece-4e8a-84fd-f99af777d198"],
+      "statuses": { "available": [], "non_operational": [] },
+      "vehicle_types": ["bicycle", "scooter"],
+      "maximum": 1,
+      "inclusive_maximum": false,
+      "rate_applies_when": "in_bounds",
+      "rate_amount": 200,
+      "rate_recurrence": "each_time_unit"
+    },
+    {
+      "name": "1-2 Hours",
+      "rule_id": "edd6a195-bb30-4eb5-a2cc-44e5a18798a2",
+      "rule_type": "time",
+      "rule_units": "hours",
+      "geographies": ["0c77c813-bece-4e8a-84fd-f99af777d198"],
+      "statuses": { "available": [], "non_operational": [] },
+      "vehicle_types": ["bicycle", "scooter"],
+      "minimum": 1,
+      "maximum": 2,
+      "inclusive_minimum": true,
+      "inclusive_maximum": false,
+      "rate_applies_when": "in_bounds",
+      "rate_amount": 400,
+      "rate_recurrence": "each_time_unit"
+    },
+    {
+      "name": "> 2 hours",
+      "rule_id": "9cd1768c-ab9e-484c-93f8-72a7078aa7b9",
+      "rule_type": "time",
+      "rule_units": "hours",
+      "geographies": ["0c77c813-bece-4e8a-84fd-f99af777d198"],
+      "statuses": { "available": [], "non_operational": [] },
+      "vehicle_types": ["bicycle", "scooter"],
+      "minimum": 2,
+      "inclusive_minimum": true,
+      "rate_applies_when": "in_bounds",
+      "rate_amount": 1000,
+      "rate_recurrence": "each_time_unit"
+    }
+  ]
+}
+```
 
+[Top](#table-of-contents)
+
+#Patch-1
 The maximum or minimum amount of vehicles deployed by a provider are controlled. 
-
 File: [`provider-caps-or-minimums.json`](provider-caps-or-minimums.json)
 
 ```json
 {
+
  "name": "Device Limit - Lime",
  "policy_id": "56b3b3b4-a8ee-4b19-9295-3c2d7cbd76ca",
  "provider_ids": [
@@ -526,6 +658,54 @@ File: [`provider-caps-or-minimums.json`](provider-caps-or-minimums.json)
    "messages": {}
   }
  ]
+=======
+  "name": "Tiered Dwell Time Example",
+  "description": "If parked for <1hr $2 upon exit, if parked for 1-2 hours $4 upon exit, if parked for longer than 2 hours $10 upon exit",
+  "policy_id": "2800cd0a-7827-4110-9713-b9e5bf29e9a1",
+  "start_date": 1558389669540,
+  "published_date": 1558389669540,
+  "end_date": null,
+  "prev_policies": null,
+  "provider_ids": [],
+  "currency": "USD",
+  "rules": [
+    {
+      "name": "> 2 hours",
+      "rule_id": "9cd1768c-ab9e-484c-93f8-72a7078aa7b9",
+      "rule_type": "time",
+      "rule_units": "hours",
+      "geographies": ["0c77c813-bece-4e8a-84fd-f99af777d198"],
+      "statuses": { "available": [], "non_operational": [] },
+      "vehicle_types": ["bicycle", "scooter"],
+      "maximum": 2,
+      "rate_amount": 1000,
+      "rate_recurrence": "once_on_unmatch"
+    },
+    {
+      "name": "1-2 Hours",
+      "rule_id": "edd6a195-bb30-4eb5-a2cc-44e5a18798a2",
+      "rule_type": "time",
+      "rule_units": "hours",
+      "geographies": ["0c77c813-bece-4e8a-84fd-f99af777d198"],
+      "statuses": { "available": [], "non_operational": [] },
+      "vehicle_types": ["bicycle", "scooter"],
+      "maximum": 1,
+      "rate_amount": 400,
+      "rate_recurrence": "once_on_unmatch"
+    },
+    {
+      "name": "0-1 Hour",
+      "rule_id": "6b6fe61b-dbe5-4367-8e35-84fb14d23c54",
+      "rule_type": "time",
+      "rule_units": "hours",
+      "geographies": ["0c77c813-bece-4e8a-84fd-f99af777d198"],
+      "statuses": { "available": [], "non_operational": [] },
+      "vehicle_types": ["bicycle", "scooter"],
+      "maximum": 0,
+      "rate_amount": 200,
+      "rate_recurrence": "once_on_unmatch"
+    }
+  ]
 }
 
 ```

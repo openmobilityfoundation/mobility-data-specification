@@ -8,7 +8,7 @@
         "description": "If parked for <1hr $2 upon exit, if parked for 1-2 hours $4 upon exit, if parked for longer than 2 hours $10 upon exit",
         "policy_id": "2800cd0a-7827-4110-9713-b9e5bf29e9a1",
         "start_date": 1558389669540,
-        "publish_date": 1558389669540,
+        "published_date": 1558389669540,
         "end_date": null,
         "prev_policies": null,
         "provider_ids": [],
