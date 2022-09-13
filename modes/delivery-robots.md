@@ -1,6 +1,6 @@
 # Mobility Data Specification: **Delivery Robots**
 
-<img src="https://i.imgur.com/u2HgctV.png" width="120" align="right" alt="MDS Modes - Delivey Robots" border="0">
+<img src="https://i.imgur.com/f8iMepu.png" width="120" align="right" alt="MDS Modes - Delivey Robots" border="0">
 
 **Delivey Robots** refers to autonomous and remotely driven goods delivery devices. There can be one or multiple orders on different trips at the same time. The state machine tracks the trip states of the orders separately from the vehicle state.  
 
