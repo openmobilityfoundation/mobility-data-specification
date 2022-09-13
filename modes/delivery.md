@@ -8,6 +8,7 @@ See the [modes overview](/modes) for how the mode specific information below app
 ## Robots Vs Other vehicles types
 Robots do not require a driver whereas other forms of deliveries do. For most of the robots delivery operators, there is only one order at once. The idea here is to anticipate all forms of deliveries and to accept having many orders at once on one vehicle.
 
+
 ## Table of Contents
 
 - [Mode Attributes](#mode-attributes)
@@ -29,26 +30,31 @@ Journeys may be point-to-point, multi-segment, or multi-segment overlapping.
 ### Trip ID Requirements
 
 Events require a valid `trip_id` in events where `event_types` contains `reservation_start`, `reservation_stop`, `trip_start`, `trip_stop`, `trip_end`, `customer_cancellation`, `provider_cancellation`, or `driver_cancellation`. 
+
 For the robots, the notion of driver does not exist
 
 Additionally, `trip_id` is required if `event_types` contains a `enter_jurisdiction` or `leave_jurisdiction` event pertaining to a delivery trip. 
 
 ### Trip Type
 
-The `trip_type` field is used to describe the trip itself. It can be `delivery`, `roaming`, `return` or `advertising`
+The `trip_type` field is used to describe the trip itself. It can be 'delivery' or 'roaming' or 'return' or 'advertising'
 
 ### Trip Attributes
 
-The `trip_attributes` array is not used with in delivery.
+The `trip_attributes` array can be used with in delivery.
+
 
 ### Vehicle Attributes
 
 The `vehicle_attributes` array may have the following key value pairs:
 
 
-- `year` (integer)
-- `make` (string)
-- `model` (string)
+- `year` (integer, optional)
+- `make` (string, optional)
+- `model` (string, optional)
+- `color` (string, optional)
+- `inspection_date` (date YYYY-MM-DD, optional) - the date of the last inspection of the vehicle
+
 
 ### Propulsion Types
 
@@ -76,6 +82,7 @@ The `vehicle_attributes` array may have the following key value pairs:
 | `electric assist` |
 | `combustion`      |
 
+
 #### Valid for vehicle_types: "delivery_robot"
 | `propulsion`      |
 | ----------------- |
@@ -89,7 +96,6 @@ The `vehicle_attributes` array may have the following key value pairs:
 | `electric assist` |
 | `combustion`      |
 | `human`           |
-
 
 
 
@@ -113,6 +119,7 @@ See [Vehicle States][vehicle-states] for descriptions.
 ## Event Types
 
 Valid delivery vehicle event types are 
+
 
 - `agency_drop_off`
 - `agency_pick_up`
@@ -234,6 +241,7 @@ if t.any(state == ‘reserved’):
 else:
 if t=[]:
     v = ‘available’
+
 ```
 `trip_state` mappings should be the same as in the table above.
 
