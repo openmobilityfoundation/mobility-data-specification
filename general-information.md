@@ -344,6 +344,7 @@ The list of allowed `vehicle_type` values in MDS. Aligning with [GBFS vehicle ty
 | car            | A passenger car or similar light-duty vehicle |
 | scooter        | A standing or seated fully-motorized mobility device intended for one rider, capable of travel at low or moderate speeds, and suited for operation in infrastructure shared with motorized bicycles |
 | moped          | A seated fully-motorized mobility device capable of travel at moderate or high speeds and suited for operation in general urban traffic |
+| delivery_robot | A robot intended for transporting goods |
 | other          | A device that does not fit in the other categories |
 
 [Top][toc]
