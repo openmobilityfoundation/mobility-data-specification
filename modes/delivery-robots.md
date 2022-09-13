@@ -1,53 +1,113 @@
-# Mobility Data Specification: **Delivery**
+# Mobility Data Specification: **Delivery Robots**
 
+<img src="https://i.imgur.com/u2HgctV.png" width="120" align="right" alt="MDS Modes - Delivey Robots" border="0">
 
-**Delivey** refers to all forms of deliveries.  Deliveries may or may not have a driver, there can be one or multiple orders on different trips at the same time.  The state machine tracks the trip states of the orders separately from the vehicle state.  
+**Delivey Robots** refers to autonomous and remotely driven goods delivery devices. There can be one or multiple orders on different trips at the same time. The state machine tracks the trip states of the orders separately from the vehicle state.  
 
 See the [modes overview](/modes) for how the mode specific information below applies across MDS.
 
-## Robots Vs Other vehicles types
-Robots do not require a driver whereas other forms of deliveries do. For most of the robots delivery operators, there is only one order at once. The idea here is to anticipate all forms of deliveries and to accept having many orders at once on one vehicle.
+## Robots Vs Other Delivery Types
 
+Autonomous and remotely piloted delivery robots do not require a driver, whereas other forms of deliveries may, e.g. in a commerical or private car, truck, bike, etc. For this MDS release, this mode is limited to deliveries where a human driver is not on board the vehicle doing the delivery. 
 
 ## Table of Contents
 
 - [Mode Attributes](#mode-attributes)
-- [Vehicle States](#vehicle-states)
-- [Event Types](#event-types)
-- [Vehicle State Events](#vehicle-states-events)
-- [State Machine Diagram](#state-machine-diagram)
+   - [Mode ID](#mode-id)
+- [Trip Properties](#trip-properties)
+   - [Journey ID](#journey-id)
+   - [Journey Attributes](#journey-attributes)
+   - [Trip ID Requirements](#trip-id-requirements)
+   - [Trip Type](#trip-type)
+   - [Trip Attributes](#trip-attributes)
+   - [Fare Attributes](#fare-attributes)
+- [Vehicle Properties](#vehicle-properties)
+  - [Vehicle Attributes](#vehicle-attributes)
+  - [Accessibility Options](#accessibility-options)
+- [State Machine](#state-machine)
+  - [Vehicle States](#vehicle-states)
+  - [Event Types](#event-types)
+  - [Vehicle State Events](#vehicle-states-events)
+  - [State Machine Diagram](#state-machine-diagram)
 
 ## Mode Attributes
 
 ### Mode ID
 
-The short name identifier for deliveries used across MDS is `delivery`.
+The short name identifier for deliveries used across MDS is `delivery-robots`.
+
+[Top][toc]
+
+## Trip Properties
 
 ### Journey ID
 
-Journeys may be point-to-point, multi-segment, or multi-segment overlapping.
+The `journey_id` field shall have a consistent value in overlapping trips. Journeys may be point-to-point, multi-segment, or multi-segment overlapping.
+
+Example 1: delivery to a single location, then return
+```
+<-                  Journey               ->
+<- Trip: delivery -><-    Trip: return    ->
+```
+
+Example 2: three overlapping delivery trips in the same journey
+```
+<-                                 Journey                                  ->
+<- Trip: delivery ->
+                    <- Trip: delivery ->
+                                        <- Trip: delivery -><- Trip: return ->
+```
+
+[Top][toc]
+
+### Journey Attributes
+
+The `journey_attributes` array **may** have the following key value pairs:
+
+- ...
+
+[Top][toc]
 
 ### Trip ID Requirements
 
 Events require a valid `trip_id` in events where `event_types` contains `reservation_start`, `reservation_stop`, `trip_start`, `trip_stop`, `trip_end`, `customer_cancellation`, `provider_cancellation`, or `driver_cancellation`. 
 
-For the robots, the notion of driver does not exist
+For the robots, the notion of driver does not exist, even when remotely operated.
 
 Additionally, `trip_id` is required if `event_types` contains a `enter_jurisdiction` or `leave_jurisdiction` event pertaining to a delivery trip. 
 
 ### Trip Type
 
-The `trip_type` field is used to describe the trip itself. It can be 'delivery' or 'roaming' or 'return' or 'advertising'
+The `trip_type` field is used to describe the trip itself. 
+
+The `trip_type` field **must** have one of the following enumerated values:
+
+- `delivery`:
+- `return`:
+- `roaming`:
+- `advertising`:
+
+[Top][toc]
 
 ### Trip Attributes
 
-The `trip_attributes` array can be used with in delivery.
+The `trip_attributes` array **may** have the following key value pairs:
 
+- ...
+
+[Top][toc]
+
+### Fare Attributes
+
+The `fare_attributes` array is not used in this mode.
+
+[Top][toc]
+
+## Vehicle Properties
 
 ### Vehicle Attributes
 
-The `vehicle_attributes` array may have the following key value pairs:
-
+The `vehicle_attributes` array **may** have the following key value pairs:
 
 - `year` (integer, optional)
 - `make` (string, optional)
@@ -55,51 +115,17 @@ The `vehicle_attributes` array may have the following key value pairs:
 - `color` (string, optional)
 - `inspection_date` (date YYYY-MM-DD, optional) - the date of the last inspection of the vehicle
 
+[Top][toc]
 
-### Propulsion Types
+### Accessibility Options
 
-#### Valid for vehicle_types: "bicycle", "cargo_bicycle", 
+The `accessibility_options` array is not used in this mode.
 
+[Top][toc]
 
-| `propulsion`      |
-| ----------------- |
-| `electric assist` |
-| `human`           |
+## State Machine
 
-#### Valid for vehicle_types: "scooter"
-
-| `propulsion`      |
-| ----------------- |
-| `electric`        |
-| `electric assist` |
-| `human`           |
-
-#### Valid for vehicle_types: "car"; "moped"
-
-| `propulsion`      |
-| ----------------- |
-| `electric`        |
-| `electric assist` |
-| `combustion`      |
-
-
-#### Valid for vehicle_types: "delivery_robot"
-| `propulsion`      |
-| ----------------- |
-| `electric`        |
-
-
-#### Valid for vehicle_types: "other"
-| `propulsion`      |
-| ----------------- |
-| `electric`        |
-| `electric assist` |
-| `combustion`      |
-| `human`           |
-
-
-
-## Vehicle States
+### Vehicle States
 
 Valid delivery vehicle states are 
 
@@ -116,10 +142,9 @@ See [Vehicle States][vehicle-states] for descriptions.
 
 [Top][toc]
 
-## Event Types
+### Event Types
 
 Valid delivery vehicle event types are 
-
 
 - `agency_drop_off`
 - `agency_pick_up`
@@ -156,7 +181,6 @@ Valid delivery vehicle event types are
 - `trip_start`
 - `trip_stop`
 - `unspecified`
-
 
 See vehicle [Event Types][vehicle-events] for descriptions.
 
@@ -214,15 +238,15 @@ This is the list of `vehicle_state` and `event_type` pairings that constitute th
 | `on_trip`                    |`available`          | N/A   | `order_drop_off`         | The vehicle is at the customer's place and is waiting for them                                                       |
 | `on_trip`                    | `stopped`         | `stopped`    | `order_pick_up`         | The vehicle has come to pick up the order at the restaurant                                                        |
 
-
-
-
+[Top][toc]
 
 ### State Machine Diagram
 
 The *Delivery Diagram* shows how the `vehicle_state` and `event_type` relate to each other and how delivery vehicles can transition between states. 
 
-#### Delivery State Notes
+TBD
+
+#### Delivery Robots State Notes
 
 When there is only one trip ongoing, `trip_state == vehicle_state`
 
