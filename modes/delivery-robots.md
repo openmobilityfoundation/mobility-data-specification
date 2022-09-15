@@ -237,7 +237,7 @@ This is the list of `vehicle_state` and `event_type` pairings that constitute th
 | `on_trip`                    | `stopped`         | `stopped`    | `order_pick_up`         | The vehicle has come to pick up the order at the restaurant                                                               |
 | `on_trip`                    |`available`          | N/A   | `order_drop_off`         | The vehicle is at the customer's place and is waiting for them                                                       |
 | `on_trip`                    | `stopped`         | `stopped`    | `order_pick_up`         | The vehicle has come to pick up the order at the restaurant                                                        |
-
+| `on_trip`                    |`stopped`          | N/A   | `order_drop_off`         | The vehicle is at the customer's place and is waiting for them                                                       |
 [Top][toc]
 
 ### State Machine Diagram
