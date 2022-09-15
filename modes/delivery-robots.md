@@ -94,13 +94,18 @@ The `trip_type` field **must** have one of the following enumerated values:
 
 The `trip_attributes` array **may** have the following key value pairs:
 
-- ...
+- `app_name` (text, optional): name of the app used to reserve the trip which could be provider's app or 3rd party app
+- `passenger_count` (integer, required): unique count of passengers transported during trip duration
+- `request_time` (timestamp, optional): when the passenger requested the trip
 
 [Top][toc]
 
 ### Fare Attributes
 
-The `fare_attributes` array is not used in this mode.
+The `fare_attributes` array **may** have the following key value pairs:
+
+- `payment_type` (enumerated, optional): `cash`, `mobile`, `voucher`, `paratransit`, `no payment`, `test`
+- `price` (currency, optional): -Total price of the order
 
 [Top][toc]
 
