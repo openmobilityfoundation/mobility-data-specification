@@ -82,10 +82,11 @@ The `trip_type` field is used to describe the trip itself.
 
 The `trip_type` field **must** have one of the following enumerated values:
 
-- `delivery`:
-- `return`:
-- `roaming`:
-- `advertising`:
+- `delivery`: making a delivery
+- `return`: returning to home location or next trip start
+- `advertising`: displaying advertising and not making a delivery
+- `mapping`: mapping the environment and not making a delivery
+- `roaming`: moving in right of way but not in another trip_type
 
 [Top][toc]
 
