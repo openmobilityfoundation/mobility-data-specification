@@ -8,7 +8,7 @@ See the [modes overview](/modes) for how the mode specific information below app
 
 ## Robots Vs Other Delivery Types
 
-Autonomous and remotely piloted delivery robots do not require a driver, whereas other forms of deliveries may, e.g. in a commerical or private car, truck, bike, etc. For this MDS release, this mode is limited to deliveries where a human driver is not on board the vehicle doing the delivery. 
+Autonomous and remotely piloted delivery robots do not require a driver, whereas other forms of deliveries may, e.g. in a commerical or private car, truck, bike, etc. For this MDS release, this mode is limited to deliveries where a human driver is not on board the vehicle doing the delivery, and human passengers are not being transported. 
 
 ## Table of Contents
 
