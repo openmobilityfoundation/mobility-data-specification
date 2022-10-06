@@ -4,16 +4,15 @@ This file presents a series of example [Policy documents](../README.md#policy) f
 
 ## Table of Contents
 
-- [Policy Examples](#policy-examples)
-  - [Table of Contents](#table-of-contents)
-  - [Operating Area](#operating-area)
-  - [No Riding](#no-riding)
-  - [No Parking](#no-parking)
-  - [Parking](#parking)
-  - [Parking Time Limit](#parking-time-limit)
-  - [Speed Limit](#speed-limit)
-  - [Distribution Policies](#distribution-policies)
-  - [Provider Caps or Minimums](#provider-caps-or-minimums)
+- [Operating Area](#operating-area)
+- [No Riding](#no-riding)
+- [No Parking](#no-parking)
+- [Parking](#parking)
+- [Parking Time Limit](#parking-time-limit)
+- [Speed Limit](#speed-limit)
+- [Distribution Policies](#distribution-policies)
+- [Tiered Parking Fees](#tiered-parking-fees)
+- [Provider Caps or Minimums](#provider-caps-or-minimums)
 
 ## Operating Area
 
@@ -111,6 +110,7 @@ The vehicle should not be in one of these defined areas regardless of status.
 File: [`no-riding.json`](no-riding.json)
 
 ```json
+ 
  Still to be decided upon
 
 ```
@@ -262,7 +262,6 @@ File: [`parking.json`](parking.json)
   }
  ]
 }
-
 ```
 
 [Top](#table-of-contents)
@@ -397,7 +396,9 @@ File: [`distribution-policies.json`](distribution-policies.json)
  "policy_id":"9beb897c-a3ff-4367-bd80-eae30c8eae5c",
  "prev_policies":[],
  "published_date":"2021-08-26T16:52:13.689923+00:00",
+ "start_date":null,
  "name":"Deployment Equity Zones",
+ "description":"A minimum of 3 vehicles must be available in each equity zone every day.",
  "rules":[
   {
    "days":[],
@@ -412,7 +413,8 @@ File: [`distribution-policies.json`](distribution-policies.json)
    "start_time":"05:00:00",
    "geographies":["b105868b-f4cb-40af-a3f2-5c5b699b8718"]
   },
-  {"days":[],
+  {
+   "days":[],
    "name":"Distribution",
    "maximum":null,
    "minimum":3,
@@ -424,7 +426,8 @@ File: [`distribution-policies.json`](distribution-policies.json)
    "start_time":"05:00:00",
    "geographies":["4a339c20-8e6f-4b3a-a336-0cadac93c570"]
   },
-  {"days":[],
+  {
+   "days":[],
    "name":"Distribution",
    "maximum":null,
    "minimum":3,"rule_id":
@@ -448,21 +451,18 @@ File: [`distribution-policies.json`](distribution-policies.json)
    "start_time":"05:00:00",
    "geographies":["070c3590-4dea-4920-99d3-45bc4a8fc064"]
   }
- ],
- "start_date":null,
- "description":"A minimum of 3 vehicles must be available in each equity zone every day. "
+ ]
 }
+```
 
+[Top](#table-of-contents)
 
-
-#patch-1
-
-For example, say a vehicle is parked for 6.5 hours. It will be charged `$2 (0-1hr) + $4 (1-2hr) + $10 (2-3hr) + $10 (3-4hr) + $10 (4-5hr) + $10 (5-6hr) + $10 (6-6.5hr) = $56`
+## Tiered Parking Fees
 
 This policy may be specified different ways using the `rate_applies_when` field.
 Both examples are shown here.
 
-### With default `rate_applies_when = "out_of_bounds"`
+#### With default `rate_applies_when = "out_of_bounds"`
 
 By default the `rate_applies_when` field has the value `out_of_bounds`,
 meaning the rate should take effect when an event is outside the bounds
@@ -524,74 +524,10 @@ File: [`tiered-parking-fees-per-hour.json`](tiered-parking-fees-per-hour.json)
 
 [Top](#table-of-contents)
 
-
-#Patch-1
 ## Provider Caps or Minimums
-=======
-```json
-{
-  "name": "Tiered Dwell Time Example",
-  "description": "First hour $2, second hour $4, every hour onwards $10",
-  "policy_id": "2800cd0a-7827-4110-9713-b9e5bf29e9a1",
-  "start_date": 1558389669540,
-  "published_date": 1558389669540,
-  "end_date": null,
-  "prev_policies": null,
-  "provider_ids": [],
-  "currency": "USD",
-  "rules": [
-    {
-      "name": "0-1 Hour",
-      "rule_id": "6b6fe61b-dbe5-4367-8e35-84fb14d23c54",
-      "rule_type": "time",
-      "rule_units": "hours",
-      "geographies": ["0c77c813-bece-4e8a-84fd-f99af777d198"],
-      "statuses": { "available": [], "non_operational": [] },
-      "vehicle_types": ["bicycle", "scooter"],
-      "maximum": 1,
-      "inclusive_maximum": false,
-      "rate_applies_when": "in_bounds",
-      "rate_amount": 200,
-      "rate_recurrence": "each_time_unit"
-    },
-    {
-      "name": "1-2 Hours",
-      "rule_id": "edd6a195-bb30-4eb5-a2cc-44e5a18798a2",
-      "rule_type": "time",
-      "rule_units": "hours",
-      "geographies": ["0c77c813-bece-4e8a-84fd-f99af777d198"],
-      "statuses": { "available": [], "non_operational": [] },
-      "vehicle_types": ["bicycle", "scooter"],
-      "minimum": 1,
-      "maximum": 2,
-      "inclusive_minimum": true,
-      "inclusive_maximum": false,
-      "rate_applies_when": "in_bounds",
-      "rate_amount": 400,
-      "rate_recurrence": "each_time_unit"
-    },
-    {
-      "name": "> 2 hours",
-      "rule_id": "9cd1768c-ab9e-484c-93f8-72a7078aa7b9",
-      "rule_type": "time",
-      "rule_units": "hours",
-      "geographies": ["0c77c813-bece-4e8a-84fd-f99af777d198"],
-      "statuses": { "available": [], "non_operational": [] },
-      "vehicle_types": ["bicycle", "scooter"],
-      "minimum": 2,
-      "inclusive_minimum": true,
-      "rate_applies_when": "in_bounds",
-      "rate_amount": 1000,
-      "rate_recurrence": "each_time_unit"
-    }
-  ]
-}
-```
 
-[Top](#table-of-contents)
-
-#Patch-1
 The maximum or minimum amount of vehicles deployed by a provider are controlled. 
+
 File: [`provider-caps-or-minimums.json`](provider-caps-or-minimums.json)
 
 ```json
@@ -658,56 +594,7 @@ File: [`provider-caps-or-minimums.json`](provider-caps-or-minimums.json)
    "messages": {}
   }
  ]
-=======
-  "name": "Tiered Dwell Time Example",
-  "description": "If parked for <1hr $2 upon exit, if parked for 1-2 hours $4 upon exit, if parked for longer than 2 hours $10 upon exit",
-  "policy_id": "2800cd0a-7827-4110-9713-b9e5bf29e9a1",
-  "start_date": 1558389669540,
-  "published_date": 1558389669540,
-  "end_date": null,
-  "prev_policies": null,
-  "provider_ids": [],
-  "currency": "USD",
-  "rules": [
-    {
-      "name": "> 2 hours",
-      "rule_id": "9cd1768c-ab9e-484c-93f8-72a7078aa7b9",
-      "rule_type": "time",
-      "rule_units": "hours",
-      "geographies": ["0c77c813-bece-4e8a-84fd-f99af777d198"],
-      "statuses": { "available": [], "non_operational": [] },
-      "vehicle_types": ["bicycle", "scooter"],
-      "maximum": 2,
-      "rate_amount": 1000,
-      "rate_recurrence": "once_on_unmatch"
-    },
-    {
-      "name": "1-2 Hours",
-      "rule_id": "edd6a195-bb30-4eb5-a2cc-44e5a18798a2",
-      "rule_type": "time",
-      "rule_units": "hours",
-      "geographies": ["0c77c813-bece-4e8a-84fd-f99af777d198"],
-      "statuses": { "available": [], "non_operational": [] },
-      "vehicle_types": ["bicycle", "scooter"],
-      "maximum": 1,
-      "rate_amount": 400,
-      "rate_recurrence": "once_on_unmatch"
-    },
-    {
-      "name": "0-1 Hour",
-      "rule_id": "6b6fe61b-dbe5-4367-8e35-84fb14d23c54",
-      "rule_type": "time",
-      "rule_units": "hours",
-      "geographies": ["0c77c813-bece-4e8a-84fd-f99af777d198"],
-      "statuses": { "available": [], "non_operational": [] },
-      "vehicle_types": ["bicycle", "scooter"],
-      "maximum": 0,
-      "rate_amount": 200,
-      "rate_recurrence": "once_on_unmatch"
-    }
-  ]
 }
-
 ```
 
 [Top](#table-of-contents)
