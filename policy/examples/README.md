@@ -18,9 +18,6 @@ This file presents a series of example [Policy documents](../README.md#policy) f
 
 The vehicle should stay within the areas of operation defined (Riding area). 
 
-- Operators from deploying devices outside this area
-- Users from exiting operating area
-
 File: [`operating-area.json`](operating-area.json)
 
 ```json
