@@ -107,7 +107,41 @@ File: [`no-riding.json`](no-riding.json)
 
 ```json
  
- Still to be decided upon
+{
+ "name": "No Ride Zones", 
+ "policy_id": "d78625e9-5a7f-45ae-afab-18ee946acf8f", 
+ "provider_ids": [], 
+ "description": "The vehicle should not be in one of these defined areas regardless of status.", 
+ "start_date": 1617260400000, 
+ "end_date": null, 
+ "published_date": 1630099948146, 
+ "rules": [
+  {
+   "name": " No Ride Zone", 
+   "rule_id": "a2393d69-18a2-44f6-8467-744313a956ed", 
+   "rule_type": "count", 
+   "rate_recurrence": null, 
+   "rate_amount": null, 
+   "geographies": [
+    "f0313182-1ce6-4b3f-a7ce-87ff90051462"
+   ], 
+   "states": {
+    "available": [], 
+    "non_operational": [], 
+    "reserved": [], 
+    "on_trip": []
+   }, 
+   "rule_units": "devices", 
+   "days": null, 
+   "minimum": null, 
+   "maximum": 0, 
+   "start_time": null, 
+   "end_time": null, 
+   "messages": null, 
+   "value_url": null
+  }
+ ]
+}
 
 ```
 
