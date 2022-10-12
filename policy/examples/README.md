@@ -339,7 +339,7 @@ File: [`parking-time-limit.json`](parking-time-limit.json)
 
 ## Speed Limit
 
-The vehicle should operate at a lower speed in these defined areas.
+The vehicle should operate at a specific maximum speed in these defined areas.
 
 File: [`speed-limit.json`](speed-limit.json)
 
