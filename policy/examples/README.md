@@ -11,7 +11,6 @@ This file presents a series of example [Policy documents](../README.md#policy) f
 - [Parking Time Limit](#parking-time-limit)
 - [Speed Limit](#speed-limit)
 - [Distribution Policies](#distribution-policies)
-- [Tiered Parking Fees](#tiered-parking-fees)
 - [Provider Caps or Minimums](#provider-caps-or-minimums)
 
 ## Operating Area
