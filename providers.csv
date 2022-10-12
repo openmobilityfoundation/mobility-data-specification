@@ -31,4 +31,18 @@ Pony,f190d330-b49e-4590-871b-0bcbec565a8c,https://getapony.com/,https://mds.geta
 SHARE-NOW,d8f880d6-96d8-4cdc-8069-32a683b2bce6,https://www.share-now.com,https://external.share-now.com/api/rental/mds/,https://external.share-now.com/api/rental/mds/gbfs/
 Boaz Bikes,7c96bc58-fb63-433a-b77f-84ccb1c9d737,https://www.boazbikes.com/,https://mds.movatic.co/,https://gbsf.movatic.co/en/1.1/576347857979998215
 VeoRide INC.,6e39f9db-751b-5cea-ae7e-486f579a56bc,https://www.veoride.com/,https://cluster-prod.veoride.com/api/shares/mds,https://cluster-prod.veoride.com/api/shares/gbfs
+LEO Ride,b0eedf6-c7a5-4262-9222-ab2484ad214e,https://leoride.co/,https://mobile.leoriders.com/mds,https://mobile.leoriders.com/gbpf
+LEO Explore,7c653014-2f33-4f5b-98de-30ea66430986,https://leoride.co/,,
+ATOM Mobility,4d88272c-032e-487c-9f58-ab5951a23427,https://atommobility.com/,https://mds.rideatom.com/mds,
+Zig Zag Sharing,39977af0-4b94-11ec-81d3-0242ac130003,https://www.zigzagsharing.com/,https://mds.zigzagsharing.com/,
+TukTuk,1a99bf67-14a0-48a1-98d1-77147a88c3d2,https://tuktukscooters.com/,https://app.tuktukscooters.com/mds-feed,
+Helbiz,3aece8c6-416a-4d39-bcc4-d02524cb8004,https://helbiz.com,https://mds.helbiz.com,
+Kiwibot,5f19acae-d7e9-4b57-96bd-f6406712d654,https://www.kiwibot.com/,,
+Yego,da99028e-28b7-4dd3-ad23-41b7a045db8a,https://www.rideyego.com/,https://mds.yego.app/mds,https://services.rideyego.com/gbfs
+Leo&Go,84b174c4-eb74-5d07-bdeb-27f4215d2aa9,https://www.leoandgo.com,https://mds.vulog.io/mds/fleets/LEONGO-FRLIO,
+Scoot,07a25fe6-d0be-11e8-a8d5-f2801f1b9fd1,https://scoot.co/san-francisco/,https://mds.bird.co/,https://mds.bird.co/gbfs/
+Revel,89301314-1210-4126-a213-3c41423f2ac5,https://gorevel.com/,https://opendata.gorevel.com/opendata/mds/,https://gbfs.gorevel.com/gbfs/v2/
+Troopy,2b684c7c-f8ad-4c65-92f0-b9e57aaa7dd3,https://www.troopy.com,https://mds.vulog.io/mds/fleets/TROOPY-FRPAR,https://gbfs.vulog.io/mds/fleets/TROOPY-FRPAR/gbfs
+BCycle,938D9F8B-B8D3-46CC-9276-F4A8C4FA3610,https://www.bcycle.com,https://mds.bcycle.com,https://gbfs.bcycle.com
+Tembici,46b28e68-8ecb-4875-b97e-836fd5e1930f,https://www.tembici.com.br/,https://api.tembici.com.br/mds,https://api.tembici.com.br/gbfs
 POPPY Mobility,5c869736-797f-4244-9132-fb50a22d1bfd,https://www.poppy.be/,https://poppy.red/mds
