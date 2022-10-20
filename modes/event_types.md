@@ -13,6 +13,8 @@ As with all MDS definitions, they should be described in a way that maximizes th
 | `comms_lost`          | Communications lost |
 | `comms_restored`      | Communications restored |
 | `compliance_pick_up`  | Pick up for compliance (rule violation) |
+| `order_drop_off`      | Pick up of the order at the restaurant or shop or warehouse |
+| `order_pick_up`       | Delivery of the order at the customer's |
 | `decommissioned`      | Decommissioned |
 | `driver_cancellation` | Driver cancelled a trip |
 | `located`             | Located (opposite of Missing) |
@@ -21,7 +23,7 @@ As with all MDS definitions, they should be described in a way that maximizes th
 | `missing`             | Missing |
 | `off_hours`           | Off hours - end of service |
 | `on_hours`            | On hours - start of service |
-| `passenger_cancellation` | Passenger cancelled a trip |
+| `customer_cancellation` | Customer cancelled a trip |
 | `provider_cancellation` | Provider cancelled a trip |
 | `provider_drop_off`   | Drop off by the provider |
 | `rebalance_pick_up`   | Pick up for rebalancing |
@@ -34,6 +36,8 @@ As with all MDS definitions, they should be described in a way that maximizes th
 | `trip_enter_jurisdiction` | Trip enters a jurisdiction |
 | `trip_leave_jurisdiction` | Trip leaves a jurisdiction |
 | `trip_start`          | Start trip |
+| `trip_stop`          | Stop trip |
+| `trip_resume`          | Resume trip |
 | `unspecified`         | Unspecified |
 
 ### Limitations on the Use of Certain Values
