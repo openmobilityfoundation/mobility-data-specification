@@ -36,7 +36,7 @@ As with all MDS definitions, they should be described in a way that maximizes th
 | `trip_enter_jurisdiction` | Trip enters a jurisdiction |
 | `trip_leave_jurisdiction` | Trip leaves a jurisdiction |
 | `trip_start`          | Start trip |
-| `trip_stop`          | Stop trip temporarily but do not end trip |
+| `trip_pause`          | Pause trip temporarily but do not end trip |
 | `trip_resume`          | Resume trip |
 | `unspecified`         | Unspecified |
 
