@@ -94,8 +94,13 @@ The `trip_type` field **must** have one of the following enumerated values:
 
 The `trip_attributes` array **may** have the following key value pairs:
 
+- `driver_type` (ennum, required): type of driver operating the device: `human`, `semi-autonomous`, `autonomous`
+- `driver_id` (UUID, optional): consistent unique identifier of the privary driver. Could be based on software version or human
 - `app_name` (text, optional): name of the app used to reserve the trip which could be provider's app or 3rd party app
 - `request_time` (timestamp, optional): when the customer requested the trip
+- `has_payload` (boolean, optional): is there any payload for any delivery included in the device at trip start. 1 = loaded, 0 = empty
+- `range` (interger, optional): estimated range in meters based on energy levels in device at trip start
+- `identification_required` (boolean, optional): does the cargo require providing customer identification before trip start or upon delivery?
 
 [Top][toc]
 
@@ -104,7 +109,7 @@ The `trip_attributes` array **may** have the following key value pairs:
 The `fare_attributes` array **may** have the following key value pairs:
 
 - `payment_type` (enumerated, optional): `cash`, `mobile`, `voucher`, `paratransit`, `no payment`, `test`
-- `price` (currency, optional): -Total price of the order
+- `price` (currency, optional): Total price of the order
 
 [Top][toc]
 
@@ -118,13 +123,26 @@ The `vehicle_attributes` array **may** have the following key value pairs:
 - `make` (string, optional)
 - `model` (string, optional)
 - `color` (string, optional)
-- `inspection_date` (date YYYY-MM-DD, optional) - the date of the last inspection of the vehicle
+- `inspection_date` (date YYYY-MM-DD, optional): the date of the last inspection of the vehicle
+- `equipped_cameras` (integer, optional): number of cameras equipped on device
+- `equipped_lighting` (integer, optional): number of lights used to illuminate the environment on the the device
+- `wheel_count` (integer, optional): number of wheels on the device
+- `width` (integer, optional): width in meters of the device
+- `length` (integer, optional): length in meters of the device
+- `height` (integer, optional): height in meters of the device (minus flexible elements like flags)
+- `weight` (integer, optional): weight in kilograms rounded up of the device not including cargo
+- `top_speed` (integer, optional): theoretical top speed in meters per second of the device
+- `storage_capacity` (integer, optional): cubic centimeters of cargo space available not including any cargo
 
 [Top][toc]
 
 ### Accessibility Options
 
-The `accessibility_options` array is not used in this mode.
+The `accessibility_options` array **may** have the following key value pairs:
+
+- `audio_cue` (boolean, optional): is the device equipped with audio cues upon delivery
+- `visual_cue` (boolean, optional): is the device equipped with visual cues upon delivery
+- `remote_open` (boolean, optional): can the device door be remotely opened to retrieve cargo upon delivery
 
 [Top][toc]
 
