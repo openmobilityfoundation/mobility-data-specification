@@ -75,20 +75,6 @@ If `device_id` is specified, `GET` will return an array with a single vehicle re
 }
 ```
 
-A vehicle record is as follows:
-
-| Field         | Type      | Field Description                       |
-| ------------- | --------- | ----------------------------------------------------------------------------- |
-| `device_id`   | UUID      | Provided by Operator to uniquely identify a vehicle                           |
-| `provider_id` | UUID      | Issued by Agency and [tracked](../providers.csv)                              |
-| `vehicle_id`  | String    | Vehicle Identification Number (vehicle_id) visible on vehicle                 |
-| `vehicle_type`        | Enum      | [Vehicle Type][vehicle-types]           |
-| `propulsion_types`  | Enum[]    | Array of [Propulsion Type][propulsion-types]; allows multiple values          |
-| `vehicle_attributes`        | Array of [vehicle attributes](/modes/#vehicle-attributes)   | Vehicle attributes appropriate for the current [mode][modes] |
-| `state`       | Enum      | Current vehicle state. See [Vehicle State][vehicle-states]                    |
-| `prev_events`  | Enum[]      | Last [Vehicle Event][vehicle-events]                                           |
-| `updated`     | [timestamp][ts] | Date of last event update                                                     |
-
 404 Failure Response:
 
 _No content returned on vehicle not found._

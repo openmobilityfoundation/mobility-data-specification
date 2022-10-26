@@ -24,6 +24,7 @@ This specification contains a data standard for *mobility as a service* provider
   * [Events - Query Parameters](#events---query-parameters)
 * [Telemetry][telemetry]
   * [Telemetry - Query Parameters](#telemetry---query-parameters)
+* [Vehicles][vehicles]
 * [Reports](#reports)
   * [Reports - Response](#reports---response)
   * [Reports - Example](#reports---example)
@@ -544,23 +545,7 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 **Method:** `GET`  
 **[Beta feature][beta]:** No (as of 1.2.0)  
 **Schema:** [`vehicles` schema][vehicles-schema]  
-**`data` Payload:** `{ "vehicles": [] }`, an array of objects with the following structure
-
-| Field | Type | Required/Optional | Comments |
-| ----- | ---- | ----------------- | ----- |
-| `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
-| `provider_name` | String | Required | The public-facing name of the Provider |
-| `device_id` | UUID | Required | A unique device ID in UUID format, should match this device in Provider |
-| `vehicle_id` | String | Required | A unique vehicle identifier (visible code, licence plate, etc), visible on the vehicle itself |
-| `vehicle_type` | Enum | Required | see [vehicle types][vehicle-types] table |
-| `vehicle_attributes` | Array | Optional | **[Mode](/modes#list-of-supported-modes) Specific**. [Vehicle attributes](/modes#vehicle-attributes) given as mode-specific unordered key-value pairs |
-| `propulsion_types` | Enum[] | Required | Array of [propulsion types][propulsion-types]; allows multiple values |
-| `last_event_time` | [timestamp][ts] | Required | Date/time when last state change occurred. See [Event Times][event-times] |
-| `last_vehicle_state` | Enum | Required | [Vehicle state][vehicle-states] of most recent state change. |
-| `last_event_types` | Enum[] | Required | [Vehicle event(s)][vehicle-events] of most recent state change, allowable values determined by `last_vehicle_state`. |
-| `last_event_location` | GeoJSON [Point Feature][point-geo]| Required | Location of vehicle's last event. See also [Stop-based Geographic Data][stop-based-geo]. |
-| `current_location` | GeoJSON [Point Feature][point-geo] | Required if Applicable | Current location of vehicle if different from last event, and the vehicle is not currently on a trip. See also [Stop-based Geographic Data][stop-based-geo]. |
-| `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |
+**`data` Payload:** `{ "vehicles": [] }`, an array of [Vehicle](vehicle) objects
 
 (?) Open question: should we standardize on telemetry over GeoJSON Point? E.g. replace last_event_location with last_event_telemetry.
 
@@ -601,6 +586,7 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 [trips-schema]: trips.json
 [ts]: /general-information.md#timestamps
 [vehicles]: #vehicles
+[vehicle]: /general-information.md#vehicles
 [vehicle-types]: /general-information.md#vehicle-types
 [vehicle-states]: /modes#vehicle-states
 [vehicle-events]: /modes#event-types

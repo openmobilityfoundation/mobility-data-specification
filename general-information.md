@@ -22,6 +22,7 @@ This document contains specifications that are shared between the various MDS [A
   - [GBFS Compatibility](#gbfs-compatibility)
 - [Timestamps](#timestamps)
 - [UUIDs](#uuids)
+- [Vehicles](#vehicles)
 - [Vehicle Characteristics](#vehicle-characteristics)
   - [Accessibility Options](#accessibility-options)
   - [Propulsion Types](#propulsion-types)
@@ -383,6 +384,24 @@ See new location within [individual modes](/modes#list-of-supported-modes) in [m
 ### State Machine Diagram
 
 See new location within [individual modes](/modes#list-of-supported-modes) in [modes](/modes#state-machine-diagram).
+
+[Top][toc]
+
+## Vehicles
+
+A vehicle record is as follows:
+
+| Field         | Type      | Field Description                       |
+| ------------- | --------- | ----------------------------------------------------------------------------- |
+| `device_id`   | UUID      | Provided by Operator to uniquely identify a vehicle                           |
+| `provider_id` | UUID      | Issued by Agency and [tracked](../providers.csv)                              |
+| `vehicle_id`  | String    | Vehicle Identification Number (vehicle_id) visible on vehicle                 |
+| `vehicle_type`        | Enum      | [Vehicle Type][vehicle-types]           |
+| `propulsion_types`  | Enum[]    | Array of [Propulsion Type][propulsion-types]; allows multiple values          |
+| `vehicle_attributes`        | Array of [vehicle attributes](/modes/#vehicle-attributes)   | Vehicle attributes appropriate for the current [mode][modes] |
+| `state`       | Enum      | Current vehicle state. See [Vehicle State][vehicle-states]                    |
+| `prev_events`  | Enum[]      | Last [Vehicle Event][vehicle-events]                                           |
+| `updated`     | [timestamp][ts] | Date of last event update                                                     |
 
 [Top][toc]
 
