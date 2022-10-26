@@ -212,6 +212,86 @@ All String fields, such as `vehicle_id`, are limited to a maximum of 255 charact
 
 [Top][toc]
 
+## Trips
+
+A Trip is defined by the following structure:
+
+| Field | Type    | Required/Optional | Comments |
+| ----- | -------- | ----------------- | ----- |
+| `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
+| `provider_name` | String | Required | The public-facing name of the Provider |
+| `device_id` | UUID | Required | A unique device ID in UUID format |
+| `journey_id` | UUID | Optional | A unique [journey ID](/modes#journey-id) for associating collections of trips for its [mode] |
+| `trip_type` | Enum | Optional | **[Mode](/modes#list-of-supported-modes) Specific**. The [trip type](/modes#trip-type) describing the purpose of a trip segment |
+| `trip_id` | UUID | Required | A unique ID for each trip |
+| `trip_duration` | Integer | Required | Time, in Seconds |
+| `trip_distance` | Integer | Required | Trip Distance, in Meters |
+| `trip_attributes` | Array | Optional | **[Mode](/modes#list-of-supported-modes) Specific**. [Trip attributes](/modes#trip-attributes) given as unordered key-value pairs |
+| `start_time` | [timestamp][ts] | Required | Start of the passenger/driver trip |
+| `end_time` | [timestamp][ts] | Required | End of the passenger/driver trip |
+| `start_location` | GeoJSON [Point Feature][point-geo] | Required | Location of the start of the trip. See also [Stop-based Geographic Data][stop-based-geo]. |
+| `end_location` | GeoJSON [Point Feature][point-geo] | Required | Location of the end of the trip. See also [Stop-based Geographic Data][stop-based-geo]. |
+| `route` | GeoJSON `FeatureCollection` | Required | See [Routes](#routes) detail below. Note the `start_location` and `end_location` fields in this object are duplicated in the `route` data. |
+| `accuracy` | Integer | Required | The approximate level of accuracy, in meters, of `Points` within `route` |
+| `publication_time` | [timestamp][ts] | Optional | Date/time that trip became available through the trips endpoint |
+| `parking_verification_url` | String | Optional | A URL to a photo (or other evidence) of proper vehicle parking |
+| `standard_cost` | Integer | Optional | The cost, in the currency defined in `currency`, that it would cost to perform that trip in the standard operation of the System (see [Costs & Currencies][costs-and-currencies]) |
+| `actual_cost` | Integer | Optional | The actual cost, in the currency defined in `currency`, paid by the customer of the *mobility as a service* provider (see [Costs & Currencies][costs-and-currencies]) |
+| `currency` | String | Optional, USD cents is implied if null.| An [ISO 4217 Alphabetic Currency Code][iso4217] representing the currency of the payee (see [Costs & Currencies][costs-and-currencies]) |
+
+[Top][toc]
+
+## Event Data
+
+Events represent changes in vehicle status.
+
+| Field | Type | Required/Optional | Comments |
+| ----- | ---- | ----------------- | ----- |
+| `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
+| `provider_name` | String | Required | The public-facing name of the Provider |
+| `device_id` | UUID | Required | A unique device ID in UUID format |
+| `vehicle_id` | String | Required | A unique vehicle identifier (visible code, licence plate, etc), visible on the vehicle itself |
+| `vehicle_state` | Enum | Required | See [vehicle state][vehicle-states] table |
+| `event_types` | Enum[] | Required | Vehicle [event types][vehicle-events] for state change, with allowable values determined by `vehicle_state` |
+| `event_time` | [timestamp][ts] | Required | Date/time that event occurred at. See [Event Times][event-times] |
+| `publication_time` | [timestamp][ts] | Optional | Date/time that event became available through the status changes endpoint |
+| `event_location` | GeoJSON [Point Feature][point-geo] | Required | See also [Stop-based Geographic Data][stop-based-geo]. |
+| `event_geographies` | UUID[] | Optional | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 2.0.0)*. Array of Geography UUIDs consisting of every Geography that contains the location of the status change. See [Geography Driven Events][geography-driven-events]. Required if `event_location` is not present. |
+| `trip_id` | UUID | Required if Applicable | Trip UUID (foreign key to /trips endpoint), required if `event_types` contains `trip_start`, `trip_end`, `trip_cancel`, `trip_enter_jurisdiction`, or `trip_leave_jurisdiction` |
+| `associated_ticket` | String | Optional | Identifier for an associated ticket inside an Agency-maintained 311 or CRM system |
+
+(?) Use Telemetry instead of Point?
+
+(?) Do we still want `event_geographies`?
+
+### Event Times
+
+Because of the unreliability of device clocks, the Provider is unlikely to know with total confidence what time an event occurred at. However, Providers are responsible for constructing as accurate a timeline as possible. Most importantly, the order of the timestamps for a particular device's events must reflect the Provider's best understanding of the order in which those events occurred.
+
+[Top][toc]
+
+## Telemetry Data
+
+A standard point of vehicle telemetry. References to latitude and longitude imply coordinates encoded in the [WGS 84 (EPSG:4326)](https://en.wikipedia.org/wiki/World_Geodetic_System) standard GPS or GNSS projection expressed as [Decimal Degrees](https://en.wikipedia.org/wiki/Decimal_degrees).
+
+| Field          | Type           | Required/Optional     | Field Description                                            |
+| -------------- | -------------- | --------------------- | ------------------------------------------------------------ |
+| `device_id`    | UUID           | Required              | ID used in [Register](#vehicle---register)                     |
+| `timestamp`    | [timestamp][ts]| Required              | Date/time that event occurred. Based on GPS or GNSS clock            |
+| `gps`          | Object         | Required              | Telemetry position data                                      |
+| `gps.lat`      | Double         | Required              | Latitude of the location                                     |
+| `gps.lng`      | Double         | Required              | Longitude of the location                                    |
+| `gps.altitude` | Double         | Required if Available | Altitude above mean sea level in meters                      |
+| `gps.heading`  | Double         | Required if Available | Degrees - clockwise starting at 0 degrees at true North      |
+| `gps.speed`    | Float          | Required if Available | Estimated speed in meters / sec as reported by the GPS chipset                                        |
+| `gps.accuracy` | Float          | Required if Available | Horizontal accuracy, in meters                                           |
+| `gps.hdop`     | Float          | Required if Available | Horizontal GPS or GNSS accuracy value (see [hdop][hdop]) |
+| `gps.satellites` | Integer      | Required if Available | Number of GPS or GNSS satellites
+| `charge`       | Float          | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 1 |
+| `stop_id`      | UUID           | Required if Applicable | Stop that the vehicle is currently located at. Only applicable for _docked_ Micromobility. See [Stops][stops] |
+
+[Top][toc]
+
 ## Stops
 
 Stops describe vehicle trip start and end locations in a pre-designated physical place. They can vary from docking stations with or without charging, corrals with lock-to railings, or suggested parking areas marked with spray paint. Stops are used in both [Provider](/provider#stops) (including routes and event locations) and [Agency](/agency#stops) (including telemetry data).
@@ -383,7 +463,11 @@ If an unsupported or invalid version is requested, the API must respond with a s
 [modes]: /modes/README.md
 [policy]: /policy/README.md
 [provider]: /provider/README.md
+[point-geo]: #geographic-telemetry-data
+[stop-based-geo]: #stop-based-geographic-data
 [st-intersects]: https://postgis.net/docs/ST_Intersects.html
 [toc]: #table-of-contents
 [ts]: /general-information.md#timestamps
+[vehicle-states]: /modes#vehicle-states
+[vehicle-events]: /modes#event-types
 [wgs84]: https://en.wikipedia.org/wiki/World_Geodetic_System
