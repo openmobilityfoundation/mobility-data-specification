@@ -21,7 +21,10 @@ This specification contains a data standard for *mobility as a service* provider
   * [Trips - Query Parameters](#trips---query-parameters)
   * [Routes](#routes)
 * [Events][events]
-  * [Events - Query Parameters](#events---query-parameters)
+  * [Recent Events](#recent-events)
+  * [Recent Events - Query Parameters](#recent-events---query-parameters)
+  * [Historical Events](#historical-events)
+  * [Historical Events - Query Parameters](#events---query-parameters)
 * [Telemetry][telemetry]
   * [Telemetry - Query Parameters](#telemetry---query-parameters)
 * [Vehicles][vehicles]
@@ -244,7 +247,9 @@ Trips that start or end at a [Stop][stops] must include a `stop_id` property in 
 
 ## Events
 
-The `/events/recent` and `/events/historical/` endpoints return a list of Event objects, describing the activity of the Provider's vehicles.  Recent events are at most two weeks old and can be queried with start/stop time, and historical events are packaged in hour-sized chunks for ease of implementation.
+The `/events/recent` and `/events/historical/` endpoints return a list of Event objects, describing the activity of the Provider's vehicles.  Recent events are at most two weeks old and can be queried with start/stop time, and historical events are packaged in hour-sized chunks for ease of implementation. 
+
+(?) This distinction is a holdover from MDS 1.x.  Dramatic simplification of the query is meant to make cold storage by hourly chunks trivial without a database.  We should ask Providers if that has been a concern in practice.
 
 Unless stated otherwise by the municipality, this endpoint must return only those status changes with a `event_location` that [intersects](#intersection-operation) with the [municipality boundary](#municipality-boundary).
 

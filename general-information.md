@@ -279,6 +279,7 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | -------------- | -------------- | --------------------- | ------------------------------------------------------------ |
 | `device_id`    | UUID           | Required              | ID used in [Register](#vehicle---register)                     |
 | `timestamp`    | [timestamp][ts]| Required              | Date/time that event occurred. Based on GPS or GNSS clock            |
+| `trip_id`      | UUID           | Required              | If telemetry occurred during a trip, the ID of the trip.  If not in a trip, `null`.
 | `gps`          | Object         | Required              | Telemetry position data                                      |
 | `gps.lat`      | Double         | Required              | Latitude of the location                                     |
 | `gps.lng`      | Double         | Required              | Longitude of the location                                    |
