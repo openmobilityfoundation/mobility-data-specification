@@ -76,6 +76,8 @@ _See more available trip attributes for any mode in the [trips endpoint](/provid
 
 The `fare_attributes` array is not used in this mode.
 
+_See more available fare attributes for any mode in the [trips endpoint](/provider#trips)._
+
 [Top][toc]
 
 ## Vehicle Properties
