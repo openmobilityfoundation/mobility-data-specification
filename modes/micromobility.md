@@ -68,6 +68,8 @@ The `trip_type` field **may** have one of the following values:
 
 The `trip_attributes` array is not used in this mode.
 
+_See more available trip attributes for any mode in the [trips endpoint](/provider#trips)._
+
 [Top][toc]
 
 ### Fare Attributes
@@ -85,6 +87,8 @@ The `vehicle_attributes` array **may** have the following key value pairs:
 - `year` (integer, optional)
 - `make` (string, optional)
 - `model` (string, optional)
+
+_See more available vehicle attributes for any mode in the [vehicles endpoint](/provider#vehicles)._
 
 [Top][toc]
 
