@@ -100,6 +100,8 @@ The `trip_attributes` array **may** have the following key value pairs:
 - `permit_licence_number` (string, optional) - The permit licence number of the organization that dispatched the vehicle
 - `driver_id` (string, optional): Universal identifier of a specific driver, static across operators, like a driver's license number. Could also be used as a lookup in an agency's internal driver system.
 
+_See more available trip attributes for any mode in the [trips endpoint](/provider#trips)._
+
 [Top][toc]
 
 ### Fare Attributes
@@ -120,6 +122,8 @@ The `fare_attributes` array **may** have the following key value pairs:
 - `driver_trip_pay` (currency, optional) - The payment the driver received for the trip 
 - `rate_code_id` (enumerated, optional) - one of `meter_fare`, `shared`, `out_of_town`, `disabled`, `upfront_pricing`, `promo_rate`
 
+_See more available fare attributes for any mode in the [trips endpoint](/provider#trips)._
+
 [Top][toc]
 
 ## Vehicle Properties
@@ -135,6 +139,8 @@ The `vehicle_attributes` array **may** have the following key value pairs:
 - `vin` (string, optional) - the Vehicle Identification Number of the vehicle
 - `placard_number` (string, optional) - the registered placard number of the vehicle
 - `inspection_date` (date YYYY-MM-DD, optional) - the date of the last inspection of the vehicle
+
+_See more available vehicle attributes for any mode in the [vehicles endpoint](/provider#vehicles)._
 
 [Top][toc]
 
