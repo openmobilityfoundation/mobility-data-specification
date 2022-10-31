@@ -133,6 +133,13 @@ The `vehicle_attributes` array **may** have the following key value pairs:
 - `vin` (string, required) - the Vehicle Identification Number of the vehicle
 - `license_plate` (string, required) - the registered external license plate number of the vehicle
 - `inspection_date` (date YYYY-MM-DD, optional) - the date of the last inspection of the vehicle
+- `snow_shovel` (boolean, optional) - shovel for removing snow or ice from around vehicle or vehicle path
+- `snow_brush` (boolean, optional) - brushes for removing snow or ice from vehicle
+- `bike_rack` (boolean, optional) - car roof or trunk mounted bike rack
+- `park_access` (boolean, optional) - access pass to a national/regional/municipal park system
+- `toll_transponder` (boolean, optional) - toll transponder for national/regional toll system
+- `phone_charger` (boolean, optional) - a place to charge your phone
+- `sunshade` (boolean, optional) - sunshade avaialable (i.e. for windshield)
 
 _See more available vehicle attributes for any mode in the [vehicles endpoint](/provider#vehicles)._
 
