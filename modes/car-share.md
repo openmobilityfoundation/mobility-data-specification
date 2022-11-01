@@ -159,7 +159,7 @@ This `accessibility_options` enum represents the accessibility options available
 
 ### Vehicle States
 
-Valid customer services vehicle states are 
+Valid car share vehicle states are 
 
 - `removed`
 - `available` 
@@ -176,12 +176,16 @@ See [Vehicle States][vehicle-states] for descriptions.
 
 ### Event Types
 
-Valid passenger services vehicle event types are 
+Valid car share vehicle event types are 
 
+- `charging_start`
+- `charging_end`
 - `comms_lost`
 - `comms_restored`
 - `driver_cancellation`
 - `decommission`
+- `fueling_start`
+- `fueling_end`
 - `maintenance_end`
 - `maintenance_start`
 - `passenger_cancellation`
@@ -244,6 +248,10 @@ This is the list of `vehicle_state` and `event_type` pairings that constitute th
 | `stopped`                    | `available`       | N/A          | `trip_end`               | The trip has been successfully completed                                                                         |
 | `stopped`                    | `on_trip`         | `on_trip`    | `trip_resume`            | Resume a trip that was previously stopped (e.g. picking up a friend to go to the airport with)                   |
 | `stopped`                    | `on_trip`         | `on_trip`    | `trip_start`             | Start a trip                                                                                                     |
+| `stopped`                    | `stopped`         | `stopped`    | `charging_start`         | Start charging the device battery                                                                                                    |
+| `stopped`                    | `stopped`         | `stopped`    | `charging_end`           | End charging the device battery                                                                                     |
+| `stopped`                    | `stopped`         | `stopped`    | `fueling_start`          | Start fueling the device with physical fuel                                                                                                    |
+| `stopped`                    | `stopped`         | `stopped`    | `fueling_end`            | End fueling the device with physical fuel                                                                                       |
 | `stopped`                    | `stopped`         | `stopped`    | `remote_start`           | Remotely start the engine while vehicle is stopped, usually to charge battery or warm up                                                                                                    |
 | `stopped`                    | `stopped`         | `stopped`    | `remote_end`             | Remotely stop the engine while vehicle is already stopped                                                                                  |
 | `stopped`                    | `unknown`         | N/A          | `comms_lost`             | The vehicle has went out of comms while stopped                                                                  |
