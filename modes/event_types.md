@@ -19,6 +19,8 @@ As with all MDS definitions, they should be described in a way that maximizes th
 | `order_pick_up`       | Delivery of the order at the customer's location |
 | `decommissioned`      | Decommissioned |
 | `driver_cancellation` | Driver cancelled a trip |
+| `fueling_start`       | Fueling starts |
+| `fueling_end`         | Fueling ends |
 | `located`             | Located (opposite of Missing) |
 | `maintenance`         | General maintenance |
 | `maintenance_pick_up` | Pick up for maintenance |
@@ -41,7 +43,7 @@ As with all MDS definitions, they should be described in a way that maximizes th
 | `trip_leave_jurisdiction` | Trip leaves a jurisdiction |
 | `trip_start`          | Start trip |
 | `trip_pause`          | Pause trip temporarily but do not end trip |
-| `trip_resume`          | Resume trip |
+| `trip_resume`         | Resume trip |
 | `unspecified`         | Unspecified |
 
 ### Limitations on the Use of Certain Values
