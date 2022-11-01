@@ -27,6 +27,8 @@ As with all MDS definitions, they should be described in a way that maximizes th
 | `provider_cancellation` | Provider cancelled a trip |
 | `provider_drop_off`   | Drop off by the provider |
 | `rebalance_pick_up`   | Pick up for rebalancing |
+| `remote_start`        | Remotely start the engine |
+| `remote_end`          | Remotely stop the engine |
 | `reservation_cancel`  | Reservation cancelled |
 | `reservation_start`   | Reservation started |
 | `system_resume`       | Resume system operations, e.g. start of day |
