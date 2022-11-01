@@ -10,6 +10,8 @@ As with all MDS definitions, they should be described in a way that maximizes th
 | `agency_pick_up`      | Pick up by the agency, e.g. impound |
 | `battery_charged`     | Battery charged (entering service) |
 | `battery_low`         | Battery low (exiting service) |
+| `charging_start`      | Battery start charging |
+| `charging_end`        | Battery end charging |
 | `comms_lost`          | Communications lost |
 | `comms_restored`      | Communications restored |
 | `compliance_pick_up`  | Pick up for compliance (rule violation) |
