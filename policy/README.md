@@ -603,6 +603,7 @@ For each combination of items in a program, you can specify the data specs, APIs
         {
           "data_spec_name": "[DATA SPEC NAME]",
           "version": "[VERSION NUMBER]",
+          "mode": "[MODE SHORTNAME]",
           "required_apis": [
             {
               // Required APIs array
@@ -623,6 +624,7 @@ For each combination of items in a program, you can specify the data specs, APIs
 | -------------------- | ------ | -------- | ----------------------------------- |
 | `data_spec_name`     | Enum   | Required | Name of the data spec required. Supported values are: '[MDS](https://github.com/openmobilityfoundation/mobility-data-specification/tree/ms-requirements)', '[GBFS](https://github.com/NABSA/gbfs/tree/v2.2)'. Others like GOFS, GTFS, TOMP-API, etc can be tested by agencies and officially standardized here in the future -- leave your feedback on [this issue](https://github.com/openmobilityfoundation/mobility-data-specification/issues/682). |
 | `version`            | Text   | Required | Version number of the data spec required. E.g. '1.2.0' |
+| `mode`               | Text   | Optional | The [mode list][modes] shortname for MDS. E.g. 'passenger-services' |
 | `required_apis`      | Array  | Conditionally Required | Name of the [Requirement APIs](#requirement-apis) that need to be served by providers. At least one API is required. APIs not listed will not be available to the agency. |
 | `available_apis`     | Array  | Conditionally Required | Name of the [Requirement APIs](#requirement-apis) that are being served by agencies.  Not applicable to GBFS. APIs not listed will not be available to the provider. |
 
