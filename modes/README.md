@@ -58,9 +58,13 @@ The `trip_type` field allows the purpose of each trip segment to be described. S
 
 The `trip_attributes` array allows additional mode-specific information about the nature of a trip to be described. It can return a list of JSON-formatted key/value pairs which correspond to the allowed attributes and values for the operative mode. See each [mode definition](#list-of-supported-modes) for details.
 
+_See more available trip attributes for any mode in the [trips endpoint](/provider#trips)._
+
 ### Vehicle Attributes
 
 The `vehicle_attributes` array returns a list of JSON-formatted key/value pairs which correspond to the allowed attributes and values for the operative mode. For each mode, the allowed attributes and corresponding values are defined in the [mode definition](#list-of-supported-modes).
+
+_See more available vehicle attributes for any mode in the [vehicles endpoint](/provider#vehicles)._
 
 ### Accessibility Options
 

@@ -102,6 +102,8 @@ The `trip_attributes` array **may** have the following key value pairs:
 - `range` (interger, optional): estimated range in meters based on energy levels in device at trip start
 - `identification_required` (boolean, optional): does the cargo require providing customer identification before trip start or upon delivery?
 
+_See more available trip attributes for any mode in the [trips endpoint](/provider#trips)._
+
 [Top][toc]
 
 ### Fare Attributes
@@ -110,6 +112,8 @@ The `fare_attributes` array **may** have the following key value pairs:
 
 - `payment_type` (enumerated, optional): `cash`, `mobile`, `voucher`, `paratransit`, `no payment`, `test`
 - `price` (currency, optional): Total price of the order
+
+_See more available fare attributes for any mode in the [trips endpoint](/provider#trips)._
 
 [Top][toc]
 
@@ -133,6 +137,8 @@ The `vehicle_attributes` array **may** have the following key value pairs:
 - `weight` (integer, optional): weight in kilograms rounded up of the device not including cargo
 - `top_speed` (integer, optional): theoretical top speed in meters per second of the device
 - `storage_capacity` (integer, optional): cubic centimeters of cargo space available not including any cargo
+
+_See more available vehicle attributes for any mode in the [vehicles endpoint](/provider#vehicles)._
 
 [Top][toc]
 

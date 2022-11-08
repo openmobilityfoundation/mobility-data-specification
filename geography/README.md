@@ -128,7 +128,7 @@ Type of geography. These specific types are recommendations based on ones common
 | `municipal_boundary` | Edge of a city                       |
 | `policy_zone`        | Zone where [Policy](/policy) rules could be in effect, like operating area, distribution/equity zones, no/slow ride zone, no parking, etc |
 | `county_boundary`    | Edge of a county                     |
-| `stop`               | See [Stops](/general-information.ms#stops)                   |
+| `stop`               | See [Stops](/general-information.md#stops)                   |
 | `council_district`   | City council district                |
 | `political_district` | Politically defined voting area      |
 | `neighborhood`       | Neighborhood area                    |

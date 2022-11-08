@@ -10,6 +10,8 @@ As with all MDS definitions, they should be described in a way that maximizes th
 | `agency_pick_up`      | Pick up by the agency, e.g. impound |
 | `battery_charged`     | Battery charged (entering service) |
 | `battery_low`         | Battery low (exiting service) |
+| `charging_start`      | Battery start charging |
+| `charging_end`        | Battery end charging |
 | `comms_lost`          | Communications lost |
 | `comms_restored`      | Communications restored |
 | `compliance_pick_up`  | Pick up for compliance (rule violation) |
@@ -17,6 +19,8 @@ As with all MDS definitions, they should be described in a way that maximizes th
 | `order_pick_up`       | Delivery of the order at the customer's location |
 | `decommissioned`      | Decommissioned |
 | `driver_cancellation` | Driver cancelled a trip |
+| `fueling_start`       | Fueling starts |
+| `fueling_end`         | Fueling ends |
 | `located`             | Located (opposite of Missing) |
 | `maintenance`         | General maintenance |
 | `maintenance_pick_up` | Pick up for maintenance |
@@ -27,6 +31,8 @@ As with all MDS definitions, they should be described in a way that maximizes th
 | `provider_cancellation` | Provider cancelled a trip |
 | `provider_drop_off`   | Drop off by the provider |
 | `rebalance_pick_up`   | Pick up for rebalancing |
+| `remote_start`        | Remotely start the engine |
+| `remote_end`          | Remotely stop the engine |
 | `reservation_cancel`  | Reservation cancelled |
 | `reservation_start`   | Reservation started |
 | `system_resume`       | Resume system operations, e.g. start of day |
@@ -37,7 +43,7 @@ As with all MDS definitions, they should be described in a way that maximizes th
 | `trip_leave_jurisdiction` | Trip leaves a jurisdiction |
 | `trip_start`          | Start trip |
 | `trip_pause`          | Pause trip temporarily but do not end trip |
-| `trip_resume`          | Resume trip |
+| `trip_resume`         | Resume trip |
 | `unspecified`         | Unspecified |
 
 ### Limitations on the Use of Certain Values
