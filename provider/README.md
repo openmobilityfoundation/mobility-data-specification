@@ -365,6 +365,7 @@ The authenticated reports are monthly, historic flat files that may be pre-gener
 
 | Name               | Type                                      | Comments                                         |
 | ------------------ | ----------------------------------------- | ------------------------------------------------ |
+| provider_id      | UUID                                      | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
 | StartDate          | date                                      | Start date of trip the data row, ISO 8601 format, local timezone |
 | Duration           | string                                    | Value is always `P1M` for monthly. Based on [ISO 8601 duration](https://en.wikipedia.org/wiki/ISO_8601#Durations) |
 | Special Group Type | [Special Group Type](#special-group-type) | Type that applies to this row                    |
