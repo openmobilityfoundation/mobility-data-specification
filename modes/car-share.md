@@ -103,7 +103,7 @@ _See more available trip attributes for any mode in the [trips endpoint](/provid
 
 The `fare_attributes` array **may** have the following key value pairs:
 
-- `payment_type` (enumerated, required): `cash`, `credit_card`, `mobile`, `voucher`, `paratransit`, `no payment`, `test`
+- `payment_type` (enumerated, required): `cash`, `credit_card`, `mobile`, `voucher`, `no payment`, `test`
 - `fare_type` (enumerated, required): `meter_fare`, `upfront_pricing`, `flat_rate`. Indicator of which rate was charged.
 - `tolls` (currency, optional) - Sum of any and all tolls charged for the trip, such as bridge tolls
 - `base_rate` (currency, optional) - Minimum fare to be charged as soon as the trip starts.
@@ -113,8 +113,6 @@ The `fare_attributes` array **may** have the following key value pairs:
 - `extra_amount` (currency, optional) - miscellaneous extra amounts charged to customer not covered by other fields.
 - `taxes` (currency, optional) - amount of taxes paid for the ride
 - `surcharge` (currency, optional) - any surcharge pricing
-- `commission` (currency, optional) - any extra commission for the ride
-- `driver_trip_pay` (currency, optional) - The payment the company driver received for the trip 
 
 _See more available fare attributes for any mode in the [trips endpoint](/provider#trips)._
 
