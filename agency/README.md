@@ -81,6 +81,7 @@ A vehicle record is as follows:
 | ------------- | --------- | ----------------------------------------------------------------------------- |
 | `device_id`   | UUID      | Provided by Operator to uniquely identify a vehicle                           |
 | `provider_id` | UUID      | Issued by Agency and [tracked](../providers.csv)                              |
+| `data_provider_id` | UUID | Optional | If different than `provider_id`, a UUID for the data solution provider managing the data feed in this endpoint. See MDS [provider list](/providers.csv) which includes both service operators and data solution providers. |
 | `vehicle_id`  | String    | Vehicle Identification Number (vehicle_id) visible on vehicle                 |
 | `vehicle_type`        | Enum      | [Vehicle Type][vehicle-types]           |
 | `propulsion_types`  | Enum[]    | Array of [Propulsion Type][propulsion-types]; allows multiple values          |
@@ -382,6 +383,7 @@ The Trips endpoint serves two purposes:
 | trip_type                     | Enum                           | Optional               | The type of the trip |
 | trip_attributes               | `{ [String]: String}`          | Optional               | Trip attributes, given as mode-specific key-value pairs |
 | provider_id                   | UUID                           | Required               | Provider which managed this trip |
+| `data_provider_id`            | UUID                           | Optional               | If different than `provider_id`, a UUID for the data solution provider managing this data endpoint. See MDS [provider list](/providers.csv) which includes both service operators and data solution providers. |
 | reservation_method            | Enum                           | Required               | Way the customer created their reservation, see [reservation-method](#reservation-method) |
 | reservation_time              | Timestamp                      | Required               | Time the customer *requested* a reservation |
 | reservation_type              | Enum                           | Required               | Type of reservation, see [reservation-type](#reservation-type) |
