@@ -88,6 +88,10 @@ A vehicle record is as follows:
 | `state`       | Enum      | Current vehicle state. See [Vehicle State][vehicle-states]                    |
 | `prev_events`  | Enum[]      | Last [Vehicle Event][vehicle-events]                                           |
 | `updated`     | [timestamp][ts] | Date of last event update                                                     |
+| `battery_capacity` | Integer  | Required if Available | Capacity of battery expressed as milliamp hours (mAh) |
+| `fuel_capacity` | Integer  | Required if Available | Capacity of fuel tank (liquid, solid, gaseous) expressed in liters |
+| `battery_percent`       | Integer          | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 100 |
+| `fuel_percent`       | Integer          | Required if Applicable | Percent fuel in vehicle, expressed between 0 and 100 |
 
 404 Failure Response:
 
@@ -112,6 +116,8 @@ Body Params:
 | `mode`       | Enum    | Required          | [Mobility Mode][modes]                                        |
 | `propulsion_types` | Enum[]  | Required          | Array of [Propulsion Type][propulsion-types]; allows multiple values |
 | `vehicle_attributes` | Conditionally Required | Array of [vehicle attributes](/modes/#vehicle-attributes)   | Vehicle attributes appropriate for the current [mode][modes] |
+| `battery_capacity` | Integer  | Required if Available | Capacity of battery expressed as milliamp hours (mAh) |
+| `fuel_capacity` | Integer  | Required if Available | Capacity of fuel tank (liquid, solid, gaseous) expressed in liters |
 
 201 Success Response:
 
@@ -251,7 +257,8 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | `gps.accuracy` | Float          | Required if Available | Horizontal accuracy, in meters                                           |
 | `gps.hdop`     | Float          | Required if Available | Horizontal GPS or GNSS accuracy value (see [hdop][hdop]) |
 | `gps.satellites` | Integer      | Required if Available | Number of GPS or GNSS satellites
-| `charge`       | Float          | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 1 |
+| `battery_percent`       | Integer          | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 100 |
+| `fuel_percent`       | Integer          | Required if Applicable | Percent fuel in vehicle, expressed between 0 and 100 |
 | `stop_id`      | UUID           | Required if Applicable | Stop that the vehicle is currently located at. Only applicable for _docked_ Micromobility. See [Stops][stops] |
 
 [Top][toc]
@@ -372,7 +379,7 @@ The Trips endpoint serves two purposes:
 | Field                         | Type                           | Required/Optional      | Field Description |
 |-------------------------------|--------------------------------|------------------------| ----------------- |
 | trip_id                       | UUID                           | Required               | UUID for the trip this payload pertains to |
-| journey_id                    | UUID                           | Optional               | A unique ID for associating collections of trips |
+| trip_type                     | Enum                           | Optional               | The type of the trip |
 | trip_attributes               | `{ [String]: String}`          | Optional               | Trip attributes, given as mode-specific key-value pairs |
 | provider_id                   | UUID                           | Required               | Provider which managed this trip |
 | reservation_method            | Enum                           | Required               | Way the customer created their reservation, see [reservation-method](#reservation-method) |

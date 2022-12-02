@@ -1,14 +1,10 @@
-# Mobility Data Specification: **Passenger Services**
+# Mobility Data Specification: **Car Share**
 
-<img src="https://i.imgur.com/plW2Hon.png" width="120" align="right" alt="MDS Modes - Passenger Services" border="0">
+<img src="https://i.imgur.com/HSL9F0h.png" width="120" align="right" alt="MDS Modes - Car Share" border="0">
 
-**Passenger Services** refers to taxis, transportation network companies (TNCs), commercial transport apps (CTAs), and private hire vehicles (PHVs).  Passenger Services typically have a driver, one or more passengers, and multiple passengers may be on different trips.  The state machine tracks the trip states of the passengers separately from the vehicle state.  
+**Car Share** refers to shared point-to-point and station-based mutli-passenger vehicles.  Car Share typically has a driver who is the customer, and possibly one or more passengers or cargo.  
 
 See the [modes overview](/modes) for how the mode specific information below applies across MDS.
-
-## Taxi vs. TNC implementation differences
-
-Taxis typically require explicit tracking of maintenance while TNCs typically do not. Public agency regulations, legal authority, differ based on local, state, and federal laws and jursidictions between taxis, TNCs, CTAs, PHV, etc.
 
 ## Table of Contents
 
@@ -34,7 +30,7 @@ Taxis typically require explicit tracking of maintenance while TNCs typically do
 
 ### Mode ID
 
-The short name identifier for Passenger Services used across MDS is `passenger-services`.
+The short name identifier for Car Share used across MDS is `car-share`.
 
 [Top][toc]
 
@@ -42,20 +38,24 @@ The short name identifier for Passenger Services used across MDS is `passenger-s
 
 ### Journey ID
 
-The `journey_id` field shall have a consistent value in overlapping trips, e.g. "pooled" or "shared" rides with different start and/or end locations. Journeys may be point-to-point, multi-segment, or multi-segment overlapping.
+The `journey_id` field shall have a consistent value in overlapping trips for a single reservation period, e.g. trips taken by a customer between ignition states over the duration of their reservation. A reservation is the duration the customer has continuous exclusive access to the vehicle whether parked or in motion. Journeys may be point-to-point or multi-segment.
 
-Example 1: one private trip with reservation, then return to depot
+Example 1: customer makes a reservation and company delivers vehicle to customer, then one trip point-to-point by customer, ending reservation at destination
 ```
-<-                            Journey                           ->
-<- Trip: reservation -><-    Trip: private    -><- Trip: empty  ->
+<-                 Journey                ->
+<-  Trip: reservation -><-  Trip: private ->
 ```
 
-Example 2: three shared trips, some overlapping
+Example 2: Customer reservation for multiple days with trips for errands, gas, entertainment, etc
 ```
-<-                            Journey                           ->
-<- Trip: reservation -><- Trip: shared ->
-            <- Trip: reservation -><- Trip: shared ->
-                         <- Trip: reservation -><- Trip: shared ->
+<-                                           Journey                                         ->
+<- Trip: private -><- Trip: private -><- Trip: private -><- Trip: private -><- Trip: private ->
+```
+
+Example 3: one trip point-to-point with an employee moving the vehicle to a new location for maintenance
+```
+<-    Journey  ->
+<- Trip: empty ->
 ```
 
 [Top][toc]
@@ -64,15 +64,15 @@ Example 2: three shared trips, some overlapping
 
 The `journey_attributes` array **may** have the following key value pairs:
 
-- `shift_id` (UUID, optional): unique identifier for an entire driver's work shift, tied across multiple journeys and therefore trips.
+- ...
 
 [Top][toc]
 
 ### Trip ID Requirements
 
-Events require a valid `trip_id` in events where `event_types` contains `reservation_start`, `reservation_stop`, `trip_start`, `trip_stop`, `trip_end`, `passenger_cancellation`, `provider_cancellation`, or `driver_cancellation`. 
+Events require a valid `trip_id` in events where `event_types` contains `reservation_start`, `reservation_stop`, `trip_start`, `trip_stop`, `trip_end`, `passenger_cancellation`, `provider_cancellation`. 
 
-Additionally, `trip_id` is required if `event_types` contains a `enter_jurisdiction` or `leave_jurisdiction` event pertaining to a passenger trip. 
+Additionally, `trip_id` is required if `event_types` contains a `enter_jurisdiction` or `leave_jurisdiction` event pertaining to a trip. 
 
 [Top][toc]
 
@@ -81,9 +81,8 @@ Additionally, `trip_id` is required if `event_types` contains a `enter_jurisdict
 The `trip_type` field **must** have one of the following enumerated values:
 
 - `private`: a private trip made by one paying customer with one or more guests
-- `shared`: a shared or pooled trip with more than one paying customer
 - `reservation`: en route to pickup a customer who has made a reservation, with no passengers in the vehicle
-- `empty`: vehicle movement with no passengers (outside of other `trip_type` values) that may need to be reported, e.g. for deadheading
+- `empty`: vehicle movement with no customer (outside of other `trip_type` values) that may need to be reported, e.g. for maintenance
 
 [Top][toc]
 
@@ -91,17 +90,10 @@ The `trip_type` field **must** have one of the following enumerated values:
 
 The `trip_attributes` array **may** have the following key value pairs:
 
-- `hail_type` (enumerated, required): `street_hail`, `phone_dispatch`, `phone`, `text`, `app`
+- `hail_type` (enumerated, required): `phone_dispatch`, `phone`, `text`, `app`
 - `app_name` (text, optional): name of the app used to reserve the trip which could be provider's app or 3rd party app
-- `passenger_count` (integer, required): unique count of passengers transported during trip duration
-- `request_time` (timestamp, required): when the passenger requested the trip
-- `trip_wait_time` (milliseconds, optional): part of the passenger trip where the vehicle was moving slow or stopped (e.g. <12mph), which is a different fare rate in some jurisdictions
-- `trip_fare_time` (milliseconds, optional): part of the passenger trip where the vehicle was moving more quickly (e.g. >12mph), which is a different fare rate in some jurisdictions
-- `pickup_address` (text, optional): street address where the trip originated from
-- `dropoff_address` (text, optional): street address where the trip ended
 - `permit_licence_number` (string, optional) - The permit licence number of the organization that dispatched the vehicle
-- `driver_id` (string, optional): Universal identifier of a specific driver, static across operators, like a driver's license number. Could also be used as a lookup in an agency's internal driver system.
-- `wheelchair_transported` (boolean, optional) - was a wheelchair transported as part of this trip?
+- `driver_id` (string, optional): Universal identifier of a specific driver, static across operators, like a driver's license number, for company employees in `reservation` or `empty` trip types, not `private` trips. Could also be used as a lookup in an agency's internal driver system.
 
 _See more available trip attributes for any mode in the [trips endpoint](/provider#trips)._
 
@@ -113,7 +105,6 @@ The `fare_attributes` array **may** have the following key value pairs:
 
 - `payment_type` (enumerated, required): `cash`, `credit_card`, `mobile`, `voucher`, `paratransit`, `no payment`, `test`
 - `fare_type` (enumerated, required): `meter_fare`, `upfront_pricing`, `flat_rate`. Indicator of which rate was charged.
-- `meter_fare_amount` (currency, conditionally required): if `upfront_pricing` is used as a `fare_type` include what the metered fare would have been if `meter_fare` would have been used. Allows cost comparison in evalutation of programs and pilots.
 - `tolls` (currency, optional) - Sum of any and all tolls charged for the trip, such as bridge tolls
 - `base_rate` (currency, optional) - Minimum fare to be charged as soon as the trip starts.
 - `exit_fee` (currency, optional) - Fee to exit location, like an airport
@@ -123,8 +114,7 @@ The `fare_attributes` array **may** have the following key value pairs:
 - `taxes` (currency, optional) - amount of taxes paid for the ride
 - `surcharge` (currency, optional) - any surcharge pricing
 - `commission` (currency, optional) - any extra commission for the ride
-- `driver_trip_pay` (currency, optional) - The payment the driver received for the trip 
-- `rate_code_id` (enumerated, optional) - one of `meter_fare`, `shared`, `out_of_town`, `disabled`, `upfront_pricing`, `promo_rate`
+- `driver_trip_pay` (currency, optional) - The payment the company driver received for the trip 
 
 _See more available fare attributes for any mode in the [trips endpoint](/provider#trips)._
 
@@ -136,14 +126,20 @@ _See more available fare attributes for any mode in the [trips endpoint](/provid
 
 The `vehicle_attributes` array **may** have the following key value pairs:
 
-- `year` (integer, optional)
-- `make` (string, optional)
-- `model` (string, optional)
-- `color` (string, optional)
-- `vin` (string, optional) - the Vehicle Identification Number of the vehicle
-- `placard_number` (string, optional) - the registered placard number of the vehicle
-- `license_plate` (string, optional) - the registered vehicle license/number/registartion plate identifer on the vehicle
+- `year` (integer, required)
+- `make` (string, required)
+- `model` (string, required)
+- `color` (string, required)
+- `vin` (string, required) - the Vehicle Identification Number of the vehicle
+- `license_plate` (string, required) - the registered external license plate number of the vehicle
 - `inspection_date` (date YYYY-MM-DD, optional) - the date of the last inspection of the vehicle
+- `snow_shovel` (boolean, optional) - shovel for removing snow or ice from around vehicle or vehicle path
+- `snow_brush` (boolean, optional) - brushes for removing snow or ice from vehicle
+- `bike_rack` (boolean, optional) - car roof or trunk mounted bike rack
+- `park_access` (boolean, optional) - access pass to a national/regional/municipal park system
+- `toll_transponder` (boolean, optional) - toll transponder for national/regional toll system
+- `phone_charger` (boolean, optional) - a place to charge your phone
+- `sunshade` (boolean, optional) - sunshade avaialable (i.e. for windshield)
 
 _See more available vehicle attributes for any mode in the [vehicles endpoint](/provider#vehicles)._
 
@@ -163,7 +159,7 @@ This `accessibility_options` enum represents the accessibility options available
 
 ### Vehicle States
 
-Valid passenger services vehicle states are 
+Valid car share vehicle states are 
 
 - `removed`
 - `available` 
@@ -180,17 +176,23 @@ See [Vehicle States][vehicle-states] for descriptions.
 
 ### Event Types
 
-Valid passenger services vehicle event types are 
+Valid car share vehicle event types are 
 
+- `charging_start`
+- `charging_end`
 - `comms_lost`
 - `comms_restored`
 - `driver_cancellation`
 - `decommission`
+- `fueling_start`
+- `fueling_end`
 - `maintenance_end`
 - `maintenance_start`
 - `passenger_cancellation`
 - `provider_cancellation`
 - `recommission`
+- `remote_start`
+- `remote_end`
 - `reservation_cancel`
 - `reservation_start`
 - `service_end`
@@ -203,8 +205,6 @@ Valid passenger services vehicle event types are
 - `trip_start`
 - `trip_stop`
 - `unspecified`
-
-This list is somewhat shorter than the micromobility event list, as passenger service vehicles are controlled by a driver or potentially an AI. They are not picked up or dropped off for rebalancing or compliance, for example, and they do not go out of service because of a low battery.
 
 See vehicle [Event Types][vehicle-events] for descriptions.
 
@@ -238,16 +238,22 @@ This is the list of `vehicle_state` and `event_type` pairings that constitute th
 | `removed`                    | `unknown`         | N/A          | `comms_lost`             | The vehicle has gone out of comms while removed                                                                  |
 | `reserved`                   | `available`       | N/A          | `driver_cancellation`    | The driver has canceled the reservation                                                                         |
 | `reserved`                   | `available`       | N/A          | `passenger_cancellation` | The passenger has canceled the reservation                                                                      |
-| `reserved`                   | `available`       | N/A          | `provider_cancellation` | The provider has canceled the reservation                                                                      |
+| `reserved`                   | `available`       | N/A          | `provider_cancellation`  | The provider has canceled the reservation                                                                      |
 | `reserved`                   | `elsewhere`       | N/A          | `leave_jurisdiction`     | The vehicle has left the jurisdiction while in a reservation                                                     |
 | `reserved`                   | `stopped`         | `stopped`    | `reserve_stop`           | The vehicle has stopped to pick up the passenger                                                                 |
 | `reserved`                   | `unknown`         | N/A          | `comms_lost`             | The vehicle went out of comms while being reserved by a passenger                                                |
 | `stopped`                    | `available`       | N/A          | `driver_cancellation`    | The driver has canceled the trip while either waiting for the passenger, or dropping them off                   |
 | `stopped`                    | `available`       | N/A          | `passenger_cancellation` | The passenger has canceled the trip while the vehicle is waiting to pick them up, or they are being dropped off |
-| `stopped`                    | `available`       | N/A          | `provider_cancellation` | The provider has canceled the trip while the vehicle is waiting for a passenger, or dropping them off |
+| `stopped`                    | `available`       | N/A          | `provider_cancellation`  | The provider has canceled the trip while the vehicle is waiting for a passenger, or dropping them off |
 | `stopped`                    | `available`       | N/A          | `trip_end`               | The trip has been successfully completed                                                                         |
 | `stopped`                    | `on_trip`         | `on_trip`    | `trip_resume`            | Resume a trip that was previously stopped (e.g. picking up a friend to go to the airport with)                   |
 | `stopped`                    | `on_trip`         | `on_trip`    | `trip_start`             | Start a trip                                                                                                     |
+| `stopped`                    | `stopped`         | `stopped`    | `charging_start`         | Start charging the device battery                                                                                                    |
+| `stopped`                    | `stopped`         | `stopped`    | `charging_end`           | End charging the device battery                                                                                     |
+| `stopped`                    | `stopped`         | `stopped`    | `fueling_start`          | Start fueling the device with physical fuel                                                                                                    |
+| `stopped`                    | `stopped`         | `stopped`    | `fueling_end`            | End fueling the device with physical fuel                                                                                       |
+| `stopped`                    | `stopped`         | `stopped`    | `remote_start`           | Remotely start the engine while vehicle is stopped, usually to charge battery or warm up                                                                                                    |
+| `stopped`                    | `stopped`         | `stopped`    | `remote_end`             | Remotely stop the engine while vehicle is already stopped                                                                                  |
 | `stopped`                    | `unknown`         | N/A          | `comms_lost`             | The vehicle has went out of comms while stopped                                                                  |
 | `unknown`                    | `available`       | N/A          | `comms_restored`         | The vehicle has come back into comms while available for-hire                                                    |
 | `unknown`                    | `elsewhere`       | N/A          | `comms_restored`         | The vehicle has come back into comms while outside of jurisdictional boundaries                                  |
@@ -261,31 +267,9 @@ This is the list of `vehicle_state` and `event_type` pairings that constitute th
 
 ### State Machine Diagram
 
-The *Passenger Services State Machine Diagram* shows how the `vehicle_state` and `event_type` relate to each other and how taxi vehicles can transition between states. See this [text-editable EPS](https://drive.google.com/file/d/1WusVpFK1Vm7HSJgNcA_10T74TEzuCpTB/view?usp=sharing) for the source file.
+The *Car Share State Machine Diagram* shows how the `vehicle_state` and `event_type` relate to each other and how taxi vehicles can transition between states. See this [text-editable EPS](TBD) for the source file.
 
-![Passenger Services State Machine Diagram](passenger-services-state-machine-diagram.svg)
-
-[Top][toc]
-
-#### Passenger Services State Notes
-
-When there is only one trip ongoing, `trip_state == vehicle_state`
-
-In cases where there are multiple trips ongoing, please follow the trip state model pseudocode for determining what the vehicle state should be:
-```
-t = all on-going trips for vehicle
-v = vehicle state
-
-if t.any(state == ‘stopped’):
-v = ‘stopped’ 
-else:
-if t.any(state == ‘on_trip’):      
-v = ‘on_trip’
-else:
-if t.any(state == ‘reserved’):
-    v = ‘reserved’
-```
-`trip_state` mappings should be the same as in the table above.
+![Car Share State Machine Diagram](car-share-state-machine-diagram.svg)
 
 [Top][toc]
 

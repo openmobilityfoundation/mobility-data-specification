@@ -304,7 +304,8 @@ Unless stated otherwise by the municipality, this endpoint must return only thos
 | `publication_time` | [timestamp][ts] | Optional | Date/time that event became available through the status changes endpoint |
 | `event_location` | GeoJSON [Point Feature][point-geo] | Required | See also [Stop-based Geographic Data][stop-based-geo]. |
 | `event_geographies` | UUID[] | Optional | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.1.0)*. Array of Geography UUIDs consisting of every Geography that contains the location of the status change. See [Geography Driven Events][geography-driven-events]. Required if `event_location` is not present. |
-| `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |
+| `battery_percent`       | Integer          | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 100 |
+| `fuel_percent`       | Integer          | Required if Applicable | Percent fuel in vehicle, expressed between 0 and 100 |
 | `trip_id` | UUID | Required if Applicable | Trip UUID (foreign key to /trips endpoint), required if `event_types` contains `trip_start`, `trip_end`, `trip_cancel`, `trip_enter_jurisdiction`, or `trip_leave_jurisdiction` |
 | `associated_ticket` | String | Optional | Identifier for an associated ticket inside an Agency-maintained 311 or CRM system |
 
@@ -586,12 +587,15 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 | `vehicle_type` | Enum | Required | see [vehicle types][vehicle-types] table |
 | `vehicle_attributes` | Array | Optional | **[Mode](/modes#list-of-supported-modes) Specific**. [Vehicle attributes](/modes#vehicle-attributes) given as mode-specific unordered key-value pairs |
 | `propulsion_types` | Enum[] | Required | Array of [propulsion types][propulsion-types]; allows multiple values |
+| `battery_capacity` | Integer  | Required if Available | Capacity of battery expressed as milliamp hours (mAh) |
+| `fuel_capacity` | Integer  | Required if Available | Capacity of fuel tank (liquid, solid, gaseous) expressed in liters |
 | `last_event_time` | [timestamp][ts] | Required | Date/time when last state change occurred. See [Event Times][event-times] |
 | `last_vehicle_state` | Enum | Required | [Vehicle state][vehicle-states] of most recent state change. |
 | `last_event_types` | Enum[] | Required | [Vehicle event(s)][vehicle-events] of most recent state change, allowable values determined by `last_vehicle_state`. |
 | `last_event_location` | GeoJSON [Point Feature][point-geo]| Required | Location of vehicle's last event. See also [Stop-based Geographic Data][stop-based-geo]. |
 | `current_location` | GeoJSON [Point Feature][point-geo] | Required if Applicable | Current location of vehicle if different from last event, and the vehicle is not currently on a trip. See also [Stop-based Geographic Data][stop-based-geo]. |
-| `battery_pct` | Float | Required if Applicable | Percent battery charge of device, expressed between 0 and 1 |
+| `battery_percent`       | Integer          | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 100 |
+| `fuel_percent`       | Integer          | Required if Applicable | Percent fuel in vehicle, expressed between 0 and 100 |
 
 [Top][toc]
 
