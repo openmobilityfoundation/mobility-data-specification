@@ -236,9 +236,47 @@ A Trip is defined by the following structure:
 | `accuracy` | Integer | Required | The approximate level of accuracy, in meters, of `Points` within `route` |
 | `publication_time` | [timestamp][ts] | Optional | Date/time that trip became available through the trips endpoint |
 | `parking_verification_url` | String | Optional | A URL to a photo (or other evidence) of proper vehicle parking |
-| `standard_cost` | Integer | Optional | The cost, in the currency defined in `currency`, that it would cost to perform that trip in the standard operation of the System (see [Costs & Currencies][costs-and-currencies]) |
-| `actual_cost` | Integer | Optional | The actual cost, in the currency defined in `currency`, paid by the customer of the *mobility as a service* provider (see [Costs & Currencies][costs-and-currencies]) |
-| `currency` | String | Optional, USD cents is implied if null.| An [ISO 4217 Alphabetic Currency Code][iso4217] representing the currency of the payee (see [Costs & Currencies][costs-and-currencies]) |
+| `fare`                          | [Fare](#fare)                  | Conditionally Required | Fare for the trip (required if trip was completed)             |
+| `reservation_method`            | Enum                           | Required               | Way the customer created their reservation, see [reservation-method](#reservation-method) |
+| `reservation_time`              | Timestamp                      | Required               | Time the customer *requested* a reservation |
+| `reservation_type`              | Enum                           | Required               | Type of reservation, see [reservation-type](#reservation-type) |
+
+[Top][toc]
+
+## Reservation Type
+
+The reservation type enum expresses the urgency of a given reservation. This can be useful when attempting to quantify metrics around trips: for example, computing passenger wait-time. In the `on_demand` case, passenger wait-time may be quantified by the delta between the `reservation_time`, and the pick-up time; however, in the `scheduled` case, the wait time may be quantified based on the delta between the `scheduled_trip_start_time` found in the Trips payload, and the actual `trip_start_time`. 
+
+| `reservation_type` | Description                                                            |
+|--------------------|------------------------------------------------------------------------|
+| `on_demand`        | The passenger requested the vehicle as soon as possible                |
+| `scheduled`        | The passenger requested the vehicle for a scheduled time in the future |
+
+[Top][toc]
+
+## Reservation Method
+
+The reservation method enum describes the different ways in which a passenger can create their reservation.
+
+| `reservation_method` | Description                                               |
+|----------------------|-----------------------------------------------------------|
+| `app`                | Reservation was made through an application (mobile/web)  |
+| `street_hail`        | Reservation was made by the passenger hailing the vehicle |
+| `phone_dispatch`     | Reservation was made by calling the dispatch operator     |
+
+[Top][toc]
+
+## Fare
+
+The Fare object describes a fare for a Trip. 
+
+| Field           | Type                  | Required/Optional | Field Description                                                                       |
+|-----------------|-----------------------|-------------------|-----------------------------------------------------------------------------------------|
+| quoted_cost     | Float                 | Optional          | Cost quoted to the customer at the time of booking, if available                                      |
+| actual_cost     | Float                 | Required          | Actual cost after a trip was completed                                                  |
+| components      | `{ [string]: float }` | Optional          | Breakdown of the different fees that composed a fare, e.g. tolls                        |
+| currency        | string                | Required          | ISO 4217 currency code                                                                  |
+| payment_methods | `string[]`            | Optional          | Breakdown of different payment methods used for a trip, e.g. cash, card, equity_program |
 
 [Top][toc]
 
@@ -264,6 +302,8 @@ Events represent changes in vehicle status.
 (?) Use Telemetry instead of Point?
 
 (?) Do we still want `event_geographies`?
+
+(?) Add `journey_id`(s)?
 
 ### Event Times
 

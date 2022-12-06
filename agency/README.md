@@ -148,35 +148,29 @@ _No content returned if no vehicle matching `device_id` is found._
 
 [Top][toc]
 
-## Vehicle - Event
+## Vehicles - Events
 
-The vehicle `/event` endpoint allows the Provider to control the state of the vehicle.
+The vehicle `/events` endpoint allows the Provider to submit events describing the state changes of multiple vehicles.
 
-Endpoint: `/vehicles/{device_id}/event`
+Endpoint: `/vehicles/events`
+
 Method: `POST`
-
-Path Params:
-
-| Field        | Type | Required/Optional | Field Description                        |
-| ------------ | ---- | ----------------- | ---------------------------------------- |
-| `device_id`  | UUID | Required          | ID used in [Register](#vehicle---register) |
 
 Body Params:
 
 | Field           | Type                         | Required/Optional      | Field Description                                                                                          |
 |-----------------|------------------------------|------------------------|------------------------------------------------------------------------------------------------------------|
-| `vehicle_state` | Enum                         | Required               | see [Vehicle States][vehicle-states]                                                                       |
-| `event_types`   | Enum[]                       | Required               | see [Vehicle Events][vehicle-events]       |
-| `timestamp`     | [timestamp][ts]              | Required               | Date of last event update                                                                                  |
-| `telemetry`     | [Telemetry](#telemetry-data) | Required               | Single point of telemetry                                                                                  |
-| `event_geographies`  | UUID[] | Optional        | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.1.0)*. Array of Geography UUIDs consisting of every Geography that contains the location of the event. See [Geography Driven Events][geography-driven-events]. Required if `telemetry` is not present. |
-| `trip_id`       | UUID                         | Conditionally required | UUID provided by Operator to uniquely identify the trip. See `trip_id` requirements for each [mode][modes]. |
+| `data` | [EventData](#vehicle-event-data)[]  | Required               | An array of [Vehicle Event Data](#vehicle-event-data) objects.                                                                       |
 
-201 Success Response:
+200 Success Response:
 
-| Field        | Type | Field Description                                                             |
-| ------------ | ---- | ----------------------------------------------------------------------------- |
-| `device_id`  | UUID | UUID provided by Operator to uniquely identify a vehicle                      |
+| Field      | Type                           | Field Description                                                                                       |
+| ---------- | ------------------------------ | ------------------------------------------------------------------------------------------------------- |
+| `success`  | Integer                        | Number of successfully written events.                                                   |
+| `total`    | Integer                        | Total number of provided events.                                                                       |
+| `failures` | [Event](#vehicle-event-data)[] | Array of invalid events (empty if all successful).                          |
+
+(?) Should we have a description/error-code for each failure in the `failures`?
 
 400 Failure Response:
 
@@ -184,11 +178,11 @@ Body Params:
 | ------------------- | ------------------------------- | ------------------------------- |
 | `bad_param`         | A validation error occurred     | Array of parameters with errors |
 | `missing_param`     | A required parameter is missing | Array of missing parameters     |
-| `unregistered`      | Vehicle is not registered       |                                 |
+| `unregistered`      | Some of the devices are not registered       |                                 |
 
 [Top][toc]
 
-## Vehicle - Telemetry
+## Vehicles - Telemetry
 
 The vehicle `/telemetry` endpoint allows a Provider to send vehicle telemetry data in a batch for any number of vehicles in the fleet.
 
@@ -289,49 +283,14 @@ If `stop_id` is specified, `GET` will return an array with a single stop record,
 
 [Top][toc]
 
-## Reservation Type
-
-The reservation type enum expresses the urgency of a given reservation. This can be useful when attempting to quantify metrics around trips: for example, computing passenger wait-time. In the `on_demand` case, passenger wait-time may be quantified by the delta between the `reservation_time`, and the pick-up time; however, in the `scheduled` case, the wait time may be quantified based on the delta between the `scheduled_trip_start_time` found in the Trips payload, and the actual `trip_start_time`. 
-
-| `reservation_type` | Description                                                            |
-|--------------------|------------------------------------------------------------------------|
-| `on_demand`        | The passenger requested the vehicle as soon as possible                |
-| `scheduled`        | The passenger requested the vehicle for a scheduled time in the future |
-
-[Top][toc]
-
-## Reservation Method
-
-The reservation method enum describes the different ways in which a passenger can create their reservation.
-
-| `reservation_method` | Description                                               |
-|----------------------|-----------------------------------------------------------|
-| `app`                | Reservation was made through an application (mobile/web)  |
-| `street_hail`        | Reservation was made by the passenger hailing the vehicle |
-| `phone_dispatch`     | Reservation was made by calling the dispatch operator     |
-
-[Top][toc]
-
-## Fare
-
-The Fare object describes a fare for a Trip. 
-
-| Field           | Type                  | Required/Optional | Field Description                                                                       |
-|-----------------|-----------------------|-------------------|-----------------------------------------------------------------------------------------|
-| quoted_cost     | Float                 | Required          | Cost quoted to the customer at the time of booking                                      |
-| actual_cost     | Float                 | Required          | Actual cost after a trip was completed                                                  |
-| components      | `{ [string]: float }` | Optional          | Breakdown of the different fees that composed a fare, e.g. tolls                        |
-| currency        | string                | Required          | ISO 4217 currency code                                                                  |
-| payment_methods | `string[]`            | Optional          | Breakdown of different payment methods used for a trip, e.g. cash, card, equity_program |
-
-[Top][toc]
-
 ## Trip Metadata
 
 The Trips endpoint serves two purposes: 
 
 * Definitively indicating that a Trip (a sequence of events linked by a trip_id) has been completed. For example, from analyzing only the raw Vehicle Events feed, if a trip crosses an Agency's jurisdictional boundaries but does not end within the jurisdiction (last event_type seen is a `leave_jurisdiction`), this can result in a 'dangling trip'. The Trips endpoint satisfies this concern, by acting as a final indication that a trip has been finished, even if it ends outside of jurisdictional boundaries; if a trip has intersected an Agency's jurisdictional boundaries at all during a trip, it is expected that a Provider will send a Trip payload to the Agency following the trip's completion.
 * Providing information to an Agency regarding an entire trip, without extending any of the Vehicle Event payloads, or changing any requirements on when Vehicle Events should be sent.
+
+WORK IN PROGRESS - THIS WILL BE UNIFIED WITH TRIP DATA IN `general_information`
 
 | Field                         | Type                           | Required/Optional      | Field Description |
 |-------------------------------|--------------------------------|------------------------| ----------------- |
@@ -382,5 +341,6 @@ Payload which was POST'd
 [ts]: /general-information.md#timestamps
 [vehicle-types]: /general-information.md#vehicle-types
 [vehicle-states]: /modes/vehicle_states.md
-[vehicle-events]: /modes/event_types.md
+[vehicle-event-types]: /modes/event_types.md
+[vehicle-event-data]: /general-information.md#event-data
 [versioning]: /general-information.md#versioning
