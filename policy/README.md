@@ -353,6 +353,8 @@ An individual `Rule` object is defined by the following fields:
 ### Rates
 Rate-related properties can currently be specified on any policy with a `rate_amount`.   
 
+**[Beta feature](/general-information.md#beta-features)**: *No (as of 2.0.0)*. 
+
 (?) TODO define how rate_amount is applied to `count` and `speed` rules
 
 #### Rate Amounts

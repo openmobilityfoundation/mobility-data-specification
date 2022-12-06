@@ -107,7 +107,6 @@
             "count",
             "time",
             "speed",
-            "rate",
             "user"
           ]
         },
@@ -146,8 +145,7 @@
             "days",
             "mph",
             "kph",
-            "devices",
-            "amount"
+            "devices"
           ]
         },
         "vehicle_types": {
