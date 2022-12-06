@@ -107,7 +107,6 @@
             "count",
             "time",
             "speed",
-            "rate",
             "user"
           ]
         },
@@ -328,7 +327,7 @@
                       ],
                       "properties": {
                         "rule_type": {
-                          "const": "rate"
+                          "const": "time"
                         },
                         "rule_units": {
                           "enum": [

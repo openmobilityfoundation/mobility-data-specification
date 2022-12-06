@@ -271,8 +271,7 @@ File: [`per-trip-fees.json`](per-trip-fees.json)
     {
       "name": "City Wide Trip Fee",
       "rule_id": "4137a47c-836a-11ea-bc55-0242ac130003",
-      "rule_type": "rate",
-      "rule_units": "amount",
+      "rule_type": "count",
       "rate_amount": 25,
       "rate_recurrence": "once_on_match",
       "geographies": [
@@ -309,7 +308,9 @@ File: [`vehicle-row-fees.json`](vehicle-row-fees.json)
     {
       "rule_id": "96033eb2-eff7-4ed3-bb93-0101aff3bb6a",
       "name": "Downtown Right of Way Fee",
-      "rule_type": "rate",
+      "rule_type": "time",
+      "rule_unit": "day",
+      "maximum": 0, 
       "rate_amount": 25,
       "rate_recurrence": "each_time_unit",
       "rule_units": "days",
@@ -325,7 +326,9 @@ File: [`vehicle-row-fees.json`](vehicle-row-fees.json)
     {
       "rule_id": "62778174-97f6-4a2b-a949-070709b4190a",
       "name": "Decreased Right of Way Fee",
-      "rule_type": "rate",
+      "rule_type": "time",
+      "rule_unit": "day",
+      "maximum": 0, 
       "rate_amount": 5,
       "rate_recurrence": "each_time_unit",
       "rule_units": "days",
@@ -363,7 +366,8 @@ File: [`metered-parking-fees.json`](metered-parking-fees.json)
     {
       "rule_id": "0da40491-73eb-418f-9b3c-cf5f150775e8",
       "name": "Downtown Peak-Hour Parking Fee",
-      "rule_type": "rate",
+      "rule_type": "time",
+      "minimum": 0, 
       "rate_amount": 10,
       "rate_recurrence": "per_complete_time_unit",
       "rule_units": "hours",

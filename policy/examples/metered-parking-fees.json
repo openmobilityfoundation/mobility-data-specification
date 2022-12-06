@@ -15,7 +15,9 @@
           {
             "rule_id": "0da40491-73eb-418f-9b3c-cf5f150775e8",
             "name": "Downtown Peak-Hour Parking Fee",
-            "rule_type": "rate",
+            "rule_type": "time",
+            "maximum": "1",
+            "rule_unit": "hour",
             "rate_amount": 10,
             "rate_recurrence": "per_complete_time_unit",
             "rule_units": "hours",

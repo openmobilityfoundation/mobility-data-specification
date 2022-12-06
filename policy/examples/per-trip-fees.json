@@ -15,8 +15,7 @@
           {
             "name": "City Wide Trip Fee",
             "rule_id": "4137a47c-836a-11ea-bc55-0242ac130003",
-            "rule_type": "rate",
-            "rule_units": "amount",
+            "rule_type": "count",
             "rate_amount": 25,
             "rate_recurrence": "once",
             "geographies": [

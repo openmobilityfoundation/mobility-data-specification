@@ -15,10 +15,11 @@
           {
             "rule_id": "96033eb2-eff7-4ed3-bb93-0101aff3bb6a",
             "name": "Downtown Right of Way Fee",
-            "rule_type": "rate",
+            "rule_type": "time",
             "rate_amount": 25,
             "rate_recurrence": "each_time_unit",
             "rule_units": "days",
+            "minimum": 0,
             "geographies": [
               "1f943d59-ccc9-4d91-b6e2-0c5e771cbc49"
             ],
@@ -31,10 +32,11 @@
           {
             "rule_id": "62778174-97f6-4a2b-a949-070709b4190a",
             "name": "Decreased Right of Way Fee",
-            "rule_type": "rate",
+            "rule_type": "time",
             "rate_amount": 5,
             "rate_recurrence": "each_time_unit",
             "rule_units": "days",
+            "minimum": 0,
             "geographies": [
               "e3ed0a0e-61d3-4887-8b6a-4af4f3769c14"
             ],
