@@ -321,10 +321,10 @@ An individual `Rule` object is defined by the following fields:
 
 | Name      | Rule Types             | Description         |
 | --------- | ---------------------- | ------------------- |
-| `seconds` | `time` .               | Seconds             |
-| `minutes` | `time` .               | Minutes             |
-| `hours`   | `time` .               | Hours               |
-| `days`    | `time` .               | Days                |
+| `seconds` | `time`                 | Seconds             |
+| `minutes` | `time`                 | Minutes             |
+| `hours`   | `time`                 | Hours               |
+| `days`    | `time`                 | Days                |
 | `amount`  | all                    | Cost (in [local currency](/general-information.md#costs-and-currencies)) |
 | `mph`     | `speed`                | Miles per hour      |
 | `kph`     | `speed`                | Kilometers per hour |
