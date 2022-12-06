@@ -432,17 +432,28 @@ See new location within [individual modes](/modes#list-of-supported-modes) in [m
 
 A vehicle record is as follows:
 
-| Field         | Type      | Field Description                       |
-| ------------- | --------- | ----------------------------------------------------------------------------- |
-| `device_id`   | UUID      | Provided by Operator to uniquely identify a vehicle                           |
-| `provider_id` | UUID      | Issued by Agency and [tracked](../providers.csv)                              |
-| `vehicle_id`  | String    | Vehicle Identification Number (vehicle_id) visible on vehicle                 |
-| `vehicle_type`        | Enum      | [Vehicle Type][vehicle-types]           |
-| `propulsion_types`  | Enum[]    | Array of [Propulsion Type][propulsion-types]; allows multiple values          |
-| `vehicle_attributes`        | Array of [vehicle attributes](/modes/#vehicle-attributes)   | Vehicle attributes appropriate for the current [mode][modes] |
-| `state`       | Enum      | Current vehicle state. See [Vehicle State][vehicle-states]                    |
-| `prev_events`  | Enum[]      | Last [Vehicle Event][vehicle-events]                                           |
-| `updated`     | [timestamp][ts] | Date of last event update                                                     |
+(?) TODO separate out immutable vs mutable traits e.g. `fuel_capacity` vs `fuel_percent`
+
+(?) TODO include last-event and last-telemetry objects INSTEAD of pulling up rando fields
+
+| Field | Type | Required/Optional | Comments |
+| ----- | ---- | ----------------- | ----- |
+| `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
+| `device_id` | UUID | Required | A unique device ID in UUID format, should match this device in Provider |
+| `vehicle_id` | String | Required | A unique vehicle identifier (visible code, licence plate, etc), visible on the vehicle itself |
+| `vehicle_type` | Enum | Required | see [vehicle types][vehicle-types] table |
+| `vehicle_attributes` | Array | Optional | **[Mode](/modes#list-of-supported-modes) Specific**. [Vehicle attributes](/modes#vehicle-attributes) given as mode-specific unordered key-value pairs |
+| `propulsion_types` | Enum[] | Required | Array of [propulsion types][propulsion-types]; allows multiple values |
+| `battery_capacity` | Integer  | Required if Available | Capacity of battery expressed as milliamp hours (mAh) |
+| `fuel_capacity` | Integer  | Required if Available | Capacity of fuel tank (liquid, solid, gaseous) expressed in liters |
+| `last_event_time` | [timestamp][ts] | Required | Date/time when last state change occurred. See [Event Times][event-times] |
+| `last_state` | Enum | Required | [Vehicle state][vehicle-states] of most recent state change. |
+| `last_event_types` | Enum[] | Required | [Vehicle event(s)][vehicle-events] of most recent state change, allowable values determined by `last_vehicle_state`. |
+| `last_event_location` | GeoJSON [Point Feature][point-geo]| Required | Location of vehicle's last event. See also [Stop-based Geographic Data][stop-based-geo]. |
+| `current_location` | GeoJSON [Point Feature][point-geo] | Required if Applicable | Current location of vehicle if different from last event, and the vehicle is not currently on a trip. See also [Stop-based Geographic Data][stop-based-geo]. |
+| `battery_percent`       | Integer          | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 100 |
+| `fuel_percent`       | Integer          | Required if Applicable | Percent fuel in vehicle, expressed between 0 and 100 |
+
 
 [Top][toc]
 

@@ -259,7 +259,7 @@ Unless stated otherwise by the municipality, this endpoint must return only thos
 **Method:** `GET`  
 **[Beta feature][beta]:** No  
 **Schema:** [`events` schema][events-schema]  
-**`data` Payload:** `{ "events": [] }`, an array of objects with the following structure
+**`data` Payload:** `{ "data": [] }`, an array of [Vehicle Event Data](#vehicle-event-data)
 
 [Top][toc]
 
@@ -595,5 +595,6 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 [vehicle-types]: /general-information.md#vehicle-types
 [vehicle-states]: /modes#vehicle-states
 [vehicle-events]: /modes#event-types
+[vehicle-event-data]: /general-information.md#event-data
 [vehicles-schema]: vehicles.json
 [versioning]: /general-information.md#versioning

@@ -98,6 +98,8 @@ Body Params:
 | `mode`       | Enum    | Required          | [Mobility Mode][modes]                                        |
 | `propulsion_types` | Enum[]  | Required          | Array of [Propulsion Type][propulsion-types]; allows multiple values |
 | `vehicle_attributes` | Conditionally Required | Array of [vehicle attributes](/modes/#vehicle-attributes)   | Vehicle attributes appropriate for the current [mode][modes] |
+| `battery_capacity` | Integer  | Required if Available | Capacity of battery expressed as milliamp hours (mAh) |
+| `fuel_capacity` | Integer  | Required if Available | Capacity of fuel tank (liquid, solid, gaseous) expressed in liters |
 
 201 Success Response:
 
@@ -214,6 +216,32 @@ Body Params:
 
 [Top][toc]
 
+<<<<<<< HEAD
+=======
+## Telemetry Data
+
+A standard point of vehicle telemetry. References to latitude and longitude imply coordinates encoded in the [WGS 84 (EPSG:4326)](https://en.wikipedia.org/wiki/World_Geodetic_System) standard GPS or GNSS projection expressed as [Decimal Degrees](https://en.wikipedia.org/wiki/Decimal_degrees).
+
+| Field          | Type           | Required/Optional     | Field Description                                            |
+| -------------- | -------------- | --------------------- | ------------------------------------------------------------ |
+| `device_id`    | UUID           | Required              | ID used in [Register](#vehicle---register)                     |
+| `timestamp`    | [timestamp][ts]| Required              | Date/time that event occurred. Based on GPS or GNSS clock            |
+| `gps`          | Object         | Required              | Telemetry position data                                      |
+| `gps.lat`      | Double         | Required              | Latitude of the location                                     |
+| `gps.lng`      | Double         | Required              | Longitude of the location                                    |
+| `gps.altitude` | Double         | Required if Available | Altitude above mean sea level in meters                      |
+| `gps.heading`  | Double         | Required if Available | Degrees - clockwise starting at 0 degrees at true North      |
+| `gps.speed`    | Float          | Required if Available | Estimated speed in meters / sec as reported by the GPS chipset                                        |
+| `gps.accuracy` | Float          | Required if Available | Horizontal accuracy, in meters                                           |
+| `gps.hdop`     | Float          | Required if Available | Horizontal GPS or GNSS accuracy value (see [hdop][hdop]) |
+| `gps.satellites` | Integer      | Required if Available | Number of GPS or GNSS satellites
+| `battery_percent`       | Integer          | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 100 |
+| `fuel_percent`       | Integer          | Required if Applicable | Percent fuel in vehicle, expressed between 0 and 100 |
+| `stop_id`      | UUID           | Required if Applicable | Stop that the vehicle is currently located at. Only applicable for _docked_ Micromobility. See [Stops][stops] |
+
+[Top][toc]
+
+>>>>>>> dev
 ## Stops
 
 The `/stops` endpoint allows an agency to register city-managed Stops, or a provider to register self-managed Stops.
