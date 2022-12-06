@@ -241,6 +241,28 @@ A Trip is defined by the following structure:
 | `reservation_time`              | Timestamp                      | Required               | Time the customer *requested* a reservation |
 | `reservation_type`              | Enum                           | Required               | Type of reservation, see [reservation-type](#reservation-type) |
 
+WORK IN PROGRESS - THIS WAS FROM THE AGENCY PROPOSAL 
+
+| Field                         | Type                           | Required/Optional      | Field Description |
+|-------------------------------|--------------------------------|------------------------| ----------------- |
+| trip_id                       | UUID                           | Required               | UUID for the trip this payload pertains to |
+| trip_type                     | Enum                           | Optional               | The type of the trip |
+| trip_attributes               | `{ [String]: String}`          | Optional               | Trip attributes, given as mode-specific key-value pairs |
+| provider_id                   | UUID                           | Required               | Provider which managed this trip |
+| reservation_method            | Enum                           | Required               | Way the customer created their reservation, see [reservation-method](#reservation-method) |
+| reservation_time              | Timestamp                      | Required               | Time the customer *requested* a reservation |
+| reservation_type              | Enum                           | Required               | Type of reservation, see [reservation-type](#reservation-type) |
+| quoted_trip_start_time        | Timestamp                      | Required               | Time the trip was estimated or scheduled to start, that was provided to the passenger |
+| requested_trip_start_location | `{ lat: number, lng: number }` | Conditionally Required | Location where the customer requested the trip to start (required if this is within jurisdictional boundaries) |
+| dispatch_time                 | Timestamp                      | Conditionally Required | Time the vehicle was dispatched to the customer (required if trip was dispatched) |
+| trip_start_time               | Timestamp                      | Conditionally Required | Time the trip started (required if trip started)               |
+| trip_end_time                 | Timestamp                      | Conditionally Required | Time the trip ended (required if trip was completed)           |
+| distance                      | Float                          | Conditionally Required | Total distance of the trip in meters (required if trip was completed) |
+| cancellation_reason           | string                         | Conditionally Required | The reason why a *driver* cancelled a reservation. (required if a driver cancelled a trip, and a `driver_cancellation` event_type was part of the trip) |
+| fare                          | [Fare](#fare)                  | Conditionally Required | Fare for the trip (required if trip was completed)             |
+| accessibility_options         | Enum[]                         | Optional               | The **union** of any accessibility options requested, and used. E.g. if the passenger requests a vehicle with `wheelchair_accessible`, but doesn’t utilize the features during the trip, the trip payload will include `accessibility_options: ['wheelchair_accessible']`. See [accessibility-options][accessibility-options] |
+
+
 [Top][toc]
 
 ## Reservation Type

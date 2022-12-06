@@ -162,7 +162,7 @@ Body Params:
 
 | Field           | Type                         | Required/Optional      | Field Description                                                                                          |
 |-----------------|------------------------------|------------------------|------------------------------------------------------------------------------------------------------------|
-| `data` | [EventData](#vehicle-event-data)[]  | Required               | An array of [Vehicle Event Data](#vehicle-event-data) objects.                                                                       |
+| `events` | [EventData](#vehicle-event-data)[]  | Required               | An array of [Vehicle Event Data](#vehicle-event-data) objects.                                                                       |
 
 200 Success Response:
 
@@ -195,7 +195,7 @@ Body Params:
 
 | Field         | Type                           | Required/Optional | Field Description                                                                      |
 | ------------- | ------------------------------ | ----------------- | -------------------------------------------------------------------------------------- |
-| `data`        | [Telemetry](#telemetry-data)[] | Required          | Array of telemetry for one or more vehicles.                                           |
+| `telemetries`        | [Telemetry](#telemetry-data)[] | Required          | Array of telemetry for one or more vehicles.                                           |
 
 200 Success Response:
 
@@ -216,32 +216,6 @@ Body Params:
 
 [Top][toc]
 
-<<<<<<< HEAD
-=======
-## Telemetry Data
-
-A standard point of vehicle telemetry. References to latitude and longitude imply coordinates encoded in the [WGS 84 (EPSG:4326)](https://en.wikipedia.org/wiki/World_Geodetic_System) standard GPS or GNSS projection expressed as [Decimal Degrees](https://en.wikipedia.org/wiki/Decimal_degrees).
-
-| Field          | Type           | Required/Optional     | Field Description                                            |
-| -------------- | -------------- | --------------------- | ------------------------------------------------------------ |
-| `device_id`    | UUID           | Required              | ID used in [Register](#vehicle---register)                     |
-| `timestamp`    | [timestamp][ts]| Required              | Date/time that event occurred. Based on GPS or GNSS clock            |
-| `gps`          | Object         | Required              | Telemetry position data                                      |
-| `gps.lat`      | Double         | Required              | Latitude of the location                                     |
-| `gps.lng`      | Double         | Required              | Longitude of the location                                    |
-| `gps.altitude` | Double         | Required if Available | Altitude above mean sea level in meters                      |
-| `gps.heading`  | Double         | Required if Available | Degrees - clockwise starting at 0 degrees at true North      |
-| `gps.speed`    | Float          | Required if Available | Estimated speed in meters / sec as reported by the GPS chipset                                        |
-| `gps.accuracy` | Float          | Required if Available | Horizontal accuracy, in meters                                           |
-| `gps.hdop`     | Float          | Required if Available | Horizontal GPS or GNSS accuracy value (see [hdop][hdop]) |
-| `gps.satellites` | Integer      | Required if Available | Number of GPS or GNSS satellites
-| `battery_percent`       | Integer          | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 100 |
-| `fuel_percent`       | Integer          | Required if Applicable | Percent fuel in vehicle, expressed between 0 and 100 |
-| `stop_id`      | UUID           | Required if Applicable | Stop that the vehicle is currently located at. Only applicable for _docked_ Micromobility. See [Stops][stops] |
-
-[Top][toc]
-
->>>>>>> dev
 ## Stops
 
 The `/stops` endpoint allows an agency to register city-managed Stops, or a provider to register self-managed Stops.
@@ -311,41 +285,32 @@ If `stop_id` is specified, `GET` will return an array with a single stop record,
 
 [Top][toc]
 
-## Trip Metadata
+## Trips
 
 The Trips endpoint serves two purposes: 
 
 * Definitively indicating that a Trip (a sequence of events linked by a trip_id) has been completed. For example, from analyzing only the raw Vehicle Events feed, if a trip crosses an Agency's jurisdictional boundaries but does not end within the jurisdiction (last event_type seen is a `leave_jurisdiction`), this can result in a 'dangling trip'. The Trips endpoint satisfies this concern, by acting as a final indication that a trip has been finished, even if it ends outside of jurisdictional boundaries; if a trip has intersected an Agency's jurisdictional boundaries at all during a trip, it is expected that a Provider will send a Trip payload to the Agency following the trip's completion.
 * Providing information to an Agency regarding an entire trip, without extending any of the Vehicle Event payloads, or changing any requirements on when Vehicle Events should be sent.
 
-WORK IN PROGRESS - THIS WILL BE UNIFIED WITH TRIP DATA IN `general_information`
-
-| Field                         | Type                           | Required/Optional      | Field Description |
-|-------------------------------|--------------------------------|------------------------| ----------------- |
-| trip_id                       | UUID                           | Required               | UUID for the trip this payload pertains to |
-| trip_type                     | Enum                           | Optional               | The type of the trip |
-| trip_attributes               | `{ [String]: String}`          | Optional               | Trip attributes, given as mode-specific key-value pairs |
-| provider_id                   | UUID                           | Required               | Provider which managed this trip |
-| reservation_method            | Enum                           | Required               | Way the customer created their reservation, see [reservation-method](#reservation-method) |
-| reservation_time              | Timestamp                      | Required               | Time the customer *requested* a reservation |
-| reservation_type              | Enum                           | Required               | Type of reservation, see [reservation-type](#reservation-type) |
-| quoted_trip_start_time        | Timestamp                      | Required               | Time the trip was estimated or scheduled to start, that was provided to the passenger |
-| requested_trip_start_location | `{ lat: number, lng: number }` | Conditionally Required | Location where the customer requested the trip to start (required if this is within jurisdictional boundaries) |
-| dispatch_time                 | Timestamp                      | Conditionally Required | Time the vehicle was dispatched to the customer (required if trip was dispatched) |
-| trip_start_time               | Timestamp                      | Conditionally Required | Time the trip started (required if trip started)               |
-| trip_end_time                 | Timestamp                      | Conditionally Required | Time the trip ended (required if trip was completed)           |
-| distance                      | Float                          | Conditionally Required | Total distance of the trip in meters (required if trip was completed) |
-| cancellation_reason           | string                         | Conditionally Required | The reason why a *driver* cancelled a reservation. (required if a driver cancelled a trip, and a `driver_cancellation` event_type was part of the trip) |
-| fare                          | [Fare](#fare)                  | Conditionally Required | Fare for the trip (required if trip was completed)             |
-| accessibility_options         | Enum[]                         | Optional               | The **union** of any accessibility options requested, and used. E.g. if the passenger requests a vehicle with `wheelchair_accessible`, but doesn’t utilize the features during the trip, the trip payload will include `accessibility_options: ['wheelchair_accessible']`. See [accessibility-options][accessibility-options] |
-
-**Endpoint:** `/trip_metadata`  
+**Endpoint:** `/trips`  
 **Method:** `POST`  
 **[Beta feature][beta]:** Yes (as of 2.0.0)  
-**Request Body**: A [Trip Metadata](#trip_metadata) object
+**Payload:** `{ "trips": [] }`, an array of [Trips](#trip-data)
 
-201 Success Response:
-Payload which was POST'd
+Body Params:
+
+| Field         | Type                           | Required/Optional | Field Description                                                                      |
+| ------------- | ------------------------------ | ----------------- | -------------------------------------------------------------------------------------- |
+| `trips`        | [Trip](#trip-data)[] | Required          | Array of trips for one or more vehicles.                                           |
+
+200 Success Response:
+
+| Field      | Type                           | Field Description                                                                                       |
+| ---------- | ------------------------------ | ------------------------------------------------------------------------------------------------------- |
+| `success`  | Integer                        | Number of successfully written telemetry data points.                                                   |
+| `total`    | Integer                        | Total number of provided points.                                                                       |
+| `failures` | [Telemetry](#telemetry-data)[] | Array of failed telemetry for zero or more vehicles (empty if all successful).                          |
+
 
 400 Failure Response:
 | `error`              | `error_description`                               | `error_details`[]               |
@@ -365,6 +330,8 @@ Payload which was POST'd
 [propulsion-types]: /general-information.md#propulsion-types
 [responses]: /general-information.md#responses
 [stops]: /general-information.md#stops
+[telemetry-data]: /general-information.md#telemetry-data
+[trip-data]: /general-information.md#trips
 [toc]: #table-of-contents
 [ts]: /general-information.md#timestamps
 [vehicle-types]: /general-information.md#vehicle-types
