@@ -267,7 +267,7 @@ An individual `Policy` object is defined by the following fields:
 | `policy_id`      | UUID            | Required   | Unique ID of policy                                                                 |
 | `provider_ids`   | UUID[]          | Optional   | Providers for whom this policy is applicable; empty arrays and `null`/absent implies all Providers. See MDS [provider list](/providers.csv). |
 | `description`    | String          | Required   | Description of policy                                                               |
-| `currency`       | String          | Optional   | An ISO 4217 Alphabetic Currency Code representing the [currency](../general-information.md#costs-and-currencies) of all Rules of [type](#rule-types) `rate`.|
+| `currency`       | String          | Optional   | An ISO 4217 Alphabetic Currency Code representing the [currency](../general-information.md#costs-and-currencies) of all Rules with `rate_amount`.|
 | `start_date`     | [timestamp][ts] | Required   | Beginning date/time of policy enforcement. In order to give providers sufficient time to poll, `start_date` must be at least 20 minutes after `published_date`.                                           |
 | `end_date`       | [timestamp][ts] | Optional    | End date/time of policy enforcement                                                 |
 | `published_date` | [timestamp][ts] | Required   | Timestamp that the policy was published                                             |
@@ -313,7 +313,6 @@ An individual `Rule` object is defined by the following fields:
 | `count` | Fleet counts based on regions. Rule `minimum`/`maximum` refers to number of devices in [Rule Units](#rule-units).                                  |
 | `time`  | Individual limitations or fees based upon time spent in one or more vehicle states. Rule `minimum`/`maximum` refers to increments of time in [Rule Units](#rule-units). |
 | `speed` | Global or local speed limits. Rule `minimum`/`maximum` refers to speed in [Rule Units](#rule-units).                  |
-| `rate`  | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.0.0)*. Fees or subsidies based on regions and time spent in one or more vehicle states. Rule `rate_amount` refers to the rate charged according to the [Rate Recurrences](#rate_recurrences) and the [currency requirements](/general-information.md#costs-and-currencies) in [Rule Units](#rule-units). *Prior to implementation agencies should consult with providers to discuss how the `rate` rule will be used. Most agencies do this as a matter of course, but it is particularly important to communicate in advance how frequently and in what ways rates might change over time.*    |
 | `user`  | Information for users, e.g. about helmet laws. Generally can't be enforced via events and telemetry.          |
 
 [Top][toc]
@@ -322,11 +321,11 @@ An individual `Rule` object is defined by the following fields:
 
 | Name      | Rule Types             | Description         |
 | --------- | ---------------------- | ------------------- |
-| `seconds` | `rate`, `time`         | Seconds             |
-| `minutes` | `rate`, `time`         | Minutes             |
-| `hours`   | `rate`, `time`         | Hours               |
-| `days`    | `rate`, `time`         | Days                |
-| `amount`  | `rate`                 | Cost (in [local currency](/general-information.md#costs-and-currencies)) |
+| `seconds` | `time` .               | Seconds             |
+| `minutes` | `time` .               | Minutes             |
+| `hours`   | `time` .               | Hours               |
+| `days`    | `time` .               | Days                |
+| `amount`  | all                    | Cost (in [local currency](/general-information.md#costs-and-currencies)) |
 | `mph`     | `speed`                | Miles per hour      |
 | `kph`     | `speed`                | Kilometers per hour |
 | `devices` | `count`                | Devices             |
@@ -352,9 +351,9 @@ An individual `Rule` object is defined by the following fields:
 [Top][toc]
 
 ### Rates
-Rate-related properties can currently be specified on `rate` and `time` Rules. Note: A future MDS version will likely support rates for `count` and `speed` rules, but their behavior is currently undefined.
+Rate-related properties can currently be specified on any policy with a `rate_amount`.   
 
-**[Beta feature](/general-information.md#beta-features)**: *Yes (as of 1.0.0)*. [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/674)  
+(?) TODO define how rate_amount is applied to `count` and `speed` rules
 
 #### Rate Amounts
 The amount of a rate applied when this rule applies, if applicable (default zero). A positive integer rate amount represents a fee, while a negative integer represents a subsidy. Rate amounts are given in the `currency` defined in the [Policy](#policy).
@@ -376,7 +375,7 @@ Rate recurrences specify how a rate is applied – either once, or periodically
 
 The `rate_applies_when` field specifies when a rate should be applied to an event or count,
 e.g. is it when the event is within the Rule bounds or when it is outside?
-It defaults to `out_of_bounds`.
+Default is `out_of_bounds`.
 
 The `rate_applies_when` field may take the following values:
 
