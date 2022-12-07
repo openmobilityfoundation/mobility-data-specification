@@ -319,14 +319,15 @@ Events represent changes in vehicle status.
 | `publication_time` | [timestamp][ts] | Optional | Date/time that event became available through the status changes endpoint |
 | `event_location` | GeoJSON [Point Feature][point-geo] | Required | See also [Stop-based Geographic Data][stop-based-geo]. |
 | `event_geographies` | UUID[] | Optional | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 2.0.0)*. Array of Geography UUIDs consisting of every Geography that contains the location of the status change. See [Geography Driven Events][geography-driven-events]. Required if `event_location` is not present. |
-| `trip_id` | UUID | Required if Applicable | Trip UUID (foreign key to /trips endpoint), required if `event_types` contains `trip_start`, `trip_end`, `trip_cancel`, `trip_enter_jurisdiction`, or `trip_leave_jurisdiction` |
+| `trip_ids`[] | UUID[] | Required if Applicable | Trip UUIDs (foreign key to /trips endpoint), required if `event_types` contains `trip_start`, `trip_end`, `trip_cancel`, `trip_enter_jurisdiction`, or `trip_leave_jurisdiction` |
+| `journey_id` | UUID | Optional | Journey UUID | TODO "see `journey_id`" or something |
 | `associated_ticket` | String | Optional | Identifier for an associated ticket inside an Agency-maintained 311 or CRM system |
-
-(?) Use Telemetry instead of Point?
 
 (?) Do we still want `event_geographies`?
 
-(?) Add `journey_id`(s)?
+(?) Replace `event_location` GeoJSON with Telemetry
+
+(?) Does anyone use `associated_ticket`?
 
 ### Event Times
 
@@ -338,13 +339,13 @@ Because of the unreliability of device clocks, the Provider is unlikely to know 
 
 A standard point of vehicle telemetry. References to latitude and longitude imply coordinates encoded in the [WGS 84 (EPSG:4326)](https://en.wikipedia.org/wiki/World_Geodetic_System) standard GPS or GNSS projection expressed as [Decimal Degrees](https://en.wikipedia.org/wiki/Decimal_degrees).
 
-(?) Add `journey_id`?
-
 | Field          | Type           | Required/Optional     | Field Description                                            |
 | -------------- | -------------- | --------------------- | ------------------------------------------------------------ |
+| `telemetry_id` | UUID           | Required              | ID used for uniquely-identifying a Telemetry entry |
 | `device_id`    | UUID           | Required              | ID used in [Register](#vehicle---register)                     |
 | `timestamp`    | [timestamp][ts]| Required              | Date/time that event occurred. Based on GPS or GNSS clock            |
-| `trip_id`      | UUID           | Required              | If telemetry occurred during a trip, the ID of the trip.  If not in a trip, `null`.
+| `trip_ids`      | UUID[]           | Required              | If telemetry occurred during a trip, the ID of the trip(s).  If not in a trip, `null`.
+| `journey_id`   | UUID           | Required              | If telemetry occurred during a trip, the ID of the journey.  If not in a trip, `null`.
 | `stop_id`      | UUID           | Required if Applicable | Stop that the vehicle is currently located at. Only applicable for _docked_ Micromobility. See [Stops][stops] |
 | `gps`          | Object         | Required              | Telemetry position data                                      |
 | `gps.lat`      | Double         | Required              | Latitude of the location                                     |
@@ -357,6 +358,8 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | `gps.satellites` | Integer      | Required if Available | Number of GPS or GNSS satellites
 | `battery_percent`       | Integer          | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 100 |
 | `fuel_percent`       | Integer          | Required if Applicable | Percent fuel in vehicle, expressed between 0 and 100 |
+
+(?) Add `journey_id`?
 
 [Top][toc]
 
@@ -467,7 +470,7 @@ A vehicle record is as follows:
 | `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
 | `device_id` | UUID | Required | A unique device ID in UUID format, should match this device in Provider |
 | `vehicle_id` | String | Required | A unique vehicle identifier (visible code, licence plate, etc), visible on the vehicle itself |
-| `vehicle_type` | Enum | Required | see [vehicle types][vehicle-types] table |
+| `vehicle_type` | Enum | Required | see [vehicle types][#vehicle-types] (?) FIXME table |
 | `vehicle_attributes` | Array | Optional | **[Mode](/modes#list-of-supported-modes) Specific**. [Vehicle attributes](/modes#vehicle-attributes) given as mode-specific unordered key-value pairs |
 | `propulsion_types` | Enum[] | Required | Array of [propulsion types][propulsion-types]; allows multiple values |
 | `battery_capacity` | Integer  | Required if Available | Capacity of battery expressed as milliamp hours (mAh) |
@@ -477,6 +480,8 @@ A vehicle record is as follows:
 | `last_event_types` | Enum[] | Required | [Vehicle event(s)][vehicle-events] of most recent state change, allowable values determined by `last_vehicle_state`. |
 | `last_event_location` | GeoJSON [Point Feature][point-geo]| Required | Location of vehicle's last event. See also [Stop-based Geographic Data][stop-based-geo]. |
 | `current_location` | GeoJSON [Point Feature][point-geo] | Required if Applicable | Current location of vehicle if different from last event, and the vehicle is not currently on a trip. See also [Stop-based Geographic Data][stop-based-geo]. |
+
+(?) Remove GeoJSON Point
 
 [Top][toc]
 
