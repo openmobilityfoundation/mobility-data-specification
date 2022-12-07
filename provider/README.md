@@ -363,15 +363,15 @@ The authenticated reports are monthly, historic flat files that may be pre-gener
 **`data` Filename:** monthly file named by year and month, e.g. `/reports/YYYY-MM.csv`  
 **`data` Payload:** monthly CSV files with the following structure: 
 
-| Column Name          | Type                                     | Comments                                                                                                                                                                         |
-|----------------------|------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `start_date`         | date                                     | Start date of trip the data row, ISO 8601 format                                                                                                                                 |
-| `time_zone`          | string                                   | Time zone of market, from the [tzdata database](https://www.iana.org/time-zones)                                                                                                 |
-| `special_group_type` | [Special Group Type](#special-group-type) | Type that applies to this row                                                                                                                                                    |
-| `geography_id`       | [Geography](/geography)                  | ID that applies to this row. Includes all IDs in /geography. When there is no /geography then return `null` for this value and return counts based on the entire operating area. |
-| `vehicle_type`       | [Vehicle Type](/agency#vehicle-type)     | Type that applies to this row                                                                                                                                                    |
-| `trip_count`         | integer                                  | Count of trips taken for this row                                                                                                                                                |
-| `rider_count`        | integer                                  | Count of unique riders for this row                                                                                                                                              |
+| Column Name          | Type                                       | Comments                                                                                                                                                                         |
+|----------------------|--------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `start_date`         | date                                       | Start date of trip the data row, ISO 8601 format                                                                                                                                 |
+| `time_zone`          | string                                     | Time zone of market, from the [tzdata database](https://www.iana.org/time-zones)                                                                                                 |
+| `special_group_type` | [Special Group Type](#special-group-type)  | Type that applies to this row                                                                                                                                                    |
+| `geography_id`       | [Geography](/geography)                    | ID that applies to this row. Includes all IDs in /geography. When there is no /geography then return `null` for this value and return counts based on the entire operating area. |
+| `vehicle_type`       | [Vehicle Type](/agency#vehicle-type)       | Type that applies to this row                                                                                                                                                    |
+| `trip_count`         | integer                                    | Count of trips taken for this row                                                                                                                                                |
+| `rider_count`        | integer                                    | Count of unique riders for this row                                                                                                                                              |
 
 #### Data Notes
 
