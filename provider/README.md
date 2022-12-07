@@ -365,8 +365,6 @@ The authenticated reports are monthly, historic flat files that may be pre-gener
 
 | Column Name          | Type                                       | Comments                                                                                                                                                                         |
 |----------------------|--------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `start_date`         | date                                       | Start date of trip the data row, ISO 8601 format                                                                                                                                 |
-| `time_zone`          | string                                     | Time zone of market, from the [tzdata database](https://www.iana.org/time-zones)                                                                                                 |
 | `special_group_type` | [Special Group Type](#special-group-type)  | Type that applies to this row                                                                                                                                                    |
 | `geography_id`       | [Geography](/geography)                    | ID that applies to this row. Includes all IDs in /geography. When there is no /geography then return `null` for this value and return counts based on the entire operating area. |
 | `vehicle_type`       | [Vehicle Type](/agency#vehicle-type)       | Type that applies to this row                                                                                                                                                    |
@@ -377,7 +375,7 @@ The authenticated reports are monthly, historic flat files that may be pre-gener
 
 Report contents include every combination of special group types, geography IDs, and vehicle types in operation for each month since the provider began operations in the jurisdiction. New files are added monthly in addition to the previous monthly historic files. 
 
-Counts are calculated based the agency's local time zone, and this time zone is returned in the `time_zone` column.  Trips are counted based on their start time, i.e. if a trip starts in month A but ends in month B, it will be counted only as part of the report for month A.
+Counts are calculated based the agency's local time zone. Trips are counted based on their start time, i.e. if a trip starts in month A but ends in month B, it will be counted only as part of the report for month A.
 
 All geography IDs included in the city published [Geography](/geography) API endpoint are included in the report results. In lieu of serving an API, this can alternately be a [flat file](/geography#file-format) created by the city and sent to the provider via link. If there is no `/geography` available, then counts are for the entire agency operating area, and `null` is returned for each Geography ID. 
 
@@ -385,60 +383,60 @@ All geography IDs included in the city published [Geography](/geography) API end
 
 ### Reports - Example
 
-For 3 months of provider operation in a city (September 2019 through November 2019) for 3 geographies, 2 vehicle types, and 1 special group. The time zone is `America/New_York`. Values of `-1` represent [redacted data](#data-redaction) counts.
+For 3 months of provider operation in a city (September 2019 through November 2019) for 3 geographies, 2 vehicle types, and 1 special group. Values of `-1` represent [redacted data](#data-redaction) counts.
 
 **September 2019** `/reports/2019-09.csv`
 
 ```csv
-start_date,time_zone,special_group_type,geography_id,vehicle_type,trip_count,rider_count
-2019-09-01,America/New_York,all_riders,44428624-186b-4fc3-a7fb-124f487464a1,scooter,1302,983
-2019-09-01,America/New_York,low_income,44428624-186b-4fc3-a7fb-124f487464a1,scooter,201,104
-2019-09-01,America/New_York,all_riders,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,530,200
-2019-09-01,America/New_York,low_income,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,75,26
-2019-09-01,America/New_York,all_riders,03db06d0-3998-406a-92c7-25a83fc2784a,scooter,687,450
-2019-09-01,America/New_York,low_income,03db06d0-3998-406a-92c7-25a83fc2784a,scooter,98,45
-2019-09-01,America/New_York,all_riders,03db06d0-3998-406a-92c7-25a83fc2784a,bicycle,256,104
-2019-09-01,America/New_York,low_income,03db06d0-3998-406a-92c7-25a83fc2784a,bicycle,41,16
-2019-09-01,America/New_York,all_riders,8ad39dc3-005b-4348-9d61-c830c54c161b,scooter,201,140
-2019-09-01,America/New_York,low_income,8ad39dc3-005b-4348-9d61-c830c54c161b,scooter,35,21
-2019-09-01,America/New_York,all_riders,8ad39dc3-005b-4348-9d61-c830c54c161b,bicycle,103,39
-2019-09-01,America/New_York,low_income,8ad39dc3-005b-4348-9d61-c830c54c161b,bicycle,15,-1
+special_group_type,geography_id,vehicle_type,trip_count,rider_count
+all_riders,44428624-186b-4fc3-a7fb-124f487464a1,scooter,1302,983
+low_income,44428624-186b-4fc3-a7fb-124f487464a1,scooter,201,104
+all_riders,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,530,200
+low_income,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,75,26
+all_riders,03db06d0-3998-406a-92c7-25a83fc2784a,scooter,687,450
+low_income,03db06d0-3998-406a-92c7-25a83fc2784a,scooter,98,45
+all_riders,03db06d0-3998-406a-92c7-25a83fc2784a,bicycle,256,104
+low_income,03db06d0-3998-406a-92c7-25a83fc2784a,bicycle,41,16
+all_riders,8ad39dc3-005b-4348-9d61-c830c54c161b,scooter,201,140
+low_income,8ad39dc3-005b-4348-9d61-c830c54c161b,scooter,35,21
+all_riders,8ad39dc3-005b-4348-9d61-c830c54c161b,bicycle,103,39
+low_income,8ad39dc3-005b-4348-9d61-c830c54c161b,bicycle,15,-1
 ```
 
 **October 2019** `/reports/2019-10.csv`
 
 ```csv
-start_date,time_zone,special_group_type,geography_id,vehicle_type,trip_count,rider_count
-2019-10-01,America/New_York,all_riders,44428624-186b-4fc3-a7fb-124f487464a1,scooter,1042,786
-2019-10-01,America/New_York,low_income,44428624-186b-4fc3-a7fb-124f487464a1,scooter,161,83
-2019-10-01,America/New_York,all_riders,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,424,160
-2019-10-01,America/New_York,low_income,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,60,0
-2019-10-01,America/New_York,all_riders,03db06d0-3998-406a-92c7-25a83fc2784a,scooter,550,360
-2019-10-01,America/New_York,low_income,03db06d0-3998-406a-92c7-25a83fc2784a,scooter,78,36
-2019-10-01,America/New_York,all_riders,03db06d0-3998-406a-92c7-25a83fc2784a,bicycle,205,83
-2019-10-01,America/New_York,low_income,03db06d0-3998-406a-92c7-25a83fc2784a,bicycle,33,13
-2019-10-01,America/New_York,all_riders,8ad39dc3-005b-4348-9d61-c830c54c161b,scooter,161,112
-2019-10-01,America/New_York,low_income,8ad39dc3-005b-4348-9d61-c830c54c161b,scooter,28,-1
-2019-10-01,America/New_York,all_riders,8ad39dc3-005b-4348-9d61-c830c54c161b,bicycle,82,31
-2019-10-01,America/New_York,low_income,8ad39dc3-005b-4348-9d61-c830c54c161b,bicycle,-1,0
+special_group_type,geography_id,vehicle_type,trip_count,rider_count
+all_riders,44428624-186b-4fc3-a7fb-124f487464a1,scooter,1042,786
+low_income,44428624-186b-4fc3-a7fb-124f487464a1,scooter,161,83
+all_riders,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,424,160
+low_income,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,60,0
+all_riders,03db06d0-3998-406a-92c7-25a83fc2784a,scooter,550,360
+low_income,03db06d0-3998-406a-92c7-25a83fc2784a,scooter,78,36
+all_riders,03db06d0-3998-406a-92c7-25a83fc2784a,bicycle,205,83
+low_income,03db06d0-3998-406a-92c7-25a83fc2784a,bicycle,33,13
+all_riders,8ad39dc3-005b-4348-9d61-c830c54c161b,scooter,161,112
+low_income,8ad39dc3-005b-4348-9d61-c830c54c161b,scooter,28,-1
+all_riders,8ad39dc3-005b-4348-9d61-c830c54c161b,bicycle,82,31
+low_income,8ad39dc3-005b-4348-9d61-c830c54c161b,bicycle,-1,0
 ```
 
 **November 2019** `/reports/2019-11.csv`
 
 ```csv
-start_date,time_zone,special_group_type,geography_id,vehicle_type,trip_count,rider_count
-2019-11-01,America/New_York,all_riders,44428624-186b-4fc3-a7fb-124f487464a1,scooter,834,629
-2019-11-01,America/New_York,low_income,44428624-186b-4fc3-a7fb-124f487464a1,scooter,129,66
-2019-11-01,America/New_York,all_riders,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,339,128
-2019-11-01,America/New_York,low_income,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,48,-1
-2019-11-01,America/New_York,all_riders,03db06d0-3998-406a-92c7-25a83fc2784a,scooter,440,288
-2019-11-01,America/New_York,low_income,03db06d0-3998-406a-92c7-25a83fc2784a,scooter,62,29
-2019-11-01,America/New_York,all_riders,03db06d0-3998-406a-92c7-25a83fc2784a,bicycle,164,66
-2019-11-01,America/New_York,low_income,03db06d0-3998-406a-92c7-25a83fc2784a,bicycle,26,0
-2019-11-01,America/New_York,all_riders,8ad39dc3-005b-4348-9d61-c830c54c161b,scooter,129,90
-2019-11-01,America/New_York,low_income,8ad39dc3-005b-4348-9d61-c830c54c161b,scooter,22,-1
-2019-11-01,America/New_York,all_riders,8ad39dc3-005b-4348-9d61-c830c54c161b,bicycle,-1,25
-2019-11-01,America/New_York,low_income,8ad39dc3-005b-4348-9d61-c830c54c161b,bicycle,0,0
+special_group_type,geography_id,vehicle_type,trip_count,rider_count
+all_riders,44428624-186b-4fc3-a7fb-124f487464a1,scooter,834,629
+low_income,44428624-186b-4fc3-a7fb-124f487464a1,scooter,129,66
+all_riders,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,339,128
+low_income,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,48,-1
+all_riders,03db06d0-3998-406a-92c7-25a83fc2784a,scooter,440,288
+low_income,03db06d0-3998-406a-92c7-25a83fc2784a,scooter,62,29
+all_riders,03db06d0-3998-406a-92c7-25a83fc2784a,bicycle,164,66
+low_income,03db06d0-3998-406a-92c7-25a83fc2784a,bicycle,26,0
+all_riders,8ad39dc3-005b-4348-9d61-c830c54c161b,scooter,129,90
+low_income,8ad39dc3-005b-4348-9d61-c830c54c161b,scooter,22,-1
+all_riders,8ad39dc3-005b-4348-9d61-c830c54c161b,bicycle,-1,25
+low_income,8ad39dc3-005b-4348-9d61-c830c54c161b,bicycle,0,0
 ```
 
 [Top][toc]
