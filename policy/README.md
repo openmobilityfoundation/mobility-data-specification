@@ -325,7 +325,6 @@ An individual `Rule` object is defined by the following fields:
 | `minutes` | `time`                 | Minutes             |
 | `hours`   | `time`                 | Hours               |
 | `days`    | `time`                 | Days                |
-| `amount`  | all                    | Cost (in [local currency](/general-information.md#costs-and-currencies)) |
 | `mph`     | `speed`                | Miles per hour      |
 | `kph`     | `speed`                | Kilometers per hour |
 | `devices` | `count`                | Devices             |
@@ -351,11 +350,12 @@ An individual `Rule` object is defined by the following fields:
 [Top][toc]
 
 ### Rates
-Rate-related properties can currently be specified on any policy with a `rate_amount`.   
 
 **[Beta feature](/general-information.md#beta-features)**: *No (as of 2.0.0)*. 
 
-(?) TODO define how rate_amount is applied to `count` and `speed` rules
+Rate-related properties can be specified on any policy rule with a `rate_amount`, with the exception of `user` - `count`, `time` and `speed` can be measured from events and telemetry, but `user` cannot.   
+
+The application of a fee or a fine is triggered zero or more times according to [rate recurrance](#rate-recurrences).
 
 #### Rate Amounts
 The amount of a rate applied when this rule applies, if applicable (default zero). A positive integer rate amount represents a fee, while a negative integer represents a subsidy. Rate amounts are given in the `currency` defined in the [Policy](#policy).
