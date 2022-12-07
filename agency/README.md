@@ -83,7 +83,7 @@ _No content returned on vehicle not found._
 
 ## Vehicle - Register
 
-The `/vehicles` registration endpoint is used to register a vehicle for use in the Agency jurisdiction.
+The `/vehicles` registration endpoint is used to register a vehicle for use in the Agency's jurisdiction.
 
 Endpoint: `/vehicles`
 Method: `POST`
@@ -170,7 +170,7 @@ Body Params:
 | ---------- | ------------------------------ | ------------------------------------------------------------------------------------------------------- |
 | `success`  | Integer                        | Number of successfully written events.                                                   |
 | `total`    | Integer                        | Total number of provided events.                                                                       |
-| `failures` | [Event](#vehicle-event-data)[] | Array of invalid events (empty if all successful).                          |
+| `failures` | [EventData](#vehicle-event-data)[] | Array of invalid events (empty if all successful).                          |
 
 (?) Should we have a description/error-code for each failure in the `failures`?
 
@@ -294,22 +294,22 @@ The Trips endpoint serves two purposes:
 
 **Endpoint:** `/trips`  
 **Method:** `POST`  
-**[Beta feature][beta]:** Yes (as of 2.0.0)  
+**[Beta feature][beta]:** No (as of 2.0.0)  
 **Payload:** `{ "trips": [] }`, an array of [Trips](#trip-data)
 
 Body Params:
 
 | Field         | Type                           | Required/Optional | Field Description                                                                      |
 | ------------- | ------------------------------ | ----------------- | -------------------------------------------------------------------------------------- |
-| `trips`        | [Trip](#trip-data)[] | Required          | Array of trips for one or more vehicles.                                           |
+| `trips`        | [Trip](#trip-data)[] | Required          | Array of trip records
 
 200 Success Response:
 
 | Field      | Type                           | Field Description                                                                                       |
 | ---------- | ------------------------------ | ------------------------------------------------------------------------------------------------------- |
-| `success`  | Integer                        | Number of successfully written telemetry data points.                                                   |
-| `total`    | Integer                        | Total number of provided points.                                                                       |
-| `failures` | [Telemetry](#telemetry-data)[] | Array of failed telemetry for zero or more vehicles (empty if all successful).                          |
+| `success`  | Integer                        | Number of successfully written trip records points                                                |
+| `total`    | Integer                        | Total number of provided points                                                                       |
+| `failures` | [Trip](#trip-data)[] | Array of failed trip records (empty if all successful)                          |
 
 
 400 Failure Response:
