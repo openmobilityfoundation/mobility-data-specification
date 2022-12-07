@@ -363,15 +363,15 @@ The authenticated reports are monthly, historic flat files that may be pre-gener
 **`data` Filename:** monthly file named by year and month, e.g. `/reports/YYYY-MM.csv`  
 **`data` Payload:** monthly CSV files with the following structure: 
 
-| Name               | Type                                      | Comments                                         |
-| ------------------ | ----------------------------------------- | ------------------------------------------------ |
-| StartDate          | date                                      | Start date of trip the data row, ISO 8601 format, local timezone |
-| Duration           | string                                    | Value is always `P1M` for monthly. Based on [ISO 8601 duration](https://en.wikipedia.org/wiki/ISO_8601#Durations) |
-| Special Group Type | [Special Group Type](#special-group-type) | Type that applies to this row                    |
-| Geography ID       | [Geography](/geography)                   | ID that applies to this row. Includes all IDs in /geography. When there is no /geography then return `null` for this value and return counts based on the entire operating area. |
-| Vehicle Type       | [Vehicle Type](/agency#vehicle-type)      | Type that applies to this row                    |
-| Trip Count         | integer                                   | Count of trips taken for this row                |
-| Rider Count        | integer                                   | Count of unique riders for this row              |
+| Column Name          | Type                                      | Comments                                         |
+|----------------------| ----------------------------------------- | ------------------------------------------------ |
+| `start_date`         | date                                      | Start date of trip the data row, ISO 8601 format, local timezone |
+| `duration`           | string                                    | Value is always `P1M` for monthly. Based on [ISO 8601 duration](https://en.wikipedia.org/wiki/ISO_8601#Durations) |
+| `special_group_type` | [Special Group Type](#special-group-type) | Type that applies to this row                    |
+| `geography_id`       | [Geography](/geography)                   | ID that applies to this row. Includes all IDs in /geography. When there is no /geography then return `null` for this value and return counts based on the entire operating area. |
+| `vehicle_type`       | [Vehicle Type](/agency#vehicle-type)      | Type that applies to this row                    |
+| `trip_count`         | integer                                   | Count of trips taken for this row                |
+| `rider_count`        | integer                                   | Count of unique riders for this row              |
 
 #### Data Notes
 
@@ -390,7 +390,7 @@ For 3 months of provider operation in a city (September 2019 through November 20
 **September 2019** `/reports/2019-09.csv`
 
 ```csv
-StartDate,Duration,Special Group Type,Geography ID,Vehicle Type,Trip Count,Rider Count
+start_date,duration,special_group_type,geography_id,vehicle_type,trip_count,rider_count
 2019-09-01T00:00-04,P1M,all_riders,44428624-186b-4fc3-a7fb-124f487464a1,scooter,1302,983
 2019-09-01T00:00-04,P1M,low_income,44428624-186b-4fc3-a7fb-124f487464a1,scooter,201,104
 2019-09-01T00:00-04,P1M,all_riders,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,530,200
@@ -408,7 +408,7 @@ StartDate,Duration,Special Group Type,Geography ID,Vehicle Type,Trip Count,Rider
 **October 2019** `/reports/2019-10.csv`
 
 ```csv
-StartDate,Duration,Special Group Type,Geography ID,Vehicle Type,Trip Count,Rider Count
+start_date,duration,special_group_type,geography_id,vehicle_type,trip_count,rider_count
 2019-10-01T00:00-04,P1M,all_riders,44428624-186b-4fc3-a7fb-124f487464a1,scooter,1042,786
 2019-10-01T00:00-04,P1M,low_income,44428624-186b-4fc3-a7fb-124f487464a1,scooter,161,83
 2019-10-01T00:00-04,P1M,all_riders,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,424,160
@@ -426,7 +426,7 @@ StartDate,Duration,Special Group Type,Geography ID,Vehicle Type,Trip Count,Rider
 **November 2019** `/reports/2019-11.csv`
 
 ```csv
-StartDate,Duration,Special Group Type,Geography ID,Vehicle Type,Trip Count,Rider Count
+start_date,duration,special_group_type,geography_id,vehicle_type,trip_count,rider_count
 2019-11-01T00:00-05,P1M,all_riders,44428624-186b-4fc3-a7fb-124f487464a1,scooter,834,629
 2019-11-01T00:00-05,P1M,low_income,44428624-186b-4fc3-a7fb-124f487464a1,scooter,129,66
 2019-11-01T00:00-05,P1M,all_riders,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,339,128
