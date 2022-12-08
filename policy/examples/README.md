@@ -17,9 +17,8 @@ This file presents a series of example [Policy documents](../README.md#policy) f
 
 The vehicle should stay within the areas of operation defined (Riding area). 
 
-File: [`operating-area.json`](operating-area.json)
 
-```json
+```
 {
  "name": "Operating Area ",
  "policy_id": "dcc49f37-aafb-4306-b16c-49518d5a8038",
@@ -103,9 +102,8 @@ File: [`operating-area.json`](operating-area.json)
 
 The vehicle should not be in one of these defined areas regardless of status.
 
-File: [`no-riding.json`](no-riding.json)
 
-```json
+```
  
 {
  "name": "No Ride Zones", 
@@ -151,9 +149,8 @@ File: [`no-riding.json`](no-riding.json)
 
 The vehicle should not be parked in one of these defined areas in the statuses Available, Reserved and Non-operational.
 
-File: [`no-parking.json`](no-parking.json)
 
-```json
+```
 {
  "name": "No Parking Zone - SJSU" ,
  "policy_id": "ff290586-0066-4ab9-a67c-52173785b0fa",
@@ -226,9 +223,8 @@ File: [`no-parking.json`](no-parking.json)
 
 The vehicle should be parked in one of these defined areas.
 
-File: [`parking.json`](parking.json)
 
-```json
+```
 {
  "name": "Parking Zone",
  "policy_id": "ff290586-0066-4ab9-a67c-52173785b0fa",
@@ -300,9 +296,8 @@ File: [`parking.json`](parking.json)
 
 The vehicle should only be parked in one of these defined areas for a limited amount of time.
 
-File: [`parking-time-limit.json`](parking-time-limit.json)
 
-```json
+```
 {
  "name": " Parking time limit" ,
  "policy_id": "ff290586-0066-4ab9-a67c-52173785b0fa",
@@ -375,9 +370,8 @@ File: [`parking-time-limit.json`](parking-time-limit.json)
 
 The vehicle should operate at a specific maximum speed in these defined areas.
 
-File: [`speed-limit.json`](speed-limit.json)
 
-```json
+```
 {
  "name": "Improper Riding - Speed Limit | 7 Speed limits",
  "policy_id": "a7cda310-e146-452f-9657-8fdb3f7b2a5d",
@@ -419,9 +413,8 @@ File: [`speed-limit.json`](speed-limit.json)
 
 The amount of vehicles spread amongst these defined areas are controlled.
 
-File: [`distribution-policies.json`](distribution-policies.json)
 
-```json
+```
 {
  "policy_id":"9beb897c-a3ff-4367-bd80-eae30c8eae5c",
  "prev_policies":[],
@@ -491,9 +484,8 @@ File: [`distribution-policies.json`](distribution-policies.json)
 
 The maximum or minimum amount of vehicles deployed by a provider are controlled. 
 
-File: [`provider-caps-or-minimums.json`](provider-caps-or-minimums.json)
 
-```json
+```
 {
 
  "name": "Device Limit - Lime",
