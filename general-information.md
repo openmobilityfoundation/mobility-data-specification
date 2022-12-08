@@ -233,12 +233,14 @@ A Trip is defined by the following structure:
 | `trip_attributes` | Array | Optional | **[Mode](/modes#list-of-supported-modes) Specific**. [Trip attributes](/modes#trip-attributes) given as unordered key-value pairs |
 | `start_time` | [Timestamp][ts] | Required | Start of the passenger/driver trip |
 | `end_time` | [Timestamp][ts] | Required | End of the passenger/driver trip |
-| `start_location` | `{ lat: number, lng: number }` | Required | Location of the start of the trip. See also [Stop-based Geographic Data][stop-based-geo]. |
-| `end_location` | `{ lat: number, lng: number }` | Required | Location of the end of the trip. See also [Stop-based Geographic Data][stop-based-geo]. |
+| `start_location` | [Point](point) | Required | Location of the start of the trip. See also [Stop-based Geographic Data][stop-based-geo]. |
+| `end_location` | [Point](point) | Required | Location of the end of the trip. See also [Stop-based Geographic Data][stop-based-geo]. |
 | `publication_time` | [Timestamp][ts] | Optional | Date/time that trip became available through the trips endpoint |
 | `fare`                          | [Fare](#fare)                  | Conditionally Required | Fare for the trip (required if trip was completed)             |
 
 (?) Document that the route is obtained by hitting the /telemetry endpoint with a `trip_id`? 
+
+(?) Should we replace `Point` with `Telemetry`?
 
 (?) Should we keep mix of `trip_` prefix vs. no prefix? E.g. `start_time`.
 
@@ -252,7 +254,7 @@ Examples of mode-specific `trip_attributes`:
 | ----- | -------- | ----------------- | ----- |
 | `dispatch_time`                 | [Timestamp][ts]                      | Conditionally Required | Time the vehicle was dispatched to the customer (required if trip was dispatched) |
 | `quoted_trip_start_time`        | [Timestamp][ts]                      | Required               | Time the trip was estimated or scheduled to start, that was provided to the passenger |
-| `requested_trip_start_location` | `{ lat: number, lng: number }` | Conditionally Required | Location where the customer requested the trip to start (required if this is within jurisdictional boundaries) |
+| `requested_trip_start_location` | [Point](point) | Conditionally Required | Location where the customer requested the trip to start (required if this is within jurisdictional boundaries) |
 | `reservation_method`            | Enum                           | Required               | Way the customer created their reservation, see [reservation-method](#reservation-method) |
 | `reservation_time`              | [Timestamp][ts]                      | Required               | Time the customer *requested* a reservation |
 | `reservation_type`              | Enum                           | Required               | Type of reservation, see [reservation-type](#reservation-type) |
