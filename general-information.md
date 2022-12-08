@@ -240,13 +240,9 @@ A Trip is defined by the following structure:
 
 (?) Document that the route is obtained by hitting the /telemetry endpoint with a `trip_id`? 
 
-(?) Should we replace `Point` with `Telemetry`?
-
 (?) Should we keep mix of `trip_` prefix vs. no prefix? E.g. `start_time`.
 
 (?) Does anyone use `publication_time`?
-
-(?) Should `fare` move into `trip_attributes`?  No fare for delivery modes?
 
 Examples of mode-specific `trip_attributes`:
 
@@ -317,7 +313,7 @@ Events represent changes in vehicle status.
 | `event_types` | Enum[] | Required | Vehicle [event types][vehicle-events] for state change, with allowable values determined by `vehicle_state` |
 | `event_time` | [Timestamp][ts] | Required | Date/time that event occurred at. See [Event Times][event-times] |
 | `publication_time` | [Timestamp][ts] | Optional | Date/time that event became available through the status changes endpoint |
-| `event_location` | GeoJSON [Point Feature][point-geo] | Required | See also [Stop-based Geographic Data][stop-based-geo]. |
+| `event_location` | [Point][point-geo] | Required | See also [Stop-based Geographic Data][stop-based-geo]. |
 | `event_geographies` | UUID[] | Optional | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 2.0.0)*. Array of Geography UUIDs consisting of every Geography that contains the location of the status change. See [Geography Driven Events][geography-driven-events]. Required if `event_location` is not present. |
 | `trip_ids`[] | UUID[] | Required if Applicable | Trip UUIDs (foreign key to /trips endpoint), required if `event_types` contains `trip_start`, `trip_end`, `trip_cancel`, `trip_enter_jurisdiction`, or `trip_leave_jurisdiction` |
 | `journey_id` | UUID | Optional | Journey UUID | TODO "see `journey_id`" or something |
@@ -359,6 +355,8 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | `battery_percent`       | Integer          | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 100 |
 | `fuel_percent`       | Integer          | Required if Applicable | Percent fuel in vehicle, expressed between 0 and 100 |
 
+(?) What about  other types of sensor data, e.g. accelerometer? Scooter tip sensors?  Should that be telemetry or an event or ... ?
+
 [Top][toc]
 
 ## Stops
@@ -370,7 +368,7 @@ Stops describe vehicle trip start and end locations in a pre-designated physical
 | stop_id                | UUID                                                  | Required | Unique ID for stop |
 | name                   | String                                                | Required | Name of stop |
 | last_reported          | Timestamp                                             | Required | Date/Time that the stop was last updated |
-| location               | GeoJSON [Point Feature](#stop-based-geographic-data)  | Required | Simple centerpoint location of the Stop. The use of the optional `geography_id` is recommended to provide more detail. |
+| location               | [Point](#stop-based-geographic-data)  | Required | Simple centerpoint location of the Stop. The use of the optional `geography_id` is recommended to provide more detail. |
 | status                 | [Stop Status](#stop-status)                           | Required | Object representing the status of the Stop. See [Stop Status](#stop-status). |
 | capacity               | {vehicle_type: number}                                | Required | Number of total places per vehicle_type |
 | num_vehicles_available | {vehicle_type: number}                                | Required | How many vehicles are available per vehicle_type at this stop? |
@@ -476,8 +474,8 @@ A vehicle record is as follows:
 | `last_event_time` | [Timestamp][ts] | Required | Date/time when last state change occurred. See [Event Times][event-times] |
 | `last_state` | Enum | Required | [Vehicle state][vehicle-states] of most recent state change. |
 | `last_event_types` | Enum[] | Required | [Vehicle event(s)][vehicle-events] of most recent state change, allowable values determined by `last_vehicle_state`. |
-| `last_event_location` | GeoJSON [Point Feature][point-geo]| Required | Location of vehicle's last event. See also [Stop-based Geographic Data][stop-based-geo]. |
-| `current_location` | GeoJSON [Point Feature][point-geo] | Required if Applicable | Current location of vehicle if different from last event, and the vehicle is not currently on a trip. See also [Stop-based Geographic Data][stop-based-geo]. |
+| `last_event_location` | [Point][point-geo]| Required | Location of vehicle's last event. See also [Stop-based Geographic Data][stop-based-geo]. |
+| `current_location` | [Point][point-geo] | Required if Applicable | Current location of vehicle if different from last event, and the vehicle is not currently on a trip. See also [Stop-based Geographic Data][stop-based-geo]. |
 
 (?) Remove GeoJSON Point
 
