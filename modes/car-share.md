@@ -64,7 +64,7 @@ Example 3: one trip point-to-point with an employee moving the vehicle to a new 
 
 The `journey_attributes` array **may** have the following key value pairs:
 
-- ...
+- `reservation_id` (UUID, optional): unique identifier for an entire car share reservation, tied across multiple journeys and therefore trips.
 
 [Top][toc]
 
