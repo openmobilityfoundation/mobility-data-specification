@@ -10,6 +10,7 @@ This file presents a series of example [Requirements](../README.md#requirement) 
 - [Trips with No Routes, Vehicles IDs, or Dates](#trips-with-no-routes-vehicle-ids-or-dates)
 - [Provider and Other APIs](#provider-and-other-apis)
 - [Agency](#agency)
+- [Less Geographic Precision](#less-geographic-precision)
 - [Geography Driven Events](#geography-driven-events)
 - [GBFS Only](#gbfs-only)
 
