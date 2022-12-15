@@ -17,8 +17,7 @@ This file presents a series of example [Policy documents](../README.md#policy) f
 
 The vehicle should stay within the areas of operation defined (Riding area). 
 
-
-```
+```json
 {
  "name": "Operating Area ",
  "policy_id": "dcc49f37-aafb-4306-b16c-49518d5a8038",
@@ -93,7 +92,6 @@ The vehicle should stay within the areas of operation defined (Riding area).
   }
  ]
 }
-
 ```
 
 [Top](#table-of-contents)
@@ -102,9 +100,7 @@ The vehicle should stay within the areas of operation defined (Riding area).
 
 The vehicle should not be in one of these defined areas regardless of status.
 
-
-```
- 
+```json 
 {
  "name": "No Ride Zones", 
  "policy_id": "d78625e9-5a7f-45ae-afab-18ee946acf8f", 
@@ -140,7 +136,6 @@ The vehicle should not be in one of these defined areas regardless of status.
   }
  ]
 }
-
 ```
 
 [Top](#table-of-contents)
@@ -149,8 +144,7 @@ The vehicle should not be in one of these defined areas regardless of status.
 
 The vehicle should not be parked in one of these defined areas in the statuses Available, Reserved and Non-operational.
 
-
-```
+```json
 {
  "name": "No Parking Zone - SJSU" ,
  "policy_id": "ff290586-0066-4ab9-a67c-52173785b0fa",
@@ -214,7 +208,6 @@ The vehicle should not be parked in one of these defined areas in the statuses A
   }
  ]
 }
-
 ```
 
 [Top](#table-of-contents)
@@ -223,8 +216,7 @@ The vehicle should not be parked in one of these defined areas in the statuses A
 
 The vehicle should be parked in one of these defined areas.
 
-
-```
+```json
 {
  "name": "Parking Zone",
  "policy_id": "ff290586-0066-4ab9-a67c-52173785b0fa",
@@ -296,8 +288,7 @@ The vehicle should be parked in one of these defined areas.
 
 The vehicle should only be parked in one of these defined areas for a limited amount of time.
 
-
-```
+```json
 {
  "name": " Parking time limit" ,
  "policy_id": "ff290586-0066-4ab9-a67c-52173785b0fa",
@@ -361,7 +352,6 @@ The vehicle should only be parked in one of these defined areas for a limited am
   }
  ]
 }
-
 ```
 
 [Top](#table-of-contents)
@@ -370,8 +360,7 @@ The vehicle should only be parked in one of these defined areas for a limited am
 
 The vehicle should operate at a specific maximum speed in these defined areas.
 
-
-```
+```json
 {
  "name": "Improper Riding - Speed Limit | 7 Speed limits",
  "policy_id": "a7cda310-e146-452f-9657-8fdb3f7b2a5d",
@@ -413,8 +402,7 @@ The vehicle should operate at a specific maximum speed in these defined areas.
 
 The amount of vehicles spread amongst these defined areas are controlled.
 
-
-```
+```json
 {
  "policy_id":"9beb897c-a3ff-4367-bd80-eae30c8eae5c",
  "prev_policies":[],
@@ -484,8 +472,7 @@ The amount of vehicles spread amongst these defined areas are controlled.
 
 The maximum or minimum amount of vehicles deployed by a provider are controlled. 
 
-
-```
+```json
 {
 
  "name": "Device Limit - Lime",
