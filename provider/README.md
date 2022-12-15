@@ -161,8 +161,9 @@ Unless stated otherwise by the municipality, the trips endpoint must return all 
 
 | Field | Type    | Required/Optional | Comments |
 | ----- | -------- | ----------------- | ----- |
-| `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
-| `provider_name` | String | Required | The public-facing name of the Provider |
+| `provider_id` | UUID | Required | A UUID for the provider, unique within MDS. See MDS [provider list](/providers.csv). |
+| `provider_name` | String | Required | The public-facing name of the provider |
+| `data_provider_id` | UUID | Optional | If different than `provider_id`, a UUID for the data solution provider managing the data feed in this endpoint. See MDS [provider list](/providers.csv) which includes both service operators and data solution providers. |
 | `device_id` | UUID | Required | A unique device ID in UUID format |
 | `vehicle_id` | String | Required | A unique vehicle identifier (visible code, licence plate, etc), visible on the vehicle itself. |
 | `vehicle_type` | Enum | Required | See [vehicle types][vehicle-types] table |
@@ -291,8 +292,9 @@ Unless stated otherwise by the municipality, this endpoint must return only thos
 
 | Field | Type | Required/Optional | Comments |
 | ----- | ---- | ----------------- | ----- |
-| `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
-| `provider_name` | String | Required | The public-facing name of the Provider |
+| `provider_id` | UUID | Required | A UUID for the provider, unique within MDS. See MDS [provider list](/providers.csv). |
+| `provider_name` | String | Required | The public-facing name of the provider |
+| `data_provider_id` | UUID | Optional | If different than `provider_id`, a UUID for the data solution provider managing the data feed in this endpoint. See MDS [provider list](/providers.csv) which includes both service operators and data solution providers. |
 | `device_id` | UUID | Required | A unique device ID in UUID format |
 | `vehicle_id` | String | Required | A unique vehicle identifier (visible code, licence plate, etc), visible on the vehicle itself |
 | `vehicle_type` | Enum | Required | see [vehicle types][vehicle-types] table |
@@ -582,8 +584,9 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 
 | Field | Type | Required/Optional | Comments |
 | ----- | ---- | ----------------- | ----- |
-| `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
-| `provider_name` | String | Required | The public-facing name of the Provider |
+| `provider_id` | UUID | Required | A UUID for the provider, unique within MDS. See MDS [provider list](/providers.csv). |
+| `provider_name` | String | Required | The public-facing name of the provider |
+| `data_provider_id` | UUID | Optional | If different than `provider_id`, a UUID for the data solution provider managing the data feed in this endpoint. See MDS [provider list](/providers.csv) which includes both service operators and data solution providers. |
 | `device_id` | UUID | Required | A unique device ID in UUID format, should match this device in Provider |
 | `vehicle_id` | String | Required | A unique vehicle identifier (visible code, licence plate, etc), visible on the vehicle itself |
 | `vehicle_type` | Enum | Required | see [vehicle types][vehicle-types] table |
