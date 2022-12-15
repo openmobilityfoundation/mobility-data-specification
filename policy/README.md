@@ -655,6 +655,12 @@ You may also show which APIs, endpoints, and fields your agency is serving to pr
                   "disallowed_fields": [
                     "[FIELD NAME]",
                     // other field names
+                  ],
+                  "precision": [
+                    {
+                      "[FIELD NAME]" : 8,
+                      // other field names and precision
+                    }
                   ]
                 },
                 // other endpoints
@@ -693,6 +699,7 @@ You may also show which APIs, endpoints, and fields your agency is serving to pr
 | `required_endpoints` | Array | Required | Array of optional endpoints required by the agency. At least one is required. Endpoints not listed will not be available to the agency. |
 | `required_fields`    | Array | Optional | Array of optional field names required by the agency. Can be omitted if no optional fields are required. Use dot notation for nested fields. See **special notes** below. |
 | `disallowed_fields`  | Array | Optional | Array of optional field names which must not be returned by in the endpoint, even if required in MDS. Use dot notation for nested fields. See **special notes** below. |
+| `precision`  | Object | Optional | Array of optional field names and their associated decimal precision as an integer. The integer specifies the decimal places to be returned, e.g. `4` would return a `38.12345678` value as `38.1234`. Applies only to numerical field types, modifying what is required in MDS by default. |
 
 **Agency Endpoints** - Specific to the `available_apis` array
 
@@ -708,7 +715,7 @@ You may also show which APIs, endpoints, and fields your agency is serving to pr
 - Fields in MDS marked 'Required if available' are still returned if available, and are not affected by the Requirements endpoint, unless explicitly listed in `disallowed_fields`.
 - If a 'Required' or 'Required if available' or 'Optional' field in MDS is listed in `disallowed_fields`, those fields should not be returned by the provider in the endpoint. The field (and therefore its value) must be completely removed from the response. If used, [schema](/schema) validation may fail on missing required fields.
 - To reference fields that are lower in a heirarchy, use [dot separated notation](https://docs.oracle.com/en/database/oracle/oracle-database/18/adjsn/simple-dot-notation-access-to-json-data.html#GUID-7249417B-A337-4854-8040-192D5CEFD576), where a dot between field names represents one nested level deeper into the data structure. E.g. 'gps.heading' or 'features.properties.rules.vehicle_type_id'.
-- To require [Greography Driven Events](/general-information.md#geography-driven-events), simply include the `event_geographies` field for either the Agency or Provider API `api_name`. Per how GDEs work, `event_location` will then not be returned, and the `changed_geographies` vehicle state `event_type` will be used.
+- To require [Geography Driven Events](/general-information.md#geography-driven-events), simply include the `event_geographies` field for either the Agency or Provider API `api_name`. Per how GDEs work, `event_location` will then not be returned, and the `changed_geographies` vehicle state `event_type` will be used.
 
 [Top][toc]
 

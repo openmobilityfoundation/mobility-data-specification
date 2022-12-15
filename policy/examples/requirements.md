@@ -587,6 +587,71 @@ Version 1.1.0 for 3 providers and serving Agency only linking to a defined MDS P
 
 [Top](#table-of-contents)
 
+
+## Less Geographic Precision
+
+Asking for the start and end locations (latitude and longitude fields) of a trip and its route telemetry to be truncated to 3 decimal places, instead of the usual 8, for a delivery robot mode.
+
+```json
+{
+  "metadata": {
+    "mds_release": "2.0.0",
+    "file_version": "3",
+    "last_updated": "1611958740",
+    "max_update_interval": "P1M",
+    "agency_id": "737a9c62-c0cb-4c93-be43-271d21b784b5",
+    "agency_name": "Louisville Metro",
+    "agency_timezone": "America/New_York",
+    "agency_language": "en-US",
+    "agency_currency": "USD",
+    "agency_website_url": "https://www.cityname.gov/transportation/",
+    "url": "https://mds.cityname.gov/policy/requirements/2.0.0"
+  },
+  "programs": [
+    {
+      "description": "City Vehicle Pilot for Delivery Robots",
+      "program_website_url": "https://www.cityname.gov/transportation/delivery-robots.html",
+      "program_document_url": "https://www.cityname.gov/mds_data_policy.pdf",
+      "provider_ids": [
+        "70aa475d-1fcd-4504-b69c-2eeb2107f7be"
+      ],
+      "start_date": 1611958740,
+      "end_date": 1611970539,
+      "required_data_specs": [
+        {
+          "data_spec_name": "MDS",
+          "version": "2.0.0",
+          "mode": "delivery-robots",
+          "required_apis": [
+            {
+              "api_name": "provider",
+              "required_endpoints": [
+                {
+                  "endpoint_name": "trips",
+                  "precision": [ 
+                    {
+                      "start_location.geometry.coordinates": 3,
+                      "end_location.geometry.coordinates": 3,
+                      "route.features.geometry.coordinates": 3
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "data_spec_name": "GBFS",
+          "version": "2.2"
+        }
+      ]
+    }
+  ]
+}
+```
+
+[Top](#table-of-contents)
+
 ## Geography Driven Events
 
 Version 1.1.0 for 2 providers requiring Provider `/status_changes` with the minimum required for beta feature [Geography Driven Events](/general-information.md#geography-driven-events).  
@@ -699,7 +764,6 @@ Since Requirements allows the GBFS versions and optional endpoints and fields to
                 {
                   "endpoint_name": "system_pricing_plans.json",
                   "required_fields": [
-                    "per_km_pricing",
                     "per_km_pricing",
                     "surge_pricing"
                   ]
