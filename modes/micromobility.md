@@ -170,7 +170,7 @@ Note that to handle out-of-order events, the validity of the prior-state shall n
 
 Vehicles can enter the `non_contactable` state to and from any other state with the following event types: any state can go to `non_contactable` with event type `comms_lost` or `unspecified`, and `non_contactable` can go to any state with event type `comms_restored` of `unspecified`.
 
-Vehicles can enter the `missing` state to and from any other state with the following event types: any state can go to `missing` with event type `not_located` or `unspecified`, and `missing` can go to any state with event type `located` of `unspecified`.
+Vehicles can exit the `missing` state to any other state with the following event types: `missing` can go to any state with event type `located` or `unspecified`.
 
 | Valid prior `vehicle_state` values | `vehicle_state` | `event_type` | Description |
 | ---------------------------------- | --------------- | ------------ | ----------- |
@@ -215,10 +215,10 @@ Vehicles can enter the `missing` state to and from any other state with the foll
 | `non_contactable`, `missing`, `non_operational`, `available`, `elsewhere` | `removed`     | `unspecified`        | The vehicle was removed, but the provider cannot definitively (yet) specify the reason |
 | `non_contactable` | `removed`   | `comms_restored`        | The vehicle transmitted status information after a period of being in an non_contactable state |
 | `missing` | `removed`   | `located`        | The vehicle has been located by the provider |
-| `available`, `elsewhere`, `non_operational`, `on_trip`, `removed`, `reserved` | `missing`     | `not_located`            | The vehicle is not at its last reported GPS location, or that location is wildly in error |
+| `non_contactable` | `missing`     | `not_located`            | The vehicle is not at its last reported GPS location, or that location is wildly in error |
 | `available`, `elsewhere`, `non_operational`, `on_trip`, `removed`, `reserved` | `non_contactable`     | `comms_lost`       | The vehicle is unable to transmit its GPS location or other status information |
 | `available`, `elsewhere`, `non_operational`, `on_trip`, `removed`, `reserved` | `non_contactable`     | `unspecified`       | The provider cannot definitively (yet) specify the reason for the non_contactable state |
-| `available`, `elsewhere`, `non_operational`, `on_trip`, `removed`, `reserved` | `missing`     | `unspecified`       | The provider cannot definitively (yet) specify the reason for the missing state |
+| `non_contactable` | `missing`     | `unspecified`       | The provider cannot definitively (yet) specify the reason for the missing state |
 
 [Top][toc]
 
