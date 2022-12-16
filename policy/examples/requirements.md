@@ -766,6 +766,7 @@ Since Requirements allows the GBFS versions and optional endpoints and fields to
                   "endpoint_name": "system_pricing_plans.json",
                   "required_fields": [
                     "per_km_pricing",
+                    "per_km_pricing",
                     "surge_pricing"
                   ]
                 }
