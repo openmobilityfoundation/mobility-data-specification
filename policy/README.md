@@ -632,7 +632,7 @@ For each combination of items in a program, you can specify the data specs, APIs
 
 #### Requirement APIs
 
-For each data specification, you can specify which APIs, endpoints, and fields are required from providers, and which are available from your agency.
+For each data specification, you can specify which APIs, endpoints, and fields are required from providers, and which are available from your agency, and the use cases you need the data for.
 
 An agency may require providers to serve optional APIs, endpoints, and fields that are needed for your agency's program. This is a `required_apis` array within the [Requirement Data Specs](#requirement-data-specs) section in the [Requirement](#requirement) data feed.
 
@@ -661,6 +661,13 @@ You may also show which APIs, endpoints, and fields your agency is serving to pr
               ]
             },
             // other APIs in same data spec
+            "use_cases": [
+              {
+                "external_url": "[REFERENCE URL]",
+                "ids": ["1","2","3"]
+              },
+              // next external use case source
+            ]
           ],
           "available_apis": [
             {
@@ -685,6 +692,7 @@ You may also show which APIs, endpoints, and fields your agency is serving to pr
 | -------------------- | ----- | -------- | ----------------------------------- |
 | `api_name`           | Text  | Required | Name of the applicable API required. At least one API is required. APIs not listed will not be available to the agency. E.g. for MDS: 'provider', or 'agency'. For GBFS, this field is omitted since GBFS starts at the `endpoint` level. |
 | `endpoint_name`      | Text  | Required | Name of the required endpoint under the API. At least one endpoint is required. E.g. for MDS 'provider': 'trips' |
+| `use_cases`      | Object with Array  | Optional | The list of policy uses cases that this data standard's information covers for your program. Includes an `external_url` to a HTTP reference list or database (e.g. to the [OMF Use Case Database](https://airtable.com/shrPf4QvORkjZmHIs/tblzFfU6fxQm5Sdhm)), **and** an array of `ids` of each applicable use case (e.g. "OMF-MDS-31"). You may enumerate multiple external use case sources and ids. |
 
 **Provider Endpoints** - Specific to the `required_apis` array
 
