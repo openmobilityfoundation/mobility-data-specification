@@ -359,7 +359,7 @@ The authenticated reports are monthly, historic flat files that may be pre-gener
 **Endpoint:** `/reports`  
 **Method:** `GET`  
 **[Beta feature][beta]:** Yes (as of 1.1.0). [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/672)  
-**Usage note:** This endpoint uses media-type `application/vnd.mds+csv` instead of `application/vnd.mds+json`, see [Versioning][versioning].
+**Usage note:** This endpoint uses media-type `text/vnd.mds+csv` instead of `application/vnd.mds+json`, see [Versioning][versioning].
 **Schema:** TBD when out of beta  
 **`data` Filename:** monthly file named by year and month, e.g. `/reports/YYYY-MM.csv`  
 **`data` Payload:** monthly CSV files with the following structure: 
