@@ -659,15 +659,7 @@ You may also show which APIs, endpoints, and fields your agency is serving to pr
                 },
                 // other endpoints
               ]
-            },
-            // other APIs in same data spec
-            "use_cases": [
-              {
-                "external_url": "[REFERENCE URL]",
-                "ids": ["1","2","3"]
-              },
-              // next external use case source
-            ]
+            }
           ],
           "available_apis": [
             {
@@ -684,6 +676,14 @@ You may also show which APIs, endpoints, and fields your agency is serving to pr
                 // other endpoints
               ]
             }
+          ],
+          // other APIs in same data spec
+          "use_cases": [
+            {
+              "external_url": "[REFERENCE URL]",
+              "ids": ["1","2","3"]
+            },
+            // next external use case source
           ]
 // ...
 ```
