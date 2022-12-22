@@ -62,7 +62,7 @@ Example 2: three overlapping delivery trips in the same journey
 
 ### Journey Attributes
 
-The `journey_attributes` array **may** have the following key value pairs:
+The `journey_attributes` array is not used in this mode.
 
 - ...
 
@@ -95,7 +95,7 @@ The `trip_type` field **must** have one of the following enumerated values:
 The `trip_attributes` array **may** have the following key value pairs:
 
 - `driver_type` (ennum, required): type of driver operating the device: `human`, `semi-autonomous`, `autonomous`
-- `driver_id` (UUID, optional): consistent unique identifier of the privary driver. Could be based on software version or human
+- `driver_id` (UUID, optional): consistent unique identifier of the privary driver. Could be based on software version or an internal human driver id.
 - `app_name` (text, optional): name of the app used to reserve the trip which could be provider's app or 3rd party app
 - `request_time` (timestamp, optional): when the customer requested the trip
 - `has_payload` (boolean, optional): is there any payload for any delivery included in the device at trip start. 1 = loaded, 0 = empty

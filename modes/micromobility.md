@@ -153,7 +153,7 @@ Valid micromobility vehicle event types are
 - `trip_start`
 - `unspecified`
 
-Note that providers should make best-effort to map their business logic onto these states, which are meant to provide a view of the fleet to an agency.  But if an agency does not perform `agency_drop_off` or `agency_pick_up`, for example, they need not be included in the parovider's implementation.
+Note that providers should make best-effort to map their business logic onto these states, which are meant to provide a view of the fleet to an agency.  But if an agency does not perform `agency_drop_off` or `agency_pick_up`, for example, they need not be included in the provider's implementation.
 
 See vehicle [Event Types][vehicle-events] for descriptions.
 

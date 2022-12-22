@@ -226,7 +226,8 @@ Stops describe vehicle trip start and end locations in a pre-designated physical
 | capacity               | {vehicle_type: number}                                | Required | Number of total places per vehicle_type |
 | num_vehicles_available | {vehicle_type: number}                                | Required | How many vehicles are available per vehicle_type at this stop? |
 | num_vehicles_disabled  | {vehicle_type: number}                                | Required | How many vehicles are unavailable/reserved per vehicle_type at this stop? |
-| provider_id            | UUID                                                  | Optional | UUID for the Provider managing this stop. Null/undefined if managed by an Agency.  See MDS [provider list](/providers.csv). |
+| provider_id            | UUID                                                  | Optional | UUID for the provider managing this stop. Null/undefined if managed by an agency.  See MDS [provider list](/providers.csv). |
+| data_provider_id       | UUID                                                  | Optional | UUID for the data provider managing the data coming from this stop. Null/undefined if managed by an agency or a provider.  See MDS [provider list](/providers.csv). |
 | geography_id           | UUID                                                  | Optional | Pointer to the [Geography](/geography) that represents the Stop geospatially via Polygon or MultiPolygon. |
 | region_id              | string                                                | Optional | ID of the region where station is located, see [GBFS Station Information][gbfs-station-info] |
 | short_name             | String                                                | Optional | Abbreviated stop name |
@@ -351,7 +352,7 @@ The list of allowed `vehicle_type` values in MDS. Aligning with [GBFS vehicle ty
 
 MDS APIs must handle requests for specific versions of the specification from clients.
 
-Versioning must be implemented through the use of a custom media-type, `application/vnd.mds+json`, combined with a required `version` parameter.
+Versioning must be implemented through the use of a custom media-type, `application/vnd.mds+json`, combined with a required `version` parameter.  The one exception is the `/reports` endpoint, which returns CSV files instead of JSON, and so uses `text/vnd.mds+csv` as its media-type.
 
 The version parameter specifies the dot-separated combination of major and minor versions from a published version of the specification. For example, the media-type for version `1.0.1` would be specified as `application/vnd.mds+json;version=1.0`
 
