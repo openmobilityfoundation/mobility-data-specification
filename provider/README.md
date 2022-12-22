@@ -363,13 +363,15 @@ The authenticated reports are monthly, historic flat files that may be pre-gener
 **`data` Filename:** monthly file named by year and month, e.g. `/reports/YYYY-MM.csv`  
 **`data` Payload:** monthly CSV files with the following structure: 
 
-| Column Name          | Type                                       | Comments                                                                                                                                                                         |
-|----------------------|--------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `special_group_type` | [Special Group Type](#special-group-type)  | Type that applies to this row                                                                                                                                                    |
-| `geography_id`       | [Geography](/geography)                    | ID that applies to this row. Includes all IDs in /geography. When there is no /geography then return `null` for this value and return counts based on the entire operating area. |
-| `vehicle_type`       | [Vehicle Type](/agency#vehicle-type)       | Type that applies to this row                                                                                                                                                    |
-| `trip_count`         | integer                                    | Count of trips taken for this row                                                                                                                                                |
-| `rider_count`        | integer                                    | Count of unique riders for this row                                                                                                                                              |
+| Column Name    | Type                                 | Comments                                                                                                                                                                         |
+|----------------|--------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `provider_id`  | UUID                                 | A UUID for the Provider, unique within MDS. See MDS provider_id in [provider list](/providers.csv).                                                                              |
+| `start_date`   | date                                 | Start date of trip the data row, ISO 8601 date format, i.e. YYYY-MM-DD                                                                                                           || `special_group_type` | [Special Group Type](#special-group-type)  | Type that applies to this row                                                                                                                                                    |
+| `duration`     | string                               | Value is always `P1M` for monthly. Based on [ISO 8601 duration](https://en.wikipedia.org/wiki/ISO_8601#Durations)                                                                |
+| `geography_id` | [Geography](/geography)              | ID that applies to this row. Includes all IDs in /geography. When there is no /geography then return `null` for this value and return counts based on the entire operating area. |
+| `vehicle_type` | [Vehicle Type](/agency#vehicle-type) | Type that applies to this row                                                                                                                                                    |
+| `trip_count`   | integer                              | Count of trips taken for this row                                                                                                                                                |
+| `rider_count`  | integer                              | Count of unique riders for this row                                                                                                                                              |
 
 #### Data Notes
 
@@ -388,55 +390,55 @@ For 3 months of provider operation in a city (September 2019 through November 20
 **September 2019** `/reports/2019-09.csv`
 
 ```csv
-special_group_type,geography_id,vehicle_type,trip_count,rider_count
-all_riders,44428624-186b-4fc3-a7fb-124f487464a1,scooter,1302,983
-low_income,44428624-186b-4fc3-a7fb-124f487464a1,scooter,201,104
-all_riders,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,530,200
-low_income,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,75,26
-all_riders,03db06d0-3998-406a-92c7-25a83fc2784a,scooter,687,450
-low_income,03db06d0-3998-406a-92c7-25a83fc2784a,scooter,98,45
-all_riders,03db06d0-3998-406a-92c7-25a83fc2784a,bicycle,256,104
-low_income,03db06d0-3998-406a-92c7-25a83fc2784a,bicycle,41,16
-all_riders,8ad39dc3-005b-4348-9d61-c830c54c161b,scooter,201,140
-low_income,8ad39dc3-005b-4348-9d61-c830c54c161b,scooter,35,21
-all_riders,8ad39dc3-005b-4348-9d61-c830c54c161b,bicycle,103,39
-low_income,8ad39dc3-005b-4348-9d61-c830c54c161b,bicycle,15,-1
+start_date,duration,special_group_type,geography_id,vehicle_type,trip_count,rider_count
+2019-09-01,P1M,all_riders,44428624-186b-4fc3-a7fb-124f487464a1,scooter,1302,983
+2019-09-01,P1M,low_income,44428624-186b-4fc3-a7fb-124f487464a1,scooter,201,104
+2019-09-01,P1M,all_riders,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,530,200
+2019-09-01,P1M,low_income,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,75,26
+2019-09-01,P1M,all_riders,03db06d0-3998-406a-92c7-25a83fc2784a,scooter,687,450
+2019-09-01,P1M,low_income,03db06d0-3998-406a-92c7-25a83fc2784a,scooter,98,45
+2019-09-01,P1M,all_riders,03db06d0-3998-406a-92c7-25a83fc2784a,bicycle,256,104
+2019-09-01,P1M,low_income,03db06d0-3998-406a-92c7-25a83fc2784a,bicycle,41,16
+2019-09-01,P1M,all_riders,8ad39dc3-005b-4348-9d61-c830c54c161b,scooter,201,140
+2019-09-01,P1M,low_income,8ad39dc3-005b-4348-9d61-c830c54c161b,scooter,35,21
+2019-09-01,P1M,all_riders,8ad39dc3-005b-4348-9d61-c830c54c161b,bicycle,103,39
+2019-09-01,P1M,low_income,8ad39dc3-005b-4348-9d61-c830c54c161b,bicycle,15,-1
 ```
 
 **October 2019** `/reports/2019-10.csv`
 
 ```csv
-special_group_type,geography_id,vehicle_type,trip_count,rider_count
-all_riders,44428624-186b-4fc3-a7fb-124f487464a1,scooter,1042,786
-low_income,44428624-186b-4fc3-a7fb-124f487464a1,scooter,161,83
-all_riders,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,424,160
-low_income,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,60,0
-all_riders,03db06d0-3998-406a-92c7-25a83fc2784a,scooter,550,360
-low_income,03db06d0-3998-406a-92c7-25a83fc2784a,scooter,78,36
-all_riders,03db06d0-3998-406a-92c7-25a83fc2784a,bicycle,205,83
-low_income,03db06d0-3998-406a-92c7-25a83fc2784a,bicycle,33,13
-all_riders,8ad39dc3-005b-4348-9d61-c830c54c161b,scooter,161,112
-low_income,8ad39dc3-005b-4348-9d61-c830c54c161b,scooter,28,-1
-all_riders,8ad39dc3-005b-4348-9d61-c830c54c161b,bicycle,82,31
-low_income,8ad39dc3-005b-4348-9d61-c830c54c161b,bicycle,-1,0
+start_date,duration,special_group_type,geography_id,vehicle_type,trip_count,rider_count
+2019-10-01,P1M,all_riders,44428624-186b-4fc3-a7fb-124f487464a1,scooter,1042,786
+2019-10-01,P1M,low_income,44428624-186b-4fc3-a7fb-124f487464a1,scooter,161,83
+2019-10-01,P1M,all_riders,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,424,160
+2019-10-01,P1M,low_income,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,60,0
+2019-10-01,P1M,all_riders,03db06d0-3998-406a-92c7-25a83fc2784a,scooter,550,360
+2019-10-01,P1M,low_income,03db06d0-3998-406a-92c7-25a83fc2784a,scooter,78,36
+2019-10-01,P1M,all_riders,03db06d0-3998-406a-92c7-25a83fc2784a,bicycle,205,83
+2019-10-01,P1M,low_income,03db06d0-3998-406a-92c7-25a83fc2784a,bicycle,33,13
+2019-10-01,P1M,all_riders,8ad39dc3-005b-4348-9d61-c830c54c161b,scooter,161,112
+2019-10-01,P1M,low_income,8ad39dc3-005b-4348-9d61-c830c54c161b,scooter,28,-1
+2019-10-01,P1M,all_riders,8ad39dc3-005b-4348-9d61-c830c54c161b,bicycle,82,31
+2019-10-01,P1M,low_income,8ad39dc3-005b-4348-9d61-c830c54c161b,bicycle,-1,0
 ```
 
 **November 2019** `/reports/2019-11.csv`
 
 ```csv
-special_group_type,geography_id,vehicle_type,trip_count,rider_count
-all_riders,44428624-186b-4fc3-a7fb-124f487464a1,scooter,834,629
-low_income,44428624-186b-4fc3-a7fb-124f487464a1,scooter,129,66
-all_riders,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,339,128
-low_income,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,48,-1
-all_riders,03db06d0-3998-406a-92c7-25a83fc2784a,scooter,440,288
-low_income,03db06d0-3998-406a-92c7-25a83fc2784a,scooter,62,29
-all_riders,03db06d0-3998-406a-92c7-25a83fc2784a,bicycle,164,66
-low_income,03db06d0-3998-406a-92c7-25a83fc2784a,bicycle,26,0
-all_riders,8ad39dc3-005b-4348-9d61-c830c54c161b,scooter,129,90
-low_income,8ad39dc3-005b-4348-9d61-c830c54c161b,scooter,22,-1
-all_riders,8ad39dc3-005b-4348-9d61-c830c54c161b,bicycle,-1,25
-low_income,8ad39dc3-005b-4348-9d61-c830c54c161b,bicycle,0,0
+start_date,duration,special_group_type,geography_id,vehicle_type,trip_count,rider_count
+2019-11-01,P1M,all_riders,44428624-186b-4fc3-a7fb-124f487464a1,scooter,834,629
+2019-11-01,P1M,low_income,44428624-186b-4fc3-a7fb-124f487464a1,scooter,129,66
+2019-11-01,P1M,all_riders,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,339,128
+2019-11-01,P1M,low_income,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,48,-1
+2019-11-01,P1M,all_riders,03db06d0-3998-406a-92c7-25a83fc2784a,scooter,440,288
+2019-11-01,P1M,low_income,03db06d0-3998-406a-92c7-25a83fc2784a,scooter,62,29
+2019-11-01,P1M,all_riders,03db06d0-3998-406a-92c7-25a83fc2784a,bicycle,164,66
+2019-11-01,P1M,low_income,03db06d0-3998-406a-92c7-25a83fc2784a,bicycle,26,0
+2019-11-01,P1M,all_riders,8ad39dc3-005b-4348-9d61-c830c54c161b,scooter,129,90
+2019-11-01,P1M,low_income,8ad39dc3-005b-4348-9d61-c830c54c161b,scooter,22,-1
+2019-11-01,P1M,all_riders,8ad39dc3-005b-4348-9d61-c830c54c161b,bicycle,-1,25
+2019-11-01,P1M,low_income,8ad39dc3-005b-4348-9d61-c830c54c161b,bicycle,0,0
 ```
 
 [Top][toc]
