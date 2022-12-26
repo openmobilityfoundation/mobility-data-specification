@@ -168,8 +168,8 @@ Policies will be returned in order of effective date (see schema below), with pa
 
 **Endpoint**: `/requirements/`  
 **Method**: `GET`  
-**[Beta feature](/general-information.md#beta-features)**: *Yes (as of 1.2.0)*. [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/682)  
-**Schema:** TBD when out of beta
+**[Beta feature](/general-information.md#beta-features)**: *No (as of 2.0.0)*. 
+**Schema:** TBD
 **`data` Payload**: `{ requirements: [] }`, JSON objects that follow the schema [outlined here](#requirement).  
 
 See [Policy Requirements Examples](/policy/examples/requirements.md) for how this can be implemented.
@@ -453,10 +453,6 @@ The OMF recommends updating the Requirements feed no more than monthly, and you 
 If you are upgrading to a new MDS version, it is recommended to create a new requirements file at a new URL, since field names and available options may have changed. To make this more obvious, the MDS version number could be part of your URL, e.g. "https://mds.cityname.gov/requirements/1.2.0". 
 
 When requirements are updated within the same MDS version, in the [metadata](#requirement-metadata) section, increment the `file_version` value by one and update the `last_updated` timestamp. Though not required, you may choose to use the  `start_date` and `end_date` fields in the [programs](#requirement-programs) section to keep retired requirements accessible. We also recommend hosting your requirements file in a location that has a publicly-accessible version history, like GitHub or Bitbucket, or keeping previous versions accessible with a versioned URL, e.g. "https://mds.cityname.gov/requirements/1.2.0/v3". 
-
-#### Beta Limitations
-
-Note that Requirements is in [beta](#Requirements), and we welcome your [feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/682). As of 2.0, providers should follow agency data requirements around items listed as "required" or "disallowed".
 
 #### Requirement Format
 
