@@ -1,60 +1,37 @@
 # Mobility Data Specification: **Data Types**
 
 - [Vehicles](#vehicles)
-- [Vehicle Characteristics](#vehicle-characteristics)
-  - [Accessibility Options](#accessibility-options)
   - [Propulsion Types](#propulsion-types)
   - [Vehicle Types](#vehicle-types)
-- [Vehicle States](#vehicle-states)
-  - [Event Types](#event-types)
-  - [Vehicle State Events](#vehicle-state-events)
-  - [State Machine Diagram](#state-machine-diagram)
+- [Vehicle Status](#vehicle-status)
+- [Events](#events)
+  - [Event Types](#event-times)
+- [Telemetry](#telemetry)
+  - [GPS Data](#gps-data)
+- [Stops](#stops)
+  - [Stop Status](#stop-status)
 - [Trips](#trips)
   - [Reservation Type](#reservation-type)
   - [Reservation Method](#reservation-method)
   - [Fares](#fares)
-- [Stops](#stops)
-  - [Stop Status](#stop-status)
-  - [GBFS Compatibility](#gbfs-compatibility)
 
 ## Vehicles
 
 A vehicle record is as follows:
 
-| Field | Type | Required/Optional | Comments |
-| ----- | ---- | ----------------- | ----- |
-| `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
-| `device_id` | UUID | Required | A unique device ID in UUID format, should match this device in Provider |
-| `vehicle_id` | String | Required | A unique vehicle identifier (visible code, licence plate, etc), visible on the vehicle itself |
-| `vehicle_type` | Enum | Required | The [vehicle types][vehicle-types] |
-| `vehicle_attributes` | Array | Optional | **[Mode](/modes#list-of-supported-modes) Specific** [vehicle attributes](/modes#vehicle-attributes) given as mode-specific unordered key-value pairs |
-| `propulsion_types` | Enum[] | Required | Array of [propulsion types][propulsion-types]; allows multiple values |
-| `battery_capacity` | Integer  | Required if Available | Capacity of battery expressed as milliamp hours (mAh) |
-| `fuel_capacity` | Integer  | Required if Available | Capacity of fuel tank (liquid, solid, gaseous) expressed in liters |
+| Field                | Type     | Required/Optional     | Comments |
+| -------------------- | -------- | --------------------- | ----- |
+| `provider_id`        | UUID     | Required              | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
+| `device_id`          | UUID     | Required              | A unique device ID in UUID format, should match this device in Provider |
+| `vehicle_id`         | String   | Required              | A unique vehicle identifier (visible code, licence plate, etc), visible on the vehicle itself |
+| `vehicle_type`       | Enum     | Required              | The [vehicle type][vehicle-types] |
+| `vehicle_attributes` | Array    | Optional              | **[Mode][modes]-Specific** [vehicle attributes](/modes#vehicle-attributes) given as mode-specific unordered key-value pairs |
+| `propulsion_types`   | Enum[]   | Required              | Array of [propulsion types][propulsion-types]; allows multiple values |
+| `accessability_options` | Enum[] | Required             | Array of mode-specific [accessability options][accessability-options]
+| `battery_capacity`   | Integer  | Required if Available | Capacity of battery expressed as milliamp hours (mAh) |
+| `fuel_capacity`      | Integer  | Required if Available | Capacity of fuel tank (liquid, solid, gaseous) expressed in liters |
 
-## Vehicle Status 
-
-| Field | Type | Required/Optional | Comments |
-| ----- | ---- | ----------------- | ----- |
-| `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
-| `device_id` | UUID | Required | A unique device ID in UUID format, should match this device in Provider |
-| `last_event_time` | [Timestamp][ts] | Required | Date/time when last state change occurred. See [Event Times][event-times] |
-| `last_state` | Enum | Required | [Vehicle state][vehicle-states] of most recent state change. |
-| `last_event_types` | Enum[] | Required | [Vehicle event(s)][vehicle-events] of most recent state change, allowable values determined by `last_vehicle_state`. |
-| `last_event_location` | [Point][point-geo]| Required | Location of vehicle's last event. See also [Stop-based Geographic Data][stop-based-geo]. |
-| `current_location` | [Point][point-geo] | Required if Applicable | Current location of vehicle if different from last event, and the vehicle is not currently on a trip. See also [Stop-based Geographic Data][stop-based-geo]. |
-
-[Top][toc]
-
-## Vehicle Characteristics
-
-Properties and characteristics of vehicles and devices.
-
-[Top][toc]
-
-### Accessibility Options
-
-See new location within [individual modes](/modes#list-of-supported-modes) in [modes](/modes#accessibility-options).
+Note that the only mutable field is `vehicle_id`.
 
 [Top][toc]
 
@@ -87,90 +64,25 @@ The list of allowed `vehicle_type` values in MDS. Aligning with [GBFS vehicle ty
 
 [Top][toc]
 
-## Trips
+## Vehicle Status 
 
-A Trip is defined by the following structure:
+A vehicle status record represents the current or last-known disposition of a vehicle, defined as follows:
 
-| Field | Type    | Required/Optional | Comments |
-| ----- | -------- | ----------------- | ----- |
+| Field | Type | Required/Optional | Comments |
+| ----- | ---- | ----------------- | ----- |
 | `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
-| `provider_name` | String | Required | The public-facing name of the Provider |
-| `device_id` | UUID | Required | A unique device ID in UUID format |
-| `journey_id` | UUID | Optional | A unique [journey ID](/modes#journey-id) for associating collections of trips for its [mode] |
-| `trip_type` | Enum | Optional | **[Mode](/modes#list-of-supported-modes) Specific**. The [trip type](/modes#trip-type) describing the purpose of a trip segment |
-| `trip_id` | UUID | Required | A unique ID for each trip |
-| `trip_duration` | Integer | Required | Time, in Seconds |
-| `trip_distance` | Integer | Required | Trip Distance, in Meters |
-| `trip_attributes` | Array | Optional | **[Mode](/modes#list-of-supported-modes) Specific**. [Trip attributes](/modes#trip-attributes) given as unordered key-value pairs |
-| `start_time` | [Timestamp][ts] | Required | Start of the passenger/driver trip |
-| `end_time` | [Timestamp][ts] | Required | End of the passenger/driver trip |
-| `start_location` | [Point](point) | Required | Location of the start of the trip. See also [Stop-based Geographic Data][stop-based-geo]. |
-| `end_location` | [Point](point) | Required | Location of the end of the trip. See also [Stop-based Geographic Data][stop-based-geo]. |
-| `publication_time` | [Timestamp][ts] | Optional | Date/time that trip became available through the trips endpoint |
-| `fare`                          | [Fare](#fare)                  | Conditionally Required | Fare for the trip (required if trip was completed)             |
+| `device_id` | UUID | Required | A unique device ID in UUID format, should match this device in Provider |
+| `last_event_time` | [Timestamp][ts] | Required | Date/time when last state change occurred. See [Event Times][event-times] |
+| `last_state` | Enum | Required | [Vehicle state][vehicle-states] of most recent state change. |
+| `last_event_types` | Enum[] | Required | [Vehicle event(s)][vehicle-events] of most recent state change, allowable values determined by `last_vehicle_state`. |
+| `last_event_location` | [Point][point-geo]| Required | Location of vehicle's last event. See also [Stop-based Geographic Data][stop-based-geo]. |
+| `current_location` | [Point][point-geo] | Required if Applicable | Current location of vehicle if different from last event, and the vehicle is not currently on a trip. See also [Stop-based Geographic Data][stop-based-geo]. |
 
-(?) Document that the route is obtained by hitting the /telemetry endpoint with a `trip_id`? 
-
-(?) Should we keep mix of `trip_` prefix vs. no prefix? E.g. `start_time`.
-
-(?) Does anyone use `publication_time`?
-
-Examples of mode-specific `trip_attributes`:
-
-| Field | Type    | Required/Optional | Comments |
-| ----- | -------- | ----------------- | ----- |
-| `dispatch_time`                 | [Timestamp][ts]                      | Conditionally Required | Time the vehicle was dispatched to the customer (required if trip was dispatched) |
-| `quoted_trip_start_time`        | [Timestamp][ts]                      | Required               | Time the trip was estimated or scheduled to start, that was provided to the passenger |
-| `requested_trip_start_location` | [Point](point) | Conditionally Required | Location where the customer requested the trip to start (required if this is within jurisdictional boundaries) |
-| `reservation_method`            | Enum                           | Required               | Way the customer created their reservation, see [reservation-method](#reservation-method) |
-| `reservation_time`              | [Timestamp][ts]                      | Required               | Time the customer *requested* a reservation |
-| `reservation_type`              | Enum                           | Required               | Type of reservation, see [reservation-type](#reservation-type) |
-| `cancellation_reason`           | string                         | Conditionally Required | The reason why a *driver* cancelled a reservation. (required if a driver cancelled a trip, and a `driver_cancellation` event_type was part of the trip) |
-| `accessibility_options`         | Enum[]                         | Optional               | The **union** of any accessibility options requested, and used. E.g. if the passenger requests a vehicle with `wheelchair_accessible`, but doesn’t utilize the features during the trip, the trip payload will include `accessibility_options: ['wheelchair_accessible']`. See [accessibility-options][accessibility-options] |
-| `parking_verification_url` | String | Optional | A URL to a photo (or other evidence) of proper vehicle parking |
-
-(?) Make sure that ALL mode-specific stuff goes into the Modes work!
+(?) Replace `last_event_location` and `current_location` with a [GPS][gps]?  Maybe ditch [Point][point-geo] entirely.
 
 [Top][toc]
 
-## Reservation Type
-
-The reservation type enum expresses the urgency of a given reservation. This can be useful when attempting to quantify metrics around trips: for example, computing passenger wait-time. In the `on_demand` case, passenger wait-time may be quantified by the delta between the `reservation_time`, and the pick-up time; however, in the `scheduled` case, the wait time may be quantified based on the delta between the `scheduled_trip_start_time` found in the Trips payload, and the actual `trip_start_time`. 
-
-| `reservation_type` | Description                                                            |
-|--------------------|------------------------------------------------------------------------|
-| `on_demand`        | The passenger requested the vehicle as soon as possible                |
-| `scheduled`        | The passenger requested the vehicle for a scheduled time in the future |
-
-[Top][toc]
-
-## Reservation Method
-
-The reservation method enum describes the different ways in which a passenger can create their reservation.
-
-| `reservation_method` | Description                                               |
-|----------------------|-----------------------------------------------------------|
-| `app`                | Reservation was made through an application (mobile/web)  |
-| `street_hail`        | Reservation was made by the passenger hailing the vehicle |
-| `phone_dispatch`     | Reservation was made by calling the dispatch operator     |
-
-[Top][toc]
-
-## Fares
-
-The Fare object describes a fare for a Trip. 
-
-| Field           | Type                  | Required/Optional | Field Description                                                                       |
-|-----------------|-----------------------|-------------------|-----------------------------------------------------------------------------------------|
-| `quoted_cost`     | Float                 | Optional          | Cost quoted to the customer at the time of booking, if available                                      |
-| `actual_cost`     | Float                 | Required          | Actual cost after a trip was completed                                                  |
-| `components`      | `{ [string]: float }` | Optional          | Breakdown of the different fees that composed a fare, e.g. tolls                        |
-| `currency`        | string                | Required          | ISO 4217 currency code                                                                  |
-| `payment_methods` | `string[]`            | Optional          | Breakdown of different payment methods used for a trip, e.g. cash, card, equity_program |
-
-[Top][toc]
-
-## Event Data
+## Events
 
 Events represent changes in vehicle status.
 
@@ -204,7 +116,7 @@ Because of the unreliability of device clocks, the Provider is unlikely to know 
 
 [Top][toc]
 
-## Telemetry Data
+## Telemetry
 
 A standard point of vehicle telemetry. References to latitude and longitude imply coordinates encoded in the [WGS 84 (EPSG:4326)](https://en.wikipedia.org/wiki/World_Geodetic_System) standard GPS or GNSS projection expressed as [Decimal Degrees](https://en.wikipedia.org/wiki/Decimal_degrees).
 
@@ -213,22 +125,27 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | `telemetry_id` | UUID           | Required              | ID used for uniquely-identifying a Telemetry entry |
 | `device_id`    | UUID           | Required              | ID used in [Register](#vehicle---register)                     |
 | `timestamp`    | [Timestamp][ts]| Required              | Date/time that event occurred. Based on GPS or GNSS clock            |
-| `trip_ids`      | UUID[]           | Required              | If telemetry occurred during a trip, the ID of the trip(s).  If not in a trip, `null`.
+| `trip_ids`     | UUID[]         | Required              | If telemetry occurred during a trip, the ID of the trip(s).  If not in a trip, `null`.
 | `journey_id`   | UUID           | Required              | If telemetry occurred during a trip, the ID of the journey.  If not in a trip, `null`.
 | `stop_id`      | UUID           | Required if Applicable | Stop that the vehicle is currently located at. Only applicable for _docked_ Micromobility. See [Stops][stops] |
-| `gps`          | Object         | Required              | Telemetry position data                                      |
-| `gps.lat`      | Double         | Required              | Latitude of the location                                     |
-| `gps.lng`      | Double         | Required              | Longitude of the location                                    |
-| `gps.altitude` | Double         | Required if Available | Altitude above mean sea level in meters                      |
-| `gps.heading`  | Double         | Required if Available | Degrees - clockwise starting at 0 degrees at true North      |
-| `gps.speed`    | Float          | Required if Available | Estimated speed in meters / sec as reported by the GPS chipset                                        |
-| `gps.accuracy` | Float          | Required if Available | Horizontal accuracy, in meters                                           |
-| `gps.hdop`     | Float          | Required if Available | Horizontal GPS or GNSS accuracy value (see [hdop][hdop]) |
-| `gps.satellites` | Integer      | Required if Available | Number of GPS or GNSS satellites
+| `gps`          | [GPS][gps]    | Required              | Telemetry position data                                      |
 | `battery_percent`       | Integer          | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 100 |
 | `fuel_percent`       | Integer          | Required if Applicable | Percent fuel in vehicle, expressed between 0 and 100 |
 
 (?) What about  other types of sensor data, e.g. accelerometer? Scooter tip sensors?  Should that be telemetry or an event or ... ?
+
+### GPS Data
+
+| Field      | Type           | Required/Optional     | Field Description                                            |
+| ---------- | -------------- | --------------------- | ------------------------------------------------------------ |
+| `lat`      | Double         | Required              | Latitude of the location                                     |
+| `lng`      | Double         | Required              | Longitude of the location                                    |
+| `altitude` | Double         | Required if Available | Altitude above mean sea level in meters                      |
+| `heading`  | Double         | Required if Available | Degrees - clockwise starting at 0 degrees at true North      |
+| `speed`    | Float          | Required if Available | Estimated speed in meters / sec as reported by the GPS chipset |
+| `accuracy` | Float          | Required if Available | Horizontal accuracy, in meters                               |
+| `hdop`     | Float          | Required if Available | Horizontal GPS or GNSS accuracy value (see [hdop][hdop])     |
+| `satellites` | Integer      | Required if Available | Number of GPS or GNSS satellites                             |
 
 [Top][toc]
 
@@ -281,8 +198,87 @@ Example of the **Stop Status** object with properties listed:
 ```
 
 [Top][toc]
+## Trips
+
+A Trip is defined by the following structure:
+
+| Field | Type    | Required/Optional | Comments |
+| ----- | -------- | ----------------- | ----- |
+| `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
+| `provider_name` | String | Required | The public-facing name of the Provider |
+| `device_id` | UUID | Required | A unique device ID in UUID format |
+| `journey_id` | UUID | Optional | A unique [journey ID](/modes#journey-id) for associating collections of trips for its [mode] |
+| `trip_type` | Enum | Optional | **[Mode](/modes#list-of-supported-modes) Specific**. The [trip type](/modes#trip-type) describing the purpose of a trip segment |
+| `trip_id` | UUID | Required | A unique ID for each trip |
+| `trip_duration` | Integer | Required | Time, in Seconds |
+| `trip_distance` | Integer | Required | Trip Distance, in Meters |
+| `trip_attributes` | Array | Optional | **[Mode](/modes#list-of-supported-modes) Specific**. [Trip attributes](/modes#trip-attributes) given as unordered key-value pairs |
+| `start_time` | [Timestamp][ts] | Required | Start of the passenger/driver trip |
+| `end_time` | [Timestamp][ts] | Required | End of the passenger/driver trip |
+| `start_location` | [Point](point) | Required | Location of the start of the trip. See also [Stop-based Geographic Data][stop-based-geo]. |
+| `end_location` | [Point](point) | Required | Location of the end of the trip. See also [Stop-based Geographic Data][stop-based-geo]. |
+| `publication_time` | [Timestamp][ts] | Optional | Date/time that trip became available through the trips endpoint |
+| `fare`                          | [Fare](#fare)                  | Conditionally Required | Fare for the trip (required if trip was completed)             |
+
+(?) Should we keep mix of `trip_` prefix vs. no prefix? E.g. `start_time`.
+
+(?) Does anyone use `publication_time`?
+
+Examples of mode-specific `trip_attributes`:
+
+| Field | Type    | Required/Optional | Comments |
+| ----- | -------- | ----------------- | ----- |
+| `dispatch_time`                 | [Timestamp][ts]                      | Conditionally Required | Time the vehicle was dispatched to the customer (required if trip was dispatched) |
+| `quoted_trip_start_time`        | [Timestamp][ts]                      | Required               | Time the trip was estimated or scheduled to start, that was provided to the passenger |
+| `requested_trip_start_location` | [Point](point) | Conditionally Required | Location where the customer requested the trip to start (required if this is within jurisdictional boundaries) |
+| `reservation_method`            | Enum                           | Required               | Way the customer created their reservation, see [reservation-method](#reservation-method) |
+| `reservation_time`              | [Timestamp][ts]                      | Required               | Time the customer *requested* a reservation |
+| `reservation_type`              | Enum                           | Required               | Type of reservation, see [reservation-type](#reservation-type) |
+| `cancellation_reason`           | string                         | Conditionally Required | The reason why a *driver* cancelled a reservation. (required if a driver cancelled a trip, and a `driver_cancellation` event_type was part of the trip) |
+| `accessibility_options`         | Enum[]                         | Optional               | The **union** of any accessibility options requested, and used. E.g. if the passenger requests a vehicle with `wheelchair_accessible`, but doesn’t utilize the features during the trip, the trip payload will include `accessibility_options: ['wheelchair_accessible']`. See [accessibility-options][accessibility-options] |
+| `parking_verification_url` | String | Optional | A URL to a photo (or other evidence) of proper vehicle parking |
+
+[Top][toc]
+
+### Reservation Type
+
+The reservation type enum expresses the urgency of a given reservation. This can be useful when attempting to quantify metrics around trips: for example, computing passenger wait-time. In the `on_demand` case, passenger wait-time may be quantified by the delta between the `reservation_time`, and the pick-up time; however, in the `scheduled` case, the wait time may be quantified based on the delta between the `scheduled_trip_start_time` found in the Trips payload, and the actual `trip_start_time`. 
+
+| `reservation_type` | Description                                                            |
+|--------------------|------------------------------------------------------------------------|
+| `on_demand`        | The passenger requested the vehicle as soon as possible                |
+| `scheduled`        | The passenger requested the vehicle for a scheduled time in the future |
+
+[Top][toc]
+
+### Reservation Method
+
+The reservation method enum describes the different ways in which a passenger can create their reservation.
+
+| `reservation_method` | Description                                               |
+|----------------------|-----------------------------------------------------------|
+| `app`                | Reservation was made through an application (mobile/web)  |
+| `street_hail`        | Reservation was made by the passenger hailing the vehicle |
+| `phone_dispatch`     | Reservation was made by calling the dispatch operator     |
+
+[Top][toc]
+
+### Fares
+
+The Fare object describes a fare for a Trip. 
+
+| Field           | Type                  | Required/Optional | Field Description                                                                       |
+|-----------------|-----------------------|-------------------|-----------------------------------------------------------------------------------------|
+| `quoted_cost`     | Float                 | Optional          | Cost quoted to the customer at the time of booking, if available                                      |
+| `actual_cost`     | Float                 | Required          | Actual cost after a trip was completed                                                  |
+| `components`      | `{ [string]: float }` | Optional          | Breakdown of the different fees that composed a fare, e.g. tolls                        |
+| `currency`        | string                | Required          | ISO 4217 currency code                                                                  |
+| `payment_methods` | `string[]`            | Optional          | Breakdown of different payment methods used for a trip, e.g. cash, card, equity_program |
+
+[Top][toc]
 
 [agency]: /agency/README.md
+[accessability-options]: /modes/README.md#accessibility-options
 [decimal-degrees]: https://en.wikipedia.org/wiki/Decimal_degrees
 [event-times]: /general-information.md#event-times
 [hdop]: https://en.wikipedia.org/wiki/Dilution_of_precision_(navigation)
@@ -290,6 +286,7 @@ Example of the **Stop Status** object with properties listed:
 [gbfs-station-status]: https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_statusjson
 [general-stops]: /general-information.md#stops
 [geo]: #geographic-data
+[gps]: #gps-data
 [geojson-feature]: https://tools.ietf.org/html/rfc7946#section-3.2
 [geojson-point]: https://tools.ietf.org/html/rfc7946#section-3.1.2
 [modes]: /modes/README.md
