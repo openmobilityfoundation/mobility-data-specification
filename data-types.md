@@ -20,7 +20,7 @@
 A vehicle record is as follows:
 
 | Field                | Type     | Required/Optional     | Comments |
-| -------------------- | -------- | --------------------- | ----- |
+| -------------------- | -------- | --------------------- | -------- |
 | `provider_id`        | UUID     | Required              | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
 | `device_id`          | UUID     | Required              | A unique device ID in UUID format, should match this device in Provider |
 | `vehicle_id`         | String   | Required              | A unique vehicle identifier (visible code, licence plate, etc), visible on the vehicle itself |
@@ -87,7 +87,7 @@ A vehicle status record represents the current or last-known disposition of a ve
 Events represent changes in vehicle status.
 
 | Field | Type | Required/Optional | Comments |
-| ----- | ---- | ----------------- | ----- |
+| ----- | ---- | ----------------- | -------- |
 | `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
 | `provider_name` | String | Required | The public-facing name of the Provider |
 | `device_id` | UUID | Required | A unique device ID in UUID format |
@@ -104,7 +104,7 @@ Events represent changes in vehicle status.
 
 (?) Do we still want `event_geographies`?
 
-(?) Replace `event_location` GeoJSON with Telemetry
+(?) Replace `event_location` GeoJSON with GPS?
 
 (?) Does anyone use `associated_ticket`?
 
@@ -131,8 +131,6 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | `gps`          | [GPS][gps]    | Required              | Telemetry position data                                      |
 | `battery_percent`       | Integer          | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 100 |
 | `fuel_percent`       | Integer          | Required if Applicable | Percent fuel in vehicle, expressed between 0 and 100 |
-
-(?) What about  other types of sensor data, e.g. accelerometer? Scooter tip sensors?  Should that be telemetry or an event or ... ?
 
 ### GPS Data
 
