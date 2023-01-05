@@ -215,6 +215,7 @@ A Trip is defined by the following structure:
 | `trip_duration`          | Integer         | Required               | Time, in Seconds |
 | `trip_distance`          | Integer         | Required               | Trip Distance, in Meters |
 | `trip_attributes`        | Map             | Optional               | **[Mode](/modes#list-of-supported-modes) Specific**. [Trip attributes](/modes#trip-attributes) given as unordered key-value pairs |
+| `fare_attributes`        | Map             | Optional               | **[Mode](/modes#list-of-supported-modes) Specific**. [Fare attributes](/modes#fare-attributes) given as unordered key-value pairs |
 | `start_time`             | [Timestamp][ts] | Required               | Start of the passenger/driver trip |
 | `end_time`               | [Timestamp][ts] | Required               | End of the passenger/driver trip |
 | `start_location`         | [Point](point)  | Required               | Location of the start of the trip. See also [Stop-based Geographic Data][stop-based-geo]. |

@@ -60,6 +60,12 @@ The `trip_attributes` array allows additional mode-specific information about th
 
 _See more available trip attributes for any mode in the [trips endpoint](/provider#trips)._
 
+### Fare Attributes
+
+The `fare_attributes` array allows additional mode-specific information about fare information associated with the trip. It can return a list of JSON-formatted key/value pairs which correspond to the allowed attributes and values for the operative mode. See each [mode definition](#list-of-supported-modes) for details.
+
+_See more available fare attributes for any mode in the [trips endpoint](/provider#trips)._
+
 ### Vehicle Attributes
 
 The `vehicle_attributes` array returns a list of JSON-formatted key/value pairs which correspond to the allowed attributes and values for the operative mode. For each mode, the allowed attributes and corresponding values are defined in the [mode definition](#list-of-supported-modes).
