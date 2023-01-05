@@ -193,7 +193,7 @@ Version 1.1.0 for one provider with scooters, and 1.0.0 for another provider for
 
 ## Trips Only
 
-Version 1.1.0 for 2 providers requiring only historic Provider `/trips` with the optional `parking_verificaiton_url` field, linked to a specific MDS Policy.  
+Version 1.1.0 for 2 providers requiring only historic Provider `/trips` with the optional `parking_verification_url` field, linked to a specific MDS Policy.  
 
 ```json
 {

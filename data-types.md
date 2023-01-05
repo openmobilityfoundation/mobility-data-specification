@@ -26,7 +26,7 @@ A vehicle record is as follows:
 | `device_id`          | UUID     | Required              | A unique device ID in UUID format, should match this device in Provider |
 | `provider_id`        | UUID     | Required              | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). | 
 | `data_provider_id`   | UUID     | Optional              | If different than `provider_id`, a UUID for the data solution provider managing the data feed in this endpoint. See MDS [provider list](/providers.csv) which includes both service operators and data solution providers. |
-| `vehicle_id`         | String   | Required              | A unique vehicle identifier (visible code, licence plate, etc), visible on the vehicle itself |
+| `vehicle_id`         | String   | Required              | A unique vehicle identifier (visible code, license plate, etc), visible on the vehicle itself |
 | `vehicle_type`       | Enum     | Required              | The [vehicle type][vehicle-types] |
 | `vehicle_attributes` | Array    | Optional              | **[Mode][modes]-Specific** [vehicle attributes](/modes#vehicle-attributes) given as mode-specific unordered key-value pairs |
 | `propulsion_types`   | Enum[]   | Required              | Array of [propulsion types][propulsion-types]; allows multiple values |
@@ -93,7 +93,7 @@ Events represent changes in vehicle status.
 | `device_id` | UUID | Required | A unique device ID in UUID format |
 | `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
 | `data_provider_id` | UUID | Optional | If different than `provider_id`, a UUID for the data solution provider managing the data feed in this endpoint. See MDS [provider list](/providers.csv) which includes both service operators and data solution providers. |
-| `vehicle_id` | String | Required | A unique vehicle identifier (visible code, licence plate, etc), visible on the vehicle itself |
+| `vehicle_id` | String | Required | A unique vehicle identifier (visible code, license plate, etc), visible on the vehicle itself |
 | `vehicle_state` | Enum | Required | See [vehicle state][vehicle-states] table |
 | `event_types` | Enum[] | Required | Vehicle [event types][vehicle-events] for state change, with allowable values determined by `vehicle_state` |
 | `event_time` | [Timestamp][ts] | Required | Date/time that event occurred at. See [Event Times][event-times] |
