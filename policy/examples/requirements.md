@@ -318,7 +318,7 @@ Version 1.1.0 for 2 providers asking for only historic [Provider `/trips`](/prov
 
 ## Provider and Other APIs
 
-Version 1.1.0 or 0.4.1 for 3 providers with many APIs and endpoints.  
+Version 1.1.0 or 0.4.1 for 3 providers with many APIs and endpoints, for two programs: shared dockless and city docked bikes. With use cases added.
 
 Note: by specifying geography, policy, and jurisdiction here with a URL, the agency is in effect saying that they have created and are hosting these, and they are available for use if public.
 
@@ -431,6 +431,14 @@ Note: by specifying geography, policy, and jurisdiction here with a URL, the age
             {
               "api_name": "metrics"
             }
+          ],
+          "use_cases": [
+            {
+              "external_url": "https://airtable.com/shrPf4QvORkjZmHIs/tblzFfU6fxQm5Sdhm",
+              "ids": ["OMF-MDS-2","OMF-MDS-8","OMF-MDS-12","OMF-MDS-13","OMF-MDS-14","OMF-MDS-20","OMF-MDS-29","OMF-MDS-31","OMF-MDS-44"]
+            },
+              "external_url": "https://github.com/CDSM-WG/CDS-M/tree/main/use-cases",
+              "ids": ["open-data","most-used-routes","vehicle-cap","impact-on-transit","origins","vehicle-rotation","distribution-requirements-availability","distribution-requirements-availability","publish-speed-regulations"]
           ]
         },
         {
@@ -699,7 +707,6 @@ Since Requirements allows the GBFS versions and optional endpoints and fields to
                 {
                   "endpoint_name": "system_pricing_plans.json",
                   "required_fields": [
-                    "per_km_pricing",
                     "per_km_pricing",
                     "surge_pricing"
                   ]
