@@ -12,7 +12,6 @@
   - [Stop Status](#stop-status)
 - [Trips](#trips)
   - [Trip Attributes](#trip-attributes)
-  - [Fares](#fares)
   - [Reservation Data](#reservation-data)
     - [Reservation Type](#reservation-type)
     - [Reservation Method](#reservation-method)
@@ -219,15 +218,12 @@ A Trip is defined by the following structure:
 | `end_location`           | [Point](point)  | Required               | Location of the end of the trip. See also [Stop-based Geographic Data][stop-based-geo]. |
 | `publication_time`       | [Timestamp][ts] | Optional               | Date/time that trip became available through the trips endpoint |
 | `reservation_attributes` | [Reservation](#reservation-data) | Required if available | Reservation details, if a reservation initiated this trip
-| `fare`                   | [Fare](#fare)   | Conditionally Required | Fare for the trip (required if trip was completed)             |
 | `dispatch_time`          | [Timestamp][ts] | Conditionally Required | Time the vehicle was dispatched to the customer (required if trip was dispatched) |
 | `parking_verification_url` | String        | Optional               | A URL to a photo (or other evidence) of proper vehicle parking |
 | `cancellation_reason`    | Enum            | Conditionally Required | The reason why a *driver* cancelled a reservation. (required if a driver cancelled a trip, and a `driver_cancellation` event_type was part of the trip) |
 | `accessibility_options`  | Enum[]          | Optional               | The **union** of any accessibility options requested, and used. E.g. if the passenger requests a vehicle with `wheelchair_accessible`, but doesn’t utilize the features during the trip, the trip payload will include `accessibility_options: ['wheelchair_accessible']`. See [accessibility-options][accessibility-options] |
 
 (?) Reconcile inconsistent use of `trip_`
-
-(?) Does anyone use `publication_time`?
 
 [Top][toc]
 
@@ -246,20 +242,6 @@ Examples of mode-specific `trip_attributes`:
 | `cancellation_reason`           | string                         | Conditionally Required | The reason why a *driver* cancelled a reservation. (required if a driver cancelled a trip, and a `driver_cancellation` event_type was part of the trip) |
 | `accessibility_options`         | Enum[]                         | Optional               | The **union** of any accessibility options requested, and used. E.g. if the passenger requests a vehicle with `wheelchair_accessible`, but doesn’t utilize the features during the trip, the trip payload will include `accessibility_options: ['wheelchair_accessible']`. See [accessibility-options][accessibility-options] |
 | `parking_verification_url` | String | Optional | A URL to a photo (or other evidence) of proper vehicle parking |
-
-[Top][toc]
-
-### Fares
-
-The Fare object describes a fare for a Trip. 
-
-| Field           | Type                  | Required/Optional | Field Description                                                                       |
-|-----------------|-----------------------|-------------------|-----------------------------------------------------------------------------------------|
-| `quoted_cost`     | Float                 | Optional          | Cost quoted to the customer at the time of booking, if available                                      |
-| `actual_cost`     | Float                 | Required          | Actual cost after a trip was completed                                                  |
-| `components`      | `{ [string]: float }` | Optional          | Breakdown of the different fees that composed a fare, e.g. tolls                        |
-| `currency`        | String                | Required          | ISO 4217 currency code                                                                  |
-| `payment_methods` | `string[]`            | Optional          | Breakdown of different payment methods used for a trip, e.g. cash, card, equity_program |
 
 [Top][toc]
 
