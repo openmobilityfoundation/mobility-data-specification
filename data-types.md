@@ -245,43 +245,6 @@ Examples of mode-specific `trip_attributes`:
 
 [Top][toc]
 
-### Reservation Data
-
-A Reservation is defined as follows:
-
-| Field                           | Type             | Required/Optional      | Comments |
-| -----                           | ----             | -----------------      | -------- |
-| `reservation_method`            | Enum             | Required               | Way the customer created their reservation, see [reservation-method](#reservation-method) |
-| `reservation_time`              | Timestamp        | Required               | Time the customer *requested* a reservation |
-| `reservation_type`              | Enum             | Required               | Type of reservation, see [reservation-type](#reservation-type) |
-| `quoted_trip_start_time`        | Timestamp        | Required               | Time the trip was estimated or scheduled to start, that was provided to the passenger |
-| `requested_trip_start_location` | [GPS][gps] | Conditionally Required | Location where the customer requested the trip to start (required if this is within jurisdictional boundaries) |
-
-[Top][toc]
-
-#### Reservation Type
-
-The reservation type enum expresses the urgency of a given reservation. This can be useful when attempting to quantify metrics around trips: for example, computing passenger wait-time. In the `on_demand` case, passenger wait-time may be quantified by the delta between the `reservation_time`, and the pick-up time; however, in the `scheduled` case, the wait time may be quantified based on the delta between the `scheduled_trip_start_time` found in the Trips payload, and the actual `trip_start_time`. 
-
-| `reservation_type` | Description                                                            |
-|--------------------|------------------------------------------------------------------------|
-| `on_demand`        | The passenger requested the vehicle as soon as possible                |
-| `scheduled`        | The passenger requested the vehicle for a scheduled time in the future |
-
-[Top][toc]
-
-#### Reservation Method
-
-The reservation method enum describes the different ways in which a passenger can create their reservation.
-
-| `reservation_method` | Description                                               |
-|----------------------|-----------------------------------------------------------|
-| `app`                | Reservation was made through an application (mobile/web)  |
-| `street_hail`        | Reservation was made by the passenger hailing the vehicle |
-| `phone_dispatch`     | Reservation was made by calling the dispatch operator     |
-
-[Top][toc]
-
 [agency]: /agency/README.md
 [accessability-options]: /modes/README.md#accessibility-options
 [decimal-degrees]: https://en.wikipedia.org/wiki/Decimal_degrees
