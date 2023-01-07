@@ -249,8 +249,6 @@ Trips that start or end at a [Stop][stops] must include a `stop_id` property in 
 
 The `/events/recent` and `/events/historical/` endpoints return a list of Event objects, describing the activity of the Provider's vehicles.  Recent events are at most two weeks old and can be queried with start/stop time, and historical events are packaged in hour-sized chunks for ease of implementation. 
 
-(?) This distinction is a holdover from MDS 1.x.  Dramatic simplification of the query is meant to make cold storage by hourly chunks trivial without a database.  We should ask Providers if that has been a concern in practice.  Alternatively they could be the same endpoint with different parameters.
-
 Unless stated otherwise by the municipality, this endpoint must return only those status changes with a `event_location` that [intersects](#intersection-operation) with the [municipality boundary](#municipality-boundary).
 
 > Note: As a result of this definition, consumers should query the [trips endpoint][trips] to infer when vehicles enter or leave the municipality boundary.
@@ -267,8 +265,8 @@ Unless stated otherwise by the municipality, this endpoint must return only thos
 
 The `/events/historical` API uses the following query parameter:
 
-| Parameter | Format | Expected Output |
-| --------------- | ------ | --------------- |
+| Parameter    | Format | Expected Output |
+| ---------    | ------ | --------------- |
 | `event_time` | `YYYY-MM-DDTHH`, an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) extended datetime representing an UTC hour between 00 and 23. | All status changes with an event time occurring within the hour. For example, requesting `event_time=2019-10-01T07` returns all status changes where `2019-10-01T07:00:00 <= status_change.event_time < 2019-10-01T08:00:00` UTC. |
 
 Without an `event_time` query parameter, `/events` shall return a `400 Bad Request` error.
@@ -514,17 +512,11 @@ Unless stated otherwise by the municipality, this endpoint must return only thos
 
 #### Telemetry - Query Parameters
 
-The telemetry API should allow querying with a combination of query parameters:
+| Parameter    | Format | Expected Output |
+| ---------    | ------ | --------------- |
+| `telemetry_time` | `YYYY-MM-DDTHH`, an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) extended datetime representing an UTC hour between 00 and 23. | All telemetry with timestamp occurring within the hour. For example, requesting `telemetry_time=2019-10-01T07` returns all telemetry where `2019-10-01T07:00:00 <= telemetry.timestamp < 2019-10-01T08:00:00` UTC. |
 
-| Parameter | Type | Expected Output |
-| ----- | ---- | -------- |
-| `start_time` | [timestamp][ts] | telemetry where `start_time <= telemetry.timestamp` |
-| `end_time` | [timestamp][ts] | telemetry where `telemetry.timestamp < end_time` |
-| `trip_id` | UUID | telemetry where `telemetry.trip_id == trip_id` 
-
-Should either side of the requested time range be missing, or a `trip_id` is not present, `/events` shall return a `400 Bad Request` error.
-
-Should the requested time range exceed 2 weeks, `/telemetry` shall return a `400 Bad Request` error.
+Without a `telemetry_time` query parameter, `/telemetry` shall return a `400 Bad Request` error.
 
 [Top][toc]
 
@@ -554,8 +546,6 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 **[Beta feature][beta]:** No (as of 1.2.0)  
 **Schema:** [`vehicles` schema][vehicles-schema]  
 **`data` Payload:** `{ "vehicles": [] }`, an array of [Vehicle](vehicle) objects
-
-(?) Open question: should we standardize on telemetry over GeoJSON Point? E.g. replace last_event_location with last_event_telemetry.
 
 [Top][toc]
 
