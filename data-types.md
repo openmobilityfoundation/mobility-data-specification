@@ -106,10 +106,6 @@ Events represent changes in vehicle status.
 | `journey_id` | UUID | Optional | Journey UUID | TODO "see `journey_id`" or something |
 | `associated_ticket` | String | Optional | Identifier for an associated ticket inside an Agency-maintained 311 or CRM system |
 
-(?) Does anyone use `associated_ticket`?
-
-(?) Does anyone use `publication_time`?
-
 ### Event Times
 
 Because of the unreliability of device clocks, the Provider is unlikely to know with total confidence what time an event occurred at. However, Providers are responsible for constructing as accurate a timeline as possible. Most importantly, the order of the timestamps for a particular device's events must reflect the Provider's best understanding of the order in which those events occurred.
