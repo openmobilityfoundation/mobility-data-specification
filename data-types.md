@@ -35,6 +35,8 @@ A vehicle record is as follows:
 
 Note that the only mutable field is `vehicle_id`.
 
+(?) Move `vehicle_id` into events?
+
 [Top][toc]
 
 ### Propulsion Types
@@ -92,6 +94,7 @@ Events represent changes in vehicle status.
 | `device_id` | UUID | Required | A unique device ID in UUID format |
 | `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
 | `data_provider_id` | UUID | Optional | If different than `provider_id`, a UUID for the data solution provider managing the data feed in this endpoint. See MDS [provider list](/providers.csv) which includes both service operators and data solution providers. |
+| `event_id` | UUID | Required | A unique event ID |
 | `vehicle_id` | String | Required | A unique vehicle identifier (visible code, license plate, etc), visible on the vehicle itself |
 | `vehicle_state` | Enum | Required | See [vehicle state][vehicle-states] table |
 | `event_types` | Enum[] | Required | Vehicle [event types][vehicle-events] for state change, with allowable values determined by `vehicle_state` |
@@ -117,8 +120,10 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 
 | Field          | Type           | Required/Optional     | Field Description                                            |
 | -------------- | -------------- | --------------------- | ------------------------------------------------------------ |
-| `telemetry_id` | UUID           | Required              | ID used for uniquely-identifying a Telemetry entry |
 | `device_id`    | UUID           | Required              | ID used in [Register](#vehicle---register)                     |
+| `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
+| `data_provider_id` | UUID | Optional | If different than `provider_id`, a UUID for the data solution provider managing the data feed in this endpoint. See MDS [provider list](/providers.csv) which includes both service operators and data solution providers. |
+| `telemetry_id` | UUID           | Required              | ID used for uniquely-identifying a Telemetry entry |
 | `timestamp`    | [Timestamp][ts]| Required              | Date/time that event occurred. Based on GPS or GNSS clock            |
 | `trip_ids`     | UUID[]         | Required              | If telemetry occurred during a trip, the ID of the trip(s).  If not in a trip, `null`.
 | `journey_id`   | UUID           | Required              | If telemetry occurred during a trip, the ID of the journey.  If not in a trip, `null`.
@@ -214,8 +219,8 @@ A Trip is defined by the following structure:
 | `fare_attributes`        | Map             | Optional               | **[Mode](/modes#list-of-supported-modes) Specific**. [Fare attributes](/modes#fare-attributes) given as unordered key-value pairs |
 | `start_time`             | [Timestamp][ts] | Required               | Start of the passenger/driver trip |
 | `end_time`               | [Timestamp][ts] | Required               | End of the passenger/driver trip |
-| `start_location`         | [Point](point)  | Required               | Location of the start of the trip. See also [Stop-based Geographic Data][stop-based-geo]. |
-| `end_location`           | [Point](point)  | Required               | Location of the end of the trip. See also [Stop-based Geographic Data][stop-based-geo]. |
+| `start_location`         | [GPS](gps)  | Required               | Location of the start of the trip. |
+| `end_location`           | [GPS](gps)  | Required               | Location of the end of the trip. |
 | `publication_time`       | [Timestamp][ts] | Optional               | Date/time that trip became available through the trips endpoint |
 | `reservation_attributes` | [Reservation](#reservation-data) | Required if available | Reservation details, if a reservation initiated this trip
 | `accessibility_options`  | Enum[]          | Optional               | The **union** of any accessibility options requested, and used. E.g. if the passenger requests a vehicle with `wheelchair_accessible`, but doesn’t utilize the features during the trip, the trip payload will include `accessibility_options: ['wheelchair_accessible']`. See [accessibility-options][accessibility-options] |

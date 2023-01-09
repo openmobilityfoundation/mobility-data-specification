@@ -90,18 +90,9 @@ Method: `POST`
 
 Body Params:
 
-| Field        | Type    | Required/Optional | Field Description                                                    |
-| ------------ | ------- | ----------------- | -------------------------------------------------------------------- |
-| `device_id`  | UUID    | Required          | Provided by Operator to uniquely identify a vehicle                  |
-| `vehicle_id` | String  | Required          | Vehicle Identification Number (vehicle_id) visible on vehicle        |
-| `vehicle_type`       | Enum    | Required          | [Vehicle Type][vehicle-types]                                        |
-| `mode`       | Enum    | Required          | [Mobility Mode][modes]                                        |
-| `propulsion_types` | Enum[]  | Required          | Array of [Propulsion Type][propulsion-types]; allows multiple values |
-| `vehicle_attributes` | Conditionally Required | Array of [vehicle attributes](/modes/#vehicle-attributes)   | Vehicle attributes appropriate for the current [mode][modes] |
-| `battery_capacity` | Integer  | Required if Available | Capacity of battery expressed as milliamp hours (mAh) |
-| `fuel_capacity` | Integer  | Required if Available | Capacity of fuel tank (liquid, solid, gaseous) expressed in liters |
+TODO a list of Vehicle records FIXME
 
-201 Success Response:
+200 Success Response:
 
 _No content returned on success._
 
@@ -117,36 +108,6 @@ _No content returned on success._
 | `error`              | `error_description`                               | `error_details`[]               |
 | -------------------- | ------------------------------------------------- | ------------------------------- |
 | `already_registered` | A vehicle with `device_id` is already registered  |                                 |
-
-[Top][toc]
-
-## Vehicle - Update
-
-The `/vehicles` update endpoint is used to update some mutable aspect of a vehicle. For now, only `vehicle_id`.
-
-Endpoint: `/vehicles/{device_id}`
-Method: `PUT`
-
-Body Params:
-
-| Field        | Type    | Required/Optional | Field Description                                                    |
-| ------------ | ------- | ----------------- | -------------------------------------------------------------------- |
-| `vehicle_id` | String  | Required          | License Plate (if present) or VIN visible on a vehicle               |
-
-200 Success Response:
-
-_No content returned on success._
-
-400 Failure Response:
-
-| `error`              | `error_description`                               | `error_details`[]               |
-| -------------------- | ------------------------------------------------- | ------------------------------- |
-| `bad_param`          | A validation error occurred.                      | Array of parameters with errors |
-| `missing_param`      | A required parameter is missing.                  | Array of missing parameters     |
-
-404 Failure Response:
-
-_No content returned if no vehicle matching `device_id` is found._
 
 [Top][toc]
 
@@ -225,9 +186,11 @@ The `/stops` endpoint allows an agency to register city-managed Stops, or a prov
 **[Beta feature][beta]:** Yes (as of 1.0.0). [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/638)    
 **Request Body**: An array of [Stops][stops]
 
-201 Success Response:
+200 Success Response:
 
 _No content returned on success._
+
+(?) TODO FIXME resolve bulk return codes
 
 400 Failure Response:
 
