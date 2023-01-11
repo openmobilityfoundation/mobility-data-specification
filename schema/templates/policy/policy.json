@@ -28,7 +28,7 @@
           "$ref": "#/definitions/uuid",
           "description": "Unique ID of policy"
         },
-        "provider_ids":{
+        "provider_ids": {
           "$id": "#/definitions/policy/properties/provider_ids",
           "$ref": "#/definitions/null_uuid_array",
           "description": "Providers for whom this policy is applicable; empty arrays and null/absent implies all Providers.",
@@ -43,7 +43,7 @@
           "$id": "#/definitions/policy/properties/currency",
           "$ref": "#/definitions/currency"
         },
-        "start_date":{
+        "start_date": {
           "$id": "#/definitions/policy/properties/start_date",
           "$ref": "#/definitions/timestamp",
           "description": "Beginning date/time of policy enforcement"
@@ -107,7 +107,6 @@
             "count",
             "time",
             "speed",
-            "rate",
             "user"
           ]
         },
@@ -126,8 +125,7 @@
             "$id": "#/definitions/rule/properties/states/propertyNames",
             "$ref": "#/definitions/vehicle_state"
           },
-          "properties": {
-          },
+          "properties": {},
           "additionalProperties": {
             "type": "array",
             "uniqueItems": true,
@@ -163,32 +161,50 @@
         },
         "minimum": {
           "$id": "#/definitions/rule/properties/minimum",
-          "type": ["null", "integer"],
+          "type": [
+            "null",
+            "integer"
+          ],
           "description": "Minimum value, if applicable (default 0)"
         },
         "maximum": {
           "$id": "#/definitions/rule/properties/maximum",
-          "type": ["null", "integer"],
+          "type": [
+            "null",
+            "integer"
+          ],
           "description": "Maximum value, if applicable (default unlimited)"
         },
         "inclusive_minimum": {
           "$id": "#/definitions/rule/properties/inclusive_minimum",
-          "type": ["null", "boolean"],
+          "type": [
+            "null",
+            "boolean"
+          ],
           "description": "Whether the rule minimum is considered in-bounds (default true)"
         },
         "inclusive_maximum": {
           "$id": "#/definitions/rule/properties/inclusive_maximum",
-          "type": ["null", "boolean"],
+          "type": [
+            "null",
+            "boolean"
+          ],
           "description": "Whether the rule maximum is considered in-bounds (default true)"
         },
         "rate_amount": {
           "$id": "#/definitions/rule/properties/rate_amount",
-          "type": ["null", "integer"],
+          "type": [
+            "null",
+            "integer"
+          ],
           "description": "The amount of a rate applied when this rule applies, if applicable (default zero). A positive integer rate amount represents a fee, while a negative integer represents a subsidy. Rate amounts are given in the currency defined in the Policy."
         },
         "rate_recurrence": {
           "$id": "#/definitions/rule/properties/rate_recurrence",
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "description": "Specify how a rate is applied – either once, or periodically according to a time unit specified using rule_units",
           "enum": [
             "once_on_match",
@@ -199,7 +215,10 @@
         },
         "rate_applies_when": {
           "$id": "#/definitions/rule/properties/rate_applies_when",
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "description": "Specify when a rate is applicable to an event or count: when it's within rule bounds or when it is not",
           "enum": [
             "in_bounds",
@@ -223,7 +242,10 @@
         },
         "messages": {
           "$id": "#/definitions/rule/properties/messages",
-          "type": ["null", "object"],
+          "type": [
+            "null",
+            "object"
+          ],
           "description": "Message to rider user, if desired, in various languages, keyed by BCP 47 language tag",
           "propertyNames": {
             "pattern": "([A-Za-z]{2,3})([-][A-Za-z]{3}){0,3}([-]([A-Za-z]{4}))?([-]([A-Za-z]{2}|[0-9]{3}))?"
@@ -231,7 +253,10 @@
         },
         "value_url": {
           "$id": "#/definitions/rule/properties/value_url",
-          "type": ["null", "string"],
+          "type": [
+            "null",
+            "string"
+          ],
           "description": "URL to an API endpoint that can provide dynamic information for the measured value",
           "format": "uri"
         }
@@ -302,9 +327,6 @@
                         "rate_recurrence"
                       ],
                       "properties": {
-                        "rule_type": {
-                          "const": "rate"
-                        },
                         "rule_units": {
                           "enum": [
                             "amount",
