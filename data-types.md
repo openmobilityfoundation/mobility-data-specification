@@ -25,7 +25,6 @@ A vehicle record is as follows:
 | `device_id`          | UUID     | Required              | A unique device ID in UUID format, should match this device in Provider |
 | `provider_id`        | UUID     | Required              | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). | 
 | `data_provider_id`   | UUID     | Optional              | If different than `provider_id`, a UUID for the data solution provider managing the data feed in this endpoint. See MDS [provider list](/providers.csv) which includes both service operators and data solution providers. |
-| `vehicle_id`         | String   | Required              | A unique vehicle identifier (visible code, license plate, etc), visible on the vehicle itself |
 | `vehicle_type`       | Enum     | Required              | The [vehicle type][vehicle-types] |
 | `vehicle_attributes` | Array    | Optional              | **[Mode][modes]-Specific** [vehicle attributes](/modes#vehicle-attributes) given as mode-specific unordered key-value pairs |
 | `propulsion_types`   | Enum[]   | Required              | Array of [propulsion types][propulsion-types]; allows multiple values |
@@ -70,18 +69,15 @@ The list of allowed `vehicle_type` values in MDS. Aligning with [GBFS vehicle ty
 
 ## Vehicle Status 
 
-A vehicle status record represents the current or last-known disposition of a vehicle, defined as follows:
+A vehicle status record represents the current or last-known event and telemetry from a vehicle, defined as follows:
 
 | Field | Type | Required/Optional | Comments |
-| ----- | ---- | ----------------- | ----- |
+| ----- | ---- | ----------------- | -------- |
 | `device_id` | UUID | Required | A unique device ID in UUID format, should match this device in Provider |
 | `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
 | `data_provider_id` | UUID | Optional | If different than `provider_id`, a UUID for the data solution provider managing the data feed in this endpoint. See MDS [provider list](/providers.csv) which includes both service operators and data solution providers. |
-| `last_vehicle_state` | Enum | Required | [Vehicle state][vehicle-states] of most recent state change. |
-| `last_event_time` | [Timestamp][ts] | Required | Date/time when last state change occurred. See [Event Times][event-times] |
-| `last_event_types` | Enum[] | Required | [Vehicle event(s)][vehicle-events] of most recent state change, allowable values determined by `last_vehicle_state`. |
-| `last_event_location` | [GPS][gps]| Required | Location of vehicle's last event. See also [Stop-based Geographic Data][stop-based-geo]. |
-| `current_location` | [GPS][gps] | Required if Applicable | Current location of vehicle if different from last event, and the vehicle is not currently on a trip. See also [Stop-based Geographic Data][stop-based-geo]. |
+| `last_event` | Event | Required | Most recent [Event](#events) based on `timestamp` |
+| `last_telemetry` | Telemetry | Required | Most recent [Telemetry](#telemetry)  based on `timestamp` |
 
 [Top][toc]
 
@@ -98,7 +94,7 @@ Events represent changes in vehicle status.
 | `vehicle_id` | String | Required | A unique vehicle identifier (visible code, license plate, etc), visible on the vehicle itself |
 | `vehicle_state` | Enum | Required | See [vehicle state][vehicle-states] table |
 | `event_types` | Enum[] | Required | Vehicle [event types][vehicle-events] for state change, with allowable values determined by `vehicle_state` |
-| `event_time` | [Timestamp][ts] | Required | Date/time that event occurred at. See [Event Times][event-times] |
+| `timestamp` | [Timestamp][ts] | Required | Date/time that event occurred at. See [Event Times][event-times] |
 | `publication_time` | [Timestamp][ts] | Optional | Date/time that event became available through the status changes endpoint |
 | `event_location` | [GPS][gps] | Required | See also [Stop-based Geographic Data][stop-based-geo]. |
 | `event_geographies` | UUID[] | Optional | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 2.0.0)*. Array of Geography UUIDs consisting of every Geography that contains the location of the status change. See [Geography Driven Events][geography-driven-events]. Required if `event_location` is not present. |
@@ -241,8 +237,6 @@ Examples of mode-specific `trip_attributes`:
 | `cancellation_reason`           | string                         | Conditionally Required | The reason why a *driver* cancelled a reservation. (required if a driver cancelled a trip, and a `driver_cancellation` event_type was part of the trip) |
 | `accessibility_options`         | Enum[]                         | Optional               | The **union** of any accessibility options requested, and used. E.g. if the passenger requests a vehicle with `wheelchair_accessible`, but doesn’t utilize the features during the trip, the trip payload will include `accessibility_options: ['wheelchair_accessible']`. See [accessibility-options][accessibility-options] |
 | `parking_verification_url` | String | Optional | A URL to a photo (or other evidence) of proper vehicle parking |
-
-(?) Do I have the right partitioning between trip attributes and reservation attributes?
 
 [Top][toc]
 
