@@ -21,10 +21,10 @@ As with all MDS definitions, they should be described in a way that maximizes th
 | `driver_cancellation` | Driver cancelled a trip |
 | `fueling_start`       | Fueling starts |
 | `fueling_end`         | Fueling ends |
-| `located`             | Located (opposite of Missing) |
+| `not_located`             | Location unknown |
+| `located`             | Location found (opposite of Missing) |
 | `maintenance`         | General maintenance |
 | `maintenance_pick_up` | Pick up for maintenance |
-| `missing`             | Missing |
 | `off_hours`           | Off hours - end of service |
 | `on_hours`            | On hours - start of service |
 | `customer_cancellation` | Customer cancelled a trip |

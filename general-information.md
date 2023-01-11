@@ -22,6 +22,7 @@ This document contains specifications that are shared between the various MDS [A
   - [GBFS Compatibility](#gbfs-compatibility)
 - [Timestamps](#timestamps)
 - [UUIDs](#uuids)
+- [Trips](#trips)
 - [Vehicle Characteristics](#vehicle-characteristics)
   - [Accessibility Options](#accessibility-options)
   - [Propulsion Types](#propulsion-types)
@@ -144,9 +145,9 @@ For the purposes of this specification, the intersection of two geographic datat
 
 ## Geography-Driven Events
 
-**[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.1.0)*. [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/670)  
+**[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.1.0)*. [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/670)
 
-Geography-Driven Events (GDE) is a new MDS feature for Agencies to perform complete Policy compliance monitoring without precise location data. Geography-Driven Events describe individual vehicles in realtime – not just aggregate data. However, rather than receiving the exact location of a vehicle, Agencies receive information about the vehicle's current geographic region. The regions used for Geography-Driven Events correspond to the Geographies in an Agency's current Policy. In this way, the data-shared using Geography-Driven Events is matched to an Agency's particular regulatory needs. 
+Geography-Driven Events (GDE) is a new MDS feature for Agencies to perform complete Policy compliance monitoring without precise location data. Geography-Driven Events describe individual vehicles in realtime – not just aggregate data. However, rather than receiving the exact location of a vehicle, Agencies receive information about the vehicle's current geographic region. The regions used for Geography-Driven Events correspond to the Geographies in an Agency's current Policy. In this way, the data-shared using Geography-Driven Events is matched to an Agency's particular regulatory needs.
 
 See [this example](/policy/examples/requirements.md#geography-driven-events) for how to implement GDE using [Policy Requirements](/policy#requirement).
 
@@ -164,7 +165,7 @@ Here's how it works in practice:
 
 	*Agency adds rule disallowing parking on waterfront path, begins receiving data on events within area.*
 
-Agencies that wish to use Geography-Driven Events do so by requiring a new `event_geographies` field in status events. When an Agency is using Geography-Driven Events, Providers must emit a new `changed_geographies` status event whenever a vehicle in a trip enters or leaves a Geography managed by a Policy. 
+Agencies that wish to use Geography-Driven Events do so by requiring a new `event_geographies` field in status events. When an Agency is using Geography-Driven Events, Providers must emit a new `changed_geographies` status event whenever a vehicle in a trip enters or leaves a Geography managed by a Policy.
 
 During the Beta period for this feature, location and telemetry data remain required fields. This allows Agencies to test Geography-Driven Events, measuring its accuracy and efficacy against regulatory systems based on precise location data. After the beta period, if Geography-Driven Events is deemed by the OMF to be accurate and effective, the specification will evolve to allow cities to use Geography-Driven Events in lieu of location or telemetry data.
 
@@ -226,7 +227,8 @@ Stops describe vehicle trip start and end locations in a pre-designated physical
 | capacity               | {vehicle_type: number}                                | Required | Number of total places per vehicle_type |
 | num_vehicles_available | {vehicle_type: number}                                | Required | How many vehicles are available per vehicle_type at this stop? |
 | num_vehicles_disabled  | {vehicle_type: number}                                | Required | How many vehicles are unavailable/reserved per vehicle_type at this stop? |
-| provider_id            | UUID                                                  | Optional | UUID for the Provider managing this stop. Null/undefined if managed by an Agency.  See MDS [provider list](/providers.csv). |
+| provider_id            | UUID                                                  | Optional | UUID for the provider managing this stop. Null/undefined if managed by an agency.  See MDS [provider list](/providers.csv). |
+| data_provider_id       | UUID                                                  | Optional | UUID for the data provider managing the data coming from this stop. Null/undefined if managed by an agency or a provider.  See MDS [provider list](/providers.csv). |
 | geography_id           | UUID                                                  | Optional | Pointer to the [Geography](/geography) that represents the Stop geospatially via Polygon or MultiPolygon. |
 | region_id              | string                                                | Optional | ID of the region where station is located, see [GBFS Station Information][gbfs-station-info] |
 | short_name             | String                                                | Optional | Abbreviated stop name |
@@ -279,6 +281,23 @@ A `timestamp` refers to integer milliseconds since Unix epoch.
 Object identifiers are described via Universally Unique Identifiers [(UUIDs)](https://en.wikipedia.org/wiki/Universally_unique_identifier). For example, the `device_id` field used to uniquely identify a vehicle is a UUID.
 
 MDS uses Version 1 UUIDs by default. Version 4 UUIDs may be used where noted.
+
+[Top][toc]
+
+## Trips
+
+Counting trips is a common analysis with MDS data, but in some instances when
+a user rents a vehicle the rental may end up being very short because the
+vehicle is unusable or because the customer changes their mind.
+To facilitate a common definition of trips for analysis, MDS defines a trip
+as a user taking control of a vehicle for 60 seconds or more.
+If a user reserves a vehicle and cancels before taking control of the vehicle
+that reservation does not count as a trip, nor does a user taking control of
+the vehicle and canceling or ending the trip in under 60 seconds.
+
+Providers are still expected to report all trips and trip related events in
+all MDS endpoints, but parties may use this definition as a shared reference
+at the recommendation of the MDS community when analysing trips.
 
 [Top][toc]
 
@@ -351,7 +370,7 @@ The list of allowed `vehicle_type` values in MDS. Aligning with [GBFS vehicle ty
 
 MDS APIs must handle requests for specific versions of the specification from clients.
 
-Versioning must be implemented through the use of a custom media-type, `application/vnd.mds+json`, combined with a required `version` parameter.
+Versioning must be implemented through the use of a custom media-type, `application/vnd.mds+json`, combined with a required `version` parameter.  The one exception is the `/reports` endpoint, which returns CSV files instead of JSON, and so uses `text/vnd.mds+csv` as its media-type.
 
 The version parameter specifies the dot-separated combination of major and minor versions from a published version of the specification. For example, the media-type for version `1.0.1` would be specified as `application/vnd.mds+json;version=1.0`
 

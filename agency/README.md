@@ -81,6 +81,7 @@ A vehicle record is as follows:
 | ------------- | --------- | ----------------------------------------------------------------------------- |
 | `device_id`   | UUID      | Provided by Operator to uniquely identify a vehicle                           |
 | `provider_id` | UUID      | Issued by Agency and [tracked](../providers.csv)                              |
+| `data_provider_id` | UUID | Optional | If different than `provider_id`, a UUID for the data solution provider managing the data feed in this endpoint. See MDS [provider list](/providers.csv) which includes both service operators and data solution providers. |
 | `vehicle_id`  | String    | Vehicle Identification Number (vehicle_id) visible on vehicle                 |
 | `vehicle_type`        | Enum      | [Vehicle Type][vehicle-types]           |
 | `propulsion_types`  | Enum[]    | Array of [Propulsion Type][propulsion-types]; allows multiple values          |
@@ -227,16 +228,9 @@ Body Params:
 | ---------- | ------------------------------ | ------------------------------------------------------------------------------------------------------- |
 | `success`  | Integer                        | Number of successfully written telemetry data points.                                                   |
 | `total`    | Integer                        | Total number of provided points.                                                                       |
-| `failures` | [Telemetry](#telemetry-data)[] | Array of failed telemetry for zero or more vehicles (empty if all successful).                          |
+| `failures` | [Telemetry Error](#telemetry-error)[] | Array of errors including the failed telemetry data and error details (empty if all successful).                          |
 
-400 Failure Response:
-
-| `error`         | `error_description`                  | `error_details`[]                 |
-| --------------- | ------------------------------------ | --------------------------------- |
-| `bad_param`     | A validation error occurred.         | Array of parameters with errors   |
-| `invalid_data`  | None of the provided data was valid. |                                   |
-| `missing_param` | A required parameter is missing.     | Array of missing parameters       |
-| `unregistered`  | Some of the devices are unregistered | Array of unregistered `device_id` |
+Alway returns 200. Any failed data is detailed in the `failures` array of the response.
 
 [Top][toc]
 
@@ -260,6 +254,24 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | `battery_percent`       | Integer          | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 100 |
 | `fuel_percent`       | Integer          | Required if Applicable | Percent fuel in vehicle, expressed between 0 and 100 |
 | `stop_id`      | UUID           | Required if Applicable | Stop that the vehicle is currently located at. Only applicable for _docked_ Micromobility. See [Stops][stops] |
+
+[Top][toc]
+
+## Telemetry Error
+Error response for indicating failed telemetry data for the [Telemetry](#vehicle---telemetry) endpoint
+
+| Field          | Type                           | Field Description
+| -------------- | ------------------------------ | --------------------------------- |
+| `telemetry`    | [Telemetry](#telemetry-data)   | The failed telemetry data         |
+| `error`        | [Error Message][error-message] | Error message detailing the error |
+
+ Errors:
+
+| `error`         | `error_description`                  | `error_details`[]                 |
+| --------------- | ------------------------------------ | --------------------------------- |
+| `bad_param`     | A validation error occurred.         | Array of parameters with errors   |
+| `missing_param` | A required parameter is missing.     | Array of missing parameters       |
+| `unregistered`  | Vehicle is not registered            |                                   |
 
 [Top][toc]
 
@@ -382,6 +394,7 @@ The Trips endpoint serves two purposes:
 | trip_type                     | Enum                           | Optional               | The type of the trip |
 | trip_attributes               | `{ [String]: String}`          | Optional               | Trip attributes, given as mode-specific key-value pairs |
 | provider_id                   | UUID                           | Required               | Provider which managed this trip |
+| `data_provider_id`            | UUID                           | Optional               | If different than `provider_id`, a UUID for the data solution provider managing this data endpoint. See MDS [provider list](/providers.csv) which includes both service operators and data solution providers. |
 | reservation_method            | Enum                           | Required               | Way the customer created their reservation, see [reservation-method](#reservation-method) |
 | reservation_time              | Timestamp                      | Required               | Time the customer *requested* a reservation |
 | reservation_type              | Enum                           | Required               | Type of reservation, see [reservation-type](#reservation-type) |
@@ -427,3 +440,4 @@ Payload which was POST'd
 [vehicle-states]: /modes/vehicle_states.md
 [vehicle-events]: /modes/event_types.md
 [versioning]: /general-information.md#versioning
+[error-message]: /general-information.md#error-messages
