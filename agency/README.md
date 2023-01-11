@@ -17,7 +17,6 @@ This specification contains a collection of RESTful APIs used to specify the dig
 * [Vehicle - Update](#vehicle---update)
 * [Vehicle - Events](#vehicle---event)
 * [Vehicle - Telemetry](#vehicle---telemetry)
-* [Telemetry Data](#telemetry-data)
 * [Stops](#stops)
 
 ## General information
@@ -164,16 +163,9 @@ Body Params:
 | ---------- | ------------------------------ | ------------------------------------------------------------------------------------------------------- |
 | `success`  | Integer                        | Number of successfully written telemetry data points.                                                   |
 | `total`    | Integer                        | Total number of provided points.                                                                       |
-| `failures` | [Telemetry](#telemetry-data)[] | Array of failed telemetry for zero or more vehicles (empty if all successful).                          |
+| `failures` | [Telemetry Error](#telemetry-error)[] | Array of errors including the failed telemetry data and error details (empty if all successful).                          |
 
-400 Failure Response:
-
-| `error`         | `error_description`                  | `error_details`[]                 |
-| --------------- | ------------------------------------ | --------------------------------- |
-| `bad_param`     | A validation error occurred.         | Array of parameters with errors   |
-| `invalid_data`  | None of the provided data was valid. |                                   |
-| `missing_param` | A required parameter is missing.     | Array of missing parameters       |
-| `unregistered`  | Some of the devices are unregistered | Array of unregistered `device_id` |
+Alway returns 200. Any failed data is detailed in the `failures` array of the response.
 
 [Top][toc]
 
@@ -302,3 +294,4 @@ Body Params:
 [vehicle-event-types]: /modes/event_types.md
 [vehicle-event-data]: /general-information.md#event-data
 [versioning]: /general-information.md#versioning
+[error-message]: /general-information.md#error-messages
