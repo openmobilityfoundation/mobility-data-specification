@@ -32,10 +32,6 @@ A vehicle record is as follows:
 | `battery_capacity`   | Integer  | Required if Available | Capacity of battery expressed as milliamp hours (mAh) |
 | `fuel_capacity`      | Integer  | Required if Available | Capacity of fuel tank (liquid, solid, gaseous) expressed in liters |
 
-Note that the only mutable field is `vehicle_id`.
-
-(?) Move `vehicle_id` into events?
-
 [Top][toc]
 
 ### Propulsion Types
@@ -76,8 +72,8 @@ A vehicle status record represents the current or last-known event and telemetry
 | `device_id` | UUID | Required | A unique device ID in UUID format, should match this device in Provider |
 | `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
 | `data_provider_id` | UUID | Optional | If different than `provider_id`, a UUID for the data solution provider managing the data feed in this endpoint. See MDS [provider list](/providers.csv) which includes both service operators and data solution providers. |
-| `last_event` | Event | Required | Most recent [Event](#events) based on `timestamp` |
-| `last_telemetry` | Telemetry | Required | Most recent [Telemetry](#telemetry)  based on `timestamp` |
+| `last_event` | Event | Required | Most recent [Event](#events) for this device based on `timestamp` |
+| `last_telemetry` | Telemetry | Required | Most recent [Telemetry](#telemetry) for this device based on `timestamp` |
 
 [Top][toc]
 
@@ -209,19 +205,17 @@ A Trip is defined by the following structure:
 | `journey_id`             | UUID            | Optional               | A unique [journey ID](/modes#journey-id) for associating collections of trips for its [mode] |
 | `trip_type`              | Enum            | Optional               | **[Mode](/modes#list-of-supported-modes) Specific**. The [trip type](/modes#trip-type) describing the purpose of a trip segment |
 | `trip_id`                | UUID            | Required               | A unique ID for each trip |
-| `trip_duration`          | Integer         | Required               | Time, in Seconds |
-| `trip_distance`          | Integer         | Required               | Trip Distance, in Meters |
 | `trip_attributes`        | Map             | Optional               | **[Mode](/modes#list-of-supported-modes) Specific**. [Trip attributes](/modes#trip-attributes) given as unordered key-value pairs |
 | `fare_attributes`        | Map             | Optional               | **[Mode](/modes#list-of-supported-modes) Specific**. [Fare attributes](/modes#fare-attributes) given as unordered key-value pairs |
 | `start_time`             | [Timestamp][ts] | Required               | Start of the passenger/driver trip |
 | `end_time`               | [Timestamp][ts] | Required               | End of the passenger/driver trip |
 | `start_location`         | [GPS](gps)  | Required               | Location of the start of the trip. |
 | `end_location`           | [GPS](gps)  | Required               | Location of the end of the trip. |
+| `duration`               | Integer         | Required               | Time, in Seconds |
+| `distance`               | Integer         | Required               | Trip Distance, in Meters |
 | `publication_time`       | [Timestamp][ts] | Optional               | Date/time that trip became available through the trips endpoint |
 | `reservation_attributes` | [Reservation](#reservation-data) | Required if available | Reservation details, if a reservation initiated this trip
 | `accessibility_options`  | Enum[]          | Optional               | The **union** of any accessibility options requested, and used. E.g. if the passenger requests a vehicle with `wheelchair_accessible`, but doesn’t utilize the features during the trip, the trip payload will include `accessibility_options: ['wheelchair_accessible']`. See [accessibility-options][accessibility-options] |
-
-(?) Reconcile inconsistent use of `trip_`
 
 [Top][toc]
 
@@ -241,7 +235,7 @@ Examples of mode-specific `trip_attributes`:
 [Top][toc]
 
 [agency]: /agency/README.md
-[accessability-options]: /modes/README.md#accessibility-options
+[accessibility-options]: /modes/README.md#accessibility-options
 [decimal-degrees]: https://en.wikipedia.org/wiki/Decimal_degrees
 [event-times]: /general-information.md#event-times
 [hdop]: https://en.wikipedia.org/wiki/Dilution_of_precision_(navigation)

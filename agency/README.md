@@ -27,7 +27,7 @@ This specification uses data types including timestamps, UUIDs, and vehicle stat
 
 ### Versioning
 
-`agency` APIs must handle requests for specific versions of the specification from clients.
+`Agency` APIs must handle requests for specific versions of the specification from clients.
 
 Versioning must be implemented as specified in the [Versioning section][versioning].
 
@@ -82,31 +82,45 @@ _No content returned on vehicle not found._
 
 ## Vehicle - Register
 
-The `/vehicles` registration endpoint is used to register a vehicle for use in the Agency's jurisdiction.
+The `/vehicles` registration endpoint is used to register vehicles for use in the Agency's jurisdiction.
 
-Endpoint: `/vehicles`
-Method: `POST`
-
-Body Params:
-
-TODO a list of Vehicle records FIXME
+**Endpoint**: `/vehicles`  
+**Method:** `POST`  
+**Payload:** An array of [Vehicles](#vehicle)  
 
 200 Success Response:
 
-_No content returned on success._
+| Field      | Type                                        | Field Description |
+| -----      | ----                                        | ----------------- |
+| `total`    | Integer                                     | Total number of provided vehicles |
+| `success`  | Integer                                     | Number of successfully written vehicles |
+| `failures` | [InvalidVehicle](#invalid-vehicle-record)[] | Array of failure responses (empty if all successful) |
 
-400 Failure Response:
+### Invalid Vehicle Record:
+
+| Field      | Type                                    | Field Description |
+| -----      | ----                                    | ----------------- |
+| `vehicle`  | Vehicle                                 | Invalid vehicle record |
+| `errors`   | [VehicleError](#vehicle-error-record)[] | Description of why vehicle record is invalid |
+
+### Vehicle Error Record:
+
+| Field           | Type                                     | Field Description |
+| -----           | ----                                     | ----------------- |
+| `error`         | [VehicleErrorType](#vehicle-error-types) | Type of error     |
+| `error_details` | String[]                                 | Array of fields with errors, if applicable |
+
+### Vehicle Errors:
 
 | `error`              | `error_description`                               | `error_details`[]               |
 | -------------------- | ------------------------------------------------- | ------------------------------- |
-| `bad_param`          | A validation error occurred.                      | Array of parameters with errors |
-| `missing_param`      | A required parameter is missing.                  | Array of missing parameters     |
-
-409 Failure Response:
-
-| `error`              | `error_description`                               | `error_details`[]               |
-| -------------------- | ------------------------------------------------- | ------------------------------- |
+| `bad_param`          | A validation error occurred                       | Array of parameters with errors |
+| `missing_param`      | A required parameter is missing                   | Array of missing parameters     |
 | `already_registered` | A vehicle with `device_id` is already registered  |                                 |
+
+403 Unauthorized Response:
+
+**None**
 
 [Top][toc]
 
@@ -114,33 +128,43 @@ _No content returned on success._
 
 The vehicle `/events` endpoint allows the Provider to submit events describing the state changes of multiple vehicles.
 
-Endpoint: `/vehicles/events`
-
-Method: `POST`
-
-Body Params:
-
-| Field           | Type                         | Required/Optional      | Field Description                                                                                          |
-|-----------------|------------------------------|------------------------|------------------------------------------------------------------------------------------------------------|
-| `events` | [EventData](#vehicle-event-data)[]  | Required               | An array of [Vehicle Event Data](#vehicle-event-data) objects.                                                                       |
+**Endpoint:** `/vehicles/events`  
+**Method:** `POST`  
+**Payload:** An array of [Vehicle Events](#vehicle-event)  
 
 200 Success Response:
 
-| Field      | Type                           | Field Description                                                                                       |
-| ---------- | ------------------------------ | ------------------------------------------------------------------------------------------------------- |
-| `success`  | Integer                        | Number of successfully written events.                                                   |
-| `total`    | Integer                        | Total number of provided events.                                                                       |
-| `failures` | [EventData](#vehicle-event-data)[] | Array of invalid events (empty if all successful).                          |
+| Field      | Type                                        | Field Description |
+| -----      | ----                                        | ----------------- |
+| `total`    | Integer                                     | Total number of provided events |
+| `success`  | Integer                                     | Number of successfully written events |
+| `failures` | [InvalidVehicle](#invalid-vehicle-record)[] | Array of failure responses (empty if all successful) |
 
-(?) Should we have a description/error-code for each failure in the `failures`?
+### Invalid Event Record:
 
-400 Failure Response:
+| Field      | Type                                    | Field Description |
+| -----      | ----                                    | ----------------- |
+| `event`    | [Event](#vehicle-event)                 | Invalid event record |
+| `errors`   | [EventError](#event-error-record)[] | Details of why event record is invalid |
 
-| `error`             | `error_description`             | `error_details`[]               |
-| ------------------- | ------------------------------- | ------------------------------- |
-| `bad_param`         | A validation error occurred     | Array of parameters with errors |
-| `missing_param`     | A required parameter is missing | Array of missing parameters     |
-| `unregistered`      | Some of the devices are not registered       |                                 |
+### Event Error Record:
+
+| Field           | Type                                     | Field Description |
+| -----           | ----                                     | ----------------- |
+| `error`         | [EventErrorType](#event-errors)          | Type of error     |
+| `error_details` | String[]                                 | Array of fields with errors, if applicable |
+
+### Event Errors:
+
+| `error`              | `error_description`                               | `error_details`[]               |
+| -------------------- | ------------------------------------------------- | ------------------------------- |
+| `bad_param`          | A validation error occurred                       | Array of parameters with errors |
+| `missing_param`      | A required parameter is missing                   | Array of missing parameters     |
+| `unregistered`       | This `device_id` is unregistered                  |                                 |
+
+403 Unauthorized Response:
+
+**None**
 
 [Top][toc]
 
@@ -148,24 +172,43 @@ Body Params:
 
 The vehicle `/telemetry` endpoint allows a Provider to send vehicle telemetry data in a batch for any number of vehicles in the fleet.
 
-Endpoint: `/vehicles/telemetry`
-Method: `POST`
-
-Body Params:
-
-| Field         | Type                           | Required/Optional | Field Description                                                                      |
-| ------------- | ------------------------------ | ----------------- | -------------------------------------------------------------------------------------- |
-| `telemetries`        | [Telemetry](#telemetry-data)[] | Required          | Array of telemetry for one or more vehicles.                                           |
+**Endpoint**: `/vehicles/telemetry`  
+**Method**: `POST`  
+**Payload**: An array of [Vehicle Telemetry][vehicle-telemetry]  
 
 200 Success Response:
 
-| Field      | Type                           | Field Description                                                                                       |
-| ---------- | ------------------------------ | ------------------------------------------------------------------------------------------------------- |
-| `success`  | Integer                        | Number of successfully written telemetry data points.                                                   |
-| `total`    | Integer                        | Total number of provided points.                                                                       |
-| `failures` | [Telemetry Error](#telemetry-error)[] | Array of errors including the failed telemetry data and error details (empty if all successful).                          |
+| Field      | Type                                        | Field Description |
+| -----      | ----                                        | ----------------- |
+| `total`    | Integer                                     | Total number of provided telemetry entries |
+| `success`  | Integer                                     | Number of successfully written telemetry entries |
+| `failures` | [InvalidTelemetry](#invalid-telemetry-record)[] | Array of failure responses (empty if all successful) |
 
-Alway returns 200. Any failed data is detailed in the `failures` array of the response.
+### Invalid Telemetry Record:
+
+| Field      | Type                                    | Field Description |
+| -----      | ----                                    | ----------------- |
+| `event`    | [Event](#vehicle-telemetry)                 | Invalid telemetry record |
+| `errors`   | [TelemetryError](#telemetry-error-record)[] | Details of why telemetry record is invalid |
+
+### Event Error Record:
+
+| Field           | Type                                     | Field Description |
+| -----           | ----                                     | ----------------- |
+| `error`         | [TelemetryErrorType](#telemetry-errors)          | Type of error     |
+| `error_details` | String[]                                 | Array of fields with errors, if applicable |
+
+### Telemetry Errors:
+
+| `error`              | `error_description`                               | `error_details`[]               |
+| -------------------- | ------------------------------------------------- | ------------------------------- |
+| `bad_param`          | A validation error occurred                       | Array of parameters with errors |
+| `missing_param`      | A required parameter is missing                   | Array of missing parameters     |
+| `unregistered`       | This `device_id` is unregistered                  |                                 |
+
+403 Unauthorized Response:
+
+**None**
 
 [Top][toc]
 
@@ -176,22 +219,44 @@ The `/stops` endpoint allows an agency to register city-managed Stops, or a prov
 **Endpoint:** `/stops`  
 **Method:** `POST`  
 **[Beta feature][beta]:** Yes (as of 1.0.0). [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/638)    
-**Request Body**: An array of [Stops][stops]
+**Payload**: An array of [Stops][stops]
 
 200 Success Response:
 
-_No content returned on success._
+| Field      | Type                                        | Field Description |
+| -----      | ----                                        | ----------------- |
+| `total`    | Integer                                     | Total number of provided telemetry entries |
+| `success`  | Integer                                     | Number of successfully written telemetry entries |
+| `failures` | [InvalidTelemetry](#invalid-telemetry-record)[] | Array of failure responses (empty if all successful) |
 
-(?) TODO FIXME resolve bulk return codes
+### Invalid Telemetry Record:
 
-400 Failure Response:
+| Field      | Type                                    | Field Description |
+| -----      | ----                                    | ----------------- |
+| `event`    | [Event](#vehicle-telemetry)                 | Invalid telemetry record |
+| `errors`   | [TelemetryError](#telemetry-error-record)[] | Details of why telemetry record is invalid |
+
+### Event Error Record:
+
+| Field           | Type                                     | Field Description |
+| -----           | ----                                     | ----------------- |
+| `error`         | [TelemetryErrorType](#telemetry-errors)          | Type of error     |
+| `error_details` | String[]                                 | Array of fields with errors, if applicable |
+
+### Telemetry Errors:
 
 | `error`              | `error_description`                               | `error_details`[]               |
 | -------------------- | ------------------------------------------------- | ------------------------------- |
-| `bad_param`          | A validation error occurred.                      | Array of parameters with errors |
-| `missing_param`      | A required parameter is missing.                  | Array of missing parameters     |
+| `bad_param`          | A validation error occurred                       | Array of parameters with errors |
+| `missing_param`      | A required parameter is missing                   | Array of missing parameters     |
+| `unregistered`       | This `device_id` is unregistered                  |                                 |
 
-409 Failure Response:
+403 Unauthorized Response:
+
+**None**
+
+[Top][toc]
+
 
 | `error`              | `error_description`                               | `error_details`[]               |
 | -------------------- | ------------------------------------------------- | ------------------------------- |
@@ -200,7 +265,7 @@ _No content returned on success._
 **Endpoint:** `/stops`  
 **Method:** `PUT`  
 **[Beta feature][beta]:** Yes (as of 1.0.0). [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/638)  
-**Request Body**: An array of subsets of [Stop][stops] information, where the permitted subset fields are defined as:
+**Payload**: An array of subsets of [Stop][stops] information, where the permitted subset fields are defined as:
 
 | Field               | Required/Optional | Description                                 |
 |---------------------|-------------------|---------------------------------------------|
@@ -226,7 +291,7 @@ _No content returned if no vehicle matching `stop_id` is found._
 **Endpoint:** `/stops/:stop_id`  
 **Method:** `GET`  
 **[Beta feature][beta]:** Yes (as of 1.0.0). [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/638)  
-**Payload:** `{ "stops": [] }`, an array of [Stops][stops]
+**Payload:** An array of [Stops][stops]
 
 Path Params:
 
@@ -250,7 +315,7 @@ The Trips endpoint serves two purposes:
 **Endpoint:** `/trips`  
 **Method:** `POST`  
 **[Beta feature][beta]:** No (as of 2.0.0)  
-**Payload:** `{ "trips": [] }`, an array of [Trips](#trip-data)
+**Payload:** Array of [Trips](#trip-data)
 
 Body Params:
 
@@ -289,9 +354,11 @@ Body Params:
 [trip-data]: /general-information.md#trips
 [toc]: #table-of-contents
 [ts]: /general-information.md#timestamps
+[vehicle]: /data-types.md#vehicles
 [vehicle-types]: /general-information.md#vehicle-types
 [vehicle-states]: /modes/vehicle_states.md
 [vehicle-event-types]: /modes/event_types.md
-[vehicle-event-data]: /general-information.md#event-data
+[vehicle-event]: /data-types.md#events
+[vehicle-telemetry]: /data-types.md#telemetry
 [versioning]: /general-information.md#versioning
 [error-message]: /general-information.md#error-messages
