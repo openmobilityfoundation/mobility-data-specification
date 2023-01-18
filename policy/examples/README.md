@@ -12,6 +12,11 @@ This file presents a series of example [Policy documents](../README.md#policy) f
 - [Speed Limit](#speed-limit)
 - [Distribution Policies](#distribution-policies)
 - [Provider Caps or Minimums](#provider-caps-or-minimums)
+- [Per Trip Fees](#per-trip-fees)
+- [Vehicle Right of Way Fees](#vehicle-right-of-way-fees)
+- [Metered Parking Fees](#metered-parking-fees)
+- [Tiered Parking Fees Per Hour](#tiered-parking-fees-per-hour)
+- [Tiered Parking Fees Total](#tiered-parking-fees-total)
 
 ## Operating Area
 
@@ -536,6 +541,342 @@ The maximum or minimum amount of vehicles deployed by a provider are controlled.
    "messages": {}
   }
  ]
+}
+```
+
+[Top](#table-of-contents)
+
+## Per Trip Fees
+
+This policy sets a 25 cent per-trip fee that is applied for trips that start in the municipal boundary.
+
+```json
+{
+  "policy_id": "d2567b3c-3071-48a6-bbeb-3424721dbd12",
+  "published_date": 1586736000000,
+  "name": "Trip Fees",
+  "description": "This policy sets a 25 cent per-trip fee that is applied for trips that start in the municipal boundary.",
+  "start_date": 1586822400000,
+  "end_date": 1587427200000,
+  "prev_policies": null,
+  "rules": [
+    {
+      "name": "City Wide Trip Fee",
+      "rule_id": "4137a47c-836a-11ea-bc55-0242ac130003",
+      "rule_type": "count",
+      "rule_units": "devices",
+      "rate_amount": 25,
+      "rate_recurrence": "once_on_match",
+      "rate_applies_when": "in_bounds",
+      "geographies": [
+        "b4bcc213-4888-48ce-a33d-4dd6c3384bda"
+      ],
+      "states": {
+        "on_trip": [
+          "trip_start"
+        ]
+      }
+    }
+  ]
+}
+```
+
+[Top](#table-of-contents)
+
+## Vehicle Right of Way Fees
+
+This policy sets a Right-of-Way fee that is charged once a day for vehicles deployed in a given area. It charges a 25 cents per day for vehicles deployed downtown, and 5 cents per day for vehicles deployed in a historically underserved neighborhood. In the case where a vehicle is deployed twice in both areas in the same day, the higher fee would apply (because it appears first in the rules).
+
+```json
+{
+  "policy_id": "4137a47c-836a-11ea-bc55-0242ac130003",
+  "published_date": 1586736000000,
+  "name": "Right of Way Fees",
+  "description": "This policy sets a Right-of-Way fee that is charged once a day for vehicles deployed in a given area. It charges a 25 cents per day for vehicles deployed downtown, and 5 cents per day for vehicles deployed in a historically underserved neighborhood.",
+  "start_date": 1586822400000,
+  "end_date": 1587427200000,
+  "prev_policies": null,
+  "rules": [
+    {
+      "rule_id": "96033eb2-eff7-4ed3-bb93-0101aff3bb6a",
+      "name": "Downtown Right of Way Fee",
+      "rule_type": "time",
+      "rule_units": "days",
+      "rate_amount": 25,
+      "rate_recurrence": "each_time_unit",
+      "rate_applies_when": "in_bounds",
+      "geographies": [
+        "1f943d59-ccc9-4d91-b6e2-0c5e771cbc49"
+      ],
+      "states": {
+        "available": [
+          "on_hours"
+        ]
+      }
+    },
+    {
+      "rule_id": "62778174-97f6-4a2b-a949-070709b4190a",
+      "name": "Decreased Right of Way Fee",
+      "rule_type": "time",
+      "rule_units": "days",
+      "rate_amount": 5,
+      "rate_recurrence": "each_time_unit",
+      "rate_applies_when": "in_bounds",
+      "geographies": [
+        "e3ed0a0e-61d3-4887-8b6a-4af4f3769c14"
+      ],
+      "states": {
+        "available": [
+          "on_hours"
+        ]
+      }
+    }
+  ]
+}
+```
+
+[Top](#table-of-contents)
+
+## Metered Parking Fees
+
+This policy sets a 10 cent per hour metered parking charge that is applied while a vehicle is parked in a congested area during rush hour.
+
+```json
+{
+  "policy_id": "6a3dd008-836a-11ea-bc55-0242ac130003",
+  "published_date": 1586736000000,
+  "name": "Parking Fees",
+  "description": "This policy sets a 10 cent per hour metered parking charge that is applied while a vehicle is parked in a congested area during rush hour.",
+  "start_date": 1586822400000,
+  "end_date": 1587427200000,
+  "prev_policies": null,
+  "rules": [
+    {
+      "rule_id": "0da40491-73eb-418f-9b3c-cf5f150775e8",
+      "name": "Downtown Peak-Hour Parking Fee",
+      "rule_type": "time",
+      "rule_units": "hours",
+      "rate_amount": 10,
+      "rate_recurrence": "per_complete_time_unit",
+      "rate_applies_when": "in_bounds",
+      "geographies": [
+        "5473e836-b38a-4940-8b5e-0d506ca4e4a8"
+      ],
+      "days": [
+        "mon",
+        "tue",
+        "wed",
+        "thu",
+        "fri"
+      ],
+      "start_time": "07:00:00",
+      "end_time": "08:30:00",
+      "states": {
+        "available": [],
+        "non_operational": []
+      }
+    }
+  ]
+}
+```
+
+[Top](#table-of-contents)
+
+## Tiered Parking Fees Per Hour
+This policy states parking fees as such:
+- Parking for the first hour costs $2
+- Parking for the second hour costs $4
+- Parking every hour onwards costs $10
+
+For example, say a vehicle is parked for 6.5 hours. It will be charged `$2 (0-1hr) + $4 (1-2hr) + $10 (2-3hr) + $10 (3-4hr) + $10 (4-5hr) + $10 (5-6hr) + $10 (6-6.5hr) = $56`
+
+This policy may be specified different ways using the `rate_applies_when` field.
+Both examples are shown here.
+
+### With default `rate_applies_when = "out_of_bounds"`
+
+By default the `rate_applies_when` field has the value `out_of_bounds`,
+meaning the rate should take effect when an event is outside the bounds
+of a rule's `minimum` and `maximum` values.
+
+```json
+{
+  "name": "Tiered Dwell Time Example",
+  "description": "First hour $2, second hour $4, every hour onwards $10",
+  "policy_id": "2800cd0a-7827-4110-9713-b9e5bf29e9a1",
+  "start_date": 1558389669540,
+  "publish_date": 1558389669540,
+  "end_date": null,
+  "prev_policies": null,
+  "provider_ids": [],
+  "currency": "USD",
+  "rules": [
+    {
+      "name": "> 2 hours",
+      "rule_id": "9cd1768c-ab9e-484c-93f8-72a7078aa7b9",
+      "rule_type": "time",
+      "rule_units": "hours",
+      "geographies": ["0c77c813-bece-4e8a-84fd-f99af777d198"],
+      "statuses": { "available": [], "non_operational": [] },
+      "vehicle_types": ["bicycle", "scooter"],
+      "maximum": 2,
+      "rate_amount": 1000,
+      "rate_recurrence": "each_time_unit"
+    },
+    {
+      "name": "1-2 Hours",
+      "rule_id": "edd6a195-bb30-4eb5-a2cc-44e5a18798a2",
+      "rule_type": "time",
+      "rule_units": "hours",
+      "geographies": ["0c77c813-bece-4e8a-84fd-f99af777d198"],
+      "statuses": { "available": [], "non_operational": [] },
+      "vehicle_types": ["bicycle", "scooter"],
+      "maximum": 1,
+      "rate_amount": 400,
+      "rate_recurrence": "each_time_unit"
+    },
+    {
+      "name": "0-1 Hour",
+      "rule_id": "6b6fe61b-dbe5-4367-8e35-84fb14d23c54",
+      "rule_type": "time",
+      "rule_units": "hours",
+      "geographies": ["0c77c813-bece-4e8a-84fd-f99af777d198"],
+      "statuses": { "available": [], "non_operational": [] },
+      "vehicle_types": ["bicycle", "scooter"],
+      "maximum": 0,
+      "rate_amount": 200,
+      "rate_recurrence": "each_time_unit"
+    }
+  ]
+}
+```
+
+### With `rate_applies_when = "in_bounds"`
+
+When the `rate_applies_when` field has the value `in_bounds`,
+the rate takes effect when an event is within a rule's `minimum` and
+`maximum` values. Note that this also uses the `inclusive_minimum` and
+`inclusive_maximum` fields to create non-overlapping ranges for the rules.
+
+```json
+{
+  "name": "Tiered Dwell Time Example",
+  "description": "First hour $2, second hour $4, every hour onwards $10",
+  "policy_id": "2800cd0a-7827-4110-9713-b9e5bf29e9a1",
+  "start_date": 1558389669540,
+  "publish_date": 1558389669540,
+  "end_date": null,
+  "prev_policies": null,
+  "provider_ids": [],
+  "currency": "USD",
+  "rules": [
+    {
+      "name": "0-1 Hour",
+      "rule_id": "6b6fe61b-dbe5-4367-8e35-84fb14d23c54",
+      "rule_type": "time",
+      "rule_units": "hours",
+      "geographies": ["0c77c813-bece-4e8a-84fd-f99af777d198"],
+      "statuses": { "available": [], "non_operational": [] },
+      "vehicle_types": ["bicycle", "scooter"],
+      "maximum": 1,
+      "inclusive_maximum": false,
+      "rate_applies_when": "in_bounds",
+      "rate_amount": 200,
+      "rate_recurrence": "each_time_unit"
+    },
+    {
+      "name": "1-2 Hours",
+      "rule_id": "edd6a195-bb30-4eb5-a2cc-44e5a18798a2",
+      "rule_type": "time",
+      "rule_units": "hours",
+      "geographies": ["0c77c813-bece-4e8a-84fd-f99af777d198"],
+      "statuses": { "available": [], "non_operational": [] },
+      "vehicle_types": ["bicycle", "scooter"],
+      "minimum": 1,
+      "maximum": 2,
+      "inclusive_minimum": true,
+      "inclusive_maximum": false,
+      "rate_applies_when": "in_bounds",
+      "rate_amount": 400,
+      "rate_recurrence": "each_time_unit"
+    },
+    {
+      "name": "> 2 hours",
+      "rule_id": "9cd1768c-ab9e-484c-93f8-72a7078aa7b9",
+      "rule_type": "time",
+      "rule_units": "hours",
+      "geographies": ["0c77c813-bece-4e8a-84fd-f99af777d198"],
+      "statuses": { "available": [], "non_operational": [] },
+      "vehicle_types": ["bicycle", "scooter"],
+      "minimum": 2,
+      "inclusive_minimum": true,
+      "rate_applies_when": "in_bounds",
+      "rate_amount": 1000,
+      "rate_recurrence": "each_time_unit"
+    }
+  ]
+}
+```
+
+[Top](#table-of-contents)
+
+## Tiered Parking Fees Total
+This policy states parking fees as such:
+- If parked for less than an hour, $2 on exit
+- If parked for less than 2 hours, $4 on exit
+- If parked for any duration longer than 2 hours, $10 on exit
+
+For example, if a vehicle is parked for 6.5 hours, it will be charged $10 on exit.
+
+```json
+{
+  "name": "Tiered Dwell Time Example",
+  "description": "If parked for <1hr $2 upon exit, if parked for 1-2 hours $4 upon exit, if parked for longer than 2 hours $10 upon exit",
+  "policy_id": "2800cd0a-7827-4110-9713-b9e5bf29e9a1",
+  "start_date": 1558389669540,
+  "publish_date": 1558389669540,
+  "end_date": null,
+  "prev_policies": null,
+  "provider_ids": [],
+  "currency": "USD",
+  "rules": [
+    {
+      "name": "> 2 hours",
+      "rule_id": "9cd1768c-ab9e-484c-93f8-72a7078aa7b9",
+      "rule_type": "time",
+      "rule_units": "hours",
+      "geographies": ["0c77c813-bece-4e8a-84fd-f99af777d198"],
+      "statuses": { "available": [], "non_operational": [] },
+      "vehicle_types": ["bicycle", "scooter"],
+      "maximum": 2,
+      "rate_amount": 1000,
+      "rate_recurrence": "once_on_unmatch"
+    },
+    {
+      "name": "1-2 Hours",
+      "rule_id": "edd6a195-bb30-4eb5-a2cc-44e5a18798a2",
+      "rule_type": "time",
+      "rule_units": "hours",
+      "geographies": ["0c77c813-bece-4e8a-84fd-f99af777d198"],
+      "statuses": { "available": [], "non_operational": [] },
+      "vehicle_types": ["bicycle", "scooter"],
+      "maximum": 1,
+      "rate_amount": 400,
+      "rate_recurrence": "once_on_unmatch"
+    },
+    {
+      "name": "0-1 Hour",
+      "rule_id": "6b6fe61b-dbe5-4367-8e35-84fb14d23c54",
+      "rule_type": "time",
+      "rule_units": "hours",
+      "geographies": ["0c77c813-bece-4e8a-84fd-f99af777d198"],
+      "statuses": { "available": [], "non_operational": [] },
+      "vehicle_types": ["bicycle", "scooter"],
+      "maximum": 0,
+      "rate_amount": 200,
+      "rate_recurrence": "once_on_unmatch"
+    }
+  ]
 }
 ```
 
