@@ -107,7 +107,6 @@
             "count",
             "time",
             "speed",
-            "rate",
             "user"
           ]
         },
@@ -328,9 +327,6 @@
                         "rate_recurrence"
                       ],
                       "properties": {
-                        "rule_type": {
-                          "const": "rate"
-                        },
                         "rule_units": {
                           "enum": [
                             "amount",
