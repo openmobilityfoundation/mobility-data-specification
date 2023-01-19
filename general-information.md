@@ -144,6 +144,40 @@ Note if implementing the beta feature [Geography Driven Events](/general-informa
 | `error_description` | String   | Human readable error description (can be localized) |
 | `error_details`     | String[] | Array of error details |
 
+### Bulk Responses
+
+For multi-record POST and PUT calls, e.g. sending Events using the Agency API, the bulk-response structure describes a list of failures is as follows:
+
+```json
+{
+    "success": "...",
+    "total": "...",
+    "failures": [ {      // list of failure details
+        "item": { ... }, // copy of the item with the problem
+        "error": "...",
+        "error_description": "...",
+        "error_details": [ "...", "..." ] 
+    }, {
+      // additional failure records
+    } ]
+}
+```
+
+| Field      | Type                           | Field Description                                                                                       |
+| ---------- | ------------------------------ | ------------------------------------------------------------------------------------------------------- |
+| `success`  | Integer                        | Number of successfully written trip records points                                                |
+| `total`    | Integer                        | Total number of provided points                                                                       |
+| `failures` | [Trip](#trip-data)[] | Array of failed trip records (empty if all successful)                          |
+
+### Failure Details:
+
+| Field               | Type                  | Field Description |
+| -----               | ----                  | ----------------- |
+| `item`              | Vehicle, Event, etc.  | Invalid submitted item |
+| `error`             | Enum                  | Error code      |
+| `error_description` | String                | Human readable error description (can be localized)     |
+| `error_details`     | String[]              | Array of fields with errors, if applicable |
+
 [Top][toc]
 
 ## Strings

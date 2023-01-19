@@ -25,6 +25,7 @@ A vehicle record is as follows:
 | `device_id`          | UUID     | Required              | A unique device ID in UUID format, should match this device in Provider |
 | `provider_id`        | UUID     | Required              | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). | 
 | `data_provider_id`   | UUID     | Optional              | If different than `provider_id`, a UUID for the data solution provider managing the data feed in this endpoint. See MDS [provider list](/providers.csv) which includes both service operators and data solution providers. |
+| `vehicle_id` | String | Required | A unique vehicle identifier (visible code, license plate, etc), visible on the vehicle itself |
 | `vehicle_type`       | Enum     | Required              | The [vehicle type][vehicle-types] |
 | `vehicle_attributes` | Array    | Optional              | **[Mode][modes]-Specific** [vehicle attributes](/modes#vehicle-attributes) given as mode-specific unordered key-value pairs |
 | `propulsion_types`   | Enum[]   | Required              | Array of [propulsion types][propulsion-types]; allows multiple values |
@@ -87,13 +88,12 @@ Events represent changes in vehicle status.
 | `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
 | `data_provider_id` | UUID | Optional | If different than `provider_id`, a UUID for the data solution provider managing the data feed in this endpoint. See MDS [provider list](/providers.csv) which includes both service operators and data solution providers. |
 | `event_id` | UUID | Required | A unique event ID |
-| `vehicle_id` | String | Required | A unique vehicle identifier (visible code, license plate, etc), visible on the vehicle itself |
 | `vehicle_state` | Enum | Required | See [vehicle state][vehicle-states] table |
 | `event_types` | Enum[] | Required | Vehicle [event types][vehicle-events] for state change, with allowable values determined by `vehicle_state` |
 | `timestamp` | [Timestamp][ts] | Required | Date/time that event occurred at. See [Event Times][event-times] |
 | `publication_time` | [Timestamp][ts] | Optional | Date/time that event became available through the status changes endpoint |
-| `event_location` | [GPS][gps] | Required | See also [Stop-based Geographic Data][stop-based-geo]. |
-| `event_geographies` | UUID[] | Optional | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 2.0.0)*. Array of Geography UUIDs consisting of every Geography that contains the location of the status change. See [Geography Driven Events][geography-driven-events]. Required if `event_location` is not present. |
+| `location` | [GPS][gps] | Required | See also [Stop-based Geographic Data][stop-based-geo]. |
+| `event_geographies` | UUID[] | Optional | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 2.0.0)*. Array of Geography UUIDs consisting of every Geography that contains the location of the status change. See [Geography Driven Events][geography-driven-events]. Required if `location` is not present. |
 | `battery_percent`       | Integer          | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 100 |
 | `fuel_percent`       | Integer          | Required if Applicable | Percent fuel in vehicle, expressed between 0 and 100 |
 | `trip_ids`[] | UUID[] | Required if Applicable | Trip UUIDs (foreign key to /trips endpoint), required if `event_types` contains `trip_start`, `trip_end`, `trip_cancel`, `trip_enter_jurisdiction`, or `trip_leave_jurisdiction` |
@@ -120,7 +120,7 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | `trip_ids`     | UUID[]         | Required              | If telemetry occurred during a trip, the ID of the trip(s).  If not in a trip, `null`.
 | `journey_id`   | UUID           | Required              | If telemetry occurred during a trip, the ID of the journey.  If not in a trip, `null`.
 | `stop_id`      | UUID           | Required if Applicable | Stop that the vehicle is currently located at. Only applicable for _docked_ Micromobility. See [Stops][stops] |
-| `gps`          | [GPS][gps]    | Required              | Telemetry position data                                      |
+| `location`          | [GPS][gps]    | Required              | Telemetry position data                                      |
 | `battery_percent`       | Integer          | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 100 |
 | `fuel_percent`       | Integer          | Required if Applicable | Percent fuel in vehicle, expressed between 0 and 100 |
 
@@ -227,8 +227,8 @@ Examples of mode-specific `trip_attributes`:
 | ----- | -------- | ----------------- | ----- |
 | `dispatch_time`                 | [Timestamp][ts]                      | Conditionally Required | Time the vehicle was dispatched to the customer (required if trip was dispatched) |
 | `quoted_trip_start_time`        | [Timestamp][ts]                      | Required               | Time the trip was estimated or scheduled to start, that was provided to the passenger |
-| `requested_trip_start_location` | [Point](point) | Conditionally Required | Location where the customer requested the trip to start (required if this is within jurisdictional boundaries) |
-| `cancellation_reason`           | string                         | Conditionally Required | The reason why a *driver* cancelled a reservation. (required if a driver cancelled a trip, and a `driver_cancellation` event_type was part of the trip) |
+| `requested_trip_start_location` | [GPS](gps) | Conditionally Required | Location where the customer requested the trip to start (required if this is within jurisdictional boundaries) |
+| `cancellation_reason`           | String                         | Conditionally Required | The reason why a *driver* cancelled a reservation. (required if a driver cancelled a trip, and a `driver_cancellation` event_type was part of the trip) |
 | `accessibility_options`         | Enum[]                         | Optional               | The **union** of any accessibility options requested, and used. E.g. if the passenger requests a vehicle with `wheelchair_accessible`, but doesn’t utilize the features during the trip, the trip payload will include `accessibility_options: ['wheelchair_accessible']`. See [accessibility-options][accessibility-options] |
 | `parking_verification_url` | String | Optional | A URL to a photo (or other evidence) of proper vehicle parking |
 
