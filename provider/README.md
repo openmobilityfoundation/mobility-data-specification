@@ -20,8 +20,14 @@ This specification contains a data standard for *mobility as a service* provider
 * [Trips][trips]
   * [Trips - Query Parameters](#trips---query-parameters)
   * [Routes](#routes)
-* [Status Changes][status]
-  * [Status Changes - Query Parameters](#status-changes---query-parameters)
+* [Events][events]
+  * [Recent Events](#recent-events)
+  * [Recent Events - Query Parameters](#recent-events---query-parameters)
+  * [Historical Events](#historical-events)
+  * [Historical Events - Query Parameters](#events---query-parameters)
+* [Telemetry][telemetry]
+  * [Telemetry - Query Parameters](#telemetry---query-parameters)
+* [Vehicles][vehicles]
 * [Reports](#reports)
   * [Reports - Response](#reports---response)
   * [Reports - Example](#reports---example)
@@ -90,7 +96,7 @@ MDS defines [JSON Schema][json-schema] files for each endpoint.
 
 ### Pagination
 
-The `/trips` and `/status_changes` endpoints must not use pagination.
+The `/trips` and `/events/historical` endpoints must not use pagination.
 
 If Providers choose to use pagination for either of the `/events` or `/vehicles` endpoints, the pagination must comply with the [JSON API][json-api-pagination] specification.
 
@@ -133,12 +139,6 @@ Providers are not required to recalculate the set of historical data that is inc
 
 [Top][toc]
 
-### Event Times
-
-Because of the unreliability of device clocks, the Provider is unlikely to know with total confidence what time an event occurred at. However, Providers are responsible for constructing as accurate a timeline as possible. Most importantly, the order of the timestamps for a particular device's events must reflect the Provider's best understanding of the order in which those events occurred.
-
-[Top][toc]
-
 ### Other Data Types
 
 For Timestamps, Vehicle Types, Propulsion Types, UUIDs, Costs, and Currencies, refer to the MDS [General Information][general-information] document.
@@ -158,37 +158,7 @@ Unless stated otherwise by the municipality, the trips endpoint must return all 
 **Method:** `GET`  
 **[Beta feature][beta]:** No  
 **Schema:** [`trips` schema][trips-schema]  
-**`data` Payload:** `{ "trips": [] }`, an array of objects with the following structure  
-
-| Field | Type    | Required/Optional | Comments |
-| ----- | -------- | ----------------- | ----- |
-| `provider_id` | UUID | Required | A UUID for the provider, unique within MDS. See MDS [provider list](/providers.csv). |
-| `provider_name` | String | Required | The public-facing name of the provider |
-| `data_provider_id` | UUID | Optional | If different than `provider_id`, a UUID for the data solution provider managing the data feed in this endpoint. See MDS [provider list](/providers.csv) which includes both service operators and data solution providers. |
-| `device_id` | UUID | Required | A unique device ID in UUID format |
-| `vehicle_id` | String | Required | A unique vehicle identifier (visible code, licence plate, etc), visible on the vehicle itself. |
-| `vehicle_type` | Enum | Required | See [vehicle types][vehicle-types] table |
-| `vehicle_attributes` | Array | Optional | **[Mode](/modes#list-of-supported-modes) Specific**. [Vehicle attributes](/modes#vehicle-attributes) given as unordered key-value pairs |
-| `propulsion_types` | Enum[] | Required | Array of [propulsion types][propulsion-types]; allows multiple values |
-| `journey_id` | UUID | Optional | A unique [journey ID](/modes#journey-id) for associating collections of trips for its [mode] |
-| `trip_type` | Enum | Optional | **[Mode](/modes#list-of-supported-modes) Specific**. The [trip type](/modes#trip-type) describing the purpose of a trip segment |
-| `trip_id` | UUID | Required | A unique ID for each trip |
-| `trip_duration` | Integer | Required | Time, in Seconds |
-| `trip_distance` | Integer | Required | Trip Distance, in Meters |
-| `trip_attributes` | Array | Optional | **[Mode](/modes#list-of-supported-modes) Specific**. [Trip attributes](/modes#trip-attributes) given as unordered key-value pairs |
-| `start_time` | [timestamp][ts] | Required | Start of the passenger/driver trip |
-| `end_time` | [timestamp][ts] | Required | End of the passenger/driver trip |
-| `start_location` | GeoJSON [Point Feature][point-geo] | Required | Location of the start of the trip. See also [Stop-based Geographic Data][stop-based-geo]. |
-| `end_location` | GeoJSON [Point Feature][point-geo] | Required | Location of the end of the trip. See also [Stop-based Geographic Data][stop-based-geo]. |
-| `route` | GeoJSON `FeatureCollection` | Required | See [Routes](#routes) detail below. Note the `start_location` and `end_location` fields in this object are duplicated in the `route` data. |
-| `accuracy` | Integer | Required | The approximate level of accuracy, in meters, of `Points` within `route` |
-| `publication_time` | [timestamp][ts] | Optional | Date/time that trip became available through the trips endpoint |
-| `parking_verification_url` | String | Optional | A URL to a photo (or other evidence) of proper vehicle parking |
-| `standard_cost` | Integer | Optional | The cost, in the currency defined in `currency`, that it would cost to perform that trip in the standard operation of the System (see [Costs & Currencies][costs-and-currencies]) |
-| `actual_cost` | Integer | Optional | The actual cost, in the currency defined in `currency`, paid by the customer of the *mobility as a service* provider (see [Costs & Currencies][costs-and-currencies]) |
-| `currency` | String | Optional, USD cents is implied if null.| An [ISO 4217 Alphabetic Currency Code][iso4217] representing the currency of the payee (see [Costs & Currencies][costs-and-currencies]) |
-
-[Top][toc]
+**`data` Payload:** `{ "trips": [] }`, an array of [Trip][trips] objects
 
 ### Trips - Query Parameters
 
@@ -197,6 +167,7 @@ The `/trips` API should allow querying trips with the following query parameters
 | Parameter | Format | Expected Output |
 | --------------- | ------ | --------------- |
 | `end_time` | `YYYY-MM-DDTHH`, an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) extended datetime representing an UTC hour between 00 and 23. | All trips with an end time occurring within the hour. For example, requesting `end_time=2019-10-01T07` returns all trips where `2019-10-01T07:00:00 <= trip.end_time < 2019-10-01T08:00:00` UTC. |
+| `route` | Boolean | If false, do not return route data. |
 
 Without an `end_time` query parameter, `/trips` shall return a `400 Bad Request` error.
 
@@ -275,56 +246,33 @@ Trips that start or end at a [Stop][stops] must include a `stop_id` property in 
 
 [Top][toc]
 
-## Status Changes
+## Events
 
-The status of the inventory of vehicles available for customer use.
-
-The status changes endpoint allows a user to query the historical availability for a system within a time range.
+The `/events/recent` and `/events/historical/` endpoints return a list of Event objects, describing the activity of the Provider's vehicles.  Recent events are at most two weeks old and can be queried with start/stop time, and historical events are packaged in hour-sized chunks for ease of implementation. 
 
 Unless stated otherwise by the municipality, this endpoint must return only those status changes with a `event_location` that [intersects](#intersection-operation) with the [municipality boundary](#municipality-boundary).
 
 > Note: As a result of this definition, consumers should query the [trips endpoint][trips] to infer when vehicles enter or leave the municipality boundary.
 
-**Endpoint:** `/status_changes`  
+**Endpoint:** `/events/historical`  
 **Method:** `GET`  
 **[Beta feature][beta]:** No  
-**Schema:** [`status_changes` schema][status-schema]  
-**`data` Payload:** `{ "status_changes": [] }`, an array of objects with the following structure
-
-| Field | Type | Required/Optional | Comments |
-| ----- | ---- | ----------------- | ----- |
-| `provider_id` | UUID | Required | A UUID for the provider, unique within MDS. See MDS [provider list](/providers.csv). |
-| `provider_name` | String | Required | The public-facing name of the provider |
-| `data_provider_id` | UUID | Optional | If different than `provider_id`, a UUID for the data solution provider managing the data feed in this endpoint. See MDS [provider list](/providers.csv) which includes both service operators and data solution providers. |
-| `device_id` | UUID | Required | A unique device ID in UUID format |
-| `vehicle_id` | String | Required | A unique vehicle identifier (visible code, licence plate, etc), visible on the vehicle itself |
-| `vehicle_type` | Enum | Required | see [vehicle types][vehicle-types] table |
-| `vehicle_attributes` | Array | Optional | **[Mode](/modes#list-of-supported-modes) Specific**. [Vehicle attributes](/modes#vehicle-attributes) given as mode-specific unordered key-value pairs |
-| `propulsion_types` | Enum[] | Required | Array of [propulsion types][propulsion-types]; allows multiple values |
-| `vehicle_state` | Enum | Required | See [vehicle state][vehicle-states] table |
-| `event_types` | Enum[] | Required | Vehicle [event types][vehicle-events] for state change, with allowable values determined by `vehicle_state` |
-| `event_time` | [timestamp][ts] | Required | Date/time that event occurred at. See [Event Times][event-times] |
-| `publication_time` | [timestamp][ts] | Optional | Date/time that event became available through the status changes endpoint |
-| `event_location` | GeoJSON [Point Feature][point-geo] | Required | See also [Stop-based Geographic Data][stop-based-geo]. |
-| `event_geographies` | UUID[] | Optional | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.1.0)*. Array of Geography UUIDs consisting of every Geography that contains the location of the status change. See [Geography Driven Events][geography-driven-events]. Required if `event_location` is not present. |
-| `battery_percent`       | Integer          | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 100 |
-| `fuel_percent`       | Integer          | Required if Applicable | Percent fuel in vehicle, expressed between 0 and 100 |
-| `trip_id` | UUID | Required if Applicable | Trip UUID (foreign key to /trips endpoint), required if `event_types` contains `trip_start`, `trip_end`, `trip_cancel`, `trip_enter_jurisdiction`, or `trip_leave_jurisdiction` |
-| `associated_ticket` | String | Optional | Identifier for an associated ticket inside an Agency-maintained 311 or CRM system |
+**Schema:** [`events` schema][events-schema]  
+**`data` Payload:** `{ "data": [] }`, an array of [Vehicle Event Data](#vehicle-event-data)
 
 [Top][toc]
 
-### Status Changes - Query Parameters
+### Historical Events - Query Parameters
 
-The `/status_changes` API should allow querying status changes with the following query parameters:
+The `/events/historical` API uses the following query parameter:
 
-| Parameter | Format | Expected Output |
-| --------------- | ------ | --------------- |
+| Parameter    | Format | Expected Output |
+| ---------    | ------ | --------------- |
 | `event_time` | `YYYY-MM-DDTHH`, an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) extended datetime representing an UTC hour between 00 and 23. | All status changes with an event time occurring within the hour. For example, requesting `event_time=2019-10-01T07` returns all status changes where `2019-10-01T07:00:00 <= status_change.event_time < 2019-10-01T08:00:00` UTC. |
 
-Without an `event_time` query parameter, `/status_changes` shall return a `400 Bad Request` error.
+Without an `event_time` query parameter, `/events` shall return a `400 Bad Request` error.
 
-### Status Changes - Responses
+### Historical Events - Responses
 
 The API's response will depend on the hour queried and the status of data
 processing for that hour:
@@ -348,6 +296,33 @@ processing for that hour:
         }
     }
     ```
+
+[Top][toc]
+
+### Recent Events
+
+The `/events/recent` endpoint is a near-realtime feed of events less than two weeks old.
+
+See also [Stop-based Geographic Data][stop-based-geo].
+
+**Endpoint:** `/events/recent`  
+**Method:** `GET`  
+**[Beta feature][beta]:** No (as of 1.0.0)  
+**Schema:** [`events` schema][events-schema]  
+**`data` Payload:** `{ "events": [] }`, an array of Event objects
+
+#### Recent Events Query Parameters
+
+The Recent Events API requires two parameters:
+
+| Parameter | Type | Expected Output |
+| ----- | ---- | -------- |
+| `start_time` | [timestamp][ts] | status changes where `start_time <= event.timestamp` |
+| `end_time` | [timestamp][ts] | status changes where `event.timestamp < end_time` |
+
+Should either side of the requested time range be missing, `/events/recent` shall return a `400 Bad Request` error.
+
+Should either side of the requested time range be greater than 2 weeks before the time of the request, `/events/recent` shall return a `400 Bad Request` error.
 
 [Top][toc]
 
@@ -495,41 +470,6 @@ ttl                 | Yes       | Integer representing the number of millisecond
 
 [Top][toc]
 
-### Events
-
-The `/events` endpoint is a near-realtime feed of status changes, designed to give access to as recent as possible series of events.
-
-The `/events` endpoint functions similarly to `/status_changes`, but shall not include data older than 2 weeks (that should live in `/status_changes.`)
-
-Unless stated otherwise by the municipality, this endpoint must return only those events with an `event_location` that [intersects][intersection] with the [municipality boundary][muni-boundary].
-
-> Note: As a result of this definition, consumers should query the [trips endpoint][trips] to infer when vehicles enter or leave the municipality boundary.
-
-See also [Stop-based Geographic Data][stop-based-geo].
-
-The schema and datatypes are the same as those defined for [`/status_changes`][status].
-
-**Endpoint:** `/events`  
-**Method:** `GET`  
-**[Beta feature][beta]:** No (as of 1.0.0)  
-**Schema:** [`events` schema][events-schema]  
-**`data` Payload:** `{ "status_changes": [] }`, an array of objects with the same structure as in [`/status_changes`][status]
-
-#### Events Query Parameters
-
-The events API should allow querying with a combination of query parameters:
-
-| Parameter | Type | Expected Output |
-| ----- | ---- | -------- |
-| `start_time` | [timestamp][ts] | status changes where `start_time <= status_change.event_time` |
-| `end_time` | [timestamp][ts] | status changes where `status_change.event_time < end_time` |
-
-Should either side of the requested time range be missing, `/events` shall return a `400 Bad Request` error.
-
-Should either side of the requested time range be greater than 2 weeks before the time of the request, `/events` shall return a `400 Bad Request` error.
-
-[Top][toc]
-
 ### Stops
 
 Stop information should be updated on a near-realtime basis by providers who operate _docked_ mobility devices in a given municipality.
@@ -557,11 +497,35 @@ In the case that a `stop_id` query parameter is specified, the `stops` array ret
 
 [Top][toc]
 
+### Telemetry
+
+The `/telemetry` endpoint is a feed of vehicle telemetry data for publishing all available location data.  For privacy reasons, in-trip telemetry may be delayed at the discretion of the regulating body.
+
+Unless stated otherwise by the municipality, this endpoint must return only those telemetry that [intersects][intersection] with the [municipality boundary][muni-boundary].
+
+> Note: As a result of this definition, consumers should query the [trips endpoint][trips] to infer when vehicles enter or leave the municipality boundary.
+
+**Endpoint:** `/telemetry`  
+**Method:** `GET`  
+**[Beta feature][beta]:** No (as of 2.0.0)  
+**Schema:** [`telemetry` schema][telemetry-schema]  
+**`data` Payload:** `{ "telemetry": [] }`, an array of `telemetry` objects
+
+#### Telemetry - Query Parameters
+
+| Parameter    | Format | Expected Output |
+| ---------    | ------ | --------------- |
+| `telemetry_time` | `YYYY-MM-DDTHH`, an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) extended datetime representing an UTC hour between 00 and 23. | All telemetry with timestamp occurring within the hour. For example, requesting `telemetry_time=2019-10-01T07` returns all telemetry where `2019-10-01T07:00:00 <= telemetry.timestamp < 2019-10-01T08:00:00` UTC. |
+
+Without a `telemetry_time` query parameter, `/telemetry` shall return a `400 Bad Request` error.
+
+[Top][toc]
+
 ### Vehicles
 
 The `/vehicles` is a near-realtime endpoint and returns the current status of vehicles in an agency's [Jurisdiction](/general-information.md#definitions) and/or area of agency responsibility. All vehicles that are currently in any [`vehicle_state`][vehicle-states] should be returned in this payload. Since all states are returned, care should be taken to filter out states not in the [PROW](/general-information.md#definitions) if doing vehicle counts. For the states `elsewhere` and `removed` which include vehicles not in the [PROW](/general-information.md#definitions) but provide some operational clarity for agencies, these must only persist in the feed for 90 minutes before being removed. 
 
-Data in this endpoint should reconcile with data from the historic [`/status_changes`](/provider#status-changes) enpdoint, though `/status_changes` is the source of truth if there are discrepancies. 
+Data in this endpoint should reconcile with data from the historic [`/status_changes`](/provider#events) endpoint, though `/events` is the source of truth if there are discrepancies. 
 
 As with other MDS APIs, `/vehicles` is intended for use by regulators, not by the general public. `/vehicles` can be deployed by providers as a standalone MDS endpoint for agencies without requiring the use of other endpoints, due to the [modularity](/README.md#modularity) of MDS. See our [MDS Vehicles Guide](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Vehicles) for how this compares to GBFS `/free_bike_status`. Note that using authenticated `/vehicles` does not replace the role of a public [GBFS][gbfs] feed in enabling consumer-facing applications. If a provider is using both `/vehicles` and GBFS endpoints, the `/vehicles` endpoint should be considered source of truth regarding an agency's compliance checks.
 
@@ -582,27 +546,7 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 **Method:** `GET`  
 **[Beta feature][beta]:** No (as of 1.2.0)  
 **Schema:** [`vehicles` schema][vehicles-schema]  
-**`data` Payload:** `{ "vehicles": [] }`, an array of objects with the following structure
-
-| Field | Type | Required/Optional | Comments |
-| ----- | ---- | ----------------- | ----- |
-| `provider_id` | UUID | Required | A UUID for the provider, unique within MDS. See MDS [provider list](/providers.csv). |
-| `provider_name` | String | Required | The public-facing name of the provider |
-| `data_provider_id` | UUID | Optional | If different than `provider_id`, a UUID for the data solution provider managing the data feed in this endpoint. See MDS [provider list](/providers.csv) which includes both service operators and data solution providers. |
-| `device_id` | UUID | Required | A unique device ID in UUID format, should match this device in Provider |
-| `vehicle_id` | String | Required | A unique vehicle identifier (visible code, licence plate, etc), visible on the vehicle itself |
-| `vehicle_type` | Enum | Required | see [vehicle types][vehicle-types] table |
-| `vehicle_attributes` | Array | Optional | **[Mode](/modes#list-of-supported-modes) Specific**. [Vehicle attributes](/modes#vehicle-attributes) given as mode-specific unordered key-value pairs |
-| `propulsion_types` | Enum[] | Required | Array of [propulsion types][propulsion-types]; allows multiple values |
-| `battery_capacity` | Integer  | Required if Available | Capacity of battery expressed as milliamp hours (mAh) |
-| `fuel_capacity` | Integer  | Required if Available | Capacity of fuel tank (liquid, solid, gaseous) expressed in liters |
-| `last_event_time` | [timestamp][ts] | Required | Date/time when last state change occurred. See [Event Times][event-times] |
-| `last_vehicle_state` | Enum | Required | [Vehicle state][vehicle-states] of most recent state change. |
-| `last_event_types` | Enum[] | Required | [Vehicle event(s)][vehicle-events] of most recent state change, allowable values determined by `last_vehicle_state`. |
-| `last_event_location` | GeoJSON [Point Feature][point-geo]| Required | Location of vehicle's last event. See also [Stop-based Geographic Data][stop-based-geo]. |
-| `current_location` | GeoJSON [Point Feature][point-geo] | Required if Applicable | Current location of vehicle if different from last event, and the vehicle is not currently on a trip. See also [Stop-based Geographic Data][stop-based-geo]. |
-| `battery_percent`       | Integer          | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 100 |
-| `fuel_percent`       | Integer          | Required if Applicable | Percent fuel in vehicle, expressed between 0 and 100 |
+**`data` Payload:** `{ "vehicles": [] }`, an array of [Vehicle](vehicle) objects
 
 [Top][toc]
 
@@ -613,6 +557,7 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 [dgps]: https://en.wikipedia.org/wiki/Differential_GPS
 [error-messages]: /general-information.md#error-messages
 [events]: #events
+[events---query-parameters]: #events---query-parameters
 [events-schema]: events.json
 [event-times]: #event-times
 [gbfs]: https://github.com/NABSA/gbfs
@@ -629,19 +574,22 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 [point-geo]: /general-information.md#geographic-telemetry-data
 [propulsion-types]: /general-information.md#propulsion-types
 [responses]: /general-information.md#responses
-[status]: #status-changes
-[status-schema]: status_changes.json
 [stops]: /general-information.md#stops
 [stop-based-geo]: /general-information.md#stop-based-geographic-data
 [stops-schema]: stops.json
+[telemetry]: #telemetry
+[telemetry-schema]: telemetry.json
+[telemetry---query-parameters]: #telemetry-query-parameters
 [toc]: #table-of-contents
-[trips]: #trips
+[trips]: /general-information.md#trips
 [trips-general-info]: /general-information.md#stop-based-geographic-data
 [trips-schema]: trips.json
 [ts]: /general-information.md#timestamps
 [vehicles]: #vehicles
+[vehicle]: /general-information.md#vehicles
 [vehicle-types]: /general-information.md#vehicle-types
 [vehicle-states]: /modes#vehicle-states
 [vehicle-events]: /modes#event-types
+[vehicle-event-data]: /general-information.md#event-data
 [vehicles-schema]: vehicles.json
 [versioning]: /general-information.md#versioning

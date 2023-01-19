@@ -13,12 +13,14 @@ This specification contains a collection of RESTful APIs used to specify the dig
   * [Responses and Error Messages](#responses-and-error-messages)
   * [Authorization](#authorization)
 * [Vehicles](#vehicles)
-* [Vehicle - Register](#vehicle---register)
-* [Vehicle - Update](#vehicle---update)
-* [Vehicle - Events](#vehicle---event)
-* [Vehicle - Telemetry](#vehicle---telemetry)
-* [Telemetry Data](#telemetry-data)
+  * [Vehicle - Register](#vehicle---register)
+  * [Vehicle - Update](#vehicle---update)
+  * [Vehicle - Events](#vehicle---event)
+  * [Vehicle - Telemetry](#vehicle---telemetry)
 * [Stops](#stops)
+  * [Stops - Register](#stops---register)
+  * [Stops - Update](#stops---update)
+  * [Stops - Readback](#stops---readback)
 
 ## General information
 
@@ -28,7 +30,7 @@ This specification uses data types including timestamps, UUIDs, and vehicle stat
 
 ### Versioning
 
-`agency` APIs must handle requests for specific versions of the specification from clients.
+`Agency` APIs must handle requests for specific versions of the specification from clients.
 
 Versioning must be implemented as specified in the [Versioning section][versioning].
 
@@ -75,25 +77,6 @@ If `device_id` is specified, `GET` will return an array with a single vehicle re
 }
 ```
 
-A vehicle record is as follows:
-
-| Field         | Type      | Field Description                       |
-| ------------- | --------- | ----------------------------------------------------------------------------- |
-| `device_id`   | UUID      | Provided by Operator to uniquely identify a vehicle                           |
-| `provider_id` | UUID      | Issued by Agency and [tracked](../providers.csv)                              |
-| `data_provider_id` | UUID | Optional | If different than `provider_id`, a UUID for the data solution provider managing the data feed in this endpoint. See MDS [provider list](/providers.csv) which includes both service operators and data solution providers. |
-| `vehicle_id`  | String    | Vehicle Identification Number (vehicle_id) visible on vehicle                 |
-| `vehicle_type`        | Enum      | [Vehicle Type][vehicle-types]           |
-| `propulsion_types`  | Enum[]    | Array of [Propulsion Type][propulsion-types]; allows multiple values          |
-| `vehicle_attributes`        | Array of [vehicle attributes](/modes/#vehicle-attributes)   | Vehicle attributes appropriate for the current [mode][modes] |
-| `state`       | Enum      | Current vehicle state. See [Vehicle State][vehicle-states]                    |
-| `prev_events`  | Enum[]      | Last [Vehicle Event][vehicle-events]                                           |
-| `updated`     | [timestamp][ts] | Date of last event update                                                     |
-| `battery_capacity` | Integer  | Required if Available | Capacity of battery expressed as milliamp hours (mAh) |
-| `fuel_capacity` | Integer  | Required if Available | Capacity of fuel tank (liquid, solid, gaseous) expressed in liters |
-| `battery_percent`       | Integer          | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 100 |
-| `fuel_percent`       | Integer          | Required if Applicable | Percent fuel in vehicle, expressed between 0 and 100 |
-
 404 Failure Response:
 
 _No content returned on vehicle not found._
@@ -102,209 +85,124 @@ _No content returned on vehicle not found._
 
 ## Vehicle - Register
 
-The `/vehicles` registration endpoint is used to register a vehicle for use in the Agency jurisdiction.
+The `/vehicles` registration endpoint is used to register vehicles for use in the Agency's jurisdiction.
 
-Endpoint: `/vehicles`
-Method: `POST`
+**Endpoint**: `/vehicles`  
+**Method:** `POST`  
+**Payload:** An array of [Vehicles](#vehicle)  
 
-Body Params:
+200 Success Response:
 
-| Field        | Type    | Required/Optional | Field Description                                                    |
-| ------------ | ------- | ----------------- | -------------------------------------------------------------------- |
-| `device_id`  | UUID    | Required          | Provided by Operator to uniquely identify a vehicle                  |
-| `vehicle_id` | String  | Required          | Vehicle Identification Number (vehicle_id) visible on vehicle        |
-| `vehicle_type`       | Enum    | Required          | [Vehicle Type][vehicle-types]                                        |
-| `mode`       | Enum    | Required          | [Mobility Mode][modes]                                        |
-| `propulsion_types` | Enum[]  | Required          | Array of [Propulsion Type][propulsion-types]; allows multiple values |
-| `vehicle_attributes` | Conditionally Required | Array of [vehicle attributes](/modes/#vehicle-attributes)   | Vehicle attributes appropriate for the current [mode][modes] |
-| `battery_capacity` | Integer  | Required if Available | Capacity of battery expressed as milliamp hours (mAh) |
-| `fuel_capacity` | Integer  | Required if Available | Capacity of fuel tank (liquid, solid, gaseous) expressed in liters |
+See [Bulk Responses](#bulk-responses)
 
-201 Success Response:
-
-_No content returned on success._
-
-400 Failure Response:
+### Vehicle Register Error Codes:
 
 | `error`              | `error_description`                               | `error_details`[]               |
 | -------------------- | ------------------------------------------------- | ------------------------------- |
-| `bad_param`          | A validation error occurred.                      | Array of parameters with errors |
-| `missing_param`      | A required parameter is missing.                  | Array of missing parameters     |
-
-409 Failure Response:
-
-| `error`              | `error_description`                               | `error_details`[]               |
-| -------------------- | ------------------------------------------------- | ------------------------------- |
+| `bad_param`          | A validation error occurred                       | Array of parameters with errors |
+| `missing_param`      | A required parameter is missing                   | Array of missing parameters     |
 | `already_registered` | A vehicle with `device_id` is already registered  |                                 |
 
-[Top][toc]
+403 Unauthorized Response:
+
+**None**
 
 ## Vehicle - Update
 
-The `/vehicles` update endpoint is used to update some mutable aspect of a vehicle. For now, only `vehicle_id`.
+The `/vehicles` update endpoint is used to change vehicle information, should some aspect of the vehicle change, such as the `vehicle_id`. Each vehicle must already be registered.
 
-Endpoint: `/vehicles/{device_id}`
-Method: `PUT`
-
-Body Params:
-
-| Field        | Type    | Required/Optional | Field Description                                                    |
-| ------------ | ------- | ----------------- | -------------------------------------------------------------------- |
-| `vehicle_id` | String  | Required          | License Plate (if present) or VIN visible on a vehicle               |
+**Endpoint**: `/vehicles`  
+**Method:** `PUT`  
+**Payload:** An array of [Vehicles](#vehicle)  
 
 200 Success Response:
 
-_No content returned on success._
+See [Bulk Responses](#bulk-responses)
 
-400 Failure Response:
+### Vehicle Update Error Codes:
 
 | `error`              | `error_description`                               | `error_details`[]               |
 | -------------------- | ------------------------------------------------- | ------------------------------- |
-| `bad_param`          | A validation error occurred.                      | Array of parameters with errors |
-| `missing_param`      | A required parameter is missing.                  | Array of missing parameters     |
-
-404 Failure Response:
-
-_No content returned if no vehicle matching `device_id` is found._
+| `bad_param`          | A validation error occurred                       | Array of parameters with errors |
+| `unregistered`  | This `device_id` is unregistered |                                 |
 
 [Top][toc]
 
-## Vehicle - Event
+## Vehicles - Events
 
-The vehicle `/event` endpoint allows the Provider to control the state of the vehicle.
+The vehicle `/events` endpoint allows the Provider to submit events describing the state changes of multiple vehicles.
 
-Endpoint: `/vehicles/{device_id}/event`
-Method: `POST`
-
-Path Params:
-
-| Field        | Type | Required/Optional | Field Description                        |
-| ------------ | ---- | ----------------- | ---------------------------------------- |
-| `device_id`  | UUID | Required          | ID used in [Register](#vehicle---register) |
-
-Body Params:
-
-| Field           | Type                         | Required/Optional      | Field Description                                                                                          |
-|-----------------|------------------------------|------------------------|------------------------------------------------------------------------------------------------------------|
-| `vehicle_state` | Enum                         | Required               | see [Vehicle States][vehicle-states]                                                                       |
-| `event_types`   | Enum[]                       | Required               | see [Vehicle Events][vehicle-events]       |
-| `timestamp`     | [timestamp][ts]              | Required               | Date of last event update                                                                                  |
-| `telemetry`     | [Telemetry](#telemetry-data) | Required               | Single point of telemetry                                                                                  |
-| `event_geographies`  | UUID[] | Optional        | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.1.0)*. Array of Geography UUIDs consisting of every Geography that contains the location of the event. See [Geography Driven Events][geography-driven-events]. Required if `telemetry` is not present. |
-| `trip_id`       | UUID                         | Conditionally required | UUID provided by Operator to uniquely identify the trip. See `trip_id` requirements for each [mode][modes]. |
-
-201 Success Response:
-
-| Field        | Type | Field Description                                                             |
-| ------------ | ---- | ----------------------------------------------------------------------------- |
-| `device_id`  | UUID | UUID provided by Operator to uniquely identify a vehicle                      |
-
-400 Failure Response:
-
-| `error`             | `error_description`             | `error_details`[]               |
-| ------------------- | ------------------------------- | ------------------------------- |
-| `bad_param`         | A validation error occurred     | Array of parameters with errors |
-| `missing_param`     | A required parameter is missing | Array of missing parameters     |
-| `unregistered`      | Vehicle is not registered       |                                 |
-
-[Top][toc]
-
-## Vehicle - Telemetry
-
-The vehicle `/telemetry` endpoint allows a Provider to send vehicle telemetry data in a batch for any number of vehicles in the fleet.
-
-Endpoint: `/vehicles/telemetry`
-Method: `POST`
-
-Body Params:
-
-| Field         | Type                           | Required/Optional | Field Description                                                                      |
-| ------------- | ------------------------------ | ----------------- | -------------------------------------------------------------------------------------- |
-| `data`        | [Telemetry](#telemetry-data)[] | Required          | Array of telemetry for one or more vehicles.                                           |
+**Endpoint:** `/vehicles/events`  
+**Method:** `POST`  
+**Payload:** An array of [Vehicle Events](#vehicle-event)  
 
 200 Success Response:
 
-| Field      | Type                           | Field Description                                                                                       |
-| ---------- | ------------------------------ | ------------------------------------------------------------------------------------------------------- |
-| `success`  | Integer                        | Number of successfully written telemetry data points.                                                   |
-| `total`    | Integer                        | Total number of provided points.                                                                       |
-| `failures` | [Telemetry Error](#telemetry-error)[] | Array of errors including the failed telemetry data and error details (empty if all successful).                          |
+See [Bulk Responses](#bulk-responses)
 
-Alway returns 200. Any failed data is detailed in the `failures` array of the response.
+### Event Errors:
 
-[Top][toc]
-
-## Telemetry Data
-
-A standard point of vehicle telemetry. References to latitude and longitude imply coordinates encoded in the [WGS 84 (EPSG:4326)](https://en.wikipedia.org/wiki/World_Geodetic_System) standard GPS or GNSS projection expressed as [Decimal Degrees](https://en.wikipedia.org/wiki/Decimal_degrees).
-
-| Field          | Type           | Required/Optional     | Field Description                                            |
-| -------------- | -------------- | --------------------- | ------------------------------------------------------------ |
-| `device_id`    | UUID           | Required              | ID used in [Register](#vehicle---register)                     |
-| `timestamp`    | [timestamp][ts]| Required              | Date/time that event occurred. Based on GPS or GNSS clock            |
-| `gps`          | Object         | Required              | Telemetry position data                                      |
-| `gps.lat`      | Double         | Required              | Latitude of the location                                     |
-| `gps.lng`      | Double         | Required              | Longitude of the location                                    |
-| `gps.altitude` | Double         | Required if Available | Altitude above mean sea level in meters                      |
-| `gps.heading`  | Double         | Required if Available | Degrees - clockwise starting at 0 degrees at true North      |
-| `gps.speed`    | Float          | Required if Available | Estimated speed in meters / sec as reported by the GPS chipset                                        |
-| `gps.accuracy` | Float          | Required if Available | Horizontal accuracy, in meters                                           |
-| `gps.hdop`     | Float          | Required if Available | Horizontal GPS or GNSS accuracy value (see [hdop][hdop]) |
-| `gps.satellites` | Integer      | Required if Available | Number of GPS or GNSS satellites
-| `battery_percent`       | Integer          | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 100 |
-| `fuel_percent`       | Integer          | Required if Applicable | Percent fuel in vehicle, expressed between 0 and 100 |
-| `stop_id`      | UUID           | Required if Applicable | Stop that the vehicle is currently located at. Only applicable for _docked_ Micromobility. See [Stops][stops] |
+| `error`         | `error_description`              | `error_details`[]               |
+| -------         | -------------------              | -----------------               |
+| `bad_param`     | A validation error occurred      | Array of parameters with errors |
+| `missing_param` | A required parameter is missing  | Array of missing parameters     |
+| `unregistered`  | This `device_id` is unregistered |                                 |
 
 [Top][toc]
 
-## Telemetry Error
-Error response for indicating failed telemetry data for the [Telemetry](#vehicle---telemetry) endpoint
+## Vehicles - Telemetry
 
-| Field          | Type                           | Field Description
-| -------------- | ------------------------------ | --------------------------------- |
-| `telemetry`    | [Telemetry](#telemetry-data)   | The failed telemetry data         |
-| `error`        | [Error Message][error-message] | Error message detailing the error |
+The vehicle `/telemetry` endpoint allows a Provider to send vehicle telemetry data in a batch for any number of vehicles in the fleet.
 
- Errors:
+**Endpoint**: `/vehicles/telemetry`  
+**Method**: `POST`  
+**Payload**: An array of [Vehicle Telemetry][vehicle-telemetry]  
 
-| `error`         | `error_description`                  | `error_details`[]                 |
-| --------------- | ------------------------------------ | --------------------------------- |
-| `bad_param`     | A validation error occurred.         | Array of parameters with errors   |
-| `missing_param` | A required parameter is missing.     | Array of missing parameters       |
-| `unregistered`  | Vehicle is not registered            |                                   |
+200 Success Response:
+
+See [Bulk Responses](#bulk-responses)
+
+### Telemetry Errors:
+
+| `error`              | `error_description`                               | `error_details`[]               |
+| -------------------- | ------------------------------------------------- | ------------------------------- |
+| `bad_param`          | A validation error occurred                       | Array of parameters with errors |
+| `missing_param`      | A required parameter is missing                   | Array of missing parameters     |
+| `unregistered`       | This `device_id` is unregistered                  |                                 |
 
 [Top][toc]
 
 ## Stops
 
+### Stops - Register
+
 The `/stops` endpoint allows an agency to register city-managed Stops, or a provider to register self-managed Stops.
 
 **Endpoint:** `/stops`  
 **Method:** `POST`  
-**[Beta feature][beta]:** Yes (as of 1.0.0). [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/638)    
-**Request Body**: An array of [Stops][stops]
+**Payload**: An array of [Stops][stops]
 
-201 Success Response:
+200 Success Response:
 
-_No content returned on success._
+See [Bulk Responses](#bulk-responses)
 
-400 Failure Response:
-
-| `error`              | `error_description`                               | `error_details`[]               |
-| -------------------- | ------------------------------------------------- | ------------------------------- |
-| `bad_param`          | A validation error occurred.                      | Array of parameters with errors |
-| `missing_param`      | A required parameter is missing.                  | Array of missing parameters     |
-
-409 Failure Response:
+#### Stops Register Errors:
 
 | `error`              | `error_description`                               | `error_details`[]               |
 | -------------------- | ------------------------------------------------- | ------------------------------- |
+| `bad_param`          | A validation error occurred                       | Array of parameters with errors |
+| `missing_param`      | A required parameter is missing                   | Array of missing parameters     |
 | `already_registered` | A stop with `stop_id` is already registered       |                                 |
+
+403 Unauthorized Response:
+
+[Top][toc]
+
+### Stops - Update
 
 **Endpoint:** `/stops`  
 **Method:** `PUT`  
-**[Beta feature][beta]:** Yes (as of 1.0.0). [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/638)  
-**Request Body**: An array of subsets of [Stop][stops] information, where the permitted subset fields are defined as:
+**Payload**: An array of of [Stop][stops] information, where the permitted changable fields are defined as:
 
 | Field               | Required/Optional | Description                                 |
 |---------------------|-------------------|---------------------------------------------|
@@ -314,23 +212,21 @@ _No content returned on success._
 
 200 Success Response:
 
-_No content returned on success._
+See [Bulk Responses](#bulk-responses)
 
-400 Failure Response:
+#### Stops update Errors:
 
 | `error`              | `error_description`                               | `error_details`[]               |
 | -------------------- | ------------------------------------------------- | ------------------------------- |
-| `bad_param`          | A validation error occurred.                      | Array of parameters with errors |
-| `missing_param`      | A required parameter is missing.                  | Array of missing parameters     |
+| `bad_param`          | A validation error occurred                       | Array of parameters with errors |
+| `missing_param`      | A required parameter is missing                   | Array of missing parameters     |
+| `unregisterd` | No stop with `stop_id` is already registered       |                                 |
 
-404 Failure Response:
-
-_No content returned if no vehicle matching `stop_id` is found._
+### Stops - Readback
 
 **Endpoint:** `/stops/:stop_id`  
 **Method:** `GET`  
-**[Beta feature][beta]:** Yes (as of 1.0.0). [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/638)  
-**Payload:** `{ "stops": [] }`, an array of [Stops][stops]
+**Payload:** An array of [Stops][stops]
 
 Path Params:
 
@@ -344,88 +240,35 @@ If `stop_id` is specified, `GET` will return an array with a single stop record,
 
 [Top][toc]
 
-## Reservation Type
-
-The reservation type enum expresses the urgency of a given reservation. This can be useful when attempting to quantify metrics around trips: for example, computing passenger wait-time. In the `on_demand` case, passenger wait-time may be quantified by the delta between the `reservation_time`, and the pick-up time; however, in the `scheduled` case, the wait time may be quantified based on the delta between the `scheduled_trip_start_time` found in the Trips payload, and the actual `trip_start_time`. 
-
-| `reservation_type` | Description                                                            |
-|--------------------|------------------------------------------------------------------------|
-| `on_demand`        | The passenger requested the vehicle as soon as possible                |
-| `scheduled`        | The passenger requested the vehicle for a scheduled time in the future |
-
-[Top][toc]
-
-## Reservation Method
-
-The reservation method enum describes the different ways in which a passenger can create their reservation.
-
-| `reservation_method` | Description                                               |
-|----------------------|-----------------------------------------------------------|
-| `app`                | Reservation was made through an application (mobile/web)  |
-| `street_hail`        | Reservation was made by the passenger hailing the vehicle |
-| `phone_dispatch`     | Reservation was made by calling the dispatch operator     |
-
-[Top][toc]
-
-## Fare
-
-The Fare object describes a fare for a Trip. 
-
-| Field           | Type                  | Required/Optional | Field Description                                                                       |
-|-----------------|-----------------------|-------------------|-----------------------------------------------------------------------------------------|
-| quoted_cost     | Float                 | Required          | Cost quoted to the customer at the time of booking                                      |
-| actual_cost     | Float                 | Required          | Actual cost after a trip was completed                                                  |
-| components      | `{ [string]: float }` | Optional          | Breakdown of the different fees that composed a fare, e.g. tolls                        |
-| currency        | string                | Required          | ISO 4217 currency code                                                                  |
-| payment_methods | `string[]`            | Optional          | Breakdown of different payment methods used for a trip, e.g. cash, card, equity_program |
-
-[Top][toc]
-
-## Trip Metadata
+## Trips
 
 The Trips endpoint serves two purposes: 
 
 * Definitively indicating that a Trip (a sequence of events linked by a trip_id) has been completed. For example, from analyzing only the raw Vehicle Events feed, if a trip crosses an Agency's jurisdictional boundaries but does not end within the jurisdiction (last event_type seen is a `leave_jurisdiction`), this can result in a 'dangling trip'. The Trips endpoint satisfies this concern, by acting as a final indication that a trip has been finished, even if it ends outside of jurisdictional boundaries; if a trip has intersected an Agency's jurisdictional boundaries at all during a trip, it is expected that a Provider will send a Trip payload to the Agency following the trip's completion.
 * Providing information to an Agency regarding an entire trip, without extending any of the Vehicle Event payloads, or changing any requirements on when Vehicle Events should be sent.
 
-| Field                         | Type                           | Required/Optional      | Field Description |
-|-------------------------------|--------------------------------|------------------------| ----------------- |
-| trip_id                       | UUID                           | Required               | UUID for the trip this payload pertains to |
-| trip_type                     | Enum                           | Optional               | The type of the trip |
-| trip_attributes               | `{ [String]: String}`          | Optional               | Trip attributes, given as mode-specific key-value pairs |
-| provider_id                   | UUID                           | Required               | Provider which managed this trip |
-| `data_provider_id`            | UUID                           | Optional               | If different than `provider_id`, a UUID for the data solution provider managing this data endpoint. See MDS [provider list](/providers.csv) which includes both service operators and data solution providers. |
-| reservation_method            | Enum                           | Required               | Way the customer created their reservation, see [reservation-method](#reservation-method) |
-| reservation_time              | Timestamp                      | Required               | Time the customer *requested* a reservation |
-| reservation_type              | Enum                           | Required               | Type of reservation, see [reservation-type](#reservation-type) |
-| quoted_trip_start_time        | Timestamp                      | Required               | Time the trip was estimated or scheduled to start, that was provided to the passenger |
-| requested_trip_start_location | `{ lat: number, lng: number }` | Conditionally Required | Location where the customer requested the trip to start (required if this is within jurisdictional boundaries) |
-| dispatch_time                 | Timestamp                      | Conditionally Required | Time the vehicle was dispatched to the customer (required if trip was dispatched) |
-| trip_start_time               | Timestamp                      | Conditionally Required | Time the trip started (required if trip started)               |
-| trip_end_time                 | Timestamp                      | Conditionally Required | Time the trip ended (required if trip was completed)           |
-| distance                      | Float                          | Conditionally Required | Total distance of the trip in meters (required if trip was completed) |
-| cancellation_reason           | string                         | Conditionally Required | The reason why a *driver* cancelled a reservation. (required if a driver cancelled a trip, and a `driver_cancellation` event_type was part of the trip) |
-| fare                          | [Fare](#fare)                  | Conditionally Required | Fare for the trip (required if trip was completed)             |
-| accessibility_options         | Enum[]                         | Optional               | The **union** of any accessibility options requested, and used. E.g. if the passenger requests a vehicle with `wheelchair_accessible`, but doesn’t utilize the features during the trip, the trip payload will include `accessibility_options: ['wheelchair_accessible']`. See [accessibility-options][accessibility-options] |
-
-**Endpoint:** `/trip_metadata`  
+**Endpoint:** `/trips`  
 **Method:** `POST`  
-**[Beta feature][beta]:** Yes (as of 2.0.0)  
-**Request Body**: A [Trip Metadata](#trip_metadata) object
+**Payload:** Array of [Trips](#trip-data)
 
-201 Success Response:
-Payload which was POST'd
+200 Success Response:
 
-400 Failure Response:
+See [Bulk Responses](#bulk-responses)
+
+### Trip Errors:
+
 | `error`              | `error_description`                               | `error_details`[]               |
 | -------------------- | ------------------------------------------------- | ------------------------------- |
-| `bad_param`          | A validation error occurred.                      | Array of parameters with errors |
-| `missing_param`      | A required parameter is missing.                  | Array of missing parameters     |
+| `bad_param`          | A validation error occurred                       | Array of parameters with errors |
+| `missing_param`      | A required parameter is missing                   | Array of missing parameters     |
+| `unregistered`       | This `device_id` is unregistered                  |                                 |
+
 
 [Top][toc]
 
 [accessibility-options]: /general-information.md#accessibility-options
 [beta]: /general-information.md#beta-features
+[bulk-responses]: /general-information.md#bulk-responses
 [general]: /general-information.md
 [geography-driven-events]: /general-information.md#geography-driven-events
 [error-messages]: /general-information.md#error-messages
@@ -434,10 +277,15 @@ Payload which was POST'd
 [propulsion-types]: /general-information.md#propulsion-types
 [responses]: /general-information.md#responses
 [stops]: /general-information.md#stops
+[telemetry-data]: /general-information.md#telemetry-data
+[trip-data]: /general-information.md#trips
 [toc]: #table-of-contents
 [ts]: /general-information.md#timestamps
+[vehicle]: /data-types.md#vehicles
 [vehicle-types]: /general-information.md#vehicle-types
 [vehicle-states]: /modes/vehicle_states.md
-[vehicle-events]: /modes/event_types.md
+[vehicle-event-types]: /modes/event_types.md
+[vehicle-event]: /data-types.md#events
+[vehicle-telemetry]: /data-types.md#telemetry
 [versioning]: /general-information.md#versioning
 [error-message]: /general-information.md#error-messages

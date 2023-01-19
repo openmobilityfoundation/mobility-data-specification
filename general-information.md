@@ -6,6 +6,7 @@ This document contains specifications that are shared between the various MDS [A
 
 - [Beta Features](#beta-features)
 - [Costs and Currencies](#costs-and-currencies)
+- [Data Types](#data-types)
 - [Definitions](#definitions)
 - [Devices](#devices)
 - [Geographic Data](#geographic-data)
@@ -17,20 +18,8 @@ This document contains specifications that are shared between the various MDS [A
 - [Responses](#responses)
   - [Error Messages](#error-messages)
 - [Strings](#strings)
-- [Stops](#stops)
-  - [Stop Status](#stop-status)
-  - [GBFS Compatibility](#gbfs-compatibility)
 - [Timestamps](#timestamps)
 - [UUIDs](#uuids)
-- [Trips](#trips)
-- [Vehicle Characteristics](#vehicle-characteristics)
-  - [Accessibility Options](#accessibility-options)
-  - [Propulsion Types](#propulsion-types)
-  - [Vehicle Types](#vehicle-types)
-- [Vehicle States](#vehicle-states)
-  - [Event Types](#event-types)
-  - [Vehicle State Events](#vehicle-state-events)
-  - [State Machine Diagram](#state-machine-diagram)
 - [Versioning](#versioning)
 
 ## Beta Features
@@ -50,6 +39,12 @@ Working Groups and their Steering Committees are expected to review beta designa
 Fields specifying a monetary cost use a currency as specified in [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217#Active_codes). All costs should be given as integers in the currency's smallest unit. As an example, to represent $1 USD, specify an amount of `100` (100 cents).
 
 If the currency field is null, USD cents is implied.
+
+[Top][toc]
+
+## Data Types
+
+Shared data structures including [vehicles](/data-types.md#vehicles), [vehicle events](/data-types.md#vehicle-state-events), [vehicle telemetry](/data-types.md#telemetry-data), and [trips](/data-types.md#trips) can be found in the [Data Types](/data-types.md) page.
 
 [Top][toc]
 
@@ -77,62 +72,6 @@ Additionally, `device_id` must remain constant for the device's lifetime of serv
 
 References to geographic datatypes (Point, MultiPolygon, etc.) imply coordinates encoded in the [WGS 84 (EPSG:4326)][wgs84] standard GPS or GNSS projection expressed as [Decimal Degrees][decimal-degrees]. When points are used, you may assume a 20 meter buffer around the point when needed.
 
-### Geographic Telemetry Data
-
-Whenever a vehicle location coordinate measurement is presented, it must be represented as a GeoJSON [`Feature`][geojson-feature] object with a corresponding `properties` object with the following properties:
-
-
-| Field          | Type            | Required/Optional     | Field Description                                            |
-| -------------- | --------------- | --------------------- | ------------------------------------------------------------ |
-| `timestamp`    | [timestamp][ts] | Required              | Date/time that event occurred. Based on GPS or GNSS clock |
-| `altitude`     | Double          | Required if Available | Altitude above mean sea level in meters |
-| `heading`      | Double          | Required if Available | Degrees - clockwise starting at 0 degrees at true North |
-| `speed`        | Float           | Required if Available | Estimated speed in meters / sec as reported by the GPS chipset |
-| `accuracy`     | Float           | Required if Available | Horizontal accuracy, in meters |
-| `hdop`         | Float           | Required if Available | Horizontal GPS or GNSS accuracy value (see [hdop][hdop]) |
-| `satellites`   | Integer         | Required if Available | Number of GPS or GNSS satellites |
-
-Example of a vehicle location GeoJSON [`Feature`][geojson-feature] object:
-
-```json
-{
-    "type": "Feature",
-    "properties": {
-        "timestamp": 1529968782421,
-        "accuracy": 10,
-        "speed": 1.21
-    },
-    "geometry": {
-        "type": "Point",
-        "coordinates": [
-            -118.46710503101347,
-            33.9909333514159
-        ]
-    }
-}
-```
-
-### Stop-based Geographic Data
-
-When an individual location coordinate measurement (Point) corresponds to a [Stop][general-stops], it must be presented with a `stop_id` property:
-
-```json
-{
-    "type": "Feature",
-    "properties": {
-        "timestamp": 1529968782421,
-        "stop_id": "b813cde2-a41c-4ae3-b409-72ff221e003d"
-    },
-    "geometry": {
-        "type": "Point",
-        "coordinates": [
-            -118.46710503101347,
-            33.9909333514159
-        ]
-    }
-}
-```
-
 ### Intersection Operation
 
 For the purposes of this specification, the intersection of two geographic datatypes is defined according to the [`ST_Intersects` PostGIS operation][st-intersects]
@@ -147,7 +86,7 @@ For the purposes of this specification, the intersection of two geographic datat
 
 **[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.1.0)*. [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/670)
 
-Geography-Driven Events (GDE) is a new MDS feature for Agencies to perform complete Policy compliance monitoring without precise location data. Geography-Driven Events describe individual vehicles in realtime – not just aggregate data. However, rather than receiving the exact location of a vehicle, Agencies receive information about the vehicle's current geographic region. The regions used for Geography-Driven Events correspond to the Geographies in an Agency's current Policy. In this way, the data-shared using Geography-Driven Events is matched to an Agency's particular regulatory needs.
+Geography-Driven Events (GDE) is an MDS feature for Agencies to perform complete Policy compliance monitoring without precise location data. Geography-Driven Events describe individual vehicles in realtime – not just aggregate data. However, rather than receiving the exact location of a vehicle, Agencies receive information about the vehicle's current geographic region. The regions used for Geography-Driven Events correspond to the Geographies in an Agency's current Policy. In this way, the data-shared using Geography-Driven Events is matched to an Agency's particular regulatory needs. 
 
 See [this example](/policy/examples/requirements.md#geography-driven-events) for how to implement GDE using [Policy Requirements](/policy#requirement).
 
@@ -173,7 +112,7 @@ During the Beta period for this feature, location and telemetry data remain requ
 
 ## Optional Authentication
 
-Authorization of the Policy and Geography APIs is no longer required and will be deprecated in next major release with these endpoints (plus Jursidictions) becoming 'optionally private' instead of 'optionally public'. An agency may optionally decide to make the Policy and Geography endpoints, as well as Jursidictions, unauthenticated and public. This allows transparency for the public to see how the city is regulating, holds the city accountable for their policy decisions, and reduces the technical burden on providers to use these endpoints. A side benefit is that this allows third parties to ingest this information into their applications and services for public benefit.
+Authorization of the Policy and Geography APIs is no longer required and will be deprecated in next major release with these endpoints (plus Jurisdictions) becoming 'optionally private' instead of 'optionally public'. An agency may optionally decide to make the Policy and Geography endpoints, as well as Jurisdictions, unauthenticated and public. This allows transparency for the public to see how the city is regulating, holds the city accountable for their policy decisions, and reduces the technical burden on providers to use these endpoints. A side benefit is that this allows third parties to ingest this information into their applications and services for public benefit.
 
 Note if implementing the beta feature [Geography Driven Events](/general-information.md#geography-driven-events), both Policy and Geography must be public.
 
@@ -182,7 +121,7 @@ Note if implementing the beta feature [Geography Driven Events](/general-informa
 ## Responses
 
 * **200:** OK: operation successful.
-* **201:** Created: `POST` operations, new object created
+* **201:** Created: `POST` operations, new object(s) created
 * **400:** Bad request.
 * **401:** Unauthorized: Invalid, expired, or insufficient scope of token.
 * **404:** Not Found: Object does not exist, returned on `GET` or `POST` operations if the object does not exist.
@@ -205,62 +144,45 @@ Note if implementing the beta feature [Geography Driven Events](/general-informa
 | `error_description` | String   | Human readable error description (can be localized) |
 | `error_details`     | String[] | Array of error details |
 
+### Bulk Responses
+
+For multi-record POST and PUT calls, e.g. sending Events using the Agency API, the bulk-response structure describes a list of failures is as follows:
+
+```json
+{
+    "success": "...",
+    "total": "...",
+    "failures": [ {      // list of failure details
+        "item": { ... }, // copy of the item with the problem
+        "error": "...",
+        "error_description": "...",
+        "error_details": [ "...", "..." ] 
+    }, {
+      // additional failure records
+    } ]
+}
+```
+
+| Field      | Type                           | Field Description                                                                                       |
+| ---------- | ------------------------------ | ------------------------------------------------------------------------------------------------------- |
+| `success`  | Integer                        | Number of successfully written trip records points                                                |
+| `total`    | Integer                        | Total number of provided points                                                                       |
+| `failures` | [Trip](#trip-data)[] | Array of failed trip records (empty if all successful)                          |
+
+### Failure Details:
+
+| Field               | Type                  | Field Description |
+| -----               | ----                  | ----------------- |
+| `item`              | Vehicle, Event, etc.  | Invalid submitted item |
+| `error`             | Enum                  | Error code      |
+| `error_description` | String                | Human readable error description (can be localized)     |
+| `error_details`     | String[]              | Array of fields with errors, if applicable |
+
 [Top][toc]
 
 ## Strings
 
 All String fields, such as `vehicle_id`, are limited to a maximum of 255 characters.
-
-[Top][toc]
-
-## Stops
-
-Stops describe vehicle trip start and end locations in a pre-designated physical place. They can vary from docking stations with or without charging, corrals with lock-to railings, or suggested parking areas marked with spray paint. Stops are used in both [Provider](/provider#stops) (including routes and event locations) and [Agency](/agency#stops) (including telemetry data).
-
-| Field                  | Type                                                  | Required/Optional | Description |
-|------------------------|-------------------------------------------------------|-------------------|-------------|
-| stop_id                | UUID                                                  | Required | Unique ID for stop |
-| name                   | String                                                | Required | Name of stop |
-| last_reported          | Timestamp                                             | Required | Date/Time that the stop was last updated |
-| location               | GeoJSON [Point Feature](#stop-based-geographic-data)  | Required | Simple centerpoint location of the Stop. The use of the optional `geography_id` is recommended to provide more detail. |
-| status                 | [Stop Status](#stop-status)                           | Required | Object representing the status of the Stop. See [Stop Status](#stop-status). |
-| capacity               | {vehicle_type: number}                                | Required | Number of total places per vehicle_type |
-| num_vehicles_available | {vehicle_type: number}                                | Required | How many vehicles are available per vehicle_type at this stop? |
-| num_vehicles_disabled  | {vehicle_type: number}                                | Required | How many vehicles are unavailable/reserved per vehicle_type at this stop? |
-| provider_id            | UUID                                                  | Optional | UUID for the provider managing this stop. Null/undefined if managed by an agency.  See MDS [provider list](/providers.csv). |
-| data_provider_id       | UUID                                                  | Optional | UUID for the data provider managing the data coming from this stop. Null/undefined if managed by an agency or a provider.  See MDS [provider list](/providers.csv). |
-| geography_id           | UUID                                                  | Optional | Pointer to the [Geography](/geography) that represents the Stop geospatially via Polygon or MultiPolygon. |
-| region_id              | string                                                | Optional | ID of the region where station is located, see [GBFS Station Information][gbfs-station-info] |
-| short_name             | String                                                | Optional | Abbreviated stop name |
-| address                | String                                                | Optional | Postal address (useful for directions) |
-| post_code              | String                                                | Optional | Postal code (e.g. `10036`) |
-| rental_methods         | [Enum[]][gbfs-station-info]                           | Optional | List of payment methods accepted at stop, see [GBFS Rental Methods][gbfs-station-info] |
-| cross_street           | String                                                | Optional | Cross street of where the station is located. |
-| num_places_available   | {vehicle_type: number}                                | Optional | How many places are free to be populated with vehicles at this stop? |
-| num_places_disabled    | {vehicle_type: number}                                | Optional | How many places are disabled and unable to accept vehicles at this stop? |
-| parent_stop            | UUID                                                  | Optional | Describe a basic hierarchy of stops (e.g.a stop inside of a greater stop) |
-| devices                | UUID[]                                                | Optional | List of device_ids for vehicles which are currently at this stop |
-| image_url              | URL                                                   | Optional | Link to an image, photo, or diagram of the stop. Could be used by providers to help riders find or use the stop. |
-
-### Stop Status
-
-**Stop Status** returns information about the current status of a **[Stop](#stops)**.
-
-| Field        | Type    | Required/Optional | Description                                         |
-|--------------|---------|-------------------|-----------------------------------------------------|
-| is_installed | Boolean | Required          | See GBFS [station_status.json][gbfs-station-status] |
-| is_renting   | Boolean | Required          | See GBFS [station_status.json][gbfs-station-status] |
-| is_returning | Boolean | Required          | See GBFS [station_status.json][gbfs-station-status] |
-
-Example of the **Stop Status** object with properties listed:
-
-```json
-{
-  "is_installed": true,
-  "is_renting": false,
-  "is_returning": true
-}
-```
 
 [Top][toc]
 
@@ -325,47 +247,6 @@ See new location within [individual modes](/modes#list-of-supported-modes) in [m
 
 [Top][toc]
 
-## Vehicle Characteristics
-
-Properties and characteristics of vehicles and devices.
-
-[Top][toc]
-
-### Accessibility Options
-
-See new location within [individual modes](/modes#list-of-supported-modes) in [modes](/modes#accessibility-options).
-
-[Top][toc]
-
-### Propulsion Types
-
-| `propulsion`      | Description                                            |
-| ----------------- | ------------------------------------------------------ |
-| `human`           | Pedal or foot propulsion                               |
-| `electric_assist` | Provides power only alongside human propulsion         |
-| `electric`        | Contains throttle mode with a battery-powered motor    |
-| `combustion`      | Contains throttle mode with a gas engine-powered motor |
-
-A vehicle may have one or more values from the `propulsion`, depending on the number of modes of operation. For example, a scooter that can be powered by foot or by electric motor would have the `propulsion` represented by the array `['human', 'electric']`. A bicycle with pedal-assist would have the `propulsion` represented by the array `['human', 'electric_assist']` if it can also be operated as a traditional bicycle.
-
-[Top][toc]
-
-### Vehicle Types
-
-The list of allowed `vehicle_type` values in MDS. Aligning with [GBFS vehicle types form factors](https://github.com/NABSA/gbfs/blob/master/gbfs.md#vehicle_typesjson-added-in-v21-rc).
-
-| `vehicle_type` | Description |
-|----------------| ----------- |
-| bicycle        | A two-wheeled mobility device intended for personal transportation that can be operated via pedals, with or without a motorized assist (includes e-bikes, recumbents, and tandems) |
-| cargo_bicycle  | A two- or three-wheeled bicycle intended for transporting larger, heavier cargo than a standard bicycle (such as goods or passengers), with or without motorized assist (includes bakfiets/front-loaders, cargo trikes, and long-tails) |
-| car            | A passenger car or similar light-duty vehicle |
-| scooter        | A standing or seated fully-motorized mobility device intended for one rider, capable of travel at low or moderate speeds, and suited for operation in infrastructure shared with motorized bicycles |
-| moped          | A seated fully-motorized mobility device capable of travel at moderate or high speeds and suited for operation in general urban traffic |
-| delivery_robot | A robot intended for transporting goods |
-| other          | A device that does not fit in the other categories |
-
-[Top][toc]
-
 ## Versioning
 
 MDS APIs must handle requests for specific versions of the specification from clients.
@@ -402,7 +283,11 @@ If an unsupported or invalid version is requested, the API must respond with a s
 [modes]: /modes/README.md
 [policy]: /policy/README.md
 [provider]: /provider/README.md
+[point-geo]: #geographic-telemetry-data
+[stop-based-geo]: #stop-based-geographic-data
 [st-intersects]: https://postgis.net/docs/ST_Intersects.html
 [toc]: #table-of-contents
 [ts]: /general-information.md#timestamps
+[vehicle-states]: /modes#vehicle-states
+[vehicle-events]: /modes#event-types
 [wgs84]: https://en.wikipedia.org/wiki/World_Geodetic_System
