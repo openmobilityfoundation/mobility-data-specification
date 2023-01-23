@@ -110,19 +110,19 @@ Because of the unreliability of device clocks, the Provider is unlikely to know 
 
 A standard point of vehicle telemetry. References to latitude and longitude imply coordinates encoded in the [WGS 84 (EPSG:4326)](https://en.wikipedia.org/wiki/World_Geodetic_System) standard GPS or GNSS projection expressed as [Decimal Degrees](https://en.wikipedia.org/wiki/Decimal_degrees).
 
-| Field          | Type           | Required/Optional     | Field Description                                            |
-| -------------- | -------------- | --------------------- | ------------------------------------------------------------ |
-| `device_id`    | UUID           | Required              | ID used in [Register](#vehicle---register)                     |
-| `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
-| `data_provider_id` | UUID | Optional | If different than `provider_id`, a UUID for the data solution provider managing the data feed in this endpoint. See MDS [provider list](/providers.csv) which includes both service operators and data solution providers. |
-| `telemetry_id` | UUID           | Required              | ID used for uniquely-identifying a Telemetry entry |
-| `timestamp`    | [Timestamp][ts]| Required              | Date/time that event occurred. Based on GPS or GNSS clock            |
-| `trip_ids`     | UUID[]         | Required              | If telemetry occurred during a trip, the ID of the trip(s).  If not in a trip, `null`.
-| `journey_id`   | UUID           | Required              | If telemetry occurred during a trip, the ID of the journey.  If not in a trip, `null`.
-| `stop_id`      | UUID           | Required if Applicable | Stop that the vehicle is currently located at. Only applicable for _docked_ Micromobility. See [Stops][stops] |
-| `location`          | [GPS][gps]    | Required              | Telemetry position data                                      |
-| `battery_percent`       | Integer          | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 100 |
-| `fuel_percent`       | Integer          | Required if Applicable | Percent fuel in vehicle, expressed between 0 and 100 |
+| Field             | Type            | Required/Optional      | Field Description |
+| -----             | ----            | -----------------      | ----------------- |
+| `device_id`       | UUID            | Required               | ID used in [Register](#vehicle---register)                     |
+| `provider_id`     | UUID            | Required               | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
+| `data_provider_id`| UUID            | Optional               | If different than `provider_id`, a UUID for the data solution provider managing the data feed in this endpoint. See MDS [provider list](/providers.csv) which includes both service operators and data solution providers. |
+| `telemetry_id`    | UUID            | Required               | ID used for uniquely-identifying a Telemetry entry |
+| `timestamp`       | [Timestamp][ts] | Required               | Date/time that event occurred. Based on GPS or GNSS clock            |
+| `trip_ids`        | UUID[]          | Required               | If telemetry occurred during a trip, the ID of the trip(s).  If not in a trip, `null`. 
+| `journey_id`      | UUID            | Required               | If telemetry occurred during a trip, the ID of the journey.  If not in a trip, `null`.
+| `stop_id`         | UUID            | Required if Applicable | Stop that the vehicle is currently located at. Only applicable for _docked_ Micromobility. See [Stops][stops] |
+| `location`        | [GPS][gps]      | Required               | Telemetry position data |
+| `battery_percent` | Integer         | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 100 |
+| `fuel_percent`    | Integer         | Required if Applicable | Percent fuel in vehicle, expressed between 0 and 100 |
 
 ### GPS Data
 
@@ -135,7 +135,6 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | `speed`    | Float          | Required if Available | Estimated speed in meters / sec as reported by the GPS chipset |
 | `horizontal_accuracy` | Float          | Required if Available | Horizontal accuracy, in meters                               |
 | `vertical_accuracy` | Float          | Required if Available | Horizontal accuracy, in meters                               |
-| `hdop`     | Float          | Required if Available | Horizontal GPS or GNSS accuracy value (see [hdop][hdop])     |
 | `satellites` | Integer      | Required if Available | Number of GPS or GNSS satellites                             |
 
 [Top][toc]
