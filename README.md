@@ -82,7 +82,7 @@ You can read more in our **[Understanding the different MDS APIs](https://github
 
 ## GBFS Requirement
 
-All MDS compatible Provider feeds [must also expose](/provider/README.md#gbfs) a public [GBFS](https://github.com/NABSA/gbfs) feed. Compatibility with [GBFS 2.0](https://github.com/NABSA/gbfs/blob/v2.0/gbfs.md) or greater is advised due to privacy concerns and support for micromobility. See our [MDS Vehicles Guide](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Vehicles) for how MDS Provider `/vehicles` can be used by regulators instead of the public GBFS `/free_bike_status`. Additional information on MDS and GBFS can be found in this [guidance document](https://github.com/openmobilityfoundation/governance/blob/main/technical/GBFS_and_MDS.md).
+All MDS compatible Provider and/or Agency feeds [must also expose](/provider/README.md#gbfs) a public [GBFS](https://github.com/NABSA/gbfs) feed for the micromobility and car share [modes](/modes) (passenger services and delivery robots may be optionally supported at the discretion of the agency running the program). Compatibility with [GBFS 2.2](https://github.com/NABSA/gbfs/blob/v2.2/gbfs.md) or greater is advised, or per MobilityData's [supported version releases](https://github.com/MobilityData/gbfs#past-version-releases) guidance. See our [MDS Vehicles Guide](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Vehicles) for how MDS Provider `/vehicles` can be used by regulators instead of the public GBFS `/free_bike_status`. Additional information on MDS and GBFS can be found in this [guidance document](https://github.com/openmobilityfoundation/governance/blob/main/technical/GBFS_and_MDS.md).
 
 [Top][toc]
 
