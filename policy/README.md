@@ -19,7 +19,6 @@ This specification describes the digital relationship between _mobility as a ser
   - [Policies](#policies)
     - [Query Parameters](#query-parameters)
   - [Geographies](#geographies)
-    - [Query Parameters](#query-parameters-1)
   - [Requirements](#requirements)
 - [Flat Files](#flat-files)
   - [Example `policies.json`](#example-policiesjson)
@@ -30,7 +29,6 @@ This specification describes the digital relationship between _mobility as a ser
   - [Rules](#rules)
   - [Rule Types](#rule-types)
   - [Rule Units](#rule-units)
-  - [Geography](#geography)
   - [Rates](#rates)
     - [Rate Amounts](#rate-amounts)
     - [Rate Recurrences](#rate-recurrences)
@@ -317,12 +315,6 @@ An individual `Rule` object is defined by the following fields:
 | `devices` | `count`        | Devices             |
 
 [Rule type](#rule-types) `user` has no associated Rule units; `rule_units` is not required when the Rule type is `user`.
-
-[Top][toc]
-
-### Geography
-
-**Deprecated:** see the [Geography API](/geography#transition-from-policy) for the current home of this endpoint.
 
 [Top][toc]
 
