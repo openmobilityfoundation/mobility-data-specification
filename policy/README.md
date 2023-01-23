@@ -149,6 +149,8 @@ Policies will be returned in order of effective date (see schema below), with pa
 
 **Deprecated:** see the [Geography API](/geography#transition-from-policy) for the current home of this endpoint.
 
+[Top][toc]
+
 ### Requirements
 
 **Endpoint**: `/requirements/`  
