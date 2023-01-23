@@ -219,7 +219,7 @@ the vehicle and canceling or ending the trip in under 60 seconds.
 
 Providers are still expected to report all trips and trip related events in
 all MDS endpoints, but parties may use this definition as a shared reference
-at the recommendation of the MDS community when analysing trips.
+at the recommendation of the MDS community when analyzing trips.
 
 [Top][toc]
 

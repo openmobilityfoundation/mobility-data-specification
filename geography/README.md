@@ -125,7 +125,7 @@ Type of geography. These specific types are recommendations based on ones common
 | `neighborhood`       | Neighborhood area                    |
 | `market_area`        | Economic area                        |
 | `opportunity_zone`   | Defined Opportunity Zone             |
-| `overlay_district`   | Agengy overlay district              |
+| `overlay_district`   | Agency overlay district              |
 | `post_code`          | Zip or postal code                   |
 | `traffic_zone`       | Transportation planning area         |
 | `property_line`      | One or more property lines           |
