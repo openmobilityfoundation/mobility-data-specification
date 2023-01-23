@@ -122,7 +122,7 @@ See the [Responses section][responses] for information on valid MDS response cod
 
 ### Authorization
 
-Authorization is not required and agencies are encouraged to make these endpoints unauthenticated and public. See [Optional Authentication](/general-information.md#optional-authentication) for details.
+This endpoint should be made public. Authorization is not required.
 
 ### Policies
 
