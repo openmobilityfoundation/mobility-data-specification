@@ -149,20 +149,7 @@ Policies will be returned in order of effective date (see schema below), with pa
 
 ### Geographies
 
-**Deprecated:** see the new [Geography API](/geography#transition-from-policy) to understand the transition away from this endpoint, and how to support both in MDS 1.x.0 releases.
-
-**Endpoint**: `/geographies/{id}`  
-**Method**: `GET`  
-**Schema:** [`policy` schema][json-schema]  
-**`data` Payload**: `{ geographies: [] }`, an array of GeoJSON `Feature` objects that follow the schema [outlined here](#geography) or in [Geography](/geography#general-information).
-
-#### Query Parameters
-
-| Name         | Type      | Required / Optional | Description                                    |
-| ------------ | --------- | --- | ---------------------------------------------- |
-| `id`         | UUID      | Optional    | If provided, returns one [Geography](/geography#general-information) object with the matching UUID; default is to return all geography objects.               |
-
-[Top][toc]
+**Deprecated:** see the [Geography API](/geography#transition-from-policy) for the current home of this endpoint.
 
 ### Requirements
 
@@ -180,12 +167,12 @@ See [Policy Requirements Examples](/policy/examples/requirements.md) for how thi
 
 To use flat files, policies shall be represented in two (2) files:
 
-- `policies.json`
-- `geographies.json`
+- `policies.json` in Policy API
+- `geographies.json` in Geography API
 
 The files shall be structured like the output of the [REST endpoints](#rest-endpoints) above.
 
-The publishing Agency should establish and communicate to providers how frequently these files should be polled.
+The publishing agency should establish and communicate to providers how frequently these files should be polled.
 
 The `updated` field in the payload wrapper should be set to the time of publishing a revision, so that it is simple to identify a changed file.
 
@@ -335,26 +322,18 @@ An individual `Rule` object is defined by the following fields:
 
 ### Geography
 
-**Deprecated:** see the new [Geography API](/geography#transition-from-policy) to understand the transition away from this endpoint, and how to support both in a MDS 1.x.0 release.
-
-| Name             | Type      | Required / Optional | Description                                                                         |
-| ---------------- | --------- | --- | ----------------------------------------------------------------------------------- |
-| `name`           | String    | Required   | Name of geography                                                                      |
-| `description`    | String    | Optional   | Detailed description of geography                                                                      |
-| `geography_id`   | UUID      | Required   | Unique ID of [Geography](/geography#general-information)                                               |
-| `geography_json`   | JSON      | Required   | The GeoJSON that defines the geographical coordinates.
-| `effective_date`   | [timestamp][ts] | Optional   | `start_date` for first published policy that uses this geo.  Server should set this when policies are published.  This may be used on the client to distinguish between “logical” geographies that have the same name. E.g. if a policy publishes a geography on 5/1/2020, and then another policy is published which references that same geography is published on 4/1/2020, the effective_date will be set to 4/1/2020.
-| `published_date`   | [timestamp][ts] | Required   | Timestamp that the policy was published, i.e. made immutable                                             |
-| `prev_geographies`  | UUID[]    | Optional   | Unique IDs of prior [geographies](/geography#general-information) replaced by this one                                   |
+**Deprecated:** see the [Geography API](/geography#transition-from-policy) for the current home of this endpoint.
 
 [Top][toc]
 
 ### Rates
+
 Rate-related properties can currently be specified on all rule types except `user`, i.e. any rule that can be measured.
 
 **[Beta feature](/general-information.md#beta-features)**: *No (as of 2.0.0)*. [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/674)  
 
 #### Rate Amounts
+
 The amount of a rate applied when this rule applies, if applicable (default zero). A positive integer rate amount represents a fee, while a negative integer represents a subsidy. Rate amounts are given in the `currency` defined in the [Policy](#policy).
 
 #### Rate Recurrences
