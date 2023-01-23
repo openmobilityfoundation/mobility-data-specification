@@ -4,6 +4,7 @@ This document contains specifications that are shared between the various MDS [A
 
 ## Table of Contents
 
+- [Authentication](#authentication)
 - [Beta Features](#beta-features)
 - [Costs and Currencies](#costs-and-currencies)
 - [Data Types](#data-types)
@@ -14,13 +15,20 @@ This document contains specifications that are shared between the various MDS [A
   - [Stop-based Geographic Data](#stop-based-geographic-data)
   - [Intersection Operation](#intersection-operation)
 - [Geography-Driven Events](#geography-driven-events)
-- [Optional Authentication](#optional-authentication)
 - [Responses](#responses)
   - [Error Messages](#error-messages)
 - [Strings](#strings)
 - [Timestamps](#timestamps)
 - [UUIDs](#uuids)
 - [Versioning](#versioning)
+
+## Authentication
+
+If implementing MDS Policy, Geography, and/or Jurisdiction APIs and endpoints, an agency must make them unauthenticated and public. This allows transparency for the public to see how the city is regulating, holds the city accountable for their policy decisions, and reduces the technical burden on providers to use these endpoints. A side benefit is that this allows third parties to ingest this information into their applications and services for public benefit.
+
+All other MDS APIs require authentication, as outlined.
+
+[Top][toc]
 
 ## Beta Features
 
@@ -107,14 +115,6 @@ Here's how it works in practice:
 Agencies that wish to use Geography-Driven Events do so by requiring a new `event_geographies` field in status events. When an Agency is using Geography-Driven Events, Providers must emit a new `changed_geographies` status event whenever a vehicle in a trip enters or leaves a Geography managed by a Policy.
 
 During the Beta period for this feature, location and telemetry data remain required fields. This allows Agencies to test Geography-Driven Events, measuring its accuracy and efficacy against regulatory systems based on precise location data. After the beta period, if Geography-Driven Events is deemed by the OMF to be accurate and effective, the specification will evolve to allow cities to use Geography-Driven Events in lieu of location or telemetry data.
-
-[Top][toc]
-
-## Optional Authentication
-
-Authorization of the Policy and Geography APIs is no longer required and will be deprecated in next major release with these endpoints (plus Jurisdictions) becoming 'optionally private' instead of 'optionally public'. An agency may optionally decide to make the Policy and Geography endpoints, as well as Jurisdictions, unauthenticated and public. This allows transparency for the public to see how the city is regulating, holds the city accountable for their policy decisions, and reduces the technical burden on providers to use these endpoints. A side benefit is that this allows third parties to ingest this information into their applications and services for public benefit.
-
-Note if implementing the beta feature [Geography Driven Events](/general-information.md#geography-driven-events), both Policy and Geography must be public.
 
 [Top][toc]
 
@@ -219,7 +219,7 @@ the vehicle and canceling or ending the trip in under 60 seconds.
 
 Providers are still expected to report all trips and trip related events in
 all MDS endpoints, but parties may use this definition as a shared reference
-at the recommendation of the MDS community when analysing trips.
+at the recommendation of the MDS community when analyzing trips.
 
 [Top][toc]
 

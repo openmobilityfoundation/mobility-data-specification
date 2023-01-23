@@ -12,7 +12,6 @@ Geographical data will be stored as GeoJSON and read from either `geographies.js
 
 * [General Information](#general-information)
   * [Versioning](#versioning)
-  * [Transition from Policy](#transition-from-policy)
 * [Distribution](#distribution)
   * [Flat Files](#flat-files)
   * [Response Format](#response-format)
@@ -41,14 +40,6 @@ Versioning must be implemented as specified in the [Versioning section][versioni
 
 [Top][toc]
 
-### Transition from Policy
-
-To ensure this Geography API is not creating a breaking change for the 1.1.0 release, it's expected that the data contained in the [`/geographies`](/policy#geography) endpoint in the Policy API is identical to this Geography API. This will ensure that when a Geography ID is used anywhere in this release, the data could be retrieved from either location.
-
-This temporary requirement is to ensure backwards compatibility, but the overall intent is to remove the /policy/geographies endpoint at the next major MDS release.
-
-[Top][toc]
-
 ## Distribution
 
 Geographies shall be published by regulatory agencies or their authorized delegates as JSON objects. These JSON objects shall be served by either [flat files](#flat-files) or via [REST API endpoints](#rest-endpoints). In either case, geography data shall follow the [schema](#schema) outlined below.
@@ -65,7 +56,7 @@ Geographies should be re-fetched at an agreed upon interval between providers an
 
 To use a flat file, geographies shall be represented in one (1) file equivalent to the /geographies endpoint:
 
-* `geographies.json`
+* `geographies.json` in Geography API
 
 The files shall be structured like the output of the [REST endpoints](#rest-endpoints) above.
 
@@ -83,7 +74,7 @@ See the [Responses][responses] and [Error Messages][error-messages] sections.
 
 ### Authorization
 
-Authorization is not required. An agency may decide to make this endpoint unauthenticated and public. See [Optional Authentication](/general-information.md#optional-authentication) for details.
+This endpoint should be made public. Authorization is not required.
 
 [Top][toc]
 
@@ -99,7 +90,7 @@ See the [Endpoints](#endpoints) below for links to their specific JSON Schema do
 | ----------------   | --------- | --- | --------------------------------------------------------------------------------------------- |
 | `name`             | String    | Required   | Name of geography                                                                      |
 | `description`      | String    | Optional   | Detailed description of geography                                                      |
-| `geography_type`   | String     | Optional   | Type of geography, e.g. `municipal_boundary` or `council_district` or custom text.  See [Geography Types](#geography-types). |
+| `geography_type`   | String     | Optional   | Type of geography, e.g. `municipal_boundary` or `council_district` or custom text.  See [Geography Type](#geography-type). |
 | `geography_id`     | UUID      | Required   | Unique ID of geography                                                                 |
 | `geography_json`   | JSON      | Required   | The GeoJSON that defines the geographical coordinates.                                 |
 | `effective_date`   | [timestamp][ts] | Optional   | The date at which a Geography is considered "live".  Must be at or after `published_date`. |
@@ -134,7 +125,7 @@ Type of geography. These specific types are recommendations based on ones common
 | `neighborhood`       | Neighborhood area                    |
 | `market_area`        | Economic area                        |
 | `opportunity_zone`   | Defined Opportunity Zone             |
-| `overlay_district`   | Agengy overlay district              |
+| `overlay_district`   | Agency overlay district              |
 | `post_code`          | Zip or postal code                   |
 | `traffic_zone`       | Transportation planning area         |
 | `property_line`      | One or more property lines           |

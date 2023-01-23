@@ -2,7 +2,7 @@
 
 <a href="/jurisdiction/"><img src="https://i.imgur.com/tCRCfxT.png" width="120" align="right" alt="MDS Jurisdiction Icon" border="0"></a>
 
-This specification details the purpose, use cases, and schema for Jurisdictions. Jurisdictions are an optional service that are served by a coordinated group of agencies. Jurisdictions can be '[optionally authenticated](/general-information.md#optional-authentication)', making the endpoints unauthenticated and public. In the future this will shift to 'optionally private', where Jursidictions will be public by default. Note that it serves a different purpose from the [Geography](/geography) API, though it does reference areas within Geography by ID.
+This specification details the purpose, use cases, and schema for Jurisdictions. Jurisdictions are an optional service that are served by a coordinated group of agencies. Jurisdictions should be unauthenticated and public. Note that Jurisdictions serves a different purpose from the [Geography](/geography) API, though it does reference areas within Geography by ID.
 
 ## Table of Contents
 
@@ -68,7 +68,7 @@ Those tools can be granted data access from the SaaS tool based on the jurisdict
 
 ## Distribution
 
-Jurisdictions can be served by agencies through the following REST API, or via [flat-files](#flat-files). Agencies may choose to make the endpoints public and non-authenticated.
+Jurisdictions can be served by agencies through the following REST API, or via [flat-files](#flat-files). Agencies should make the endpoints public and non-authenticated.
 
 ### REST
 

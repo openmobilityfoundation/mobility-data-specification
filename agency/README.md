@@ -202,7 +202,7 @@ See [Bulk Responses](#bulk-responses)
 
 **Endpoint:** `/stops`  
 **Method:** `PUT`  
-**Payload**: An array of of [Stop][stops] information, where the permitted changable fields are defined as:
+**Payload**: An array of of [Stop][stops] information, where the permitted changeable fields are defined as:
 
 | Field               | Required/Optional | Description                                 |
 |---------------------|-------------------|---------------------------------------------|
@@ -220,7 +220,7 @@ See [Bulk Responses](#bulk-responses)
 | -------------------- | ------------------------------------------------- | ------------------------------- |
 | `bad_param`          | A validation error occurred                       | Array of parameters with errors |
 | `missing_param`      | A required parameter is missing                   | Array of missing parameters     |
-| `unregisterd` | No stop with `stop_id` is already registered       |                                 |
+| `unregistered` | No stop with `stop_id` is already registered       |                                 |
 
 ### Stops - Readback
 
