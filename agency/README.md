@@ -12,6 +12,7 @@ This specification contains a collection of RESTful APIs used to specify the dig
   * [Versioning](#versioning)
   * [Responses and Error Messages](#responses-and-error-messages)
   * [Authorization](#authorization)
+  * [GBFS](#gbfs)
 * [Vehicles](#vehicles)
   * [Vehicle - Register](#vehicle---register)
   * [Vehicle - Update](#vehicle---update)
@@ -36,6 +37,12 @@ Versioning must be implemented as specified in the [Versioning section][versioni
 
 [Top][toc]
 
+### Modes
+
+MDS is intended to be used for multiple transportation modes, including its original micromobility (e-scooters, bikes, etc.) as well as additional modes such as taxis and delivery bots.  A given `provider_id` shall be associated with a single mobility [mode], so that the mode does not have to be specified in each data structure and API call.  A provider implementing more than one mode shall [register](/README.md#providers-using-mds) a `provider_id` for each mode.
+
+[Top][toc]
+
 ### Responses and Error Messages
 
 See the [Responses][responses] and [Error Messages][error-messages] sections.
@@ -45,6 +52,12 @@ See the [Responses][responses] and [Error Messages][error-messages] sections.
 ### Authorization
 
 When making requests, the Agency API expects `provider_id` to be part of the claims in a [JWT](https://jwt.io/) `access_token` in the `Authorization` header, in the form `Authorization: Bearer <access_token>`. The token issuance, expiration and revocation policies are at the discretion of the Agency.
+
+[Top][toc]
+
+### GBFS
+
+See the [GBFS Requirement](/README.md#gbfs-requirement) language for more details.
 
 [Top][toc]
 
