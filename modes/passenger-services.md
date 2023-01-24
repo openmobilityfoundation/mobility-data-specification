@@ -40,6 +40,8 @@ The short name identifier for Passenger Services used across MDS is `passenger-s
 
 ## Trip Properties
 
+_See more available trip and fare attributes for any mode used in the [trips object](/data-types.md#trips)._
+
 ### Journey ID
 
 The `journey_id` field shall have a consistent value in overlapping trips, e.g. "pooled" or "shared" rides with different start and/or end locations. Journeys may be point-to-point, multi-segment, or multi-segment overlapping.
@@ -107,8 +109,6 @@ The `trip_attributes` array **may** have the following key value pairs:
 - `wheelchair_transported` (boolean, optional) - was a wheelchair transported as part of this trip?
 - `cancellation_reason` (String, Conditionally Required): The reason why a *driver* cancelled a reservation. (required if a driver cancelled a trip, and a `driver_cancellation` event_type was part of the trip) 
 
-_See more available trip attributes for any mode in the [trips endpoint](/provider#trips)._
-
 [Top][toc]
 
 ### Fare Attributes
@@ -130,11 +130,11 @@ The `fare_attributes` array **may** have the following key value pairs:
 - `driver_trip_pay` (currency, optional) - The payment the driver received for the trip 
 - `rate_code_id` (enumerated, optional) - one of `meter_fare`, `shared`, `out_of_town`, `disabled`, `upfront_pricing`, `promo_rate`
 
-_See more available fare attributes for any mode in the [trips endpoint](/provider#trips)._
-
 [Top][toc]
 
 ## Vehicle Properties
+
+_See more available vehicle attributes and accessibility options for any mode used in the [vehicles object](/data-types.md#vehicles)._
 
 ### Vehicle Attributes
 
@@ -148,8 +148,6 @@ The `vehicle_attributes` array **may** have the following key value pairs:
 - `placard_number` (string, optional) - the registered placard number of the vehicle
 - `license_plate` (string, optional) - the registered vehicle license/number/registration plate identifier on the vehicle
 - `inspection_date` (date YYYY-MM-DD, optional) - the date of the last inspection of the vehicle
-
-_See more available vehicle attributes for any mode in the [vehicles endpoint](/provider#vehicles)._
 
 [Top][toc]
 

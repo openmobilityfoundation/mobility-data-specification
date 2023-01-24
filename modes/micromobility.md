@@ -36,6 +36,8 @@ The short name identifier for Micromobility used across MDS is `micromobility`.
 
 ## Trip Properties
 
+_See more available trip and fare attributes for any mode used in the [trips object](/data-types.md#trips)._
+
 ### Journey ID
 
 The `journey_id` field is not used in this mode. Trips are point-to-point.
@@ -68,15 +70,11 @@ The `trip_type` field **may** have one of the following values:
 
 The `trip_attributes` array is not used in this mode.
 
-_See more available trip attributes for any mode in the [trips endpoint](/provider#trips)._
-
 [Top][toc]
 
 ### Fare Attributes
 
 The `fare_attributes` array is not used in this mode.
-
-_See more available fare attributes for any mode in the [trips endpoint](/provider#trips)._
 
 [Top][toc]
 
@@ -84,13 +82,13 @@ _See more available fare attributes for any mode in the [trips endpoint](/provid
 
 ### Vehicle Attributes
 
+_See more available vehicle attributes and accessibility options for any mode used in the [vehicles object](/data-types.md#vehicles)._
+
 The `vehicle_attributes` array **may** have the following key value pairs:
 
 - `year` (integer, optional)
 - `make` (string, optional)
 - `model` (string, optional)
-
-_See more available vehicle attributes for any mode in the [vehicles endpoint](/provider#vehicles)._
 
 [Top][toc]
 
