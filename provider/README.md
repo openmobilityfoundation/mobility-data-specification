@@ -12,6 +12,7 @@ This specification contains a data standard for *mobility as a service* provider
   * [Versioning](#versioning)
   * [Modes](#modes)
   * [Responses and Error Messages](#responses-and-error-messages)
+  * [GBFS](#GBFS)
   * [JSON Schema](#json-schema)
   * [Pagination](#pagination)
   * [Municipality Boundary](#municipality-boundary)
@@ -34,7 +35,6 @@ This specification contains a data standard for *mobility as a service* provider
   * [Special Group Type](#special-group-type)
   * [Data Redaction](#data-redaction)
 * [Realtime Data](#realtime-data)
-  * [GBFS](#GBFS)
   * [Data Latency Requirements][data-latency]
   * [Events][events]
   * [Stops](#stops)
@@ -83,6 +83,12 @@ Response bodies must be a `UTF-8` encoded JSON object and must minimally include
 ```
 
 All response fields must use `lower_case_with_underscores`.
+
+[Top][toc]
+
+### GBFS
+
+See the [GBFS Requirement](/README.md#gbfs-requirement) language for more details.
 
 [Top][toc]
 
@@ -450,14 +456,6 @@ Using k-anonymity will reduce, but not necessarily eliminate the risk that an in
 [Top][toc]
 
 ## Realtime Data
-
-### GBFS
-
-All MDS compatible `provider` APIs must expose a public [GBFS](https://github.com/NABSA/gbfs) feed as well. Compatibility with [GBFS 2.0](https://github.com/NABSA/gbfs/blob/v2.0/gbfs.md) or greater is advised due to privacy concerns and support for micromobility.
-
-GBFS 2.0 includes some changes that may make it less useful for regulatory purposes (specifically, the automatic rotation of vehicle IDs). The [`/vehicles`](#vehicles) endpoint offers an alternative to GBFS that may more effectively meet the use cases of regulators. See our [MDS Vehicles Guide](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Vehicles) for how this compares to GBFS `/free_bike_status`. Additional information on MDS and GBFS can be found in this [guidance document](https://github.com/openmobilityfoundation/governance/blob/main/technical/GBFS_and_MDS.md).
-
-[Top][toc]
 
 ### Data Latency Requirements
 
