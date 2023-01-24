@@ -80,9 +80,9 @@ The `fare_attributes` array is not used in this mode.
 
 ## Vehicle Properties
 
-### Vehicle Attributes
-
 _See more available vehicle attributes and accessibility options for any mode used in the [vehicles object](/data-types.md#vehicles)._
+
+### Vehicle Attributes
 
 The `vehicle_attributes` array **may** have the following key value pairs:
 
