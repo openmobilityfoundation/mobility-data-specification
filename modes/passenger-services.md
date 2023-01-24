@@ -8,7 +8,7 @@ See the [modes overview](/modes) for how the mode specific information below app
 
 ## Taxi vs. TNC implementation differences
 
-Taxis typically require explicit tracking of maintenance while TNCs typically do not. Public agency regulations, legal authority, differ based on local, state, and federal laws and jursidictions between taxis, TNCs, CTAs, PHV, etc.
+Taxis typically require explicit tracking of maintenance while TNCs typically do not. Public agency regulations, legal authority, differ based on local, state, and federal laws and jurisdictions between taxis, TNCs, CTAs, PHV, etc.
 
 ## Table of Contents
 
@@ -94,14 +94,18 @@ The `trip_attributes` array **may** have the following key value pairs:
 - `hail_type` (enumerated, required): `street_hail`, `phone_dispatch`, `phone`, `text`, `app`
 - `app_name` (text, optional): name of the app used to reserve the trip which could be provider's app or 3rd party app
 - `passenger_count` (integer, required): unique count of passengers transported during trip duration
-- `request_time` (timestamp, required): when the passenger requested the trip
+- `requested_time` (timestamp, required): when the passenger requested the trip
+- `requested_trip_start_location` ([GPS](gps), Conditionally Required):  Location where the customer requested the trip to start (required if this is within jurisdictional boundaries) 
+- `quoted_trip_start_time` ([Timestamp][ts], Required): Time the trip was estimated or scheduled to start, that was provided to the passenger 
+- `dispatch_time` ([Timestamp][ts], Conditionally Required): Time the vehicle was dispatched to the customer (required if trip was dispatched) 
 - `trip_wait_time` (milliseconds, optional): part of the passenger trip where the vehicle was moving slow or stopped (e.g. <12mph), which is a different fare rate in some jurisdictions
 - `trip_fare_time` (milliseconds, optional): part of the passenger trip where the vehicle was moving more quickly (e.g. >12mph), which is a different fare rate in some jurisdictions
 - `pickup_address` (text, optional): street address where the trip originated from
 - `dropoff_address` (text, optional): street address where the trip ended
-- `permit_licence_number` (string, optional) - The permit licence number of the organization that dispatched the vehicle
+- `permit_license_number` (string, optional) - The permit license number of the organization that dispatched the vehicle
 - `driver_id` (string, optional): Universal identifier of a specific driver, static across operators, like a driver's license number. Could also be used as a lookup in an agency's internal driver system.
 - `wheelchair_transported` (boolean, optional) - was a wheelchair transported as part of this trip?
+- `cancellation_reason` (String, Conditionally Required): The reason why a *driver* cancelled a reservation. (required if a driver cancelled a trip, and a `driver_cancellation` event_type was part of the trip) 
 
 _See more available trip attributes for any mode in the [trips endpoint](/provider#trips)._
 
@@ -113,7 +117,7 @@ The `fare_attributes` array **may** have the following key value pairs:
 
 - `payment_type` (enumerated, required): `cash`, `credit_card`, `mobile`, `voucher`, `paratransit`, `no payment`, `test`
 - `fare_type` (enumerated, required): `meter_fare`, `upfront_pricing`, `flat_rate`. Indicator of which rate was charged.
-- `meter_fare_amount` (currency, conditionally required): if `upfront_pricing` is used as a `fare_type` include what the metered fare would have been if `meter_fare` would have been used. Allows cost comparison in evalutation of programs and pilots.
+- `meter_fare_amount` (currency, conditionally required): if `upfront_pricing` is used as a `fare_type` include what the metered fare would have been if `meter_fare` would have been used. Allows cost comparison in evaluation of programs and pilots.
 - `tolls` (currency, optional) - Sum of any and all tolls charged for the trip, such as bridge tolls
 - `base_rate` (currency, optional) - Minimum fare to be charged as soon as the trip starts.
 - `exit_fee` (currency, optional) - Fee to exit location, like an airport
@@ -142,7 +146,7 @@ The `vehicle_attributes` array **may** have the following key value pairs:
 - `color` (string, optional)
 - `vin` (string, optional) - the Vehicle Identification Number of the vehicle
 - `placard_number` (string, optional) - the registered placard number of the vehicle
-- `license_plate` (string, optional) - the registered vehicle license/number/registartion plate identifer on the vehicle
+- `license_plate` (string, optional) - the registered vehicle license/number/registration plate identifier on the vehicle
 - `inspection_date` (date YYYY-MM-DD, optional) - the date of the last inspection of the vehicle
 
 _See more available vehicle attributes for any mode in the [vehicles endpoint](/provider#vehicles)._
@@ -232,7 +236,7 @@ This is the list of `vehicle_state` and `event_type` pairings that constitute th
 | `non_operational`            | `non_contactable`         | N/A          | `comms_lost`             | The vehicle has went out of comms while not operating commercially                                               |
 | `on_trip`                    | `elsewhere`       | N/A          | `leave_jurisdiction`     | The vehicle has left jurisdictional boundaries while on a trip                                                   |
 | `on_trip`                    | `stopped`         | `stopped`    | `trip_stop`              | The vehicle has stopped while on a trip                                                                          |
-| `on_trip`                    | `unon_contactable`         | N/A          | `comms_lost`             | The vehicle has gone out of comms while on a trip                                                                |
+| `on_trip`                    | `non_contactable`         | N/A          | `comms_lost`             | The vehicle has gone out of comms while on a trip                                                                |
 | `removed`                    | `non_operational` | N/A          | `maintenance_end`        | The vehicle has left the depot                                                                                   |
 | `removed`                    | `non_operational` | N/A          | `recommissioned`         | The vehicle has been re-added to the Provider's fleet after being previously `decommissioned`                    |
 | `removed`                    | `non_contactable`         | N/A          | `comms_lost`             | The vehicle has gone out of comms while removed                                                                  |
@@ -297,8 +301,10 @@ if t.any(state == ‘reserved’):
 
 [MDS Home][home]
 
+[gps]: /data-types.md#gps-data
 [home]: /README.md
 [modes]: /modes/README.md
 [toc]: #table-of-contents
+[ts]: /general-information.md#timestamps
 [vehicle-states]: /modes/vehicle_states.md
 [vehicle-events]: /modes/event_types.md

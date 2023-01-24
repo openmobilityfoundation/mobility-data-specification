@@ -11,10 +11,6 @@
 - [Stops](#stops)
   - [Stop Status](#stop-status)
 - [Trips](#trips)
-  - [Trip Attributes](#trip-attributes)
-  - [Reservation Data](#reservation-data)
-    - [Reservation Type](#reservation-type)
-    - [Reservation Method](#reservation-method)
 
 ## Vehicles
 
@@ -199,8 +195,12 @@ A Trip is defined by the following structure:
 | Field                    | Type            | Required/Optional      | Comments |
 | -----                    | ----            | -----------------      | -------- |
 | `provider_id`            | UUID            | Required               | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
+| `provider_name` | String | Required | The public-facing name of the Provider |
 | `data_provider_id`       | UUID            | Optional               | If different than `provider_id`, a UUID for the data solution provider managing this data endpoint. See MDS [provider list](/providers.csv) which includes both service operators and data solution providers. |
 | `device_id`              | UUID            | Required               | A unique device ID in UUID format |
+`vehicle_id` | String | Required | The Vehicle Identification Number visible on the vehicle itself |
+| `vehicle_type` | Enum | Required | See [vehicle types][vehicle-types] table |
+| `propulsion_types` | Enum[] | Required | Array of [propulsion types][propulsion-types]; allows multiple values |
 | `journey_id`             | UUID            | Optional               | A unique [journey ID](/modes#journey-id) for associating collections of trips for its [mode] |
 | `trip_type`              | Enum            | Optional               | **[Mode](/modes#list-of-supported-modes) Specific**. The [trip type](/modes#trip-type) describing the purpose of a trip segment |
 | `trip_id`                | UUID            | Required               | A unique ID for each trip |
@@ -213,29 +213,18 @@ A Trip is defined by the following structure:
 | `duration`               | Integer         | Required               | Time, in Seconds |
 | `distance`               | Integer         | Required               | Trip Distance, in Meters |
 | `publication_time`       | [Timestamp][ts] | Optional               | Date/time that trip became available through the trips endpoint |
-| `reservation_attributes` | [Reservation](#reservation-data) | Required if available | Reservation details, if a reservation initiated this trip
-| `accessibility_options`  | Enum[]          | Optional               | The **union** of any accessibility options requested, and used. E.g. if the passenger requests a vehicle with `wheelchair_accessible`, but doesn’t utilize the features during the trip, the trip payload will include `accessibility_options: ['wheelchair_accessible']`. See [accessibility-options][accessibility-options] |
-
-[Top][toc]
-
-### Trip Attributes
-
-Examples of mode-specific `trip_attributes`:
-
-| Field | Type    | Required/Optional | Comments |
-| ----- | -------- | ----------------- | ----- |
-| `dispatch_time`                 | [Timestamp][ts]                      | Conditionally Required | Time the vehicle was dispatched to the customer (required if trip was dispatched) |
-| `quoted_trip_start_time`        | [Timestamp][ts]                      | Required               | Time the trip was estimated or scheduled to start, that was provided to the passenger |
-| `requested_trip_start_location` | [GPS](gps) | Conditionally Required | Location where the customer requested the trip to start (required if this is within jurisdictional boundaries) |
-| `cancellation_reason`           | String                         | Conditionally Required | The reason why a *driver* cancelled a reservation. (required if a driver cancelled a trip, and a `driver_cancellation` event_type was part of the trip) |
-| `accessibility_options`         | Enum[]                         | Optional               | The **union** of any accessibility options requested, and used. E.g. if the passenger requests a vehicle with `wheelchair_accessible`, but doesn’t utilize the features during the trip, the trip payload will include `accessibility_options: ['wheelchair_accessible']`. See [accessibility-options][accessibility-options] |
-| `parking_verification_url` | String | Optional | A URL to a photo (or other evidence) of proper vehicle parking |
+| `accessibility_options`  | Enum[]          | Optional               |  **[Mode](/modes#list-of-supported-modes) Specific**. [Accessibility options](/modes#accessibility-options) given as an array of enumerated values. The **union** of any accessibility options requested, and used. E.g. if the passenger requests a vehicle with `wheelchair_accessible`, but doesn’t utilize the features during the trip, the trip payload will include `accessibility_options: ['wheelchair_accessible']`. |
+| `parking_verification_url` | URL | Optional | A URL to a photo (or other evidence) of proper vehicle parking |
+| `standard_cost` | Integer | Optional | The cost, in the currency defined in `currency`, that it would cost to perform that trip in the standard operation of the System (see [Costs & Currencies][costs-and-currencies]) |
+| `actual_cost` | Integer | Optional | The actual cost, in the currency defined in `currency`, paid by the customer of the *mobility as a service* provider (see [Costs & Currencies][costs-and-currencies]) |
+| `currency` | String | Optional, USD cents is implied if null.| An [ISO 4217 Alphabetic Currency Code][iso4217] representing the currency of the payee (see [Costs & Currencies][costs-and-currencies]) |
 
 [Top][toc]
 
 [agency]: /agency/README.md
 [accessibility-options]: /modes/README.md#accessibility-options
 [decimal-degrees]: https://en.wikipedia.org/wiki/Decimal_degrees
+[costs-and-currencies]: /general-information.md#costs-and-currencies
 [event-times]: /general-information.md#event-times
 [hdop]: https://en.wikipedia.org/wiki/Dilution_of_precision_(navigation)
 [gbfs-station-info]: https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_informationjson
