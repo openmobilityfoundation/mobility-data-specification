@@ -1,5 +1,9 @@
 # Mobility Data Specification: **Data Types**
 
+This MDS data types page catalogs the objects (fields, types, requirements, descriptions) used across MDS, particularly with the unified Provider and Agency endpoints.
+
+## Table of Contents
+
 - [Vehicles](#vehicles)
   - [Vehicle Types](#vehicle-types)
   - [Propulsion Types](#propulsion-types)
@@ -25,7 +29,7 @@ A vehicle record is as follows:
 | `vehicle_type`       | Enum     | Required              | The [vehicle type][vehicle-types] |
 | `vehicle_attributes` | Array    | Optional              |**[Mode](/modes#list-of-supported-modes) Specific**. [Vehicle attributes](/modes#vehicle-attributes) given as mode-specific unordered key-value pairs |
 | `propulsion_types`   | Enum[]   | Required              | Array of [propulsion types][propulsion-types]; allows multiple values |
-| `accessibility_options` | Enum[] | Required             | **[Mode](/modes#list-of-supported-modes) Specific**. [Accessibility options](/modes#accessibility-options) given as an array of enumerated values. List of any accessibility options available on the vehicle. |
+| `accessibility_options` | Enum[] | Required             | **[Mode](/modes#list-of-supported-modes) Specific**. [Accessibility options](/modes#accessibility-options) given as an array of enumerated values. List of any accessibility options **available on the vehicle**. |
 | `battery_capacity`   | Integer  | Required if Available | Capacity of battery expressed as milliamp hours (mAh) |
 | `fuel_capacity`      | Integer  | Required if Available | Capacity of fuel tank (liquid, solid, gaseous) expressed in liters |
 
@@ -98,7 +102,7 @@ Events represent changes in vehicle status.
 
 ### Event Times
 
-Because of the unreliability of device clocks, the Provider is unlikely to know with total confidence what time an event occurred at. However, Providers are responsible for constructing as accurate a timeline as possible. Most importantly, the order of the timestamps for a particular device's events must reflect the Provider's best understanding of the order in which those events occurred.
+Because of the unreliability of device clocks, the provider is unlikely to know with total confidence what time an event occurred at. However, providers are responsible for constructing as accurate a timeline as possible. Most importantly, the order of the timestamps for a particular device's events must reflect the provider's best understanding of the order in which those events occurred.
 
 [Top][toc]
 
@@ -210,7 +214,7 @@ A Trip is defined by the following structure:
 | `duration`               | Integer         | Required               | Time, in Seconds |
 | `distance`               | Integer         | Required               | Trip Distance, in Meters |
 | `publication_time`       | [Timestamp][ts] | Optional               | Date/time that trip became available through the trips endpoint |
-| `accessibility_options` | Enum[] | Required             | **[Mode](/modes#list-of-supported-modes) Specific**. [Accessibility options](/modes#accessibility-options) given as an array of enumerated values. List of any accessibility options used during the trip. |
+| `accessibility_options` | Enum[] | Required             | **[Mode](/modes#list-of-supported-modes) Specific**. [Accessibility options](/modes#accessibility-options) given as an array of enumerated values. List of any accessibility options **used during the trip**. |
 | `parking_verification_url` | URL | Optional | A URL to a photo (or other evidence) of proper vehicle parking |
 | `standard_cost` | Integer | Optional | The cost, in the currency defined in `currency`, to perform that trip in the standard operation of the System (see [Costs & Currencies][costs-and-currencies]) |
 | `actual_cost` | Integer | Optional | The actual cost, in the currency defined in `currency`, paid by the customer of the *mobility as a service* provider (see [Costs & Currencies][costs-and-currencies]) |
