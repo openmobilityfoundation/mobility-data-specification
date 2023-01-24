@@ -12,6 +12,7 @@ This specification contains a data standard for *mobility as a service* provider
   * [Versioning](#versioning)
   * [Modes](#modes)
   * [Responses and Error Messages](#responses-and-error-messages)
+  * [GBFS](#GBFS)
   * [JSON Schema](#json-schema)
   * [Pagination](#pagination)
   * [Municipality Boundary](#municipality-boundary)
@@ -34,7 +35,6 @@ This specification contains a data standard for *mobility as a service* provider
   * [Special Group Type](#special-group-type)
   * [Data Redaction](#data-redaction)
 * [Realtime Data](#realtime-data)
-  * [GBFS](#GBFS)
   * [Data Latency Requirements][data-latency]
   * [Events][events]
   * [Stops](#stops)
@@ -83,6 +83,12 @@ Response bodies must be a `UTF-8` encoded JSON object and must minimally include
 ```
 
 All response fields must use `lower_case_with_underscores`.
+
+[Top][toc]
+
+### GBFS
+
+See the [GBFS Requirement](/README.md#gbfs-requirement) language for more details.
 
 [Top][toc]
 
@@ -450,12 +456,6 @@ Using k-anonymity will reduce, but not necessarily eliminate the risk that an in
 [Top][toc]
 
 ## Realtime Data
-
-### GBFS
-
-See the [GBFS Requirement](/README.md#gbfs-requirement) language for more details.
-
-[Top][toc]
 
 ### Data Latency Requirements
 
