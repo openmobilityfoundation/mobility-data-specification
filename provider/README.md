@@ -32,7 +32,6 @@ This specification contains a data standard for *mobility as a service* provider
 * [Reports](#reports)
   * [Reports - Response](#reports---response)
   * [Reports - Example](#reports---example)
-  * [Special Group Type](#special-group-type)
   * [Data Redaction](#data-redaction)
 * [Realtime Data](#realtime-data)
   * [Data Latency Requirements][data-latency]
@@ -342,116 +341,17 @@ The authenticated reports are monthly, historic flat files that may be pre-gener
 
 **Endpoint:** `/reports`  
 **Method:** `GET`  
-**[Beta feature][beta]:** Yes (as of 1.1.0). [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/672)  
+**[Beta feature][beta]:** No (as of 2.0.0). [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/672)  
 **Usage note:** This endpoint uses media-type `text/vnd.mds+csv` instead of `application/vnd.mds+json`, see [Versioning][versioning].
-**Schema:** TBD when out of beta  
+**Schema:** TBD
 **`data` Filename:** monthly file named by year and month, e.g. `/reports/YYYY-MM.csv`  
-**`data` Payload:** monthly CSV files with the following structure: 
-
-| Column Name          | Type                                      | Comments                                         |
-|----------------------| ----------------------------------------- | ------------------------------------------------ |
-| `provider_id`        | UUID                                      | A UUID for the Provider, unique within MDS. See MDS provider_id in [provider list](/providers.csv). |
-| `start_date`         | date                                      | Start date of trip the data row, ISO 8601 date format, i.e. YYYY-MM-DD |
-| `duration`           | string                                    | Value is always `P1M` for monthly. Based on [ISO 8601 duration](https://en.wikipedia.org/wiki/ISO_8601#Durations) |
-| `special_group_type` | [Special Group Type](#special-group-type) | Type that applies to this row                    |
-| `geography_id`       | [Geography](/geography)                   | ID that applies to this row. Includes all IDs in /geography. When there is no /geography then return `null` for this value and return counts based on the entire operating area. |
-| `vehicle_type`       | [Vehicle Type](/agency#vehicle-type)      | Type that applies to this row                    |
-| `trip_count`         | integer                                   | Count of trips taken for this row                |
-| `rider_count`        | integer                                   | Count of unique riders for this row              |
-
-#### Data Notes
-
-Report contents include every combination of special group types, geography IDs, and vehicle types in operation for each month since the provider began operations in the jurisdiction. New files are added monthly in addition to the previous monthly historic files. 
-
-Counts are calculated based the agency's local time zone. Trips are counted based on their start time, i.e. if a trip starts in month A but ends in month B, it will be counted only as part of the report for month A. Similarly, trips are counted based on their start geography, i.e. if a trip starts in geography A and ends in geography B, it will appear in the counts for geography A and not for geography B.
-
-All geography IDs included in the city published [Geography](/geography) API endpoint are included in the report results. In lieu of serving an API, this can alternately be a [flat file](/geography#file-format) created by the city and sent to the provider via link. If there is no `/geography` available, then counts are for the entire agency operating area, and `null` is returned for each Geography ID. 
+**`data` Payload:** monthly CSV files of [Report](/data-types.md#Reports) objects 
 
 [Top][toc]
 
 ### Reports - Example
 
-For 3 months of provider operation in a city (September 2019 through November 2019) for 3 geographies, 2 vehicle types, and 1 special group. Values of `-1` represent [redacted data](#data-redaction) counts.
-
-**September 2019** `/reports/2019-09.csv`
-
-```csv
-provider_id,start_date,duration,special_group_type,geography_id,vehicle_type,trip_count,rider_count
-48415839-3e38-4ba5-a557-e45fb4e6a0a3,2019-09-01,P1M,all_riders,44428624-186b-4fc3-a7fb-124f487464a1,scooter,1302,983
-48415839-3e38-4ba5-a557-e45fb4e6a0a3,2019-09-01,P1M,low_income,44428624-186b-4fc3-a7fb-124f487464a1,scooter,201,104
-48415839-3e38-4ba5-a557-e45fb4e6a0a3,2019-09-01,P1M,all_riders,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,530,200
-48415839-3e38-4ba5-a557-e45fb4e6a0a3,2019-09-01,P1M,low_income,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,75,26
-48415839-3e38-4ba5-a557-e45fb4e6a0a3,2019-09-01,P1M,all_riders,03db06d0-3998-406a-92c7-25a83fc2784a,scooter,687,450
-48415839-3e38-4ba5-a557-e45fb4e6a0a3,2019-09-01,P1M,low_income,03db06d0-3998-406a-92c7-25a83fc2784a,scooter,98,45
-48415839-3e38-4ba5-a557-e45fb4e6a0a3,2019-09-01,P1M,all_riders,03db06d0-3998-406a-92c7-25a83fc2784a,bicycle,256,104
-48415839-3e38-4ba5-a557-e45fb4e6a0a3,2019-09-01,P1M,low_income,03db06d0-3998-406a-92c7-25a83fc2784a,bicycle,41,16
-48415839-3e38-4ba5-a557-e45fb4e6a0a3,2019-09-01,P1M,all_riders,8ad39dc3-005b-4348-9d61-c830c54c161b,scooter,201,140
-48415839-3e38-4ba5-a557-e45fb4e6a0a3,2019-09-01,P1M,low_income,8ad39dc3-005b-4348-9d61-c830c54c161b,scooter,35,21
-48415839-3e38-4ba5-a557-e45fb4e6a0a3,2019-09-01,P1M,all_riders,8ad39dc3-005b-4348-9d61-c830c54c161b,bicycle,103,39
-48415839-3e38-4ba5-a557-e45fb4e6a0a3,2019-09-01,P1M,low_income,8ad39dc3-005b-4348-9d61-c830c54c161b,bicycle,15,-1
-```
-
-**October 2019** `/reports/2019-10.csv`
-
-```csv
-provider_id,start_date,duration,special_group_type,geography_id,vehicle_type,trip_count,rider_count
-48415839-3e38-4ba5-a557-e45fb4e6a0a3,2019-10-01,P1M,all_riders,44428624-186b-4fc3-a7fb-124f487464a1,scooter,1042,786
-48415839-3e38-4ba5-a557-e45fb4e6a0a3,2019-10-01,P1M,low_income,44428624-186b-4fc3-a7fb-124f487464a1,scooter,161,83
-48415839-3e38-4ba5-a557-e45fb4e6a0a3,2019-10-01,P1M,all_riders,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,424,160
-48415839-3e38-4ba5-a557-e45fb4e6a0a3,2019-10-01,P1M,low_income,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,60,0
-48415839-3e38-4ba5-a557-e45fb4e6a0a3,2019-10-01,P1M,all_riders,03db06d0-3998-406a-92c7-25a83fc2784a,scooter,550,360
-48415839-3e38-4ba5-a557-e45fb4e6a0a3,2019-10-01,P1M,low_income,03db06d0-3998-406a-92c7-25a83fc2784a,scooter,78,36
-48415839-3e38-4ba5-a557-e45fb4e6a0a3,2019-10-01,P1M,all_riders,03db06d0-3998-406a-92c7-25a83fc2784a,bicycle,205,83
-48415839-3e38-4ba5-a557-e45fb4e6a0a3,2019-10-01,P1M,low_income,03db06d0-3998-406a-92c7-25a83fc2784a,bicycle,33,13
-48415839-3e38-4ba5-a557-e45fb4e6a0a3,2019-10-01,P1M,all_riders,8ad39dc3-005b-4348-9d61-c830c54c161b,scooter,161,112
-48415839-3e38-4ba5-a557-e45fb4e6a0a3,2019-10-01,P1M,low_income,8ad39dc3-005b-4348-9d61-c830c54c161b,scooter,28,-1
-48415839-3e38-4ba5-a557-e45fb4e6a0a3,2019-10-01,P1M,all_riders,8ad39dc3-005b-4348-9d61-c830c54c161b,bicycle,82,31
-48415839-3e38-4ba5-a557-e45fb4e6a0a3,2019-10-01,P1M,low_income,8ad39dc3-005b-4348-9d61-c830c54c161b,bicycle,-1,0
-```
-
-**November 2019** `/reports/2019-11.csv`
-
-```csv
-provider_id,start_date,duration,special_group_type,geography_id,vehicle_type,trip_count,rider_count
-48415839-3e38-4ba5-a557-e45fb4e6a0a3,2019-11-01,P1M,all_riders,44428624-186b-4fc3-a7fb-124f487464a1,scooter,834,629
-48415839-3e38-4ba5-a557-e45fb4e6a0a3,2019-11-01,P1M,low_income,44428624-186b-4fc3-a7fb-124f487464a1,scooter,129,66
-48415839-3e38-4ba5-a557-e45fb4e6a0a3,2019-11-01,P1M,all_riders,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,339,128
-48415839-3e38-4ba5-a557-e45fb4e6a0a3,2019-11-01,P1M,low_income,44428624-186b-4fc3-a7fb-124f487464a1,bicycle,48,-1
-48415839-3e38-4ba5-a557-e45fb4e6a0a3,2019-11-01,P1M,all_riders,03db06d0-3998-406a-92c7-25a83fc2784a,scooter,440,288
-48415839-3e38-4ba5-a557-e45fb4e6a0a3,2019-11-01,P1M,low_income,03db06d0-3998-406a-92c7-25a83fc2784a,scooter,62,29
-48415839-3e38-4ba5-a557-e45fb4e6a0a3,2019-11-01,P1M,all_riders,03db06d0-3998-406a-92c7-25a83fc2784a,bicycle,164,66
-48415839-3e38-4ba5-a557-e45fb4e6a0a3,2019-11-01,P1M,low_income,03db06d0-3998-406a-92c7-25a83fc2784a,bicycle,26,0
-48415839-3e38-4ba5-a557-e45fb4e6a0a3,2019-11-01,P1M,all_riders,8ad39dc3-005b-4348-9d61-c830c54c161b,scooter,129,90
-48415839-3e38-4ba5-a557-e45fb4e6a0a3,2019-11-01,P1M,low_income,8ad39dc3-005b-4348-9d61-c830c54c161b,scooter,22,-1
-48415839-3e38-4ba5-a557-e45fb4e6a0a3,2019-11-01,P1M,all_riders,8ad39dc3-005b-4348-9d61-c830c54c161b,bicycle,-1,25
-48415839-3e38-4ba5-a557-e45fb4e6a0a3,2019-11-01,P1M,low_income,8ad39dc3-005b-4348-9d61-c830c54c161b,bicycle,0,0
-```
-
-[Top][toc]
-
-### Special Group Type	
-
-Here are the possible values for the `special_group_type` dimension field:	
-
-| Name             | Description                                                                                                           |	
-| ---------------- | --------------------------------------------------------------------------------------------------------------------- |	
-| low_income       | Trips where a low income discount is applied by the provider, e.g., a discount from a qualified provider equity plan. |	
-| adaptive_scooter | Trips taken on a scooter with features to improve accessibility for people with disabilities, e.g., scooter with a seat or wider base |
-| all_riders       | All riders from any group                                                                                             |	
-
-Other special group types may be added in future MDS releases as relevant agency and provider use cases are identified. When additional special group types or metrics are proposed, a thorough review of utility and relevance in program oversight, evaluation, and policy development should be done by OMF Working Groups, as well as any privacy implications by the OMF Privacy Committee.
-
-[Top][toc]
-
-### Data Redaction
-
-Some combinations of parameters may return a small count of trips, which could increase a privacy risk of re-identification. To correct for that, Reports does not return data below a certain count of results. This data redaction is called k-anonymity, and the threshold is set at a k-value of 10. For more explanation of this methodology, see our [Data Redaction Guidance document](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Data-Redaction).
-
-**If the query returns fewer than `10` trips in a count, then that row's count value is returned as "-1".** Note "0" values are also returned as "-1" since the goal is to group both low and no count values for privacy. 
-
-As Reports is in [beta][beta], this value may be adjusted in future releases and/or may become dynamic to account for specific categories of use cases and users. To improve the specification and to inform future guidance, beta users are encouraged to share their feedback and questions about k-values on this [discussion thread](https://github.com/openmobilityfoundation/mobility-data-specification/discussions/622).
-
-Using k-anonymity will reduce, but not necessarily eliminate the risk that an individual could be re-identified in a dataset, and this data should still be treated as sensitive. This is just one part of good privacy protection practices, which you can read more about in our [MDS Privacy Guide for Cities](https://github.com/openmobilityfoundation/governance/blob/main/documents/OMF-MDS-Privacy-Guide-for-Cities.pdf). 
+See [Provider examples](examples.md#reports).
 
 [Top][toc]
 
@@ -505,7 +405,6 @@ Unless stated otherwise by the municipality, this endpoint must return only thos
 
 **Endpoint:** `/telemetry`  
 **Method:** `GET`  
-**[Beta feature][beta]:** No (as of 2.0.0)  
 **Schema:** [`telemetry` schema][telemetry-schema]  
 **`data` Payload:** `{ "telemetry": [] }`, an array of `telemetry` objects
 
@@ -522,8 +421,6 @@ Without a `telemetry_time` query parameter, `/telemetry` shall return a `400 Bad
 ### Vehicles
 
 The `/vehicles` is a near-realtime endpoint and returns the current status of vehicles in an agency's [Jurisdiction](/general-information.md#definitions) and/or area of agency responsibility. All vehicles that are currently in any [`vehicle_state`][vehicle-states] should be returned in this payload. Since all states are returned, care should be taken to filter out states not in the [PROW](/general-information.md#definitions) if doing vehicle counts. For the states `elsewhere` and `removed` which include vehicles not in the [PROW](/general-information.md#definitions) but provide some operational clarity for agencies, these must only persist in the feed for 90 minutes before being removed. 
-
-Data in this endpoint should reconcile with data from the historic [`/status_changes`](/provider#events) endpoint, though `/events` is the source of truth if there are discrepancies. 
 
 As with other MDS APIs, `/vehicles` is intended for use by regulators, not by the general public. `/vehicles` can be deployed by providers as a standalone MDS endpoint for agencies without requiring the use of other endpoints, due to the [modularity](/README.md#modularity) of MDS. See our [MDS Vehicles Guide](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Vehicles) for how this compares to GBFS `/free_bike_status`. Note that using authenticated `/vehicles` does not replace the role of a public [GBFS][gbfs] feed in enabling consumer-facing applications. If a provider is using both `/vehicles` and GBFS endpoints, the `/vehicles` endpoint should be considered source of truth regarding an agency's compliance checks.
 

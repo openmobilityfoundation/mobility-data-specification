@@ -15,6 +15,7 @@ This MDS data types page catalogs the objects (fields, types, requirements, desc
 - [Stops](#stops)
   - [Stop Status](#stop-status)
 - [Trips](#trips)
+- [Reports](#reports)
 
 ## Vehicles
 
@@ -219,6 +220,59 @@ A Trip is defined by the following structure:
 | `standard_cost` | Integer | Optional | The cost, in the currency defined in `currency`, to perform that trip in the standard operation of the System (see [Costs & Currencies][costs-and-currencies]) |
 | `actual_cost` | Integer | Optional | The actual cost, in the currency defined in `currency`, paid by the customer of the *mobility as a service* provider (see [Costs & Currencies][costs-and-currencies]) |
 | `currency` | String | Optional, USD cents is implied if null.| An [ISO 4217 Alphabetic Currency Code][iso4217] representing the currency of the payee (see [Costs & Currencies][costs-and-currencies]) |
+
+[Top][toc]
+
+## Reports
+
+A Report is defined by the following structure:
+
+| Column Name          | Type                                      | Comments                                         |
+|----------------------| ----------------------------------------- | ------------------------------------------------ |
+| `provider_id`        | UUID                                      | A UUID for the Provider, unique within MDS. See MDS provider_id in [provider list](/providers.csv). |
+| `start_date`         | date                                      | Start date of trip the data row, ISO 8601 date format, i.e. YYYY-MM-DD |
+| `duration`           | string                                    | Value is always `P1M` for monthly. Based on [ISO 8601 duration](https://en.wikipedia.org/wiki/ISO_8601#Durations) |
+| `special_group_type` | [Special Group Type](#special-group-type) | Type that applies to this row                    |
+| `geography_id`       | [Geography](/geography)                   | ID that applies to this row. Includes all IDs in /geography. When there is no /geography then return `null` for this value and return counts based on the entire operating area. |
+| `vehicle_type`       | [Vehicle Type](/general-information.md#vehicle-types)      | Type that applies to this row                    |
+| `trip_count`         | integer                                   | Count of trips taken for this row                |
+| `rider_count`        | integer                                   | Count of unique riders for this row              |
+
+[Top][toc]
+
+### Data Notes
+
+Report contents include every combination of special group types, geography IDs, and vehicle types in operation for each month since the provider began operations in the jurisdiction. New files are added monthly in addition to the previous monthly historic files. 
+
+Counts are calculated based the agency's local time zone. Trips are counted based on their start time, i.e. if a trip starts in month A but ends in month B, it will be counted only as part of the report for month A. Similarly, trips are counted based on their start geography, i.e. if a trip starts in geography A and ends in geography B, it will appear in the counts for geography A and not for geography B.
+
+All geography IDs included in the city published [Geography](/geography) API endpoint are included in the report results. In lieu of serving an API, this can alternately be a [flat file](/geography#file-format) created by the city and sent to the provider via link. If there is no `/geography` available, then counts are for the entire agency operating area, and `null` is returned for each Geography ID. 
+
+[Top][toc]
+
+### Data Redaction
+
+Some combinations of parameters may return a small count of trips, which could increase a privacy risk of re-identification. To correct for that, Reports does not return data below a certain count of results. This data redaction is called k-anonymity, and the threshold is set at a k-value of 10. For more explanation of this methodology, see our [Data Redaction Guidance document](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Data-Redaction).
+
+**If the query returns fewer than `10` trips in a count, then that row's count value is returned as "-1".** Note "0" values are also returned as "-1" since the goal is to group both low and no count values for privacy. 
+
+This value may be adjusted in future releases and/or may become dynamic to account for specific categories of use cases and users. To improve the specification and to inform future guidance, users are encouraged to share their feedback and questions about k-values on this [discussion thread](https://github.com/openmobilityfoundation/mobility-data-specification/discussions/622).
+
+Using k-anonymity will reduce, but not necessarily eliminate the risk that an individual could be re-identified in a dataset, and this data should still be treated as sensitive. This is just one part of good privacy protection practices, which you can read more about in our [MDS Privacy Guide for Cities](https://github.com/openmobilityfoundation/governance/blob/main/documents/OMF-MDS-Privacy-Guide-for-Cities.pdf). 
+
+[Top][toc]
+
+### Special Group Type	
+
+Here are the possible values for the `special_group_type` dimension field:	
+
+| Name             | Description                                                                                                           |	
+| ---------------- | --------------------------------------------------------------------------------------------------------------------- |	
+| low_income       | Trips where a low income discount is applied by the provider, e.g., a discount from a qualified provider equity plan. |	
+| adaptive_scooter | Trips taken on a scooter with features to improve accessibility for people with disabilities, e.g., scooter with a seat or wider base |
+| all_riders       | All riders from any group                                                                                             |	
+
+Other special group types may be added in future MDS releases as relevant agency and provider use cases are identified. When additional special group types or metrics are proposed, a thorough review of utility and relevance in program oversight, evaluation, and policy development should be done by OMF Working Groups, as well as any privacy implications by the OMF Privacy Committee.
 
 [Top][toc]
 
