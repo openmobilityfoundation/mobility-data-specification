@@ -10,18 +10,21 @@ This specification contains a collection of RESTful APIs used to specify the dig
 
 * [General Information](#general-information)
   * [Versioning](#versioning)
+  * [Modes](#modes)
   * [Responses and Error Messages](#responses-and-error-messages)
   * [Authorization](#authorization)
   * [GBFS](#gbfs)
 * [Vehicles](#vehicles)
   * [Vehicle - Register](#vehicle---register)
   * [Vehicle - Update](#vehicle---update)
-  * [Vehicle - Events](#vehicle---event)
-  * [Vehicle - Telemetry](#vehicle---telemetry)
+  * [Vehicles - Events](#vehicles---events)
+  * [Vehicles - Telemetry](#vehicles---telemetry)
+* [Trips](#trips)
 * [Stops](#stops)
   * [Stops - Register](#stops---register)
   * [Stops - Update](#stops---update)
   * [Stops - Readback](#stops---readback)
+* [Reports](#Reports)
 
 ## General information
 
@@ -108,6 +111,8 @@ The `/vehicles` registration endpoint is used to register vehicles for use in th
 
 See [Bulk Responses](#bulk-responses)
 
+[Top][toc]
+
 ### Vehicle Register Error Codes:
 
 | `error`              | `error_description`                               | `error_details`[]               |
@@ -185,6 +190,31 @@ See [Bulk Responses](#bulk-responses)
 
 [Top][toc]
 
+## Trips
+
+The Trips endpoint serves two purposes: 
+
+* Definitively indicating that a Trip (a sequence of events linked by a trip_id) has been completed. For example, from analyzing only the raw Vehicle Events feed, if a trip crosses an Agency's jurisdictional boundaries but does not end within the jurisdiction (last event_type seen is a `leave_jurisdiction`), this can result in a 'dangling trip'. The Trips endpoint satisfies this concern, by acting as a final indication that a trip has been finished, even if it ends outside of jurisdictional boundaries; if a trip has intersected an Agency's jurisdictional boundaries at all during a trip, it is expected that a Provider will send a Trip payload to the Agency following the trip's completion.
+* Providing information to an Agency regarding an entire trip, without extending any of the Vehicle Event payloads, or changing any requirements on when Vehicle Events should be sent.
+
+**Endpoint:** `/trips`  
+**Method:** `POST`  
+**Payload:** Array of [Trips](#trip-data)
+
+200 Success Response:
+
+See [Bulk Responses](#bulk-responses)
+
+### Trip Errors:
+
+| `error`              | `error_description`                               | `error_details`[]               |
+| -------------------- | ------------------------------------------------- | ------------------------------- |
+| `bad_param`          | A validation error occurred                       | Array of parameters with errors |
+| `missing_param`      | A required parameter is missing                   | Array of missing parameters     |
+| `unregistered`       | This `device_id` is unregistered                  |                                 |
+
+[Top][toc]
+
 ## Stops
 
 ### Stops - Register
@@ -208,6 +238,8 @@ See [Bulk Responses](#bulk-responses)
 | `already_registered` | A stop with `stop_id` is already registered       |                                 |
 
 403 Unauthorized Response:
+
+**None**
 
 [Top][toc]
 
@@ -235,6 +267,8 @@ See [Bulk Responses](#bulk-responses)
 | `missing_param`      | A required parameter is missing                   | Array of missing parameters     |
 | `unregistered` | No stop with `stop_id` is already registered       |                                 |
 
+[Top][toc]
+
 ### Stops - Readback
 
 **Endpoint:** `/stops/:stop_id`  
@@ -250,32 +284,6 @@ Path Params:
 200 Success Response:
 
 If `stop_id` is specified, `GET` will return an array with a single stop record, otherwise it will be a list of all stop records.
-
-[Top][toc]
-
-## Trips
-
-The Trips endpoint serves two purposes: 
-
-* Definitively indicating that a Trip (a sequence of events linked by a trip_id) has been completed. For example, from analyzing only the raw Vehicle Events feed, if a trip crosses an Agency's jurisdictional boundaries but does not end within the jurisdiction (last event_type seen is a `leave_jurisdiction`), this can result in a 'dangling trip'. The Trips endpoint satisfies this concern, by acting as a final indication that a trip has been finished, even if it ends outside of jurisdictional boundaries; if a trip has intersected an Agency's jurisdictional boundaries at all during a trip, it is expected that a Provider will send a Trip payload to the Agency following the trip's completion.
-* Providing information to an Agency regarding an entire trip, without extending any of the Vehicle Event payloads, or changing any requirements on when Vehicle Events should be sent.
-
-**Endpoint:** `/trips`  
-**Method:** `POST`  
-**Payload:** Array of [Trips](#trip-data)
-
-200 Success Response:
-
-See [Bulk Responses](#bulk-responses)
-
-### Trip Errors:
-
-| `error`              | `error_description`                               | `error_details`[]               |
-| -------------------- | ------------------------------------------------- | ------------------------------- |
-| `bad_param`          | A validation error occurred                       | Array of parameters with errors |
-| `missing_param`      | A required parameter is missing                   | Array of missing parameters     |
-| `unregistered`       | This `device_id` is unregistered                  |                                 |
-
 
 [Top][toc]
 

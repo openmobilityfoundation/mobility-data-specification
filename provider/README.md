@@ -17,26 +17,23 @@ This specification contains a data standard for *mobility as a service* provider
   * [JSON Schema](#json-schema)
   * [Pagination](#pagination)
   * [Municipality Boundary](#municipality-boundary)
-  * [Event Times](#event-times)
   * [Other Data Types](#other-data-types)
-* [Trips][trips]
+* [Vehicles][vehicles]
+* [Trips][#trips]
   * [Trips - Query Parameters](#trips---query-parameters)
   * [Trips - Responses](#trips---responses)
   * [Routes](#routes)
 * [Telemetry][telemetry]
   * [Telemetry - Query Parameters](#telemetry---query-parameters)
 * [Events][events]
-  * [Historical Events - Query Parameters](#events---query-parameters)
+  * [Historical Events - Query Parameters](#historical-events---query-parameters)
   * [Historical Events - Responses](#historical-events---responses)
   * [Recent Events](#recent-events)
   * [Recent Events - Query Parameters](#recent-events---query-parameters)
-* [Vehicles][vehicles]
 * [Stops](#stops)
 * [Reports](#reports)
   * [Reports - Response](#reports---response)
   * [Reports - Example](#reports---example)
-  * [Data Redaction](#data-redaction)
-
 
 ## General Information
 
@@ -51,6 +48,8 @@ This specification uses data types including timestamps, UUIDs, and vehicle stat
 `provider` APIs must handle requests for specific versions of the specification from clients.
 
 Versioning must be implemented as specified in the [Versioning section][versioning].
+
+[Top][toc]
 
 ### Modes
 
@@ -160,6 +159,33 @@ For Timestamps, Vehicle Types, Propulsion Types, UUIDs, Costs, and Currencies, r
 
 [Top][toc]
 
+## Vehicles
+
+The `/vehicles` is a near-realtime endpoint and returns the current status of vehicles in an agency's [Jurisdiction](/general-information.md#definitions) and/or area of agency responsibility. All vehicles that are currently in any [`vehicle_state`][vehicle-states] should be returned in this payload. Since all states are returned, care should be taken to filter out states not in the [PROW](/general-information.md#definitions) if doing vehicle counts. For the states `elsewhere` and `removed` which include vehicles not in the [PROW](/general-information.md#definitions) but provide some operational clarity for agencies, these must only persist in the feed for 90 minutes before being removed. 
+
+As with other MDS APIs, `/vehicles` is intended for use by regulators, not by the general public. `/vehicles` can be deployed by providers as a standalone MDS endpoint for agencies without requiring the use of other endpoints, due to the [modularity](/README.md#modularity) of MDS. See our [MDS Vehicles Guide](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Vehicles) for how this compares to GBFS `/free_bike_status`. Note that using authenticated `/vehicles` does not replace the role of a public [GBFS][gbfs] feed in enabling consumer-facing applications. If a provider is using both `/vehicles` and GBFS endpoints, the `/vehicles` endpoint should be considered source of truth regarding an agency's compliance checks.
+
+In addition to the standard [Provider payload wrapper](#response-format), responses from this endpoint should contain the last update timestamp and amount of time until the next update in accordance with the [Data Latency Requirements][data-latency]:
+
+```json
+{
+    "version": "x.y.z",
+    "data": {
+        "vehicles": []
+    },
+    "last_updated": "12345",
+    "ttl": "12345"
+}
+```
+
+**Endpoint:** `/vehicles`  
+**Method:** `GET`  
+**[Beta feature][beta]:** No (as of 1.2.0)  
+**Schema:** [`vehicles` schema][vehicles-schema]  
+**`data` Payload:** `{ "vehicles": [] }`, an array of [Vehicle](vehicle) objects
+
+[Top][toc]
+
 ## Trips
 
 A [trip][trips-general-info] represents a journey taken by a *mobility as a service* customer with
@@ -185,6 +211,8 @@ The `/trips` API should allow querying trips with the following query parameters
 | `route` | Boolean | If false, do not return route data. |
 
 Without an `end_time` query parameter, `/trips` shall return a `400 Bad Request` error.
+
+[Top][toc]
 
 ### Trips - Responses
 
@@ -273,6 +301,8 @@ Unless stated otherwise by the municipality, this endpoint must return only thos
 **Method:** `GET`  
 **Schema:** [`telemetry` schema][telemetry-schema]  
 **`data` Payload:** `{ "telemetry": [] }`, an array of `telemetry` objects
+
+[Top][toc]
 
 ### Telemetry - Query Parameters
 
@@ -364,33 +394,6 @@ Should either side of the requested time range be greater than 2 weeks before th
 
 [Top][toc]
 
-## Vehicles
-
-The `/vehicles` is a near-realtime endpoint and returns the current status of vehicles in an agency's [Jurisdiction](/general-information.md#definitions) and/or area of agency responsibility. All vehicles that are currently in any [`vehicle_state`][vehicle-states] should be returned in this payload. Since all states are returned, care should be taken to filter out states not in the [PROW](/general-information.md#definitions) if doing vehicle counts. For the states `elsewhere` and `removed` which include vehicles not in the [PROW](/general-information.md#definitions) but provide some operational clarity for agencies, these must only persist in the feed for 90 minutes before being removed. 
-
-As with other MDS APIs, `/vehicles` is intended for use by regulators, not by the general public. `/vehicles` can be deployed by providers as a standalone MDS endpoint for agencies without requiring the use of other endpoints, due to the [modularity](/README.md#modularity) of MDS. See our [MDS Vehicles Guide](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Vehicles) for how this compares to GBFS `/free_bike_status`. Note that using authenticated `/vehicles` does not replace the role of a public [GBFS][gbfs] feed in enabling consumer-facing applications. If a provider is using both `/vehicles` and GBFS endpoints, the `/vehicles` endpoint should be considered source of truth regarding an agency's compliance checks.
-
-In addition to the standard [Provider payload wrapper](#response-format), responses from this endpoint should contain the last update timestamp and amount of time until the next update in accordance with the [Data Latency Requirements][data-latency]:
-
-```json
-{
-    "version": "x.y.z",
-    "data": {
-        "vehicles": []
-    },
-    "last_updated": "12345",
-    "ttl": "12345"
-}
-```
-
-**Endpoint:** `/vehicles`  
-**Method:** `GET`  
-**[Beta feature][beta]:** No (as of 1.2.0)  
-**Schema:** [`vehicles` schema][vehicles-schema]  
-**`data` Payload:** `{ "vehicles": [] }`, an array of [Vehicle](vehicle) objects
-
-[Top][toc]
-
 ## Stops
 
 Stop information should be updated on a near-realtime basis by providers who operate _docked_ mobility devices in a given municipality.
@@ -423,6 +426,8 @@ In the case that a `stop_id` query parameter is specified, the `stops` array ret
 Reports are information that providers can send back to agencies containing aggregated data that is not contained within other MDS endpoints, like counts of special groups of riders. These supplemental reports are not a substitute for other MDS Provider endpoints.
 
 The authenticated reports are monthly, historic flat files that may be pre-generated by the provider. 
+
+[Top][toc]
 
 ### Reports - Response
 
