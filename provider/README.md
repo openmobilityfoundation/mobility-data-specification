@@ -13,6 +13,7 @@ This specification contains a data standard for *mobility as a service* provider
   * [Modes](#modes)
   * [Responses and Error Messages](#responses-and-error-messages)
   * [GBFS](#GBFS)
+  * [Data Latency Requirements][data-latency]
   * [JSON Schema](#json-schema)
   * [Pagination](#pagination)
   * [Municipality Boundary](#municipality-boundary)
@@ -20,24 +21,22 @@ This specification contains a data standard for *mobility as a service* provider
   * [Other Data Types](#other-data-types)
 * [Trips][trips]
   * [Trips - Query Parameters](#trips---query-parameters)
+  * [Trips - Responses](#trips---responses)
   * [Routes](#routes)
-* [Events][events]
-  * [Recent Events](#recent-events)
-  * [Recent Events - Query Parameters](#recent-events---query-parameters)
-  * [Historical Events](#historical-events)
-  * [Historical Events - Query Parameters](#events---query-parameters)
 * [Telemetry][telemetry]
   * [Telemetry - Query Parameters](#telemetry---query-parameters)
+* [Events][events]
+  * [Historical Events - Query Parameters](#events---query-parameters)
+  * [Historical Events - Responses](#historical-events---responses)
+  * [Recent Events](#recent-events)
+  * [Recent Events - Query Parameters](#recent-events---query-parameters)
 * [Vehicles][vehicles]
+* [Stops](#stops)
 * [Reports](#reports)
   * [Reports - Response](#reports---response)
   * [Reports - Example](#reports---example)
   * [Data Redaction](#data-redaction)
-* [Realtime Data](#realtime-data)
-  * [Data Latency Requirements][data-latency]
-  * [Events][events]
-  * [Stops](#stops)
-  * [Vehicles][vehicles]
+
 
 ## General Information
 
@@ -88,6 +87,17 @@ All response fields must use `lower_case_with_underscores`.
 ### GBFS
 
 See the [GBFS Requirement](/README.md#gbfs-requirement) language for more details.
+
+[Top][toc]
+
+### Data Latency Requirements
+
+The data returned by a near-realtime endpoint should be as close to realtime as possible, but in no case should it be more than 5 minutes out-of-date. Near-realtime endpoints must contain `last_updated` and `ttl` properties in the top-level of the response body. These properties are defined as:
+
+Field Name          | Required  | Defines
+--------------------| ----------| ----------
+last_updated        | Yes       | Timestamp indicating the last time the data in this feed was updated
+ttl                 | Yes       | Integer representing the number of milliseconds before the data in this feed will be updated again (0 if the data should always be refreshed).
 
 [Top][toc]
 
@@ -251,6 +261,29 @@ Trips that start or end at a [Stop][stops] must include a `stop_id` property in 
 
 [Top][toc]
 
+## Telemetry
+
+The `/telemetry` endpoint is a feed of vehicle telemetry data for publishing all available location data.  For privacy reasons, in-trip telemetry may be delayed at the discretion of the regulating body.
+
+Unless stated otherwise by the municipality, this endpoint must return only those telemetry that [intersects][intersection] with the [municipality boundary][muni-boundary].
+
+> Note: As a result of this definition, consumers should query the [trips endpoint][trips] to infer when vehicles enter or leave the municipality boundary.
+
+**Endpoint:** `/telemetry`  
+**Method:** `GET`  
+**Schema:** [`telemetry` schema][telemetry-schema]  
+**`data` Payload:** `{ "telemetry": [] }`, an array of `telemetry` objects
+
+### Telemetry - Query Parameters
+
+| Parameter    | Format | Expected Output |
+| ---------    | ------ | --------------- |
+| `telemetry_time` | `YYYY-MM-DDTHH`, an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) extended datetime representing an UTC hour between 00 and 23. | All telemetry with timestamp occurring within the hour. For example, requesting `telemetry_time=2019-10-01T07` returns all telemetry where `2019-10-01T07:00:00 <= telemetry.timestamp < 2019-10-01T08:00:00` UTC. |
+
+Without a `telemetry_time` query parameter, `/telemetry` shall return a `400 Bad Request` error.
+
+[Top][toc]
+
 ## Events
 
 The `/events/recent` and `/events/historical/` endpoints return a list of Event objects, describing the activity of the Provider's vehicles.  Recent events are at most two weeks old and can be queried with start/stop time, and historical events are packaged in hour-sized chunks for ease of implementation. 
@@ -316,7 +349,7 @@ See also [Stop-based Geographic Data][stop-based-geo].
 **Schema:** [`events` schema][events-schema]  
 **`data` Payload:** `{ "events": [] }`, an array of Event objects
 
-#### Recent Events Query Parameters
+#### Recent Events - Query Parameters
 
 The Recent Events API requires two parameters:
 
@@ -331,44 +364,34 @@ Should either side of the requested time range be greater than 2 weeks before th
 
 [Top][toc]
 
-## Reports
+## Vehicles
 
-Reports are information that providers can send back to agencies containing aggregated data that is not contained within other MDS endpoints, like counts of special groups of riders. These supplemental reports are not a substitute for other MDS Provider endpoints.
+The `/vehicles` is a near-realtime endpoint and returns the current status of vehicles in an agency's [Jurisdiction](/general-information.md#definitions) and/or area of agency responsibility. All vehicles that are currently in any [`vehicle_state`][vehicle-states] should be returned in this payload. Since all states are returned, care should be taken to filter out states not in the [PROW](/general-information.md#definitions) if doing vehicle counts. For the states `elsewhere` and `removed` which include vehicles not in the [PROW](/general-information.md#definitions) but provide some operational clarity for agencies, these must only persist in the feed for 90 minutes before being removed. 
 
-The authenticated reports are monthly, historic flat files that may be pre-generated by the provider. 
+As with other MDS APIs, `/vehicles` is intended for use by regulators, not by the general public. `/vehicles` can be deployed by providers as a standalone MDS endpoint for agencies without requiring the use of other endpoints, due to the [modularity](/README.md#modularity) of MDS. See our [MDS Vehicles Guide](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Vehicles) for how this compares to GBFS `/free_bike_status`. Note that using authenticated `/vehicles` does not replace the role of a public [GBFS][gbfs] feed in enabling consumer-facing applications. If a provider is using both `/vehicles` and GBFS endpoints, the `/vehicles` endpoint should be considered source of truth regarding an agency's compliance checks.
 
-### Reports - Response
+In addition to the standard [Provider payload wrapper](#response-format), responses from this endpoint should contain the last update timestamp and amount of time until the next update in accordance with the [Data Latency Requirements][data-latency]:
 
-**Endpoint:** `/reports`  
+```json
+{
+    "version": "x.y.z",
+    "data": {
+        "vehicles": []
+    },
+    "last_updated": "12345",
+    "ttl": "12345"
+}
+```
+
+**Endpoint:** `/vehicles`  
 **Method:** `GET`  
-**[Beta feature][beta]:** No (as of 2.0.0). [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/672)  
-**Usage note:** This endpoint uses media-type `text/vnd.mds+csv` instead of `application/vnd.mds+json`, see [Versioning][versioning].
-**Schema:** TBD
-**`data` Filename:** monthly file named by year and month, e.g. `/reports/YYYY-MM.csv`  
-**`data` Payload:** monthly CSV files of [Report](/data-types.md#Reports) objects 
+**[Beta feature][beta]:** No (as of 1.2.0)  
+**Schema:** [`vehicles` schema][vehicles-schema]  
+**`data` Payload:** `{ "vehicles": [] }`, an array of [Vehicle](vehicle) objects
 
 [Top][toc]
 
-### Reports - Example
-
-See [Provider examples](examples.md#reports).
-
-[Top][toc]
-
-## Realtime Data
-
-### Data Latency Requirements
-
-The data returned by a near-realtime endpoint should be as close to realtime as possible, but in no case should it be more than 5 minutes out-of-date. Near-realtime endpoints must contain `last_updated` and `ttl` properties in the top-level of the response body. These properties are defined as:
-
-Field Name          | Required  | Defines
---------------------| ----------| ----------
-last_updated        | Yes       | Timestamp indicating the last time the data in this feed was updated
-ttl                 | Yes       | Integer representing the number of milliseconds before the data in this feed will be updated again (0 if the data should always be refreshed).
-
-[Top][toc]
-
-### Stops
+## Stops
 
 Stop information should be updated on a near-realtime basis by providers who operate _docked_ mobility devices in a given municipality.
 
@@ -395,53 +418,27 @@ In the case that a `stop_id` query parameter is specified, the `stops` array ret
 
 [Top][toc]
 
-### Telemetry
+## Reports
 
-The `/telemetry` endpoint is a feed of vehicle telemetry data for publishing all available location data.  For privacy reasons, in-trip telemetry may be delayed at the discretion of the regulating body.
+Reports are information that providers can send back to agencies containing aggregated data that is not contained within other MDS endpoints, like counts of special groups of riders. These supplemental reports are not a substitute for other MDS Provider endpoints.
 
-Unless stated otherwise by the municipality, this endpoint must return only those telemetry that [intersects][intersection] with the [municipality boundary][muni-boundary].
+The authenticated reports are monthly, historic flat files that may be pre-generated by the provider. 
 
-> Note: As a result of this definition, consumers should query the [trips endpoint][trips] to infer when vehicles enter or leave the municipality boundary.
+### Reports - Response
 
-**Endpoint:** `/telemetry`  
+**Endpoint:** `/reports`  
 **Method:** `GET`  
-**Schema:** [`telemetry` schema][telemetry-schema]  
-**`data` Payload:** `{ "telemetry": [] }`, an array of `telemetry` objects
-
-#### Telemetry - Query Parameters
-
-| Parameter    | Format | Expected Output |
-| ---------    | ------ | --------------- |
-| `telemetry_time` | `YYYY-MM-DDTHH`, an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) extended datetime representing an UTC hour between 00 and 23. | All telemetry with timestamp occurring within the hour. For example, requesting `telemetry_time=2019-10-01T07` returns all telemetry where `2019-10-01T07:00:00 <= telemetry.timestamp < 2019-10-01T08:00:00` UTC. |
-
-Without a `telemetry_time` query parameter, `/telemetry` shall return a `400 Bad Request` error.
+**[Beta feature][beta]:** No (as of 2.0.0). [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/672)  
+**Usage note:** This endpoint uses media-type `text/vnd.mds+csv` instead of `application/vnd.mds+json`, see [Versioning][versioning].
+**Schema:** TBD
+**`data` Filename:** monthly file named by year and month, e.g. `/reports/YYYY-MM.csv`  
+**`data` Payload:** monthly CSV files of [Report](/data-types.md#Reports) objects 
 
 [Top][toc]
 
-### Vehicles
+### Reports - Example
 
-The `/vehicles` is a near-realtime endpoint and returns the current status of vehicles in an agency's [Jurisdiction](/general-information.md#definitions) and/or area of agency responsibility. All vehicles that are currently in any [`vehicle_state`][vehicle-states] should be returned in this payload. Since all states are returned, care should be taken to filter out states not in the [PROW](/general-information.md#definitions) if doing vehicle counts. For the states `elsewhere` and `removed` which include vehicles not in the [PROW](/general-information.md#definitions) but provide some operational clarity for agencies, these must only persist in the feed for 90 minutes before being removed. 
-
-As with other MDS APIs, `/vehicles` is intended for use by regulators, not by the general public. `/vehicles` can be deployed by providers as a standalone MDS endpoint for agencies without requiring the use of other endpoints, due to the [modularity](/README.md#modularity) of MDS. See our [MDS Vehicles Guide](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Vehicles) for how this compares to GBFS `/free_bike_status`. Note that using authenticated `/vehicles` does not replace the role of a public [GBFS][gbfs] feed in enabling consumer-facing applications. If a provider is using both `/vehicles` and GBFS endpoints, the `/vehicles` endpoint should be considered source of truth regarding an agency's compliance checks.
-
-In addition to the standard [Provider payload wrapper](#response-format), responses from this endpoint should contain the last update timestamp and amount of time until the next update in accordance with the [Data Latency Requirements][data-latency]:
-
-```json
-{
-    "version": "x.y.z",
-    "data": {
-        "vehicles": []
-    },
-    "last_updated": "12345",
-    "ttl": "12345"
-}
-```
-
-**Endpoint:** `/vehicles`  
-**Method:** `GET`  
-**[Beta feature][beta]:** No (as of 1.2.0)  
-**Schema:** [`vehicles` schema][vehicles-schema]  
-**`data` Payload:** `{ "vehicles": [] }`, an array of [Vehicle](vehicle) objects
+See [Provider examples](examples.md#reports).
 
 [Top][toc]
 
