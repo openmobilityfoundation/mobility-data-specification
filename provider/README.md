@@ -18,14 +18,14 @@ This specification contains a data standard for *mobility as a service* provider
   * [Pagination](#pagination)
   * [Municipality Boundary](#municipality-boundary)
   * [Other Data Types](#other-data-types)
-* [Vehicles][vehicles]
-* [Trips][#trips]
+* [Vehicles](#vehicles)
+* [Trips](#trips)
   * [Trips - Query Parameters](#trips---query-parameters)
   * [Trips - Responses](#trips---responses)
   * [Routes](#routes)
-* [Telemetry][telemetry]
+* [Telemetry](#telemetry)
   * [Telemetry - Query Parameters](#telemetry---query-parameters)
-* [Events][events]
+* [Events](#events)
   * [Historical Events - Query Parameters](#historical-events---query-parameters)
   * [Historical Events - Responses](#historical-events---responses)
   * [Recent Events](#recent-events)
@@ -178,11 +178,39 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 }
 ```
 
-**Endpoint:** `/vehicles`  
+The `/vehicles` endpoint returns the specified vehicle (if a device_id is provided) or a list of known vehicles.
+
+**Endpoint:** `/vehicles/{device_id}`  
 **Method:** `GET`  
 **[Beta feature][beta]:** No (as of 1.2.0)  
 **Schema:** [`vehicles` schema][vehicles-schema]  
 **`data` Payload:** `{ "vehicles": [] }`, an array of [Vehicle](vehicle) objects
+
+Path Params:
+
+| Param        | Type | Required/Optional | Description                                 |
+| ------------ | ---- | ----------------- | ------------------------------------------- |
+| `device_id`  | UUID | Optional          | If provided, retrieve the specified vehicle |
+
+200 Success Response:
+
+If `device_id` is specified, `GET` will return an array with a single vehicle record, otherwise it will be a list of vehicle records with pagination details per the [JSON API](https://jsonapi.org/format/#fetching-pagination) spec:
+
+```json
+{
+    "vehicles": [ ... ]
+    "links": {
+        "first": "https://...",
+        "last": "https://...",
+        "prev": "https://...",
+        "next": "https://..."
+    }
+}
+```
+
+404 Failure Response:
+
+_No content returned on vehicle not found._
 
 [Top][toc]
 

@@ -26,9 +26,9 @@ A vehicle record is as follows:
 | `device_id`          | UUID     | Required              | A unique device ID in UUID format, should match this device in Provider |
 | `provider_id`        | UUID     | Required              | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). | 
 | `data_provider_id`   | UUID     | Optional              | If different than `provider_id`, a UUID for the data solution provider managing the data feed in this endpoint. See MDS [provider list](/providers.csv) which includes both service operators and data solution providers. |
-| `vehicle_id` | String | Required | A unique vehicle identifier (visible code, license plate, etc), visible on the vehicle itself |
+| `vehicle_id`         | String   | Required              | A unique vehicle identifier (visible code, license plate, etc), visible on the vehicle itself |
 | `vehicle_type`       | Enum     | Required              | The [vehicle type][vehicle-types] |
-| `vehicle_attributes` | Array    | Optional              |**[Mode](/modes#list-of-supported-modes) Specific**. [Vehicle attributes](/modes#vehicle-attributes) given as mode-specific unordered key-value pairs |
+| `vehicle_attributes` | Array    | Optional              | **[Mode](/modes#list-of-supported-modes) Specific**. [Vehicle attributes](/modes#vehicle-attributes) given as mode-specific unordered key-value pairs |
 | `propulsion_types`   | Enum[]   | Required              | Array of [propulsion types][propulsion-types]; allows multiple values |
 | `accessibility_options` | Enum[] | Required             | **[Mode](/modes#list-of-supported-modes) Specific**. [Accessibility options](/modes#accessibility-options) given as an array of enumerated values. List of any accessibility options **available on the vehicle**. |
 | `battery_capacity`   | Integer  | Required if Available | Capacity of battery expressed as milliamp hours (mAh) |
@@ -135,7 +135,7 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | `heading`  | Double         | Required if Available | Degrees - clockwise starting at 0 degrees at true North      |
 | `speed`    | Float          | Required if Available | Estimated speed in meters / sec as reported by the GPS chipset |
 | `horizontal_accuracy` | Float          | Required if Available | Horizontal accuracy, in meters                               |
-| `vertical_accuracy` | Float          | Required if Available | Horizontal accuracy, in meters                               |
+| `vertical_accuracy` | Float          | Required if Available | Vertical accuracy, in meters                               |
 | `satellites` | Integer      | Required if Available | Number of GPS or GNSS satellites                             |
 
 [Top][toc]
@@ -286,6 +286,7 @@ Other special group types may be added in future MDS releases as relevant agency
 [gbfs-station-status]: https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_statusjson
 [general-stops]: /general-information.md#stops
 [geo]: #geographic-data
+[geography-driven-events]: /general-information.md#geography-driven-events
 [gps]: #gps-data
 [iso4217]: https://en.wikipedia.org/wiki/ISO_4217#Active_codes
 [modes]: /modes/README.md
@@ -294,6 +295,7 @@ Other special group types may be added in future MDS releases as relevant agency
 [provider]: /provider/README.md
 [point-geo]: #geographic-telemetry-data
 [stop-based-geo]: #stop-based-geographic-data
+[stops]: #stops
 [st-intersects]: https://postgis.net/docs/ST_Intersects.html
 [toc]: #table-of-contents
 [ts]: /general-information.md#timestamps
