@@ -2,7 +2,7 @@
 
 <a href="/agency/"><img src="https://i.imgur.com/HzMWtaI.png" width="120" align="right" alt="MDS Agency Icon" border="0"></a>
 
-The Agency API endpoints are intended to be implemented by regulatory agencies and consumed by mobility providers. Providers query the Agency API when events (such as a trip start or vehicle status change) occur in their systems.
+The Agency API endpoints are intended to be implemented by regulatory agencies and consumed by mobility providers. Data is **pushed** to agencies by providers. Providers query the Agency API when events (such as a trip start or vehicle status change) occur in their systems.
 
 This specification contains a collection of RESTful APIs used to specify the digital relationship between *mobility as a service* providers and the agencies that regulate them.
 
@@ -10,18 +10,22 @@ This specification contains a collection of RESTful APIs used to specify the dig
 
 * [General Information](#general-information)
   * [Versioning](#versioning)
+  * [Modes](#modes)
   * [Responses and Error Messages](#responses-and-error-messages)
   * [Authorization](#authorization)
   * [GBFS](#gbfs)
 * [Vehicles](#vehicles)
   * [Vehicle - Register](#vehicle---register)
   * [Vehicle - Update](#vehicle---update)
-  * [Vehicle - Events](#vehicle---event)
-  * [Vehicle - Telemetry](#vehicle---telemetry)
+  * [Vehicles - Events](#vehicles---events)
+  * [Vehicles - Telemetry](#vehicles---telemetry)
+* [Trips](#trips)
 * [Stops](#stops)
   * [Stops - Register](#stops---register)
   * [Stops - Update](#stops---update)
   * [Stops - Readback](#stops---readback)
+* [Reports](#reports)
+  * [Reports - Register](#reports---register)
 
 ## General information
 
@@ -39,7 +43,7 @@ Versioning must be implemented as specified in the [Versioning section][versioni
 
 ### Modes
 
-MDS is intended to be used for multiple transportation modes, including its original micromobility (e-scooters, bikes, etc.) as well as additional modes such as taxis and delivery bots.  A given `provider_id` shall be associated with a single mobility [mode], so that the mode does not have to be specified in each data structure and API call.  A provider implementing more than one mode shall [register](/README.md#providers-using-mds) a `provider_id` for each mode.
+MDS is intended to be used for multiple transportation modes, including its original micromobility (e-scooters, bikes, etc.) as well as additional modes such as taxis and delivery bots.  A given `provider_id` shall be associated with a single mobility [mode][modes], so that the mode does not have to be specified in each data structure and API call.  A provider implementing more than one mode shall [register](/README.md#providers-using-mds) a `provider_id` for each mode.
 
 [Top][toc]
 
@@ -107,6 +111,8 @@ The `/vehicles` registration endpoint is used to register vehicles for use in th
 200 Success Response:
 
 See [Bulk Responses](#bulk-responses)
+
+[Top][toc]
 
 ### Vehicle Register Error Codes:
 
@@ -185,6 +191,31 @@ See [Bulk Responses](#bulk-responses)
 
 [Top][toc]
 
+## Trips
+
+The Trips endpoint serves two purposes: 
+
+* Definitively indicating that a Trip (a sequence of events linked by a trip_id) has been completed. For example, from analyzing only the raw Vehicle Events feed, if a trip crosses an Agency's jurisdictional boundaries but does not end within the jurisdiction (last event_type seen is a `leave_jurisdiction`), this can result in a 'dangling trip'. The Trips endpoint satisfies this concern, by acting as a final indication that a trip has been finished, even if it ends outside of jurisdictional boundaries; if a trip has intersected an Agency's jurisdictional boundaries at all during a trip, it is expected that a Provider will send a Trip payload to the Agency following the trip's completion.
+* Providing information to an Agency regarding an entire trip, without extending any of the Vehicle Event payloads, or changing any requirements on when Vehicle Events should be sent.
+
+**Endpoint:** `/trips`  
+**Method:** `POST`  
+**Payload:** Array of [Trips](#trip-data)
+
+200 Success Response:
+
+See [Bulk Responses](#bulk-responses)
+
+### Trip Errors:
+
+| `error`              | `error_description`                               | `error_details`[]               |
+| -------------------- | ------------------------------------------------- | ------------------------------- |
+| `bad_param`          | A validation error occurred                       | Array of parameters with errors |
+| `missing_param`      | A required parameter is missing                   | Array of missing parameters     |
+| `unregistered`       | This `device_id` is unregistered                  |                                 |
+
+[Top][toc]
+
 ## Stops
 
 ### Stops - Register
@@ -208,6 +239,8 @@ See [Bulk Responses](#bulk-responses)
 | `already_registered` | A stop with `stop_id` is already registered       |                                 |
 
 403 Unauthorized Response:
+
+**None**
 
 [Top][toc]
 
@@ -235,6 +268,8 @@ See [Bulk Responses](#bulk-responses)
 | `missing_param`      | A required parameter is missing                   | Array of missing parameters     |
 | `unregistered` | No stop with `stop_id` is already registered       |                                 |
 
+[Top][toc]
+
 ### Stops - Readback
 
 **Endpoint:** `/stops/:stop_id`  
@@ -253,29 +288,37 @@ If `stop_id` is specified, `GET` will return an array with a single stop record,
 
 [Top][toc]
 
-## Trips
+## Reports
 
-The Trips endpoint serves two purposes: 
+Reports are information that providers can send back to agencies containing aggregated data that is not contained within other MDS endpoints, like counts of special groups of riders. These supplemental reports are not a substitute for other MDS Provider endpoints.
 
-* Definitively indicating that a Trip (a sequence of events linked by a trip_id) has been completed. For example, from analyzing only the raw Vehicle Events feed, if a trip crosses an Agency's jurisdictional boundaries but does not end within the jurisdiction (last event_type seen is a `leave_jurisdiction`), this can result in a 'dangling trip'. The Trips endpoint satisfies this concern, by acting as a final indication that a trip has been finished, even if it ends outside of jurisdictional boundaries; if a trip has intersected an Agency's jurisdictional boundaries at all during a trip, it is expected that a Provider will send a Trip payload to the Agency following the trip's completion.
-* Providing information to an Agency regarding an entire trip, without extending any of the Vehicle Event payloads, or changing any requirements on when Vehicle Events should be sent.
+The authenticated reports are monthly, historic flat files that may be pre-generated by the provider. 
 
-**Endpoint:** `/trips`  
+[Top][toc]
+
+## Reports - register
+
+The `/reports` endpoint allows an agency to register aggregated report counts in CSV structure.
+
+**Endpoint:** `/reports`  
 **Method:** `POST`  
-**Payload:** Array of [Trips](#trip-data)
+**Payload**: A CSV of [Reports][reports]
 
 200 Success Response:
 
 See [Bulk Responses](#bulk-responses)
 
-### Trip Errors:
+#### Reports Register Errors:
 
 | `error`              | `error_description`                               | `error_details`[]               |
 | -------------------- | ------------------------------------------------- | ------------------------------- |
 | `bad_param`          | A validation error occurred                       | Array of parameters with errors |
 | `missing_param`      | A required parameter is missing                   | Array of missing parameters     |
-| `unregistered`       | This `device_id` is unregistered                  |                                 |
+| `already_registered` | A stop with `stop_id` is already registered       |                                 |
 
+403 Unauthorized Response:
+
+**None**
 
 [Top][toc]
 
@@ -287,15 +330,16 @@ See [Bulk Responses](#bulk-responses)
 [error-messages]: /general-information.md#error-messages
 [hdop]: https://en.wikipedia.org/wiki/Dilution_of_precision_(navigation)
 [modes]: /modes/README.md
-[propulsion-types]: /general-information.md#propulsion-types
+[propulsion-types]: /data_types.md#propulsion-types
+[reports]: /data_types.md#reports
 [responses]: /general-information.md#responses
-[stops]: /general-information.md#stops
-[telemetry-data]: /general-information.md#telemetry-data
-[trip-data]: /general-information.md#trips
+[stops]: /data_types.md#stops
+[telemetry-data]: /data_types.md#telemetry
+[trip-data]: /data_types.md#trips
 [toc]: #table-of-contents
 [ts]: /general-information.md#timestamps
 [vehicle]: /data-types.md#vehicles
-[vehicle-types]: /general-information.md#vehicle-types
+[vehicle-types]: /data_types.md#vehicle-types
 [vehicle-states]: /modes/vehicle_states.md
 [vehicle-event-types]: /modes/event_types.md
 [vehicle-event]: /data-types.md#events

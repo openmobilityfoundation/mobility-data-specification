@@ -29,7 +29,7 @@ Each mode defined in MDS shall include key descriptive information, such as jour
 
 - **[Micromobility](/modes/micromobility.md)** (`micromobility`) - dockless or docked small devices such as e-scooters and bikes.
 - **[Passenger services](/modes/passenger-services.md)** (`passenger-services`) - transporting individuals with a vehicle driven by another entity, including taxis, TNCs, and microtransit
-- **[Car share](/modes/car-share.md)** (`car-share`) - shared point-to-point and station-based mutli-passenger vehicles.
+- **[Car share](/modes/car-share.md)** (`car-share`) - shared point-to-point and station-based multi-passenger vehicles.
 - **[Delivery robots](/modes/delivery-robots.md)** (`delivery-robots`) - autonomous and remotely driven goods delivery devices
 
 <p align="center">
@@ -50,6 +50,10 @@ Some fields used across MDS APIs are defined in more detail within each mode.
 
 The `journey_id` field allows multiple trip segments to be referentially linked together. See each [mode definition](#list-of-supported-modes) for details.
 
+### Journey Attributes
+
+The `journey_attributes` array allows additional mode-specific information about the nature of a journey to be described. See each [mode definition](#list-of-supported-modes) for details.
+
 ### Trip Type
 
 The `trip_type` field allows the purpose of each trip segment to be described. See each [mode definition](#list-of-supported-modes) for details.
@@ -58,19 +62,19 @@ The `trip_type` field allows the purpose of each trip segment to be described. S
 
 The `trip_attributes` array allows additional mode-specific information about the nature of a trip to be described. It can return a list of JSON-formatted key/value pairs which correspond to the allowed attributes and values for the operative mode. See each [mode definition](#list-of-supported-modes) for details.
 
-_See more available trip attributes for any mode in the [trips endpoint](/provider#trips)._
+_See more available trip attributes for any mode in the [trips object](/data-types.md#trips)._
 
 ### Fare Attributes
 
 The `fare_attributes` array allows additional mode-specific information about fare information associated with the trip. It can return a list of JSON-formatted key/value pairs which correspond to the allowed attributes and values for the operative mode. See each [mode definition](#list-of-supported-modes) for details.
 
-_See more available fare attributes for any mode in the [trips endpoint](/provider#trips)._
+_See more available fare attributes for any mode in the [trips object](/data-types.md#trips)._
 
 ### Vehicle Attributes
 
 The `vehicle_attributes` array returns a list of JSON-formatted key/value pairs which correspond to the allowed attributes and values for the operative mode. For each mode, the allowed attributes and corresponding values are defined in the [mode definition](#list-of-supported-modes).
 
-_See more available vehicle attributes for any mode in the [vehicles endpoint](/provider#vehicles)._
+_See more available vehicle attributes for any mode in the [vehicles object](/data-types.md#vehicles)._
 
 ### Accessibility Options
 

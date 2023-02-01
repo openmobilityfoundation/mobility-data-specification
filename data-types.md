@@ -1,8 +1,12 @@
 # Mobility Data Specification: **Data Types**
 
+This MDS data types page catalogs the objects (fields, types, requirements, descriptions) used across MDS, particularly with the unified Provider and Agency endpoints.
+
+## Table of Contents
+
 - [Vehicles](#vehicles)
-  - [Propulsion Types](#propulsion-types)
   - [Vehicle Types](#vehicle-types)
+  - [Propulsion Types](#propulsion-types)
 - [Vehicle Status](#vehicle-status)
 - [Events](#events)
   - [Event Types](#event-times)
@@ -11,10 +15,7 @@
 - [Stops](#stops)
   - [Stop Status](#stop-status)
 - [Trips](#trips)
-  - [Trip Attributes](#trip-attributes)
-  - [Reservation Data](#reservation-data)
-    - [Reservation Type](#reservation-type)
-    - [Reservation Method](#reservation-method)
+- [Reports](#reports)
 
 ## Vehicles
 
@@ -25,26 +26,13 @@ A vehicle record is as follows:
 | `device_id`          | UUID     | Required              | A unique device ID in UUID format, should match this device in Provider |
 | `provider_id`        | UUID     | Required              | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). | 
 | `data_provider_id`   | UUID     | Optional              | If different than `provider_id`, a UUID for the data solution provider managing the data feed in this endpoint. See MDS [provider list](/providers.csv) which includes both service operators and data solution providers. |
-| `vehicle_id` | String | Required | A unique vehicle identifier (visible code, license plate, etc), visible on the vehicle itself |
+| `vehicle_id`         | String   | Required              | A unique vehicle identifier (visible code, license plate, etc), visible on the vehicle itself |
 | `vehicle_type`       | Enum     | Required              | The [vehicle type][vehicle-types] |
-| `vehicle_attributes` | Array    | Optional              | **[Mode][modes]-Specific** [vehicle attributes](/modes#vehicle-attributes) given as mode-specific unordered key-value pairs |
+| `vehicle_attributes` | Array    | Optional              | **[Mode](/modes#list-of-supported-modes) Specific**. [Vehicle attributes](/modes#vehicle-attributes) given as mode-specific unordered key-value pairs |
 | `propulsion_types`   | Enum[]   | Required              | Array of [propulsion types][propulsion-types]; allows multiple values |
-| `accessability_options` | Enum[] | Required             | Array of mode-specific [accessability options][accessability-options] |
+| `accessibility_options` | Enum[] | Required             | **[Mode](/modes#list-of-supported-modes) Specific**. [Accessibility options](/modes#accessibility-options) given as an array of enumerated values. List of any accessibility options **available on the vehicle**. |
 | `battery_capacity`   | Integer  | Required if Available | Capacity of battery expressed as milliamp hours (mAh) |
 | `fuel_capacity`      | Integer  | Required if Available | Capacity of fuel tank (liquid, solid, gaseous) expressed in liters |
-
-[Top][toc]
-
-### Propulsion Types
-
-| `propulsion`      | Description                                            |
-| ----------------- | ------------------------------------------------------ |
-| `human`           | Pedal or foot propulsion                               |
-| `electric_assist` | Provides power only alongside human propulsion         |
-| `electric`        | Contains throttle mode with a battery-powered motor    |
-| `combustion`      | Contains throttle mode with a gas engine-powered motor |
-
-A vehicle may have one or more values from the `propulsion`, depending on the number of modes of operation. For example, a scooter that can be powered by foot or by electric motor would have the `propulsion` represented by the array `['human', 'electric']`. A bicycle with pedal-assist would have the `propulsion` represented by the array `['human', 'electric_assist']` if it can also be operated as a traditional bicycle.
 
 [Top][toc]
 
@@ -61,6 +49,19 @@ The list of allowed `vehicle_type` values in MDS. Aligning with [GBFS vehicle ty
 | `moped`          | A seated fully-motorized mobility device capable of travel at moderate or high speeds and suited for operation in general urban traffic |
 | `delivery_robot` | A robot intended for transporting goods |
 | `other`          | A device that does not fit in the other categories |
+
+[Top][toc]
+
+### Propulsion Types
+
+| `propulsion`      | Description                                            |
+| ----------------- | ------------------------------------------------------ |
+| `human`           | Pedal or foot propulsion                               |
+| `electric_assist` | Provides power only alongside human propulsion         |
+| `electric`        | Contains throttle mode with a battery-powered motor    |
+| `combustion`      | Contains throttle mode with a gas engine-powered motor |
+
+A vehicle may have one or more values from the `propulsion`, depending on the number of modes of operation. For example, a scooter that can be powered by foot or by electric motor would have the `propulsion` represented by the array `['human', 'electric']`. A bicycle with pedal-assist would have the `propulsion` represented by the array `['human', 'electric_assist']` if it can also be operated as a traditional bicycle.
 
 [Top][toc]
 
@@ -102,7 +103,7 @@ Events represent changes in vehicle status.
 
 ### Event Times
 
-Because of the unreliability of device clocks, the Provider is unlikely to know with total confidence what time an event occurred at. However, Providers are responsible for constructing as accurate a timeline as possible. Most importantly, the order of the timestamps for a particular device's events must reflect the Provider's best understanding of the order in which those events occurred.
+Because of the unreliability of device clocks, the provider is unlikely to know with total confidence what time an event occurred at. However, providers are responsible for constructing as accurate a timeline as possible. Most importantly, the order of the timestamps for a particular device's events must reflect the provider's best understanding of the order in which those events occurred.
 
 [Top][toc]
 
@@ -134,7 +135,7 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | `heading`  | Double         | Required if Available | Degrees - clockwise starting at 0 degrees at true North      |
 | `speed`    | Float          | Required if Available | Estimated speed in meters / sec as reported by the GPS chipset |
 | `horizontal_accuracy` | Float          | Required if Available | Horizontal accuracy, in meters                               |
-| `vertical_accuracy` | Float          | Required if Available | Horizontal accuracy, in meters                               |
+| `vertical_accuracy` | Float          | Required if Available | Vertical accuracy, in meters                               |
 | `satellites` | Integer      | Required if Available | Number of GPS or GNSS satellites                             |
 
 [Top][toc]
@@ -200,10 +201,11 @@ A Trip is defined by the following structure:
 | -----                    | ----            | -----------------      | -------- |
 | `provider_id`            | UUID            | Required               | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
 | `data_provider_id`       | UUID            | Optional               | If different than `provider_id`, a UUID for the data solution provider managing this data endpoint. See MDS [provider list](/providers.csv) which includes both service operators and data solution providers. |
-| `device_id`              | UUID            | Required               | A unique device ID in UUID format |
-| `journey_id`             | UUID            | Optional               | A unique [journey ID](/modes#journey-id) for associating collections of trips for its [mode] |
-| `trip_type`              | Enum            | Optional               | **[Mode](/modes#list-of-supported-modes) Specific**. The [trip type](/modes#trip-type) describing the purpose of a trip segment |
+| `device_id`              | UUID            | Required               | A unique device ID in UUID format. Cross reference with `/vehicles` for more device details. |
+| `journey_id`             | UUID            | Optional               | A unique [journey ID](/modes#journey-id) for associating collections of trips for its [mode][modes] |
+| `journey_attributes`        | Map             | Optional               | **[Mode](/modes#list-of-supported-modes) Specific**. [Journey attributes](/modes#journey-attributes) given as unordered key-value pairs |
 | `trip_id`                | UUID            | Required               | A unique ID for each trip |
+| `trip_type`              | Enum            | Optional               | **[Mode](/modes#list-of-supported-modes) Specific**. The [trip type](/modes#trip-type) describing the purpose of a trip segment |
 | `trip_attributes`        | Map             | Optional               | **[Mode](/modes#list-of-supported-modes) Specific**. [Trip attributes](/modes#trip-attributes) given as unordered key-value pairs |
 | `fare_attributes`        | Map             | Optional               | **[Mode](/modes#list-of-supported-modes) Specific**. [Fare attributes](/modes#fare-attributes) given as unordered key-value pairs |
 | `start_time`             | [Timestamp][ts] | Required               | Start of the passenger/driver trip |
@@ -213,42 +215,87 @@ A Trip is defined by the following structure:
 | `duration`               | Integer         | Required               | Time, in Seconds |
 | `distance`               | Integer         | Required               | Trip Distance, in Meters |
 | `publication_time`       | [Timestamp][ts] | Optional               | Date/time that trip became available through the trips endpoint |
-| `reservation_attributes` | [Reservation](#reservation-data) | Required if available | Reservation details, if a reservation initiated this trip
-| `accessibility_options`  | Enum[]          | Optional               | The **union** of any accessibility options requested, and used. E.g. if the passenger requests a vehicle with `wheelchair_accessible`, but doesn’t utilize the features during the trip, the trip payload will include `accessibility_options: ['wheelchair_accessible']`. See [accessibility-options][accessibility-options] |
+| `accessibility_options` | Enum[] | Required             | **[Mode](/modes#list-of-supported-modes) Specific**. [Accessibility options](/modes#accessibility-options) given as an array of enumerated values. List of any accessibility options **used during the trip**. |
+| `parking_verification_url` | URL | Optional | A URL to a photo (or other evidence) of proper vehicle parking |
+| `standard_cost` | Integer | Optional | The cost, in the currency defined in `currency`, to perform that trip in the standard operation of the System (see [Costs & Currencies][costs-and-currencies]) |
+| `actual_cost` | Integer | Optional | The actual cost, in the currency defined in `currency`, paid by the customer of the *mobility as a service* provider (see [Costs & Currencies][costs-and-currencies]) |
+| `currency` | String | Optional, USD cents is implied if null.| An [ISO 4217 Alphabetic Currency Code][iso4217] representing the currency of the payee (see [Costs & Currencies][costs-and-currencies]) |
 
 [Top][toc]
 
-### Trip Attributes
+## Reports
 
-Examples of mode-specific `trip_attributes`:
+A Report is defined by the following structure:
 
-| Field | Type    | Required/Optional | Comments |
-| ----- | -------- | ----------------- | ----- |
-| `dispatch_time`                 | [Timestamp][ts]                      | Conditionally Required | Time the vehicle was dispatched to the customer (required if trip was dispatched) |
-| `quoted_trip_start_time`        | [Timestamp][ts]                      | Required               | Time the trip was estimated or scheduled to start, that was provided to the passenger |
-| `requested_trip_start_location` | [GPS](gps) | Conditionally Required | Location where the customer requested the trip to start (required if this is within jurisdictional boundaries) |
-| `cancellation_reason`           | String                         | Conditionally Required | The reason why a *driver* cancelled a reservation. (required if a driver cancelled a trip, and a `driver_cancellation` event_type was part of the trip) |
-| `accessibility_options`         | Enum[]                         | Optional               | The **union** of any accessibility options requested, and used. E.g. if the passenger requests a vehicle with `wheelchair_accessible`, but doesn’t utilize the features during the trip, the trip payload will include `accessibility_options: ['wheelchair_accessible']`. See [accessibility-options][accessibility-options] |
-| `parking_verification_url` | String | Optional | A URL to a photo (or other evidence) of proper vehicle parking |
+| Column Name          | Type                                      | Comments                                         |
+|----------------------| ----------------------------------------- | ------------------------------------------------ |
+| `provider_id`        | UUID                                      | A UUID for the Provider, unique within MDS. See MDS provider_id in [provider list](/providers.csv). |
+| `start_date`         | date                                      | Start date of trip the data row, ISO 8601 date format, i.e. YYYY-MM-DD |
+| `duration`           | string                                    | Value is always `P1M` for monthly. Based on [ISO 8601 duration](https://en.wikipedia.org/wiki/ISO_8601#Durations) |
+| `special_group_type` | [Special Group Type](#special-group-type) | Type that applies to this row                    |
+| `geography_id`       | [Geography](/geography)                   | ID that applies to this row. Includes all IDs in /geography. When there is no /geography then return `null` for this value and return counts based on the entire operating area. |
+| `vehicle_type`       | [Vehicle Type](/general-information.md#vehicle-types)      | Type that applies to this row                    |
+| `trip_count`         | integer                                   | Count of trips taken for this row                |
+| `rider_count`        | integer                                   | Count of unique riders for this row              |
+
+[Top][toc]
+
+### Data Notes
+
+Report contents include every combination of special group types, geography IDs, and vehicle types in operation for each month since the provider began operations in the jurisdiction. New files are added monthly in addition to the previous monthly historic files. 
+
+Counts are calculated based the agency's local time zone. Trips are counted based on their start time, i.e. if a trip starts in month A but ends in month B, it will be counted only as part of the report for month A. Similarly, trips are counted based on their start geography, i.e. if a trip starts in geography A and ends in geography B, it will appear in the counts for geography A and not for geography B.
+
+All geography IDs included in the city published [Geography](/geography) API endpoint are included in the report results. In lieu of serving an API, this can alternately be a [flat file](/geography#file-format) created by the city and sent to the provider via link. If there is no `/geography` available, then counts are for the entire agency operating area, and `null` is returned for each Geography ID. 
+
+[Top][toc]
+
+### Data Redaction
+
+Some combinations of parameters may return a small count of trips, which could increase a privacy risk of re-identification. To correct for that, Reports does not return data below a certain count of results. This data redaction is called k-anonymity, and the threshold is set at a k-value of 10. For more explanation of this methodology, see our [Data Redaction Guidance document](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Data-Redaction).
+
+**If the query returns fewer than `10` trips in a count, then that row's count value is returned as "-1".** Note "0" values are also returned as "-1" since the goal is to group both low and no count values for privacy. 
+
+This value may be adjusted in future releases and/or may become dynamic to account for specific categories of use cases and users. To improve the specification and to inform future guidance, users are encouraged to share their feedback and questions about k-values on this [discussion thread](https://github.com/openmobilityfoundation/mobility-data-specification/discussions/622).
+
+Using k-anonymity will reduce, but not necessarily eliminate the risk that an individual could be re-identified in a dataset, and this data should still be treated as sensitive. This is just one part of good privacy protection practices, which you can read more about in our [MDS Privacy Guide for Cities](https://github.com/openmobilityfoundation/governance/blob/main/documents/OMF-MDS-Privacy-Guide-for-Cities.pdf). 
+
+[Top][toc]
+
+### Special Group Type	
+
+Here are the possible values for the `special_group_type` dimension field:	
+
+| Name             | Description                                                                                                           |	
+| ---------------- | --------------------------------------------------------------------------------------------------------------------- |	
+| low_income       | Trips where a low income discount is applied by the provider, e.g., a discount from a qualified provider equity plan. |	
+| adaptive_scooter | Trips taken on a scooter with features to improve accessibility for people with disabilities, e.g., scooter with a seat or wider base |
+| all_riders       | All riders from any group                                                                                             |	
+
+Other special group types may be added in future MDS releases as relevant agency and provider use cases are identified. When additional special group types or metrics are proposed, a thorough review of utility and relevance in program oversight, evaluation, and policy development should be done by OMF Working Groups, as well as any privacy implications by the OMF Privacy Committee.
 
 [Top][toc]
 
 [agency]: /agency/README.md
 [accessibility-options]: /modes/README.md#accessibility-options
 [decimal-degrees]: https://en.wikipedia.org/wiki/Decimal_degrees
+[costs-and-currencies]: /general-information.md#costs-and-currencies
 [event-times]: /general-information.md#event-times
 [hdop]: https://en.wikipedia.org/wiki/Dilution_of_precision_(navigation)
 [gbfs-station-info]: https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_informationjson
 [gbfs-station-status]: https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_statusjson
 [general-stops]: /general-information.md#stops
 [geo]: #geographic-data
+[geography-driven-events]: /general-information.md#geography-driven-events
 [gps]: #gps-data
+[iso4217]: https://en.wikipedia.org/wiki/ISO_4217#Active_codes
 [modes]: /modes/README.md
 [policy]: /policy/README.md
 [propulsion-types]: /general-information.md#propulsion-types
 [provider]: /provider/README.md
 [point-geo]: #geographic-telemetry-data
 [stop-based-geo]: #stop-based-geographic-data
+[stops]: #stops
 [st-intersects]: https://postgis.net/docs/ST_Intersects.html
 [toc]: #table-of-contents
 [ts]: /general-information.md#timestamps

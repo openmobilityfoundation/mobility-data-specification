@@ -1,14 +1,14 @@
 # Mobility Data Specification: **Delivery Robots**
 
-<img src="https://i.imgur.com/f8iMepu.png" width="120" align="right" alt="MDS Modes - Delivey Robots" border="0">
+<img src="https://i.imgur.com/f8iMepu.png" width="120" align="right" alt="MDS Modes - Delivery Robots" border="0">
 
-**Delivey Robots** refers to autonomous and remotely driven goods delivery devices. There can be one or multiple orders on different trips at the same time. The state machine tracks the trip states of the orders separately from the vehicle state.  
+**Delivery Robots** refers to autonomous and remotely driven goods delivery devices. There can be one or multiple orders on different trips at the same time. The state machine tracks the trip states of the orders separately from the vehicle state.  
 
 See the [modes overview](/modes) for how the mode specific information below applies across MDS.
 
 ## Robots Vs Other Delivery Types
 
-Autonomous and remotely piloted delivery robots do not require a driver, whereas other forms of deliveries may, e.g. in a commerical or private car, truck, bike, etc. For this MDS release, this mode is limited to deliveries where a human driver is not on board the vehicle doing the delivery, and human passengers are not being transported. 
+Autonomous and remotely piloted delivery robots do not require a driver, whereas other forms of deliveries may, e.g. in a commercial or private car, truck, bike, etc. For this MDS release, this mode is limited to deliveries where a human driver is not on board the vehicle doing the delivery, and human passengers are not being transported. 
 
 ## Table of Contents
 
@@ -39,6 +39,8 @@ The short name identifier for deliveries used across MDS is `delivery-robots`.
 [Top][toc]
 
 ## Trip Properties
+
+_See more available trip and fare attributes for any mode used in the [trips object](/data-types.md#trips)._
 
 ### Journey ID
 
@@ -94,15 +96,13 @@ The `trip_type` field **must** have one of the following enumerated values:
 
 The `trip_attributes` array **may** have the following key value pairs:
 
-- `driver_type` (ennum, required): type of driver operating the device: `human`, `semi-autonomous`, `autonomous`
-- `driver_id` (UUID, optional): consistent unique identifier of the privary driver. Could be based on software version or an internal human driver id.
+- `driver_type` (enum, required): type of driver operating the device: `human`, `semi-autonomous`, `autonomous`
+- `driver_id` (UUID, optional): consistent unique identifier of the primary driver. Could be based on software version or an internal human driver id.
 - `app_name` (text, optional): name of the app used to reserve the trip which could be provider's app or 3rd party app
 - `request_time` (timestamp, optional): when the customer requested the trip
 - `has_payload` (boolean, optional): is there any payload for any delivery included in the device at trip start. 1 = loaded, 0 = empty
-- `range` (interger, optional): estimated range in meters based on energy levels in device at trip start
+- `range` (integer, optional): estimated range in meters based on energy levels in device at trip start
 - `identification_required` (boolean, optional): does the cargo require providing customer identification before trip start or upon delivery?
-
-_See more available trip attributes for any mode in the [trips endpoint](/provider#trips)._
 
 [Top][toc]
 
@@ -113,11 +113,11 @@ The `fare_attributes` array **may** have the following key value pairs:
 - `payment_type` (enumerated, optional): `cash`, `mobile`, `voucher`, `paratransit`, `no payment`, `test`
 - `price` (currency, optional): Total price of the order
 
-_See more available fare attributes for any mode in the [trips endpoint](/provider#trips)._
-
 [Top][toc]
 
 ## Vehicle Properties
+
+_See more available vehicle attributes and accessibility options for any mode used in the [vehicles object](/data-types.md#vehicles)._
 
 ### Vehicle Attributes
 
@@ -137,8 +137,6 @@ The `vehicle_attributes` array **may** have the following key value pairs:
 - `weight` (integer, optional): weight in kilograms rounded up of the device not including cargo
 - `top_speed` (integer, optional): theoretical top speed in meters per second of the device
 - `storage_capacity` (integer, optional): cubic centimeters of cargo space available not including any cargo
-
-_See more available vehicle attributes for any mode in the [vehicles endpoint](/provider#vehicles)._
 
 [Top][toc]
 
@@ -289,7 +287,7 @@ When there is only one trip ongoing, `trip_state == vehicle_state`
 
 In cases where there are multiple trips ongoing, please follow the trip state model pseudocode for determining what the vehicle state should be:
 ```
-t = for the one vehicle, all on-going trips which are 'delivey' or undefined trips (we do not take into account 'roaming', 'return' or 'advertising' trips)
+t = for the one vehicle, all on-going trips which are 'delivery' or undefined trips (we do not take into account 'roaming', 'return' or 'advertising' trips)
 v = vehicle state
 if t.any(state == ‘stopped’):
     v = ‘stopped’ 

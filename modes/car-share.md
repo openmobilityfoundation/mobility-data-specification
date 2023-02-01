@@ -36,6 +36,8 @@ The short name identifier for Car Share used across MDS is `car-share`.
 
 ## Trip Properties
 
+_See more available trip and fare attributes for any mode used in the [trips object](/data-types.md#trips)._
+
 ### Journey ID
 
 The `journey_id` field shall have a consistent value in overlapping trips for a single reservation period, e.g. trips taken by a customer between ignition states over the duration of their reservation. A reservation is the duration the customer has continuous exclusive access to the vehicle whether parked or in motion. Journeys may be point-to-point or multi-segment.
@@ -92,10 +94,8 @@ The `trip_attributes` array **may** have the following key value pairs:
 
 - `hail_type` (enumerated, required): `phone_dispatch`, `phone`, `text`, `app`
 - `app_name` (text, optional): name of the app used to reserve the trip which could be provider's app or 3rd party app
-- `permit_licence_number` (string, optional) - The permit licence number of the organization that dispatched the vehicle
+- `permit_license_number` (string, optional) - The permit license number of the organization that dispatched the vehicle
 - `driver_id` (string, optional): Universal identifier of a specific driver, static across operators, like a driver's license number, for company employees in `reservation` or `empty` trip types, not `private` trips. Could also be used as a lookup in an agency's internal driver system.
-
-_See more available trip attributes for any mode in the [trips endpoint](/provider#trips)._
 
 [Top][toc]
 
@@ -114,11 +114,11 @@ The `fare_attributes` array **may** have the following key value pairs:
 - `taxes` (currency, optional) - amount of taxes paid for the ride
 - `surcharge` (currency, optional) - any surcharge pricing
 
-_See more available fare attributes for any mode in the [trips endpoint](/provider#trips)._
-
 [Top][toc]
 
 ## Vehicle Properties
+
+_See more available vehicle attributes and accessibility options for any mode used in the [vehicles object](/data-types.md#vehicles)._
 
 ### Vehicle Attributes
 
@@ -137,9 +137,7 @@ The `vehicle_attributes` array **may** have the following key value pairs:
 - `park_access` (boolean, optional) - access pass to a national/regional/municipal park system
 - `toll_transponder` (boolean, optional) - toll transponder for national/regional toll system
 - `phone_charger` (boolean, optional) - a place to charge your phone
-- `sunshade` (boolean, optional) - sunshade avaialable (i.e. for windshield)
-
-_See more available vehicle attributes for any mode in the [vehicles endpoint](/provider#vehicles)._
+- `sunshade` (boolean, optional) - sunshade available (i.e. for windshield)
 
 [Top][toc]
 
