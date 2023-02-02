@@ -124,6 +124,7 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | `location`        | [GPS][gps]      | Required               | Telemetry position data |
 | `battery_percent` | Integer         | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 100 |
 | `fuel_percent`    | Integer         | Required if Applicable | Percent fuel in vehicle, expressed between 0 and 100 |
+| `tipped_over`     | Boolean         | Required if Known      | If detectable and known, is the device tipped over or not? Default is 'false'. |
 
 ### GPS Data
 
