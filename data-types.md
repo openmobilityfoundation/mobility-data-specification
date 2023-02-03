@@ -7,7 +7,7 @@ This MDS data types page catalogs the objects (fields, types, requirements, desc
 - [Vehicles](#vehicles)
   - [Vehicle Types](#vehicle-types)
   - [Propulsion Types](#propulsion-types)
-- [Vehicle Status](#vehicle-status)
+  - [Vehicle Status](#vehicle-status)
 - [Events](#events)
   - [Event Types](#event-times)
 - [Telemetry](#telemetry)
@@ -65,7 +65,7 @@ A vehicle may have one or more values from the `propulsion`, depending on the nu
 
 [Top][toc]
 
-## Vehicle Status 
+### Vehicle Status 
 
 A vehicle status record represents the current or last-known event and telemetry from a vehicle, defined as follows:
 
@@ -113,7 +113,7 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 
 | Field             | Type            | Required/Optional      | Field Description |
 | -----             | ----            | -----------------      | ----------------- |
-| `device_id`       | UUID            | Required               | ID used in [Register](#vehicle---register)                     |
+| `device_id`       | UUID            | Required               | A unique device ID in UUID format                     |
 | `provider_id`     | UUID            | Required               | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
 | `data_provider_id`| UUID            | Optional               | If different than `provider_id`, a UUID for the data solution provider managing the data feed in this endpoint. See MDS [provider list](/providers.csv) which includes both service operators and data solution providers. |
 | `telemetry_id`    | UUID            | Required               | ID used for uniquely-identifying a Telemetry entry |

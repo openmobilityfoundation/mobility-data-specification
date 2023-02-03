@@ -70,8 +70,9 @@ See the [GBFS Requirement](/README.md#gbfs-requirement) language for more detail
 
 The `/vehicles` endpoint returns the specified vehicle (if a device_id is provided) or a list of known vehicles. Providers can only retrieve data for vehicles in their registered fleet. Contains vehicle properties that do not change often.
 
-Endpoint: `/vehicles/{device_id}`
-Method: `GET`
+**Endpoint**: `/vehicles/{device_id}`  
+**Method:** `POST`  
+**Payload:** An array of [Vehicles](/data-types.md#vehicles)  
 
 Path Params:
 
@@ -105,8 +106,9 @@ _No content returned on vehicle not found._
 
 The `/vehicles/status` endpoint returns information about the specified vehicle (if a device_id is provided) or a list of known vehicles current state. Providers can only retrieve data for vehicles in their registered fleet. Contains specific vehicle properties that are updated frequently.
 
-Endpoint: `/vehicles/status/{device_id}`
-Method: `GET`
+**Endpoint**: `/vehicles/status/{device_id}`  
+**Method:** `POST`  
+**Payload:** An array of [Vehicles](/data-types.md#vehicle-status) objects  
 
 Path Params:
 
@@ -214,7 +216,7 @@ The vehicle `/telemetry` endpoint allows a Provider to send vehicle telemetry da
 
 **Endpoint**: `/telemetry`  
 **Method**: `POST`  
-**Payload**: An array of [Vehicle Telemetry][vehicle-telemetry]  
+**Payload**: An array of vehicle [Telemetry][vehicle-telemetry]  
 
 200 Success Response:
 

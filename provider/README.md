@@ -221,8 +221,8 @@ The `/vehicles/status` endpoint returns the specified vehicle (if a device_id is
 **Endpoint:** `/vehicles/status/{device_id}`  
 **Method:** `GET`  
 **[Beta feature][beta]:** No (as of 1.2.0)  
-**Schema:** [`vehicles-status` schema][vehicles-status-schema]  
-**`data` Payload:** `{ "vehicles": [] }`, an array of [Vehicle Status](vehicle-status) objects
+**Schema:** N/A
+**`data` Payload:** `{ "vehicles": [] }`, an array of [Vehicle Status][vehicle-status] objects
 
 Path Params:
 
@@ -325,7 +325,7 @@ Unless stated otherwise by the municipality, this endpoint must return only thos
 **Endpoint:** `/telemetry`  
 **Method:** `GET`  
 **Schema:** [`telemetry` schema][telemetry-schema]  
-**`data` Payload:** `{ "telemetry": [] }`, an array of `telemetry` objects
+**`data` Payload:** `{ "telemetry": [] }`, an array of [Vehicle Telemetry][vehicle-telemetry] objects
 
 [Top][toc]
 
@@ -345,13 +345,13 @@ The `/events/recent` and `/events/historical/` endpoints return a list of Event 
 
 Unless stated otherwise by the municipality, this endpoint must return only those status changes with a `event_location` that [intersects](#intersection-operation) with the [municipality boundary](#municipality-boundary).
 
-> Note: As a result of this definition, consumers should query the [trips endpoint][trips] to infer when vehicles enter or leave the municipality boundary.
+> Note: As a result of this definition, consumers should query the [trips endpoint](#trips) to infer when vehicles enter or leave the municipality boundary.
 
 **Endpoint:** `/events/historical`  
 **Method:** `GET`  
 **[Beta feature][beta]:** No  
 **Schema:** [`events` schema][events-schema]  
-**`data` Payload:** `{ "data": [] }`, an array of [Vehicle Event Data](#vehicle-event-data)
+**`data` Payload:** `{ "data": [] }`, an array of [Events](/data-types.md#events) object
 
 [Top][toc]
 
@@ -402,7 +402,7 @@ See also [Stop-based Geographic Data][stop-based-geo].
 **Method:** `GET`  
 **[Beta feature][beta]:** No (as of 1.0.0)  
 **Schema:** [`events` schema][events-schema]  
-**`data` Payload:** `{ "events": [] }`, an array of Event objects
+**`data` Payload:** `{ "events": [] }`, an array of [Events](/data-types.md#events) object objects
 
 #### Recent Events - Query Parameters
 
@@ -493,7 +493,7 @@ See [Provider examples](examples.md#reports).
 [json-schema]: https://json-schema.org
 [muni-boundary]: #municipality-boundary
 [mode]: /modes/README.md
-[point-geo]: /general-information.md#geographic-telemetry-data
+[point-geo]: /data-types.md#gps-data
 [propulsion-types]: /general-information.md#propulsion-types
 [responses]: /general-information.md#responses
 [stops]: /data-types.md#stops
@@ -515,4 +515,5 @@ See [Provider examples](examples.md#reports).
 [vehicle-events]: /modes#event-types
 [vehicle-event-data]: /general-information.md#event-data
 [vehicles-schema]: vehicles.json
+[vehicle-telemetry]: /data-types.md#telemetry
 [versioning]: /general-information.md#versioning
