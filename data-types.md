@@ -142,7 +142,7 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 
 ## Stops
 
-Stops describe vehicle trip start and end locations in a pre-designated physical place. They can vary from docking stations with or without charging, corrals with lock-to railings, or suggested parking areas marked with spray paint. Stops are used in both [Provider](/provider#stops) (including routes and event locations) and [Agency](/agency#stops) (including telemetry data).
+Stops describe vehicle trip start and end locations in a pre-designated physical place. They can vary from docking stations with or without charging, corrals with lock-to railings, or suggested parking areas marked with spray paint. Stops are used in both [Provider](/provider#stops) and [Agency](/agency#stops) telemetry data.
 
 | Field                    | Type                                                  | Required/Optional | Description |
 | -----                    | ----                                                  |-------------------|-------------|

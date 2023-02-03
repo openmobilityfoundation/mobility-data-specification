@@ -19,10 +19,10 @@ This specification contains a data standard for *mobility as a service* provider
   * [Municipality Boundary](#municipality-boundary)
   * [Other Data Types](#other-data-types)
 * [Vehicles](#vehicles)
+  * [Vehicle Status](#vehicle-status)
 * [Trips](#trips)
   * [Trips - Query Parameters](#trips---query-parameters)
   * [Trips - Responses](#trips---responses)
-  * [Routes](#routes)
 * [Telemetry](#telemetry)
   * [Telemetry - Query Parameters](#telemetry---query-parameters)
 * [Events](#events)
@@ -178,7 +178,7 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 }
 ```
 
-The `/vehicles` endpoint returns the specified vehicle (if a device_id is provided) or a list of known vehicles.
+The `/vehicles` endpoint returns the specified vehicle (if a device_id is provided) or a list of known vehicles. Contains vehicle properties that do not change often.
 
 **Endpoint:** `/vehicles/{device_id}`  
 **Method:** `GET`  
@@ -214,10 +214,47 @@ _No content returned on vehicle not found._
 
 [Top][toc]
 
+### Vehicle Status
+
+The `/vehicles/status` endpoint returns the specified vehicle (if a device_id is provided) or a list of known vehicles. Contains specific vehicle properties that are updated frequently.
+
+**Endpoint:** `/vehicles/status/{device_id}`  
+**Method:** `GET`  
+**[Beta feature][beta]:** No (as of 1.2.0)  
+**Schema:** [`vehicles-status` schema][vehicles-status-schema]  
+**`data` Payload:** `{ "vehicles": [] }`, an array of [Vehicle Status](vehicle-status) objects
+
+Path Params:
+
+| Param        | Type | Required/Optional | Description                                 |
+| ------------ | ---- | ----------------- | ------------------------------------------- |
+| `device_id`  | UUID | Optional          | If provided, retrieve the specified vehicle |
+
+200 Success Response:
+
+If `device_id` is specified, `GET` will return an array with a single vehicle record, otherwise it will be a list of vehicle records with pagination details per the [JSON API](https://jsonapi.org/format/#fetching-pagination) spec:
+
+```json
+{
+    "vehicles": [ ... ]
+    "links": {
+        "first": "https://...",
+        "last": "https://...",
+        "prev": "https://...",
+        "next": "https://..."
+    }
+}
+```
+
+404 Failure Response:
+
+_No content returned on vehicle not found._
+
+[Top][toc]
+
 ## Trips
 
-A [trip][trips-general-info] represents a journey taken by a *mobility as a service* customer with
-a geo-tagged start and stop point.
+A [trip][trips-general-info] represents a journey taken by a *mobility as a service* customer with a geo-tagged start and stop point.
 
 The trips endpoint allows a user to query historical trip data.
 
@@ -271,55 +308,15 @@ For the near-ish real time use cases, please use the [events][events] endpoint.
 
 [Top][toc]
 
-### Routes
-
-To represent a route, MDS `provider` APIs must create a GeoJSON [`FeatureCollection`][geojson-feature-collection], which includes every [observed point][point-geo] in the route, even those which occur outside the [municipality boundary][muni-boundary].
-
-Routes must include at least 2 points: the start point and end point. Routes must include all possible GPS or GNSS samples collected by a Provider. Providers may round the latitude and longitude to the level of precision representing the maximum accuracy of the specific measurement. For example, [a-GPS][agps] is accurate to 5 decimal places, [differential GPS][dgps] is generally accurate to 6 decimal places. Providers may round those readings to the appropriate number for their systems.
-
-Trips that start or end at a [Stop][stops] must include a `stop_id` property in the first (when starting) and last (when ending) Feature of the `route`. See [Stop-based Geographic Data][stop-based-geo] for more information.
-
-```js
-"route": {
-    "type": "FeatureCollection",
-    "features": [{
-        "type": "Feature",
-        "properties": {
-            "timestamp": 1529968782421,
-            // Required for Trips starting at a Stop
-            "stop_id": "95084833-6a3f-4770-9919-de1ab4b8989b",
-        },
-        "geometry": {
-            "type": "Point",
-            "coordinates": [
-                -118.46710503101347,
-                33.9909333514159
-            ]
-        }
-    },
-    {
-        "type": "Feature",
-        "properties": {
-            "timestamp": 1531007628377,
-            // Required for Trips ending at a Stop
-            "stop_id": "b813cde2-a41c-4ae3-b409-72ff221e003d"
-        },
-        "geometry": {
-            "type": "Point",
-            "coordinates": [
-                -118.464851975441,
-                33.990366257735
-            ]
-        }
-    }]
-}
-```
-
-[Top][toc]
-
 ## Telemetry
 
 The `/telemetry` endpoint is a feed of vehicle telemetry data for publishing all available location data.  For privacy reasons, in-trip telemetry may be delayed at the discretion of the regulating body.
+
+To represent trip telemetry, the data should includes every [observed point][point-geo] in the trip, even those which occur outside the [municipality boundary][muni-boundary].
+
+Trip telemetry must include at least 2 points: the start point and end point. Trips must include all possible GPS or GNSS samples collected by a Provider. Providers may round the latitude and longitude to the level of precision representing the maximum accuracy of the specific measurement. For example, [a-GPS][agps] is accurate to 5 decimal places, [differential GPS][dgps] is generally accurate to 6 decimal places. Providers may round those readings to the appropriate number for their systems.
+
+Trips that start or end at a [Stop][stops] must include a `stop_id` property in the first (when starting) and last (when ending) Feature of the `route`. See [Stop-based Geographic Data][stop-based-geo] for more information.
 
 Unless stated otherwise by the municipality, this endpoint must return only those telemetry that [intersects][intersection] with the [municipality boundary][muni-boundary].
 
@@ -481,7 +478,7 @@ See [Provider examples](examples.md#reports).
 [data-latency]: #data-latency-requirements
 [dgps]: https://en.wikipedia.org/wiki/Differential_GPS
 [error-messages]: /general-information.md#error-messages
-[events]: #events
+[events]: /data-types.md#events
 [events---query-parameters]: #events---query-parameters
 [events-schema]: events.json
 [event-times]: #event-times
@@ -499,20 +496,21 @@ See [Provider examples](examples.md#reports).
 [point-geo]: /general-information.md#geographic-telemetry-data
 [propulsion-types]: /general-information.md#propulsion-types
 [responses]: /general-information.md#responses
-[stops]: /general-information.md#stops
+[stops]: /data-types.md#stops
 [stop-based-geo]: /general-information.md#stop-based-geographic-data
 [stops-schema]: stops.json
-[telemetry]: #telemetry
+[telemetry]: /data-types.md#telemetry
 [telemetry-schema]: telemetry.json
 [telemetry---query-parameters]: #telemetry-query-parameters
 [toc]: #table-of-contents
-[trips]: /general-information.md#trips
+[trips]: /data-types.md#trips
 [trips-general-info]: /general-information.md#stop-based-geographic-data
 [trips-schema]: trips.json
 [ts]: /general-information.md#timestamps
-[vehicles]: #vehicles
-[vehicle]: /general-information.md#vehicles
-[vehicle-types]: /general-information.md#vehicle-types
+[vehicles]: /data-types.md#vehicles
+[vehicle]: /data-types.md#vehicles
+[vehicle-types]: /data-types.md#vehicle-types
+[vehicle-status]: /data-types.md#vehicle-states
 [vehicle-states]: /modes#vehicle-states
 [vehicle-events]: /modes#event-types
 [vehicle-event-data]: /general-information.md#event-data

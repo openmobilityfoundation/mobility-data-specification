@@ -15,6 +15,7 @@ This specification contains a collection of RESTful APIs used to specify the dig
   * [Authorization](#authorization)
   * [GBFS](#gbfs)
 * [Vehicles](#vehicles)
+  * [Vehicle - Status](#vehicle---status)
   * [Vehicle - Register](#vehicle---register)
   * [Vehicle - Update](#vehicle---update)
 * [Trips](#trips)
@@ -67,9 +68,44 @@ See the [GBFS Requirement](/README.md#gbfs-requirement) language for more detail
 
 ## Vehicles
 
-The `/vehicles` endpoint returns the specified vehicle (if a device_id is provided) or a list of known vehicles. Providers can only retrieve data for vehicles in their registered fleet.
+The `/vehicles` endpoint returns the specified vehicle (if a device_id is provided) or a list of known vehicles. Providers can only retrieve data for vehicles in their registered fleet. Contains vehicle properties that do not change often.
 
 Endpoint: `/vehicles/{device_id}`
+Method: `GET`
+
+Path Params:
+
+| Param        | Type | Required/Optional | Description                                 |
+| ------------ | ---- | ----------------- | ------------------------------------------- |
+| `device_id`  | UUID | Optional          | If provided, retrieve the specified vehicle |
+
+200 Success Response:
+
+If `device_id` is specified, `GET` will return an array with a single vehicle record, otherwise it will be a list of vehicle records with pagination details per the [JSON API](https://jsonapi.org/format/#fetching-pagination) spec:
+
+```json
+{
+    "vehicles": [ ... ]
+    "links": {
+        "first": "https://...",
+        "last": "https://...",
+        "prev": "https://...",
+        "next": "https://..."
+    }
+}
+```
+
+404 Failure Response:
+
+_No content returned on vehicle not found._
+
+[Top][toc]
+
+### Vehicle - Status
+
+The `/vehicles/status` endpoint returns information about the specified vehicle (if a device_id is provided) or a list of known vehicles current state. Providers can only retrieve data for vehicles in their registered fleet. Contains specific vehicle properties that are updated frequently.
+
+Endpoint: `/vehicles/status/{device_id}`
 Method: `GET`
 
 Path Params:
@@ -296,7 +332,7 @@ The authenticated reports are monthly, historic flat files that may be pre-gener
 
 [Top][toc]
 
-## Reports - register
+## Reports - Register
 
 The `/reports` endpoint allows an agency to register aggregated report counts in CSV structure.
 
