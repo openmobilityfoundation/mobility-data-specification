@@ -122,8 +122,10 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | `journey_id`      | UUID            | Required               | If telemetry occurred during a trip, the ID of the journey.  If not in a trip, `null`.
 | `stop_id`         | UUID            | Required if Applicable | Stop that the vehicle is currently located at. Only applicable for _docked_ Micromobility. See [Stops][stops] |
 | `location`        | [GPS][gps]      | Required               | Telemetry position data |
+| `location_type`   | Enum            | Required if Known      | If detectable and known, what type of location the device is on or in. One of `street`, `sidewalk`, `crosswalk`, `garage`, `bike_lane`.   |
 | `battery_percent` | Integer         | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 100 |
 | `fuel_percent`    | Integer         | Required if Applicable | Percent fuel in vehicle, expressed between 0 and 100 |
+| `tipped_over`     | Boolean         | Required if Known      | If detectable and known, is the device tipped over or not? Default is 'false'. |
 
 ### GPS Data
 
@@ -203,23 +205,24 @@ A Trip is defined by the following structure:
 | `data_provider_id`       | UUID            | Optional               | If different than `provider_id`, a UUID for the data solution provider managing this data endpoint. See MDS [provider list](/providers.csv) which includes both service operators and data solution providers. |
 | `device_id`              | UUID            | Required               | A unique device ID in UUID format. Cross reference with `/vehicles` for more device details. |
 | `journey_id`             | UUID            | Optional               | A unique [journey ID](/modes#journey-id) for associating collections of trips for its [mode][modes] |
-| `journey_attributes`        | Map             | Optional               | **[Mode](/modes#list-of-supported-modes) Specific**. [Journey attributes](/modes#journey-attributes) given as unordered key-value pairs |
-| `trip_id`                | UUID            | Required               | A unique ID for each trip |
-| `trip_type`              | Enum            | Optional               | **[Mode](/modes#list-of-supported-modes) Specific**. The [trip type](/modes#trip-type) describing the purpose of a trip segment |
-| `trip_attributes`        | Map             | Optional               | **[Mode](/modes#list-of-supported-modes) Specific**. [Trip attributes](/modes#trip-attributes) given as unordered key-value pairs |
-| `fare_attributes`        | Map             | Optional               | **[Mode](/modes#list-of-supported-modes) Specific**. [Fare attributes](/modes#fare-attributes) given as unordered key-value pairs |
-| `start_time`             | [Timestamp][ts] | Required               | Start of the passenger/driver trip |
-| `end_time`               | [Timestamp][ts] | Required               | End of the passenger/driver trip |
-| `start_location`         | [GPS](gps)  | Required               | Location of the start of the trip. |
-| `end_location`           | [GPS](gps)  | Required               | Location of the end of the trip. |
-| `duration`               | Integer         | Required               | Time, in Seconds |
-| `distance`               | Integer         | Required               | Trip Distance, in Meters |
-| `publication_time`       | [Timestamp][ts] | Optional               | Date/time that trip became available through the trips endpoint |
-| `accessibility_options` | Enum[] | Required             | **[Mode](/modes#list-of-supported-modes) Specific**. [Accessibility options](/modes#accessibility-options) given as an array of enumerated values. List of any accessibility options **used during the trip**. |
-| `parking_verification_url` | URL | Optional | A URL to a photo (or other evidence) of proper vehicle parking |
-| `standard_cost` | Integer | Optional | The cost, in the currency defined in `currency`, to perform that trip in the standard operation of the System (see [Costs & Currencies][costs-and-currencies]) |
-| `actual_cost` | Integer | Optional | The actual cost, in the currency defined in `currency`, paid by the customer of the *mobility as a service* provider (see [Costs & Currencies][costs-and-currencies]) |
-| `currency` | String | Optional, USD cents is implied if null.| An [ISO 4217 Alphabetic Currency Code][iso4217] representing the currency of the payee (see [Costs & Currencies][costs-and-currencies]) |
+| `journey_attributes`     | Map             | Optional | **[Mode](/modes#list-of-supported-modes) Specific**. [Journey attributes](/modes#journey-attributes) given as unordered key-value pairs |
+| `trip_id`                | UUID            | Required | A unique ID for each trip |
+| `trip_type`              | Enum            | Optional | **[Mode](/modes#list-of-supported-modes) Specific**. The [trip type](/modes#trip-type) describing the purpose of a trip segment |
+| `trip_attributes`        | Map             | Optional | **[Mode](/modes#list-of-supported-modes) Specific**. [Trip attributes](/modes#trip-attributes) given as unordered key-value pairs |
+| `fare_attributes`        | Map             | Optional | **[Mode](/modes#list-of-supported-modes) Specific**. [Fare attributes](/modes#fare-attributes) given as unordered key-value pairs |
+| `start_time`             | [Timestamp][ts] | Required | Start of the passenger/driver trip |
+| `end_time`               | [Timestamp][ts] | Required | End of the passenger/driver trip |
+| `start_location`         | [GPS](gps)      | Required | Location of the start of the trip. |
+| `end_location`           | [GPS](gps)      | Required | Location of the end of the trip. |
+| `duration`               | Integer         | Required | Time, in Seconds |
+| `distance`               | Integer         | Required | Trip Distance, in Meters |
+| `publication_time`       | [Timestamp][ts] | Optional | Date/time that trip became available through the trips endpoint |
+| `accessibility_options`  | Enum[]          | Required | **[Mode](/modes#list-of-supported-modes) Specific**. [Accessibility options](/modes#accessibility-options) given as an array of enumerated values. List of any accessibility options **used during the trip**. |
+| `parking_verification_url` | URL           | Optional | A URL to a photo (or other evidence) of proper vehicle parking at the end of a trip, provided by customer or operator. |
+| `parking_category`       | Enum            | Optional | The type of parking location detected or provided and the end of a trip. One of `corral`, `curb`, `rack`, `other_valid`, `invalid`. Note that `other_valid` covers any other allowed parking location beyond what is enumerated, and `invalid` is any improper parking based on agency parking rules.
+| `standard_cost`          | Integer         | Optional | The cost, in the currency defined in `currency`, to perform that trip in the standard operation of the System (see [Costs & Currencies][costs-and-currencies]) |
+| `actual_cost`            | Integer         | Optional | The actual cost, in the currency defined in `currency`, paid by the customer of the *mobility as a service* provider (see [Costs & Currencies][costs-and-currencies]) |
+| `currency`               | String          | Optional, USD cents is implied if null.| An [ISO 4217 Alphabetic Currency Code][iso4217] representing the currency of the payee (see [Costs & Currencies][costs-and-currencies]) |
 
 [Top][toc]
 
