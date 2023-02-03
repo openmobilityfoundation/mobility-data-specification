@@ -118,11 +118,11 @@ Path Params:
 
 200 Success Response:
 
-If `device_id` is specified, `GET` will return an array with a single vehicle record, otherwise it will be a list of vehicle records with pagination details per the [JSON API](https://jsonapi.org/format/#fetching-pagination) spec:
+If `device_id` is specified, `GET` will return an array with a vehicle status record, otherwise it will be a list of vehicle records with pagination details per the [JSON API](https://jsonapi.org/format/#fetching-pagination) spec:
 
 ```json
 {
-    "vehicles": [ ... ]
+    "vehicles_status": [ ... ]
     "links": {
         "first": "https://...",
         "last": "https://...",
