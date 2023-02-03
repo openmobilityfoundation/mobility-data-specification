@@ -17,9 +17,9 @@ This specification contains a collection of RESTful APIs used to specify the dig
 * [Vehicles](#vehicles)
   * [Vehicle - Register](#vehicle---register)
   * [Vehicle - Update](#vehicle---update)
-  * [Vehicles - Events](#vehicles---events)
-  * [Vehicles - Telemetry](#vehicles---telemetry)
 * [Trips](#trips)
+* [Telemetry](#telemetry)
+* [Events](#events)
 * [Stops](#stops)
   * [Stops - Register](#stops---register)
   * [Stops - Update](#stops---update)
@@ -100,17 +100,17 @@ _No content returned on vehicle not found._
 
 [Top][toc]
 
-## Vehicle - Register
+### Vehicle - Register
 
 The `/vehicles` registration endpoint is used to register vehicles for use in the Agency's jurisdiction.
 
 **Endpoint**: `/vehicles`  
 **Method:** `POST`  
-**Payload:** An array of [Vehicles](#vehicle)  
+**Payload:** An array of [Vehicles](/data-types.md#vehicles)  
 
 200 Success Response:
 
-See [Bulk Responses](#bulk-responses)
+See [Bulk Responses][bulk-responses]
 
 [Top][toc]
 
@@ -126,17 +126,17 @@ See [Bulk Responses](#bulk-responses)
 
 **None**
 
-## Vehicle - Update
+### Vehicle - Update
 
 The `/vehicles` update endpoint is used to change vehicle information, should some aspect of the vehicle change, such as the `vehicle_id`. Each vehicle must already be registered.
 
 **Endpoint**: `/vehicles`  
 **Method:** `PUT`  
-**Payload:** An array of [Vehicles](#vehicle)  
+**Payload:** An array of [Vehicles](/data-types.md#vehicles)  
 
 200 Success Response:
 
-See [Bulk Responses](#bulk-responses)
+See [Bulk Responses][bulk-responses]
 
 ### Vehicle Update Error Codes:
 
@@ -144,50 +144,6 @@ See [Bulk Responses](#bulk-responses)
 | -------------------- | ------------------------------------------------- | ------------------------------- |
 | `bad_param`          | A validation error occurred                       | Array of parameters with errors |
 | `unregistered`  | This `device_id` is unregistered |                                 |
-
-[Top][toc]
-
-## Vehicles - Events
-
-The vehicle `/events` endpoint allows the Provider to submit events describing the state changes of multiple vehicles.
-
-**Endpoint:** `/vehicles/events`  
-**Method:** `POST`  
-**Payload:** An array of [Vehicle Events](#vehicle-event)  
-
-200 Success Response:
-
-See [Bulk Responses](#bulk-responses)
-
-### Event Errors:
-
-| `error`         | `error_description`              | `error_details`[]               |
-| -------         | -------------------              | -----------------               |
-| `bad_param`     | A validation error occurred      | Array of parameters with errors |
-| `missing_param` | A required parameter is missing  | Array of missing parameters     |
-| `unregistered`  | This `device_id` is unregistered |                                 |
-
-[Top][toc]
-
-## Vehicles - Telemetry
-
-The vehicle `/telemetry` endpoint allows a Provider to send vehicle telemetry data in a batch for any number of vehicles in the fleet.
-
-**Endpoint**: `/vehicles/telemetry`  
-**Method**: `POST`  
-**Payload**: An array of [Vehicle Telemetry][vehicle-telemetry]  
-
-200 Success Response:
-
-See [Bulk Responses](#bulk-responses)
-
-### Telemetry Errors:
-
-| `error`              | `error_description`                               | `error_details`[]               |
-| -------------------- | ------------------------------------------------- | ------------------------------- |
-| `bad_param`          | A validation error occurred                       | Array of parameters with errors |
-| `missing_param`      | A required parameter is missing                   | Array of missing parameters     |
-| `unregistered`       | This `device_id` is unregistered                  |                                 |
 
 [Top][toc]
 
@@ -200,11 +156,11 @@ The Trips endpoint serves two purposes:
 
 **Endpoint:** `/trips`  
 **Method:** `POST`  
-**Payload:** Array of [Trips](#trip-data)
+**Payload:** Array of [Trips](/data-types.md#trips)
 
 200 Success Response:
 
-See [Bulk Responses](#bulk-responses)
+See [Bulk Responses][bulk-responses]
 
 ### Trip Errors:
 
@@ -213,6 +169,50 @@ See [Bulk Responses](#bulk-responses)
 | `bad_param`          | A validation error occurred                       | Array of parameters with errors |
 | `missing_param`      | A required parameter is missing                   | Array of missing parameters     |
 | `unregistered`       | This `device_id` is unregistered                  |                                 |
+
+[Top][toc]
+
+## Telemetry
+
+The vehicle `/telemetry` endpoint allows a Provider to send vehicle telemetry data in a batch for any number of vehicles in the fleet.
+
+**Endpoint**: `/telemetry`  
+**Method**: `POST`  
+**Payload**: An array of [Vehicle Telemetry][vehicle-telemetry]  
+
+200 Success Response:
+
+See [Bulk Responses][bulk-responses]
+
+### Telemetry Errors:
+
+| `error`              | `error_description`                               | `error_details`[]               |
+| -------------------- | ------------------------------------------------- | ------------------------------- |
+| `bad_param`          | A validation error occurred                       | Array of parameters with errors |
+| `missing_param`      | A required parameter is missing                   | Array of missing parameters     |
+| `unregistered`       | This `device_id` is unregistered                  |                                 |
+
+[Top][toc]
+
+## Events
+
+The vehicle `/events` endpoint allows the Provider to submit events describing the state changes of multiple vehicles.
+
+**Endpoint:** `/events`  
+**Method:** `POST`  
+**Payload:** An array of vehicle [Events](/data-types.md#events)  
+
+200 Success Response:
+
+See [Bulk Responses][bulk-responses]
+
+### Event Errors:
+
+| `error`         | `error_description`              | `error_details`[]               |
+| -------         | -------------------              | -----------------               |
+| `bad_param`     | A validation error occurred      | Array of parameters with errors |
+| `missing_param` | A required parameter is missing  | Array of missing parameters     |
+| `unregistered`  | This `device_id` is unregistered |                                 |
 
 [Top][toc]
 
@@ -228,7 +228,7 @@ The `/stops` endpoint allows an agency to register city-managed Stops, or a prov
 
 200 Success Response:
 
-See [Bulk Responses](#bulk-responses)
+See [Bulk Responses][bulk-responses]
 
 #### Stops Register Errors:
 
@@ -258,7 +258,7 @@ See [Bulk Responses](#bulk-responses)
 
 200 Success Response:
 
-See [Bulk Responses](#bulk-responses)
+See [Bulk Responses][bulk-responses]
 
 #### Stops update Errors:
 
@@ -306,7 +306,7 @@ The `/reports` endpoint allows an agency to register aggregated report counts in
 
 200 Success Response:
 
-See [Bulk Responses](#bulk-responses)
+See [Bulk Responses][bulk-responses]
 
 #### Reports Register Errors:
 
