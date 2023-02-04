@@ -7,7 +7,7 @@ This MDS data types page catalogs the objects (fields, types, requirements, desc
 - [Vehicles](#vehicles)
   - [Vehicle Types](#vehicle-types)
   - [Propulsion Types](#propulsion-types)
-- [Vehicle Status](#vehicle-status)
+  - [Vehicle Status](#vehicle-status)
 - [Events](#events)
   - [Event Types](#event-times)
 - [Telemetry](#telemetry)
@@ -65,7 +65,7 @@ A vehicle may have one or more values from the `propulsion`, depending on the nu
 
 [Top][toc]
 
-## Vehicle Status 
+### Vehicle Status 
 
 A vehicle status record represents the current or last-known event and telemetry from a vehicle, defined as follows:
 
@@ -113,14 +113,14 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 
 | Field             | Type            | Required/Optional      | Field Description |
 | -----             | ----            | -----------------      | ----------------- |
-| `device_id`       | UUID            | Required               | ID used in [Register](#vehicle---register)                     |
+| `device_id`       | UUID            | Required               | A unique device ID in UUID format                     |
 | `provider_id`     | UUID            | Required               | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
 | `data_provider_id`| UUID            | Optional               | If different than `provider_id`, a UUID for the data solution provider managing the data feed in this endpoint. See MDS [provider list](/providers.csv) which includes both service operators and data solution providers. |
 | `telemetry_id`    | UUID            | Required               | ID used for uniquely-identifying a Telemetry entry |
 | `timestamp`       | [Timestamp][ts] | Required               | Date/time that event occurred. Based on GPS or GNSS clock            |
 | `trip_ids`        | UUID[]          | Required               | If telemetry occurred during a trip, the ID of the trip(s).  If not in a trip, `null`. 
 | `journey_id`      | UUID            | Required               | If telemetry occurred during a trip, the ID of the journey.  If not in a trip, `null`.
-| `stop_id`         | UUID            | Required if Applicable | Stop that the vehicle is currently located at. Only applicable for _docked_ Micromobility. See [Stops][stops] |
+| `stop_id`         | UUID            | Required if Applicable | Stop that the vehicle is currently located at. See [Stops][stops] |
 | `location`        | [GPS][gps]      | Required               | Telemetry position data |
 | `location_type`   | Enum            | Required if Known      | If detectable and known, what type of location the device is on or in. One of `street`, `sidewalk`, `crosswalk`, `garage`, `bike_lane`.   |
 | `battery_percent` | Integer         | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 100 |
@@ -144,7 +144,7 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 
 ## Stops
 
-Stops describe vehicle trip start and end locations in a pre-designated physical place. They can vary from docking stations with or without charging, corrals with lock-to railings, or suggested parking areas marked with spray paint. Stops are used in both [Provider](/provider#stops) (including routes and event locations) and [Agency](/agency#stops) (including telemetry data).
+Stops describe vehicle trip start and end locations in a pre-designated physical place. They can vary from docking stations with or without charging, corrals with lock-to railings, or suggested parking areas marked with spray paint. Stops are used in both [Provider](/provider#stops) and [Agency](/agency#stops) telemetry data.
 
 | Field                    | Type                                                  | Required/Optional | Description |
 | -----                    | ----                                                  |-------------------|-------------|

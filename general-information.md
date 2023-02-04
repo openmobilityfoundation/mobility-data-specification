@@ -10,16 +10,19 @@ This document contains specifications that are shared between the various MDS [A
 - [Data Types](#data-types)
 - [Definitions](#definitions)
 - [Devices](#devices)
+- [GBFS Compatibility](#gbfs-compatibility)
 - [Geographic Data](#geographic-data)
-  - [Geographic Telemetry Data](#geographic-telemetry-data)
-  - [Stop-based Geographic Data](#stop-based-geographic-data)
   - [Intersection Operation](#intersection-operation)
 - [Geography-Driven Events](#geography-driven-events)
 - [Responses](#responses)
   - [Error Messages](#error-messages)
+  - [Bulk Responses](#bulk-responses)
+  - [Failure Details](#failure-details)
 - [Strings](#strings)
 - [Timestamps](#timestamps)
+- [Trips](#trips)
 - [UUIDs](#uuids)
+- [Vehicle States](#vehicle-states)
 - [Versioning](#versioning)
 
 ## Authentication
@@ -42,7 +45,7 @@ Working Groups and their Steering Committees are expected to review beta designa
 
 [Top][toc]
 
-## Costs and currencies
+## Costs and Currencies
 
 Fields specifying a monetary cost use a currency as specified in [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217#Active_codes). All costs should be given as integers in the currency's smallest unit. As an example, to represent $1 USD, specify an amount of `100` (100 cents).
 
@@ -73,6 +76,12 @@ Defining terminology and abbreviations used throughout MDS.
 MDS defines the *device* as the unit that transmits GPS or GNSS signals for a particular vehicle. A given device must have a UUID (`device_id` below) that is unique within the Provider's fleet.
 
 Additionally, `device_id` must remain constant for the device's lifetime of service, regardless of the vehicle components that house the device.
+
+[Top][toc]
+
+## GBFS Compatibility
+
+Some of the fields in the `Stops` definition are using notions which are currently not in MDS, such as `rental_methods`. These fields are included for compatibility with GBFS.
 
 [Top][toc]
 
@@ -169,7 +178,7 @@ For multi-record POST and PUT calls, e.g. sending Events using the Agency API, t
 | `total`    | Integer                        | Total number of provided points                                                                       |
 | `failures` | [Trip](#trip-data)[] | Array of failed trip records (empty if all successful)                          |
 
-### Failure Details:
+### Failure Details
 
 | Field               | Type                  | Field Description |
 | -----               | ----                  | ----------------- |
@@ -186,23 +195,9 @@ All String fields, such as `vehicle_id`, are limited to a maximum of 255 charact
 
 [Top][toc]
 
-### GBFS Compatibility
-
-Some of the fields in the `Stops` definition are using notions which are currently not in MDS, such as `rental_methods`. These fields are included for compatibility with GBFS.
-
-[Top][toc]
-
 ## Timestamps
 
 A `timestamp` refers to integer milliseconds since Unix epoch.
-
-[Top][toc]
-
-## UUIDs
-
-Object identifiers are described via Universally Unique Identifiers [(UUIDs)](https://en.wikipedia.org/wiki/Universally_unique_identifier). For example, the `device_id` field used to uniquely identify a vehicle is a UUID.
-
-MDS uses Version 1 UUIDs by default. Version 4 UUIDs may be used where noted.
 
 [Top][toc]
 
@@ -220,6 +215,14 @@ the vehicle and canceling or ending the trip in under 60 seconds.
 Providers are still expected to report all trips and trip related events in
 all MDS endpoints, but parties may use this definition as a shared reference
 at the recommendation of the MDS community when analyzing trips.
+
+[Top][toc]
+
+## UUIDs
+
+Object identifiers are described via Universally Unique Identifiers [(UUIDs)](https://en.wikipedia.org/wiki/Universally_unique_identifier). For example, the `device_id` field used to uniquely identify a vehicle is a UUID.
+
+MDS uses Version 1 UUIDs by default. Version 4 UUIDs may be used where noted.
 
 [Top][toc]
 
@@ -253,12 +256,12 @@ MDS APIs must handle requests for specific versions of the specification from cl
 
 Versioning must be implemented through the use of a custom media-type, `application/vnd.mds+json`, combined with a required `version` parameter.  The one exception is the `/reports` endpoint, which returns CSV files instead of JSON, and so uses `text/vnd.mds+csv` as its media-type.
 
-The version parameter specifies the dot-separated combination of major and minor versions from a published version of the specification. For example, the media-type for version `1.0.1` would be specified as `application/vnd.mds+json;version=1.0`
+The version parameter specifies the dot-separated combination of major and minor versions from a published version of the specification. For example, the media-type for version `1.0.1` would be specified as `application/vnd.mds+json;version=1.0`. Only major and minor versions are allowed and required in the media-type version string (not [patch](https://github.com/openmobilityfoundation/governance/blob/main/technical/ReleaseGuidelines.md#versioning) releases).
 
 Clients must specify the version they are targeting through the `Accept` header. For example:
 
 ```http
-Accept: application/vnd.mds+json;version=1.2.0
+Accept: application/vnd.mds+json;version=2.0
 ```
 
 Since versioning was not available from the start, the following APIs provide a fallback version if the `Accept` header is not set as specified above:
