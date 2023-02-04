@@ -312,13 +312,9 @@ For the near-ish real time use cases, please use the [events][events] endpoint.
 
 The `/telemetry` endpoint is a feed of vehicle telemetry data for publishing all available location data.  For privacy reasons, in-trip telemetry may be delayed at the discretion of the regulating body.
 
-To represent trip telemetry, the data should includes every [observed point][point-geo] in the trip, even those which occur outside the [municipality boundary][muni-boundary].
+To represent [trip](#trip) telemetry, the data should include every [observed point][point-geo] in the trip, even those which occur outside the [municipality boundary][muni-boundary], as long as any part of the trip [intersects][intersection] with the [municipality boundary][muni-boundary].
 
-Trip telemetry must include at least 2 points: the start point and end point. Trips must include all possible GPS or GNSS samples collected by a Provider. Providers may round the latitude and longitude to the level of precision representing the maximum accuracy of the specific measurement. For example, [a-GPS][agps] is accurate to 5 decimal places, [differential GPS][dgps] is generally accurate to 6 decimal places. Providers may round those readings to the appropriate number for their systems.
-
-Unless stated otherwise by the municipality, this endpoint must return only those telemetry that [intersects][intersection] with the [municipality boundary][muni-boundary].
-
-> Note: As a result of this definition, consumers should query the [trips endpoint][trips] to infer when vehicles enter or leave the municipality boundary.
+Telemetry for a [trip](#trip) must include at least 2 points: the start point and end point. Trips must include all additional GPS or GNSS samples collected by a Provider. Providers may round the latitude and longitude to the level of precision representing the maximum accuracy of the specific measurement. For example, [a-GPS][agps] is accurate to 5 decimal places, [differential GPS][dgps] is generally accurate to 6 decimal places. Providers may round those readings to the appropriate number for their systems.
 
 **Endpoint:** `/telemetry`  
 **Method:** `GET`  
