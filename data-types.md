@@ -40,15 +40,19 @@ A vehicle record is as follows:
 
 The list of allowed `vehicle_type` values in MDS. Aligning with [GBFS vehicle types form factors](https://github.com/NABSA/gbfs/blob/master/gbfs.md#vehicle_typesjson-added-in-v21-rc).
 
-| `vehicle_type`   | Description |
-|------------------| ----------- |
-| `bicycle`        | A two-wheeled mobility device intended for personal transportation that can be operated via pedals, with or without a motorized assist (includes e-bikes, recumbents, and tandems) |
-| `cargo_bicycle`  | A two- or three-wheeled bicycle intended for transporting larger, heavier cargo than a standard bicycle (such as goods or passengers), with or without motorized assist (includes bakfiets/front-loaders, cargo trikes, and long-tails) |
-| `car`            | A passenger car or similar light-duty vehicle |
-| `scooter`        | A standing or seated fully-motorized mobility device intended for one rider, capable of travel at low or moderate speeds, and suited for operation in infrastructure shared with motorized bicycles |
-| `moped`          | A seated fully-motorized mobility device capable of travel at moderate or high speeds and suited for operation in general urban traffic |
-| `delivery_robot` | A robot intended for transporting goods |
-| `other`          | A device that does not fit in the other categories |
+| `vehicle_type`     | Description |
+|--------------------| ----------- |
+| `bicycle`          | A two-wheeled mobility device intended for personal transportation that can be operated via pedals, with or without a motorized assist (includes e-bikes, recumbents, and tandems) |
+| `bus`              | A vehicle larger than a car or small truck capable of transporting multiple passengers at once |
+| `cargo_bicycle`    | A two- or three-wheeled bicycle intended for transporting larger, heavier cargo than a standard bicycle (such as goods or passengers), with or without motorized assist (includes bakfiets/front-loaders, cargo trikes, and long-tails) |
+| `car`              | A passenger car or similar light-duty vehicle |
+| `delivery_robot`   | A robot or remote-operated device intended for transporting goods |
+| `moped`            | A seated fully-motorized mobility device capable of travel at moderate or high speeds and suited for operation in general urban traffic |
+| `motorcycle`       | A seated fully-motorized mobility device capable of travel at high speeds and suited for operation in general urban traffic and highways |
+| `scooter_standing` | A standing fully-motorized mobility device without a seat intended for one rider, capable of travel at low or moderate speeds, and suited for operation in infrastructure shared with motorized bicycles |
+| `scooter_seated`   | A fully-motorized mobility device with a seat intended for one rider, capable of travel at low or moderate speeds, and suited for operation in infrastructure shared with motorized bicycles |
+| `truck`            | A truck or vehicle larger than a car or similar heavy-duty vehicle |
+| `other`            | A device that does not fit in the other categories |
 
 [Top][toc]
 
