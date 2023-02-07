@@ -54,18 +54,26 @@ The list of allowed `vehicle_type` values in MDS. Aligning with [GBFS vehicle ty
 | `truck`            | A truck or vehicle larger than a car or similar heavy-duty vehicle |
 | `other`            | A device that does not fit in the other categories |
 
+Values based off of `form_factor` in [GBFS vehicle_types](https://github.com/MobilityData/gbfs/blob/master/gbfs.md#vehicle_typesjson), with some additional to support MDS modes.
+
 [Top][toc]
 
 ### Propulsion Types
 
-| `propulsion`      | Description                                            |
-| ----------------- | ------------------------------------------------------ |
-| `human`           | Pedal or foot propulsion                               |
-| `electric_assist` | Provides power only alongside human propulsion         |
-| `electric`        | Contains throttle mode with a battery-powered motor    |
-| `combustion`      | Contains throttle mode with a gas engine-powered motor |
+| `propulsion`         | Description                                            |
+| -------------------- | ------------------------------------------------------ |
+| `human`              | Pedal or foot propulsion |
+| `electric_assist`    | Provides electric motor assist only in combination with human propulsion - no throttle mode |
+| `electric`           | Powered by battery-powered electric motor with throttle mode |
+| `combustion`         | Powered by gasoline combustion engine |
+| `combustion_diesel`  | Powered by diesel combustion engine |
+| `hybrid`             | Powered by combined combustion engine and battery-powered motor |
+| `hydrogen_fuel_cell` | Powered by hydrogen fuel cell powered electric motor |
+| `plug_in_hybrid`     | Powered by combined combustion engine and battery-powered motor with plug-in charging |
 
 A vehicle may have one or more values from the `propulsion`, depending on the number of modes of operation. For example, a scooter that can be powered by foot or by electric motor would have the `propulsion` represented by the array `['human', 'electric']`. A bicycle with pedal-assist would have the `propulsion` represented by the array `['human', 'electric_assist']` if it can also be operated as a traditional bicycle.
+
+Values based off of `propulsion_type` in [GBFS vehicle_types](https://github.com/MobilityData/gbfs/blob/master/gbfs.md#vehicle_typesjson).
 
 [Top][toc]
 
