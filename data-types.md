@@ -39,7 +39,7 @@ A vehicle record is as follows:
 
 ### Vehicle Types
 
-The list of allowed `vehicle_type` values in MDS. Aligning with [GBFS vehicle types form factors](https://github.com/NABSA/gbfs/blob/master/gbfs.md#vehicle_typesjson-added-in-v21-rc).
+The list of allowed `vehicle_type` values in MDS. 
 
 | `vehicle_type`     | Description |
 |--------------------| ----------- |
@@ -60,6 +60,8 @@ Values based off of `form_factor` in [GBFS vehicle_types](https://github.com/Mob
 [Top][toc]
 
 ### Propulsion Types
+
+The list of allowed `propulsion_type` values in MDS. 
 
 | `propulsion`         | Description                                            |
 | -------------------- | ------------------------------------------------------ |
