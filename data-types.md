@@ -33,35 +33,50 @@ A vehicle record is as follows:
 | `accessibility_options` | Enum[] | Required             | **[Mode](/modes#list-of-supported-modes) Specific**. [Accessibility options](/modes#accessibility-options) given as an array of enumerated values. List of any accessibility options **available on the vehicle**. |
 | `battery_capacity`   | Integer  | Required if Available | Capacity of battery expressed as milliamp hours (mAh) |
 | `fuel_capacity`      | Integer  | Required if Available | Capacity of fuel tank (liquid, solid, gaseous) expressed in liters |
+| `maximum_speed`      | Integer  | Required if Available | Maximum speed (kph) possible with vehicle under normal, flat incline, smooth surface conditions. Applicable if the device has a built-in or intelligent speed limiter/governor. |
 
 [Top][toc]
 
 ### Vehicle Types
 
-The list of allowed `vehicle_type` values in MDS. Aligning with [GBFS vehicle types form factors](https://github.com/NABSA/gbfs/blob/master/gbfs.md#vehicle_typesjson-added-in-v21-rc).
+The list of allowed `vehicle_type` values in MDS. 
 
-| `vehicle_type`   | Description |
-|------------------| ----------- |
-| `bicycle`        | A two-wheeled mobility device intended for personal transportation that can be operated via pedals, with or without a motorized assist (includes e-bikes, recumbents, and tandems) |
-| `cargo_bicycle`  | A two- or three-wheeled bicycle intended for transporting larger, heavier cargo than a standard bicycle (such as goods or passengers), with or without motorized assist (includes bakfiets/front-loaders, cargo trikes, and long-tails) |
-| `car`            | A passenger car or similar light-duty vehicle |
-| `scooter`        | A standing or seated fully-motorized mobility device intended for one rider, capable of travel at low or moderate speeds, and suited for operation in infrastructure shared with motorized bicycles |
-| `moped`          | A seated fully-motorized mobility device capable of travel at moderate or high speeds and suited for operation in general urban traffic |
-| `delivery_robot` | A robot intended for transporting goods |
-| `other`          | A device that does not fit in the other categories |
+| `vehicle_type`     | Description |
+|--------------------| ----------- |
+| `bicycle`          | A two-wheeled mobility device intended for personal transportation that can be operated via pedals, with or without a motorized assist (includes e-bikes, recumbents, and tandems) |
+| `bus`              | A vehicle larger than a car or small truck capable of transporting multiple passengers at once |
+| `cargo_bicycle`    | A two- or three-wheeled bicycle intended for transporting larger, heavier cargo than a standard bicycle (such as goods or passengers), with or without motorized assist (includes bakfiets/front-loaders, cargo trikes, and long-tails) |
+| `car`              | A passenger car or similar light-duty vehicle |
+| `delivery_robot`   | A robot or remote-operated device intended for transporting goods |
+| `moped`            | A seated fully-motorized mobility device capable of travel at moderate or high speeds and suited for operation in general urban traffic |
+| `motorcycle`       | A seated fully-motorized mobility device capable of travel at high speeds and suited for operation in general urban traffic and highways |
+| `scooter_standing` | A standing fully-motorized mobility device without a seat intended for one rider, capable of travel at low or moderate speeds, and suited for operation in infrastructure shared with motorized bicycles |
+| `scooter_seated`   | A fully-motorized mobility device with a seat intended for one rider, capable of travel at low or moderate speeds, and suited for operation in infrastructure shared with motorized bicycles |
+| `truck`            | A truck or vehicle larger than a car or similar heavy-duty vehicle |
+| `other`            | A device that does not fit in the other categories |
+
+Values based off of `form_factor` in [GBFS vehicle_types](https://github.com/MobilityData/gbfs/blob/master/gbfs.md#vehicle_typesjson), with some additional to support MDS modes.
 
 [Top][toc]
 
 ### Propulsion Types
 
-| `propulsion`      | Description                                            |
-| ----------------- | ------------------------------------------------------ |
-| `human`           | Pedal or foot propulsion                               |
-| `electric_assist` | Provides power only alongside human propulsion         |
-| `electric`        | Contains throttle mode with a battery-powered motor    |
-| `combustion`      | Contains throttle mode with a gas engine-powered motor |
+The list of allowed `propulsion_type` values in MDS. 
+
+| `propulsion`         | Description                                            |
+| -------------------- | ------------------------------------------------------ |
+| `human`              | Pedal or foot propulsion |
+| `electric_assist`    | Provides electric motor assist only in combination with human propulsion - no throttle mode |
+| `electric`           | Powered by battery-powered electric motor with throttle mode |
+| `combustion`         | Powered by gasoline combustion engine |
+| `combustion_diesel`  | Powered by diesel combustion engine |
+| `hybrid`             | Powered by combined combustion engine and battery-powered motor |
+| `hydrogen_fuel_cell` | Powered by hydrogen fuel cell powered electric motor |
+| `plug_in_hybrid`     | Powered by combined combustion engine and battery-powered motor with plug-in charging |
 
 A vehicle may have one or more values from the `propulsion`, depending on the number of modes of operation. For example, a scooter that can be powered by foot or by electric motor would have the `propulsion` represented by the array `['human', 'electric']`. A bicycle with pedal-assist would have the `propulsion` represented by the array `['human', 'electric_assist']` if it can also be operated as a traditional bicycle.
+
+Values based off of `propulsion_type` in [GBFS vehicle_types](https://github.com/MobilityData/gbfs/blob/master/gbfs.md#vehicle_typesjson).
 
 [Top][toc]
 
