@@ -8,9 +8,9 @@ This specification details the purpose, use cases, and schema for Jurisdictions.
 
 - [Background](#background)
 - [Beta Feature](#beta-feature)
+- [Authorization](#authorization)
 - [Use Cases](#use-cases)
 - [Distribution](#distribution)
-  - [REST](#rest)
 - [Schema](#schema)
 - [REST Endpoints](#rest-endpoints)
 - [Flat Files](#flat-files)
@@ -33,11 +33,21 @@ A jurisdiction is:
 - Purview to make rules over physical boundaries and modal boundaries (e.g. a jurisdiction could be for taxis only)
 - A way of tracking revisions in an agency's authority
 
+[Top][toc]
+
 ## Beta Feature
 
 The Jurisdictions API and all of its endpoints are marked as a [beta feature](https://github.com/openmobilityfoundation/mobility-data-specification/blob/feature-metrics/general-information.md#beta-features) starting in the 1.1.0 release. It has not been tested in real world scenarios, and may be adjusted in future releases.
 
 **[Beta feature](https://github.com/openmobilityfoundation/mobility-data-specification/blob/feature-metrics/general-information.md#beta-features)**: _Yes (as of 1.1.0)_. [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/673) 
+
+[Top][toc]
+
+### Authorization
+
+This endpoint should be made public. Authorization is not required.
+
+[Top][toc]
 
 ## Use Cases
 
@@ -64,25 +74,13 @@ Example: A SaaS company contracts with Miami-Dade County to provide MDS. There a
 Example: The City of Miami has different data visualization tools from the city of Coral Gables
 Those tools can be granted data access from the SaaS tool based on the jurisdiction's stable identifier.
 
-[Top](#table-of-contents)
+[Top][toc]
 
 ## Distribution
 
-Jurisdictions can be served by agencies through the following REST API, or via [flat-files](#flat-files). Agencies should make the endpoints public and non-authenticated.
+Jurisdictions can be served by agencies through the following REST API, or via [flat-files](#flat-files). See [Authorization](#authorization).
 
-### REST
-
-All response fields must use `lower_case_with_underscores`.
-
-Responses must set the `Content-Type` header, as specified in the [Provider versioning](../provider/README.md#versioning) section. They must also specify the current API version being served in the JSON-formatted response body, under the `version` key.
-
-Response bodies must be a `UTF-8` encoded JSON object.
-
-#### HTTP Response Codes
-
-The response to a client request must include a valid HTTP status code defined in the [IANA HTTP Status Code Registry](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml)
-
-[Top](#table-of-contents)
+[Top][toc]
 
 ## Schema
 
@@ -116,8 +114,22 @@ Formatted in JSON, a Jurisdiction object should look like this:
 	"timestamp": Timestamp
 }
 ```
+[Top][toc]
 
 ## REST Endpoints
+
+### Format
+
+All response fields must use `lower_case_with_underscores`.
+
+Responses must set the `Content-Type` header, as specified in the [Provider versioning](../provider/README.md#versioning) section. They must also specify the current API version being served in the JSON-formatted response body, under the `version` key.
+
+Response bodies must be a `UTF-8` encoded JSON object.
+
+### HTTP Response Codes
+
+The response to a client request must include a valid HTTP status code defined in the [IANA HTTP Status Code Registry](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml)
+
 
 ### GET /Jurisdictions
 
@@ -150,7 +162,7 @@ Response codes:
 - 404 - not found
 - 500 - Server error
 
-[Top](#table-of-contents)
+[Top][toc]
 
 ## Flat Files
 
@@ -165,7 +177,7 @@ The publishing Agency should establish and communicate to interested parties how
 
 The `updated` field in the payload wrapper should be set to the time of publishing a revision, so that it is simple to identify a changed file.
 
-[Top](#table-of-contents)
+[Top][toc]
 
 ## Examples
 
@@ -173,6 +185,7 @@ See the [Jurisdiction Examples](examples/README.md) for a sample `jurisdictions.
 
 See the [Geography Examples](/geography/examples/README.md) for an example `geographies.json`.
 
-[Top](#table-of-contents)
+[Top][toc]
 
 [modes]: /modes#list-of-supported-modes
+[toc]: #table-of-contents
