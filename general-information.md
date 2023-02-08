@@ -69,7 +69,7 @@ OAuth 2.0's `client_credentials` grant type (outlined in [RFC6749](https://tools
 
 OAuth 2.0 is an industry standard authorization framework with a variety of existing tooling. The `client_credentials` grant type facilitates generation of tokens that can be used for access by agencies and distributed to data partners.
 
-If an MDS `provider` implements this auth scheme, it **MAY** choose to specify token scopes that define access parameters like allowable time ranges. These guidelines **SHOULD** be encoded into the returned token in a parseable way.
+If an MDS provider implements this auth scheme, it **MAY** choose to specify token scopes that define access parameters like allowable time ranges. These guidelines **SHOULD** be encoded into the returned token in a parseable way.
 
 [Top][toc]
 

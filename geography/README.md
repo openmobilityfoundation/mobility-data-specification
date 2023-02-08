@@ -11,11 +11,11 @@ Geographical data will be stored as GeoJSON and read from either `geographies.js
 ## Table of Contents
 
 * [General Information](#general-information)
+  * [Authorization](#authorization)
   * [Versioning](#versioning)
 * [Distribution](#distribution)
   * [Flat Files](#flat-files)
   * [Response Format](#response-format)
-  * [Authorization](#authorization)
 * [Schema](#schema)
   * [Geography Fields](#geography-fields)
   * [Previous Geographies](#previous-geographies)
@@ -29,6 +29,12 @@ Geographical data will be stored as GeoJSON and read from either `geographies.js
 ## General Information
 
 The following information applies to all `geography` API endpoints.
+
+[Top][toc]
+
+### Authorization
+
+This endpoint should be made public. Authorization is not required.
 
 [Top][toc]
 
@@ -69,12 +75,6 @@ The `updated` field in the payload wrapper should be set to the time of publishi
 ### Response Format
 
 See the [Responses][responses] and [Error Messages][error-messages] sections.
-
-[Top][toc]
-
-### Authorization
-
-This endpoint should be made public. Authorization is not required.
 
 [Top][toc]
 

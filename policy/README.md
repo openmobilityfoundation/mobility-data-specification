@@ -10,13 +10,13 @@ This specification describes the digital relationship between _mobility as a ser
 
 - [General information](#general-information)
   - [Background](#background)
+  - [Authorization](#authorization)
   - [Update Frequency](#update-frequency)
   - [Updating or Ending Policies](#updating-or-ending-policies)
   - [Versioning](#versioning)
   - [Distribution](#distribution)
 - [REST Endpoints](#rest-endpoints)
   - [Responses and Error Messages](#responses-and-error-messages)
-  - [Authorization](#authorization)
   - [Policies](#policies)
     - [Query Parameters](#query-parameters)
   - [Geographies](#geographies)
@@ -70,6 +70,10 @@ The machine-readable format allows Providers to obtain policies and compute comp
 **See the [Policy Examples](./examples/README.md) for ways these can be implemented.**
 
 [Top][toc]
+
+### Authorization
+
+This endpoint should be made public. Authorization is not required.
 
 ### Update Frequency
 
@@ -126,10 +130,6 @@ Responses must set the `Content-Type` header, as specified in the [versioning][v
 The response to a client request must include a valid HTTP status code defined in the [IANA HTTP Status Code Registry][iana].
 
 See the [Responses section][responses] for information on valid MDS response codes and the [Error Messages section][error-messages] for information on formatting error messages.
-
-### Authorization
-
-This endpoint should be made public. Authorization is not required.
 
 ### Policies
 

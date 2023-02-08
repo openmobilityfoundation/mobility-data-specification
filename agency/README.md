@@ -9,10 +9,10 @@ This specification contains a collection of RESTful APIs used to specify the dig
 ## Table of Contents
 
 * [General Information](#general-information)
+  * [Authorization](#authorization)
   * [Versioning](#versioning)
   * [Modes](#modes)
   * [Responses and Error Messages](#responses-and-error-messages)
-  * [Authorization](#authorization)
   * [GBFS](#gbfs)
 * [Vehicles](#vehicles)
   * [Vehicle - Status](#vehicle---status)
@@ -34,6 +34,15 @@ This specification uses data types including timestamps, UUIDs, and vehicle stat
 
 [Top][toc]
 
+
+### Authorization
+
+When making requests, the Agency API expects `provider_id` to be part of the claims in a [JWT](https://jwt.io/) `access_token` in the `Authorization` header, in the form `Authorization: Bearer <access_token>`. The token issuance, expiration and revocation policies are at the discretion of the Agency. [JSON Web Token](/general-information.md#json-web-tokens) is the recommended format.
+
+General authorization details are specified in the [Authorization section](/general-information.md#authorization) in MDS General Information.
+
+[Top][toc]
+
 ### Versioning
 
 `Agency` APIs must handle requests for specific versions of the specification from clients.
@@ -51,12 +60,6 @@ MDS is intended to be used for multiple transportation modes, including its orig
 ### Responses and Error Messages
 
 See the [Responses][responses] and [Error Messages][error-messages] sections.
-
-[Top][toc]
-
-### Authorization
-
-When making requests, the Agency API expects `provider_id` to be part of the claims in a [JWT](https://jwt.io/) `access_token` in the `Authorization` header, in the form `Authorization: Bearer <access_token>`. The token issuance, expiration and revocation policies are at the discretion of the Agency.
 
 [Top][toc]
 

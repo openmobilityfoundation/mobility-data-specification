@@ -9,6 +9,7 @@ This specification contains a data standard for *mobility as a service* provider
 ## Table of Contents
 
 * [General Information](#general-information)
+  * [Authorization](#authorization)
   * [Versioning](#versioning)
   * [Modes](#modes)
   * [Responses and Error Messages](#responses-and-error-messages)
