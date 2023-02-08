@@ -86,13 +86,15 @@ All interval durations (duration) are [ISO 8601](https://en.wikipedia.org/wiki/I
 
 ### For Agencies hosting the Metrics API
 
-When making requests, the Metrics API expects one of two scopes `metrics:read` or `metrics:read:provider` to be present as part of the `scope` claims in a [JWT](https://jwt.io/) `access_token` in the `Authorization` header, in the form `Authorization: Bearer <access_token>`. The token issuance, expiration and revocation policies are at the discretion of the Agency.
+When making requests, the Metrics API expects one of two scopes `metrics:read` or `metrics:read:provider` to be present as part of the `scope` claims in a [JSON Web Token](https://jwt.io/) (JWT) `access_token` in the `Authorization` header, in the form `Authorization: Bearer <access_token>`. The token issuance, expiration and revocation policies are at the discretion of the agency. See MDS [JSON Web Token](/general-information.md#json-web-tokens) guidance.
 
 If a client has a `metrics:read` scope, they are permitted to read _all_ metrics available via the Metrics API.
 
 If a client has a `metrics:read:provider` scope, they are only permitted to read metrics which pertain to a particular `provider_id` claim in the aforementioned [JWT](https://jwt.io/) `access_token`.
 
 Further scopes and requirements may be added at the discretion of the Agency, depending on their particular access control needs.
+
+General authorization details are specified in the [Authorization section](/general-information.md#authorization) in MDS General Information.
 
 [Top][toc]
 

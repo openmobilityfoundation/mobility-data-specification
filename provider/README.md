@@ -45,7 +45,7 @@ This specification uses data types including timestamps, UUIDs, and vehicle stat
 
 ### Authorization
 
-MDS `providers` **SHALL** provide authorization for API endpoints via a bearer token based auth system, and [JSON Web Token](/general-information.md#json-web-tokens) is the recommended format.
+MDS Provider endpoint producers **SHALL** provide authorization for API endpoints via a bearer token based auth system, and [JSON Web Token](/general-information.md#json-web-tokens) is the recommended format.
 
 General authorization details are specified in the [Authorization section](/general-information.md#authorization) in MDS General Information.
 
