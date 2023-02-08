@@ -37,9 +37,17 @@ This specification contains a data standard for *mobility as a service* provider
 
 ## General Information
 
-The following information applies to all `provider` API endpoints. Details on providing authorization to endpoints is specified in the [auth](auth.md) document.
+The following information applies to all `provider` API endpoints. 
 
 This specification uses data types including timestamps, UUIDs, and vehicle state definitions as described in the MDS [General Information][general-information] document.
+
+[Top][toc]
+
+### Authorization
+
+MDS `providers` **SHALL** provide authorization for API endpoints via a bearer token based auth system, and [JSON Web Token](/general-information.md#json-web-tokens) is the recommended format.
+
+General authorization details are specified in the [Authorization section](/general-information.md#authorization) in MDS General Information.
 
 [Top][toc]
 
