@@ -36,49 +36,49 @@ The Mobility Data Specification (**MDS**), a project of the [Open Mobility Found
 
 <a href="/provider/"><img src="https://i.imgur.com/yzXrKpo.png" width="80" align="left" alt="MDS Provider Icon" border="0"></a>
 
-The [`provider`][provider] API endpoints are intended to be implemented by mobility providers and consumed by regulatory agencies. When a municipality queries information from a mobility provider, the Provider API has a historical view of operations in a standard format. It was first released in June 2018. 
+The [`provider`][provider] API endpoints are intended to be implemented by mobility providers and consumed by regulatory agencies. Data is **pulled** from providers by agencies. When a municipality queries information from a mobility provider, the Provider API provides historical and recent views of operations. First released in June 2018.
 
 ---
 
 <a href="/agency/"><img src="https://i.imgur.com/HzMWtaI.png" width="80" align="left" alt="MDS Agency Icon" border="0"></a>
 
-The [`agency`][agency] API endpoints are intended to be implemented by regulatory agencies and consumed by mobility providers. Providers query the Agency API when events (such as a trip start or vehicle status change) occur in their systems. It was first released in April 2019. 
+The [`agency`][agency] API endpoints are intended to be implemented by regulatory agencies and consumed by mobility providers. Data is **pushed** to agencies by providers. Providers query the Agency API when events (such as a trip start or vehicle status change) occur in their systems. First released in April 2019.
 
 ---
 
 <a href="/policy/"><img src="https://i.imgur.com/66QXveN.png" width="80" align="left" alt="MDS Policy Icon" border="0"></a>
 
-The [`policy`][policy] API endpoints are intended to be implemented by regulatory agencies and consumed by mobility providers. Providers query the Policy API to get information about local rules that may affect the operation of their mobility service or which may be used to determine compliance. It was first released in October 2019.
+The [`policy`][policy] API endpoints are intended to be implemented by regulatory agencies and consumed by mobility providers. Providers query the Policy API to get information about local rules that may affect the operation of their mobility service or which may be used to determine compliance. First released in October 2019.
 
 ---
 
 <a href="/geography/"><img src="https://i.imgur.com/JJdKX8b.png" width="80" align="left" alt="MDS Geography Icon" border="0"></a>
 
-The [`geography`][geography] API endpoints are intended to be implemented by regulatory agencies and consumed by mobility providers. Providers query the Policy API to get information about geographical regions for regulatory and other purposes. It was first released in October 2019, originally included as part of the Policy specification. 
+The [`geography`][geography] API endpoints are intended to be implemented by regulatory agencies and consumed by mobility providers. Providers query the Geography API to get information about geographical regions for regulatory and other purposes. First released in October 2019, as part of the Policy specification.
 
 ---
 
 <a href="/jurisdiction/"><img src="https://i.imgur.com/tCRCfxT.png" width="80" align="left" alt="MDS Jurisdiction Icon" border="0"></a>
 
-The [`jurisdiction`][jurisdiction] API endpoints are intended to be implemented by regulatory agencies that have a need to coordinate with each other. The jurisdiction endpoints allow cities to communicate boundaries between one another and to mobility providers. It was first released in March 2021. 
+The [`jurisdiction`][jurisdiction] API endpoints are intended to be implemented by regulatory agencies that have a need to coordinate with each other. The Jurisdiction API endpoints allow cities to communicate boundaries between one another and to mobility providers. First released in March 2021.
 
 ---
 
 <a href="/metrics/"><img src="https://i.imgur.com/ouijHLj.png" width="80" align="left" alt="MDS Metrics Icon" border="0"></a>
 
-The [`metrics`](/metrics) API endpoints are intended to be implemented by regulatory agencies or their appointed third-party representatives to have a standard way to consistently describe available metrics, and create an extensible interface for querying MDS metrics. It was first released in March 2021. 
+The [`metrics`](/metrics) API endpoints are intended to be implemented by regulatory agencies or their appointed third-party representatives to have a standard way to consistently describe available metrics, and create an extensible interface for querying MDS metrics. First released in March 2021.
 
 ---
 
 ## Modularity
 
-MDS is designed to be a modular kit-of-parts. Regulatory agencies can use the components of the API that are appropriate for their needs. An agency may choose to use only `agency`, `provider`, or `policy`. Other APIs like `geography`, `jurisdiction`, and `metrics` can be used in coordination as described with these APIs or sometimes on their own. Or agencies may select specific elements (endpoints) from each API to help them implement their goals. Development of the APIs takes place under the guidance of the OMF's [MDS Working Group](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Working-Group).
+MDS is designed to be a modular kit-of-parts. Regulatory agencies can use the components of the API that are appropriate for their needs. An agency may choose to use only `agency`, `provider`, and/or `policy`. Other APIs like `geography`, `jurisdiction`, and/or `metrics` can be used in coordination as described with these APIs or sometimes on their own. Or agencies may select specific elements (endpoints) from each API to help them implement their goals. Development of the APIs takes place under the guidance of the OMF's [MDS Working Group](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Working-Group).
 
 Many parts of the MDS definitions and APIs align across each other. In these cases, consolidated information can be found on the [General Information](/general-information.md) page.
 
 You can read more in our **[Understanding the different MDS APIs](https://github.com/openmobilityfoundation/governance/blob/main/technical/Understanding-MDS-APIs.md)** guide. 
 
-![MDS APIs and Endpoints](https://i.imgur.com/cCjI0RS.png)
+![MDS APIs and Endpoints](https://i.imgur.com/i27Mmfw.png)
 
 ## GBFS Requirement
 
@@ -97,7 +97,7 @@ MDS supports multiple "modes", defined as a distinct regulatory framework for a 
 
 <p align="center">
 <a href="/modes/micromobility.md"><img src="https://i.imgur.com/tl99weM.png" alt="MDS Mode - Micromobility" style="float: left; border: 0; width: 150px;"></a> &nbsp; &nbsp; &nbsp;
-<a href="/modes/passenger-services.md"><img src="https://i.imgur.com/mzbughz.png" alt="MDS Mode - Passenger Services" style="float: left; border: 0; width: 150px;"></a> &nbsp; &nbsp; &nbsp; 
+<a href="/modes/passenger-services.md"><img src="https://i.imgur.com/3iAkYBC.png" alt="MDS Mode - Passenger Services" style="float: left; border: 0; width: 150px;"></a> &nbsp; &nbsp; &nbsp; 
 <a href="/modes/car-share.md"><img src="https://i.imgur.com/cCQTge5.png" alt="MDS Mode - Car Share" style="float: left; border: 0; width: 150px;"></a> &nbsp; &nbsp; &nbsp;
 <a href="/modes/delivery-robots.md"><img src="https://i.imgur.com/u2HgctV.png" alt="MDS Mode - Delivery Robots" style="float: left; border: 0; width: 150px;"></a>
 </p>
@@ -107,7 +107,7 @@ MDS supports multiple "modes", defined as a distinct regulatory framework for a 
 
 # Versions
 
-MDS has a **current release** (version 1.2.0), **previous releases** (both recommended and longer recommended for use), and **upcoming releases** in development. For a full list of releases, their status, recommended versions, and timelines, see the [Official MDS Releases](https://github.com/openmobilityfoundation/governance/wiki/Releases) page.
+MDS has a **current release** (version 2.0.0), **previous releases** (both recommended and longer recommended for use), and **upcoming releases** in development. For a full list of releases, their status, recommended versions, and timelines, see the [Official MDS Releases](https://github.com/openmobilityfoundation/governance/wiki/Releases) page.
 
 The OMF provides guidance on upgrading for cities, providers, and software companies, and sample permit language for cities. See our [MDS Version Guidance](https://github.com/openmobilityfoundation/governance/blob/main/technical/OMF-MDS-Version-Guidance.md) for best practices on how and when to upgrade MDS as new versions become available. Our complimentary [MDS Policy Language Guidance](https://github.com/openmobilityfoundation/governance/blob/main/technical/OMF-MDS-Policy-Language-Guidance.md) document is for cities writing MDS into their operating policy and includes sample policy language.
 
@@ -177,7 +177,9 @@ To add yourself to the provider list, please let us know [via our website](https
 
 An open source approach to data specifications benefits cities and companies by creating a space for collaborative development, reducing costs, and nurturing a healthy, competitive ecosystem for mobility services and software tools. The open model promotes a competitive ecosystem for software tools built by dozens of software companies providing their services to cities, agencies, and providers.
 
-- See our **[list of third party software companies using MDS](https://www.openmobilityfoundation.org/mds-users/#software-companies-using-mds)** and an article about the [benefits of an open approach](https://www.openmobilityfoundation.org/why-open-behind-omfs-unique-open-source-model/). 
+- See our **[list of third party software companies using MDS](https://www.openmobilityfoundation.org/mds-users/#software-companies-using-mds)** and an article about the [benefits of an open approach](https://www.openmobilityfoundation.org/why-open-behind-omfs-unique-open-source-model/).  For a table list with unique IDs, see the MDS [provider list](/providers.csv) which includes both service operators and data solution providers.
+
+To add yourself to the provider list (as a data solution providers), please let us know [via our website](https://www.openmobilityfoundation.org/get-in-touch/) or open an [Issue](https://github.com/openmobilityfoundation/mobility-data-specification/issues) or [Pull Request](https://github.com/openmobilityfoundation/mobility-data-specification/pulls). Find out how in our [Adding an Provider ID](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/Adding-an-MDS-Provider-ID) help document.
 
 Please [let us know](https://www.openmobilityfoundation.org/get-in-touch/) if you are using MDS in your company so we can add you to the list.
 

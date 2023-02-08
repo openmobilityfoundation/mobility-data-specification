@@ -92,8 +92,8 @@ The `trip_type` field **must** have one of the following enumerated values:
 
 The `trip_attributes` array **may** have the following key value pairs:
 
-- `hail_type` (enumerated, required): `phone_dispatch`, `phone`, `text`, `app`
-- `app_name` (text, optional): name of the app used to reserve the trip which could be provider's app or 3rd party app
+- `reservation_type` (enumerated, required): how was the vehicle reserved, one of `phone_dispatch`, `phone`, `text`, `app`
+- `app_name` (text, optional): name of the app used to reserve the vehicle which could be provider's app or 3rd party app
 - `permit_license_number` (string, optional) - The permit license number of the organization that dispatched the vehicle
 - `driver_id` (string, optional): Universal identifier of a specific driver, static across operators, like a driver's license number, for company employees in `reservation` or `empty` trip types, not `private` trips. Could also be used as a lookup in an agency's internal driver system.
 
@@ -138,6 +138,17 @@ The `vehicle_attributes` array **may** have the following key value pairs:
 - `toll_transponder` (boolean, optional) - toll transponder for national/regional toll system
 - `phone_charger` (boolean, optional) - a place to charge your phone
 - `sunshade` (boolean, optional) - sunshade available (i.e. for windshield)
+- `cargo_volume_capacity` (integer, optional) - Cargo volume available in the vehicle, expressed in liters. For cars, it corresponds to the space between the boot floor, including the storage under the hatch, to the rear shelf in the trunk.
+- `cargo_load_capacity` (integer, optional) - The capacity of the vehicle cargo space (excluding passengers), expressed in kilograms.
+- `door_count` (integer, optional) - number of doors this vehicle type has
+- `wheel_count` (integer, optional) - number of wheels this vehicle type has
+- `air_conditioning` (boolean, optional) - vehicle has air conditioning
+- `gear_switch` (enum, optional) - one of `automatic`, `manual`
+- `convertible` (boolean, optional) - vehicle has a retractable roof
+- `cruise_control` (boolean, optional) - vehicle has a cruise control system
+- `navigation` (boolean, optional) - vehicle has a built-in navigation system
+
+Note many of these attributes come from fields in [GBFS vehicle_types](https://github.com/MobilityData/gbfs/blob/v2.3/gbfs.md#vehicle_typesjson). 
 
 [Top][toc]
 
@@ -182,8 +193,9 @@ Valid car share vehicle event types are
 - `decommission`
 - `fueling_start`
 - `fueling_end`
+- `maintenance`
+- `maintenance_pick_up`
 - `maintenance_end`
-- `maintenance_start`
 - `passenger_cancellation`
 - `provider_cancellation`
 - `recommission`
@@ -224,12 +236,13 @@ This is the list of `vehicle_state` and `event_type` pairings that constitute th
 | `non_operational`            | `available`       | N/A          | `service_start`          | The vehicle has went into service (is available for-hire)                                                        |
 | `non_operational`            | `elsewhere`       | N/A          | `leave_jurisdiction`     | The vehicle has left jurisdictional boundaries while not operating commercially                                  |
 | `non_operational`            | `removed`         | N/A          | `decommissioned`         | The vehicle has been removed from the Provider's fleet                                                           |
-| `non_operational`            | `removed`         | N/A          | `maintenance_start`      | The vehicle has entered the depot for maintenance                                                                |
+| `non_operational`            | `removed`         | N/A          | `maintenance`      | The vehicle is undergoing maintenance on site                                                               |
+| `non_operational`            | `removed`         | N/A          | `maintenance_pick_up`      | The vehicle has entered the depot for maintenance                                                                |
 | `non_operational`            | `non_contactable`         | N/A          | `comms_lost`             | The vehicle has went out of comms while not operating commercially                                               |
 | `on_trip`                    | `elsewhere`       | N/A          | `leave_jurisdiction`     | The vehicle has left jurisdictional boundaries while on a trip                                                   |
 | `on_trip`                    | `stopped`         | `stopped`    | `trip_stop`              | The vehicle has stopped while on a trip                                                                          |
 | `on_trip`                    | `non_contactable`         | N/A          | `comms_lost`             | The vehicle has gone out of comms while on a trip                                                                |
-| `removed`                    | `non_operational` | N/A          | `maintenance_end`        | The vehicle has left the depot                                                                                   |
+| `removed`                    | `non_operational` | N/A          | `maintenance_end`        | The vehicle maintenance work has ended                                                                                   |
 | `removed`                    | `non_operational` | N/A          | `recommissioned`         | The vehicle has been re-added to the Provider's fleet after being previously `decommissioned`                    |
 | `removed`                    | `non_contactable`         | N/A          | `comms_lost`             | The vehicle has gone out of comms while removed                                                                  |
 | `reserved`                   | `available`       | N/A          | `driver_cancellation`    | The driver has canceled the reservation                                                                         |
