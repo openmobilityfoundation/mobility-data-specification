@@ -34,10 +34,9 @@ This specification uses data types including timestamps, UUIDs, and vehicle stat
 
 [Top][toc]
 
-
 ### Authorization
 
-When making requests, the Agency API expects `provider_id` to be part of the claims in a [JWT](https://jwt.io/) `access_token` in the `Authorization` header, in the form `Authorization: Bearer <access_token>`. The token issuance, expiration and revocation policies are at the discretion of the Agency. [JSON Web Token](/general-information.md#json-web-tokens) is the recommended format.
+MDS Agency endpoint producers **SHALL** provide authorization for API endpoints via a bearer token based auth system. When making requests, the endpoints expect `provider_id` to be part of the claims in a [JSON Web Token](https://jwt.io/) (JWT) `access_token` in the `Authorization` header, in the form `Authorization: Bearer <access_token>`. The token issuance, expiration and revocation policies are at the discretion of the agency. [JSON Web Token](/general-information.md#json-web-tokens) is the recommended format.
 
 General authorization details are specified in the [Authorization section](/general-information.md#authorization) in MDS General Information.
 

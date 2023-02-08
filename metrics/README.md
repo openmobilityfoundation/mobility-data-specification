@@ -62,7 +62,7 @@ Here are initial design use cases and scenarios for Metrics.
 
 ### For Agencies hosting the Metrics API
 
-When making requests, the Metrics API expects one of two scopes `metrics:read` or `metrics:read:provider` to be present as part of the `scope` claims in a [JSON Web Token](https://jwt.io/) (JWT) `access_token` in the `Authorization` header, in the form `Authorization: Bearer <access_token>`. The token issuance, expiration and revocation policies are at the discretion of the agency. See MDS [JSON Web Token](/general-information.md#json-web-tokens) guidance.
+MDS Metrics endpoint producers **SHALL** provide authorization for API endpoints via a bearer token based auth system. When making requests, the endpoints expect one of two scopes `metrics:read` or `metrics:read:provider` to be present as part of the `scope` claims in a [JSON Web Token](https://jwt.io/) (JWT) `access_token` in the `Authorization` header, in the form `Authorization: Bearer <access_token>`. The token issuance, expiration and revocation policies are at the discretion of the agency. [JSON Web Token](/general-information.md#json-web-tokens) is the recommended format.
 
 If a client has a `metrics:read` scope, they are permitted to read _all_ metrics available via the Metrics API.
 
