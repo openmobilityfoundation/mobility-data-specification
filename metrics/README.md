@@ -68,7 +68,7 @@ If a client has a `metrics:read` scope, they are permitted to read _all_ metrics
 
 If a client has a `metrics:read:provider` scope, they are only permitted to read metrics which pertain to a particular `provider_id` claim in the aforementioned [JWT](https://jwt.io/) `access_token`.
 
-Further scopes and requirements may be added at the discretion of the Agency, depending on their particular access control needs.
+Further scopes and requirements may be added at the discretion of the agency, depending on their particular access control needs.
 
 General authorization details are specified in the [Authorization section](/general-information.md#authorization) in MDS General Information.
 

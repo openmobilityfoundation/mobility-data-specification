@@ -47,7 +47,7 @@ Host: api.provider.co
 Authorization: Bearer <token>
 ```
 
-More info on how to document [Bearer Auth in swagger](https://swagger.io/docs/specification/authentication/bearer-authentication/)
+More info on how to document [Bearer Auth in swagger](https://swagger.io/docs/specification/authentication/bearer-authentication/).
 
 ### JSON Web Tokens
 
