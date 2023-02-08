@@ -4,7 +4,7 @@ This document contains specifications that are shared between the various MDS [A
 
 ## Table of Contents
 
-- [Authentication](#authentication)
+- [Authorization](#authorization)
 - [Beta Features](#beta-features)
 - [Costs and Currencies](#costs-and-currencies)
 - [Data Types](#data-types)
@@ -25,11 +25,49 @@ This document contains specifications that are shared between the various MDS [A
 - [Vehicle States](#vehicle-states)
 - [Versioning](#versioning)
 
-## Authentication
+## Authorization
+
+Outlines shared authorization details and methods across all MDS APIs.
+
+### Endpoint Requirements  
+
+All MDS Provider, Agency, and Metrics APIs require authentication, as outlined.
 
 If implementing MDS Policy, Geography, and/or Jurisdiction APIs and endpoints, an agency must make them unauthenticated and public. This allows transparency for the public to see how the city is regulating, holds the city accountable for their policy decisions, and reduces the technical burden on providers to use these endpoints. A side benefit is that this allows third parties to ingest this information into their applications and services for public benefit.
 
-All other MDS APIs require authentication, as outlined.
+As of MDS 0.3.0, `gbfs.json` is required. The required GBFS endpoints should be made available publicly. See Provider [#realtime-data](https://github.com/openmobilityfoundation/mobility-data-specification/tree/main/provider#realtime-data) for more information about how to implement GBFS for dockless systems. 
+
+### Header
+
+The `Authorization` header is sent as part of an HTTP request. Example:
+
+```
+GET /trips HTTP/1.1
+Host: api.provider.co
+Authorization: Bearer <token>
+```
+
+More info on how to document [Bearer Auth in swagger](https://swagger.io/docs/specification/authentication/bearer-authentication/).
+
+### JSON Web Tokens
+
+JSON Web Token ([JWT](https://jwt.io/introduction/)) is **RECOMMENDED** as the token format.
+
+JWTs provide a safe, secure way to verify the identity of an agency and provide access to MDS resources without providing access to other, potentially sensitive data.
+
+> JSON Web Token (JWT) is an open standard ([RFC 7519](https://tools.ietf.org/html/rfc7519)) that defines a compact and self-contained way for securely transmitting information between parties as a JSON object. This information can be verified and trusted because it is digitally signed. JWTs can be signed using a secret (with the HMAC algorithm) or a public/private key pair using RSA or ECDSA.
+
+MDS API producers **MAY** include any metadata in the JWT they wish that helps to route, log, permission, or debug agency requests, leaving their internal implementation flexible.
+
+JWT provides a helpful [debugger](https://jwt.io/#debugger) for testing your token and verifying security.
+
+### OAuth 2.0
+
+OAuth 2.0's `client_credentials` grant type (outlined in [RFC6749](https://tools.ietf.org/html/rfc6749#section-4.4)) is **RECOMMENDED** as the authentication and authorization scheme.
+
+OAuth 2.0 is an industry standard authorization framework with a variety of existing tooling. The `client_credentials` grant type facilitates generation of tokens that can be used for access by agencies and distributed to data partners.
+
+If an MDS endpoint producer implements this auth scheme, it **MAY** choose to specify token scopes that define access parameters like allowable time ranges. These guidelines **SHOULD** be encoded into the returned token in a parsable way.
 
 [Top][toc]
 

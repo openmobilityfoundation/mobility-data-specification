@@ -10,10 +10,10 @@ The Metrics API endpoints are intended to be implemented by regulatory agencies,
 
 - [General Information](#general-information)
 - [Implementation](#implementation)
+- [Authorization](#authorization)
 - [Data Requirements](#data-requirements)
 - [Beta Feature](#beta-feature)
 - [Date and Time Format](#date-and-time-format)
-- [Authorization](#authorization)
 - [Data Redaction](#data-redaction)
 - [Metrics Discovery API](#metrics-discovery-api)
 - [Metrics Query API](#metrics-query-api)
@@ -58,6 +58,22 @@ Here are initial design use cases and scenarios for Metrics.
 
 [Top][toc]
 
+## Authorization
+
+### For Agencies hosting the Metrics API
+
+MDS Metrics endpoint producers **SHALL** provide authorization for API endpoints via a bearer token based auth system. When making requests, the endpoints expect one of two scopes `metrics:read` or `metrics:read:provider` to be present as part of the `scope` claims in a [JSON Web Token](https://jwt.io/) (JWT) `access_token` in the `Authorization` header, in the form `Authorization: Bearer <access_token>`. The token issuance, expiration and revocation policies are at the discretion of the agency. [JSON Web Token](/general-information.md#json-web-tokens) is the recommended format.
+
+If a client has a `metrics:read` scope, they are permitted to read _all_ metrics available via the Metrics API.
+
+If a client has a `metrics:read:provider` scope, they are only permitted to read metrics which pertain to a particular `provider_id` claim in the aforementioned [JWT](https://jwt.io/) `access_token`.
+
+Further scopes and requirements may be added at the discretion of the agency, depending on their particular access control needs.
+
+General authorization details are specified in the [Authorization section](/general-information.md#authorization) in MDS General Information.
+
+[Top][toc]
+
 ## Data Requirements
 
 The Metrics API does not replace required MDS Provider and Agency endpoints (e.g., [trips](/provider#trips), [events](/provider#events), [vehicles](/provider#vehicles), etc.) in any way. City regulators use disaggregated data access for policy, data validation, auditing, and operational needs, and the Metrics API is not designed to serve these purposes.
@@ -79,20 +95,6 @@ The Metrics API and all of its endpoints are marked as a [beta feature](https://
 All dates and times (datetime) are [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) formatted strings (YYYY-MM-DDTHHMM), with minute granularity supported and time zone (default UTC) or included offset. Dates and times may also be specified using a numeric *Unix epoch/timestamp* 
 
 All interval durations (duration) are [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#Durations) duration format strings (e.g. PT15M, PT1H, P1D).
-
-[Top][toc]
-
-## Authorization
-
-### For Agencies hosting the Metrics API
-
-When making requests, the Metrics API expects one of two scopes `metrics:read` or `metrics:read:provider` to be present as part of the `scope` claims in a [JWT](https://jwt.io/) `access_token` in the `Authorization` header, in the form `Authorization: Bearer <access_token>`. The token issuance, expiration and revocation policies are at the discretion of the Agency.
-
-If a client has a `metrics:read` scope, they are permitted to read _all_ metrics available via the Metrics API.
-
-If a client has a `metrics:read:provider` scope, they are only permitted to read metrics which pertain to a particular `provider_id` claim in the aforementioned [JWT](https://jwt.io/) `access_token`.
-
-Further scopes and requirements may be added at the discretion of the Agency, depending on their particular access control needs.
 
 [Top][toc]
 
