@@ -27,7 +27,7 @@ This document contains specifications that are shared between the various MDS [A
 
 ## Authorization
 
-TBD
+Outlines shared authorization details and methods across all MDS APIs.
 
 ### Endpoint Requirements  
 
@@ -35,9 +35,7 @@ All MDS Provider, Agency, and Metrics APIs require authentication, as outlined.
 
 If implementing MDS Policy, Geography, and/or Jurisdiction APIs and endpoints, an agency must make them unauthenticated and public. This allows transparency for the public to see how the city is regulating, holds the city accountable for their policy decisions, and reduces the technical burden on providers to use these endpoints. A side benefit is that this allows third parties to ingest this information into their applications and services for public benefit.
 
-All Provider endpoints must be authenticated, to protect potentially sensitive information.
-
-As of MDS 0.3.0, `gbfs.json` is required. The required GBFS endpoints should be made available publicly. See [#realtime-data](https://github.com/openmobilityfoundation/mobility-data-specification/tree/main/provider#realtime-data) for more information about how to implement GBFS for dockless systems. 
+As of MDS 0.3.0, `gbfs.json` is required. The required GBFS endpoints should be made available publicly. See Provider [#realtime-data](https://github.com/openmobilityfoundation/mobility-data-specification/tree/main/provider#realtime-data) for more information about how to implement GBFS for dockless systems. 
 
 ### Header
 
@@ -69,7 +67,7 @@ OAuth 2.0's `client_credentials` grant type (outlined in [RFC6749](https://tools
 
 OAuth 2.0 is an industry standard authorization framework with a variety of existing tooling. The `client_credentials` grant type facilitates generation of tokens that can be used for access by agencies and distributed to data partners.
 
-If an MDS provider implements this auth scheme, it **MAY** choose to specify token scopes that define access parameters like allowable time ranges. These guidelines **SHOULD** be encoded into the returned token in a parseable way.
+If an MDS endpoint producer implements this auth scheme, it **MAY** choose to specify token scopes that define access parameters like allowable time ranges. These guidelines **SHOULD** be encoded into the returned token in a parsable way.
 
 [Top][toc]
 
