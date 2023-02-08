@@ -9,10 +9,11 @@ This specification describes the digital relationship between _mobility as a ser
 ## Table of Contents
 
 - [General information](#general-information)
+  - [Background](#background)
   - [Update Frequency](#update-frequency)
+  - [Updating or Ending Policies](#updating-or-ending-policies)
   - [Versioning](#versioning)
-- [Background](#background)
-- [Distribution](#distribution)
+  - [Distribution](#distribution)
 - [REST Endpoints](#rest-endpoints)
   - [Responses and Error Messages](#responses-and-error-messages)
   - [Authorization](#authorization)
@@ -53,21 +54,7 @@ The following information applies to all `policy` API endpoints.
 
 [Top][toc]
 
-### Update Frequency
-
-The publishing agency should establish beforehand and communicate to providers how frequently the Policy endpoints are expected to change, how often they should be polled to get the latest information, and expectations around emergency updates.
-
-[Top][toc]
-
-### Versioning
-
-`policy` APIs must handle requests for specific versions of the specification from clients.
-
-Versioning must be implemented as specified in the [Versioning section][versioning].
-
-[Top][toc]
-
-## Background
+### Background
 
 The goal of the Policy API specification is to enable agencies to create, revise, and publish machine-readable policies, as sets of rules for individual and collective device behavior exhibited by both _mobility as a service_ providers and riders / users. [Examples](./examples/README.md) of policies include:
 
@@ -84,13 +71,33 @@ The machine-readable format allows Providers to obtain policies and compute comp
 
 [Top][toc]
 
-## Distribution
+### Update Frequency
+
+The publishing agency should establish beforehand and communicate to providers how frequently the Policy endpoints are expected to change, how often they should be polled to get the latest information, and expectations around emergency updates.
+
+[Top][toc]
+
+### Updating or Ending Policies
+
+Published policies, like geographies, should be treated as immutable data. Obsoleting or otherwise changing a policy is accomplished by publishing a new policy with a field named `prev_policies`, a list of UUID references to the policy or policies superseded by the new policy.
+
+To update a policy, create a new policy with the new rules rules, and list the now updated policy id in `prev_policies`.
+
+To revoke or end a policy, create a new policy with empty rules, and list the ended policy id in `prev_policies`.
+
+[Top][toc]
+
+### Versioning
+
+`policy` APIs must handle requests for specific versions of the specification from clients.
+
+[Top][toc]
+
+### Distribution
 
 Policies shall be published by regulatory bodies or their authorized delegates as JSON objects. These JSON objects shall be served by either [flat files](#flat-files) or via [REST API endpoints](#rest-endpoints). In either case, policy data shall follow the [schema](#schema) outlined below.
 
-Policies typically refer to one or more associated geographies. Geographic information is obtained from the MDS [Geography](/geography#general-information) API.  Each policy and geography shall have a unique ID (UUID).
-
-Published policies, like geographies, should be treated as immutable data. Obsoleting or otherwise changing a policy is accomplished by publishing a new policy with a field named `prev_policies`, a list of UUID references to the policy or policies superseded by the new policy.
+Policies typically refer to one or more associated geographies. Geographic information is obtained from the MDS [Geography](/geography) API.  Each policy and geography shall have a unique ID (UUID).
 
 Geographical data shall be represented as GeoJSON `Feature` objects. No part of the geographical data should be outside the [municipality boundary][muni-boundary].
 
