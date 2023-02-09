@@ -222,9 +222,9 @@ Vehicles can exit the `missing` state to any other state with the following even
 
 ### State Machine Diagram
 
-This *State Machine Diagram* shows how `vehicle_state` and `event_type` relate to each other and how vehicles can transition between states. See [Google Slides](https://docs.google.com/presentation/d/1fHdq1efbN5GSFDLF4en-oA_BYPXQKbbIbHff6iROJKA/edit#slide=id.g924900addd_1_0) for the source file.
+This *State Machine Diagram* shows how `vehicle_state` and `event_type` relate to each other and how vehicles can transition between states. See [Google Slides](https://docs.google.com/presentation/d/1fHdq1efbN5GSFDLF4en-oA_BYPXQKbbIbHff6iROJKA/edit#slide=id.g206f7c6e12e_0_0) for the source file.
 
-![micromobility-state-machine-diagram-2 0 0](https://user-images.githubusercontent.com/58531352/208538219-78d71c0e-fccc-4edd-b624-95e0b4364ebf.svg)
+![micromobility-state-machine-diagram](/modes/micromobility-state-machine-diagram.svg)
 
 [Top][toc]
 
