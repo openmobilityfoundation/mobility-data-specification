@@ -82,7 +82,9 @@ You can read more in our **[Understanding the different MDS APIs](https://github
 
 ## GBFS Requirement
 
-All MDS compatible Provider and/or Agency feeds must also expose a public [GBFS](https://github.com/NABSA/gbfs) feed for the micromobility and car share [modes](/modes) (passenger services and delivery robots may be optionally supported at the discretion of the agency running the program). Compatibility with [GBFS 2.2](https://github.com/NABSA/gbfs/blob/v2.2/gbfs.md) or greater is advised, or the version recommended per MobilityData's [supported releases](https://github.com/MobilityData/gbfs#past-version-releases) guidance. See our [MDS Vehicles Guide](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Vehicles) for how MDS Provider/Agency `/vehicles` can be used by regulators instead of the public GBFS `/free_bike_status`. Additional information on MDS and GBFS can be found in this [guidance document](https://github.com/openmobilityfoundation/governance/blob/main/technical/GBFS_and_MDS.md).
+All MDS compatible Provider and/or Agency feeds must also expose a public [GBFS](https://github.com/NABSA/gbfs) feed for the micromobility and car share [modes](/modes) (passenger services and delivery robots may be optionally supported at the discretion of the agency running the program). Compatibility with [GBFS 2.2](https://github.com/NABSA/gbfs/blob/v2.2/gbfs.md) or greater is advised, or the version recommended per MobilityData's [supported releases](https://github.com/MobilityData/gbfs#past-version-releases) guidance. Read MobilityData's RFP recommendations and required files list in their [GBFS and Shared Mobility Data Policy guide](https://mobilitydata.org/gbfs-and-shared-mobility-data-policy/).
+
+See our [MDS Vehicles Guide](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Vehicles) for how MDS Provider/Agency `/vehicles` can be used by regulators instead of the public GBFS `/free_bike_status`. Additional information on MDS and GBFS can be found in this [guidance document](https://github.com/openmobilityfoundation/governance/blob/main/technical/GBFS_and_MDS.md).
 
 [Top][toc]
 
