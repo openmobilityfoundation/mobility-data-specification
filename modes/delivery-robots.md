@@ -219,59 +219,59 @@ See vehicle [Event Types][vehicle-events] for descriptions.
 
 This is the list of `vehicle_state` and `event_type` pairings that constitute the valid transitions of the vehicle state machine.
 
-| **Previous** `vehicle_state` | `vehicle_state`   | `trip_state` | `event_type`             | Description                                                                                                      |
-|------------------------------|-------------------|--------------|--------------------------|------------------------------------------------------------------------------------------------------------------|
-| `available`                  | `elsewhere`       | N/A          | `leave_jurisdiction`     | The vehicle has left jurisdictional boundaries while available for-hire                                          |
-| `available`                  | `non_operational` | N/A          | `service_end`            | The vehicle has gone out of service (is unavailable for-hire)                                                    |
-| `available`                  | `reserved`        | `reserved`   | `reserve`                | The vehicle was reserved by a customer                                                                       |
-| `available`                  | `non_contactable`         | N/A          | `comms_lost`             | The vehicle has gone out of comms while available for-use                                                        |
-| `elsewhere`                  | `available`       | N/A          | `enter_jurisdiction`     | The vehicle has entered jurisdictional boundaries while available for-hire                                       |
-| `elsewhere`                  | `non_operational` | N/A          | `enter_jurisdiction`     | The vehicle has entered jurisdictional boundaries while not operating commercially                               |
-| `elsewhere`                  | `on_trip`         | `on_trip`    | `enter_jurisdiction`     | The vehicle has entered jurisdictional boundaries while on a trip                                                |
-| `elsewhere`                  | `reserved`        | N/A          | `enter_jurisdiction`     | The vehicle has entered jurisdictional boundaries while reserved by a customer                                   |
-| `elsewhere`                  | `non_contactable`         | N/A          | `comms_lost`             | The vehicle has gone out of comms while outside of jurisdictional boundaries                                     |
-| `non_operational`            | `available`       | N/A          | `service_start`          | The vehicle has gone into service (is available for-hire)                                                        |
-| `non_operational`            | `elsewhere`       | N/A          | `leave_jurisdiction`     | The vehicle has left jurisdictional boundaries while not operating commercially                                  |
-| `non_operational`            | `removed`         | N/A          | `decommissioned`         | The vehicle has been removed from the Provider's fleet                                                           |
-| `non_operational`            | `removed`         | N/A          | `maintenance_start`      | The vehicle has entered the depot for maintenance                                                                |
-| `non_operational`            | `non_contactable`         | N/A          | `comms_lost`             | The vehicle has gone out of comms while not operating commercially                                               |
-| `on_trip`                    | `elsewhere`       | N/A          | `leave_jurisdiction`     | The vehicle has left jurisdictional boundaries while on a trip                                                   |
-| `on_trip`                    | `stopped`         | `stopped`    | `trip_pause`              | The vehicle has paused while on a trip                                                                          |
-| `on_trip`                    | `stopped`         | `stopped`    | `order_pick_up`         | The vehicle has come to pick up the order at the restaurant                                                               |
-| `on_trip`                    | `non_contactable`         | N/A          | `comms_lost`             | The vehicle has gone out of comms while on a trip to pick up the order                                          |
-| `on_trip`                    |`available`          | N/A   | `order_drop_off`         | The vehicle is at the customer's place and is waiting for them                                                       |
-| `on_trip`                    |`stopped`          | N/A   | `order_drop_off`         | The vehicle is at the customer's place and is waiting for them                                                       |
-| `removed`                    | `non_operational` | N/A          | `maintenance_end`        | The vehicle has left the depot                                                                                   |
-| `removed`                    | `non_operational` | N/A          | `recommissioned`         | The vehicle has been re-added to the Provider's fleet after being previously `decommissioned`                    |
-| `removed`                    | `non_contactable`         | N/A          | `comms_lost`             | The vehicle has gone out of comms while removed                                                                  |
-| `reserved`                   | `available`       | N/A          | `driver_cancellation`    | The driver has canceled the reservation                                                                         |
-| `reserved`                   | `available`       | N/A          | `customer_cancellation` | The customer has canceled the reservation                                                                      |
-| `reserved`                   | `available`       | N/A          | `provider_cancellation` | The provider has canceled the reservation                                                                      |
-| `reserved`                   | `elsewhere`       | N/A          | `leave_jurisdiction`     | The vehicle has left the jurisdiction while in a reservation                                                     |
-| `reserved`                   | `stopped`         | `stopped`    | `reserve_stop`           | The vehicle has stopped to pickup reservation                                                                 |
-| `reserved`                   | `non_contactable`         | N/A          | `comms_lost`             | The vehicle has gone of comms while being reserved by a customer                                                |
-| `stopped`                    | `available`       | N/A          | `driver_cancellation`    | The driver has canceled the trip while waiting |
-| `stopped`                    | `available`       | N/A          | `customer_cancellation` | The customer has canceled the trip while the vehicle is waiting |
-| `stopped`                    | `available`       | N/A          | `provider_cancellation` | The provider has canceled the trip while the vehicle is waiting |
-| `stopped`                    | `available`       | N/A          | `trip_end`               | The trip has been successfully completed                                                                         |
-| `stopped`                    | `on_trip`         | `on_trip`    | `trip_resume`            | Resume a trip that was previously paused (e.g. picking up an order)                 |
-| `stopped`                    | `on_trip`         | `on_trip`    | `trip_start`             | Start a trip                                                                                                     |
-| `stopped`                    | `non_contactable`         | N/A          | `comms_lost`             | The vehicle has gone out of comms while stopped                                                                  |
-| `non_contactable`                    | `available`       | N/A          | `comms_restored`         | The vehicle has come back into comms while available for-hire                                                    |
-| `non_contactable`                    | `elsewhere`       | N/A          | `comms_restored`         | The vehicle has come back into comms while outside of jurisdictional boundaries                                  |
-| `non_contactable`                    | `non_operational` | N/A          | `comms_restored`         | The vehicle has come back into comms while not operating commercially                                            |
-| `non_contactable`                    | `on_trip`         | `on_trip`    | `comms_restored`         | The vehicle has come back into comms while on a trip                                                             |
-| `non_contactable`                    | `removed`         | N/A          | `comms_restored`         | The vehicle has come back into comms while removed                                                               |
-| `non_contactable`                    | `reserved`        | `reserved`   | `comms_restored`         | The vehicle has come back into comms while reserved by a customer                                            |
-| `non_contactable`                    | `stopped`         | `stopped`    | `comms_restored`         | The vehicle has come back into comms while stopped                                                               |
-| `non_contactable`                    | `missing`         | N/A      | `not_located`         | The vehicle has gone missing after a period of lost comms                                                               |
-| `missing`                    | `available`       | N/A          | `located`         | The vehicle has been located while available for-hire                                                    |
-| `missing`                    | `elsewhere`       | N/A          | `located`         | The vehicle has been located while outside of jurisdictional boundaries                                  |
-| `missing`                    | `non_operational` | N/A          | `located`         | The vehicle has been located while not operating commercially                                            |
-| `missing`                    | `on_trip`         | `on_trip`    | `located`         | The vehicle has been located while on a trip                                                             |
-| `missing`                    | `removed`         | N/A          | `located`         | The vehicle has been located while removed                                                               |
-| `missing`                    | `reserved`        | `reserved`   | `located`         | The vehicle has been located while reserved by a customer                                            |
-| `missing`                    | `stopped`         | `stopped`    | `located`         | The vehicle has been located while stopped                                                               |
+| **From** `vehicle_state` | **To** `vehicle_state` | `trip_state` | `event_type`            | Description                                                                                   |
+| ------------------------ | ---------------------- | ------------ | ----------------------- | --------------------------------------------------------------------------------------------- |
+| `available`              | `elsewhere`            | N/A          | `leave_jurisdiction`    | The vehicle has left jurisdictional boundaries while available for-hire                       |
+| `available`              | `non_contactable`      | N/A          | `comms_lost`            | The vehicle has gone out of comms while available for-use                                     |
+| `available`              | `non_operational`      | N/A          | `service_end`           | The vehicle has gone out of service (is unavailable for-hire)                                 |
+| `available`              | `reserved`             | `reserved`   | `reserve`               | The vehicle was reserved by a customer                                                        |
+| `elsewhere`              | `available`            | N/A          | `enter_jurisdiction`    | The vehicle has entered jurisdictional boundaries while available for-hire                    |
+| `elsewhere`              | `non_contactable`      | N/A          | `comms_lost`            | The vehicle has gone out of comms while outside of jurisdictional boundaries                  |
+| `elsewhere`              | `non_operational`      | N/A          | `enter_jurisdiction`    | The vehicle has entered jurisdictional boundaries while not operating commercially            |
+| `elsewhere`              | `on_trip`              | `on_trip`    | `enter_jurisdiction`    | The vehicle has entered jurisdictional boundaries while on a trip                             |
+| `elsewhere`              | `reserved`             | N/A          | `enter_jurisdiction`    | The vehicle has entered jurisdictional boundaries while reserved by a customer                |
+| `missing`                | `available`            | N/A          | `located`               | The vehicle has been located while available for-hire                                         |
+| `missing`                | `elsewhere`            | N/A          | `located`               | The vehicle has been located while outside of jurisdictional boundaries                       |
+| `missing`                | `non_operational`      | N/A          | `located`               | The vehicle has been located while not operating commercially                                 |
+| `missing`                | `on_trip`              | `on_trip`    | `located`               | The vehicle has been located while on a trip                                                  |
+| `missing`                | `removed`              | N/A          | `located`               | The vehicle has been located while removed                                                    |
+| `missing`                | `reserved`             | `reserved`   | `located`               | The vehicle has been located while reserved by a customer                                     |
+| `missing`                | `stopped`              | `stopped`    | `located`               | The vehicle has been located while stopped                                                    |
+| `non_contactable`        | `available`            | N/A          | `comms_restored`        | The vehicle has come back into comms while available for-hire                                 |
+| `non_contactable`        | `elsewhere`            | N/A          | `comms_restored`        | The vehicle has come back into comms while outside of jurisdictional boundaries               |
+| `non_contactable`        | `missing`              | N/A          | `not_located`           | The vehicle has gone missing after a period of lost comms                                     |
+| `non_contactable`        | `non_operational`      | N/A          | `comms_restored`        | The vehicle has come back into comms while not operating commercially                         |
+| `non_contactable`        | `on_trip`              | `on_trip`    | `comms_restored`        | The vehicle has come back into comms while on a trip                                          |
+| `non_contactable`        | `removed`              | N/A          | `comms_restored`        | The vehicle has come back into comms while removed                                            |
+| `non_contactable`        | `reserved`             | `reserved`   | `comms_restored`        | The vehicle has come back into comms while reserved by a customer                             |
+| `non_contactable`        | `stopped`              | `stopped`    | `comms_restored`        | The vehicle has come back into comms while stopped                                            |
+| `non_operational`        | `available`            | N/A          | `service_start`         | The vehicle has gone into service (is available for-hire)                                     |
+| `non_operational`        | `elsewhere`            | N/A          | `leave_jurisdiction`    | The vehicle has left jurisdictional boundaries while not operating commercially               |
+| `non_operational`        | `non_contactable`      | N/A          | `comms_lost`            | The vehicle has gone out of comms while not operating commercially                            |
+| `non_operational`        | `removed`              | N/A          | `decommissioned`        | The vehicle has been removed from the Provider's fleet                                        |
+| `non_operational`        | `removed`              | N/A          | `maintenance_start`     | The vehicle has entered the depot for maintenance                                             |
+| `on_trip`                | `available`            | N/A          | `order_drop_off`        | The vehicle is at the customer's place and is waiting for them                                |
+| `on_trip`                | `elsewhere`            | N/A          | `leave_jurisdiction`    | The vehicle has left jurisdictional boundaries while on a trip                                |
+| `on_trip`                | `non_contactable`      | N/A          | `comms_lost`            | The vehicle has gone out of comms while on a trip to pick up the order                        |
+| `on_trip`                | `stopped`              | N/A          | `order_drop_off`        | The vehicle is at the customer's place and is waiting for them                                |
+| `on_trip`                | `stopped`              | `stopped`    | `order_pick_up`         | The vehicle has come to pick up the order at the restaurant                                   |
+| `on_trip`                | `stopped`              | `stopped`    | `trip_pause`            | The vehicle has paused while on a trip                                                        |
+| `removed`                | `non_contactable`      | N/A          | `comms_lost`            | The vehicle has gone out of comms while removed                                               |
+| `removed`                | `non_operational`      | N/A          | `maintenance_end`       | The vehicle has left the depot                                                                |
+| `removed`                | `non_operational`      | N/A          | `recommissioned`        | The vehicle has been re-added to the Provider's fleet after being previously `decommissioned` |
+| `reserved`               | `available`            | N/A          | `customer_cancellation` | The customer has canceled the reservation                                                     |
+| `reserved`               | `available`            | N/A          | `driver_cancellation`   | The driver has canceled the reservation                                                       |
+| `reserved`               | `available`            | N/A          | `provider_cancellation` | The provider has canceled the reservation                                                     |
+| `reserved`               | `elsewhere`            | N/A          | `leave_jurisdiction`    | The vehicle has left the jurisdiction while in a reservation                                  |
+| `reserved`               | `non_contactable`      | N/A          | `comms_lost`            | The vehicle has gone of comms while being reserved by a customer                              |
+| `reserved`               | `stopped`              | `stopped`    | `reserve_stop`          | The vehicle has stopped to pickup reservation                                                 |
+| `stopped`                | `available`            | N/A          | `customer_cancellation` | The customer has canceled the trip while the vehicle is waiting                               |
+| `stopped`                | `available`            | N/A          | `driver_cancellation`   | The driver has canceled the trip while waiting                                                |
+| `stopped`                | `available`            | N/A          | `provider_cancellation` | The provider has canceled the trip while the vehicle is waiting                               |
+| `stopped`                | `available`            | N/A          | `trip_end`              | The trip has been successfully completed                                                      |
+| `stopped`                | `non_contactable`      | N/A          | `comms_lost`            | The vehicle has gone out of comms while stopped                                               |
+| `stopped`                | `on_trip`              | `on_trip`    | `trip_resume`           | Resume a trip that was previously paused (e.g. picking up an order)                           |
+| `stopped`                | `on_trip`              | `on_trip`    | `trip_start`            | Start a trip                                                                                  |
 
 [Top][toc]
 
