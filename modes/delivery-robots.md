@@ -215,7 +215,7 @@ See vehicle [Event Types][vehicle-events] for descriptions.
 
 [Top][toc]
 
-## Vehicle States Events
+### Vehicle States Events
 
 This is the list of `vehicle_state` and `event_type` pairings that constitute the valid transitions of the vehicle state machine.
 
@@ -277,7 +277,9 @@ This is the list of `vehicle_state` and `event_type` pairings that constitute th
 
 ### State Machine Diagram
 
-The *Delivery Diagram* shows how the `vehicle_state` and `event_type` relate to each other and how delivery vehicles can transition between states. 
+This *State Machine Diagram* shows how `vehicle_state` and `event_type` relate to each other and how vehicles can transition between states. See [Google Slides](https://docs.google.com/presentation/d/1fHdq1efbN5GSFDLF4en-oA_BYPXQKbbIbHff6iROJKA/edit#slide=id.g2072486e468_1_402) for the source file.
+
+![Delivery Robots State Machine Diagram](delivery-robots-state-machine-diagram.svg)
 
 TBD
 

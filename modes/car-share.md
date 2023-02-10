@@ -276,7 +276,7 @@ This is the list of `vehicle_state` and `event_type` pairings that constitute th
 
 ### State Machine Diagram
 
-The *Car Share State Machine Diagram* shows how the `vehicle_state` and `event_type` relate to each other and how taxi vehicles can transition between states. See this [text-editable EPS](TBD) for the source file.
+This *State Machine Diagram* shows how `vehicle_state` and `event_type` relate to each other and how vehicles can transition between states. See [Google Slides](https://docs.google.com/presentation/d/1fHdq1efbN5GSFDLF4en-oA_BYPXQKbbIbHff6iROJKA/edit#slide=id.g2072486e468_1_300) for the source file.
 
 ![Car Share State Machine Diagram](car-share-state-machine-diagram.svg)
 
