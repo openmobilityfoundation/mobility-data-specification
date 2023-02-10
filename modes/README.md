@@ -7,9 +7,10 @@ All MDS APIs should be mode-agnostic.
 ## Table of Contents
 
 - [Modes](#modes)
+  - [Provider ID](#provider-id)
 - [List of Supported Modes](#list-of-supported-modes)
 - [Mode Attributes](#mode-attributes)
-- [Unique Mode Properties](#unique-mode-properties)
+- [Mode Properties](#mode-properties)
 
 ## Modes
 
@@ -22,6 +23,12 @@ There will be some gray areas and some differences from one jurisdiction to anot
 We err on the side of treating highly similar services as one mode, but consult with our members and community to inform each decision about how to integrate a new service and whether it needs to be designated as its own mode. This is a policy implementation question as much as it is a technical one.
 
 Each mode defined in MDS shall include key descriptive information, such as journey type (e.g. point-to-point, multi-segment, multi-segment overlapping), primary purpose (goods, single passenger, multi-passenger, etc.), and a description of the service being offered that aligns with terminology commonly understood by the public (e.g. “e-scooter” or “ridehailing”). 
+
+[Top][toc]
+
+### Provider ID
+
+MDS is intended to be used for multiple transportation modes, including its original micromobility (e-scooters, bikes, etc.) mode, as well as additional modes such as taxis, car share, and delivery bots. A given `provider_id` shall be associated with a single mobility [mode], so that the mode does not have to be specified in each data structure and API call. A provider implementing more than one mode shall [register](/README.md#providers-using-mds) a unique `provider_id` for each mode.
 
 [Top][toc]
 
@@ -82,9 +89,9 @@ The `accessibility_options` array returns a list of JSON-formatted key/value pai
 
 [Top][toc]
 
-## Unique Mode Properties
+## Mode Properties
 
-While each mode is unique in its operational and business models, there are several areas where there are significant differences from one mode to the next. Each of these areas is defined in more detail within the mode, and each pull from a base of options defined in a global location.
+While each mode is unique in its operational and business models, there are several areas where there are significant differences from one mode to the next. Each of these areas is defined in more detail within the mode, and each pull from a base of options defined in a central location.
 
 ### Vehicle States
 
