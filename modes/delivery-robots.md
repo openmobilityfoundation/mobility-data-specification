@@ -281,8 +281,6 @@ This *State Machine Diagram* shows how `vehicle_state` and `event_type` relate t
 
 ![Delivery Robots State Machine Diagram](delivery-robots-state-machine-diagram.svg)
 
-TBD
-
 #### Delivery Robots State Notes
 
 When there is only one trip ongoing, `trip_state == vehicle_state`
