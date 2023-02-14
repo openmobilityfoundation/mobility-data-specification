@@ -129,6 +129,7 @@ Valid micromobility vehicle event types are
 - `agency_pick_up`
 - `battery_charged`
 - `battery_low`
+- `changed_geographies`
 - `comms_lost`
 - `comms_restored`
 - `compliance_pick_up`

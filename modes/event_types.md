@@ -10,32 +10,34 @@ As with all MDS definitions, they should be described in a way that maximizes th
 | `agency_pick_up`      | Pick up by the agency, e.g. impound |
 | `battery_charged`     | Battery charged (entering service) |
 | `battery_low`         | Battery low (exiting service) |
+| `changed_geographies` | Geography change per [Geography Driven Events](/general-information.md#geography-driven-events) |
 | `charging_start`      | Battery start charging |
 | `charging_end`        | Battery end charging |
 | `comms_lost`          | Communications lost |
 | `comms_restored`      | Communications restored |
 | `compliance_pick_up`  | Pick up for compliance (rule violation) |
-| `order_drop_off`      | Pick up of the order at the restaurant or shop or warehouse |
-| `order_pick_up`       | Delivery of the order at the customer's location |
+| `customer_cancellation` | Customer cancelled a trip |
 | `decommissioned`      | Decommissioned |
 | `driver_cancellation` | Driver cancelled a trip |
 | `fueling_start`       | Fueling starts |
 | `fueling_end`         | Fueling ends |
-| `not_located`         | Location unknown |
 | `located`             | Location found (opposite of Missing) |
 | `maintenance`         | Start general maintenance in right of way |
 | `maintenance_pick_up` | Start pick up for maintenance outside of right of way |
 | `maintenance_end`     | End of maintenance |
+| `not_located`         | Location unknown |
 | `off_hours`           | Off hours - end of service |
 | `on_hours`            | On hours - start of service |
-| `customer_cancellation` | Customer cancelled a trip |
+| `order_drop_off`      | Pick up of the order at business |
+| `order_pick_up`       | Delivery of the order at the customer location |
 | `provider_cancellation` | Provider cancelled a trip |
 | `provider_drop_off`   | Drop off by the provider |
 | `rebalance_pick_up`   | Pick up for rebalancing |
 | `remote_start`        | Remotely start the engine |
 | `remote_end`          | Remotely stop the engine |
-| `reservation_cancel`  | Reservation cancelled |
+| `reservation_cancel`  | Reservation cancelled before trip |
 | `reservation_start`   | Reservation started |
+| `reservation_stop`    | Reservation stopped temporarily |
 | `system_resume`       | Resume system operations, e.g. start of day |
 | `system_suspend`      | Suspend system operations, e.g. end of day |
 | `trip_cancel`         | Cancel trip |

@@ -43,7 +43,7 @@ _See more available trip and fare attributes for any mode used in the [trips obj
 The `journey_id` field shall have a consistent value in overlapping trips for a single reservation period, e.g. trips taken by a customer between ignition states over the duration of their reservation. A reservation is the duration the customer has continuous exclusive access to the vehicle whether parked or in motion. Journeys may be point-to-point or multi-segment.
 
 - **Example 1**: customer makes a reservation and company delivers vehicle to customer, then one trip point-to-point by customer, ending reservation at destination
-- **Example 2**: Customer reservation for multiple days with trips for errands, gas, entertainment, etc
+- **Example 2**: customer reservation for multiple days with trips for errands, gas, entertainment, etc
 - **Example 3**: one trip point-to-point with an employee moving the vehicle to a new location for maintenance
 
 ![Journey Diagram](https://i.imgur.com/FHxQLps.png)
@@ -178,7 +178,6 @@ Valid car share vehicle event types are
 - `comms_lost`
 - `comms_restored`
 - `driver_cancellation`
-- `decommission`
 - `fueling_start`
 - `fueling_end`
 - `maintenance`
@@ -186,21 +185,18 @@ Valid car share vehicle event types are
 - `maintenance_end`
 - `passenger_cancellation`
 - `provider_cancellation`
-- `recommission`
 - `remote_start`
 - `remote_end`
-- `reservation_cancel`
+- `reservation_stop`
 - `reservation_start`
 - `service_end`
 - `service_start`
-- `trip_cancel`
 - `trip_end`
 - `trip_enter_jurisdiction`
 - `trip_leave_jurisdiction`
 - `trip_resume`
 - `trip_start`
 - `trip_stop`
-- `unspecified`
 
 See vehicle [Event Types][vehicle-events] for descriptions.
 
@@ -215,7 +211,7 @@ This is the list of `vehicle_state` and `event_type` pairings that constitute th
 | `available`              | `elsewhere`            | N/A          | `trip_leave_jurisdiction`     | The vehicle has left jurisdictional boundaries while available for-hire                                         |
 | `available`              | `non_contactable`      | N/A          | `comms_lost`             | The vehicle has went out of comms while available for-use                                                       |
 | `available`              | `non_operational`      | N/A          | `service_end`            | The vehicle has went out of service (is unavailable for-hire)                                                   |
-| `available`              | `reserved`             | `reserved`   | `reserve`                | The vehicle was reserved by a passenger                                                                         |
+| `available`              | `reserved`             | `reserved`   | `reservation_start`                | The vehicle was reserved by a passenger                                                                         |
 | `elsewhere`              | `available`            | N/A          | `trip_enter_jurisdiction`     | The vehicle has entered jurisdictional boundaries while available for-hire                                      |
 | `elsewhere`              | `non_contactable`      | N/A          | `comms_lost`             | The vehicle has went out of comms while outside of jurisdictional boundaries                                    |
 | `elsewhere`              | `non_operational`      | N/A          | `trip_enter_jurisdiction`     | The vehicle has entered jurisdictional boundaries while not operating commercially                              |
@@ -245,7 +241,7 @@ This is the list of `vehicle_state` and `event_type` pairings that constitute th
 | `reserved`               | `available`            | N/A          | `provider_cancellation`  | The provider has canceled the reservation                                                                       |
 | `reserved`               | `elsewhere`            | N/A          | `trip_leave_jurisdiction`     | The vehicle has left the jurisdiction while in a reservation                                                    |
 | `reserved`               | `non_contactable`      | N/A          | `comms_lost`             | The vehicle went out of comms while being reserved by a passenger                                               |
-| `reserved`               | `stopped`              | `stopped`    | `reserve_stop`           | The vehicle has stopped to pick up the passenger                                                                |
+| `reserved`               | `stopped`              | `stopped`    | `reservation_stop`           | The vehicle has stopped to pick up the passenger                                                                |
 | `stopped`                | `available`            | N/A          | `driver_cancellation`    | The driver has canceled the trip while either waiting for the passenger, or dropping them off                   |
 | `stopped`                | `available`            | N/A          | `passenger_cancellation` | The passenger has canceled the trip while the vehicle is waiting to pick them up, or they are being dropped off |
 | `stopped`                | `available`            | N/A          | `provider_cancellation`  | The provider has canceled the trip while the vehicle is waiting for a passenger, or dropping them off           |

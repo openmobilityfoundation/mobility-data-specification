@@ -178,25 +178,21 @@ Valid passenger services vehicle event types are
 - `comms_lost`
 - `comms_restored`
 - `driver_cancellation`
-- `decommission`
 - `maintenance`
 - `maintenance_pick_up`
 - `maintenance_end`
 - `passenger_cancellation`
 - `provider_cancellation`
-- `recommission`
-- `reservation_cancel`
+- `reservation_stop`
 - `reservation_start`
 - `service_end`
 - `service_start`
-- `trip_cancel`
 - `trip_end`
 - `trip_enter_jurisdiction`
 - `trip_leave_jurisdiction`
 - `trip_resume`
 - `trip_start`
 - `trip_stop`
-- `unspecified`
 
 This list is somewhat shorter than the micromobility event list, as passenger service vehicles are controlled by a driver or potentially an AI. They are not picked up or dropped off for rebalancing or compliance, for example, and they do not go out of service because of a low battery.
 
@@ -213,7 +209,7 @@ This is the list of `vehicle_state` and `event_type` pairings that constitute th
 | `available`              | `elsewhere`            | N/A          | `trip_leave_jurisdiction`     | The vehicle has left jurisdictional boundaries while available for-hire                                         |
 | `available`              | `non_contactable`      | N/A          | `comms_lost`             | The vehicle has went out of comms while available for-use                                                       |
 | `available`              | `non_operational`      | N/A          | `service_end`            | The vehicle has went out of service (is unavailable for-hire)                                                   |
-| `available`              | `reserved`             | `reserved`   | `reserve`                | The vehicle was reserved by a passenger                                                                         |
+| `available`              | `reserved`             | `reserved`   | `reservation_start`                | The vehicle was reserved by a passenger                                                                         |
 | `elsewhere`              | `available`            | N/A          | `trip_enter_jurisdiction`     | The vehicle has entered jurisdictional boundaries while available for-hire                                      |
 | `elsewhere`              | `non_contactable`      | N/A          | `comms_lost`             | The vehicle has went out of comms while outside of jurisdictional boundaries                                    |
 | `elsewhere`              | `non_operational`      | N/A          | `trip_enter_jurisdiction`     | The vehicle has entered jurisdictional boundaries while not operating commercially                              |
@@ -244,7 +240,7 @@ This is the list of `vehicle_state` and `event_type` pairings that constitute th
 | `reserved`               | `available`            | N/A          | `provider_cancellation`  | The provider has canceled the reservation                                                                       |
 | `reserved`               | `elsewhere`            | N/A          | `trip_leave_jurisdiction`     | The vehicle has left the jurisdiction while in a reservation                                                    |
 | `reserved`               | `non_contactable`      | N/A          | `comms_lost`             | The vehicle went out of comms while being reserved by a passenger                                               |
-| `reserved`               | `stopped`              | `stopped`    | `reserve_stop`           | The vehicle has stopped to pick up the passenger                                                                |
+| `reserved`               | `stopped`              | `stopped`    | `reservation_stop`           | The vehicle has stopped to pick up the passenger                                                                |
 | `stopped`                | `available`            | N/A          | `driver_cancellation`    | The driver has canceled the trip while either waiting for the passenger, or dropping them off                   |
 | `stopped`                | `available`            | N/A          | `passenger_cancellation` | The passenger has canceled the trip while the vehicle is waiting to pick them up, or they are being dropped off |
 | `stopped`                | `available`            | N/A          | `provider_cancellation`  | The provider has canceled the trip while the vehicle is waiting for a passenger, or dropping them off           |
