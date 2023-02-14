@@ -46,19 +46,10 @@ _See more available trip and fare attributes for any mode used in the [trips obj
 
 The `journey_id` field shall have a consistent value in overlapping trips, e.g. "pooled" or "shared" rides with different start and/or end locations. Journeys may be point-to-point, multi-segment, or multi-segment overlapping.
 
-Example 1: one private trip with reservation, then return to depot
-```
-<-                            Journey                           ->
-<- Trip: reservation -><-    Trip: private    -><- Trip: empty  ->
-```
+- **Example 1**: one private trip with reservation, then return to depot
+- **Example 2**: three shared trips, some overlapping
 
-Example 2: three shared trips, some overlapping
-```
-<-                            Journey                           ->
-<- Trip: reservation -><- Trip: shared ->
-            <- Trip: reservation -><- Trip: shared ->
-                         <- Trip: reservation -><- Trip: shared ->
-```
+![Journey Diagram](https://i.imgur.com/ciNnDKC.png)
 
 [Top][toc]
 

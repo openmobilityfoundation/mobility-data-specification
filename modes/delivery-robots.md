@@ -46,19 +46,10 @@ _See more available trip and fare attributes for any mode used in the [trips obj
 
 The `journey_id` field shall have a consistent value in overlapping trips. Journeys may be point-to-point, multi-segment, or multi-segment overlapping.
 
-Example 1: delivery to a single location, then return
-```
-<-                  Journey               ->
-<- Trip: delivery -><-    Trip: return    ->
-```
+- **Example 1**: delivery to a single location, then return
+- **Example 2**: three overlapping delivery trips in the same journey
 
-Example 2: three overlapping delivery trips in the same journey
-```
-<-                                 Journey                                  ->
-<- Trip: delivery ->
-                    <- Trip: delivery ->
-                                        <- Trip: delivery -><- Trip: return ->
-```
+![Journey Diagram](https://i.imgur.com/Mx8jVQq.png)
 
 [Top][toc]
 
@@ -66,7 +57,6 @@ Example 2: three overlapping delivery trips in the same journey
 
 The `journey_attributes` array is not used in this mode.
 
-- ...
 
 [Top][toc]
 

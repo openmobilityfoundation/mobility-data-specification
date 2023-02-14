@@ -42,23 +42,11 @@ _See more available trip and fare attributes for any mode used in the [trips obj
 
 The `journey_id` field shall have a consistent value in overlapping trips for a single reservation period, e.g. trips taken by a customer between ignition states over the duration of their reservation. A reservation is the duration the customer has continuous exclusive access to the vehicle whether parked or in motion. Journeys may be point-to-point or multi-segment.
 
-Example 1: customer makes a reservation and company delivers vehicle to customer, then one trip point-to-point by customer, ending reservation at destination
-```
-<-                 Journey                ->
-<-  Trip: reservation -><-  Trip: private ->
-```
+- **Example 1**: customer makes a reservation and company delivers vehicle to customer, then one trip point-to-point by customer, ending reservation at destination
+- **Example 2**: Customer reservation for multiple days with trips for errands, gas, entertainment, etc
+- **Example 3**: one trip point-to-point with an employee moving the vehicle to a new location for maintenance
 
-Example 2: Customer reservation for multiple days with trips for errands, gas, entertainment, etc
-```
-<-                                           Journey                                         ->
-<- Trip: private -><- Trip: private -><- Trip: private -><- Trip: private -><- Trip: private ->
-```
-
-Example 3: one trip point-to-point with an employee moving the vehicle to a new location for maintenance
-```
-<-    Journey  ->
-<- Trip: empty ->
-```
+![Journey Diagram](https://i.imgur.com/FHxQLps.png)
 
 [Top][toc]
 
