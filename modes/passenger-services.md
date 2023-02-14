@@ -188,8 +188,9 @@ Valid passenger services vehicle event types are
 - `comms_restored`
 - `driver_cancellation`
 - `decommission`
+- `maintenance`
+- `maintenance_pick_up`
 - `maintenance_end`
-- `maintenance_start`
 - `passenger_cancellation`
 - `provider_cancellation`
 - `recommission`
@@ -237,8 +238,10 @@ This is the list of `vehicle_state` and `event_type` pairings that constitute th
 | `non_operational`        | `available`            | N/A          | `service_start`          | The vehicle has went into service (is available for-hire)                                                       |
 | `non_operational`        | `elsewhere`            | N/A          | `trip_leave_jurisdiction`     | The vehicle has left jurisdictional boundaries while not operating commercially                                 |
 | `non_operational`        | `non_contactable`      | N/A          | `comms_lost`             | The vehicle has went out of comms while not operating commercially                                              |
+| `non_operational`        | `non_operational`              | N/A          | `maintenance`     | The vehicle has maintenance performed on site                                             |
+| `non_operational`        | `non_operational`              | N/A          | `maintenance_end`     | Maintenance is complete                                             |
+| `non_operational`        | `removed`              | N/A          | `maintenance_pick_up`      | The vehicle has entered the depot for maintenance                                                               |
 | `non_operational`        | `removed`              | N/A          | `decommissioned`         | The vehicle has been removed from the Provider's fleet                                                          |
-| `non_operational`        | `removed`              | N/A          | `maintenance_start`      | The vehicle has entered the depot for maintenance                                                               |
 | `on_trip`                | `elsewhere`            | N/A          | `trip_leave_jurisdiction`     | The vehicle has left jurisdictional boundaries while on a trip                                                  |
 | `on_trip`                | `non_contactable`      | N/A          | `comms_lost`             | The vehicle has gone out of comms while on a trip                                                               |
 | `on_trip`                | `stopped`              | `stopped`    | `trip_stop`              | The vehicle has stopped while on a trip                                                                         |
