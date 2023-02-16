@@ -4,7 +4,7 @@
 
 > [Release Plan](https://github.com/openmobilityfoundation/governance/wiki/Release-2.0.0)
 
-The 2.0.0 major release includes support for new moblity modes, clarity around Policy, and the alignment of the data and structure of Agency and Provider. 
+The 2.0.0 major release includes support for new mobility modes, clarity around Policy, and the alignment of the data and structure of Agency and Provider. 
 
 ### CHANGES
 
@@ -89,15 +89,15 @@ The difference between Agency and Provider is that with Agency operators PUSH da
 
 Reports have a new adaptive scooter special group type, and improved formatting.
 
-- #[Updates to provider reports](https://github.com/openmobilityfoundation/mobility-data-specification/pulls?q=is%3Apr+is%3Aclosed+label%3AReports) including header, date format, column names, and adaptive scooter special group type
+- [Updates to provider reports](https://github.com/openmobilityfoundation/mobility-data-specification/pulls?q=is%3Apr+is%3Aclosed+label%3AReports) including header, date format, column names, and adaptive scooter special group type
 
 #### **_Geography_**
 
-- #[824](https://github.com/openmobilityfoundation/mobility-data-specification/pull/824/files) - Geography is now public, and removed from Policy
+- [Geography is now public, and removed from Policy](https://github.com/openmobilityfoundation/mobility-data-specification/pull/824/files)
 
 #### **_Jurisdiction_**
 
-- #[824](https://github.com/openmobilityfoundation/mobility-data-specification/pull/824/files) - Jurisdiction is now public
+- [Jurisdiction is now public](https://github.com/openmobilityfoundation/mobility-data-specification/pull/824/files)
 
 ## 1.2.0
 
