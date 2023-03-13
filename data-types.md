@@ -227,8 +227,8 @@ A Trip is defined by the following structure:
 | `fare_attributes`        | Map             | Optional | **[Mode](/modes#list-of-supported-modes) Specific**. [Fare attributes](/modes#fare-attributes) given as unordered key-value pairs |
 | `start_time`             | [Timestamp][ts] | Required | Start of the passenger/driver trip |
 | `end_time`               | [Timestamp][ts] | Required | End of the passenger/driver trip |
-| `start_location`         | [GPS](gps)      | Required | Location of the start of the trip. |
-| `end_location`           | [GPS](gps)      | Required | Location of the end of the trip. |
+| `start_location`         | [GPS][gps]      | Required | Location of the start of the trip. |
+| `end_location`           | [GPS][gps]      | Required | Location of the end of the trip. |
 | `duration`               | Integer         | Required | Time, in Seconds |
 | `distance`               | Integer         | Required | Trip Distance, in Meters |
 | `publication_time`       | [Timestamp][ts] | Optional | Date/time that trip became available through the trips endpoint |
