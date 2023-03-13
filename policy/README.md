@@ -162,8 +162,8 @@ Policies will be returned in order of effective date (see schema below), with pa
 
 **Endpoint**: `/requirements/`  
 **Method**: `GET`  
-**[Beta feature](/general-information.md#beta-features)**: *No (as of 2.0.0)*. 
-**Schema:** TBD
+**[Beta feature](/general-information.md#beta-features)**: *No (as of 2.0.0)*.  
+**Schema:** TBD  
 **`data` Payload**: `{ requirements: [] }`, JSON objects that follow the schema [outlined here](#requirement).  
 
 See [Policy Requirements Examples](/policy/examples/requirements.md) for how this can be implemented.
@@ -331,7 +331,7 @@ An individual `Rule` object is defined by the following fields:
 
 Rate-related properties can currently be specified on all rule types except `user`, i.e. any rule that can be measured.
 
-**[Beta feature](/general-information.md#beta-features)**: *No (as of 2.0.0)*. [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/674)  
+**[Beta feature](/general-information.md#beta-features)**: *No (as of 2.0.0)*.
 
 #### Rate Amounts
 
