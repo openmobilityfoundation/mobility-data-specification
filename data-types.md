@@ -113,7 +113,6 @@ Events represent changes in vehicle status.
 | `battery_percent`       | Integer          | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 100 |
 | `fuel_percent`       | Integer          | Required if Applicable | Percent fuel in vehicle, expressed between 0 and 100 |
 | `trip_ids`[] | UUID[] | Required if Applicable | Trip UUIDs (foreign key to /trips endpoint), required if `event_types` contains `trip_start`, `trip_end`, `trip_cancel`, `trip_enter_jurisdiction`, or `trip_leave_jurisdiction` |
-| `journey_id` | UUID | Optional | Journey UUID | TODO "see `journey_id`" or something |
 | `associated_ticket` | String | Optional | Identifier for an associated ticket inside an Agency-maintained 311 or CRM system |
 
 ### Event Times
@@ -134,7 +133,7 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | `telemetry_id`    | UUID            | Required               | ID used for uniquely-identifying a Telemetry entry |
 | `timestamp`       | [Timestamp][ts] | Required               | Date/time that event occurred. Based on GPS or GNSS clock            |
 | `trip_ids`        | UUID[]          | Required               | If telemetry occurred during a trip, the ID of the trip(s).  If not in a trip, `null`. 
-| `journey_id`      | UUID            | Required               | If telemetry occurred during a trip, the ID of the journey.  If not in a trip, `null`.
+| `journey_id`      | UUID            | Required               | If telemetry occurred during a trip and journeys are used for the mode, the ID of the journey.  If not in a trip, `null`.
 | `stop_id`         | UUID            | Required if Applicable | Stop that the vehicle is currently located at. See [Stops][stops] |
 | `location`        | [GPS][gps]      | Required               | Telemetry position data |
 | `location_type`   | Enum            | Required if Known      | If detectable and known, what type of location the device is on or in. One of `street`, `sidewalk`, `crosswalk`, `garage`, `bike_lane`.   |
