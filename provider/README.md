@@ -282,7 +282,6 @@ The `/trips` API should allow querying trips with the following query parameters
 | Parameter | Format | Expected Output |
 | --------------- | ------ | --------------- |
 | `end_time` | `YYYY-MM-DDTHH`, an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) extended datetime representing an UTC hour between 00 and 23. | All trips with an end time occurring within the hour. For example, requesting `end_time=2019-10-01T07` returns all trips where `2019-10-01T07:00:00 <= trip.end_time < 2019-10-01T08:00:00` UTC. |
-| `route` | Boolean | If false, do not return route data. |
 
 Without an `end_time` query parameter, `/trips` shall return a `400 Bad Request` error.
 
