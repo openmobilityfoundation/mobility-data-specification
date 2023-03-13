@@ -193,7 +193,7 @@ The `/vehicles` endpoint returns the specified vehicle (if a device_id is provid
 **Method:** `GET`  
 **[Beta feature][beta]:** No (as of 1.2.0)  
 **Schema:** [`vehicles` schema][vehicles-schema]  
-**`data` Payload:** `{ "vehicles": [] }`, an array of [Vehicle](vehicle) objects
+**`data` Payload:** `{ "vehicles": [] }`, an array of [Vehicle][vehicle] objects
 
 Path Params:
 
