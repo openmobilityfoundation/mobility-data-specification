@@ -133,7 +133,7 @@ See the [Responses section][responses] for information on valid MDS response cod
 
 ### Policies
 
-**Endpoint**: `/policies/{id}`  
+**Endpoint**: `/policies/{policy_id}`  
 **Method**: `GET`  
 **Schema:** [`policy` schema][json-schema]  
 **`data` Payload**: `{ "policies": [] }`, an array of objects with the structure [outlined below](#policy).
@@ -142,7 +142,7 @@ See the [Responses section][responses] for information on valid MDS response cod
 
 | Name         | Type      | Required / Optional | Description                                    |
 | ------------ | --------- | --- | ---------------------------------------------- |
-| `id`         | UUID      | Optional    | If provided, returns one policy object with the matching UUID; default is to return all policy objects.                       |
+| `policy_id`         | UUID      | Optional    | If provided, returns one policy object with the matching UUID; default is to return all policy objects.                       |
 | `start_date` | [timestamp][ts] | Optional    | Beginning date of the queried time range; the default value is the request time |
 | `end_date`   | [timestamp][ts] | Optional    | Ending date of the queried time range; the default value is null, which captures all policies that are effective in the future|
 
