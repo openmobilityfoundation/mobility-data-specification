@@ -73,7 +73,7 @@ The machine-readable format allows Providers to obtain policies and compute comp
 
 ### Authorization
 
-This endpoint should be made public. Authorization is not required.
+The Policy endpoints should be made public. Authorization is not required.
 
 ### Update Frequency
 
@@ -135,6 +135,7 @@ See the [Responses section][responses] for information on valid MDS response cod
 
 **Endpoint**: `/policies/{policy_id}`  
 **Method**: `GET`  
+**Authorization**: public  
 **Schema:** [`policy` schema][json-schema]  
 **`data` Payload**: `{ "policies": [] }`, an array of objects with the structure [outlined below](#policy).
 
@@ -162,6 +163,7 @@ Policies will be returned in order of effective date (see schema below), with pa
 
 **Endpoint**: `/requirements/`  
 **Method**: `GET`  
+**Authorization**: public  
 **[Beta feature](/general-information.md#beta-features)**: *No (as of 2.0.0)*.  
 **Schema:** TBD  
 **`data` Payload**: `{ requirements: [] }`, JSON objects that follow the schema [outlined here](#requirement).  
