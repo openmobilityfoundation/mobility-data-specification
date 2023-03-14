@@ -195,9 +195,9 @@ The `/vehicles` endpoint returns the specified vehicle (if a device_id is provid
 **Schema:** [`vehicles` schema][vehicles-schema]  
 **`data` Payload:** `{ "vehicles": [] }`, an array of [Vehicle][vehicle] objects
 
-Path Params:
+_Path Parameters:_
 
-| Param        | Type | Required/Optional | Description                                 |
+| Path Parameters       | Type | Required/Optional | Description                                 |
 | ------------ | ---- | ----------------- | ------------------------------------------- |
 | `device_id`  | UUID | Optional          | If provided, retrieve the specified vehicle |
 
@@ -233,9 +233,9 @@ The `/vehicles/status` endpoint returns the specified vehicle (if a device_id is
 **Schema:** N/A
 **`data` Payload:** `{ "vehicles_status": [] }`, an array of [Vehicle Status][vehicle-status] objects
 
-Path Params:
+_Path Parameters:_
 
-| Param        | Type | Required/Optional | Description                                 |
+| Path Parameter        | Type | Required/Optional | Description                                 |
 | ------------ | ---- | ----------------- | ------------------------------------------- |
 | `device_id`  | UUID | Optional          | If provided, retrieve the specified vehicle |
 
@@ -279,7 +279,7 @@ Unless stated otherwise by the municipality, the trips endpoint must return all 
 
 The `/trips` API should allow querying trips with the following query parameters:
 
-| Parameter | Format | Expected Output |
+| Query Parameter | Format | Expected Output |
 | --------------- | ------ | --------------- |
 | `end_time` | `YYYY-MM-DDTHH`, an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) extended datetime representing an UTC hour between 00 and 23. | All trips with an end time occurring within the hour. For example, requesting `end_time=2019-10-01T07` returns all trips where `2019-10-01T07:00:00 <= trip.end_time < 2019-10-01T08:00:00` UTC. |
 
@@ -333,7 +333,7 @@ Telemetry for a [trip](#trip) must include at least 2 points: the start point an
 
 ### Telemetry - Query Parameters
 
-| Parameter    | Format | Expected Output |
+| Query Parameter    | Format | Expected Output |
 | ---------    | ------ | --------------- |
 | `telemetry_time` | `YYYY-MM-DDTHH`, an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) extended datetime representing an UTC hour between 00 and 23. | All telemetry with timestamp occurring within the hour. For example, requesting `telemetry_time=2019-10-01T07` returns all telemetry where `2019-10-01T07:00:00 <= telemetry.timestamp < 2019-10-01T08:00:00` UTC. |
 
@@ -361,7 +361,7 @@ Unless stated otherwise by the municipality, this endpoint must return only thos
 
 The `/events/historical` API uses the following query parameter:
 
-| Parameter    | Format | Expected Output |
+| Query Parameter    | Format | Expected Output |
 | ---------    | ------ | --------------- |
 | `event_time` | `YYYY-MM-DDTHH`, an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) extended datetime representing an UTC hour between 00 and 23. | All status changes with an event time occurring within the hour. For example, requesting `event_time=2019-10-01T07` returns all status changes where `2019-10-01T07:00:00 <= status_change.event_time < 2019-10-01T08:00:00` UTC. |
 
@@ -410,7 +410,7 @@ See also [Stop-based Geographic Data][stop-based-geo].
 
 The Recent Events API requires two parameters:
 
-| Parameter | Type | Expected Output |
+| Query Parameter | Type | Expected Output |
 | ----- | ---- | -------- |
 | `start_time` | [timestamp][ts] | status changes where `start_time <= event.timestamp` |
 | `end_time` | [timestamp][ts] | status changes where `event.timestamp < end_time` |

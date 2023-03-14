@@ -171,9 +171,9 @@ The Geography Author API consists of the following endpoints:
 **Method**: `GET`  
 **Schema:** [`geography` schema](./geography.json)  
 
-#### Query Parameters
+#### Path Parameters
 
-| Name          | Type | Required/Optional | Description                                       |
+| Path Parameter          | Type | Required/Optional | Description                                       |
 | ------------- | ---- | --- | --------------------------------------------------- |
 | `geography_id`  | UUID | Required   | Unique identifier for a single specific Geography |
 

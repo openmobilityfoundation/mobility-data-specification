@@ -76,9 +76,9 @@ The `/vehicles` endpoint returns the specified vehicle (if a device_id is provid
 **Method:** `POST`  
 **Payload:** An array of [Vehicles](/data-types.md#vehicles)  
 
-Path Params:
+_Path Parameters:_
 
-| Param        | Type | Required/Optional | Description                                 |
+| Path Parameters        | Type | Required/Optional | Description                                 |
 | ------------ | ---- | ----------------- | ------------------------------------------- |
 | `device_id`  | UUID | Optional          | If provided, retrieve the specified vehicle |
 
@@ -112,9 +112,9 @@ The `/vehicles/status` endpoint returns information about the specified vehicle 
 **Method:** `POST`  
 **Payload:** An array of [Vehicles](/data-types.md#vehicle-status) objects  
 
-Path Params:
+_Path Parameters:_
 
-| Param        | Type | Required/Optional | Description                                 |
+| Path Parameters        | Type | Required/Optional | Description                                 |
 | ------------ | ---- | ----------------- | ------------------------------------------- |
 | `device_id`  | UUID | Optional          | If provided, retrieve the specified vehicle |
 
@@ -312,13 +312,13 @@ See [Bulk Responses][bulk-responses]
 
 ### Stops - Readback
 
-**Endpoint:** `/stops/:stop_id`  
+**Endpoint:** `/stops/{stop_id}`  
 **Method:** `GET`  
 **Payload:** An array of [Stops][stops]
 
-Path Params:
+_Path Parameters:_
 
-| Param        | Type | Required/Optional | Description                                 |
+| Path Parameters        | Type | Required/Optional | Description                                 |
 | ------------ | ---- | ----------------- | ------------------------------------------- |
 | `stop_id`    | UUID | Optional          | If provided, retrieve the specified stop    |
 

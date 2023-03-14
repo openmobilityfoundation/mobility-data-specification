@@ -167,7 +167,7 @@ Supports querying one or more metrics with the following parameters.
 
 ### Parameters
 
-| Name            | Type     | Required | Comments                                                                        |
+| Query Parameters | Type     | Required | Comments                                                                        |
 | --------------- | -------- | -------- | ------------------------------------------------------------------------------- |
 | `measures`      | string[] | Yes      | list of measures to return. [See metric names](core_metrics.md)                 |
 | `interval`      | duration | Yes      | [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#Durations) duration for metrics intervals.                                                 |

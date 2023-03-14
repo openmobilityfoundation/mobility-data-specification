@@ -18,7 +18,6 @@ This specification describes the digital relationship between _mobility as a ser
 - [REST Endpoints](#rest-endpoints)
   - [Responses and Error Messages](#responses-and-error-messages)
   - [Policies](#policies)
-    - [Query Parameters](#query-parameters)
   - [Geographies](#geographies)
   - [Requirements](#requirements)
 - [Flat Files](#flat-files)
@@ -139,9 +138,15 @@ See the [Responses section][responses] for information on valid MDS response cod
 **Schema:** [`policy` schema][json-schema]  
 **`data` Payload**: `{ "policies": [] }`, an array of objects with the structure [outlined below](#policy).
 
-#### Query Parameters
+_Path Parameters:_
 
-| Name         | Type      | Required / Optional | Description                                    |
+| Path Parameter | Type      | Required / Optional | Description                                    |
+| ------------ | --------- | --- | ---------------------------------------------- |
+| `policy_id`         | UUID      | Optional    | If provided, returns one policy object with the matching UUID; default is to return all policy objects.                       |
+
+_Query Parameters:_
+
+| Query Parameter | Type      | Required / Optional | Description                                    |
 | ------------ | --------- | --- | ---------------------------------------------- |
 | `policy_id`         | UUID      | Optional    | If provided, returns one policy object with the matching UUID; default is to return all policy objects.                       |
 | `start_date` | [timestamp][ts] | Optional    | Beginning date of the queried time range; the default value is the request time |

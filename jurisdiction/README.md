@@ -13,6 +13,8 @@ This specification details the purpose, use cases, and schema for Jurisdictions.
 - [Distribution](#distribution)
 - [Schema](#schema)
 - [REST Endpoints](#rest-endpoints)
+   - [Get Jurisdictions](#get-jurisdictions)
+   - [Get Jurisdiction](#get-jurisdiction)
 - [Flat Files](#flat-files)
 - [Examples](#examples)
 
@@ -130,13 +132,19 @@ Response bodies must be a `UTF-8` encoded JSON object.
 
 The response to a client request must include a valid HTTP status code defined in the [IANA HTTP Status Code Registry](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml)
 
-
-### GET /Jurisdictions
+### Get Jurisdictions
 
 Gets all of an agency's Jurisdictions. Served by agencies.
 
-Parameters:
-| Name | Type | R/O | Description |
+**Endpoint:** `/jurisdictions/`  
+**Method:** `GET`  
+**[Beta feature][beta]:** _Yes (as of 1.1.0)_. [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/673)  
+**Schema:** [`jurisdiction` schema](#schema)  
+**`data` Payload:** `{ "jurisdiction": [] }`, an array of [jurisdiction](#schema) objects
+
+_Query Parameters:_
+
+| Query Parameters | Type | R/O | Description |
 | ------------ | --------- | --- | ---------------------------------------------- |
 | `effective` | Timestamp | O | See the state of all the Jurisdictions (i.e. which ones are effective) at that point in time. If not supplied, the default is to show only Jurisdictions that are currently in effect. |
 
@@ -146,12 +154,25 @@ Response codes:
 - 403 - unauthorized
 - 500 - server error
 
-### GET /Jurisdictions/:jurisdiction_id
+### GET Jurisdiction
 
-Gets a single Jurisdictions. Served by agencies
+Gets a single Jurisdictions. Served by agencies.
 
-Parameters:
-| Name | Type | R/O | Description |
+**Endpoint:** `/jurisdictions/{jurisdiction_id}`  
+**Method:** `GET`  
+**[Beta feature][beta]:** _Yes (as of 1.1.0)_. [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/673)  
+**Schema:** [`jurisdiction` schema](#schema)  
+**`data` Payload:** `{ "jurisdiction": [] }`, an array of [jurisdiction](#schema) objects
+
+_Path Parameters:_
+
+| Path Parameters | Type | R/O | Description |
+| ------------ | --------- | --- | ---------------------------------------------- |
+| `jurisdiction_id` | UUID | R | Single jurisdiction to return |
+
+_Query Parameters:_
+
+| Query Parameters | Type | R/O | Description |
 | ------------ | --------- | --- | ---------------------------------------------- |
 | `effective` | Timestamp | O | See the version of the Jurisdiction that was in effect at that point in time. |
 
