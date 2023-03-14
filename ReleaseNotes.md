@@ -53,7 +53,6 @@ See the closed PRs tagged with [Milestone 2.0.0](https://github.com/openmobility
 
 A reimagining of Policy, including top ten most common policies are clearly defined, edge cases (dwell time, trip definition, rule units, updating/ending policies, lookback periods) are clarified, Stops is out of beta, and Policy feeds are public
 
-- [Better support for fee schedules](https://github.com/openmobilityfoundation/mobility-data-specification/issues/621)
 - [Support utilization policies](https://github.com/openmobilityfoundation/mobility-data-specification/issues/620)
 - [Clarify minimum vehicle distribution](https://github.com/openmobilityfoundation/mobility-data-specification/issues/619)
 - [Support vehicle distribution by percent](https://github.com/openmobilityfoundation/mobility-data-specification/issues/618)
