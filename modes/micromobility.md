@@ -46,7 +46,7 @@ The `journey_id` field is not used in this mode. Trips are point-to-point.
 
 ### Journey Attributes
 
-The `journey_attributes` array is not used in this mode.
+The `journey_attributes` object is not used in this mode.
 
 [Top][toc]
 
@@ -68,13 +68,13 @@ The `trip_type` field **may** have one of the following values:
 
 ### Trip Attributes
 
-The `trip_attributes` array is not used in this mode.
+The `trip_attributes` object is not used in this mode.
 
 [Top][toc]
 
 ### Fare Attributes
 
-The `fare_attributes` array is not used in this mode.
+The `fare_attributes` object is not used in this mode.
 
 [Top][toc]
 
@@ -84,7 +84,7 @@ _See more available vehicle attributes and accessibility options for any mode us
 
 ### Vehicle Attributes
 
-The `vehicle_attributes` array **may** have the following key value pairs:
+The `vehicle_attributes` object **may** have the following key value pairs:
 
 - `year` (integer, optional)
 - `make` (string, optional)

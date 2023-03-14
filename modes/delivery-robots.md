@@ -55,7 +55,7 @@ The `journey_id` field shall have a consistent value in overlapping trips. Journ
 
 ### Journey Attributes
 
-The `journey_attributes` array is not used in this mode.
+The `journey_attributes` object is not used in this mode.
 
 
 [Top][toc]
@@ -84,7 +84,7 @@ The `trip_type` field **must** have one of the following enumerated values:
 
 ### Trip Attributes
 
-The `trip_attributes` array **may** have the following key value pairs:
+The `trip_attributes` object **may** have the following key value pairs:
 
 - `driver_type` (enum, required): type of driver operating the device: `human`, `semi-autonomous`, `autonomous`
 - `driver_id` (UUID, optional): consistent unique identifier of the primary driver. Could be based on software version or an internal human driver id.
@@ -98,7 +98,7 @@ The `trip_attributes` array **may** have the following key value pairs:
 
 ### Fare Attributes
 
-The `fare_attributes` array **may** have the following key value pairs:
+The `fare_attributes` object **may** have the following key value pairs:
 
 - `payment_type` (enumerated, optional): `cash`, `mobile`, `voucher`, `paratransit`, `no payment`, `test`
 - `price` (currency, optional): Total price of the order
@@ -111,7 +111,7 @@ _See more available vehicle attributes and accessibility options for any mode us
 
 ### Vehicle Attributes
 
-The `vehicle_attributes` array **may** have the following key value pairs:
+The `vehicle_attributes` object **may** have the following key value pairs:
 
 - `year` (integer, optional)
 - `make` (string, optional)
@@ -132,7 +132,7 @@ The `vehicle_attributes` array **may** have the following key value pairs:
 
 ### Accessibility Options
 
-The `accessibility_options` array **may** have the following key value pairs:
+The `accessibility_options` object **may** have the following key value pairs:
 
 - `audio_cue` (boolean, optional): is the device equipped with audio cues upon delivery
 - `visual_cue` (boolean, optional): is the device equipped with visual cues upon delivery

@@ -59,7 +59,7 @@ The `journey_id` field allows multiple trip segments to be referentially linked 
 
 ### Journey Attributes
 
-The `journey_attributes` array allows additional mode-specific information about the nature of a journey to be described. See each [mode definition](#list-of-supported-modes) for details.
+The `journey_attributes` object allows additional mode-specific information about the nature of a journey to be described. See each [mode definition](#list-of-supported-modes) for details.
 
 ### Trip Type
 
@@ -67,25 +67,25 @@ The `trip_type` field allows the purpose of each trip segment to be described. S
 
 ### Trip Attributes
 
-The `trip_attributes` array allows additional mode-specific information about the nature of a trip to be described. It can return a list of JSON-formatted key/value pairs which correspond to the allowed attributes and values for the operative mode. See each [mode definition](#list-of-supported-modes) for details.
+The `trip_attributes` object allows additional mode-specific information about the nature of a trip to be described. It can return a list of JSON-formatted key/value pairs which correspond to the allowed attributes and values for the operative mode. See each [mode definition](#list-of-supported-modes) for details.
 
 _See more available trip attributes for any mode in the [trips object](/data-types.md#trips)._
 
 ### Fare Attributes
 
-The `fare_attributes` array allows additional mode-specific information about fare information associated with the trip. It can return a list of JSON-formatted key/value pairs which correspond to the allowed attributes and values for the operative mode. See each [mode definition](#list-of-supported-modes) for details.
+The `fare_attributes` object allows additional mode-specific information about fare information associated with the trip. It can return a list of JSON-formatted key/value pairs which correspond to the allowed attributes and values for the operative mode. See each [mode definition](#list-of-supported-modes) for details.
 
 _See more available fare attributes for any mode in the [trips object](/data-types.md#trips)._
 
 ### Vehicle Attributes
 
-The `vehicle_attributes` array returns a list of JSON-formatted key/value pairs which correspond to the allowed attributes and values for the operative mode. For each mode, the allowed attributes and corresponding values are defined in the [mode definition](#list-of-supported-modes).
+The `vehicle_attributes` object returns a list of JSON-formatted key/value pairs which correspond to the allowed attributes and values for the operative mode. For each mode, the allowed attributes and corresponding values are defined in the [mode definition](#list-of-supported-modes).
 
 _See more available vehicle attributes for any mode in the [vehicles object](/data-types.md#vehicles)._
 
 ### Accessibility Options
 
-The `accessibility_options` array returns a list of JSON-formatted key/value pairs which correspond to the allowed accessibility attributes and values for the operative mode. For each mode, the allowed attributes and corresponding values are defined in the [mode definition](#list-of-supported-modes).
+The `accessibility_options` object returns a list of JSON-formatted key/value pairs which correspond to the allowed accessibility attributes and values for the operative mode. For each mode, the allowed attributes and corresponding values are defined in the [mode definition](#list-of-supported-modes).
 
 [Top][toc]
 

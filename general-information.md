@@ -95,7 +95,7 @@ If the currency field is null, USD cents is implied.
 
 Shared data structures including [vehicles](/data-types.md#vehicles), [vehicle events](/data-types.md#vehicle-state-events), [vehicle telemetry](/data-types.md#telemetry-data), and [trips](/data-types.md#trips) can be found in the [Data Types](/data-types.md) page.
 
-Standard [JSON data type defintions](https://en.wikipedia.org/wiki/JSON#Data_types) apply when feeds are in JSON format. The spec may also have more specific formatting requests, like enumeration (an enumerated set of approved values), object (an unordered key-value mapping of integer, strings, and symbols), map (an ordered mapping of any data types), integer (whole number), float (number with up to 8 decimal places), double (number with up 16 decimal places), etc.
+Standard [JSON data type definitions](https://en.wikipedia.org/wiki/JSON#Data_types) apply when feeds are in JSON format. The spec may also have more specific formatting requests, like enumeration (an enumerated set of approved values), object (an unordered key-value mapping of integer, strings, and symbols), map (an ordered mapping of any data types), integer (whole number), float (number with up to 8 decimal places), double (number with up 16 decimal places), etc.
 
 [Top][toc]
 

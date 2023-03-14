@@ -52,7 +52,7 @@ The `journey_id` field shall have a consistent value in overlapping trips for a 
 
 ### Journey Attributes
 
-The `journey_attributes` array **may** have the following key value pairs:
+The `journey_attributes` object **may** have the following key value pairs:
 
 - `reservation_id` (UUID, optional): unique identifier for an entire car share reservation, tied across multiple journeys and therefore trips.
 
@@ -78,7 +78,7 @@ The `trip_type` field **must** have one of the following enumerated values:
 
 ### Trip Attributes
 
-The `trip_attributes` array **may** have the following key value pairs:
+The `trip_attributes` object **may** have the following key value pairs:
 
 - `reservation_type` (enumerated, required): how was the vehicle reserved, one of `phone_dispatch`, `phone`, `text`, `app`
 - `app_name` (text, optional): name of the app used to reserve the vehicle which could be provider's app or 3rd party app
@@ -89,7 +89,7 @@ The `trip_attributes` array **may** have the following key value pairs:
 
 ### Fare Attributes
 
-The `fare_attributes` array **may** have the following key value pairs:
+The `fare_attributes` object **may** have the following key value pairs:
 
 - `payment_type` (enumerated, required): `cash`, `credit_card`, `mobile`, `voucher`, `no payment`, `test`
 - `fare_type` (enumerated, required): `meter_fare`, `upfront_pricing`, `flat_rate`. Indicator of which rate was charged.
@@ -110,7 +110,7 @@ _See more available vehicle attributes and accessibility options for any mode us
 
 ### Vehicle Attributes
 
-The `vehicle_attributes` array **may** have the following key value pairs:
+The `vehicle_attributes` object **may** have the following key value pairs:
 
 - `year` (integer, required)
 - `make` (string, required)
