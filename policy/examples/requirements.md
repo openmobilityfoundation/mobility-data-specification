@@ -10,6 +10,7 @@ This file presents a series of example [Requirements](../README.md#requirement) 
 - [Trips with No Routes, Vehicles IDs, or Dates](#trips-with-no-routes-vehicle-ids-or-dates)
 - [Provider and Other APIs](#provider-and-other-apis)
 - [Agency](#agency)
+- [Use Cases](#use-cases)
 - [Geography Driven Events](#geography-driven-events)
 - [GBFS Only](#gbfs-only)
 
@@ -587,6 +588,73 @@ Version 1.1.0 for 3 providers and serving Agency only linking to a defined MDS P
           "data_spec_name": "GBFS",
           "version": "2.2"
         }
+      ]
+    }
+  ]
+}
+```
+
+[Top](#table-of-contents)
+
+## Use Cases
+
+Version 2.0.0 for 2 providers requiring Provider `/vehicles` with external use cases for the program enumerated.  
+
+```json
+{
+  "metadata": {
+    "mds_release": "2..0",
+    "file_version": "2",
+    "last_updated": "1611953923",
+    "max_update_interval": "P1M",
+    "agency_id": "46c9882d-1297-48fc-83e5-3067d4e9337f",
+    "agency_name": "Gemeente Amsterdam",
+    "agency_timezone": "Europe/Amsterdam",
+    "agency_language": "nl_NL",
+    "agency_currency": "EUR",
+    "agency_website_url": "https://www.cityname.gov/transportation/",
+    "url": "https://mds.cityname.gov/policy/requirements/2.0.0"
+  },
+  "programs": [
+    {
+      "description": "SMART MOBILITY Actieprogramma",
+      "program_website_url": "https://www.cityname.gov/transportation/shared-devices.html",
+      "program_document_url": "https://www.cityname.gov/mds_data_policy.pdf",
+      "provider_ids": [
+        "70aa475d-1fcd-4504-b69c-2eeb2107f7be",
+        "2411d395-04f2-47c9-ab66-d09e9e3c3251"
+      ],
+      "start_date": 1611958740,
+      "end_date": 1611970539,
+      "required_data_specs": [
+        {
+          "data_spec_name": "MDS",
+          "version": "2.0.0",
+          "required_apis": [
+            {
+              "api_name": "provider",
+              "required_endpoints": [
+                {
+                  "endpoint_name": "vehicles"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "data_spec_name": "GBFS",
+          "version": "2.2"
+        }
+      ],
+      "use_cases": [
+        {
+          "external_url": "https://airtable.com/shr2cnPQvKjzONJpG",
+           "ids": ["OMF-MDS-4","OMF-MDS-12","OMF-MDS-34"]
+        },
+        {
+          "external_url": "https://github.com/CDSM-WG/CDS-M/tree/main/use-cases",
+           "ids": ["reduced-speed-area","start-trips","end-trips","realtime-events"]
+        }   
       ]
     }
   ]
