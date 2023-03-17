@@ -603,7 +603,7 @@ Version 2.0.0 for 2 providers requiring Provider `/vehicles` with external use c
 ```json
 {
   "metadata": {
-    "mds_release": "2..0",
+    "mds_release": "2.0.0",
     "file_version": "2",
     "last_updated": "1611953923",
     "max_update_interval": "P1M",
