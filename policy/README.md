@@ -10,6 +10,7 @@ This specification describes the digital relationship between _mobility as a ser
 
 - [General information](#general-information)
   - [Background](#background)
+  - [Policy Examples](#policy-examples)
   - [Authorization](#authorization)
   - [Update Frequency](#update-frequency)
   - [Updating or Ending Policies](#updating-or-ending-policies)
@@ -37,6 +38,7 @@ This specification describes the digital relationship between _mobility as a ser
   - [Value URL](#value-url)
   - [Order of Operations](#order-of-operations)
   - [Requirement](#requirement)
+    - [Examples](#examples)
     - [Public Hosting](#public-hosting)
     - [Update Frequency](#requirement-update-frequency)
     - [Version Tracking](#version-tracking)
@@ -66,7 +68,11 @@ The goal of the Policy API specification is to enable agencies to create, revise
 
 The machine-readable format allows Providers to obtain policies and compute compliance where it can be determined entirely by data obtained internally, and know what data is required from them and provided to them.
 
-**See the [Policy Examples](./examples/README.md) for ways these can be implemented.**
+[Top][toc]
+
+### Policy Examples
+
+See the [Policy Examples](./examples/README.md) for ways Policy can be implemented.
 
 [Top][toc]
 
@@ -422,6 +428,8 @@ The internal mechanics of ordering are up to the Policy editing and hosting soft
 A public agency's Policy program Requirements endpoint enumerates all of the parts of MDS, [CDS](https://github.com/openmobilityfoundation/curb-data-specification), GBFS, and other specifications that an agency requires from providers for certain programs, including APIs, endpoints, and optional fields, as well as information for providers about the APIs the agency is hosting. The program requirements are specific to the needs and use cases of each agency, and ensure there is clarity on what data is being asked for in operating policy documents from providers, reducing the burden on both. This also allows additional public transparency and accountability around data requirements from agencies, and encourages privacy by allowing agencies to ask for only the data they need.
 
 Requirements can also be used to define a scaled-down MDS implementation in situations where an agency has more limited regulatory goals, has legal limitations on the types of data they can collect, or wants to use a lightweight version of MDS for a pilot project or other experiment where aspects of a full MDS implementation would be irrelevant or unnecessary.
+
+#### Examples
 
 See [Policy Requirements Examples](/policy/examples/requirements.md) for ideas on how this can be implemented.
 
