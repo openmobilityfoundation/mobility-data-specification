@@ -230,7 +230,7 @@ The `/vehicles/status` endpoint returns the specified vehicle (if a device_id is
 **Endpoint:** `/vehicles/status/{device_id}`  
 **Method:** `GET`  
 **[Beta feature][beta]:** No (as of 1.2.0)  
-**Schema:** N/A
+**Schema:** N/A. 
 **`data` Payload:** `{ "vehicles_status": [] }`, an array of [Vehicle Status][vehicle-status] objects
 
 _Path Parameters:_
@@ -461,8 +461,8 @@ The authenticated reports are monthly, historic flat files that may be pre-gener
 **Endpoint:** `/reports`  
 **Method:** `GET`  
 **[Beta feature][beta]:** No (as of 2.0.0). [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/672)  
-**Usage note:** This endpoint uses media-type `text/vnd.mds+csv` instead of `application/vnd.mds+json`, see [Versioning][versioning].
-**Schema:** TBD
+**Usage note:** This endpoint uses media-type `text/vnd.mds+csv` instead of `application/vnd.mds+json`, see [Versioning][versioning].  
+**Schema:** TBD  
 **`data` Filename:** monthly file named by year and month, e.g. `/reports/YYYY-MM.csv`  
 **`data` Payload:** monthly CSV files of [Report](/data-types.md#Reports) objects 
 
