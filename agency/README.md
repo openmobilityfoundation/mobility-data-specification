@@ -73,7 +73,7 @@ See the [GBFS Requirement](/README.md#gbfs-requirement) language for more detail
 The `/vehicles` endpoint returns the specified vehicle (if a device_id is provided) or a list of known vehicles. Providers can only retrieve data for vehicles in their registered fleet. Contains vehicle properties that do not change often.
 
 **Endpoint**: `/vehicles/{device_id}`  
-**Method:** `POST`  
+**Method:** `GET`  
 **Payload:** An array of [Vehicles](/data-types.md#vehicles)  
 
 _Path Parameters:_
@@ -84,7 +84,7 @@ _Path Parameters:_
 
 200 Success Response:
 
-If `device_id` is specified, `POST` will return an array with a single vehicle record, otherwise it will be a list of vehicle records with pagination details per the [JSON API](https://jsonapi.org/format/#fetching-pagination) spec:
+If `device_id` is specified, `GET` will return an array with a single vehicle record, otherwise it will be a list of vehicle records with pagination details per the [JSON API](https://jsonapi.org/format/#fetching-pagination) spec:
 
 ```json
 {
@@ -109,7 +109,7 @@ _No content returned on vehicle not found._
 The `/vehicles/status` endpoint returns information about the specified vehicle (if a device_id is provided) or a list of known vehicles current state. Providers can only retrieve data for vehicles in their registered fleet. Contains specific vehicle properties that are updated frequently.
 
 **Endpoint**: `/vehicles/status/{device_id}`  
-**Method:** `POST`  
+**Method:** `GET`  
 **Payload:** An array of [Vehicles](/data-types.md#vehicle-status) objects  
 
 _Path Parameters:_
@@ -120,7 +120,7 @@ _Path Parameters:_
 
 200 Success Response:
 
-If `device_id` is specified, `POST` will return an array with a vehicle status record, otherwise it will be a list of vehicle records with pagination details per the [JSON API](https://jsonapi.org/format/#fetching-pagination) spec:
+If `device_id` is specified, `GET` will return an array with a vehicle status record, otherwise it will be a list of vehicle records with pagination details per the [JSON API](https://jsonapi.org/format/#fetching-pagination) spec:
 
 ```json
 {
