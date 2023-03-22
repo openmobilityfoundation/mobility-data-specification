@@ -136,6 +136,7 @@ Version 1.1.0 for one provider with scooters, and 1.0.0 for another provider for
         {
           "data_spec_name": "MDS",
           "version": "1.2.0",
+          "mode_id": "micromobility",
           "required_apis": [
             {
               "api_name": "provider",
