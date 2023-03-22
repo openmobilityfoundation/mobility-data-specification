@@ -272,7 +272,7 @@ An individual `Policy` object is defined by the following fields:
 | Name             | Type            | Required / Optional | Description                                                                         |
 | ---------------- | --------------- | ---------- | ----------------------------------------------------------------------------------- |
 | `name`           | String          | Required   | Name of policy                                                                      |
-| `mode`           | [Mode][modes]            | Required   | Mode this rule should apply, see MDS [mode list][modes] for options. Default `micromobility` for backwards compatibility (this default will likely be removed in a subsequent MDS release)                                                               |
+| `mode_id`           | [Mode][modes]            | Required   | Mode this rule should apply, see MDS [mode list][modes] for options. Default `micromobility` for backwards compatibility (this default will likely be removed in a subsequent MDS release)                                                               |
 | `policy_id`      | UUID            | Required   | Unique ID of policy                                                                 |
 | `provider_ids`   | UUID[]          | Optional   | Providers for whom this policy is applicable; empty arrays and `null`/absent implies all Providers. See MDS [provider list](/providers.csv). |
 | `description`    | String          | Required   | Description of policy                                                               |
@@ -608,7 +608,7 @@ For each combination of items in a program, you can specify the data specs, APIs
         {
           "data_spec_name": "[DATA SPEC NAME]",
           "version": "[VERSION NUMBER]",
-          "mode": "[MODE SHORTNAME]",
+          "mode_id": "[MODE SHORTNAME]",
           "required_apis": [
             {
               // Required APIs array
@@ -629,7 +629,7 @@ For each combination of items in a program, you can specify the data specs, APIs
 | -------------------- | ------ | -------- | ----------------------------------- |
 | `data_spec_name`     | Enum   | Required | Name of the data spec required. Supported values are: '[MDS](https://github.com/openmobilityfoundation/mobility-data-specification/tree/ms-requirements)', '[CDS](https://github.com/openmobilityfoundation/curb-data-specification)' '[GBFS](https://github.com/NABSA/gbfs/tree/v2.2)'. Others like GOFS, GTFS, TOMP-API, etc may also be referenced now by agencies and officially standardized here in the future -- leave your feedback on [this issue](https://github.com/openmobilityfoundation/mobility-data-specification/issues/682). |
 | `version`            | Text   | Required | Version number of the data spec required. E.g. '1.2.0' |
-| `mode`               | Text   | Optional | The [mode list][modes] shortname for MDS. E.g. 'passenger-services' |
+| `mode_id`               | Text   | Optional | The [mode list][modes] shortname for MDS. E.g. 'passenger-services' |
 | `required_apis`      | Array  | Conditionally Required | Name of the [Requirement APIs](#requirement-apis) that need to be served by providers. At least one API is required. APIs not listed will not be available to the agency. |
 | `available_apis`     | Array  | Conditionally Required | Name of the [Requirement APIs](#requirement-apis) that are being served by agencies.  Not applicable to GBFS. APIs not listed will not be available to the provider. |
 
