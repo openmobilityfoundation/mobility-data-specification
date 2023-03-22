@@ -15,9 +15,10 @@ This specification contains a collection of RESTful APIs used to specify the dig
   * [Responses and Error Messages](#responses-and-error-messages)
   * [GBFS](#gbfs)
 * [Vehicles](#vehicles)
-  * [Vehicle - Status](#vehicle---status)
   * [Vehicle - Register](#vehicle---register)
   * [Vehicle - Update](#vehicle---update)
+  * [Vehicle - List](#vehicle---list)
+  * [Vehicle - Status](#vehicle---status)
 * [Trips](#trips)
 * [Telemetry](#telemetry)
 * [Events](#events)
@@ -69,6 +70,57 @@ See the [GBFS Requirement](/README.md#gbfs-requirement) language for more detail
 [Top][toc]
 
 ## Vehicles
+
+The `/vehicles` endpoints allow providers to register and update the properties of their fleet vehicles, and query current vehicle properties and status.
+
+### Vehicle - Register
+
+The `/vehicles` registration endpoint is used to register vehicles for use in the Agency's jurisdiction.
+
+**Endpoint**: `/vehicles`  
+**Method:** `POST`  
+**Payload:** An array of [Vehicles](/data-types.md#vehicles)  
+
+200 Success Response:
+
+See [Bulk Responses][bulk-responses]
+
+[Top][toc]
+
+### Vehicle Register Error Codes:
+
+| `error`              | `error_description`                               | `error_details`[]               |
+| -------------------- | ------------------------------------------------- | ------------------------------- |
+| `bad_param`          | A validation error occurred                       | Array of parameters with errors |
+| `missing_param`      | A required parameter is missing                   | Array of missing parameters     |
+| `already_registered` | A vehicle with `device_id` is already registered  |                                 |
+
+403 Unauthorized Response:
+
+**None**
+
+### Vehicle - Update
+
+The `/vehicles` update endpoint is used to change vehicle information, should some aspect of the vehicle change, such as the `vehicle_id`. Each vehicle must already be registered.
+
+**Endpoint**: `/vehicles`  
+**Method:** `PUT`  
+**Payload:** An array of [Vehicles](/data-types.md#vehicles)  
+
+200 Success Response:
+
+See [Bulk Responses][bulk-responses]
+
+### Vehicle Update Error Codes:
+
+| `error`              | `error_description`                               | `error_details`[]               |
+| -------------------- | ------------------------------------------------- | ------------------------------- |
+| `bad_param`          | A validation error occurred                       | Array of parameters with errors |
+| `unregistered`  | This `device_id` is unregistered |                                 |
+
+[Top][toc]
+
+### Vehicle - List
 
 The `/vehicles` endpoint returns the specified vehicle (if a device_id is provided) or a list of known vehicles. Providers can only retrieve data for vehicles in their registered fleet. Contains vehicle properties that do not change often.
 
@@ -137,53 +189,6 @@ If `device_id` is specified, `GET` will return an array with a vehicle status re
 404 Failure Response:
 
 _No content returned on vehicle not found._
-
-[Top][toc]
-
-### Vehicle - Register
-
-The `/vehicles` registration endpoint is used to register vehicles for use in the Agency's jurisdiction.
-
-**Endpoint**: `/vehicles`  
-**Method:** `POST`  
-**Payload:** An array of [Vehicles](/data-types.md#vehicles)  
-
-200 Success Response:
-
-See [Bulk Responses][bulk-responses]
-
-[Top][toc]
-
-### Vehicle Register Error Codes:
-
-| `error`              | `error_description`                               | `error_details`[]               |
-| -------------------- | ------------------------------------------------- | ------------------------------- |
-| `bad_param`          | A validation error occurred                       | Array of parameters with errors |
-| `missing_param`      | A required parameter is missing                   | Array of missing parameters     |
-| `already_registered` | A vehicle with `device_id` is already registered  |                                 |
-
-403 Unauthorized Response:
-
-**None**
-
-### Vehicle - Update
-
-The `/vehicles` update endpoint is used to change vehicle information, should some aspect of the vehicle change, such as the `vehicle_id`. Each vehicle must already be registered.
-
-**Endpoint**: `/vehicles`  
-**Method:** `PUT`  
-**Payload:** An array of [Vehicles](/data-types.md#vehicles)  
-
-200 Success Response:
-
-See [Bulk Responses][bulk-responses]
-
-### Vehicle Update Error Codes:
-
-| `error`              | `error_description`                               | `error_details`[]               |
-| -------------------- | ------------------------------------------------- | ------------------------------- |
-| `bad_param`          | A validation error occurred                       | Array of parameters with errors |
-| `unregistered`  | This `device_id` is unregistered |                                 |
 
 [Top][toc]
 
