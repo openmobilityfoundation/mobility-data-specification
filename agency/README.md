@@ -87,7 +87,7 @@ See [Bulk Responses][bulk-responses]
 
 [Top][toc]
 
-### Vehicle Register Error Codes:
+#### Vehicle Register Error Codes:
 
 | `error`              | `error_description`                               | `error_details`[]               |
 | -------------------- | ------------------------------------------------- | ------------------------------- |
@@ -111,7 +111,7 @@ The `/vehicles` update endpoint is used to change vehicle information, should so
 
 See [Bulk Responses][bulk-responses]
 
-### Vehicle Update Error Codes:
+#### Vehicle Update Error Codes:
 
 | `error`              | `error_description`                               | `error_details`[]               |
 | -------------------- | ------------------------------------------------- | ------------------------------- |
