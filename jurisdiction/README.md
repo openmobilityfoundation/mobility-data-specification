@@ -99,7 +99,7 @@ An individual `Jurisdiction` object is defined by the following fields:
 | `agency_name`     | String    | Optional            | Human-readable agency name for display purposes.                                                                                                                                                                                                                                                                      |
 | `description`     | String    | Required            | Description of Jurisdiction.                                                                                                                                                                                                                                                                                          |
 | `geography_id`    | UUID      | Optional            | The unique ID of the geography covered by this Jurisdiction.                                                                                                                                                                                                                                                          |
-| `mobility_modes`  | String[]  | Required            | Use this field to specify an array of what mobility [modes][modes] a jurisdiction applies to. |
+| `mode_ids`  | String[]  | Required            | Use this field to specify an array of what mobility [modes][modes] a jurisdiction applies to. |
 | `timestamp`       | timestamp | Required            | Creation or update time of a Jurisdiction.                                                                                                                                                                                                                                                                            |
 
 Formatted in JSON, a Jurisdiction object should look like this:
@@ -110,7 +110,7 @@ Formatted in JSON, a Jurisdiction object should look like this:
 	"agency_key": string,
 	"agency_name": string,
 	"geography_id": UUID,
-	"mobility_modes": [
+	"mode_ids": [
 		string
 	],
 	"timestamp": Timestamp
