@@ -297,7 +297,7 @@ processing for that hour:
 * For hours in which the provider was not operating the API shall return a
   `404 Not Found` response.
 * For hours that are in the past but for which data is not yet available
-  the API shall return a `102 Processing` response.
+  the API shall return a `202 Accepted` response.
 * For all other hours the API shall return a `200 OK` response with a fully
   populated body, even for hours that contain no trips to report.
   If the hour has no trips to report the response shall contain an empty
@@ -377,7 +377,7 @@ processing for that hour:
 * For hours in which the provider was not operating the API shall return a
   `404 Not Found` response.
 * For hours that are in the past but for which data is not yet available
-  the API shall return a `102 Processing` response.
+  the API shall return a `202 Accepted` response.
 * For all other hours the API shall return a `200 OK` response with a fully
   populated body, even for hours that contain no status changes to report.
   If the hour has no status changes to report the response shall contain an
