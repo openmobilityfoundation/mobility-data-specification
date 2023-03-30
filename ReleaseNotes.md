@@ -57,7 +57,6 @@ A reimagining of Policy, including top ten most common policies are clearly defi
 - [Clarify minimum vehicle distribution](https://github.com/openmobilityfoundation/mobility-data-specification/issues/619)
 - [Support vehicle distribution by percent](https://github.com/openmobilityfoundation/mobility-data-specification/issues/618)
 - [Multimodal support in Policy](https://github.com/openmobilityfoundation/mobility-data-specification/issues/614)
-- [Clarification on dwell time duration](https://github.com/openmobilityfoundation/mobility-data-specification/issues/711)
 - [Clarification on possible values of rule_units](https://github.com/openmobilityfoundation/mobility-data-specification/issues/704)
 - [Move Stops out of beta](https://github.com/openmobilityfoundation/mobility-data-specification/issues/674)
 - [Policy is now public](https://github.com/openmobilityfoundation/mobility-data-specification/pull/824/)
