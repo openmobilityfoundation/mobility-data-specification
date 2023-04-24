@@ -24,7 +24,7 @@ This specification describes the digital relationship between _mobility as a ser
   - [Example `policies.json`](#example-policiesjson)
   - [Example `geographies.json`](#example-geographiesjson)
 - [Schema](#schema)
-  - [JSON Schema](#json-schema)
+  - [Data Schema](#data-schema)
   - [Policy](#policy)
   - [Rules](#rules)
   - [Rule Types](#rule-types)
@@ -128,7 +128,7 @@ This endpoint should be made public. Authorization is not required.
 
 **Endpoint**: `/policies/{id}`  
 **Method**: `GET`  
-**Schema:** [`policy` schema][json-schema]  
+**Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.    
 **`data` Payload**: `{ "policies": [] }`, an array of objects with the structure [outlined below](#policy).
 
 #### Query Parameters
@@ -156,7 +156,7 @@ Policies will be returned in order of effective date (see schema below), with pa
 **Endpoint**: `/requirements/`  
 **Method**: `GET`  
 **[Beta feature](/general-information.md#beta-features)**: *No (as of 2.0.0)*. 
-**Schema:** TBD
+**Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.  
 **`data` Payload**: `{ requirements: [] }`, JSON objects that follow the schema [outlined here](#requirement).  
 
 See [Policy Requirements Examples](/policy/examples/requirements.md) for how this can be implemented.
@@ -235,9 +235,9 @@ Response bodies must be a `UTF-8` encoded JSON object and must minimally include
 }
 ```
 
-### JSON Schema
+### Data Schema
 
-The JSON Schema file is available in this repository: [`policy.json`](./policy.json).
+See the [Endpoints](#endpoints) below for information on their specific schema, and the [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for full details and interactive documentation.
 
 Before publishing a new Policy document, the document should be validated against the schema to ensure it has the correct format and fields.
 
@@ -250,7 +250,7 @@ An individual `Policy` object is defined by the following fields:
 | Name             | Type            | Required / Optional | Description                                                                         |
 | ---------------- | --------------- | ---------- | ----------------------------------------------------------------------------------- |
 | `name`           | String          | Required   | Name of policy                                                                      |
-| `mode`           | [Mode][modes]            | Required   | Mode this rule should apply, see MDS [mode list][modes] for options. Default `micromobility` for backwards compatibility (this default will likely be removed in a subsequent MDS release)                                                               |
+| `mode`           | [Mode][modes]   | Required   | Mode this rule should apply, see MDS [mode list][modes] for options. Default `micromobility` for backwards compatibility (this default will likely be removed in a subsequent MDS release)                                                               |
 | `policy_id`      | UUID            | Required   | Unique ID of policy                                                                 |
 | `provider_ids`   | UUID[]          | Optional   | Providers for whom this policy is applicable; empty arrays and `null`/absent implies all Providers. See MDS [provider list](/providers.csv). |
 | `description`    | String          | Required   | Description of policy                                                               |
