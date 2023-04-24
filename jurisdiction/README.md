@@ -86,7 +86,9 @@ The response to a client request must include a valid HTTP status code defined i
 
 ## Schema
 
-A Jurisdiction optionally contains a reference to a Geography object. This reference may change over time, e.g. if two
+See the [Endpoints](#endpoints) below for information on their specific schema, and the [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for full details and interactive documentation.
+
+A Jurisdiction optionally contains a reference to a Geography object. 
 
 When a Jurisdiction is updated, the old version should remain in the back-end for archival purposes.
 
