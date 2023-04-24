@@ -13,6 +13,7 @@ This specification contains a collection of RESTful APIs used to specify the dig
   * [Modes](#modes)
   * [Responses and Error Messages](#responses-and-error-messages)
   * [Authorization](#authorization)
+  * [Data Schema](#data-schema)
   * [GBFS](#gbfs)
 * [Vehicles](#vehicles)
   * [Vehicle - Status](#vehicle---status)
@@ -57,6 +58,12 @@ See the [Responses][responses] and [Error Messages][error-messages] sections.
 ### Authorization
 
 When making requests, the Agency API expects `provider_id` to be part of the claims in a [JWT](https://jwt.io/) `access_token` in the `Authorization` header, in the form `Authorization: Bearer <access_token>`. The token issuance, expiration and revocation policies are at the discretion of the Agency.
+
+[Top][toc]
+
+### Data Schema
+
+See the [Endpoints](#endpoints) below for information on their specific schema, and the [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for full details and interactive documentation.
 
 [Top][toc]
 
