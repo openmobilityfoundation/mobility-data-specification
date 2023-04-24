@@ -13,6 +13,7 @@ The Metrics API endpoints are intended to be implemented by regulatory agencies,
 - [Data Requirements](#data-requirements)
 - [Beta Feature](#beta-feature)
 - [Date and Time Format](#date-and-time-format)
+- [Data Schema](#data-schema)
 - [Authorization](#authorization)
 - [Data Redaction](#data-redaction)
 - [Metrics Discovery API](#metrics-discovery-api)
@@ -79,6 +80,12 @@ The Metrics API and all of its endpoints are marked as a [beta feature](https://
 All dates and times (datetime) are [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) formatted strings (YYYY-MM-DDTHHMM), with minute granularity supported and time zone (default UTC) or included offset. Dates and times may also be specified using a numeric *Unix epoch/timestamp* 
 
 All interval durations (duration) are [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#Durations) duration format strings (e.g. PT15M, PT1H, P1D).
+
+[Top][toc]
+
+## Data Schema
+
+See the [Endpoints](#endpoints) below for information on their specific schema, and the [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for full details and interactive documentation. 
 
 [Top][toc]
 
