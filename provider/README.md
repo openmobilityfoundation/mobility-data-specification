@@ -14,7 +14,7 @@ This specification contains a data standard for *mobility as a service* provider
   * [Responses and Error Messages](#responses-and-error-messages)
   * [GBFS](#GBFS)
   * [Data Latency Requirements][data-latency]
-  * [JSON Schema](#json-schema)
+  * [Data Schema](#data-schema)
   * [Pagination](#pagination)
   * [Municipality Boundary](#municipality-boundary)
   * [Other Data Types](#other-data-types)
@@ -100,11 +100,9 @@ ttl                 | Yes       | Integer representing the number of millisecond
 
 [Top][toc]
 
-### JSON Schema
+### Data Schema
 
-MDS defines [JSON Schema][json-schema] files for each endpoint.
-
-`provider` API responses must validate against their respective schema files. The schema files always take precedence over the language and examples in this and other supporting documentation meant for *human* consumption.
+See the [Endpoints](#endpoints) below for information on their specific schema, and the [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for full details and interactive documentation.
 
 [Top][toc]
 
@@ -183,7 +181,7 @@ The `/vehicles` endpoint returns the specified vehicle (if a device_id is provid
 **Endpoint:** `/vehicles/{device_id}`  
 **Method:** `GET`  
 **[Beta feature][beta]:** No (as of 1.2.0)  
-**Schema:** [`vehicles` schema][vehicles-schema]  
+**Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.   
 **`data` Payload:** `{ "vehicles": [] }`, an array of [Vehicle](vehicle) objects
 
 Path Params:
@@ -221,7 +219,7 @@ The `/vehicles/status` endpoint returns the specified vehicle (if a device_id is
 **Endpoint:** `/vehicles/status/{device_id}`  
 **Method:** `GET`  
 **[Beta feature][beta]:** No (as of 1.2.0)  
-**Schema:** N/A
+**Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.  
 **`data` Payload:** `{ "vehicles_status": [] }`, an array of [Vehicle Status][vehicle-status] objects
 
 Path Params:
@@ -263,7 +261,7 @@ Unless stated otherwise by the municipality, the trips endpoint must return all 
 **Endpoint:** `/trips`  
 **Method:** `GET`  
 **[Beta feature][beta]:** No  
-**Schema:** [`trips` schema][trips-schema]  
+**Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.   
 **`data` Payload:** `{ "trips": [] }`, an array of [Trip][trips] objects
 
 ### Trips - Query Parameters
@@ -318,7 +316,7 @@ Telemetry for a [trip](#trip) must include at least 2 points: the start point an
 
 **Endpoint:** `/telemetry`  
 **Method:** `GET`  
-**Schema:** [`telemetry` schema][telemetry-schema]  
+**Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.  
 **`data` Payload:** `{ "telemetry": [] }`, an array of [Vehicle Telemetry][vehicle-telemetry] objects
 
 [Top][toc]
@@ -344,7 +342,7 @@ Unless stated otherwise by the municipality, this endpoint must return only thos
 **Endpoint:** `/events/historical`  
 **Method:** `GET`  
 **[Beta feature][beta]:** No  
-**Schema:** [`events` schema][events-schema]  
+**Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.  
 **`data` Payload:** `{ "data": [] }`, an array of [Events](/data-types.md#events) object
 
 [Top][toc]
@@ -395,7 +393,7 @@ See also [Stop-based Geographic Data][stop-based-geo].
 **Endpoint:** `/events/recent`  
 **Method:** `GET`  
 **[Beta feature][beta]:** No (as of 1.0.0)  
-**Schema:** [`events` schema][events-schema]  
+**Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.  
 **`data` Payload:** `{ "events": [] }`, an array of [Events](/data-types.md#events) object objects
 
 #### Recent Events - Query Parameters
@@ -433,7 +431,7 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 **Endpoint:** `/stops/:stop_id`  
 **Method:** `GET`  
 **[Beta feature][beta]:** Yes (as of 1.0.0). [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/638)  
-**Schema:** [`stops` schema][stops-schema]  
+**Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.    
 **`data` Payload:** `{ "stops": [] }`, an array of [Stops][stops]
 
 In the case that a `stop_id` query parameter is specified, the `stops` array returned will only have one entry. In the case that no `stop_id` query parameter is specified, all stops will be returned.
@@ -454,7 +452,7 @@ The authenticated reports are monthly, historic flat files that may be pre-gener
 **Method:** `GET`  
 **[Beta feature][beta]:** No (as of 2.0.0). [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/672)  
 **Usage note:** This endpoint uses media-type `text/vnd.mds+csv` instead of `application/vnd.mds+json`, see [Versioning][versioning].
-**Schema:** TBD
+**Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.  
 **`data` Filename:** monthly file named by year and month, e.g. `/reports/YYYY-MM.csv`  
 **`data` Payload:** monthly CSV files of [Report](/data-types.md#Reports) objects 
 
@@ -474,7 +472,6 @@ See [Provider examples](examples.md#reports).
 [error-messages]: /general-information.md#error-messages
 [events]: /data-types.md#events
 [events---query-parameters]: #events---query-parameters
-[events-schema]: events.json
 [event-times]: #event-times
 [gbfs]: https://github.com/NABSA/gbfs
 [general-information]: /general-information.md
@@ -492,14 +489,11 @@ See [Provider examples](examples.md#reports).
 [responses]: /general-information.md#responses
 [stops]: /data-types.md#stops
 [stop-based-geo]: /general-information.md#stop-based-geographic-data
-[stops-schema]: stops.json
 [telemetry]: /data-types.md#telemetry
-[telemetry-schema]: telemetry.json
 [telemetry---query-parameters]: #telemetry-query-parameters
 [toc]: #table-of-contents
 [trips]: /data-types.md#trips
 [trips-general-info]: /general-information.md#stop-based-geographic-data
-[trips-schema]: trips.json
 [ts]: /general-information.md#timestamps
 [vehicles]: /data-types.md#vehicles
 [vehicle]: /data-types.md#vehicles
@@ -508,6 +502,5 @@ See [Provider examples](examples.md#reports).
 [vehicle-states]: /modes#vehicle-states
 [vehicle-events]: /modes#event-types
 [vehicle-event-data]: /general-information.md#event-data
-[vehicles-schema]: vehicles.json
 [vehicle-telemetry]: /data-types.md#telemetry
 [versioning]: /general-information.md#versioning
