@@ -293,30 +293,19 @@ Other special group types may be added in future MDS releases as relevant agency
 
 [Top][toc]
 
-[agency]: /agency/README.md
-[accessibility-options]: /modes/README.md#accessibility-options
-[decimal-degrees]: https://en.wikipedia.org/wiki/Decimal_degrees
 [costs-and-currencies]: /general-information.md#costs-and-currencies
 [event-times]: /general-information.md#event-times
-[hdop]: https://en.wikipedia.org/wiki/Dilution_of_precision_(navigation)
 [gbfs-station-info]: https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_informationjson
 [gbfs-station-status]: https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_statusjson
-[general-stops]: /general-information.md#stops
-[geo]: #geographic-data
 [geography-driven-events]: /general-information.md#geography-driven-events
 [gps]: #gps-data
 [iso4217]: https://en.wikipedia.org/wiki/ISO_4217#Active_codes
 [modes]: /modes/README.md
-[policy]: /policy/README.md
 [propulsion-types]: /general-information.md#propulsion-types
-[provider]: /provider/README.md
-[point-geo]: #geographic-telemetry-data
 [stop-based-geo]: #stop-based-geographic-data
 [stops]: #stops
-[st-intersects]: https://postgis.net/docs/ST_Intersects.html
 [toc]: #table-of-contents
 [ts]: /general-information.md#timestamps
 [vehicle-states]: /modes#vehicle-states
 [vehicle-events]: /modes#event-types
 [vehicle-types]: /general-information.md#vehicle-types
-[wgs84]: https://en.wikipedia.org/wiki/World_Geodetic_System
