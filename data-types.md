@@ -24,7 +24,7 @@ A vehicle record is as follows:
 | Field                | Type     | Required/Optional     | Comments |
 | -------------------- | -------- | --------------------- | -------- |
 | `device_id`          | UUID     | Required              | A unique device ID in UUID format, should match this device in Provider |
-| `provider_id`        | UUID     | Required              | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). | 
+| `provider_id`        | UUID     | Required              | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
 | `data_provider_id`   | UUID     | Optional              | If different than `provider_id`, a UUID for the data solution provider managing the data feed in this endpoint. See MDS [provider list](/providers.csv) which includes both service operators and data solution providers. |
 | `vehicle_id`         | String   | Required              | A unique vehicle identifier (visible code, license plate, etc), visible on the vehicle itself |
 | `vehicle_type`       | Enum     | Required              | The [vehicle type][vehicle-types] |
@@ -39,7 +39,7 @@ A vehicle record is as follows:
 
 ### Vehicle Types
 
-The list of allowed `vehicle_type` values in MDS. 
+The list of allowed `vehicle_type` values in MDS.
 
 | `vehicle_type`     | Description |
 |--------------------| ----------- |
@@ -61,7 +61,7 @@ Values based off of `form_factor` in [GBFS vehicle_types](https://github.com/Mob
 
 ### Propulsion Types
 
-The list of allowed `propulsion_type` values in MDS. 
+The list of allowed `propulsion_type` values in MDS.
 
 | `propulsion`         | Description                                            |
 | -------------------- | ------------------------------------------------------ |
@@ -80,7 +80,7 @@ Values based off of `propulsion_type` in [GBFS vehicle_types](https://github.com
 
 [Top][toc]
 
-### Vehicle Status 
+### Vehicle Status
 
 A vehicle status record represents the current or last-known event and telemetry from a vehicle, defined as follows:
 
@@ -132,7 +132,7 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | `data_provider_id`| UUID            | Optional               | If different than `provider_id`, a UUID for the data solution provider managing the data feed in this endpoint. See MDS [provider list](/providers.csv) which includes both service operators and data solution providers. |
 | `telemetry_id`    | UUID            | Required               | ID used for uniquely-identifying a Telemetry entry |
 | `timestamp`       | [Timestamp][ts] | Required               | Date/time that event occurred. Based on GPS or GNSS clock            |
-| `trip_ids`        | UUID[]          | Required               | If telemetry occurred during a trip, the ID of the trip(s).  If not in a trip, `null`. 
+| `trip_ids`        | UUID[]          | Required               | If telemetry occurred during a trip, the ID of the trip(s).  If not in a trip, `null`.
 | `journey_id`      | UUID            | Required               | If telemetry occurred during a trip and journeys are used for the mode, the ID of the journey.  If not in a trip, `null`.
 | `stop_id`         | UUID            | Required if Applicable | Stop that the vehicle is currently located at. See [Stops][stops] |
 | `location`        | [GPS][gps]      | Required               | Telemetry position data |
@@ -259,11 +259,11 @@ A Report is defined by the following structure:
 
 ### Data Notes
 
-Report contents include every combination of special group types, geography IDs, and vehicle types in operation for each month since the provider began operations in the jurisdiction. New files are added monthly in addition to the previous monthly historic files. 
+Report contents include every combination of special group types, geography IDs, and vehicle types in operation for each month since the provider began operations in the jurisdiction. New files are added monthly in addition to the previous monthly historic files.
 
 Counts are calculated based the agency's local time zone. Trips are counted based on their start time, i.e. if a trip starts in month A but ends in month B, it will be counted only as part of the report for month A. Similarly, trips are counted based on their start geography, i.e. if a trip starts in geography A and ends in geography B, it will appear in the counts for geography A and not for geography B.
 
-All geography IDs included in the city published [Geography](/geography) API endpoint are included in the report results. In lieu of serving an API, this can alternately be a [flat file](/geography#file-format) created by the city and sent to the provider via link. If there is no `/geography` available, then counts are for the entire agency operating area, and `null` is returned for each Geography ID. 
+All geography IDs included in the city published [Geography](/geography) API endpoint are included in the report results. In lieu of serving an API, this can alternately be a [flat file](/geography#file-format) created by the city and sent to the provider via link. If there is no `/geography` available, then counts are for the entire agency operating area, and `null` is returned for each Geography ID.
 
 [Top][toc]
 
@@ -271,23 +271,23 @@ All geography IDs included in the city published [Geography](/geography) API end
 
 Some combinations of parameters may return a small count of trips, which could increase a privacy risk of re-identification. To correct for that, Reports does not return data below a certain count of results. This data redaction is called k-anonymity, and the threshold is set at a k-value of 10. For more explanation of this methodology, see our [Data Redaction Guidance document](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Data-Redaction).
 
-**If the query returns fewer than `10` trips in a count, then that row's count value is returned as "-1".** Note "0" values are also returned as "-1" since the goal is to group both low and no count values for privacy. 
+**If the query returns fewer than `10` trips in a count, then that row's count value is returned as "-1".** Note "0" values are also returned as "-1" since the goal is to group both low and no count values for privacy.
 
 This value may be adjusted in future releases and/or may become dynamic to account for specific categories of use cases and users. To improve the specification and to inform future guidance, users are encouraged to share their feedback and questions about k-values on this [discussion thread](https://github.com/openmobilityfoundation/mobility-data-specification/discussions/622).
 
-Using k-anonymity will reduce, but not necessarily eliminate the risk that an individual could be re-identified in a dataset, and this data should still be treated as sensitive. This is just one part of good privacy protection practices, which you can read more about in our [MDS Privacy Guide for Cities](https://github.com/openmobilityfoundation/governance/blob/main/documents/OMF-MDS-Privacy-Guide-for-Cities.pdf). 
+Using k-anonymity will reduce, but not necessarily eliminate the risk that an individual could be re-identified in a dataset, and this data should still be treated as sensitive. This is just one part of good privacy protection practices, which you can read more about in our [MDS Privacy Guide for Cities](https://github.com/openmobilityfoundation/governance/blob/main/documents/OMF-MDS-Privacy-Guide-for-Cities.pdf).
 
 [Top][toc]
 
-### Special Group Type	
+### Special Group Type
 
-Here are the possible values for the `special_group_type` dimension field:	
+Here are the possible values for the `special_group_type` dimension field:
 
-| Name             | Description                                                                                                           |	
-| ---------------- | --------------------------------------------------------------------------------------------------------------------- |	
-| low_income       | Trips where a low income discount is applied by the provider, e.g., a discount from a qualified provider equity plan. |	
+| Name             | Description                                                                                                           |
+| ---------------- | --------------------------------------------------------------------------------------------------------------------- |
+| low_income       | Trips where a low income discount is applied by the provider, e.g., a discount from a qualified provider equity plan. |
 | adaptive_scooter | Trips taken on a scooter with features to improve accessibility for people with disabilities, e.g., scooter with a seat or wider base |
-| all_riders       | All riders from any group                                                                                             |	
+| all_riders       | All riders from any group                                                                                             |
 
 Other special group types may be added in future MDS releases as relevant agency and provider use cases are identified. When additional special group types or metrics are proposed, a thorough review of utility and relevance in program oversight, evaluation, and policy development should be done by OMF Working Groups, as well as any privacy implications by the OMF Privacy Committee.
 
