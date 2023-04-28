@@ -29,13 +29,13 @@ This document contains specifications that are shared between the various MDS [A
 
 Outlines shared authorization details and methods across all MDS APIs.
 
-### Endpoint Requirements  
+### Endpoint Requirements
 
 All MDS Provider, Agency, and Metrics APIs require authentication, as outlined.
 
 If implementing MDS Policy, Geography, and/or Jurisdiction APIs and endpoints, an agency must make them unauthenticated and public. This allows transparency for the public to see how the city is regulating, holds the city accountable for their policy decisions, and reduces the technical burden on providers to use these endpoints. A side benefit is that this allows third parties to ingest this information into their applications and services for public benefit.
 
-As of MDS 0.3.0, `gbfs.json` is required. The required GBFS endpoints should be made available publicly. See Provider [#realtime-data](https://github.com/openmobilityfoundation/mobility-data-specification/tree/main/provider#realtime-data) for more information about how to implement GBFS for dockless systems. 
+As of MDS 0.3.0, `gbfs.json` is required. The required GBFS endpoints should be made available publicly. See Provider [#realtime-data](https://github.com/openmobilityfoundation/mobility-data-specification/tree/main/provider#realtime-data) for more information about how to implement GBFS for dockless systems.
 
 ### Header
 
@@ -103,17 +103,17 @@ Standard [JSON data type definitions](https://en.wikipedia.org/wiki/JSON#Data_ty
 
 Defining terminology and abbreviations used throughout MDS.
 
-* **API** - Application Programming Interface - A function or set of functions that allow one software application to access or communicate with features of a different software application or service.
-* **API Endpoint** - A point at which an API connects with a software application or service.
-* **DOT** - Department of Transportation, usually a city-run agency.
-* **Jurisdiction** - An agency’s area of legal authority to manage and regulate a mobility program in the real world. Note there is also an MDS API called [Jurisdiction](/jurisdiction), which is a way to digitally represent this.
-* **PROW** - Public Right of Way - the physical infrastructure reserved for transportation purposes, examples include sidewalks, curbs, bike lanes, transit lanes and stations, traffic lanes and signals, and public parking.
+- **API** - Application Programming Interface - A function or set of functions that allow one software application to access or communicate with features of a different software application or service.
+- **API Endpoint** - A point at which an API connects with a software application or service.
+- **DOT** - Department of Transportation, usually a city-run agency.
+- **Jurisdiction** - An agency’s area of legal authority to manage and regulate a mobility program in the real world. Note there is also an MDS API called [Jurisdiction](/jurisdiction), which is a way to digitally represent this.
+- **PROW** - Public Right of Way - the physical infrastructure reserved for transportation purposes, examples include sidewalks, curbs, bike lanes, transit lanes and stations, traffic lanes and signals, and public parking.
 
 [Top][toc]
 
 ## Devices
 
-MDS defines the *device* as the unit that transmits GPS or GNSS signals for a particular vehicle. A given device must have a UUID (`device_id` below) that is unique within the Provider's fleet.
+MDS defines the _device_ as the unit that transmits GPS or GNSS signals for a particular vehicle. A given device must have a UUID (`device_id` below) that is unique within the Provider's fleet.
 
 Additionally, `device_id` must remain constant for the device's lifetime of service, regardless of the vehicle components that house the device.
 
@@ -141,9 +141,9 @@ For the purposes of this specification, the intersection of two geographic datat
 
 ## Geography-Driven Events
 
-**[Beta feature](/general-information.md#beta-features):** *Yes (as of 1.1.0)*. [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/670)
+**[Beta feature](/general-information.md#beta-features):** _Yes (as of 1.1.0)_. [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/670)
 
-Geography-Driven Events (GDE) is an MDS feature for Agencies to perform complete Policy compliance monitoring without precise location data. Geography-Driven Events describe individual vehicles in realtime – not just aggregate data. However, rather than receiving the exact location of a vehicle, Agencies receive information about the vehicle's current geographic region. The regions used for Geography-Driven Events correspond to the Geographies in an Agency's current Policy. In this way, the data-shared using Geography-Driven Events is matched to an Agency's particular regulatory needs. 
+Geography-Driven Events (GDE) is an MDS feature for Agencies to perform complete Policy compliance monitoring without precise location data. Geography-Driven Events describe individual vehicles in realtime – not just aggregate data. However, rather than receiving the exact location of a vehicle, Agencies receive information about the vehicle's current geographic region. The regions used for Geography-Driven Events correspond to the Geographies in an Agency's current Policy. In this way, the data-shared using Geography-Driven Events is matched to an Agency's particular regulatory needs.
 
 See [this example](/policy/examples/requirements.md#geography-driven-events) for how to implement GDE using [Policy Requirements](/policy#requirement).
 
@@ -151,15 +151,15 @@ Here's how it works in practice:
 
 1. The Agency creates a geographic Policy Area for a local regulatory need
 
-	*Scooters traveling within downtown during peak hours incur a $0.20 fee.*
+   _Scooters traveling within downtown during peak hours incur a $0.20 fee._
 
 2. Providers notify the Agency in real-time about events in the Policy Area.
 
-	*At 5:21pm scooter X7123 entered downtown.*
+   _At 5:21pm scooter X7123 entered downtown._
 
 3. The Agency can refine their data needs over time by revising their published Policy Areas.
 
-	*Agency adds rule disallowing parking on waterfront path, begins receiving data on events within area.*
+   _Agency adds rule disallowing parking on waterfront path, begins receiving data on events within area._
 
 Agencies that wish to use Geography-Driven Events do so by requiring a new `event_geographies` field in status events. When an Agency is using Geography-Driven Events, Providers must emit a new `changed_geographies` status event whenever a vehicle in a trip enters or leaves a Geography managed by a Policy.
 
@@ -169,29 +169,29 @@ During the Beta period for this feature, location and telemetry data remain requ
 
 ## Responses
 
-* **200:** OK: operation successful.
-* **201:** Created: `POST` operations, new object(s) created
-* **400:** Bad request.
-* **401:** Unauthorized: Invalid, expired, or insufficient scope of token.
-* **404:** Not Found: Object does not exist, returned on `GET` or `POST` operations if the object does not exist.
-* **409:** Conflict: `POST` operations when an object already exists and an update is not possible.
-* **500:** Internal server error: In this case, the answer may contain a `text/plain` body with an error message for troubleshooting.
+- **200:** OK: operation successful.
+- **201:** Created: `POST` operations, new object(s) created
+- **400:** Bad request.
+- **401:** Unauthorized: Invalid, expired, or insufficient scope of token.
+- **404:** Not Found: Object does not exist, returned on `GET` or `POST` operations if the object does not exist.
+- **409:** Conflict: `POST` operations when an object already exists and an update is not possible.
+- **500:** Internal server error: In this case, the answer may contain a `text/plain` body with an error message for troubleshooting.
 
 ### Error Messages
 
 ```jsonc
 {
-    "error": "...",
-    "error_description": "...",
-    "error_details": [ "...", "..." ]
+  "error": "...",
+  "error_description": "...",
+  "error_details": ["...", "..."]
 }
 ```
 
-| Field               | Type     | Field Description      |
-| ------------------- | -------- | ---------------------- |
-| `error`             | String   | Error message string   |
+| Field               | Type     | Field Description                                   |
+| ------------------- | -------- | --------------------------------------------------- |
+| `error`             | String   | Error message string                                |
 | `error_description` | String   | Human readable error description (can be localized) |
-| `error_details`     | String[] | Array of error details |
+| `error_details`     | String[] | Array of error details                              |
 
 ### Bulk Responses
 
@@ -205,7 +205,7 @@ For multi-record POST and PUT calls, e.g. sending Events using the Agency API, t
         "item": { ... }, // copy of the item with the problem
         "error": "...",
         "error_description": "...",
-        "error_details": [ "...", "..." ] 
+        "error_details": [ "...", "..." ]
     }, {
       // additional failure records
     } ]
@@ -220,12 +220,12 @@ For multi-record POST and PUT calls, e.g. sending Events using the Agency API, t
 
 ### Failure Details
 
-| Field               | Type                  | Field Description |
-| -----               | ----                  | ----------------- |
-| `item`              | Vehicle, Event, etc.  | Invalid submitted item |
-| `error`             | Enum                  | Error code      |
-| `error_description` | String                | Human readable error description (can be localized)     |
-| `error_details`     | String[]              | Array of fields with errors, if applicable |
+| Field               | Type                 | Field Description                                   |
+| ------------------- | -------------------- | --------------------------------------------------- |
+| `item`              | Vehicle, Event, etc. | Invalid submitted item                              |
+| `error`             | Enum                 | Error code                                          |
+| `error_description` | String               | Human readable error description (can be localized) |
+| `error_details`     | String[]             | Array of fields with errors, if applicable          |
 
 [Top][toc]
 
@@ -294,7 +294,7 @@ See new location within [individual modes](/modes#list-of-supported-modes) in [m
 
 MDS APIs must handle requests for specific versions of the specification from clients.
 
-Versioning must be implemented through the use of a custom media-type, `application/vnd.mds+json`, combined with a required `version` parameter.  The one exception is the `/reports` endpoint, which returns CSV files instead of JSON, and so uses `text/vnd.mds+csv` as its media-type.
+Versioning must be implemented through the use of a custom media-type, `application/vnd.mds+json`, combined with a required `version` parameter. The one exception is the `/reports` endpoint, which returns CSV files instead of JSON, and so uses `text/vnd.mds+csv` as its media-type.
 
 The version parameter specifies the dot-separated combination of major and minor versions from a published version of the specification. For example, the media-type for version `1.0.1` would be specified as `application/vnd.mds+json;version=1.0`. Only major and minor versions are allowed and required in the media-type version string (not [patch](https://github.com/openmobilityfoundation/governance/blob/main/technical/ReleaseGuidelines.md#versioning) releases).
 
@@ -306,9 +306,9 @@ Accept: application/vnd.mds+json;version=2.0
 
 Since versioning was not available from the start, the following APIs provide a fallback version if the `Accept` header is not set as specified above:
 
-* The `provider` API must respond as if version `0.2` was requested.
-* The `agency` API must respond as if version `0.3` was requested.
-* The `policy` API must respond as if version `0.4` was requested.
+- The `provider` API must respond as if version `0.2` was requested.
+- The `agency` API must respond as if version `0.3` was requested.
+- The `policy` API must respond as if version `0.4` was requested.
 
 If an unsupported or invalid version is requested, the API must respond with a status of `406 Not Acceptable`.
 
