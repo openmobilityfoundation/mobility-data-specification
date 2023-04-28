@@ -128,7 +128,7 @@ The MDS specification is versioned using Git tags and [semantic versioning](http
 
 To help with MDS data and feed validation, please see our OpenAPI schema description in the OMF [mds-openapi](https://github.com/openmobilityfoundation/mds-openapi) repository. Browsable interactive documentation is also linked to in that repository.
 
-Starting with MDS 2.0, [schema](/schema) validation of endpoints is done using OpenAPI, instead of the former JSON Schema.
+Starting with MDS 2.0, OpenAPI documents describe MDS endpoints and allow for [schema](/schema) validation, expanding on the JSON Schemas formerly housed in this repository.
 
 [Top][toc]
 
