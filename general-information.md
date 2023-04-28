@@ -179,7 +179,7 @@ During the Beta period for this feature, location and telemetry data remain requ
 
 ### Error Messages
 
-```json
+```jsonc
 {
     "error": "...",
     "error_description": "...",
@@ -197,7 +197,7 @@ During the Beta period for this feature, location and telemetry data remain requ
 
 For multi-record POST and PUT calls, e.g. sending Events using the Agency API, the bulk-response structure describes a list of failures is as follows:
 
-```json
+```jsonc
 {
     "success": "...",
     "total": "...",
@@ -212,11 +212,11 @@ For multi-record POST and PUT calls, e.g. sending Events using the Agency API, t
 }
 ```
 
-| Field      | Type                           | Field Description                                                                                       |
-| ---------- | ------------------------------ | ------------------------------------------------------------------------------------------------------- |
-| `success`  | Integer                        | Number of successfully written trip records points                                                |
-| `total`    | Integer                        | Total number of provided points                                                                       |
-| `failures` | [Trip](#trip-data)[] | Array of failed trip records (empty if all successful)                          |
+| Field      | Type                                  | Field Description                                               |
+| ---------- | ------------------------------------- | --------------------------------------------------------------- |
+| `success`  | Integer                               | Number of successfully written records                          |
+| `total`    | Integer                               | Total number of provided records                                |
+| `failures` | [Failure Details](#failure-details)[] | Array of details about failed records (empty if all successful) |
 
 ### Failure Details
 
