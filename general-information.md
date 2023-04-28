@@ -314,23 +314,7 @@ If an unsupported or invalid version is requested, the API must respond with a s
 
 [Top][toc]
 
-[agency]: /agency/README.md
 [decimal-degrees]: https://en.wikipedia.org/wiki/Decimal_degrees
-[hdop]: https://en.wikipedia.org/wiki/Dilution_of_precision_(navigation)
-[gbfs-station-info]: https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_informationjson
-[gbfs-station-status]: https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_statusjson
-[general-stops]: /general-information.md#stops
-[geo]: #geographic-data
-[geojson-feature]: https://tools.ietf.org/html/rfc7946#section-3.2
-[geojson-point]: https://tools.ietf.org/html/rfc7946#section-3.1.2
-[modes]: /modes/README.md
-[policy]: /policy/README.md
-[provider]: /provider/README.md
-[point-geo]: #geographic-telemetry-data
-[stop-based-geo]: #stop-based-geographic-data
 [st-intersects]: https://postgis.net/docs/ST_Intersects.html
 [toc]: #table-of-contents
-[ts]: /general-information.md#timestamps
-[vehicle-states]: /modes#vehicle-states
-[vehicle-events]: /modes#event-types
 [wgs84]: https://en.wikipedia.org/wiki/World_Geodetic_System
