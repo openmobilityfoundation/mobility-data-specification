@@ -199,10 +199,8 @@ Response body:
 
 Response codes:
 
-* 200 - success
-* 401 - unauthorized
-* 404 - no geography found
-* 403 - user is attempting to read an unpublished geography, but only has the `geographies:read:published` scope.
+- 200 - success
+- 404 - no geography found
 
 [Top][toc]
 
@@ -233,8 +231,7 @@ Response body:
 
 Response codes:
 
-* 200 - success
-* 401 - unauthorized
+- 200 - success
 
 [Top][toc]
 
