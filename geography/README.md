@@ -52,7 +52,7 @@ Geographies shall be published by regulatory agencies or their authorized delega
 
 Published geographies, should be treated as immutable data. Obsoleting or otherwise changing a geography is accomplished by publishing a new geography with a field named `prev_geographies`, a list of UUID references to the geography or policies geographies by the new geography.
 
-Geographical data shall be represented as GeoJSON `Feature` objects. Typically no part of the geographical data should be outside the [municipality boundary][muni-boundary] unless an agency has the authority to regulate there.
+Geographical data shall be represented as GeoJSON `FeatureCollection` objects. Typically no part of the geographical data should be outside the [municipality boundary][muni-boundary] unless an agency has the authority to regulate there.
 
 Geographies should be re-fetched at an agreed upon interval between providers and agencies, or when either entity requests it.
 
