@@ -4,27 +4,27 @@
 
 This specification contains a collection of RESTful APIs used to read Geographies (descriptions of geographical information, e.g. multi-polygons, currently represented via GeoJSON).
 
-Geographical data has many applications in the context of mobility, such as the description of municipal boundaries, locations for pick-up and drop-off zones, and areas of temporary closure for special events or emergencies.  This API is intended to support a variety of other APIs, including the Policy API.
+Geographical data has many applications in the context of mobility, such as the description of municipal boundaries, locations for pick-up and drop-off zones, and areas of temporary closure for special events or emergencies. This API is intended to support a variety of other APIs, including the Policy API.
 
-Geographical data will be stored as GeoJSON and read from either `geographies.json` or the `/geographies` endpoint, referenced by UUID. Geography data once published through this API shall be treated as immutable, to ensure that any rules or regulations referring to the boundaries cannot be retroactively changed.  A Geography may be deprecated and replaced by updated version with a new UUID.
+Geographical data will be stored as GeoJSON and read from either `geographies.json` or the `/geographies` endpoint, referenced by UUID. Geography data once published through this API shall be treated as immutable, to ensure that any rules or regulations referring to the boundaries cannot be retroactively changed. A Geography may be deprecated and replaced by updated version with a new UUID.
 
 ## Table of Contents
 
-* [General Information](#general-information)
-  * [Authorization](#authorization)
-  * [Versioning](#versioning)
-* [Distribution](#distribution)
-  * [Flat Files](#flat-files)
-  * [Response Format](#response-format)
-* [Schema](#schema)
-  * [Geography Fields](#geography-fields)
-  * [Previous Geographies](#previous-geographies)
-  * [Geography Type](#geography-type)
-* [File Format](#file-format)
-* [Endpoints](#endpoints)
-  * [Geography](#geography)
-  * [Geographies](#geographies)
-* [Examples](#examples)
+- [General Information](#general-information)
+  - [Authorization](#authorization)
+  - [Versioning](#versioning)
+- [Distribution](#distribution)
+  - [Flat Files](#flat-files)
+  - [Response Format](#response-format)
+- [Schema](#schema)
+  - [Geography Fields](#geography-fields)
+  - [Previous Geographies](#previous-geographies)
+  - [Geography Type](#geography-type)
+- [File Format](#file-format)
+- [Endpoints](#endpoints)
+  - [Geography](#geography)
+  - [Geographies](#geographies)
+- [Examples](#examples)
 
 ## General Information
 
@@ -62,7 +62,7 @@ Geographies should be re-fetched at an agreed upon interval between providers an
 
 To use a flat file, geographies shall be represented in one (1) file equivalent to the /geographies endpoint:
 
-* `geographies.json` in Geography API
+- `geographies.json` in Geography API
 
 The files shall be structured like the output of the [REST endpoints](#endpoints) above.
 
@@ -102,15 +102,15 @@ See the [Endpoints](#endpoints) below for links to their specific JSON Schema do
 
 ### Previous Geographies
 
-Obsoleting or otherwise changing a geography is accomplished by publishing a new geography with the `prev_geographies` field, which is a list of UUID references to the geography or geographies superseded by the new geography. The previous geographies are also published in the `/geographies` endpoint.  Using it allows agencies to look back historically at previously published geographies, for analysis, historic reference, or an auditable change trail.
+Obsoleting or otherwise changing a geography is accomplished by publishing a new geography with the `prev_geographies` field, which is a list of UUID references to the geography or geographies superseded by the new geography. The previous geographies are also published in the `/geographies` endpoint. Using it allows agencies to look back historically at previously published geographies, for analysis, historic reference, or an auditable change trail.
 
-This field is optional can be omitted by the publishing Agency.  
+This field is optional can be omitted by the publishing Agency.
 
 [Top][toc]
 
 ### Geography Type
 
-Type of geography. These specific types are recommendations based on ones commonly defined by agencies.  Others may be created by the Agency as needed, or the optional `geography_type` field may be omitted.
+Type of geography. These specific types are recommendations based on ones commonly defined by agencies. Others may be created by the Agency as needed, or the optional `geography_type` field may be omitted.
 
 `geography_type` does not imply policy or required actions by providers, but instead is for organizational and discovery purposes within the standalone Geography API. Geographies need to be referenced from other areas of MDS to be meaningfully applied.
 
@@ -138,7 +138,7 @@ Type of geography. These specific types are recommendations based on ones common
 
 ## File format
 
-Note: to use flat files rather than REST endpoints, Geography objects should be stored in `geographies.json`.  The `geographies.json` file will look like the output of `GET /geographies`.  
+Note: to use flat files rather than REST endpoints, Geography objects should be stored in `geographies.json`. The `geographies.json` file will look like the output of `GET /geographies`.
 
 Example `geographies.json`
 
@@ -167,15 +167,15 @@ The Geography API consists of the following endpoints:
 
 ### Geography
 
-**Endpoint**:  `/geographies/{geography_id}`  
-**Method**: `GET`  
-**Schema:** [`geography` schema](./geography.json)  
+**Endpoint**: `/geographies/{geography_id}`
+**Method**: `GET`
+**Schema:** [`geography` schema](./geography.json)
 
 #### Path Parameters
 
-| Path Parameter          | Type | Required/Optional | Description                                       |
-| ------------- | ---- | --- | --------------------------------------------------- |
-| `geography_id`  | UUID | Required   | Unique identifier for a single specific Geography |
+| Path Parameter | Type | Required/Optional | Description                                       |
+| -------------- | ---- | ----------------- | ------------------------------------------------- |
+| `geography_id` | UUID | Required          | Unique identifier for a single specific Geography |
 
 Returns: Details of a single Geography based on a UUID.
 
@@ -206,9 +206,9 @@ Response codes:
 
 ### Geographies
 
-**Endpoint**:  `/geographies`  
-**Method**: `GET`  
-**Schema:** [`geographies` schema](./geographies.json)  
+**Endpoint**: `/geographies`
+**Method**: `GET`
+**Schema:** [`geographies` schema](./geographies.json)
 
 Returns: All geography objects
 
