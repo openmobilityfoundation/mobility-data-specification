@@ -68,7 +68,7 @@ The files shall be structured like the output of the [REST endpoints](#rest-endp
 
 The publishing Agency should establish and communicate to providers how frequently these files should be polled.
 
-The `updated` field in the payload wrapper should be set to the time of publishing a revision, so that it is simple to identify a changed file.
+The `last_updated` field in the payload wrapper should be set to the time of publishing a revision, so that it is simple to identify a changed file.
 
 [Top][toc]
 
@@ -144,16 +144,16 @@ Example `geographies.json`
 
 ```jsonc
 {
-    "version": "1.2.0",
-    "updated": "1570035222868",
-    "geographies": [
-        {
-            // Geography 1
-        },
-        {
-            // Geography 2
-        }
-    ]
+  "version": "2.0.0",
+  "last_updated": "1682984274000",
+  "geographies": [
+    {
+      // Geography 1
+    },
+    {
+      // Geography 2
+    }
+  ]
 }
 ```
 
@@ -183,7 +183,7 @@ Response body:
 
 ```js
 {
-  "version": '1.2.0',
+  "version": "2.0.0",
   "geography": {
     "geography_id": UUID,
     "geography_type": string,
@@ -193,7 +193,7 @@ Response body:
     "effective_date": timestamp,
     "prev_geographies": UUID[],
     "geography_json": GeoJSON FeatureCollection
-  } 
+  }
 }
 ```
 
@@ -216,16 +216,16 @@ Response body:
 
 ```jsonc
 {
-    "version": "1.2.0",
-    "updated": "1570035222868",
-    "geographies": [
-        {
-            // Geography 1
-        },
-        {
-            // Geography 2
-        }
-    ]
+  "version": "2.0.0",
+  "last_updated": "1682984274000",
+  "geographies": [
+    {
+      // Geography 1
+    },
+    {
+      // Geography 2
+    }
+  ]
 }
 ```
 
