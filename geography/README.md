@@ -48,7 +48,7 @@ Versioning must be implemented as specified in the [Versioning section][versioni
 
 ## Distribution
 
-Geographies shall be published by regulatory agencies or their authorized delegates as JSON objects. These JSON objects shall be served by either [flat files](#flat-files) or via [REST API endpoints](#rest-endpoints). In either case, geography data shall follow the [schema](#schema) outlined below.
+Geographies shall be published by regulatory agencies or their authorized delegates as JSON objects. These JSON objects shall be served by either [flat files](#flat-files) or via [REST API endpoints](#endpoints). In either case, geography data shall follow the [schema](#schema) outlined below.
 
 Published geographies, should be treated as immutable data. Obsoleting or otherwise changing a geography is accomplished by publishing a new geography with a field named `prev_geographies`, a list of UUID references to the geography or policies geographies by the new geography.
 
@@ -64,7 +64,7 @@ To use a flat file, geographies shall be represented in one (1) file equivalent 
 
 * `geographies.json` in Geography API
 
-The files shall be structured like the output of the [REST endpoints](#rest-endpoints) above.
+The files shall be structured like the output of the [REST endpoints](#endpoints) above.
 
 The publishing Agency should establish and communicate to providers how frequently these files should be polled.
 
@@ -163,7 +163,7 @@ Example `geographies.json`
 
 Responses must set the `Content-Type` header, as specified in the [Provider versioning](../provider/README.md#versioning) section. They must also specify the API version in the JSON-formatted response body, under the `version` key.
 
-The Geography Author API consists of the following endpoints:
+The Geography API consists of the following endpoints:
 
 ### Geography
 
