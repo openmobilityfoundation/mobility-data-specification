@@ -202,19 +202,17 @@ The `last_updated` field in the payload wrapper should be set to the time of pub
 
 ```jsonc
 {
-    "version": "0.4.0",
-    "last_updated": 1570035222868,
-    "end_date": 1570035222868,
-    "data": {
-        "policies": [
-            {
-                // policy JSON 1
-            },
-            {
-                // policy JSON 2
-            }
-        ]
+  "version": "0.4.0",
+  "last_updated": 1570035222868,
+  "end_date": 1570035222868,
+  "policies": [
+    {
+      // policy JSON 1
+    },
+    {
+      // policy JSON 2
     }
+  ]
 }
 ```
 
@@ -224,18 +222,16 @@ The optional `end_date` field applies to all policies represented in the file.
 
 ```jsonc
 {
-    "version": "0.4.0",
-    "last_updated": 1570035222868,
-    "data": {
-        "geographies": [
-            {
-                // GeoJSON Feature 1
-            },
-            {
-                // GeoJSON Feature 2
-            }
-        ]
+  "version": "0.4.0",
+  "last_updated": 1570035222868,
+  "geographies": [
+    {
+      // GeoJSON Feature 1
+    },
+    {
+      // GeoJSON Feature 2
     }
+  ]
 }
 ```
 
@@ -249,11 +245,9 @@ Response bodies must be a `UTF-8` encoded JSON object and must minimally include
 
 ```jsonc
 {
-    "version": "x.y.z",
-    "last_updated": 1570035222868,
-    "data": {
-        // endpoint/file specific payload
-    }
+  "version": "x.y.z",
+  "last_updated": 1570035222868,
+  // endpoint/file specific payload
 }
 ```
 

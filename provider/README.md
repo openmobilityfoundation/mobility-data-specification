@@ -79,12 +79,12 @@ Response bodies must be a `UTF-8` encoded JSON object and must minimally include
 ```json
 {
     "version": "x.y.z",
-    "data": {
-        "trips": [{
-            "provider_id": "...",
-            "trip_id": "...",
-        }]
-    }
+    "trips": [
+      {
+        "provider_id": "...",
+        "trip_id": "..."
+      }
+    ]
 }
 ```
 
@@ -133,12 +133,10 @@ At a minimum, paginated payloads must include a `next` key, which must be set to
 ```json
 {
     "version": "x.y.z",
-    "data": {
-        "trips": [{
-            "provider_id": "...",
-            "trip_id": "...",
-        }]
-    },
+    "trips": [{
+        "provider_id": "...",
+        "trip_id": "...",
+    }],
     "links": {
         "first": "https://...",
         "last": "https://...",
@@ -177,11 +175,9 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 ```json
 {
     "version": "x.y.z",
-    "data": {
-        "vehicles": []
-    },
     "last_updated": "12345",
-    "ttl": "12345"
+    "ttl": "12345",
+    "vehicles": []
 }
 ```
 
@@ -304,9 +300,7 @@ processing for that hour:
     ```json
     {
         "version": "x.y.z",
-        "data": {
-            "trips": []
-        }
+        "trips": []
     }
     ```
 
@@ -351,7 +345,7 @@ Unless stated otherwise by the municipality, this endpoint must return only thos
 **Method:** `GET`  
 **[Beta feature][beta]:** No  
 **Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.  
-**`data` Payload:** `{ "data": [] }`, an array of [Events](/data-types.md#events) object
+**`data` Payload:** `{ "events": [] }`, an array of [Events](/data-types.md#events) object
 
 [Top][toc]
 
@@ -384,9 +378,7 @@ processing for that hour:
     ```json
     {
         "version": "x.y.z",
-        "data": {
-            "status_changes": []
-        }
+        "status_changes": []
     }
     ```
 
@@ -428,11 +420,9 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 ```json
 {
     "version": "x.y.z",
-    "data": {
-        "stops": []
-    },
     "last_updated": "12345",
-    "ttl": "12345"
+    "ttl": "12345",
+    "stops": []
 }
 ```
 
