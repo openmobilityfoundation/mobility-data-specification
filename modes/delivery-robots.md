@@ -23,7 +23,7 @@ Autonomous and remotely piloted delivery robots do not require a driver, whereas
    - [Fare Attributes](#fare-attributes)
 - [Vehicle Properties](#vehicle-properties)
   - [Vehicle Attributes](#vehicle-attributes)
-  - [Accessibility Options](#accessibility-options)
+  - [Accessibility Attributes](#accessibility-attributes)
 - [State Machine](#state-machine)
   - [Vehicle States](#vehicle-states)
   - [Event Types](#event-types)
@@ -130,9 +130,9 @@ The `vehicle_attributes` object **may** have the following key value pairs:
 
 [Top][toc]
 
-### Accessibility Options
+### Accessibility Attributes
 
-The `accessibility_options` object **may** have the following key value pairs:
+The `accessibility_attributes` object **may** have the following key value pairs:
 
 - `audio_cue` (boolean, optional): is the device equipped with audio cues upon delivery
 - `visual_cue` (boolean, optional): is the device equipped with visual cues upon delivery

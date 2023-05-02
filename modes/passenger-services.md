@@ -23,7 +23,7 @@ Taxis typically require explicit tracking of maintenance while TNCs typically do
    - [Fare Attributes](#fare-attributes)
 - [Vehicle Properties](#vehicle-properties)
   - [Vehicle Attributes](#vehicle-attributes)
-  - [Accessibility Options](#accessibility-options)
+  - [Accessibility Attributes](#accessibility-attributes)
 - [State Machine](#state-machine)
   - [Vehicle States](#vehicle-states)
   - [Event Types](#event-types)
@@ -142,13 +142,13 @@ The `vehicle_attributes` object **may** have the following key value pairs:
 
 [Top][toc]
 
-### Accessibility Options
+### Accessibility Attributes
 
-This `accessibility_options` enum represents the accessibility options available on a given vehicle, or the accessibility options utilized for a given trip. 
+This `accessibility_attributes` enum represents the accessibility options available on a given vehicle, or the accessibility options utilized for a given trip. 
 
-| `accessibility_options` | Description                           |
-|-------------------------|---------------------------------------|
-| `wheelchair_accessible` | This vehicle is wheelchair accessible |
+| `accessibility_attributes` | Description                           |
+|----------------------------|---------------------------------------|
+| `wheelchair_accessible`    | This vehicle is wheelchair accessible |
 
 [Top][toc]
 

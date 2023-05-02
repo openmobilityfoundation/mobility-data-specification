@@ -83,9 +83,9 @@ The `vehicle_attributes` object returns a list of JSON-formatted key/value pairs
 
 _See more available vehicle attributes for any mode in the [vehicles object](/data-types.md#vehicles)._
 
-### Accessibility Options
+### Accessibility Attributes
 
-The `accessibility_options` object returns a list of JSON-formatted key/value pairs which correspond to the allowed accessibility attributes and values for the operative mode. For each mode, the allowed attributes and corresponding values are defined in the [mode definition](#list-of-supported-modes).
+The `accessibility_attributes` object returns a list of JSON-formatted key/value pairs which correspond to the allowed accessibility attributes and values for the operative mode. For each mode, the allowed attributes and corresponding values are defined in the [mode definition](#list-of-supported-modes).
 
 [Top][toc]
 
