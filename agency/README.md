@@ -9,16 +9,16 @@ This specification contains a collection of RESTful APIs used to specify the dig
 ## Table of Contents
 
 * [General Information](#general-information)
+  * [Authorization](#authorization)
   * [Versioning](#versioning)
   * [Modes](#modes)
   * [Responses and Error Messages](#responses-and-error-messages)
-  * [Authorization](#authorization)
-  * [Data Schema](#data-schema)
   * [GBFS](#gbfs)
 * [Vehicles](#vehicles)
-  * [Vehicle - Status](#vehicle---status)
   * [Vehicle - Register](#vehicle---register)
   * [Vehicle - Update](#vehicle---update)
+  * [Vehicle - List](#vehicle---list)
+  * [Vehicle - Status](#vehicle---status)
 * [Trips](#trips)
 * [Telemetry](#telemetry)
 * [Events](#events)
@@ -35,6 +35,14 @@ This specification uses data types including timestamps, UUIDs, and vehicle stat
 
 [Top][toc]
 
+### Authorization
+
+MDS Agency endpoint producers **SHALL** provide authorization for API endpoints via a bearer token based auth system. When making requests, the endpoints expect `provider_id` to be part of the claims in a [JSON Web Token](https://jwt.io/) (JWT) `access_token` in the `Authorization` header, in the form `Authorization: Bearer <access_token>`. The token issuance, expiration and revocation policies are at the discretion of the agency. [JSON Web Token](/general-information.md#json-web-tokens) is the recommended format.
+
+General authorization details are specified in the [Authorization section](/general-information.md#authorization) in MDS General Information.
+
+[Top][toc]
+
 ### Versioning
 
 `Agency` APIs must handle requests for specific versions of the specification from clients.
@@ -45,7 +53,7 @@ Versioning must be implemented as specified in the [Versioning section][versioni
 
 ### Modes
 
-MDS is intended to be used for multiple transportation modes, including its original micromobility (e-scooters, bikes, etc.) as well as additional modes such as taxis and delivery bots.  A given `provider_id` shall be associated with a single mobility [mode][modes], so that the mode does not have to be specified in each data structure and API call.  A provider implementing more than one mode shall [register](/README.md#providers-using-mds) a `provider_id` for each mode.
+MDS is intended to be used for multiple transportation modes, including its original micromobility (e-scooters, bikes, etc.) mode, as well as additional modes such as taxis, car share, and delivery bots. A given `provider_id` shall be associated with a single mobility [mode][modes], so that the mode does not have to be specified in each data structure and API call. A provider implementing more than one mode shall [register](/README.md#providers-using-mds) a unique `provider_id` for each mode.
 
 [Top][toc]
 
@@ -55,9 +63,9 @@ See the [Responses][responses] and [Error Messages][error-messages] sections.
 
 [Top][toc]
 
-### Authorization
+### GBFS
 
-When making requests, the Agency API expects `provider_id` to be part of the claims in a [JWT](https://jwt.io/) `access_token` in the `Authorization` header, in the form `Authorization: Bearer <access_token>`. The token issuance, expiration and revocation policies are at the discretion of the Agency.
+See the [GBFS Requirement](/README.md#gbfs-requirement) language for more details.
 
 [Top][toc]
 
@@ -67,23 +75,68 @@ See the [Endpoints](#endpoints) below for information on their specific schema, 
 
 [Top][toc]
 
-### GBFS
+## Vehicles
 
-See the [GBFS Requirement](/README.md#gbfs-requirement) language for more details.
+The `/vehicles` endpoints allow providers to register and update the properties of their fleet vehicles, and query current vehicle properties and status.
+
+### Vehicle - Register
+
+The `/vehicles` registration endpoint is used to register vehicles for use in the Agency's jurisdiction.
+
+**Endpoint**: `/vehicles`  
+**Method:** `POST`  
+**Payload:** An array of [Vehicles](/data-types.md#vehicles)  
+
+200 Success Response:
+
+See [Bulk Responses][bulk-responses]
 
 [Top][toc]
 
-## Vehicles
+#### Vehicle Register Error Codes:
+
+| `error`              | `error_description`                               | `error_details`[]               |
+| -------------------- | ------------------------------------------------- | ------------------------------- |
+| `bad_param`          | A validation error occurred                       | Array of parameters with errors |
+| `missing_param`      | A required parameter is missing                   | Array of missing parameters     |
+| `already_registered` | A vehicle with `device_id` is already registered  |                                 |
+
+403 Unauthorized Response:
+
+**None**
+
+### Vehicle - Update
+
+The `/vehicles` update endpoint is used to change vehicle information, should some aspect of the vehicle change, such as the `vehicle_id`. Each vehicle must already be registered.
+
+**Endpoint**: `/vehicles`  
+**Method:** `PUT`  
+**Payload:** An array of [Vehicles](/data-types.md#vehicles)  
+
+200 Success Response:
+
+See [Bulk Responses][bulk-responses]
+
+#### Vehicle Update Error Codes:
+
+| `error`              | `error_description`                               | `error_details`[]               |
+| -------------------- | ------------------------------------------------- | ------------------------------- |
+| `bad_param`          | A validation error occurred                       | Array of parameters with errors |
+| `unregistered`  | This `device_id` is unregistered |                                 |
+
+[Top][toc]
+
+### Vehicle - List
 
 The `/vehicles` endpoint returns the specified vehicle (if a device_id is provided) or a list of known vehicles. Providers can only retrieve data for vehicles in their registered fleet. Contains vehicle properties that do not change often.
 
 **Endpoint**: `/vehicles/{device_id}`  
-**Method:** `POST`  
+**Method:** `GET`  
 **Payload:** An array of [Vehicles](/data-types.md#vehicles)  
 
-Path Params:
+_Path Parameters:_
 
-| Param        | Type | Required/Optional | Description                                 |
+| Path Parameters        | Type | Required/Optional | Description                                 |
 | ------------ | ---- | ----------------- | ------------------------------------------- |
 | `device_id`  | UUID | Optional          | If provided, retrieve the specified vehicle |
 
@@ -114,12 +167,12 @@ _No content returned on vehicle not found._
 The `/vehicles/status` endpoint returns information about the specified vehicle (if a device_id is provided) or a list of known vehicles current state. Providers can only retrieve data for vehicles in their registered fleet. Contains specific vehicle properties that are updated frequently.
 
 **Endpoint**: `/vehicles/status/{device_id}`  
-**Method:** `POST`  
+**Method:** `GET`  
 **Payload:** An array of [Vehicles](/data-types.md#vehicle-status) objects  
 
-Path Params:
+_Path Parameters:_
 
-| Param        | Type | Required/Optional | Description                                 |
+| Path Parameters        | Type | Required/Optional | Description                                 |
 | ------------ | ---- | ----------------- | ------------------------------------------- |
 | `device_id`  | UUID | Optional          | If provided, retrieve the specified vehicle |
 
@@ -142,53 +195,6 @@ If `device_id` is specified, `GET` will return an array with a vehicle status re
 404 Failure Response:
 
 _No content returned on vehicle not found._
-
-[Top][toc]
-
-### Vehicle - Register
-
-The `/vehicles` registration endpoint is used to register vehicles for use in the Agency's jurisdiction.
-
-**Endpoint**: `/vehicles`  
-**Method:** `POST`  
-**Payload:** An array of [Vehicles](/data-types.md#vehicles)  
-
-200 Success Response:
-
-See [Bulk Responses][bulk-responses]
-
-[Top][toc]
-
-### Vehicle Register Error Codes:
-
-| `error`              | `error_description`                               | `error_details`[]               |
-| -------------------- | ------------------------------------------------- | ------------------------------- |
-| `bad_param`          | A validation error occurred                       | Array of parameters with errors |
-| `missing_param`      | A required parameter is missing                   | Array of missing parameters     |
-| `already_registered` | A vehicle with `device_id` is already registered  |                                 |
-
-403 Unauthorized Response:
-
-**None**
-
-### Vehicle - Update
-
-The `/vehicles` update endpoint is used to change vehicle information, should some aspect of the vehicle change, such as the `vehicle_id`. Each vehicle must already be registered.
-
-**Endpoint**: `/vehicles`  
-**Method:** `PUT`  
-**Payload:** An array of [Vehicles](/data-types.md#vehicles)  
-
-200 Success Response:
-
-See [Bulk Responses][bulk-responses]
-
-### Vehicle Update Error Codes:
-
-| `error`              | `error_description`                               | `error_details`[]               |
-| -------------------- | ------------------------------------------------- | ------------------------------- |
-| `bad_param`          | A validation error occurred                       | Array of parameters with errors |
-| `unregistered`  | This `device_id` is unregistered |                                 |
 
 [Top][toc]
 
@@ -317,13 +323,13 @@ See [Bulk Responses][bulk-responses]
 
 ### Stops - Readback
 
-**Endpoint:** `/stops/:stop_id`  
+**Endpoint:** `/stops/{stop_id}`  
 **Method:** `GET`  
 **Payload:** An array of [Stops][stops]
 
-Path Params:
+_Path Parameters:_
 
-| Param        | Type | Required/Optional | Description                                 |
+| Path Parameters        | Type | Required/Optional | Description                                 |
 | ------------ | ---- | ----------------- | ------------------------------------------- |
 | `stop_id`    | UUID | Optional          | If provided, retrieve the specified stop    |
 
@@ -375,16 +381,16 @@ See [Bulk Responses][bulk-responses]
 [error-messages]: /general-information.md#error-messages
 [hdop]: https://en.wikipedia.org/wiki/Dilution_of_precision_(navigation)
 [modes]: /modes/README.md
-[propulsion-types]: /data_types.md#propulsion-types
-[reports]: /data_types.md#reports
+[propulsion-types]: /data-types.md#propulsion-types
+[reports]: /data-types.md#reports
 [responses]: /general-information.md#responses
-[stops]: /data_types.md#stops
-[telemetry-data]: /data_types.md#telemetry
-[trip-data]: /data_types.md#trips
+[stops]: /data-types.md#stops
+[telemetry-data]: /data-types.md#telemetry
+[trip-data]: /data-types.md#trips
 [toc]: #table-of-contents
 [ts]: /general-information.md#timestamps
 [vehicle]: /data-types.md#vehicles
-[vehicle-types]: /data_types.md#vehicle-types
+[vehicle-types]: /data-types.md#vehicle-types
 [vehicle-states]: /modes/vehicle_states.md
 [vehicle-event-types]: /modes/event_types.md
 [vehicle-event]: /data-types.md#events

@@ -9,15 +9,16 @@ This specification describes the digital relationship between _mobility as a ser
 ## Table of Contents
 
 - [General information](#general-information)
+  - [Background](#background)
+  - [Policy Examples](#policy-examples)
+  - [Authorization](#authorization)
   - [Update Frequency](#update-frequency)
+  - [Updating or Ending Policies](#updating-or-ending-policies)
   - [Versioning](#versioning)
-- [Background](#background)
-- [Distribution](#distribution)
+  - [Distribution](#distribution)
 - [REST Endpoints](#rest-endpoints)
   - [Responses and Error Messages](#responses-and-error-messages)
-  - [Authorization](#authorization)
   - [Policies](#policies)
-    - [Query Parameters](#query-parameters)
   - [Geographies](#geographies)
   - [Requirements](#requirements)
 - [Flat Files](#flat-files)
@@ -37,6 +38,7 @@ This specification describes the digital relationship between _mobility as a ser
   - [Value URL](#value-url)
   - [Order of Operations](#order-of-operations)
   - [Requirement](#requirement)
+    - [Examples](#examples)
     - [Public Hosting](#public-hosting)
     - [Update Frequency](#requirement-update-frequency)
     - [Version Tracking](#version-tracking)
@@ -53,21 +55,7 @@ The following information applies to all `policy` API endpoints.
 
 [Top][toc]
 
-### Update Frequency
-
-The publishing agency should establish beforehand and communicate to providers how frequently the Policy endpoints are expected to change, how often they should be polled to get the latest information, and expectations around emergency updates.
-
-[Top][toc]
-
-### Versioning
-
-`policy` APIs must handle requests for specific versions of the specification from clients.
-
-Versioning must be implemented as specified in the [Versioning section][versioning].
-
-[Top][toc]
-
-## Background
+### Background
 
 The goal of the Policy API specification is to enable agencies to create, revise, and publish machine-readable policies, as sets of rules for individual and collective device behavior exhibited by both _mobility as a service_ providers and riders / users. [Examples](./examples/README.md) of policies include:
 
@@ -80,17 +68,47 @@ The goal of the Policy API specification is to enable agencies to create, revise
 
 The machine-readable format allows Providers to obtain policies and compute compliance where it can be determined entirely by data obtained internally, and know what data is required from them and provided to them.
 
-**See the [Policy Examples](./examples/README.md) for ways these can be implemented.**
+[Top][toc]
+
+### Policy Examples
+
+See the [Policy Examples](./examples/README.md) for ways Policy can be implemented.
 
 [Top][toc]
 
-## Distribution
+### Authorization
+
+The Policy endpoints should be made public. Authorization is not required.
+
+[Top][toc]
+
+### Update Frequency
+
+The publishing agency should establish beforehand and communicate to providers how frequently the Policy endpoints are expected to change, how often they should be polled to get the latest information, and expectations around emergency updates.
+
+[Top][toc]
+
+### Updating or Ending Policies
+
+Published policies, like geographies, should be treated as immutable data. Obsoleting or otherwise changing a policy is accomplished by publishing a new policy with a field named `prev_policies`, a list of UUID references to the policy or policies superseded by the new policy.
+
+To update a policy, create a new policy with the new rules rules, and list the now updated policy id in `prev_policies`.
+
+To revoke or end a policy, create a new policy with empty rules, and list the ended policy id in `prev_policies`.
+
+[Top][toc]
+
+### Versioning
+
+`policy` APIs must handle requests for specific versions of the specification from clients.
+
+[Top][toc]
+
+### Distribution
 
 Policies shall be published by regulatory bodies or their authorized delegates as JSON objects. These JSON objects shall be served by either [flat files](#flat-files) or via [REST API endpoints](#rest-endpoints). In either case, policy data shall follow the [schema](#schema) outlined below.
 
-Policies typically refer to one or more associated geographies. Geographic information is obtained from the MDS [Geography](/geography#general-information) API.  Each policy and geography shall have a unique ID (UUID).
-
-Published policies, like geographies, should be treated as immutable data. Obsoleting or otherwise changing a policy is accomplished by publishing a new policy with a field named `prev_policies`, a list of UUID references to the policy or policies superseded by the new policy.
+Policies typically refer to one or more associated geographies. Geographic information is obtained from the MDS [Geography](/geography) API.  Each policy and geography shall have a unique ID (UUID).
 
 Geographical data shall be represented as GeoJSON `Feature` objects. No part of the geographical data should be outside the [municipality boundary][muni-boundary].
 
@@ -120,22 +138,25 @@ The response to a client request must include a valid HTTP status code defined i
 
 See the [Responses section][responses] for information on valid MDS response codes and the [Error Messages section][error-messages] for information on formatting error messages.
 
-### Authorization
-
-This endpoint should be made public. Authorization is not required.
-
 ### Policies
 
-**Endpoint**: `/policies/{id}`  
+**Endpoint**: `/policies/{policy_id}`  
 **Method**: `GET`  
 **Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.    
+**Authorization**: public  
 **`data` Payload**: `{ "policies": [] }`, an array of objects with the structure [outlined below](#policy).
 
-#### Query Parameters
+_Path Parameters:_
 
-| Name         | Type      | Required / Optional | Description                                    |
+| Path Parameter | Type      | Required / Optional | Description                                    |
 | ------------ | --------- | --- | ---------------------------------------------- |
-| `id`         | UUID      | Optional    | If provided, returns one policy object with the matching UUID; default is to return all policy objects.                       |
+| `policy_id`         | UUID      | Optional    | If provided, returns one policy object with the matching UUID; default is to return all policy objects.                       |
+
+_Query Parameters:_
+
+| Query Parameter | Type      | Required / Optional | Description                                    |
+| ------------ | --------- | --- | ---------------------------------------------- |
+| `policy_id`         | UUID      | Optional    | If provided, returns one policy object with the matching UUID; default is to return all policy objects.                       |
 | `start_date` | [timestamp][ts] | Optional    | Beginning date of the queried time range; the default value is the request time |
 | `end_date`   | [timestamp][ts] | Optional    | Ending date of the queried time range; the default value is null, which captures all policies that are effective in the future|
 
@@ -156,6 +177,7 @@ Policies will be returned in order of effective date (see schema below), with pa
 **Endpoint**: `/requirements/`  
 **Method**: `GET`  
 **[Beta feature](/general-information.md#beta-features)**: *No (as of 2.0.0)*. 
+**Authorization**: public  
 **Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.  
 **`data` Payload**: `{ requirements: [] }`, JSON objects that follow the schema [outlined here](#requirement).  
 
@@ -174,14 +196,14 @@ The files shall be structured like the output of the [REST endpoints](#rest-endp
 
 The publishing agency should establish and communicate to providers how frequently these files should be polled.
 
-The `updated` field in the payload wrapper should be set to the time of publishing a revision, so that it is simple to identify a changed file.
+The `last_updated` field in the payload wrapper should be set to the time of publishing a revision, so that it is simple to identify a changed file.
 
 ### Example `policies.json`
 
 ```jsonc
 {
     "version": "0.4.0",
-    "updated": 1570035222868,
+    "last_updated": 1570035222868,
     "end_date": 1570035222868,
     "data": {
         "policies": [
@@ -203,7 +225,7 @@ The optional `end_date` field applies to all policies represented in the file.
 ```jsonc
 {
     "version": "0.4.0",
-    "updated": 1570035222868,
+    "last_updated": 1570035222868,
     "data": {
         "geographies": [
             {
@@ -223,12 +245,12 @@ The optional `end_date` field applies to all policies represented in the file.
 
 All response fields must use `lower_case_with_underscores`.
 
-Response bodies must be a `UTF-8` encoded JSON object and must minimally include the MDS `version`, a timestamp indicating the last time the data was `updated`, and a `data` payload:
+Response bodies must be a `UTF-8` encoded JSON object and must minimally include the MDS `version`, a timestamp indicating the last time the data was `last_updated`, and a `data` payload:
 
 ```jsonc
 {
     "version": "x.y.z",
-    "updated": 1570035222868,
+    "last_updated": 1570035222868,
     "data": {
         // endpoint/file specific payload
     }
@@ -251,6 +273,7 @@ An individual `Policy` object is defined by the following fields:
 | ---------------- | --------------- | ---------- | ----------------------------------------------------------------------------------- |
 | `name`           | String          | Required   | Name of policy                                                                      |
 | `mode`           | [Mode][modes]   | Required   | Mode this rule should apply, see MDS [mode list][modes] for options. Default `micromobility` for backwards compatibility (this default will likely be removed in a subsequent MDS release)                                                               |
+| `mode_id`         | [Mode][modes]  | Required   | Mode this rule should apply, see MDS [mode list][modes] for options. Default `micromobility` for backwards compatibility (this default will likely be removed in a subsequent MDS release)                                                               |
 | `policy_id`      | UUID            | Required   | Unique ID of policy                                                                 |
 | `provider_ids`   | UUID[]          | Optional   | Providers for whom this policy is applicable; empty arrays and `null`/absent implies all Providers. See MDS [provider list](/providers.csv). |
 | `description`    | String          | Required   | Description of policy                                                               |
@@ -324,11 +347,13 @@ An individual `Rule` object is defined by the following fields:
 
 Rate-related properties can currently be specified on all rule types except `user`, i.e. any rule that can be measured.
 
-**[Beta feature](/general-information.md#beta-features)**: *No (as of 2.0.0)*. [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/674)  
+**[Beta feature](/general-information.md#beta-features)**: *No (as of 2.0.0)*.
 
 #### Rate Amounts
 
 The amount of a rate applied when this rule applies, if applicable (default zero). A positive integer rate amount represents a fee, while a negative integer represents a subsidy. Rate amounts are given in the `currency` defined in the [Policy](#policy).
+
+[Top][toc]
 
 #### Rate Recurrences
 
@@ -355,6 +380,8 @@ The `rate_applies_when` field may take the following values:
 | --------------- | ----------- |
 | `in_bounds`     | Rate applies when an event or count is within the rule `minimum` and `maximum` |
 | `out_of_bounds` | Rate applies when an event or count is outside of the rule `minimum` and `maximum` |
+
+[Top][toc]
 
 ### Messages
 
@@ -409,21 +436,33 @@ A public agency's Policy program Requirements endpoint enumerates all of the par
 
 Requirements can also be used to define a scaled-down MDS implementation in situations where an agency has more limited regulatory goals, has legal limitations on the types of data they can collect, or wants to use a lightweight version of MDS for a pilot project or other experiment where aspects of a full MDS implementation would be irrelevant or unnecessary.
 
+[Top][toc]
+
+#### Examples
+
 See [Policy Requirements Examples](/policy/examples/requirements.md) for ideas on how this can be implemented.
+
+[Top][toc]
 
 #### Public Hosting
 
 This endpoint is not authenticated (ie. public), and allows the discovery of other public endpoints within Geography, Policy, and Jurisdiction. The agency can host this as a file or dynamic endpoint on their servers, on a third party server, or the OMF can host on behalf of an agency in the [agency program requirements repo](https://github.com/openmobilityfoundation/agency-program-requirements). See this [hosting guidance document](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/Policy-Requirements-OMF-Hosting-Guidance) for more information.  This requirements file can be [referenced directly](https://github.com/openmobilityfoundation/governance/blob/main/technical/OMF-MDS-Policy-Language-Guidance.md) in an agency's operating permit/policy document when discussing program data requirements, and [updated digitally as needed](#requirement-update-frequency). To be compliant with MDS you must obtain an `agency_id` and list your public URL in [agencies.csv](/agencies.csv), per our [guidance document](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/Adding-an-MDS-Agency-ID).
 
+[Top][toc]
+
 #### Requirement Update Frequency
 
 The OMF recommends updating the Requirements feed no more than monthly, and you may specify your expected timeframe with the `max_update_interval` in the [metadata](#requirement-metadata) section so providers have some idea of how often to check the feed. More specifically the OMF recommends giving the following notice to providers: 1 month for optional field additions, 3 months for endpoint/API changes/additions, 3 months for new minor releases, and 4 months for major releases. You should also communicate these future changes ahead of time with the `start_date` field. Finally, the OMF recommends any changes need to be part of a discussion between agencies and affected providers.
+
+[Top][toc]
 
 #### Version Tracking
 
 If you are upgrading to a new MDS version, it is recommended to create a new requirements file at a new URL, since field names and available options may have changed. To make this more obvious, the MDS version number could be part of your URL, e.g. "https://mds.cityname.gov/requirements/1.2.0". 
 
 When requirements are updated within the same MDS version, in the [metadata](#requirement-metadata) section, increment the `file_version` value by one and update the `last_updated` timestamp. Though not required, you may choose to use the  `start_date` and `end_date` fields in the [programs](#requirement-programs) section to keep retired requirements accessible. We also recommend hosting your requirements file in a location that has a publicly-accessible version history, like GitHub or Bitbucket, or keeping previous versions accessible with a versioned URL, e.g. "https://mds.cityname.gov/requirements/1.2.0/v3". 
+
+[Top][toc]
 
 #### Requirement Format
 
@@ -570,7 +609,7 @@ For each combination of items in a program, you can specify the data specs, APIs
         {
           "data_spec_name": "[DATA SPEC NAME]",
           "version": "[VERSION NUMBER]",
-          "mode": "[MODE SHORTNAME]",
+          "mode_id": "[MODE SHORTNAME]",
           "required_apis": [
             {
               // Required APIs array
@@ -591,7 +630,7 @@ For each combination of items in a program, you can specify the data specs, APIs
 | -------------------- | ------ | -------- | ----------------------------------- |
 | `data_spec_name`     | Enum   | Required | Name of the data spec required. Supported values are: '[MDS](https://github.com/openmobilityfoundation/mobility-data-specification/tree/ms-requirements)', '[CDS](https://github.com/openmobilityfoundation/curb-data-specification)' '[GBFS](https://github.com/NABSA/gbfs/tree/v2.2)'. Others like GOFS, GTFS, TOMP-API, etc may also be referenced now by agencies and officially standardized here in the future -- leave your feedback on [this issue](https://github.com/openmobilityfoundation/mobility-data-specification/issues/682). |
 | `version`            | Text   | Required | Version number of the data spec required. E.g. '1.2.0' |
-| `mode`               | Text   | Optional | The [mode list][modes] shortname for MDS. E.g. 'passenger-services' |
+| `mode_id`               | Text   | Optional | The [mode list][modes] shortname for MDS. E.g. 'passenger-services' |
 | `required_apis`      | Array  | Conditionally Required | Name of the [Requirement APIs](#requirement-apis) that need to be served by providers. At least one API is required. APIs not listed will not be available to the agency. |
 | `available_apis`     | Array  | Conditionally Required | Name of the [Requirement APIs](#requirement-apis) that are being served by agencies.  Not applicable to GBFS. APIs not listed will not be available to the provider. |
 
@@ -660,6 +699,8 @@ You may also show which APIs, endpoints, and fields your agency is serving to pr
 | `api_name`           | Text  | Required | Name of the applicable API required. At least one API is required. APIs not listed will not be available to the agency. E.g. for MDS: 'provider', or 'agency'. For GBFS, this field is omitted since GBFS starts at the `endpoint` level. |
 | `endpoint_name`      | Text  | Required | Name of the required endpoint under the API. At least one endpoint is required. E.g. for MDS 'provider': 'trips' |
 | `use_cases`      | Object with Array  | Optional | The list of policy uses cases that this data standard's information covers for your program. Includes an `external_url` to a HTTP reference list or database (e.g. to the [OMF Use Case Database](https://airtable.com/shrPf4QvORkjZmHIs/tblzFfU6fxQm5Sdhm)), **and** an array of `ids` of each applicable use case (e.g. "OMF-MDS-31"). You may enumerate multiple external use case sources and ids. |
+
+[Top][toc]
 
 **Provider Endpoints** - Specific to the `required_apis` array
 

@@ -24,48 +24,63 @@ A vehicle record is as follows:
 | Field                | Type     | Required/Optional     | Comments |
 | -------------------- | -------- | --------------------- | -------- |
 | `device_id`          | UUID     | Required              | A unique device ID in UUID format, should match this device in Provider |
-| `provider_id`        | UUID     | Required              | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). | 
+| `provider_id`        | UUID     | Required              | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
 | `data_provider_id`   | UUID     | Optional              | If different than `provider_id`, a UUID for the data solution provider managing the data feed in this endpoint. See MDS [provider list](/providers.csv) which includes both service operators and data solution providers. |
 | `vehicle_id`         | String   | Required              | A unique vehicle identifier (visible code, license plate, etc), visible on the vehicle itself |
 | `vehicle_type`       | Enum     | Required              | The [vehicle type][vehicle-types] |
-| `vehicle_attributes` | Array    | Optional              | **[Mode](/modes#list-of-supported-modes) Specific**. [Vehicle attributes](/modes#vehicle-attributes) given as mode-specific unordered key-value pairs |
+| `vehicle_attributes` | Map      | Optional              | **[Mode](/modes#list-of-supported-modes) Specific**. [Vehicle attributes](/modes#vehicle-attributes) given as mode-specific unordered key-value pairs |
 | `propulsion_types`   | Enum[]   | Required              | Array of [propulsion types][propulsion-types]; allows multiple values |
 | `accessibility_options` | Enum[] | Required             | **[Mode](/modes#list-of-supported-modes) Specific**. [Accessibility options](/modes#accessibility-options) given as an array of enumerated values. List of any accessibility options **available on the vehicle**. |
 | `battery_capacity`   | Integer  | Required if Available | Capacity of battery expressed as milliamp hours (mAh) |
 | `fuel_capacity`      | Integer  | Required if Available | Capacity of fuel tank (liquid, solid, gaseous) expressed in liters |
+| `maximum_speed`      | Integer  | Required if Available | Maximum speed (kph) possible with vehicle under normal, flat incline, smooth surface conditions. Applicable if the device has a built-in or intelligent speed limiter/governor. |
 
 [Top][toc]
 
 ### Vehicle Types
 
-The list of allowed `vehicle_type` values in MDS. Aligning with [GBFS vehicle types form factors](https://github.com/NABSA/gbfs/blob/master/gbfs.md#vehicle_typesjson-added-in-v21-rc).
+The list of allowed `vehicle_type` values in MDS.
 
-| `vehicle_type`   | Description |
-|------------------| ----------- |
-| `bicycle`        | A two-wheeled mobility device intended for personal transportation that can be operated via pedals, with or without a motorized assist (includes e-bikes, recumbents, and tandems) |
-| `cargo_bicycle`  | A two- or three-wheeled bicycle intended for transporting larger, heavier cargo than a standard bicycle (such as goods or passengers), with or without motorized assist (includes bakfiets/front-loaders, cargo trikes, and long-tails) |
-| `car`            | A passenger car or similar light-duty vehicle |
-| `scooter`        | A standing or seated fully-motorized mobility device intended for one rider, capable of travel at low or moderate speeds, and suited for operation in infrastructure shared with motorized bicycles |
-| `moped`          | A seated fully-motorized mobility device capable of travel at moderate or high speeds and suited for operation in general urban traffic |
-| `delivery_robot` | A robot intended for transporting goods |
-| `other`          | A device that does not fit in the other categories |
+| `vehicle_type`     | Description |
+|--------------------| ----------- |
+| `bicycle`          | A two-wheeled mobility device intended for personal transportation that can be operated via pedals, with or without a motorized assist (includes e-bikes, recumbents, and tandems) |
+| `bus`              | A vehicle larger than a car or small truck capable of transporting multiple passengers at once |
+| `cargo_bicycle`    | A two- or three-wheeled bicycle intended for transporting larger, heavier cargo than a standard bicycle (such as goods or passengers), with or without motorized assist (includes bakfiets/front-loaders, cargo trikes, and long-tails) |
+| `car`              | A passenger car or similar light-duty vehicle |
+| `delivery_robot`   | A robot or remote-operated device intended for transporting goods |
+| `moped`            | A seated fully-motorized mobility device capable of travel at moderate or high speeds and suited for operation in general urban traffic |
+| `motorcycle`       | A seated fully-motorized mobility device capable of travel at high speeds and suited for operation in general urban traffic and highways |
+| `scooter_standing` | A standing fully-motorized mobility device without a seat intended for one rider, capable of travel at low or moderate speeds, and suited for operation in infrastructure shared with motorized bicycles |
+| `scooter_seated`   | A fully-motorized mobility device with a seat intended for one rider, capable of travel at low or moderate speeds, and suited for operation in infrastructure shared with motorized bicycles |
+| `truck`            | A truck or vehicle larger than a car or similar heavy-duty vehicle |
+| `other`            | A device that does not fit in the other categories |
+
+Values based off of `form_factor` in [GBFS vehicle_types](https://github.com/MobilityData/gbfs/blob/master/gbfs.md#vehicle_typesjson), with some additional to support MDS modes.
 
 [Top][toc]
 
 ### Propulsion Types
 
-| `propulsion`      | Description                                            |
-| ----------------- | ------------------------------------------------------ |
-| `human`           | Pedal or foot propulsion                               |
-| `electric_assist` | Provides power only alongside human propulsion         |
-| `electric`        | Contains throttle mode with a battery-powered motor    |
-| `combustion`      | Contains throttle mode with a gas engine-powered motor |
+The list of allowed `propulsion_type` values in MDS.
+
+| `propulsion`         | Description                                            |
+| -------------------- | ------------------------------------------------------ |
+| `human`              | Pedal or foot propulsion |
+| `electric_assist`    | Provides electric motor assist only in combination with human propulsion - no throttle mode |
+| `electric`           | Powered by battery-powered electric motor with throttle mode |
+| `combustion`         | Powered by gasoline combustion engine |
+| `combustion_diesel`  | Powered by diesel combustion engine |
+| `hybrid`             | Powered by combined combustion engine and battery-powered motor |
+| `hydrogen_fuel_cell` | Powered by hydrogen fuel cell powered electric motor |
+| `plug_in_hybrid`     | Powered by combined combustion engine and battery-powered motor with plug-in charging |
 
 A vehicle may have one or more values from the `propulsion`, depending on the number of modes of operation. For example, a scooter that can be powered by foot or by electric motor would have the `propulsion` represented by the array `['human', 'electric']`. A bicycle with pedal-assist would have the `propulsion` represented by the array `['human', 'electric_assist']` if it can also be operated as a traditional bicycle.
 
+Values based off of `propulsion_type` in [GBFS vehicle_types](https://github.com/MobilityData/gbfs/blob/master/gbfs.md#vehicle_typesjson).
+
 [Top][toc]
 
-### Vehicle Status 
+### Vehicle Status
 
 A vehicle status record represents the current or last-known event and telemetry from a vehicle, defined as follows:
 
@@ -97,8 +112,7 @@ Events represent changes in vehicle status.
 | `event_geographies` | UUID[] | Optional | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 2.0.0)*. Array of Geography UUIDs consisting of every Geography that contains the location of the status change. See [Geography Driven Events][geography-driven-events]. Required if `location` is not present. |
 | `battery_percent`       | Integer          | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 100 |
 | `fuel_percent`       | Integer          | Required if Applicable | Percent fuel in vehicle, expressed between 0 and 100 |
-| `trip_ids`[] | UUID[] | Required if Applicable | Trip UUIDs (foreign key to /trips endpoint), required if `event_types` contains `trip_start`, `trip_end`, `trip_cancel`, `trip_enter_jurisdiction`, or `trip_leave_jurisdiction` |
-| `journey_id` | UUID | Optional | Journey UUID | TODO "see `journey_id`" or something |
+| `trip_ids` | UUID[] | Required if Applicable | Trip UUIDs (foreign key to /trips endpoint), required if `event_types` contains `trip_start`, `trip_end`, `trip_cancel`, `trip_enter_jurisdiction`, or `trip_leave_jurisdiction` |
 | `associated_ticket` | String | Optional | Identifier for an associated ticket inside an Agency-maintained 311 or CRM system |
 
 ### Event Times
@@ -118,8 +132,8 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | `data_provider_id`| UUID            | Optional               | If different than `provider_id`, a UUID for the data solution provider managing the data feed in this endpoint. See MDS [provider list](/providers.csv) which includes both service operators and data solution providers. |
 | `telemetry_id`    | UUID            | Required               | ID used for uniquely-identifying a Telemetry entry |
 | `timestamp`       | [Timestamp][ts] | Required               | Date/time that event occurred. Based on GPS or GNSS clock            |
-| `trip_ids`        | UUID[]          | Required               | If telemetry occurred during a trip, the ID of the trip(s).  If not in a trip, `null`. 
-| `journey_id`      | UUID            | Required               | If telemetry occurred during a trip, the ID of the journey.  If not in a trip, `null`.
+| `trip_ids`        | UUID[]          | Required               | If telemetry occurred during a trip, the ID of the trip(s).  If not in a trip, `null`.
+| `journey_id`      | UUID            | Required               | If telemetry occurred during a trip and journeys are used for the mode, the ID of the journey.  If not in a trip, `null`.
 | `stop_id`         | UUID            | Required if Applicable | Stop that the vehicle is currently located at. See [Stops][stops] |
 | `location`        | [GPS][gps]      | Required               | Telemetry position data |
 | `location_type`   | Enum            | Required if Known      | If detectable and known, what type of location the device is on or in. One of `street`, `sidewalk`, `crosswalk`, `garage`, `bike_lane`.   |
@@ -150,7 +164,7 @@ Stops describe vehicle trip start and end locations in a pre-designated physical
 | -----                    | ----                                                  |-------------------|-------------|
 | `stop_id`                | UUID                                                  | Required | Unique ID for stop |
 | `name`                   | String                                                | Required | Name of stop |
-| `last_reported`          | Timestamp                                             | Required | Date/Time that the stop was last updated |
+| `last_updated`          | Timestamp                                             | Required | Date/Time that the stop was last updated |
 | `location`               | [GPS][gps]                                            | Required | Simple centerpoint location of the Stop. The use of the optional `geography_id` is recommended to provide more detail. |
 | `status`                 | [Stop Status](#stop-status)                           | Required | Object representing the status of the Stop. See [Stop Status](#stop-status). |
 | `capacity`               | {vehicle_type: number}                                | Required | Number of total places per vehicle_type |
@@ -212,8 +226,8 @@ A Trip is defined by the following structure:
 | `fare_attributes`        | Map             | Optional | **[Mode](/modes#list-of-supported-modes) Specific**. [Fare attributes](/modes#fare-attributes) given as unordered key-value pairs |
 | `start_time`             | [Timestamp][ts] | Required | Start of the passenger/driver trip |
 | `end_time`               | [Timestamp][ts] | Required | End of the passenger/driver trip |
-| `start_location`         | [GPS](gps)      | Required | Location of the start of the trip. |
-| `end_location`           | [GPS](gps)      | Required | Location of the end of the trip. |
+| `start_location`         | [GPS][gps]      | Required | Location of the start of the trip. |
+| `end_location`           | [GPS][gps]      | Required | Location of the end of the trip. |
 | `duration`               | Integer         | Required | Time, in Seconds |
 | `distance`               | Integer         | Required | Trip Distance, in Meters |
 | `publication_time`       | [Timestamp][ts] | Optional | Date/time that trip became available through the trips endpoint |
@@ -245,11 +259,11 @@ A Report is defined by the following structure:
 
 ### Data Notes
 
-Report contents include every combination of special group types, geography IDs, and vehicle types in operation for each month since the provider began operations in the jurisdiction. New files are added monthly in addition to the previous monthly historic files. 
+Report contents include every combination of special group types, geography IDs, and vehicle types in operation for each month since the provider began operations in the jurisdiction. New files are added monthly in addition to the previous monthly historic files.
 
 Counts are calculated based the agency's local time zone. Trips are counted based on their start time, i.e. if a trip starts in month A but ends in month B, it will be counted only as part of the report for month A. Similarly, trips are counted based on their start geography, i.e. if a trip starts in geography A and ends in geography B, it will appear in the counts for geography A and not for geography B.
 
-All geography IDs included in the city published [Geography](/geography) API endpoint are included in the report results. In lieu of serving an API, this can alternately be a [flat file](/geography#file-format) created by the city and sent to the provider via link. If there is no `/geography` available, then counts are for the entire agency operating area, and `null` is returned for each Geography ID. 
+All geography IDs included in the city published [Geography](/geography) API endpoint are included in the report results. In lieu of serving an API, this can alternately be a [flat file](/geography#file-format) created by the city and sent to the provider via link. If there is no `/geography` available, then counts are for the entire agency operating area, and `null` is returned for each Geography ID.
 
 [Top][toc]
 
@@ -257,52 +271,41 @@ All geography IDs included in the city published [Geography](/geography) API end
 
 Some combinations of parameters may return a small count of trips, which could increase a privacy risk of re-identification. To correct for that, Reports does not return data below a certain count of results. This data redaction is called k-anonymity, and the threshold is set at a k-value of 10. For more explanation of this methodology, see our [Data Redaction Guidance document](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Data-Redaction).
 
-**If the query returns fewer than `10` trips in a count, then that row's count value is returned as "-1".** Note "0" values are also returned as "-1" since the goal is to group both low and no count values for privacy. 
+**If the query returns fewer than `10` trips in a count, then that row's count value is returned as "-1".** Note "0" values are also returned as "-1" since the goal is to group both low and no count values for privacy.
 
 This value may be adjusted in future releases and/or may become dynamic to account for specific categories of use cases and users. To improve the specification and to inform future guidance, users are encouraged to share their feedback and questions about k-values on this [discussion thread](https://github.com/openmobilityfoundation/mobility-data-specification/discussions/622).
 
-Using k-anonymity will reduce, but not necessarily eliminate the risk that an individual could be re-identified in a dataset, and this data should still be treated as sensitive. This is just one part of good privacy protection practices, which you can read more about in our [MDS Privacy Guide for Cities](https://github.com/openmobilityfoundation/governance/blob/main/documents/OMF-MDS-Privacy-Guide-for-Cities.pdf). 
+Using k-anonymity will reduce, but not necessarily eliminate the risk that an individual could be re-identified in a dataset, and this data should still be treated as sensitive. This is just one part of good privacy protection practices, which you can read more about in our [MDS Privacy Guide for Cities](https://github.com/openmobilityfoundation/governance/blob/main/documents/OMF-MDS-Privacy-Guide-for-Cities.pdf).
 
 [Top][toc]
 
-### Special Group Type	
+### Special Group Type
 
-Here are the possible values for the `special_group_type` dimension field:	
+Here are the possible values for the `special_group_type` dimension field:
 
-| Name             | Description                                                                                                           |	
-| ---------------- | --------------------------------------------------------------------------------------------------------------------- |	
-| low_income       | Trips where a low income discount is applied by the provider, e.g., a discount from a qualified provider equity plan. |	
+| Name             | Description                                                                                                           |
+| ---------------- | --------------------------------------------------------------------------------------------------------------------- |
+| low_income       | Trips where a low income discount is applied by the provider, e.g., a discount from a qualified provider equity plan. |
 | adaptive_scooter | Trips taken on a scooter with features to improve accessibility for people with disabilities, e.g., scooter with a seat or wider base |
-| all_riders       | All riders from any group                                                                                             |	
+| all_riders       | All riders from any group                                                                                             |
 
 Other special group types may be added in future MDS releases as relevant agency and provider use cases are identified. When additional special group types or metrics are proposed, a thorough review of utility and relevance in program oversight, evaluation, and policy development should be done by OMF Working Groups, as well as any privacy implications by the OMF Privacy Committee.
 
 [Top][toc]
 
-[agency]: /agency/README.md
-[accessibility-options]: /modes/README.md#accessibility-options
-[decimal-degrees]: https://en.wikipedia.org/wiki/Decimal_degrees
 [costs-and-currencies]: /general-information.md#costs-and-currencies
 [event-times]: /general-information.md#event-times
-[hdop]: https://en.wikipedia.org/wiki/Dilution_of_precision_(navigation)
 [gbfs-station-info]: https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_informationjson
 [gbfs-station-status]: https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_statusjson
-[general-stops]: /general-information.md#stops
-[geo]: #geographic-data
 [geography-driven-events]: /general-information.md#geography-driven-events
 [gps]: #gps-data
 [iso4217]: https://en.wikipedia.org/wiki/ISO_4217#Active_codes
 [modes]: /modes/README.md
-[policy]: /policy/README.md
 [propulsion-types]: /general-information.md#propulsion-types
-[provider]: /provider/README.md
-[point-geo]: #geographic-telemetry-data
 [stop-based-geo]: #stop-based-geographic-data
 [stops]: #stops
-[st-intersects]: https://postgis.net/docs/ST_Intersects.html
 [toc]: #table-of-contents
 [ts]: /general-information.md#timestamps
 [vehicle-states]: /modes#vehicle-states
 [vehicle-events]: /modes#event-types
 [vehicle-types]: /general-information.md#vehicle-types
-[wgs84]: https://en.wikipedia.org/wiki/World_Geodetic_System

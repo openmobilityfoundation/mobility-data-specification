@@ -1,3 +1,99 @@
+## 2.0.0
+
+> Release Candidate submitted: 2023-15-02
+
+> [Release Plan](https://github.com/openmobilityfoundation/governance/wiki/Release-2.0.0)
+
+The 2.0.0 major release includes support for new mobility modes, clarity around Policy, and the alignment of the data and structure of Agency and Provider. 
+
+### CHANGES
+
+See the closed PRs tagged with [Milestone 2.0.0](https://github.com/openmobilityfoundation/mobility-data-specification/pulls?q=is%3Apr+is%3Aclosed+milestone%3A2.0.0) and [Issues](https://github.com/openmobilityfoundation/mobility-data-specification/issues?q=is%3Aissue+milestone%3A2.0.0+is%3Aclosed) for a full list of changes.
+
+#### **_Admin/General Changes_**
+
+- Update [state machine diagrams](https://docs.google.com/presentation/d/1fHdq1efbN5GSFDLF4en-oA_BYPXQKbbIbHff6iROJKA/edit?usp=sharing) and create 3 new diagrams for each new modes
+- [Remove Schema and instead link to OpenAPI repo](https://github.com/openmobilityfoundation/mobility-data-specification/issues/281)
+   - OpenAPI support in place of JSON Schema allows easier building of real-time MDS endpoint validation, and interactive documentation on Stoplight.
+- [Remove Geography from Policy](https://github.com/openmobilityfoundation/mobility-data-specification/issues/816)
+- [Authorization consistency across MDS](https://github.com/openmobilityfoundation/mobility-data-specification/issues/584)
+- [Make GBFS optional for some modes](https://github.com/openmobilityfoundation/mobility-data-specification/issues/769)
+- [Align vehicle types to GBFS](https://github.com/openmobilityfoundation/mobility-data-specification/issues/692)
+    - Updated MDS alignment with GBFS to include all of their vehicle types (including seated scooter) and the addition of new ones for modes (bus, truck, delivery robot, motorcycle), all propulsion types, and to require GBFS for only micromobility and car share (delivery robots and passenger services are option, but not well supported in GBFS).
+- [Added maintenance_pick_up event for out of PROW work](https://github.com/openmobilityfoundation/mobility-data-specification/issues/595)
+- Ability to send tip overs, surface type, and parking validation [data if available from sensors](https://github.com/openmobilityfoundation/mobility-data-specification/pull/829)
+   - New optional fields to include sensors now available and in use in the field by many micromobility companies for tip overs, surface type, and parking validation.
+- [Vertical accuracy for GPS telemetry](https://github.com/openmobilityfoundation/mobility-data-specification/issues/661)
+- All vehicle states are now clearly in or out of the right of way, [no unknown state](https://github.com/openmobilityfoundation/mobility-data-specification/issues/770)
+- Many [new provider IDs added](https://github.com/openmobilityfoundation/mobility-data-specification/pulls?q=is%3Apr+is%3Aclosed+label%3A%22identifier+change%22+milestone%3A2.0.0)
+
+#### **_Modes Architecture_** 
+
+- [Support for multiple modes/services in MDS](https://github.com/openmobilityfoundation/mobility-data-specification/issues/574) 
+   - Updates the base of MDS to have some shared objects and fields, and specific fields as needed for each mode.
+   - Adds specific modes to MDS, with help from Member Networks, and existing real world data exchanges between operators, agencies, and solution providers.
+   - Operators must register a unique UUID for each mode they operate under. 
+
+**Passenger Services**
+- [Passenger services/TNC/taxi support ](https://github.com/openmobilityfoundation/mobility-data-specification/issues/95) 
+
+**Delivery Robots**
+- [Support for vehicles like delivery robots](https://github.com/openmobilityfoundation/mobility-data-specification/issues/782)  
+
+**Car Share**
+- [Carshare Support](https://github.com/openmobilityfoundation/mobility-data-specification/issues/640) 
+
+**Work to bring modes together**
+
+- [Add a "Data Provider UUID" to MDS](https://github.com/openmobilityfoundation/mobility-data-specification/issues/805) 
+   - New data provider id allows endpoints to include who is producing and serving up the data. Software companies and solution providers are [encouraged to register](https://github.com/openmobilityfoundation/mobility-data-specification/tree/feature-modes-cleanup#software-companies-using-mds) for their own global UUID now to serve up operator or agency data with MDS.
+- [Support for Modes in Policy](https://github.com/openmobilityfoundation/mobility-data-specification/issues/614) - specify which mode your policy applies to
+
+#### **_Policy Reimagining_**
+
+A reimagining of Policy, including top ten most common policies are clearly defined, edge cases (dwell time, trip definition, rule units, updating/ending policies, lookback periods) are clarified, Stops is out of beta, and Policy feeds are public
+
+- [Multimodal support in Policy](https://github.com/openmobilityfoundation/mobility-data-specification/issues/614)
+- [Clarification on possible values of rule_units](https://github.com/openmobilityfoundation/mobility-data-specification/issues/704)
+- [Move Stops out of beta](https://github.com/openmobilityfoundation/mobility-data-specification/issues/674)
+- [Policy is now public](https://github.com/openmobilityfoundation/mobility-data-specification/pull/824/)
+- [Updating and ending policy clarification](https://github.com/openmobilityfoundation/mobility-data-specification/pull/834)
+- [Lookback period clarification ](https://github.com/openmobilityfoundation/mobility-data-specification/issues/749)
+
+**Policy Requirements**
+
+Requirements now supports linking to external use cases, and is moved out of beta because of adoption.
+
+- [Support to reference external use cases](https://github.com/openmobilityfoundation/mobility-data-specification/issues/681)
+- [Move out of beta](https://github.com/openmobilityfoundation/mobility-data-specification/issues/682)
+
+#### **_Agency/Provider Unification_**
+
+The difference between Agency and Provider is that with Agency operators PUSH data to cities, and with Provider cities PULL data from operators. Both share the same data types, referenced in a new file, with the same endpoints and fields available.
+
+- [MDS Agency and Provider Unification](https://github.com/openmobilityfoundation/mobility-data-specification/issues/759)
+  - Endpoints are now identical
+  - Data objects are now identical, referenced in new data-type.md file
+  - Distinction between Agency and Provider is now simply pushing data to agencies, or pulling data from operators
+- [Adding trips endpoint to Agency](https://github.com/openmobilityfoundation/mobility-data-specification/issues/550)
+- [Adding trip data to Agency](https://github.com/openmobilityfoundation/mobility-data-specification/issues/722)
+(https://github.com/openmobilityfoundation/mobility-data-specification/issues/770)
+   - Trip telemetry points are no longer in the trips endpoint directly, instead referenced in their own telemetry endpoint. Start and end location only is available in trips.
+
+#### **_Provider_**
+
+Reports have a new adaptive scooter special group type, and improved formatting.
+
+- [Updates to provider reports](https://github.com/openmobilityfoundation/mobility-data-specification/pulls?q=is%3Apr+is%3Aclosed+label%3AReports) including header, date format, column names, and adaptive scooter special group type
+
+#### **_Geography_**
+
+- [Geography is now public, and removed from Policy](https://github.com/openmobilityfoundation/mobility-data-specification/pull/824/files)
+
+#### **_Jurisdiction_**
+
+- [Jurisdiction is now public](https://github.com/openmobilityfoundation/mobility-data-specification/pull/824/files)
+
 ## 1.2.0
 
 > Released: 2021-11-04

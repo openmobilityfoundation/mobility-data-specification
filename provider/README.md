@@ -9,6 +9,7 @@ This specification contains a data standard for *mobility as a service* provider
 ## Table of Contents
 
 * [General Information](#general-information)
+  * [Authorization](#authorization)
   * [Versioning](#versioning)
   * [Modes](#modes)
   * [Responses and Error Messages](#responses-and-error-messages)
@@ -37,9 +38,17 @@ This specification contains a data standard for *mobility as a service* provider
 
 ## General Information
 
-The following information applies to all `provider` API endpoints. Details on providing authorization to endpoints is specified in the [auth](auth.md) document.
+The following information applies to all `provider` API endpoints. 
 
 This specification uses data types including timestamps, UUIDs, and vehicle state definitions as described in the MDS [General Information][general-information] document.
+
+[Top][toc]
+
+### Authorization
+
+MDS Provider endpoint producers **SHALL** provide authorization for API endpoints via a bearer token based auth system. When making requests, the endpoints expect `provider_id` to be part of the claims in a [JSON Web Token](https://jwt.io/) (JWT) `access_token` in the `Authorization` header, in the form `Authorization: Bearer <access_token>`. The token issuance, expiration and revocation policies are at the discretion of the agency. [JSON Web Token](/general-information.md#json-web-tokens) is the recommended format.
+
+General authorization details are specified in the [Authorization section](/general-information.md#authorization) in MDS General Information.
 
 [Top][toc]
 
@@ -53,7 +62,7 @@ Versioning must be implemented as specified in the [Versioning section][versioni
 
 ### Modes
 
-MDS is intended to be used for multiple transportation modes, including its original micromobility (e-scooters, bikes, etc.) as well as additional modes such as taxis and delivery bots.  A given `provider_id` shall be associated with a single mobility [mode], so that the mode does not have to be specified in each data structure and API call.  A provider implementing more than one mode shall [register](/README.md#providers-using-mds) a `provider_id` for each mode.
+MDS is intended to be used for multiple transportation modes, including its original micromobility (e-scooters, bikes, etc.) mode, as well as additional modes such as taxis, car share, and delivery bots. A given `provider_id` shall be associated with a single mobility [mode], so that the mode does not have to be specified in each data structure and API call. A provider implementing more than one mode shall [register](/README.md#providers-using-mds) a unique `provider_id` for each mode.
 
 [Top][toc]
 
@@ -184,9 +193,9 @@ The `/vehicles` endpoint returns the specified vehicle (if a device_id is provid
 **Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.   
 **`data` Payload:** `{ "vehicles": [] }`, an array of [Vehicle](vehicle) objects
 
-Path Params:
+_Path Parameters:_
 
-| Param        | Type | Required/Optional | Description                                 |
+| Path Parameters       | Type | Required/Optional | Description                                 |
 | ------------ | ---- | ----------------- | ------------------------------------------- |
 | `device_id`  | UUID | Optional          | If provided, retrieve the specified vehicle |
 
@@ -222,9 +231,9 @@ The `/vehicles/status` endpoint returns the specified vehicle (if a device_id is
 **Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.  
 **`data` Payload:** `{ "vehicles_status": [] }`, an array of [Vehicle Status][vehicle-status] objects
 
-Path Params:
+_Path Parameters:_
 
-| Param        | Type | Required/Optional | Description                                 |
+| Path Parameter        | Type | Required/Optional | Description                                 |
 | ------------ | ---- | ----------------- | ------------------------------------------- |
 | `device_id`  | UUID | Optional          | If provided, retrieve the specified vehicle |
 
@@ -268,10 +277,9 @@ Unless stated otherwise by the municipality, the trips endpoint must return all 
 
 The `/trips` API should allow querying trips with the following query parameters:
 
-| Parameter | Format | Expected Output |
+| Query Parameter | Format | Expected Output |
 | --------------- | ------ | --------------- |
 | `end_time` | `YYYY-MM-DDTHH`, an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) extended datetime representing an UTC hour between 00 and 23. | All trips with an end time occurring within the hour. For example, requesting `end_time=2019-10-01T07` returns all trips where `2019-10-01T07:00:00 <= trip.end_time < 2019-10-01T08:00:00` UTC. |
-| `route` | Boolean | If false, do not return route data. |
 
 Without an `end_time` query parameter, `/trips` shall return a `400 Bad Request` error.
 
@@ -287,7 +295,7 @@ processing for that hour:
 * For hours in which the provider was not operating the API shall return a
   `404 Not Found` response.
 * For hours that are in the past but for which data is not yet available
-  the API shall return a `102 Processing` response.
+  the API shall return a `202 Accepted` response.
 * For all other hours the API shall return a `200 OK` response with a fully
   populated body, even for hours that contain no trips to report.
   If the hour has no trips to report the response shall contain an empty
@@ -323,7 +331,7 @@ Telemetry for a [trip](#trip) must include at least 2 points: the start point an
 
 ### Telemetry - Query Parameters
 
-| Parameter    | Format | Expected Output |
+| Query Parameter    | Format | Expected Output |
 | ---------    | ------ | --------------- |
 | `telemetry_time` | `YYYY-MM-DDTHH`, an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) extended datetime representing an UTC hour between 00 and 23. | All telemetry with timestamp occurring within the hour. For example, requesting `telemetry_time=2019-10-01T07` returns all telemetry where `2019-10-01T07:00:00 <= telemetry.timestamp < 2019-10-01T08:00:00` UTC. |
 
@@ -351,7 +359,7 @@ Unless stated otherwise by the municipality, this endpoint must return only thos
 
 The `/events/historical` API uses the following query parameter:
 
-| Parameter    | Format | Expected Output |
+| Query Parameter    | Format | Expected Output |
 | ---------    | ------ | --------------- |
 | `event_time` | `YYYY-MM-DDTHH`, an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) extended datetime representing an UTC hour between 00 and 23. | All status changes with an event time occurring within the hour. For example, requesting `event_time=2019-10-01T07` returns all status changes where `2019-10-01T07:00:00 <= status_change.event_time < 2019-10-01T08:00:00` UTC. |
 
@@ -367,7 +375,7 @@ processing for that hour:
 * For hours in which the provider was not operating the API shall return a
   `404 Not Found` response.
 * For hours that are in the past but for which data is not yet available
-  the API shall return a `102 Processing` response.
+  the API shall return a `202 Accepted` response.
 * For all other hours the API shall return a `200 OK` response with a fully
   populated body, even for hours that contain no status changes to report.
   If the hour has no status changes to report the response shall contain an
@@ -400,7 +408,7 @@ See also [Stop-based Geographic Data][stop-based-geo].
 
 The Recent Events API requires two parameters:
 
-| Parameter | Type | Expected Output |
+| Query Parameter | Type | Expected Output |
 | ----- | ---- | -------- |
 | `start_time` | [timestamp][ts] | status changes where `start_time <= event.timestamp` |
 | `end_time` | [timestamp][ts] | status changes where `event.timestamp < end_time` |
@@ -428,13 +436,13 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 }
 ```
 
-**Endpoint:** `/stops/:stop_id`  
+**Endpoint:** `/stops/{stop_id}`  
 **Method:** `GET`  
 **[Beta feature][beta]:** Yes (as of 1.0.0). [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/638)  
 **Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.    
 **`data` Payload:** `{ "stops": [] }`, an array of [Stops][stops]
 
-In the case that a `stop_id` query parameter is specified, the `stops` array returned will only have one entry. In the case that no `stop_id` query parameter is specified, all stops will be returned.
+In the case that a `stop_id` path parameter is specified, the `stops` array returned will only have one entry. In the case that no `stop_id` query parameter is specified, all stops will be returned.
 
 [Top][toc]
 
