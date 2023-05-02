@@ -1,6 +1,6 @@
 ## 2.0.0
 
-> Release Candidate submitted: 2023-15-02
+> Release Candidate submitted: 2023-02-15
 
 > [Release Plan](https://github.com/openmobilityfoundation/governance/wiki/Release-2.0.0)
 
