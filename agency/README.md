@@ -69,6 +69,12 @@ See the [GBFS Requirement](/README.md#gbfs-requirement) language for more detail
 
 [Top][toc]
 
+### Data Schema
+
+See the [Endpoints](#endpoints) below for information on their specific schema, and the [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for full details and interactive documentation.
+
+[Top][toc]
+
 ## Vehicles
 
 The `/vehicles` endpoints allow providers to register and update the properties of their fleet vehicles, and query current vehicle properties and status.

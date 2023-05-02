@@ -80,7 +80,7 @@ See the [Responses][responses] and [Error Messages][error-messages] sections.
 
 ## Schema
 
-See the [Endpoints](#endpoints) below for links to their specific JSON Schema documents.
+See the [Endpoints](#endpoints) below for links to specific data objects, and the [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for full details and interactive documentation.
 
 [Top][toc]
 
@@ -167,9 +167,9 @@ The Geography API consists of the following endpoints:
 
 ### Geography
 
-**Endpoint**: `/geographies/{geography_id}`
-**Method**: `GET`
-**Schema:** [`geography` schema](./geography.json)
+**Endpoint**: `/geographies/{geography_id}`  
+**Method**: `GET`  
+**Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.  
 
 #### Path Parameters
 
@@ -206,9 +206,9 @@ Response codes:
 
 ### Geographies
 
-**Endpoint**: `/geographies`
-**Method**: `GET`
-**Schema:** [`geographies` schema](./geographies.json)
+**Endpoint**: `/geographies`  
+**Method**: `GET`  
+**Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.  
 
 Returns: All geography objects
 

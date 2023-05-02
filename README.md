@@ -9,6 +9,7 @@
 - [Modes](#modes)
 - [Versions](#versions)
   - [Technical Information](#technical-information)
+  - [Data Validation](#data-validation)
 - [Get Involved](#get-involved)
   - [Membership](#membership)
 - [Cities Using MDS](#cities-using-mds)
@@ -124,6 +125,12 @@ The MDS specification is versioned using Git tags and [semantic versioning](http
 * [All GitHub Releases](https://github.com/openmobilityfoundation/mobility-data-specification/releases)
 * [MDS Releases](https://github.com/openmobilityfoundation/governance/wiki/Releases) - current/recommended versions, timeline
 * [Release Guidelines](https://github.com/openmobilityfoundation/governance/blob/main/technical/ReleaseGuidelines.md)
+
+## Data Validation
+
+To help with MDS data and feed validation, please see our OpenAPI schema description in the OMF [mds-openapi](https://github.com/openmobilityfoundation/mds-openapi) repository. Browsable interactive documentation is also linked to in that repository.
+
+Starting with MDS 2.0, OpenAPI documents describe MDS endpoints and allow for [schema](/schema) validation, expanding on the JSON Schemas formerly housed in this repository.
 
 [Top][toc]
 
