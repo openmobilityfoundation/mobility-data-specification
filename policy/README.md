@@ -196,14 +196,14 @@ The files shall be structured like the output of the [REST endpoints](#rest-endp
 
 The publishing agency should establish and communicate to providers how frequently these files should be polled.
 
-The `updated` field in the payload wrapper should be set to the time of publishing a revision, so that it is simple to identify a changed file.
+The `last_updated` field in the payload wrapper should be set to the time of publishing a revision, so that it is simple to identify a changed file.
 
 ### Example `policies.json`
 
 ```jsonc
 {
     "version": "0.4.0",
-    "updated": 1570035222868,
+    "last_updated": 1570035222868,
     "end_date": 1570035222868,
     "data": {
         "policies": [
@@ -225,7 +225,7 @@ The optional `end_date` field applies to all policies represented in the file.
 ```jsonc
 {
     "version": "0.4.0",
-    "updated": 1570035222868,
+    "last_updated": 1570035222868,
     "data": {
         "geographies": [
             {
@@ -245,12 +245,12 @@ The optional `end_date` field applies to all policies represented in the file.
 
 All response fields must use `lower_case_with_underscores`.
 
-Response bodies must be a `UTF-8` encoded JSON object and must minimally include the MDS `version`, a timestamp indicating the last time the data was `updated`, and a `data` payload:
+Response bodies must be a `UTF-8` encoded JSON object and must minimally include the MDS `version`, a timestamp indicating the last time the data was `last_updated`, and a `data` payload:
 
 ```jsonc
 {
     "version": "x.y.z",
-    "updated": 1570035222868,
+    "last_updated": 1570035222868,
     "data": {
         // endpoint/file specific payload
     }
