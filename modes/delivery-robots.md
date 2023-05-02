@@ -100,7 +100,7 @@ The `trip_attributes` object **may** have the following key value pairs:
 
 The `fare_attributes` object **may** have the following key value pairs:
 
-- `payment_type` (enumerated, optional): `cash`, `mobile`, `voucher`, `paratransit`, `no payment`, `test`
+- `payment_type` (enumerated, optional): `account_number`, `cash`, `credit_card`, `mobile_app`, `no payment`, `phone`, `voucher`, `test`
 - `price` (currency, optional): Total price of the order
 
 [Top][toc]
