@@ -202,7 +202,7 @@ The `last_updated` field in the payload wrapper should be set to the time of pub
 
 ```jsonc
 {
-  "version": "0.4.0",
+  "version": "2.0.0",
   "last_updated": 1570035222868,
   "end_date": 1570035222868,
   "policies": [
@@ -222,7 +222,7 @@ The optional `end_date` field applies to all policies represented in the file.
 
 ```jsonc
 {
-  "version": "0.4.0",
+  "version": "2.0.0",
   "last_updated": 1570035222868,
   "geographies": [
     {
@@ -266,8 +266,7 @@ An individual `Policy` object is defined by the following fields:
 | Name             | Type            | Required / Optional | Description                                                                         |
 | ---------------- | --------------- | ---------- | ----------------------------------------------------------------------------------- |
 | `name`           | String          | Required   | Name of policy                                                                      |
-| `mode`           | [Mode][modes]   | Required   | Mode this rule should apply, see MDS [mode list][modes] for options. Default `micromobility` for backwards compatibility (this default will likely be removed in a subsequent MDS release)                                                               |
-| `mode_id`         | [Mode][modes]  | Required   | Mode this rule should apply, see MDS [mode list][modes] for options. Default `micromobility` for backwards compatibility (this default will likely be removed in a subsequent MDS release)                                                               |
+| `mode_id`         | [Mode][modes]  | Required   | Mode this rule should apply, see MDS [mode list][modes] for options. Default `micromobility` for backwards compatibility (this default will likely be removed in a subsequent MDS release)                |
 | `policy_id`      | UUID            | Required   | Unique ID of policy                                                                 |
 | `provider_ids`   | UUID[]          | Optional   | Providers for whom this policy is applicable; empty arrays and `null`/absent implies all Providers. See MDS [provider list](/providers.csv). |
 | `description`    | String          | Required   | Description of policy                                                               |
