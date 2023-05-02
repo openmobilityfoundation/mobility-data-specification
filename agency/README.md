@@ -146,6 +146,7 @@ If `device_id` is specified, `GET` will return an array with a single vehicle re
 
 ```json
 {
+    "version": "2.0.0",
     "vehicles": [ ... ]
     "links": {
         "first": "https://...",
@@ -182,6 +183,7 @@ If `device_id` is specified, `GET` will return an array with a vehicle status re
 
 ```json
 {
+    "version": "2.0.0",
     "vehicles_status": [ ... ]
     "links": {
         "first": "https://...",
