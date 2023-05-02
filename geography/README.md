@@ -68,7 +68,7 @@ The files shall be structured like the output of the [REST endpoints](#rest-endp
 
 The publishing Agency should establish and communicate to providers how frequently these files should be polled.
 
-The `updated` field in the payload wrapper should be set to the time of publishing a revision, so that it is simple to identify a changed file.
+The `last_updated` field in the payload wrapper should be set to the time of publishing a revision, so that it is simple to identify a changed file.
 
 [Top][toc]
 
@@ -145,7 +145,7 @@ Example `geographies.json`
 ```jsonc
 {
     "version": "1.2.0",
-    "updated": "1570035222868",
+    "last_updated": "1570035222868",
     "geographies": [
         {
             // Geography 1
@@ -219,7 +219,7 @@ Response body:
 ```jsonc
 {
     "version": "1.2.0",
-    "updated": "1570035222868",
+    "last_updated": "1570035222868",
     "geographies": [
         {
             // Geography 1
