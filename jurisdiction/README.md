@@ -196,7 +196,7 @@ The format and content of `jurisdictions.json` should resemble the responses fro
 
 The publishing Agency should establish and communicate to interested parties how frequently these files should be polled.
 
-The `updated` field in the payload wrapper should be set to the time of publishing a revision, so that it is simple to identify a changed file.
+The `last_updated` field in the payload wrapper should be set to the time of publishing a revision, so that it is simple to identify a changed file.
 
 [Top][toc]
 
