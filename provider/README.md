@@ -201,6 +201,7 @@ If `device_id` is specified, `GET` will return an array with a single vehicle re
 
 ```json
 {
+    "version": "x.y.z",
     "vehicles": [ ... ]
     "links": {
         "first": "https://...",
@@ -239,6 +240,7 @@ If `device_id` is specified, `GET` will return an array with a vehicle status re
 
 ```json
 {
+    "version": "x.y.z",
     "vehicles": [ ... ]
     "links": {
         "first": "https://...",
@@ -496,7 +498,7 @@ See [Provider examples](examples.md#reports).
 [vehicles]: /data-types.md#vehicles
 [vehicle]: /data-types.md#vehicles
 [vehicle-types]: /data-types.md#vehicle-types
-[vehicle-status]: /data-types.md#vehicle-states
+[vehicle-status]: /data-types.md#vehicle-status
 [vehicle-states]: /modes#vehicle-states
 [vehicle-events]: /modes#event-types
 [vehicle-event-data]: /general-information.md#event-data
