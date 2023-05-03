@@ -187,7 +187,7 @@ The `/vehicles` endpoint returns the specified vehicle (if a device_id is provid
 **Method:** `GET`  
 **[Beta feature][beta]:** No (as of 1.2.0)  
 **Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.   
-**`data` Payload:** `{ "vehicles": [] }`, an array of [Vehicle](vehicle) objects
+**`data` Payload:** `{ "vehicles": [] }`, an array of [Vehicle][vehicles] objects
 
 _Path Parameters:_
 
@@ -496,7 +496,6 @@ See [Provider examples](examples.md#reports).
 [trips-general-info]: /general-information.md#stop-based-geographic-data
 [ts]: /general-information.md#timestamps
 [vehicles]: /data-types.md#vehicles
-[vehicle]: /data-types.md#vehicles
 [vehicle-types]: /data-types.md#vehicle-types
 [vehicle-status]: /data-types.md#vehicle-status
 [vehicle-states]: /modes#vehicle-states
