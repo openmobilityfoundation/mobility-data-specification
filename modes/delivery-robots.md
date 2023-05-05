@@ -89,7 +89,7 @@ The `trip_attributes` object **may** have the following key value pairs:
 - `driver_type` (enum, required): type of driver operating the device: `human`, `semi-autonomous`, `autonomous`
 - `driver_id` (UUID, optional): consistent unique identifier of the primary driver. Could be based on software version or an internal human driver id.
 - `app_name` (text, optional): name of the app used to reserve the trip which could be provider's app or 3rd party app
-- `request_time` (timestamp, optional): when the customer requested the trip
+- `requested_time` ([Timestamp][ts], optional): when the customer requested the trip
 - `has_payload` (boolean, optional): is there any payload for any delivery included in the device at trip start. 1 = loaded, 0 = empty
 - `range` (integer, optional): estimated range in meters based on energy levels in device at trip start
 - `identification_required` (boolean, optional): does the cargo require providing customer identification before trip start or upon delivery?
