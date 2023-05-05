@@ -297,5 +297,6 @@ if t=[]:
 [home]: /README.md
 [modes]: /modes/README.md
 [toc]: #table-of-contents
+[ts]: /general-information.md#timestamps
 [vehicle-states]: /modes/vehicle_states.md
 [vehicle-events]: /modes/event_types.md
