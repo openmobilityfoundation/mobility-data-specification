@@ -106,7 +106,7 @@ The `trip_attributes` object **may** have the following key value pairs:
 
 The `fare_attributes` object **may** have the following key value pairs:
 
-- `payment_type` (enumerated, required): `account_number`, `cash`, `credit_card`, `mobile_app`, `no payment`, `paratransit`, `phone`, `voucher`, `test`
+- `payment_type` (enumerated, required): `account_number`, `cash`, `credit_card`, `mobile_app`, `no_payment`, `paratransit`, `phone`, `voucher`, `test`
 - `fare_type` (enumerated, required): `meter_fare`, `upfront_pricing`, `flat_rate`. Indicator of which rate was charged.
 - `meter_fare_amount` (currency, conditionally required): if `upfront_pricing` is used as a `fare_type` include what the metered fare would have been if `meter_fare` would have been used. Allows cost comparison in evaluation of programs and pilots.
 - `tolls` (currency, optional) - Sum of any and all tolls charged for the trip, such as bridge tolls
