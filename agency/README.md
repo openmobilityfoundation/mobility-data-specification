@@ -366,10 +366,8 @@ See [Bulk Responses][bulk-responses]
 | `error`              | `error_description`                               | `error_details`[]               |
 | -------------------- | ------------------------------------------------- | ------------------------------- |
 | `bad_param`          | A validation error occurred                       | Array of parameters with errors |
-| `missing_param`      | A required parameter is missing                   | Array of missing parameters     |
-| `already_registered` | A stop with `stop_id` is already registered       |                                 |
 
-403 Unauthorized Response:
+400 Unauthorized Response:
 
 **None**
 
