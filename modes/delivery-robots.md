@@ -86,7 +86,7 @@ The `trip_type` field **must** have one of the following enumerated values:
 
 The `trip_attributes` object **may** have the following key value pairs:
 
-- `driver_type` (enum, required): type of driver operating the device: `human`, `semi-autonomous`, `autonomous`
+- `driver_type` (enum, required): type of driver operating the device: `human`, `semi_autonomous`, `autonomous`
 - `driver_id` (UUID, optional): consistent unique identifier of the primary driver. Could be based on software version or an internal human driver id.
 - `app_name` (text, optional): name of the app used to reserve the trip which could be provider's app or 3rd party app
 - `requested_time` ([Timestamp][ts], optional): when the customer requested the trip
