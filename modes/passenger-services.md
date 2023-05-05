@@ -87,7 +87,7 @@ The `trip_attributes` object **may** have the following key value pairs:
 - `hail_type` (enumerated, required): `street_hail`, `phone_dispatch`, `phone`, `text`, `app`
 - `app_name` (text, optional): name of the app used to reserve the trip which could be provider's app or 3rd party app
 - `passenger_count` (integer, required): unique count of passengers transported during trip duration
-- `requested_time` (timestamp, required): when the passenger requested the trip
+- `requested_time` ([Timestamp][ts], required): when the passenger requested the trip
 - `requested_trip_start_location` ([GPS](gps), Conditionally Required):  Location where the customer requested the trip to start (required if this is within jurisdictional boundaries) 
 - `quoted_trip_start_time` ([Timestamp][ts], Required): Time the trip was estimated or scheduled to start, that was provided to the passenger 
 - `dispatch_time` ([Timestamp][ts], Conditionally Required): Time the vehicle was dispatched to the customer (required if trip was dispatched) 
