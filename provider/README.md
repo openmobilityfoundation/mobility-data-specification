@@ -54,7 +54,7 @@ General authorization details are specified in the [Authorization section](/gene
 
 ### Versioning
 
-`provider` APIs must handle requests for specific versions of the specification from clients.
+`Provider` APIs must handle requests for specific versions of the specification from clients.
 
 Versioning must be implemented as specified in the [Versioning section][versioning].
 
@@ -70,11 +70,13 @@ MDS is intended to be used for multiple transportation modes, including its orig
 
 The response to a client request must include a valid HTTP status code defined in the [IANA HTTP Status Code Registry][iana].
 
-See [Responses][responses] for information on valid MDS response codes and [Error Messages][error-messages] for information on formatting error messages.
-
 The response must set the `Content-Type` header as specified in the [Versioning section][versioning].
 
-Response bodies must be a `UTF-8` encoded JSON object and must minimally include the MDS `version` and a `data` payload:
+Response bodies must be a `UTF-8` encoded JSON object
+
+See the [Responses][responses], [Error Messages][error-messages], and [Bulk Responses][bulk-responses] sections, and the [schema][schema] for more details.
+
+Response bodies must be a `UTF-8` encoded JSON object and must minimally include the MDS `version` and an object payload:
 
 ```json
 {
@@ -195,8 +197,6 @@ _Path Parameters:_
 | ------------ | ---- | ----------------- | ------------------------------------------- |
 | `device_id`  | UUID | Optional          | If provided, retrieve the specified vehicle |
 
-200 Success Response:
-
 If `device_id` is specified, `GET` will return an array with a single vehicle record, otherwise it will be a list of vehicle records with pagination details per the [JSON API](https://jsonapi.org/format/#fetching-pagination) spec:
 
 ```json
@@ -212,9 +212,17 @@ If `device_id` is specified, `GET` will return an array with a single vehicle re
 }
 ```
 
-404 Failure Response:
+#### Responses
 
-_No content returned on vehicle not found._
+Possible HTTP Status Codes: 
+200
+400 (with parameter)
+401
+404
+406
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
 
 [Top][toc]
 
@@ -234,8 +242,6 @@ _Path Parameters:_
 | ------------ | ---- | ----------------- | ------------------------------------------- |
 | `device_id`  | UUID | Optional          | If provided, retrieve the specified vehicle |
 
-200 Success Response:
-
 If `device_id` is specified, `GET` will return an array with a vehicle status record, otherwise it will be a list of vehicle records with pagination details per the [JSON API](https://jsonapi.org/format/#fetching-pagination) spec:
 
 ```json
@@ -251,9 +257,17 @@ If `device_id` is specified, `GET` will return an array with a vehicle status re
 }
 ```
 
-404 Failure Response:
+#### Responses
 
-_No content returned on vehicle not found._
+Possible HTTP Status Codes: 
+200
+400 (with parameter)
+401
+404
+406
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
 
 [Top][toc]
 
@@ -308,6 +322,19 @@ processing for that hour:
 
 For the near-ish real time use cases, please use the [events][events] endpoint.
 
+#### Responses
+
+Possible HTTP Status Codes: 
+200
+202
+400 (with parameter)
+401
+404
+406
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
+
 [Top][toc]
 
 ## Telemetry
@@ -332,6 +359,17 @@ Telemetry for a [trip](#trip) must include at least 2 points: the start point an
 | `telemetry_time` | `YYYY-MM-DDTHH`, an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) extended datetime representing an UTC hour between 00 and 23. | All telemetry with timestamp occurring within the hour. For example, requesting `telemetry_time=2019-10-01T07` returns all telemetry where `2019-10-01T07:00:00 <= telemetry.timestamp < 2019-10-01T08:00:00` UTC. |
 
 Without a `telemetry_time` query parameter, `/telemetry` shall return a `400 Bad Request` error.
+
+#### Responses
+
+Possible HTTP Status Codes: 
+200
+400 (with parameter)
+401
+406
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
 
 [Top][toc]
 
@@ -384,6 +422,19 @@ processing for that hour:
     }
     ```
 
+#### Responses
+
+Possible HTTP Status Codes: 
+200
+202
+400 (with parameter)
+401
+404
+406
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
+
 [Top][toc]
 
 ### Recent Events
@@ -411,6 +462,17 @@ Should either side of the requested time range be missing, `/events/recent` shal
 
 Should either side of the requested time range be greater than 2 weeks before the time of the request, `/events/recent` shall return a `400 Bad Request` error.
 
+#### Responses
+
+Possible HTTP Status Codes: 
+200
+400 (with parameter)
+401
+406
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
+
 [Top][toc]
 
 ## Stops
@@ -436,6 +498,18 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 
 In the case that a `stop_id` path parameter is specified, the `stops` array returned will only have one entry. In the case that no `stop_id` query parameter is specified, all stops will be returned.
 
+#### Responses
+
+Possible HTTP Status Codes: 
+200
+400 (with parameter)
+401
+404 (with parameter)
+406
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
+
 [Top][toc]
 
 ## Reports
@@ -455,6 +529,16 @@ The authenticated reports are monthly, historic flat files that may be pre-gener
 **Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.  
 **`data` Filename:** monthly file named by year and month, e.g. `/reports/YYYY-MM.csv`  
 **`data` Payload:** monthly CSV files of [Report](/data-types.md#Reports) objects 
+
+#### Responses
+
+Possible HTTP Status Codes: 
+200
+401
+404
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
 
 [Top][toc]
 

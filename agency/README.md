@@ -59,6 +59,12 @@ MDS is intended to be used for multiple transportation modes, including its orig
 
 ### Responses and Error Messages
 
+The response to a client request must include a valid HTTP status code defined in the [IANA HTTP Status Code Registry][iana].
+
+The response must set the `Content-Type` header as specified in the [Versioning section][versioning].
+
+Response bodies must be a `UTF-8` encoded JSON object
+
 See the [Responses][responses], [Error Messages][error-messages], and [Bulk Responses][bulk-responses] sections, and the [schema][schema] for more details.
 
 [Top][toc]
@@ -171,7 +177,7 @@ If `device_id` is specified, `GET` will return an array with a single vehicle re
 
 Possible HTTP Status Codes: 
 200
-400 (with `vehicle_id` parameter)
+400 (with parameter)
 401
 404
 406
@@ -214,7 +220,7 @@ If `device_id` is specified, `GET` will return an array with a vehicle status re
 
 Possible HTTP Status Codes: 
 200
-400 (with `vehicle_id` parameter)
+400 (with parameter)
 401
 404
 406
@@ -466,6 +472,7 @@ See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schem
 [geography-driven-events]: /general-information.md#geography-driven-events
 [error-messages]: /general-information.md#error-messages
 [hdop]: https://en.wikipedia.org/wiki/Dilution_of_precision_(navigation)
+[iana]: https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
 [modes]: /modes/README.md
 [propulsion-types]: /data-types.md#propulsion-types
 [reports]: /data-types.md#reports
