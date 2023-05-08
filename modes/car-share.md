@@ -142,7 +142,7 @@ Note many of these attributes come from fields in [GBFS vehicle_types](https://g
 
 ### Accessibility Attributes
 
-This `accessibility_attributes` enum represents the accessibility options available on a given vehicle, or the accessibility options utilized for a given trip. 
+This `accessibility_attributes` enum represents the accessibility attributes available on a given vehicle, or the accessibility attributes utilized for a given trip. 
 
 | `accessibility_attributes` | Description                           |
 |----------------------------|---------------------------------------|

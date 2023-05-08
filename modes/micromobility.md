@@ -80,7 +80,7 @@ The `fare_attributes` object is not used in this mode.
 
 ## Vehicle Properties
 
-_See more available vehicle attributes and accessibility options for any mode used in the [vehicles object](/data-types.md#vehicles)._
+_See more available vehicle attributes and accessibility attributes for any mode used in the [vehicles object](/data-types.md#vehicles)._
 
 ### Vehicle Attributes
 
@@ -94,7 +94,7 @@ The `vehicle_attributes` object **may** have the following key value pairs:
 
 ### Accessibility Attributes
 
-This `accessibility_attributes` enum represents the accessibility options available on a given vehicle, or the accessibility options utilized for a given trip. 
+This `accessibility_attributes` enum represents the accessibility attributes available on a given vehicle, or the accessibility attributes utilized for a given trip. 
 
 | `accessibility_attributes` | Description                           |
 |----------------------------|---------------------------------------|

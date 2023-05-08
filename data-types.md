@@ -30,7 +30,7 @@ A vehicle record is as follows:
 | `vehicle_type`       | Enum     | Required              | The [vehicle type][vehicle-types] |
 | `vehicle_attributes` | Map      | Optional              | **[Mode](/modes#list-of-supported-modes) Specific**. [Vehicle attributes](/modes#vehicle-attributes) given as mode-specific unordered key-value pairs |
 | `propulsion_types`   | Enum[]   | Required              | Array of [propulsion types][propulsion-types]; allows multiple values |
-| `accessibility_attributes` | Enum[] | Required             | **[Mode](/modes#list-of-supported-modes) Specific**. [Accessibility attributes](/modes#accessibility-attributes) given as an array of enumerated values. List of any accessibility options **available on the vehicle**. |
+| `accessibility_attributes` | Enum[] | Required if Available | **[Mode](/modes#list-of-supported-modes) Specific**. [Accessibility attributes](/modes#accessibility-attributes) given as an array of enumerated values. List of any accessibility attributes **available on the vehicle**. |
 | `battery_capacity`   | Integer  | Required if Available | Capacity of battery expressed as milliamp hours (mAh) |
 | `fuel_capacity`      | Integer  | Required if Available | Capacity of fuel tank (liquid, solid, gaseous) expressed in liters |
 | `maximum_speed`      | Integer  | Required if Available | Maximum speed (kph) possible with vehicle under normal, flat incline, smooth surface conditions. Applicable if the device has a built-in or intelligent speed limiter/governor. |
@@ -231,7 +231,7 @@ A Trip is defined by the following structure:
 | `duration`               | Integer         | Required | Time, in Seconds |
 | `distance`               | Integer         | Required | Trip Distance, in Meters |
 | `publication_time`       | [Timestamp][ts] | Optional | Date/time that trip became available through the trips endpoint |
-| `accessibility_attributes`  | Enum[]          | Required | **[Mode](/modes#list-of-supported-modes) Specific**. [Accessibility attributes](/modes#accessibility-attributes) given as an array of enumerated values. List of any accessibility options **used during the trip**. |
+| `accessibility_attributes` | Enum[]        | Required if Available | **[Mode](/modes#list-of-supported-modes) Specific**. [Accessibility attributes](/modes#accessibility-attributes) given as an array of enumerated values. List of any accessibility attributes **used during the trip**. |
 | `parking_verification_url` | URL           | Optional | A URL to a photo (or other evidence) of proper vehicle parking at the end of a trip, provided by customer or operator. |
 | `parking_category`       | Enum            | Optional | The type of parking location detected or provided and the end of a trip. One of `corral`, `curb`, `rack`, `other_valid`, `invalid`. Note that `other_valid` covers any other allowed parking location beyond what is enumerated, and `invalid` is any improper parking based on agency parking rules.
 | `standard_cost`          | Integer         | Optional | The cost, in the currency defined in `currency`, to perform that trip in the standard operation of the System (see [Costs & Currencies][costs-and-currencies]) |

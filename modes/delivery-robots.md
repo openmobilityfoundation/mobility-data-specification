@@ -107,7 +107,7 @@ The `fare_attributes` object **may** have the following key value pairs:
 
 ## Vehicle Properties
 
-_See more available vehicle attributes and accessibility options for any mode used in the [vehicles object](/data-types.md#vehicles)._
+_See more available vehicle attributes and accessibility attributes for any mode used in the [vehicles object](/data-types.md#vehicles)._
 
 ### Vehicle Attributes
 
