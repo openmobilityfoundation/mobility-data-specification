@@ -130,9 +130,13 @@ Responses must set the `Content-Type` header, as specified in the [Provider vers
 
 Response bodies must be a `UTF-8` encoded JSON object.
 
+[Top][toc]
+
 ### HTTP Response Codes
 
 The response to a client request must include a valid HTTP status code defined in the [IANA HTTP Status Code Registry](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml)
+
+[Top][toc]
 
 ### Get Jurisdictions
 
@@ -150,11 +154,18 @@ _Query Parameters:_
 | ------------ | --------- | --- | ---------------------------------------------- |
 | `effective` | Timestamp | O | See the state of all the Jurisdictions (i.e. which ones are effective) at that point in time. If not supplied, the default is to show only Jurisdictions that are currently in effect. |
 
-Response codes:
+#### Responses
 
-- 200 - success
-- 403 - unauthorized
-- 500 - server error
+_Possible HTTP Status Codes_: 
+200,
+400 (with parameter),
+404,
+406,
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
+
+[Top][toc]
 
 ### GET Jurisdiction
 
@@ -178,12 +189,16 @@ _Query Parameters:_
 | ------------ | --------- | --- | ---------------------------------------------- |
 | `effective` | Timestamp | O | See the version of the Jurisdiction that was in effect at that point in time. |
 
-Response codes:
+#### Responses
 
-- 200 - Success
-- 403 - Unauthorized
-- 404 - not found
-- 500 - Server error
+_Possible HTTP Status Codes_: 
+200,
+400 (with parameter),
+404,
+406,
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
 
 [Top][toc]
 
@@ -200,6 +215,16 @@ The publishing Agency should establish and communicate to interested parties how
 
 The `last_updated` field in the payload wrapper should be set to the time of publishing a revision, so that it is simple to identify a changed file.
 
+### Responses
+
+_Possible HTTP Status Codes_: 
+200,
+404,
+406,
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
+
 [Top][toc]
 
 ## Examples
@@ -210,5 +235,8 @@ See the [Geography Examples](/geography/examples/README.md) for an example `geog
 
 [Top][toc]
 
+[bulk-responses]: /general-information.md#bulk-responses
 [modes]: /modes#list-of-supported-modes
+[responses]: /general-information.md#responses
+[schema]: /schema/
 [toc]: #table-of-contents
