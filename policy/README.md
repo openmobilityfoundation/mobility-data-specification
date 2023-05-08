@@ -100,7 +100,7 @@ To revoke or end a policy, create a new policy with empty rules, and list the en
 
 ### Versioning
 
-`policy` APIs must handle requests for specific versions of the specification from clients.
+`Policy` APIs must handle requests for specific versions of the specification from clients.
 
 [Top][toc]
 
@@ -114,8 +114,8 @@ Geographical data shall be represented as GeoJSON `Feature` objects. No part of 
 
 Policies should be re-fetched whenever:
 
-1) a policy expires (via its `end_date`), or
-2) at an interval specified by the regulatory body, e.g. "daily at midnight".
+1. a policy expires (via its `end_date`), or
+2. at an interval specified by the regulatory body, e.g. "daily at midnight".
 
 Flat files have an optional `end_date` field that will apply to the file as a whole.
 
@@ -125,10 +125,10 @@ Flat files have an optional `end_date` field that will apply to the file as a wh
 
 Among other use-cases, configuring a REST API allows an Agency to:
 
-1) Dynamically adjust caps
-2) Set Provider specific policies
-3) Adjust other attributes in closer to real time
-4) Enumerate when policies are set to change
+1. Dynamically adjust caps
+2. Set Provider specific policies
+3. Adjust other attributes in closer to real time
+4. Enumerate when policies are set to change
 
 Responses must set the `Content-Type` header, as specified in the [versioning][versioning] section.
 
@@ -182,6 +182,17 @@ Policies will be returned in order of effective date (see schema below), with pa
 **`data` Payload**: `{ requirements: [] }`, JSON objects that follow the schema [outlined here](#requirement).  
 
 See [Policy Requirements Examples](/policy/examples/requirements.md) for how this can be implemented.
+
+#### Responses
+
+_Possible HTTP Status Codes_: 
+200,
+400 (with parameter),
+404,
+406,
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
 
 [Top][toc]
 
@@ -721,8 +732,21 @@ You may also show which APIs, endpoints, and fields your agency is serving to pr
 
 [Top][toc]
 
+### Responses
+
+_Possible HTTP Status Codes_: 
+200,
+404,
+406,
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
+
+[Top][toc]
+
 [accessibility-options]: /general-information.md#accessibility-options
 [beta]: /general-information.md#beta
+[bulk-responses]: /general-information.md#bulk-responses
 [error-messages]: /general-information.md#error-messages
 [iana]: https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
 [json-schema]: #json-schema
@@ -730,6 +754,7 @@ You may also show which APIs, endpoints, and fields your agency is serving to pr
 [muni-boundary]: /provider/README.md#municipality-boundary
 [propulsion-types]: /general-information.md#propulsion-types
 [responses]: /general-information.md#responses
+[schema]: /schema/
 [ts]: /general-information.md#timestamps
 [toc]: #table-of-contents
 [vehicle-events]: /modes#event-types
