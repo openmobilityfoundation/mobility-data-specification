@@ -169,12 +169,6 @@ _Possible HTTP Status Codes_:
 
 See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
 
-## Examples
-
-See the [Metrics Examples](examples) for ways these can be implemented.
-
-[Top][toc]
-
 ## Metrics Query API
 
 ### Method
