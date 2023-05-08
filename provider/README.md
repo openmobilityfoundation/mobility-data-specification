@@ -215,11 +215,11 @@ If `device_id` is specified, `GET` will return an array with a single vehicle re
 #### Responses
 
 _Possible HTTP Status Codes_: 
-200
-400 (with parameter)
-401
-404
-406
+200,
+400 (with parameter),
+401,
+404,
+406,
 500
 
 See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
@@ -260,11 +260,11 @@ If `device_id` is specified, `GET` will return an array with a vehicle status re
 #### Responses
 
 _Possible HTTP Status Codes_: 
-200
-400 (with parameter)
-401
-404
-406
+200,
+400 (with parameter),
+401,
+404,
+406,
 500
 
 See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
@@ -325,12 +325,12 @@ For the near-ish real time use cases, please use the [events][events] endpoint.
 #### Responses
 
 _Possible HTTP Status Codes_: 
-200
-202
-400 (with parameter)
-401
-404
-406
+200,
+202,
+400 (with parameter),
+401,
+404,
+406,
 500
 
 See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
@@ -363,10 +363,10 @@ Without a `telemetry_time` query parameter, `/telemetry` shall return a `400 Bad
 #### Responses
 
 _Possible HTTP Status Codes_: 
-200
-400 (with parameter)
-401
-406
+200,
+400 (with parameter),
+401,
+406,
 500
 
 See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
@@ -425,12 +425,12 @@ processing for that hour:
 #### Responses
 
 _Possible HTTP Status Codes_: 
-200
-202
-400 (with parameter)
-401
-404
-406
+200,
+202,
+400 (with parameter),
+401,
+404,
+406,
 500
 
 See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
@@ -465,10 +465,10 @@ Should either side of the requested time range be greater than 2 weeks before th
 #### Responses
 
 _Possible HTTP Status Codes_: 
-200
-400 (with parameter)
-401
-406
+200,
+400 (with parameter),
+401,
+406,
 500
 
 See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
@@ -501,11 +501,11 @@ In the case that a `stop_id` path parameter is specified, the `stops` array retu
 #### Responses
 
 _Possible HTTP Status Codes_: 
-200
-400 (with parameter)
-401
-404 (with parameter)
-406
+200,
+400 (with parameter),
+401,
+404 (with parameter),
+406,
 500
 
 See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
@@ -533,9 +533,9 @@ The authenticated reports are monthly, historic flat files that may be pre-gener
 #### Responses
 
 _Possible HTTP Status Codes_: 
-200
-401
-404
+200,
+401,
+404,
 500
 
 See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.

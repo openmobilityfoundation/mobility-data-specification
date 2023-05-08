@@ -96,11 +96,11 @@ The `/vehicles` registration endpoint is used to register vehicles for use in th
 #### Responses
 
 _Possible HTTP Status Codes_: 
-201
-400
-401
-406
-409
+201,
+400,
+401,
+406,
+409,
 500
 
 See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
@@ -126,11 +126,11 @@ The `/vehicles` update endpoint is used to change vehicle information, should so
 #### Responses
 
 _Possible HTTP Status Codes_: 
-200
-400
-401
-406
-409
+200,
+400,
+401,
+406,
+409,
 500
 
 See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
@@ -176,11 +176,11 @@ If `device_id` is specified, `GET` will return an array with a single vehicle re
 #### Responses
 
 _Possible HTTP Status Codes_: 
-200
-400 (with parameter)
-401
-404
-406
+200,
+400 (with parameter),
+401,
+404,
+406,
 500
 
 See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
@@ -219,11 +219,11 @@ If `device_id` is specified, `GET` will return an array with a vehicle status re
 #### Responses
 
 _Possible HTTP Status Codes_: 
-200
-400 (with parameter)
-401
-404
-406
+200,
+400 (with parameter),
+401,
+404,
+406,
 500
 
 See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
@@ -244,11 +244,11 @@ The Trips endpoint serves two purposes:
 ### Responses
 
 _Possible HTTP Status Codes_: 
-201
-400
-401
-404
-406
+201,
+400,
+401,
+404,
+406,
 500
 
 See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
@@ -274,11 +274,11 @@ The vehicle `/telemetry` endpoint allows a Provider to send vehicle telemetry da
 ### Responses
 
 _Possible HTTP Status Codes_: 
-201
-400
-401
-404
-406
+201,
+400,
+401,
+404,
+406,
 500
 
 See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
@@ -304,11 +304,11 @@ The vehicle `/events` endpoint allows the Provider to submit events describing t
 ### Responses
 
 _Possible HTTP Status Codes_: 
-201
-400
-401
-404
-406
+201,
+400,
+401,
+404,
+406,
 500
 
 See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
@@ -336,11 +336,11 @@ The `/stops` endpoint allows an agency to register city-managed Stops, or a prov
 ### Responses
 
 _Possible HTTP Status Codes_: 
-201
-400
-401
-406
-409
+201,
+400,
+401,
+406,
+409,
 500
 
 See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
@@ -380,11 +380,11 @@ See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schem
 ### Responses
 
 _Possible HTTP Status Codes_: 
-200
-400
-401
-404
-406
+200,
+400,
+401,
+404,
+406,
 500
 
 See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
@@ -416,10 +416,10 @@ If `stop_id` is specified, `GET` will return an array with a single stop record,
 ### Responses
 
 _Possible HTTP Status Codes_: 
-200
-401
-404
-406
+200,
+401,
+404,
+406,
 500
 
 See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
@@ -445,10 +445,10 @@ The `/reports` endpoint allows an agency to register aggregated report counts in
 ### Responses
 
 _Possible HTTP Status Codes_: 
-201
-400
-401
-406
+201,
+400,
+401,
+406,
 500
 
 See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
