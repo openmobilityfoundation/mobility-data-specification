@@ -87,23 +87,27 @@ The `/vehicles` registration endpoint is used to register vehicles for use in th
 **Method:** `POST`  
 **Payload:** An array of [Vehicles](/data-types.md#vehicles)  
 
-200 Success Response:
+#### Responses
 
-See [Bulk Responses][bulk-responses]
+Possible Responses: 
+201
+400
+401
+406
+409
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
 
 [Top][toc]
 
-#### Vehicle Register Error Codes:
+#### Error Codes:
 
 | `error`              | `error_description`                               | `error_details`[]               |
 | -------------------- | ------------------------------------------------- | ------------------------------- |
 | `bad_param`          | A validation error occurred                       | Array of parameters with errors |
 | `missing_param`      | A required parameter is missing                   | Array of missing parameters     |
 | `already_registered` | A vehicle with `device_id` is already registered  |                                 |
-
-403 Unauthorized Response:
-
-**None**
 
 ### Vehicle - Update
 
@@ -113,16 +117,24 @@ The `/vehicles` update endpoint is used to change vehicle information, should so
 **Method:** `PUT`  
 **Payload:** An array of [Vehicles](/data-types.md#vehicles)  
 
-200 Success Response:
+#### Responses
 
-See [Bulk Responses][bulk-responses]
+Possible Responses: 
+200
+400
+401
+406
+409
+500
 
-#### Vehicle Update Error Codes:
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
+
+#### Error Codes:
 
 | `error`              | `error_description`                               | `error_details`[]               |
 | -------------------- | ------------------------------------------------- | ------------------------------- |
 | `bad_param`          | A validation error occurred                       | Array of parameters with errors |
-| `unregistered`  | This `device_id` is unregistered |                                 |
+| `unregistered`       | This `device_id` is unregistered                  |                                 |
 
 [Top][toc]
 
@@ -140,8 +152,6 @@ _Path Parameters:_
 | ------------ | ---- | ----------------- | ------------------------------------------- |
 | `device_id`  | UUID | Optional          | If provided, retrieve the specified vehicle |
 
-200 Success Response:
-
 If `device_id` is specified, `GET` will return an array with a single vehicle record, otherwise it will be a list of vehicle records with pagination details per the [JSON API](https://jsonapi.org/format/#fetching-pagination) spec:
 
 ```json
@@ -157,9 +167,17 @@ If `device_id` is specified, `GET` will return an array with a single vehicle re
 }
 ```
 
-404 Failure Response:
+#### Responses
 
-_No content returned on vehicle not found._
+Possible Responses: 
+200
+400 (with `vehicle_id` parameter)
+401
+404
+406
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
 
 [Top][toc]
 
@@ -177,8 +195,6 @@ _Path Parameters:_
 | ------------ | ---- | ----------------- | ------------------------------------------- |
 | `device_id`  | UUID | Optional          | If provided, retrieve the specified vehicle |
 
-200 Success Response:
-
 If `device_id` is specified, `GET` will return an array with a vehicle status record, otherwise it will be a list of vehicle records with pagination details per the [JSON API](https://jsonapi.org/format/#fetching-pagination) spec:
 
 ```json
@@ -194,9 +210,17 @@ If `device_id` is specified, `GET` will return an array with a vehicle status re
 }
 ```
 
-404 Failure Response:
+#### Responses
 
-_No content returned on vehicle not found._
+Possible Responses: 
+200
+400 (with `vehicle_id` parameter)
+401
+404
+406
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
 
 [Top][toc]
 
@@ -211,9 +235,17 @@ The Trips endpoint serves two purposes:
 **Method:** `POST`  
 **Payload:** Array of [Trips](/data-types.md#trips)
 
-200 Success Response:
+### Responses
 
-See [Bulk Responses][bulk-responses]
+Possible Responses: 
+201
+400
+401
+404
+406
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
 
 ### Trip Errors:
 
@@ -233,9 +265,17 @@ The vehicle `/telemetry` endpoint allows a Provider to send vehicle telemetry da
 **Method**: `POST`  
 **Payload**: An array of vehicle [Telemetry][vehicle-telemetry]  
 
-200 Success Response:
+### Responses
 
-See [Bulk Responses][bulk-responses]
+Possible Responses: 
+201
+400
+401
+404
+406
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
 
 ### Telemetry Errors:
 
@@ -255,9 +295,17 @@ The vehicle `/events` endpoint allows the Provider to submit events describing t
 **Method:** `POST`  
 **Payload:** An array of vehicle [Events](/data-types.md#events)  
 
-200 Success Response:
+### Responses
 
-See [Bulk Responses][bulk-responses]
+Possible Responses: 
+201
+400
+401
+404
+406
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
 
 ### Event Errors:
 
@@ -279,9 +327,17 @@ The `/stops` endpoint allows an agency to register city-managed Stops, or a prov
 **Method:** `POST`  
 **Payload**: An array of [Stops][stops]
 
-200 Success Response:
+### Responses
 
-See [Bulk Responses][bulk-responses]
+Possible Responses: 
+201
+400
+401
+406
+409
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
 
 #### Stops Register Errors:
 
@@ -315,9 +371,17 @@ See [Bulk Responses][bulk-responses]
 | num_places_disabled    | Optional          |See [Stops][stops] |
 | devices                | Optional          |See [Stops][stops] |
 
-200 Success Response:
+### Responses
 
-See [Bulk Responses][bulk-responses]
+Possible Responses: 
+200
+400
+401
+404
+406
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
 
 #### Stops update Errors:
 
@@ -341,9 +405,18 @@ _Path Parameters:_
 | ------------ | ---- | ----------------- | ------------------------------------------- |
 | `stop_id`    | UUID | Optional          | If provided, retrieve the specified stop    |
 
-200 Success Response:
-
 If `stop_id` is specified, `GET` will return an array with a single stop record, otherwise it will be a list of all stop records.
+
+### Responses
+
+Possible Responses: 
+200
+401
+404
+406
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
 
 [Top][toc]
 
@@ -363,9 +436,16 @@ The `/reports` endpoint allows an agency to register aggregated report counts in
 **Method:** `POST`  
 **Payload**: A CSV of [Reports][reports]
 
-200 Success Response:
+### Responses
 
-See [Bulk Responses][bulk-responses]
+Possible Responses: 
+201
+400
+401
+406
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
 
 #### Reports Register Errors:
 
@@ -390,6 +470,7 @@ See [Bulk Responses][bulk-responses]
 [propulsion-types]: /data-types.md#propulsion-types
 [reports]: /data-types.md#reports
 [responses]: /general-information.md#responses
+[schema]: /schema/
 [stops]: /data-types.md#stops
 [telemetry-data]: /data-types.md#telemetry
 [trip-data]: /data-types.md#trips

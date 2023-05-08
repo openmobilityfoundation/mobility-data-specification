@@ -174,6 +174,7 @@ During the Beta period for this feature, location and telemetry data remain requ
 - **400:** Bad request.
 - **401:** Unauthorized: Invalid, expired, or insufficient scope of token.
 - **404:** Not Found: Object does not exist, returned on `GET` or `POST` operations if the object does not exist.
+- **406:** MDS version in Accept header is unsupported or invalid.
 - **409:** Conflict: `POST` operations when an object already exists and an update is not possible.
 - **500:** Internal server error: In this case, the answer may contain a `text/plain` body with an error message for troubleshooting.
 
