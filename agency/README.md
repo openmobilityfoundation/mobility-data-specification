@@ -59,7 +59,7 @@ MDS is intended to be used for multiple transportation modes, including its orig
 
 ### Responses and Error Messages
 
-See the [Responses][responses] and [Error Messages][error-messages] sections.
+See the [Responses][responses], [Error Messages][error-messages], and [Bulk Responses][bulk-responses] sections, and the [schema][schema] for more details.
 
 [Top][toc]
 
