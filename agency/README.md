@@ -303,11 +303,18 @@ See [Bulk Responses][bulk-responses]
 **Method:** `PUT`  
 **Payload**: An array of of [Stop][stops] information, where the permitted changeable fields are defined as:
 
-| Field               | Required/Optional | Description                                 |
-|---------------------|-------------------|---------------------------------------------|
-| stop_id             | Required          |See [Stops][stops] |
-| status              | Optional          |See [Stops][stops] |
-| num_spots_disabled  | Optional          |See [Stops][stops] |
+| Field                  | Required/Optional | Description       |
+|------------------------|-------------------|-------------------|
+| stop_id                | Required          |See [Stops][stops] |
+| last_updated           | Optional          |See [Stops][stops] |
+| status                 | Optional          |See [Stops][stops] |
+| rental_methods         | Optional          |See [Stops][stops] |
+| num_spots_disabled     | Optional          |See [Stops][stops] |
+| num_vehicles_available | Optional          |See [Stops][stops] |
+| num_vehicles_disabled  | Optional          |See [Stops][stops] |
+| num_places_available   | Optional          |See [Stops][stops] |
+| num_places_disabled    | Optional          |See [Stops][stops] |
+| devices                | Optional          |See [Stops][stops] |
 
 200 Success Response:
 
@@ -319,7 +326,7 @@ See [Bulk Responses][bulk-responses]
 | -------------------- | ------------------------------------------------- | ------------------------------- |
 | `bad_param`          | A validation error occurred                       | Array of parameters with errors |
 | `missing_param`      | A required parameter is missing                   | Array of missing parameters     |
-| `unregistered` | No stop with `stop_id` is already registered       |                                 |
+| `unregistered`       | No stop with `stop_id` is already registered      |                                 |
 
 [Top][toc]
 
