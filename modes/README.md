@@ -14,9 +14,14 @@ All MDS APIs should be mode-agnostic.
 
 ## Modes
 
-The `mode` value is used to specify the applicable mobility category in MDS Policy, MDS Jurisdictions, and many other parts of MDS. 
+The `mode` value is used to specify the applicable mobility category in MDS Policy, Provider/Agency, and many other parts of MDS. 
 
-A `mode` is defined as: A distinct regulatory framework for a type of mobility service, as distinguished by a combination of a) the data needed by regulators, b) the operating rules under which the service functions, c) the legal authority under which it is regulated, and the d) design and operating model of the service itself.
+A `mode` is defined as: A distinct regulatory framework for a type of mobility service or program, as distinguished by a combination of:
+
+1. the data needed by regulators,
+1. the operating rules under which the service functions, 
+1. the legal authority under which it is regulated, and
+1. the design and operating model of the service itself.
 
 There will be some gray areas and some differences from one jurisdiction to another (e.g. taxis and ridehail may be regulated under the same rules on one place, but different rules in another). MDS will not pre-define a complete taxonomy of modes, or identify every modal boundary upfront, but will instead add modes on an as-needed basis, maintaining as much consistency of naming as possible.
 
