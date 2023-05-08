@@ -166,6 +166,19 @@ Policies will be returned in order of effective date (see schema below), with pa
 
 `provider_id` is an implicit parameter and will be encoded in the authentication mechanism, or a complete list of policies should be produced. If the Agency decides that Provider-specific policy documents should not be shared with other Providers (e.g. punitive policy in response to violations), an Agency should filter policy objects before serving them via this endpoint.
 
+### Responses
+
+_Possible HTTP Status Codes_: 
+200,
+400 (with parameter),
+404,
+406,
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
+
+[Top][toc]
+
 ### Geographies
 
 **Deprecated:** see the [Geography API](/geography#transition-from-policy) for the current home of this endpoint.
@@ -187,7 +200,6 @@ See [Policy Requirements Examples](/policy/examples/requirements.md) for how thi
 
 _Possible HTTP Status Codes_: 
 200,
-400 (with parameter),
 404,
 406,
 500
@@ -208,6 +220,18 @@ The files shall be structured like the output of the [REST endpoints](#rest-endp
 The publishing agency should establish and communicate to providers how frequently these files should be polled.
 
 The `last_updated` field in the payload wrapper should be set to the time of publishing a revision, so that it is simple to identify a changed file.
+
+### Responses
+
+_Possible HTTP Status Codes_: 
+200,
+404,
+406,
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
+
+[Top][toc]
 
 ### Example `policies.json`
 
@@ -729,18 +753,6 @@ You may also show which APIs, endpoints, and fields your agency is serving to pr
 - If a 'Required' or 'Required if available' or 'Optional' field in MDS is listed in `disallowed_fields`, those fields should not be returned by the provider in the endpoint. The field (and therefore its value) must be completely removed from the response. If used, [schema](/schema) validation may fail on missing required fields.
 - To reference fields that are lower in a hierarchy, use [dot separated notation](https://docs.oracle.com/en/database/oracle/oracle-database/18/adjsn/simple-dot-notation-access-to-json-data.html#GUID-7249417B-A337-4854-8040-192D5CEFD576), where a dot between field names represents one nested level deeper into the data structure. E.g. 'gps.heading' or 'features.properties.rules.vehicle_type_id'.
 - To require [Geography Driven Events](/general-information.md#geography-driven-events), simply include the `event_geographies` field for either the Agency or Provider API `api_name`. Per how GDEs work, `event_location` will then not be returned, and the `changed_geographies` vehicle state `event_type` will be used.
-
-[Top][toc]
-
-### Responses
-
-_Possible HTTP Status Codes_: 
-200,
-404,
-406,
-500
-
-See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
 
 [Top][toc]
 
