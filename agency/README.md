@@ -95,7 +95,7 @@ The `/vehicles` registration endpoint is used to register vehicles for use in th
 
 #### Responses
 
-Possible HTTP Status Codes: 
+_Possible HTTP Status Codes_: 
 201
 400
 401
@@ -125,7 +125,7 @@ The `/vehicles` update endpoint is used to change vehicle information, should so
 
 #### Responses
 
-Possible HTTP Status Codes: 
+_Possible HTTP Status Codes_: 
 200
 400
 401
@@ -175,7 +175,7 @@ If `device_id` is specified, `GET` will return an array with a single vehicle re
 
 #### Responses
 
-Possible HTTP Status Codes: 
+_Possible HTTP Status Codes_: 
 200
 400 (with parameter)
 401
@@ -218,7 +218,7 @@ If `device_id` is specified, `GET` will return an array with a vehicle status re
 
 #### Responses
 
-Possible HTTP Status Codes: 
+_Possible HTTP Status Codes_: 
 200
 400 (with parameter)
 401
@@ -243,7 +243,7 @@ The Trips endpoint serves two purposes:
 
 ### Responses
 
-Possible HTTP Status Codes: 
+_Possible HTTP Status Codes_: 
 201
 400
 401
@@ -273,7 +273,7 @@ The vehicle `/telemetry` endpoint allows a Provider to send vehicle telemetry da
 
 ### Responses
 
-Possible HTTP Status Codes: 
+_Possible HTTP Status Codes_: 
 201
 400
 401
@@ -303,7 +303,7 @@ The vehicle `/events` endpoint allows the Provider to submit events describing t
 
 ### Responses
 
-Possible HTTP Status Codes: 
+_Possible HTTP Status Codes_: 
 201
 400
 401
@@ -335,7 +335,7 @@ The `/stops` endpoint allows an agency to register city-managed Stops, or a prov
 
 ### Responses
 
-Possible HTTP Status Codes: 
+_Possible HTTP Status Codes_: 
 201
 400
 401
@@ -379,7 +379,7 @@ See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schem
 
 ### Responses
 
-Possible HTTP Status Codes: 
+_Possible HTTP Status Codes_: 
 200
 400
 401
@@ -415,7 +415,7 @@ If `stop_id` is specified, `GET` will return an array with a single stop record,
 
 ### Responses
 
-Possible HTTP Status Codes: 
+_Possible HTTP Status Codes_: 
 200
 401
 404
@@ -444,7 +444,7 @@ The `/reports` endpoint allows an agency to register aggregated report counts in
 
 ### Responses
 
-Possible HTTP Status Codes: 
+_Possible HTTP Status Codes_: 
 201
 400
 401

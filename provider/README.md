@@ -214,7 +214,7 @@ If `device_id` is specified, `GET` will return an array with a single vehicle re
 
 #### Responses
 
-Possible HTTP Status Codes: 
+_Possible HTTP Status Codes_: 
 200
 400 (with parameter)
 401
@@ -259,7 +259,7 @@ If `device_id` is specified, `GET` will return an array with a vehicle status re
 
 #### Responses
 
-Possible HTTP Status Codes: 
+_Possible HTTP Status Codes_: 
 200
 400 (with parameter)
 401
@@ -324,7 +324,7 @@ For the near-ish real time use cases, please use the [events][events] endpoint.
 
 #### Responses
 
-Possible HTTP Status Codes: 
+_Possible HTTP Status Codes_: 
 200
 202
 400 (with parameter)
@@ -362,7 +362,7 @@ Without a `telemetry_time` query parameter, `/telemetry` shall return a `400 Bad
 
 #### Responses
 
-Possible HTTP Status Codes: 
+_Possible HTTP Status Codes_: 
 200
 400 (with parameter)
 401
@@ -424,7 +424,7 @@ processing for that hour:
 
 #### Responses
 
-Possible HTTP Status Codes: 
+_Possible HTTP Status Codes_: 
 200
 202
 400 (with parameter)
@@ -464,7 +464,7 @@ Should either side of the requested time range be greater than 2 weeks before th
 
 #### Responses
 
-Possible HTTP Status Codes: 
+_Possible HTTP Status Codes_: 
 200
 400 (with parameter)
 401
@@ -500,7 +500,7 @@ In the case that a `stop_id` path parameter is specified, the `stops` array retu
 
 #### Responses
 
-Possible HTTP Status Codes: 
+_Possible HTTP Status Codes_: 
 200
 400 (with parameter)
 401
@@ -532,7 +532,7 @@ The authenticated reports are monthly, historic flat files that may be pre-gener
 
 #### Responses
 
-Possible HTTP Status Codes: 
+_Possible HTTP Status Codes_: 
 200
 401
 404
@@ -550,6 +550,7 @@ See [Provider examples](examples.md#reports).
 
 [agps]: https://en.wikipedia.org/wiki/Assisted_GPS
 [beta]: /general-information.md#beta-features
+[bulk-responses]: /general-information.md#bulk-responses
 [costs-and-currencies]: /general-information.md#costs-and-currencies
 [data-latency]: #data-latency-requirements
 [dgps]: https://en.wikipedia.org/wiki/Differential_GPS
@@ -571,6 +572,7 @@ See [Provider examples](examples.md#reports).
 [point-geo]: /data-types.md#gps-data
 [propulsion-types]: /general-information.md#propulsion-types
 [responses]: /general-information.md#responses
+[schema]: /schema/
 [stops]: /data-types.md#stops
 [stop-based-geo]: /general-information.md#stop-based-geographic-data
 [telemetry]: /data-types.md#telemetry
