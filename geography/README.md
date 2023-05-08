@@ -157,6 +157,16 @@ Example `geographies.json`
 }
 ```
 
+#### Responses
+
+_Possible HTTP Status Codes_: 
+200,
+404,
+406,
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
+
 [Top][toc]
 
 ## Endpoints
@@ -197,10 +207,16 @@ Response body:
 }
 ```
 
-Response codes:
+#### Responses
 
-- 200 - success
-- 404 - no geography found
+_Possible HTTP Status Codes_: 
+200,
+400 (with parameter),
+404,
+406,
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
 
 [Top][toc]
 
@@ -229,9 +245,15 @@ Response body:
 }
 ```
 
-Response codes:
+#### Responses
 
-- 200 - success
+_Possible HTTP Status Codes_: 
+200,
+404,
+406,
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
 
 [Top][toc]
 
@@ -241,8 +263,10 @@ See the [Geography Examples](examples/README.md) for ways these can be implement
 
 [Top][toc]
 
+[bulk-responses]: /general-information.md#bulk-responses
 [error-messages]: /general-information.md#error-messages
 [responses]: /general-information.md#responses
+[schema]: /schema/
 [ts]: /general-information.md#timestamps
 [versioning]: /general-information.md#versioning
 [muni-boundary]: ../provider/README.md#municipality-boundary
