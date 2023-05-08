@@ -160,6 +160,17 @@ None.
 }
 ```
 
+### Responses
+
+_Possible HTTP Status Codes_: 
+200,
+404,
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
+
+## Examples
+
 See the [Metrics Examples](examples) for ways these can be implemented.
 
 [Top][toc]
@@ -248,6 +259,16 @@ All named fields are required to be returned in response. Non-relevant values ca
 }
 ```
 
+### Responses
+
+_Possible HTTP Status Codes_: 
+200,
+400 (with parameter),
+404,
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
+
 [Top][toc]
 
 ## Examples
@@ -256,4 +277,7 @@ See the [Metrics Examples](examples) for ways these can be implemented.
 
 [Top][toc]
 
+[bulk-responses]: /general-information.md#bulk-responses
+[responses]: /general-information.md#responses
 [toc]: #table-of-contents
+[schema]: /schema/
