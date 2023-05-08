@@ -309,7 +309,6 @@ See [Bulk Responses][bulk-responses]
 | last_updated           | Optional          |See [Stops][stops] |
 | status                 | Optional          |See [Stops][stops] |
 | rental_methods         | Optional          |See [Stops][stops] |
-| num_spots_disabled     | Optional          |See [Stops][stops] |
 | num_vehicles_available | Optional          |See [Stops][stops] |
 | num_vehicles_disabled  | Optional          |See [Stops][stops] |
 | num_places_available   | Optional          |See [Stops][stops] |
