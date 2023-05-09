@@ -1,6 +1,6 @@
 ## 2.0.0
 
-> Release Candidate submitted: 2023-02-15
+> Released 2023-05-09
 
 > [Release Plan](https://github.com/openmobilityfoundation/governance/wiki/Release-2.0.0)
 
@@ -12,7 +12,7 @@ See the closed PRs tagged with [Milestone 2.0.0](https://github.com/openmobility
 
 #### **_Admin/General Changes_**
 
-- Update [state machine diagrams](https://docs.google.com/presentation/d/1fHdq1efbN5GSFDLF4en-oA_BYPXQKbbIbHff6iROJKA/edit?usp=sharing) and create 3 new diagrams for each new modes
+- Update [state machine diagrams](https://docs.google.com/presentation/d/1fHdq1efbN5GSFDLF4en-oA_BYPXQKbbIbHff6iROJKA/edit?usp=sharing) and create 4 new diagrams for each mode
 - [Remove Schema and instead link to OpenAPI repo](https://github.com/openmobilityfoundation/mobility-data-specification/issues/281)
    - OpenAPI support in place of JSON Schema allows easier building of real-time MDS endpoint validation, and interactive documentation on Stoplight.
 - [Remove Geography from Policy](https://github.com/openmobilityfoundation/mobility-data-specification/issues/816)
