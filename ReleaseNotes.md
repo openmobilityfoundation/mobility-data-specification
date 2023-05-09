@@ -94,6 +94,19 @@ Reports have a new adaptive scooter special group type, and improved formatting.
 
 - [Jurisdiction is now public](https://github.com/openmobilityfoundation/mobility-data-specification/pull/824/files)
 
+#### **_Technical Updates_**
+
+As part of the OpenAPI schema work, a number of technical updates were made to ensure the spec was internally consistent. A full list can be found for all issues and PRs in [this date range](https://github.com/openmobilityfoundation/mobility-data-specification/issues?q=milestone%3A2.0.0+created%3A%3E2023-04-15+updated%3A%3C2023-05-09).
+
+- [OpenAPI Schema](https://github.com/openmobilityfoundation/mobility-data-specification/issues/281) definitions, created in [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repo
+- [HTTP error and bulk responses](https://github.com/openmobilityfoundation/mobility-data-specification/issues/856)
+- [Accessibility 'options' renamed to 'attributes'](https://github.com/openmobilityfoundation/mobility-data-specification/issues/847) for consistency
+- [Add missing event types from main list](https://github.com/openmobilityfoundation/mobility-data-specification/issues/845)
+- [Fix car share event types](https://github.com/openmobilityfoundation/mobility-data-specification/issues/843)
+- [Updated fare_attributes.payment_type list](https://github.com/openmobilityfoundation/mobility-data-specification/issues/844)
+- [Use last_updated consistently](https://github.com/openmobilityfoundation/mobility-data-specification/issues/842) across responses
+- [Remove extra 'data' hierarchy](https://github.com/openmobilityfoundation/mobility-data-specification/issues/841) in responses in some endpoints
+
 ## 1.2.0
 
 > Released: 2021-11-04
