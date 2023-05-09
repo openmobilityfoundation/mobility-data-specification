@@ -1,33 +1,52 @@
-provider_name,provider_id,url,mds_api_url,gbfs_api_url
-JUMP,c20e08cf-8488-46a6-a66c-5d8fb827f7e0,https://jump.com,https://api.uber.com/v0.2/emobility/mds,
-Lime,63f13c48-34ff-49d2-aca7-cf6a5b6171c3,https://li.me,https://data.lime.bike/api/partners/v1/mds,
-Bird,2411d395-04f2-47c9-ab66-d09e9e3c3251,https://www.bird.co,https://mds.bird.co,https://mds.bird.co/gbfs
-Razor,6ddcc0ad-1d66-4046-bba4-d1d96bb8ca4d,https://www.razor.com/share,https://razor-200806.appspot.com/api/v2/mds,
-Lyft,e714f168-ce56-4b41-81b7-0b6a4bd26128,https://www.lyft.com,https://api.lyft.com/v1/last-mile/mds,
-Skip,d73fcf80-22b1-450f-b535-042b4e30aac7,https://www.skipscooters.com,https://api.skipscooters.com/mds,
-HOPR,2e4cb206-b475-4a9d-80fb-0880c9a033e0,https://gohopr.com,https://gbfs.hopr.city/api/mds,
-Wheels,b79f8687-526d-4ae6-80bf-89b4c44dc071,https://wheels.co,https://mds.getwheelsapp.com,
-Spin,70aa475d-1fcd-4504-b69c-2eeb2107f7be,https://www.spin.app,https://web.spin.pm/api/mds/v1,
-WIND,d56d2df6-fa92-43de-ab61-92c3a84acd7d,https://www.wind.co,https://partners.wind.co/v1/mds,
-Tier,264aad41-b47c-415d-8585-0208d436516e,https://www.tier.app,https://partner.tier-services.io/mds,
-Cloud,bf95148b-d1d1-464e-a140-6d2563ac43d4,https://www.cloud.tt,https://mds.cloud.tt,https://mds.cloud.tt/gbfs
-BlueLA,f3c5a65d-fd85-463e-9564-fc95ea473f7d,https://www.bluela.com,https://api.bluela.com/mds/v0,https://api.bluela.com/gbfs/v1/meta
-Bolt,3291c288-c9c8-42f1-bc3e-8502b077cd7f,https://www.micromobility.com/,https://bolt.miami/bolt2/api/mds,
-CLEVR,daecbe87-a9f2-4a5a-b5df-8e3e14180513,https://clevrmobility.com,https://portal.clevrmobility.com/api/mds,
-SherpaLA,3c95765d-4da6-41c6-b61e-1954472ec6c9,,https://mds.bird.co,https://mds.bird.co/gbfs/platform-partner/sherpa-la
-OjO Electric,8d293326-8464-4256-8312-617ebcd0efad,https://www.ojoelectric.com,https://api.ojoelectric.com/api/mds,https://api.ojoelectric.com/api/mds/gbfs.json
-VOI,1f129e3f-158f-4df5-af9c-a80de238e334,https://www.voiscooters.com/,https://mds.voiapp.io,https://mds.voiapp.io/v1/gbfs
-MOVO,40dad54c-e199-4fd8-9f5b-cff93ffced63,https://movo.me,https://mds.movo.me,https://gbfs.movo.me
-Baus,638ba503-4006-4c53-bf34-cd625cc03d61,https://bausmoves.com,https://mds.bird.co,https://mds.bird.co/gbfs/platform-partner/v2/baus
-Bolt Technology,7ea695ca-9de7-4b3b-9f3c-241b2045a1fe,https://bolt.eu,https://mds.bolt.eu,https://mds.bolt.eu/gbfs/1
-Grin,8a0ecfce-5fb3-451e-8069-434b79c8b01a,https://ongrin.com,https://open-data.grow.mobi/mds/,https://open-data.grow.mobi/api/v1/gbfs/
-Dott,0a899e3a-705a-46f2-9189-d78cc83a2db4,https://ridedott.com,https://mds.api.ridedott.com,https://gbfs.api.ridedott.com
-Superpedestrian,420e6e94-55a6-4946-b6b3-4398fe22e912,https://www.superpedestrian.com,https://mds.linkyour.city/mds,
-Circ,03d5d605-e5c9-45a1-a1dd-144aa8649525,https://www.circ.com,https://mds.bird.co,
-GIG,42475742-8618-4fc0-aa8f-3b3948b84b85,https://gigcarshare.com/,https://global.us.prod.svc.ridecell.io/reporting/api/mds,
-Zisch,fb62cfe6-757c-4e5b-a264-18b43b3fc40b,https://www.e-zisch.ch,https://mds.bird.co,
-Seven Group,7fca7812-c718-48dd-b9f2-d1ae160f2ae4,https://www.group-seven.ch,https://mds.bird.co,
-Pony,f190d330-b49e-4590-871b-0bcbec565a8c,https://getapony.com/,https://mds.getapony.com/v1,
-SHARE-NOW,d8f880d6-96d8-4cdc-8069-32a683b2bce6,https://www.share-now.com,https://external.share-now.com/api/rental/mds/,https://external.share-now.com/api/rental/mds/gbfs/
-Boaz Bikes,7c96bc58-fb63-433a-b77f-84ccb1c9d737,https://www.boazbikes.com/,https://mds.movatic.co/,https://gbsf.movatic.co/en/1.1/576347857979998215
-VeoRide INC.,6e39f9db-751b-5cea-ae7e-486f579a56bc,https://www.veoride.com/,https://cluster-prod.veoride.com/api/shares/mds,https://cluster-prod.veoride.com/api/shares/gbfs
+provider_name,mode_id,provider_id,url,mds_api_url,gbfs_api_url
+JUMP,micromobility,c20e08cf-8488-46a6-a66c-5d8fb827f7e0,https://jump.com,https://api.uber.com/v0.2/emobility/mds,
+Lime,micromobility,63f13c48-34ff-49d2-aca7-cf6a5b6171c3,https://li.me,https://data.lime.bike/api/partners/v1/mds,
+Bird,micromobility,2411d395-04f2-47c9-ab66-d09e9e3c3251,https://www.bird.co,https://mds.bird.co,https://mds.bird.co/gbfs
+Razor,micromobility,6ddcc0ad-1d66-4046-bba4-d1d96bb8ca4d,https://www.razor.com/share,https://razor-200806.appspot.com/api/v2/mds,
+Lyft,micromobility,e714f168-ce56-4b41-81b7-0b6a4bd26128,https://www.lyft.com,https://api.lyft.com/v1/last-mile/mds,
+Skip,micromobility,d73fcf80-22b1-450f-b535-042b4e30aac7,https://www.skipscooters.com,https://api.skipscooters.com/mds,
+HOPR,micromobility,2e4cb206-b475-4a9d-80fb-0880c9a033e0,https://gohopr.com,https://gbfs.hopr.city/api/mds,
+Wheels,micromobility,b79f8687-526d-4ae6-80bf-89b4c44dc071,https://wheels.co,https://mds.getwheelsapp.com,
+Spin,micromobility,70aa475d-1fcd-4504-b69c-2eeb2107f7be,https://www.spin.app,https://web.spin.pm/api/mds/v1,
+WIND,micromobility,d56d2df6-fa92-43de-ab61-92c3a84acd7d,https://www.wind.co,https://partners.wind.co/v1/mds,
+Tier,micromobility,264aad41-b47c-415d-8585-0208d436516e,https://www.tier.app,https://partner.tier-services.io/mds,
+Cloud,micromobility,bf95148b-d1d1-464e-a140-6d2563ac43d4,https://www.cloud.tt,https://mds.cloud.tt,https://mds.cloud.tt/gbfs
+BlueLA,micromobility,f3c5a65d-fd85-463e-9564-fc95ea473f7d,https://www.bluela.com,https://api.bluela.com/mds/v0,https://api.bluela.com/gbfs/v1/meta
+Bolt,micromobility,3291c288-c9c8-42f1-bc3e-8502b077cd7f,https://www.micromobility.com/,https://bolt.miami/bolt2/api/mds,
+CLEVR,micromobility,daecbe87-a9f2-4a5a-b5df-8e3e14180513,https://clevrmobility.com,https://portal.clevrmobility.com/api/mds,
+SherpaLA,micromobility,3c95765d-4da6-41c6-b61e-1954472ec6c9,,https://mds.bird.co,https://mds.bird.co/gbfs/platform-partner/sherpa-la
+OjO Electric,micromobility,8d293326-8464-4256-8312-617ebcd0efad,https://www.ojoelectric.com,https://api.ojoelectric.com/api/mds,https://api.ojoelectric.com/api/mds/gbfs.json
+VOI,micromobility,1f129e3f-158f-4df5-af9c-a80de238e334,https://www.voiscooters.com/,https://mds.voiapp.io,https://mds.voiapp.io/v1/gbfs
+MOVO,micromobility,40dad54c-e199-4fd8-9f5b-cff93ffced63,https://movo.me,https://mds.movo.me,https://gbfs.movo.me
+Baus,micromobility,638ba503-4006-4c53-bf34-cd625cc03d61,https://bausmoves.com,https://mds.bird.co,https://mds.bird.co/gbfs/platform-partner/v2/baus
+Bolt Technology,micromobility,7ea695ca-9de7-4b3b-9f3c-241b2045a1fe,https://bolt.eu,https://mds.bolt.eu,https://mds.bolt.eu/gbfs/1
+Grin,micromobility,8a0ecfce-5fb3-451e-8069-434b79c8b01a,https://ongrin.com,https://open-data.grow.mobi/mds/,https://open-data.grow.mobi/api/v1/gbfs/
+Dott,micromobility,0a899e3a-705a-46f2-9189-d78cc83a2db4,https://ridedott.com,https://mds.api.ridedott.com,https://gbfs.api.ridedott.com
+Superpedestrian,micromobility,420e6e94-55a6-4946-b6b3-4398fe22e912,https://www.superpedestrian.com,https://mds.linkyour.city/mds,
+Circ,micromobility,03d5d605-e5c9-45a1-a1dd-144aa8649525,https://www.circ.com,https://mds.bird.co,
+GIG,car-share,42475742-8618-4fc0-aa8f-3b3948b84b85,https://gigcarshare.com/,https://global.us.prod.svc.ridecell.io/reporting/api/mds,
+Zisch,micromobility,fb62cfe6-757c-4e5b-a264-18b43b3fc40b,https://www.e-zisch.ch,https://mds.bird.co,
+Seven Group,micromobility,7fca7812-c718-48dd-b9f2-d1ae160f2ae4,https://www.group-seven.ch,https://mds.bird.co,
+Pony,micromobility,f190d330-b49e-4590-871b-0bcbec565a8c,https://getapony.com/,https://mds.getapony.com/v1,
+SHARE-NOW,car-share,d8f880d6-96d8-4cdc-8069-32a683b2bce6,https://www.share-now.com,https://external.share-now.com/api/rental/mds/,https://external.share-now.com/api/rental/mds/gbfs/
+Boaz Bikes,micromobility,7c96bc58-fb63-433a-b77f-84ccb1c9d737,https://www.boazbikes.com/,https://mds.movatic.co/,https://gbsf.movatic.co/en/1.1/576347857979998215
+VeoRide INC.,micromobility,6e39f9db-751b-5cea-ae7e-486f579a56bc,https://www.veoride.com/,https://cluster-prod.veoride.com/api/shares/mds,https://cluster-prod.veoride.com/api/shares/gbfs
+LEO Ride,micromobility,b0eedf6-c7a5-4262-9222-ab2484ad214e,https://leoride.co/,https://mobile.leoriders.com/mds,https://mobile.leoriders.com/gbpf
+LEO Explore,micromobility,7c653014-2f33-4f5b-98de-30ea66430986,https://leoride.co/,,
+ATOM Mobility,micromobility,4d88272c-032e-487c-9f58-ab5951a23427,https://atommobility.com/,https://mds.rideatom.com/mds,
+Zig Zag Sharing,micromobility,39977af0-4b94-11ec-81d3-0242ac130003,https://www.zigzagsharing.com/,https://mds.zigzagsharing.com/,
+TukTuk,micromobility,1a99bf67-14a0-48a1-98d1-77147a88c3d2,https://tuktukscooters.com/,https://app.tuktukscooters.com/mds-feed,
+Helbiz,micromobility,3aece8c6-416a-4d39-bcc4-d02524cb8004,https://helbiz.com,https://mds.helbiz.com,
+Kiwibot,delivery-robots,5f19acae-d7e9-4b57-96bd-f6406712d654,https://www.kiwibot.com/,,
+Yego,micromobility,da99028e-28b7-4dd3-ad23-41b7a045db8a,https://www.rideyego.com/,https://mds.yego.app/mds,https://services.rideyego.com/gbfs
+Leo&Go,micromobility,84b174c4-eb74-5d07-bdeb-27f4215d2aa9,https://www.leoandgo.com,https://mds.vulog.io/mds/fleets/LEONGO-FRLIO,
+Scoot,micromobility,07a25fe6-d0be-11e8-a8d5-f2801f1b9fd1,https://scoot.co/san-francisco/,https://mds.bird.co/,https://mds.bird.co/gbfs/
+Revel,micromobility,89301314-1210-4126-a213-3c41423f2ac5,https://gorevel.com/,https://opendata.gorevel.com/opendata/mds/,https://gbfs.gorevel.com/gbfs/v2/
+Troopy,micromobility,2b684c7c-f8ad-4c65-92f0-b9e57aaa7dd3,https://www.troopy.com,https://mds.vulog.io/mds/fleets/TROOPY-FRPAR,https://gbfs.vulog.io/mds/fleets/TROOPY-FRPAR/gbfs
+BCycle,micromobility,938D9F8B-B8D3-46CC-9276-F4A8C4FA3610,https://www.bcycle.com,https://mds.bcycle.com,https://gbfs.bcycle.com
+Tembici,micromobility,46b28e68-8ecb-4875-b97e-836fd5e1930f,https://www.tembici.com.br/,https://api.tembici.com.br/mds,https://api.tembici.com.br/gbfs
+POPPY Mobility,micromobility,5c869736-797f-4244-9132-fb50a22d1bfd,https://www.poppy.be/,https://poppy.red/mds,
+Whoosh,micromobility,3f8908a7-86fa-450d-8889-5d49077e06cd,https://whoosh.bike,https://mds.whoosh.bike,
+Telofun,micromobility,3dd253d3-557c-4fcb-98da-9af3edeaaae6,https://www.tel-o-fun.co.il/,https://mds.fsmctmobility.com/api/mds/v1/,
+Gbike,micromobility,a50b796e-bca2-11ed-afa1-0242ac120002,https://gcoo.io/,https://mds.gcoo.io/,https://mds.gcoo.io/gbfs
+SURF,micromobility,66c43ccb-f9f9-4f70-9707-37301b9f49a8,https://www.surfingscooters.com,https://api.app.surf/mds,https://api.app.surf/gbfs/en
