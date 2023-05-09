@@ -19,7 +19,7 @@ See the [modes overview](/modes) for how the mode specific information below app
    - [Fare Attributes](#fare-attributes)
 - [Vehicle Properties](#vehicle-properties)
   - [Vehicle Attributes](#vehicle-attributes)
-  - [Accessibility Options](#accessibility-options)
+  - [Accessibility Attributes](#accessibility-attributes)
 - [State Machine](#state-machine)
   - [Vehicle States](#vehicle-states)
   - [Event Types](#event-types)
@@ -46,7 +46,7 @@ The `journey_id` field is not used in this mode. Trips are point-to-point.
 
 ### Journey Attributes
 
-The `journey_attributes` array is not used in this mode.
+The `journey_attributes` object is not used in this mode.
 
 [Top][toc]
 
@@ -68,23 +68,23 @@ The `trip_type` field **may** have one of the following values:
 
 ### Trip Attributes
 
-The `trip_attributes` array is not used in this mode.
+The `trip_attributes` object is not used in this mode.
 
 [Top][toc]
 
 ### Fare Attributes
 
-The `fare_attributes` array is not used in this mode.
+The `fare_attributes` object is not used in this mode.
 
 [Top][toc]
 
 ## Vehicle Properties
 
-_See more available vehicle attributes and accessibility options for any mode used in the [vehicles object](/data-types.md#vehicles)._
+_See more available vehicle attributes and accessibility attributes for any mode used in the [vehicles object](/data-types.md#vehicles)._
 
 ### Vehicle Attributes
 
-The `vehicle_attributes` array **may** have the following key value pairs:
+The `vehicle_attributes` object **may** have the following key value pairs:
 
 - `year` (integer, optional)
 - `make` (string, optional)
@@ -92,13 +92,13 @@ The `vehicle_attributes` array **may** have the following key value pairs:
 
 [Top][toc]
 
-### Accessibility Options
+### Accessibility Attributes
 
-This `accessibility_options` enum represents the accessibility options available on a given vehicle, or the accessibility options utilized for a given trip. 
+This `accessibility_attributes` enum represents the accessibility attributes available on a given vehicle, or the accessibility attributes utilized for a given trip. 
 
-| `accessibility_options` | Description                           |
-|-------------------------|---------------------------------------|
-| `adaptive`              | This vehicle is accessible to people with various physical disabilities, and may include three wheels or be self balancing, a seat, or a basket or storage area  |
+| `accessibility_attributes` | Description                           |
+|----------------------------|---------------------------------------|
+| `adaptive`                 | This vehicle is accessible to people with various physical disabilities, and may include three wheels or be self balancing, a seat, or a basket or storage area  |
 
 [Top][toc]
 

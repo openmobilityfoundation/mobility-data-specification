@@ -14,6 +14,7 @@ The Metrics API endpoints are intended to be implemented by regulatory agencies,
 - [Data Requirements](#data-requirements)
 - [Beta Feature](#beta-feature)
 - [Date and Time Format](#date-and-time-format)
+- [Data Schema](#data-schema)
 - [Data Redaction](#data-redaction)
 - [Metrics Discovery API](#metrics-discovery-api)
 - [Metrics Query API](#metrics-query-api)
@@ -98,6 +99,12 @@ All interval durations (duration) are [ISO 8601](https://en.wikipedia.org/wiki/I
 
 [Top][toc]
 
+## Data Schema
+
+See the [Endpoints](#endpoints) below for information on their specific schema, and the [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for full details and interactive documentation. 
+
+[Top][toc]
+
 ## Data Redaction
 
 Some combinations of dimensions, filters, time, and geography may return a small count of trips, which could increase a privacy risk of re-identification. To correct for that, Metrics does not return data below a certain count of results.  This data redaction is called k-anonymity, and the threshold is set at a k-value of 10. For more explanation of this methodology, see our [Data Redaction Guidance document](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Data-Redaction).
@@ -153,9 +160,14 @@ None.
 }
 ```
 
-See the [Metrics Examples](examples) for ways these can be implemented.
+### Responses
 
-[Top][toc]
+_Possible HTTP Status Codes_: 
+200,
+404,
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
 
 ## Metrics Query API
 
@@ -167,7 +179,7 @@ Supports querying one or more metrics with the following parameters.
 
 ### Parameters
 
-| Name            | Type     | Required | Comments                                                                        |
+| Query Parameters | Type     | Required | Comments                                                                        |
 | --------------- | -------- | -------- | ------------------------------------------------------------------------------- |
 | `measures`      | string[] | Yes      | list of measures to return. [See metric names](core_metrics.md)                 |
 | `interval`      | duration | Yes      | [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#Durations) duration for metrics intervals.                                                 |
@@ -241,6 +253,16 @@ All named fields are required to be returned in response. Non-relevant values ca
 }
 ```
 
+### Responses
+
+_Possible HTTP Status Codes_: 
+200,
+400 (with parameter),
+404,
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
+
 [Top][toc]
 
 ## Examples
@@ -249,4 +271,7 @@ See the [Metrics Examples](examples) for ways these can be implemented.
 
 [Top][toc]
 
+[bulk-responses]: /general-information.md#bulk-responses
+[responses]: /general-information.md#responses
 [toc]: #table-of-contents
+[schema]: /schema/

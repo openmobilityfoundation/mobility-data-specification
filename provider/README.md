@@ -15,7 +15,7 @@ This specification contains a data standard for *mobility as a service* provider
   * [Responses and Error Messages](#responses-and-error-messages)
   * [GBFS](#GBFS)
   * [Data Latency Requirements][data-latency]
-  * [JSON Schema](#json-schema)
+  * [Data Schema](#data-schema)
   * [Pagination](#pagination)
   * [Municipality Boundary](#municipality-boundary)
   * [Other Data Types](#other-data-types)
@@ -54,7 +54,7 @@ General authorization details are specified in the [Authorization section](/gene
 
 ### Versioning
 
-`provider` APIs must handle requests for specific versions of the specification from clients.
+`Provider` APIs must handle requests for specific versions of the specification from clients.
 
 Versioning must be implemented as specified in the [Versioning section][versioning].
 
@@ -70,21 +70,23 @@ MDS is intended to be used for multiple transportation modes, including its orig
 
 The response to a client request must include a valid HTTP status code defined in the [IANA HTTP Status Code Registry][iana].
 
-See [Responses][responses] for information on valid MDS response codes and [Error Messages][error-messages] for information on formatting error messages.
-
 The response must set the `Content-Type` header as specified in the [Versioning section][versioning].
 
-Response bodies must be a `UTF-8` encoded JSON object and must minimally include the MDS `version` and a `data` payload:
+Response bodies must be a `UTF-8` encoded JSON object
+
+See the [Responses][responses], [Error Messages][error-messages], and [Bulk Responses][bulk-responses] sections, and the [schema][schema] for more details.
+
+Response bodies must be a `UTF-8` encoded JSON object and must minimally include the MDS `version` and an object payload:
 
 ```json
 {
     "version": "x.y.z",
-    "data": {
-        "trips": [{
-            "provider_id": "...",
-            "trip_id": "...",
-        }]
-    }
+    "trips": [
+      {
+        "provider_id": "...",
+        "trip_id": "..."
+      }
+    ]
 }
 ```
 
@@ -109,11 +111,9 @@ ttl                 | Yes       | Integer representing the number of millisecond
 
 [Top][toc]
 
-### JSON Schema
+### Data Schema
 
-MDS defines [JSON Schema][json-schema] files for each endpoint.
-
-`provider` API responses must validate against their respective schema files. The schema files always take precedence over the language and examples in this and other supporting documentation meant for *human* consumption.
+See the [Endpoints](#endpoints) below for information on their specific schema, and the [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for full details and interactive documentation.
 
 [Top][toc]
 
@@ -135,12 +135,10 @@ At a minimum, paginated payloads must include a `next` key, which must be set to
 ```json
 {
     "version": "x.y.z",
-    "data": {
-        "trips": [{
-            "provider_id": "...",
-            "trip_id": "...",
-        }]
-    },
+    "trips": [{
+        "provider_id": "...",
+        "trip_id": "...",
+    }],
     "links": {
         "first": "https://...",
         "last": "https://...",
@@ -179,11 +177,9 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 ```json
 {
     "version": "x.y.z",
-    "data": {
-        "vehicles": []
-    },
     "last_updated": "12345",
-    "ttl": "12345"
+    "ttl": "12345",
+    "vehicles": []
 }
 ```
 
@@ -192,21 +188,20 @@ The `/vehicles` endpoint returns the specified vehicle (if a device_id is provid
 **Endpoint:** `/vehicles/{device_id}`  
 **Method:** `GET`  
 **[Beta feature][beta]:** No (as of 1.2.0)  
-**Schema:** [`vehicles` schema][vehicles-schema]  
-**`data` Payload:** `{ "vehicles": [] }`, an array of [Vehicle](vehicle) objects
+**Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.   
+**`data` Payload:** `{ "vehicles": [] }`, an array of [Vehicle][vehicles] objects
 
-Path Params:
+_Path Parameters:_
 
-| Param        | Type | Required/Optional | Description                                 |
+| Path Parameters       | Type | Required/Optional | Description                                 |
 | ------------ | ---- | ----------------- | ------------------------------------------- |
 | `device_id`  | UUID | Optional          | If provided, retrieve the specified vehicle |
-
-200 Success Response:
 
 If `device_id` is specified, `GET` will return an array with a single vehicle record, otherwise it will be a list of vehicle records with pagination details per the [JSON API](https://jsonapi.org/format/#fetching-pagination) spec:
 
 ```json
 {
+    "version": "x.y.z",
     "vehicles": [ ... ]
     "links": {
         "first": "https://...",
@@ -217,9 +212,17 @@ If `device_id` is specified, `GET` will return an array with a single vehicle re
 }
 ```
 
-404 Failure Response:
+#### Responses
 
-_No content returned on vehicle not found._
+_Possible HTTP Status Codes_: 
+200,
+400 (with parameter),
+401,
+404,
+406,
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
 
 [Top][toc]
 
@@ -230,21 +233,20 @@ The `/vehicles/status` endpoint returns the specified vehicle (if a device_id is
 **Endpoint:** `/vehicles/status/{device_id}`  
 **Method:** `GET`  
 **[Beta feature][beta]:** No (as of 1.2.0)  
-**Schema:** N/A
+**Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.  
 **`data` Payload:** `{ "vehicles_status": [] }`, an array of [Vehicle Status][vehicle-status] objects
 
-Path Params:
+_Path Parameters:_
 
-| Param        | Type | Required/Optional | Description                                 |
+| Path Parameter        | Type | Required/Optional | Description                                 |
 | ------------ | ---- | ----------------- | ------------------------------------------- |
 | `device_id`  | UUID | Optional          | If provided, retrieve the specified vehicle |
-
-200 Success Response:
 
 If `device_id` is specified, `GET` will return an array with a vehicle status record, otherwise it will be a list of vehicle records with pagination details per the [JSON API](https://jsonapi.org/format/#fetching-pagination) spec:
 
 ```json
 {
+    "version": "x.y.z",
     "vehicles": [ ... ]
     "links": {
         "first": "https://...",
@@ -255,9 +257,17 @@ If `device_id` is specified, `GET` will return an array with a vehicle status re
 }
 ```
 
-404 Failure Response:
+#### Responses
 
-_No content returned on vehicle not found._
+_Possible HTTP Status Codes_: 
+200,
+400 (with parameter),
+401,
+404,
+406,
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
 
 [Top][toc]
 
@@ -272,17 +282,16 @@ Unless stated otherwise by the municipality, the trips endpoint must return all 
 **Endpoint:** `/trips`  
 **Method:** `GET`  
 **[Beta feature][beta]:** No  
-**Schema:** [`trips` schema][trips-schema]  
+**Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.   
 **`data` Payload:** `{ "trips": [] }`, an array of [Trip][trips] objects
 
 ### Trips - Query Parameters
 
 The `/trips` API should allow querying trips with the following query parameters:
 
-| Parameter | Format | Expected Output |
+| Query Parameter | Format | Expected Output |
 | --------------- | ------ | --------------- |
 | `end_time` | `YYYY-MM-DDTHH`, an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) extended datetime representing an UTC hour between 00 and 23. | All trips with an end time occurring within the hour. For example, requesting `end_time=2019-10-01T07` returns all trips where `2019-10-01T07:00:00 <= trip.end_time < 2019-10-01T08:00:00` UTC. |
-| `route` | Boolean | If false, do not return route data. |
 
 Without an `end_time` query parameter, `/trips` shall return a `400 Bad Request` error.
 
@@ -298,7 +307,7 @@ processing for that hour:
 * For hours in which the provider was not operating the API shall return a
   `404 Not Found` response.
 * For hours that are in the past but for which data is not yet available
-  the API shall return a `102 Processing` response.
+  the API shall return a `202 Accepted` response.
 * For all other hours the API shall return a `200 OK` response with a fully
   populated body, even for hours that contain no trips to report.
   If the hour has no trips to report the response shall contain an empty
@@ -307,13 +316,24 @@ processing for that hour:
     ```json
     {
         "version": "x.y.z",
-        "data": {
-            "trips": []
-        }
+        "trips": []
     }
     ```
 
 For the near-ish real time use cases, please use the [events][events] endpoint.
+
+#### Responses
+
+_Possible HTTP Status Codes_: 
+200,
+202,
+400 (with parameter),
+401,
+404,
+406,
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
 
 [Top][toc]
 
@@ -327,18 +347,29 @@ Telemetry for a [trip](#trip) must include at least 2 points: the start point an
 
 **Endpoint:** `/telemetry`  
 **Method:** `GET`  
-**Schema:** [`telemetry` schema][telemetry-schema]  
+**Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.  
 **`data` Payload:** `{ "telemetry": [] }`, an array of [Vehicle Telemetry][vehicle-telemetry] objects
 
 [Top][toc]
 
 ### Telemetry - Query Parameters
 
-| Parameter    | Format | Expected Output |
+| Query Parameter    | Format | Expected Output |
 | ---------    | ------ | --------------- |
 | `telemetry_time` | `YYYY-MM-DDTHH`, an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) extended datetime representing an UTC hour between 00 and 23. | All telemetry with timestamp occurring within the hour. For example, requesting `telemetry_time=2019-10-01T07` returns all telemetry where `2019-10-01T07:00:00 <= telemetry.timestamp < 2019-10-01T08:00:00` UTC. |
 
 Without a `telemetry_time` query parameter, `/telemetry` shall return a `400 Bad Request` error.
+
+#### Responses
+
+_Possible HTTP Status Codes_: 
+200,
+400 (with parameter),
+401,
+406,
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
 
 [Top][toc]
 
@@ -353,8 +384,8 @@ Unless stated otherwise by the municipality, this endpoint must return only thos
 **Endpoint:** `/events/historical`  
 **Method:** `GET`  
 **[Beta feature][beta]:** No  
-**Schema:** [`events` schema][events-schema]  
-**`data` Payload:** `{ "data": [] }`, an array of [Events](/data-types.md#events) object
+**Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.  
+**`data` Payload:** `{ "events": [] }`, an array of [Events](/data-types.md#events) object
 
 [Top][toc]
 
@@ -362,7 +393,7 @@ Unless stated otherwise by the municipality, this endpoint must return only thos
 
 The `/events/historical` API uses the following query parameter:
 
-| Parameter    | Format | Expected Output |
+| Query Parameter    | Format | Expected Output |
 | ---------    | ------ | --------------- |
 | `event_time` | `YYYY-MM-DDTHH`, an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) extended datetime representing an UTC hour between 00 and 23. | All status changes with an event time occurring within the hour. For example, requesting `event_time=2019-10-01T07` returns all status changes where `2019-10-01T07:00:00 <= status_change.event_time < 2019-10-01T08:00:00` UTC. |
 
@@ -378,7 +409,7 @@ processing for that hour:
 * For hours in which the provider was not operating the API shall return a
   `404 Not Found` response.
 * For hours that are in the past but for which data is not yet available
-  the API shall return a `102 Processing` response.
+  the API shall return a `202 Accepted` response.
 * For all other hours the API shall return a `200 OK` response with a fully
   populated body, even for hours that contain no status changes to report.
   If the hour has no status changes to report the response shall contain an
@@ -387,11 +418,22 @@ processing for that hour:
     ```json
     {
         "version": "x.y.z",
-        "data": {
-            "status_changes": []
-        }
+        "status_changes": []
     }
     ```
+
+#### Responses
+
+_Possible HTTP Status Codes_: 
+200,
+202,
+400 (with parameter),
+401,
+404,
+406,
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
 
 [Top][toc]
 
@@ -404,14 +446,14 @@ See also [Stop-based Geographic Data][stop-based-geo].
 **Endpoint:** `/events/recent`  
 **Method:** `GET`  
 **[Beta feature][beta]:** No (as of 1.0.0)  
-**Schema:** [`events` schema][events-schema]  
+**Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.  
 **`data` Payload:** `{ "events": [] }`, an array of [Events](/data-types.md#events) object objects
 
 #### Recent Events - Query Parameters
 
 The Recent Events API requires two parameters:
 
-| Parameter | Type | Expected Output |
+| Query Parameter | Type | Expected Output |
 | ----- | ---- | -------- |
 | `start_time` | [timestamp][ts] | status changes where `start_time <= event.timestamp` |
 | `end_time` | [timestamp][ts] | status changes where `event.timestamp < end_time` |
@@ -419,6 +461,17 @@ The Recent Events API requires two parameters:
 Should either side of the requested time range be missing, `/events/recent` shall return a `400 Bad Request` error.
 
 Should either side of the requested time range be greater than 2 weeks before the time of the request, `/events/recent` shall return a `400 Bad Request` error.
+
+#### Responses
+
+_Possible HTTP Status Codes_: 
+200,
+400 (with parameter),
+401,
+406,
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
 
 [Top][toc]
 
@@ -431,21 +484,31 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 ```json
 {
     "version": "x.y.z",
-    "data": {
-        "stops": []
-    },
     "last_updated": "12345",
-    "ttl": "12345"
+    "ttl": "12345",
+    "stops": []
 }
 ```
 
-**Endpoint:** `/stops/:stop_id`  
+**Endpoint:** `/stops/{stop_id}`  
 **Method:** `GET`  
 **[Beta feature][beta]:** Yes (as of 1.0.0). [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/638)  
-**Schema:** [`stops` schema][stops-schema]  
+**Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.    
 **`data` Payload:** `{ "stops": [] }`, an array of [Stops][stops]
 
-In the case that a `stop_id` query parameter is specified, the `stops` array returned will only have one entry. In the case that no `stop_id` query parameter is specified, all stops will be returned.
+In the case that a `stop_id` path parameter is specified, the `stops` array returned will only have one entry. In the case that no `stop_id` query parameter is specified, all stops will be returned.
+
+#### Responses
+
+_Possible HTTP Status Codes_: 
+200,
+400 (with parameter),
+401,
+404 (with parameter),
+406,
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
 
 [Top][toc]
 
@@ -463,9 +526,19 @@ The authenticated reports are monthly, historic flat files that may be pre-gener
 **Method:** `GET`  
 **[Beta feature][beta]:** No (as of 2.0.0). [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/672)  
 **Usage note:** This endpoint uses media-type `text/vnd.mds+csv` instead of `application/vnd.mds+json`, see [Versioning][versioning].
-**Schema:** TBD
+**Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.  
 **`data` Filename:** monthly file named by year and month, e.g. `/reports/YYYY-MM.csv`  
 **`data` Payload:** monthly CSV files of [Report](/data-types.md#Reports) objects 
+
+#### Responses
+
+_Possible HTTP Status Codes_: 
+200,
+401,
+404,
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
 
 [Top][toc]
 
@@ -477,13 +550,13 @@ See [Provider examples](examples.md#reports).
 
 [agps]: https://en.wikipedia.org/wiki/Assisted_GPS
 [beta]: /general-information.md#beta-features
+[bulk-responses]: /general-information.md#bulk-responses
 [costs-and-currencies]: /general-information.md#costs-and-currencies
 [data-latency]: #data-latency-requirements
 [dgps]: https://en.wikipedia.org/wiki/Differential_GPS
 [error-messages]: /general-information.md#error-messages
 [events]: /data-types.md#events
 [events---query-parameters]: #events---query-parameters
-[events-schema]: events.json
 [event-times]: #event-times
 [gbfs]: https://github.com/NABSA/gbfs
 [general-information]: /general-information.md
@@ -499,24 +572,20 @@ See [Provider examples](examples.md#reports).
 [point-geo]: /data-types.md#gps-data
 [propulsion-types]: /general-information.md#propulsion-types
 [responses]: /general-information.md#responses
+[schema]: /schema/
 [stops]: /data-types.md#stops
 [stop-based-geo]: /general-information.md#stop-based-geographic-data
-[stops-schema]: stops.json
 [telemetry]: /data-types.md#telemetry
-[telemetry-schema]: telemetry.json
 [telemetry---query-parameters]: #telemetry-query-parameters
 [toc]: #table-of-contents
 [trips]: /data-types.md#trips
 [trips-general-info]: /general-information.md#stop-based-geographic-data
-[trips-schema]: trips.json
 [ts]: /general-information.md#timestamps
 [vehicles]: /data-types.md#vehicles
-[vehicle]: /data-types.md#vehicles
 [vehicle-types]: /data-types.md#vehicle-types
-[vehicle-status]: /data-types.md#vehicle-states
+[vehicle-status]: /data-types.md#vehicle-status
 [vehicle-states]: /modes#vehicle-states
 [vehicle-events]: /modes#event-types
 [vehicle-event-data]: /general-information.md#event-data
-[vehicles-schema]: vehicles.json
 [vehicle-telemetry]: /data-types.md#telemetry
 [versioning]: /general-information.md#versioning

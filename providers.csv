@@ -48,3 +48,5 @@ Tembici,micromobility,46b28e68-8ecb-4875-b97e-836fd5e1930f,https://www.tembici.c
 POPPY Mobility,micromobility,5c869736-797f-4244-9132-fb50a22d1bfd,https://www.poppy.be/,https://poppy.red/mds,
 Whoosh,micromobility,3f8908a7-86fa-450d-8889-5d49077e06cd,https://whoosh.bike,https://mds.whoosh.bike,
 Telofun,micromobility,3dd253d3-557c-4fcb-98da-9af3edeaaae6,https://www.tel-o-fun.co.il/,https://mds.fsmctmobility.com/api/mds/v1/,
+Gbike,micromobility,a50b796e-bca2-11ed-afa1-0242ac120002,https://gcoo.io/,https://mds.gcoo.io/,https://mds.gcoo.io/gbfs
+SURF,micromobility,66c43ccb-f9f9-4f70-9707-37301b9f49a8,https://www.surfingscooters.com,https://api.app.surf/mds,https://api.app.surf/gbfs/en

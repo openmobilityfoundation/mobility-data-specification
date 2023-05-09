@@ -20,12 +20,13 @@ This file presents a series of example [Policy documents](../README.md#policy) f
 
 ## Operating Area
 
-The vehicle should stay within the areas of operation defined (Riding area). 
+The vehicle should stay within the areas of operation defined (riding area). 
 
 ```json
 {
  "name": "Operating Area ",
  "policy_id": "dcc49f37-aafb-4306-b16c-49518d5a8038",
+ "mode_id": "micromobility",
  "provider_ids": null,
  "description": "E-scooter operation area of the city",
  "start_date": 1635750000000,

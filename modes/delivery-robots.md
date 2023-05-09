@@ -23,7 +23,7 @@ Autonomous and remotely piloted delivery robots do not require a driver, whereas
    - [Fare Attributes](#fare-attributes)
 - [Vehicle Properties](#vehicle-properties)
   - [Vehicle Attributes](#vehicle-attributes)
-  - [Accessibility Options](#accessibility-options)
+  - [Accessibility Attributes](#accessibility-attributes)
 - [State Machine](#state-machine)
   - [Vehicle States](#vehicle-states)
   - [Event Types](#event-types)
@@ -55,7 +55,7 @@ The `journey_id` field shall have a consistent value in overlapping trips. Journ
 
 ### Journey Attributes
 
-The `journey_attributes` array is not used in this mode.
+The `journey_attributes` object is not used in this mode.
 
 
 [Top][toc]
@@ -84,12 +84,12 @@ The `trip_type` field **must** have one of the following enumerated values:
 
 ### Trip Attributes
 
-The `trip_attributes` array **may** have the following key value pairs:
+The `trip_attributes` object **may** have the following key value pairs:
 
-- `driver_type` (enum, required): type of driver operating the device: `human`, `semi-autonomous`, `autonomous`
+- `driver_type` (enum, required): type of driver operating the device: `human`, `semi_autonomous`, `autonomous`
 - `driver_id` (UUID, optional): consistent unique identifier of the primary driver. Could be based on software version or an internal human driver id.
 - `app_name` (text, optional): name of the app used to reserve the trip which could be provider's app or 3rd party app
-- `request_time` (timestamp, optional): when the customer requested the trip
+- `requested_time` ([Timestamp][ts], optional): when the customer requested the trip
 - `has_payload` (boolean, optional): is there any payload for any delivery included in the device at trip start. 1 = loaded, 0 = empty
 - `range` (integer, optional): estimated range in meters based on energy levels in device at trip start
 - `identification_required` (boolean, optional): does the cargo require providing customer identification before trip start or upon delivery?
@@ -98,20 +98,20 @@ The `trip_attributes` array **may** have the following key value pairs:
 
 ### Fare Attributes
 
-The `fare_attributes` array **may** have the following key value pairs:
+The `fare_attributes` object **may** have the following key value pairs:
 
-- `payment_type` (enumerated, optional): `cash`, `mobile`, `voucher`, `paratransit`, `no payment`, `test`
+- `payment_type` (enumerated, optional): `account_number`, `cash`, `credit_card`, `mobile_app`, `no payment`, `phone`, `voucher`, `test`
 - `price` (currency, optional): Total price of the order
 
 [Top][toc]
 
 ## Vehicle Properties
 
-_See more available vehicle attributes and accessibility options for any mode used in the [vehicles object](/data-types.md#vehicles)._
+_See more available vehicle attributes and accessibility attributes for any mode used in the [vehicles object](/data-types.md#vehicles)._
 
 ### Vehicle Attributes
 
-The `vehicle_attributes` array **may** have the following key value pairs:
+The `vehicle_attributes` object **may** have the following key value pairs:
 
 - `year` (integer, optional)
 - `make` (string, optional)
@@ -130,9 +130,9 @@ The `vehicle_attributes` array **may** have the following key value pairs:
 
 [Top][toc]
 
-### Accessibility Options
+### Accessibility Attributes
 
-The `accessibility_options` array **may** have the following key value pairs:
+The `accessibility_attributes` object **may** have the following key value pairs:
 
 - `audio_cue` (boolean, optional): is the device equipped with audio cues upon delivery
 - `visual_cue` (boolean, optional): is the device equipped with visual cues upon delivery
@@ -297,5 +297,6 @@ if t=[]:
 [home]: /README.md
 [modes]: /modes/README.md
 [toc]: #table-of-contents
+[ts]: /general-information.md#timestamps
 [vehicle-states]: /modes/vehicle_states.md
 [vehicle-events]: /modes/event_types.md

@@ -19,7 +19,7 @@ See the [modes overview](/modes) for how the mode specific information below app
    - [Fare Attributes](#fare-attributes)
 - [Vehicle Properties](#vehicle-properties)
   - [Vehicle Attributes](#vehicle-attributes)
-  - [Accessibility Options](#accessibility-options)
+  - [Accessibility Attributes](#accessibility-attributes)
 - [State Machine](#state-machine)
   - [Vehicle States](#vehicle-states)
   - [Event Types](#event-types)
@@ -52,7 +52,7 @@ The `journey_id` field shall have a consistent value in overlapping trips for a 
 
 ### Journey Attributes
 
-The `journey_attributes` array **may** have the following key value pairs:
+The `journey_attributes` object **may** have the following key value pairs:
 
 - `reservation_id` (UUID, optional): unique identifier for an entire car share reservation, tied across multiple journeys and therefore trips.
 
@@ -60,7 +60,7 @@ The `journey_attributes` array **may** have the following key value pairs:
 
 ### Trip ID Requirements
 
-Events require a valid `trip_id` in events where `event_types` contains `reservation_start`, `reservation_stop`, `trip_start`, `trip_pause`, `trip_resume`, `trip_end`,`trip_cancel`, `customer_cancellation`, `provider_cancellation`, or `driver_cancellation`. 
+Events require a valid `trip_id` in events where `event_types` contains `reservation_start`, `reservation_stop`, `trip_start`, `trip_resume`, `trip_end`,`trip_cancel`, `customer_cancellation`, `provider_cancellation`, or `driver_cancellation`. 
 
 Additionally, `trip_id` is required if `event_types` contains a `trip_enter_jurisdiction` or `trip_leave_jurisdiction` event pertaining to a trip. 
 
@@ -78,7 +78,7 @@ The `trip_type` field **must** have one of the following enumerated values:
 
 ### Trip Attributes
 
-The `trip_attributes` array **may** have the following key value pairs:
+The `trip_attributes` object **may** have the following key value pairs:
 
 - `reservation_type` (enumerated, required): how was the vehicle reserved, one of `phone_dispatch`, `phone`, `text`, `app`
 - `app_name` (text, optional): name of the app used to reserve the vehicle which could be provider's app or 3rd party app
@@ -89,9 +89,9 @@ The `trip_attributes` array **may** have the following key value pairs:
 
 ### Fare Attributes
 
-The `fare_attributes` array **may** have the following key value pairs:
+The `fare_attributes` object **may** have the following key value pairs:
 
-- `payment_type` (enumerated, required): `cash`, `credit_card`, `mobile`, `voucher`, `no payment`, `test`
+- `payment_type` (enumerated, required): `account_number`, `cash`, `credit_card`, `mobile_app`, `no payment`, `phone`, `voucher`, `test`
 - `fare_type` (enumerated, required): `meter_fare`, `upfront_pricing`, `flat_rate`. Indicator of which rate was charged.
 - `tolls` (currency, optional) - Sum of any and all tolls charged for the trip, such as bridge tolls
 - `base_rate` (currency, optional) - Minimum fare to be charged as soon as the trip starts.
@@ -110,7 +110,7 @@ _See more available vehicle attributes and accessibility options for any mode us
 
 ### Vehicle Attributes
 
-The `vehicle_attributes` array **may** have the following key value pairs:
+The `vehicle_attributes` object **may** have the following key value pairs:
 
 - `year` (integer, required)
 - `make` (string, required)
@@ -140,13 +140,13 @@ Note many of these attributes come from fields in [GBFS vehicle_types](https://g
 
 [Top][toc]
 
-### Accessibility Options
+### Accessibility Attributes
 
-This `accessibility_options` enum represents the accessibility options available on a given vehicle, or the accessibility options utilized for a given trip. 
+This `accessibility_attributes` enum represents the accessibility attributes available on a given vehicle, or the accessibility attributes utilized for a given trip. 
 
-| `accessibility_options` | Description                           |
-|-------------------------|---------------------------------------|
-| `wheelchair_accessible` | This vehicle is wheelchair accessible |
+| `accessibility_attributes` | Description                           |
+|----------------------------|---------------------------------------|
+| `wheelchair_accessible`    | This vehicle is wheelchair accessible |
 
 [Top][toc]
 
@@ -177,13 +177,13 @@ Valid car share vehicle event types are
 - `charging_end`
 - `comms_lost`
 - `comms_restored`
+- `customer_cancellation`
 - `driver_cancellation`
 - `fueling_start`
 - `fueling_end`
 - `maintenance`
 - `maintenance_pick_up`
 - `maintenance_end`
-- `passenger_cancellation`
 - `provider_cancellation`
 - `remote_start`
 - `remote_end`
@@ -237,13 +237,13 @@ This is the list of `vehicle_state` and `event_type` pairings that constitute th
 | `removed`                | `non_operational`      | N/A          | `maintenance_end`        | The vehicle maintenance work has ended                                                                          |
 | `removed`                | `non_operational`      | N/A          | `recommissioned`         | The vehicle has been re-added to the Provider's fleet after being previously `decommissioned`                   |
 | `reserved`               | `available`            | N/A          | `driver_cancellation`    | The driver has canceled the reservation                                                                         |
-| `reserved`               | `available`            | N/A          | `passenger_cancellation` | The passenger has canceled the reservation                                                                      |
+| `reserved`               | `available`            | N/A          | `customer_cancellation` | The customer has canceled the reservation                                                                      |
 | `reserved`               | `available`            | N/A          | `provider_cancellation`  | The provider has canceled the reservation                                                                       |
 | `reserved`               | `elsewhere`            | N/A          | `trip_leave_jurisdiction`     | The vehicle has left the jurisdiction while in a reservation                                                    |
 | `reserved`               | `non_contactable`      | N/A          | `comms_lost`             | The vehicle went out of comms while being reserved by a passenger                                               |
 | `reserved`               | `stopped`              | `stopped`    | `reservation_stop`           | The vehicle has stopped to pick up the passenger                                                                |
 | `stopped`                | `available`            | N/A          | `driver_cancellation`    | The driver has canceled the trip while either waiting for the passenger, or dropping them off                   |
-| `stopped`                | `available`            | N/A          | `passenger_cancellation` | The passenger has canceled the trip while the vehicle is waiting to pick them up, or they are being dropped off |
+| `stopped`                | `available`            | N/A          | `customer_cancellation` | The customer has canceled the trip while the vehicle is waiting to pick them up, or they are being dropped off |
 | `stopped`                | `available`            | N/A          | `provider_cancellation`  | The provider has canceled the trip while the vehicle is waiting for a passenger, or dropping them off           |
 | `stopped`                | `available`            | N/A          | `trip_end`               | The trip has been successfully completed                                                                        |
 | `stopped`                | `non_contactable`      | N/A          | `comms_lost`             | The vehicle has went out of comms while stopped                                                                 |

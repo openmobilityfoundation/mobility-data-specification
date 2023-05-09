@@ -13,6 +13,8 @@ This specification details the purpose, use cases, and schema for Jurisdictions.
 - [Distribution](#distribution)
 - [Schema](#schema)
 - [REST Endpoints](#rest-endpoints)
+   - [Get Jurisdictions](#get-jurisdictions)
+   - [Get Jurisdiction](#get-jurisdiction)
 - [Flat Files](#flat-files)
 - [Examples](#examples)
 
@@ -84,7 +86,9 @@ Jurisdictions can be served by agencies through the following REST API, or via [
 
 ## Schema
 
-A Jurisdiction optionally contains a reference to a Geography object. This reference may change over time, e.g. if two
+See the [Endpoints](#endpoints) below for information on their specific schema, and the [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for full details and interactive documentation.
+
+A Jurisdiction optionally contains a reference to a Geography object. 
 
 When a Jurisdiction is updated, the old version should remain in the back-end for archival purposes.
 
@@ -97,7 +101,7 @@ An individual `Jurisdiction` object is defined by the following fields:
 | `agency_name`     | String    | Optional            | Human-readable agency name for display purposes.                                                                                                                                                                                                                                                                      |
 | `description`     | String    | Required            | Description of Jurisdiction.                                                                                                                                                                                                                                                                                          |
 | `geography_id`    | UUID      | Optional            | The unique ID of the geography covered by this Jurisdiction.                                                                                                                                                                                                                                                          |
-| `mobility_modes`  | String[]  | Required            | Use this field to specify an array of what mobility [modes][modes] a jurisdiction applies to. |
+| `mode_ids`  | String[]  | Required            | Use this field to specify an array of what mobility [modes][modes] a jurisdiction applies to. |
 | `timestamp`       | timestamp | Required            | Creation or update time of a Jurisdiction.                                                                                                                                                                                                                                                                            |
 
 Formatted in JSON, a Jurisdiction object should look like this:
@@ -108,7 +112,7 @@ Formatted in JSON, a Jurisdiction object should look like this:
 	"agency_key": string,
 	"agency_name": string,
 	"geography_id": UUID,
-	"mobility_modes": [
+	"mode_ids": [
 		string
 	],
 	"timestamp": Timestamp
@@ -126,41 +130,75 @@ Responses must set the `Content-Type` header, as specified in the [Provider vers
 
 Response bodies must be a `UTF-8` encoded JSON object.
 
+[Top][toc]
+
 ### HTTP Response Codes
 
 The response to a client request must include a valid HTTP status code defined in the [IANA HTTP Status Code Registry](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml)
 
+[Top][toc]
 
-### GET /Jurisdictions
+### Get Jurisdictions
 
 Gets all of an agency's Jurisdictions. Served by agencies.
 
-Parameters:
-| Name | Type | R/O | Description |
+**Endpoint:** `/jurisdictions/`  
+**Method:** `GET`  
+**[Beta feature][beta]:** _Yes (as of 1.1.0)_. [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/673)  
+**Schema:** [`jurisdiction` schema](#schema)  
+**`data` Payload:** `{ "jurisdiction": [] }`, an array of [jurisdiction](#schema) objects
+
+_Query Parameters:_
+
+| Query Parameters | Type | R/O | Description |
 | ------------ | --------- | --- | ---------------------------------------------- |
 | `effective` | Timestamp | O | See the state of all the Jurisdictions (i.e. which ones are effective) at that point in time. If not supplied, the default is to show only Jurisdictions that are currently in effect. |
 
-Response codes:
+#### Responses
 
-- 200 - success
-- 403 - unauthorized
-- 500 - server error
+_Possible HTTP Status Codes_: 
+200,
+400 (with parameter),
+404,
+406,
+500
 
-### GET /Jurisdictions/:jurisdiction_id
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
 
-Gets a single Jurisdictions. Served by agencies
+[Top][toc]
 
-Parameters:
-| Name | Type | R/O | Description |
+### GET Jurisdiction
+
+Gets a single Jurisdictions. Served by agencies.
+
+**Endpoint:** `/jurisdictions/{jurisdiction_id}`  
+**Method:** `GET`  
+**[Beta feature][beta]:** _Yes (as of 1.1.0)_. [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/673)  
+**Schema:** [`jurisdiction` schema](#schema)  
+**`data` Payload:** `{ "jurisdiction": [] }`, an array of [jurisdiction](#schema) objects
+
+_Path Parameters:_
+
+| Path Parameters | Type | R/O | Description |
+| ------------ | --------- | --- | ---------------------------------------------- |
+| `jurisdiction_id` | UUID | R | Single jurisdiction to return |
+
+_Query Parameters:_
+
+| Query Parameters | Type | R/O | Description |
 | ------------ | --------- | --- | ---------------------------------------------- |
 | `effective` | Timestamp | O | See the version of the Jurisdiction that was in effect at that point in time. |
 
-Response codes:
+#### Responses
 
-- 200 - Success
-- 403 - Unauthorized
-- 404 - not found
-- 500 - Server error
+_Possible HTTP Status Codes_: 
+200,
+400 (with parameter),
+404,
+406,
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
 
 [Top][toc]
 
@@ -175,7 +213,17 @@ The format and content of `jurisdictions.json` should resemble the responses fro
 
 The publishing Agency should establish and communicate to interested parties how frequently these files should be polled.
 
-The `updated` field in the payload wrapper should be set to the time of publishing a revision, so that it is simple to identify a changed file.
+The `last_updated` field in the payload wrapper should be set to the time of publishing a revision, so that it is simple to identify a changed file.
+
+### Responses
+
+_Possible HTTP Status Codes_: 
+200,
+404,
+406,
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
 
 [Top][toc]
 
@@ -187,5 +235,8 @@ See the [Geography Examples](/geography/examples/README.md) for an example `geog
 
 [Top][toc]
 
+[bulk-responses]: /general-information.md#bulk-responses
 [modes]: /modes#list-of-supported-modes
+[responses]: /general-information.md#responses
+[schema]: /schema/
 [toc]: #table-of-contents

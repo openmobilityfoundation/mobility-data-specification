@@ -15,9 +15,10 @@ This specification contains a collection of RESTful APIs used to specify the dig
   * [Responses and Error Messages](#responses-and-error-messages)
   * [GBFS](#gbfs)
 * [Vehicles](#vehicles)
-  * [Vehicle - Status](#vehicle---status)
   * [Vehicle - Register](#vehicle---register)
   * [Vehicle - Update](#vehicle---update)
+  * [Vehicle - List](#vehicle---list)
+  * [Vehicle - Status](#vehicle---status)
 * [Trips](#trips)
 * [Telemetry](#telemetry)
 * [Events](#events)
@@ -52,13 +53,19 @@ Versioning must be implemented as specified in the [Versioning section][versioni
 
 ### Modes
 
-MDS is intended to be used for multiple transportation modes, including its original micromobility (e-scooters, bikes, etc.) mode, as well as additional modes such as taxis, car share, and delivery bots. A given `provider_id` shall be associated with a single mobility [mode], so that the mode does not have to be specified in each data structure and API call. A provider implementing more than one mode shall [register](/README.md#providers-using-mds) a unique `provider_id` for each mode.
+MDS is intended to be used for multiple transportation modes, including its original micromobility (e-scooters, bikes, etc.) mode, as well as additional modes such as taxis, car share, and delivery bots. A given `provider_id` shall be associated with a single mobility [mode][modes], so that the mode does not have to be specified in each data structure and API call. A provider implementing more than one mode shall [register](/README.md#providers-using-mds) a unique `provider_id` for each mode.
 
 [Top][toc]
 
 ### Responses and Error Messages
 
-See the [Responses][responses] and [Error Messages][error-messages] sections.
+The response to a client request must include a valid HTTP status code defined in the [IANA HTTP Status Code Registry][iana].
+
+The response must set the `Content-Type` header as specified in the [Versioning section][versioning].
+
+Response bodies must be a `UTF-8` encoded JSON object
+
+See the [Responses][responses], [Error Messages][error-messages], and [Bulk Responses][bulk-responses] sections, and the [schema][schema] for more details.
 
 [Top][toc]
 
@@ -68,26 +75,94 @@ See the [GBFS Requirement](/README.md#gbfs-requirement) language for more detail
 
 [Top][toc]
 
+### Data Schema
+
+See the [Endpoints](#endpoints) below for information on their specific schema, and the [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for full details and interactive documentation.
+
+[Top][toc]
+
 ## Vehicles
+
+The `/vehicles` endpoints allow providers to register and update the properties of their fleet vehicles, and query current vehicle properties and status.
+
+### Vehicle - Register
+
+The `/vehicles` registration endpoint is used to register vehicles for use in the Agency's jurisdiction.
+
+**Endpoint**: `/vehicles`  
+**Method:** `POST`  
+**Payload:** An array of [Vehicles](/data-types.md#vehicles)  
+
+#### Responses
+
+_Possible HTTP Status Codes_: 
+201,
+400,
+401,
+406,
+409,
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
+
+[Top][toc]
+
+#### Error Codes:
+
+| `error`              | `error_description`                               | `error_details`[]               |
+| -------------------- | ------------------------------------------------- | ------------------------------- |
+| `bad_param`          | A validation error occurred                       | Array of parameters with errors |
+| `missing_param`      | A required parameter is missing                   | Array of missing parameters     |
+| `already_registered` | A vehicle with `device_id` is already registered  |                                 |
+
+### Vehicle - Update
+
+The `/vehicles` update endpoint is used to change vehicle information, should some aspect of the vehicle change, such as the `vehicle_id`. Each vehicle must already be registered.
+
+**Endpoint**: `/vehicles`  
+**Method:** `PUT`  
+**Payload:** An array of [Vehicles](/data-types.md#vehicles)  
+
+#### Responses
+
+_Possible HTTP Status Codes_: 
+200,
+400,
+401,
+406,
+409,
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
+
+#### Error Codes:
+
+| `error`              | `error_description`                               | `error_details`[]               |
+| -------------------- | ------------------------------------------------- | ------------------------------- |
+| `bad_param`          | A validation error occurred                       | Array of parameters with errors |
+| `unregistered`       | This `device_id` is unregistered                  |                                 |
+
+[Top][toc]
+
+### Vehicle - List
 
 The `/vehicles` endpoint returns the specified vehicle (if a device_id is provided) or a list of known vehicles. Providers can only retrieve data for vehicles in their registered fleet. Contains vehicle properties that do not change often.
 
 **Endpoint**: `/vehicles/{device_id}`  
-**Method:** `POST`  
+**Method:** `GET`  
 **Payload:** An array of [Vehicles](/data-types.md#vehicles)  
 
-Path Params:
+_Path Parameters:_
 
-| Param        | Type | Required/Optional | Description                                 |
+| Path Parameters        | Type | Required/Optional | Description                                 |
 | ------------ | ---- | ----------------- | ------------------------------------------- |
 | `device_id`  | UUID | Optional          | If provided, retrieve the specified vehicle |
-
-200 Success Response:
 
 If `device_id` is specified, `GET` will return an array with a single vehicle record, otherwise it will be a list of vehicle records with pagination details per the [JSON API](https://jsonapi.org/format/#fetching-pagination) spec:
 
 ```json
 {
+    "version": "2.0.0",
     "vehicles": [ ... ]
     "links": {
         "first": "https://...",
@@ -98,9 +173,17 @@ If `device_id` is specified, `GET` will return an array with a single vehicle re
 }
 ```
 
-404 Failure Response:
+#### Responses
 
-_No content returned on vehicle not found._
+_Possible HTTP Status Codes_: 
+200,
+400 (with parameter),
+401,
+404,
+406,
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
 
 [Top][toc]
 
@@ -109,21 +192,20 @@ _No content returned on vehicle not found._
 The `/vehicles/status` endpoint returns information about the specified vehicle (if a device_id is provided) or a list of known vehicles current state. Providers can only retrieve data for vehicles in their registered fleet. Contains specific vehicle properties that are updated frequently.
 
 **Endpoint**: `/vehicles/status/{device_id}`  
-**Method:** `POST`  
+**Method:** `GET`  
 **Payload:** An array of [Vehicles](/data-types.md#vehicle-status) objects  
 
-Path Params:
+_Path Parameters:_
 
-| Param        | Type | Required/Optional | Description                                 |
+| Path Parameters        | Type | Required/Optional | Description                                 |
 | ------------ | ---- | ----------------- | ------------------------------------------- |
 | `device_id`  | UUID | Optional          | If provided, retrieve the specified vehicle |
-
-200 Success Response:
 
 If `device_id` is specified, `GET` will return an array with a vehicle status record, otherwise it will be a list of vehicle records with pagination details per the [JSON API](https://jsonapi.org/format/#fetching-pagination) spec:
 
 ```json
 {
+    "version": "2.0.0",
     "vehicles_status": [ ... ]
     "links": {
         "first": "https://...",
@@ -134,56 +216,17 @@ If `device_id` is specified, `GET` will return an array with a vehicle status re
 }
 ```
 
-404 Failure Response:
+#### Responses
 
-_No content returned on vehicle not found._
+_Possible HTTP Status Codes_: 
+200,
+400 (with parameter),
+401,
+404,
+406,
+500
 
-[Top][toc]
-
-### Vehicle - Register
-
-The `/vehicles` registration endpoint is used to register vehicles for use in the Agency's jurisdiction.
-
-**Endpoint**: `/vehicles`  
-**Method:** `POST`  
-**Payload:** An array of [Vehicles](/data-types.md#vehicles)  
-
-200 Success Response:
-
-See [Bulk Responses][bulk-responses]
-
-[Top][toc]
-
-### Vehicle Register Error Codes:
-
-| `error`              | `error_description`                               | `error_details`[]               |
-| -------------------- | ------------------------------------------------- | ------------------------------- |
-| `bad_param`          | A validation error occurred                       | Array of parameters with errors |
-| `missing_param`      | A required parameter is missing                   | Array of missing parameters     |
-| `already_registered` | A vehicle with `device_id` is already registered  |                                 |
-
-403 Unauthorized Response:
-
-**None**
-
-### Vehicle - Update
-
-The `/vehicles` update endpoint is used to change vehicle information, should some aspect of the vehicle change, such as the `vehicle_id`. Each vehicle must already be registered.
-
-**Endpoint**: `/vehicles`  
-**Method:** `PUT`  
-**Payload:** An array of [Vehicles](/data-types.md#vehicles)  
-
-200 Success Response:
-
-See [Bulk Responses][bulk-responses]
-
-### Vehicle Update Error Codes:
-
-| `error`              | `error_description`                               | `error_details`[]               |
-| -------------------- | ------------------------------------------------- | ------------------------------- |
-| `bad_param`          | A validation error occurred                       | Array of parameters with errors |
-| `unregistered`  | This `device_id` is unregistered |                                 |
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
 
 [Top][toc]
 
@@ -198,9 +241,17 @@ The Trips endpoint serves two purposes:
 **Method:** `POST`  
 **Payload:** Array of [Trips](/data-types.md#trips)
 
-200 Success Response:
+### Responses
 
-See [Bulk Responses][bulk-responses]
+_Possible HTTP Status Codes_: 
+201,
+400,
+401,
+404,
+406,
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
 
 ### Trip Errors:
 
@@ -220,9 +271,17 @@ The vehicle `/telemetry` endpoint allows a Provider to send vehicle telemetry da
 **Method**: `POST`  
 **Payload**: An array of vehicle [Telemetry][vehicle-telemetry]  
 
-200 Success Response:
+### Responses
 
-See [Bulk Responses][bulk-responses]
+_Possible HTTP Status Codes_: 
+201,
+400,
+401,
+404,
+406,
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
 
 ### Telemetry Errors:
 
@@ -242,9 +301,17 @@ The vehicle `/events` endpoint allows the Provider to submit events describing t
 **Method:** `POST`  
 **Payload:** An array of vehicle [Events](/data-types.md#events)  
 
-200 Success Response:
+### Responses
 
-See [Bulk Responses][bulk-responses]
+_Possible HTTP Status Codes_: 
+201,
+400,
+401,
+404,
+406,
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
 
 ### Event Errors:
 
@@ -266,9 +333,17 @@ The `/stops` endpoint allows an agency to register city-managed Stops, or a prov
 **Method:** `POST`  
 **Payload**: An array of [Stops][stops]
 
-200 Success Response:
+### Responses
 
-See [Bulk Responses][bulk-responses]
+_Possible HTTP Status Codes_: 
+201,
+400,
+401,
+406,
+409,
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
 
 #### Stops Register Errors:
 
@@ -290,15 +365,29 @@ See [Bulk Responses][bulk-responses]
 **Method:** `PUT`  
 **Payload**: An array of of [Stop][stops] information, where the permitted changeable fields are defined as:
 
-| Field               | Required/Optional | Description                                 |
-|---------------------|-------------------|---------------------------------------------|
-| stop_id             | Required          |See [Stops][stops] |
-| status              | Optional          |See [Stops][stops] |
-| num_spots_disabled  | Optional          |See [Stops][stops] |
+| Field                  | Required/Optional | Description       |
+|------------------------|-------------------|-------------------|
+| stop_id                | Required          |See [Stops][stops] |
+| last_updated           | Optional          |See [Stops][stops] |
+| status                 | Optional          |See [Stops][stops] |
+| rental_methods         | Optional          |See [Stops][stops] |
+| num_vehicles_available | Optional          |See [Stops][stops] |
+| num_vehicles_disabled  | Optional          |See [Stops][stops] |
+| num_places_available   | Optional          |See [Stops][stops] |
+| num_places_disabled    | Optional          |See [Stops][stops] |
+| devices                | Optional          |See [Stops][stops] |
 
-200 Success Response:
+### Responses
 
-See [Bulk Responses][bulk-responses]
+_Possible HTTP Status Codes_: 
+200,
+400,
+401,
+404,
+406,
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
 
 #### Stops update Errors:
 
@@ -306,25 +395,34 @@ See [Bulk Responses][bulk-responses]
 | -------------------- | ------------------------------------------------- | ------------------------------- |
 | `bad_param`          | A validation error occurred                       | Array of parameters with errors |
 | `missing_param`      | A required parameter is missing                   | Array of missing parameters     |
-| `unregistered` | No stop with `stop_id` is already registered       |                                 |
+| `unregistered`       | No stop with `stop_id` is already registered      |                                 |
 
 [Top][toc]
 
 ### Stops - Readback
 
-**Endpoint:** `/stops/:stop_id`  
+**Endpoint:** `/stops/{stop_id}`  
 **Method:** `GET`  
 **Payload:** An array of [Stops][stops]
 
-Path Params:
+_Path Parameters:_
 
-| Param        | Type | Required/Optional | Description                                 |
+| Path Parameters        | Type | Required/Optional | Description                                 |
 | ------------ | ---- | ----------------- | ------------------------------------------- |
 | `stop_id`    | UUID | Optional          | If provided, retrieve the specified stop    |
 
-200 Success Response:
-
 If `stop_id` is specified, `GET` will return an array with a single stop record, otherwise it will be a list of all stop records.
+
+### Responses
+
+_Possible HTTP Status Codes_: 
+200,
+401,
+404,
+406,
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
 
 [Top][toc]
 
@@ -344,19 +442,24 @@ The `/reports` endpoint allows an agency to register aggregated report counts in
 **Method:** `POST`  
 **Payload**: A CSV of [Reports][reports]
 
-200 Success Response:
+### Responses
 
-See [Bulk Responses][bulk-responses]
+_Possible HTTP Status Codes_: 
+201,
+400,
+401,
+406,
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
 
 #### Reports Register Errors:
 
 | `error`              | `error_description`                               | `error_details`[]               |
 | -------------------- | ------------------------------------------------- | ------------------------------- |
 | `bad_param`          | A validation error occurred                       | Array of parameters with errors |
-| `missing_param`      | A required parameter is missing                   | Array of missing parameters     |
-| `already_registered` | A stop with `stop_id` is already registered       |                                 |
 
-403 Unauthorized Response:
+400 Unauthorized Response:
 
 **None**
 
@@ -369,17 +472,19 @@ See [Bulk Responses][bulk-responses]
 [geography-driven-events]: /general-information.md#geography-driven-events
 [error-messages]: /general-information.md#error-messages
 [hdop]: https://en.wikipedia.org/wiki/Dilution_of_precision_(navigation)
+[iana]: https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
 [modes]: /modes/README.md
-[propulsion-types]: /data_types.md#propulsion-types
-[reports]: /data_types.md#reports
+[propulsion-types]: /data-types.md#propulsion-types
+[reports]: /data-types.md#reports
 [responses]: /general-information.md#responses
-[stops]: /data_types.md#stops
-[telemetry-data]: /data_types.md#telemetry
-[trip-data]: /data_types.md#trips
+[schema]: /schema/
+[stops]: /data-types.md#stops
+[telemetry-data]: /data-types.md#telemetry
+[trip-data]: /data-types.md#trips
 [toc]: #table-of-contents
 [ts]: /general-information.md#timestamps
 [vehicle]: /data-types.md#vehicles
-[vehicle-types]: /data_types.md#vehicle-types
+[vehicle-types]: /data-types.md#vehicle-types
 [vehicle-states]: /modes/vehicle_states.md
 [vehicle-event-types]: /modes/event_types.md
 [vehicle-event]: /data-types.md#events

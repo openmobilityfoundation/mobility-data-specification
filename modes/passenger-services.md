@@ -23,7 +23,7 @@ Taxis typically require explicit tracking of maintenance while TNCs typically do
    - [Fare Attributes](#fare-attributes)
 - [Vehicle Properties](#vehicle-properties)
   - [Vehicle Attributes](#vehicle-attributes)
-  - [Accessibility Options](#accessibility-options)
+  - [Accessibility Attributes](#accessibility-attributes)
 - [State Machine](#state-machine)
   - [Vehicle States](#vehicle-states)
   - [Event Types](#event-types)
@@ -55,7 +55,7 @@ The `journey_id` field shall have a consistent value in overlapping trips, e.g. 
 
 ### Journey Attributes
 
-The `journey_attributes` array **may** have the following key value pairs:
+The `journey_attributes` object **may** have the following key value pairs:
 
 - `shift_id` (UUID, optional): unique identifier for an entire driver's work shift, tied across multiple journeys and therefore trips.
 
@@ -82,12 +82,12 @@ The `trip_type` field **must** have one of the following enumerated values:
 
 ### Trip Attributes
 
-The `trip_attributes` array **may** have the following key value pairs:
+The `trip_attributes` object **may** have the following key value pairs:
 
 - `hail_type` (enumerated, required): `street_hail`, `phone_dispatch`, `phone`, `text`, `app`
 - `app_name` (text, optional): name of the app used to reserve the trip which could be provider's app or 3rd party app
 - `passenger_count` (integer, required): unique count of passengers transported during trip duration
-- `requested_time` (timestamp, required): when the passenger requested the trip
+- `requested_time` ([Timestamp][ts], required): when the passenger requested the trip
 - `requested_trip_start_location` ([GPS](gps), Conditionally Required):  Location where the customer requested the trip to start (required if this is within jurisdictional boundaries) 
 - `quoted_trip_start_time` ([Timestamp][ts], Required): Time the trip was estimated or scheduled to start, that was provided to the passenger 
 - `dispatch_time` ([Timestamp][ts], Conditionally Required): Time the vehicle was dispatched to the customer (required if trip was dispatched) 
@@ -104,9 +104,9 @@ The `trip_attributes` array **may** have the following key value pairs:
 
 ### Fare Attributes
 
-The `fare_attributes` array **may** have the following key value pairs:
+The `fare_attributes` object **may** have the following key value pairs:
 
-- `payment_type` (enumerated, required): `cash`, `credit_card`, `mobile`, `voucher`, `paratransit`, `no payment`, `test`
+- `payment_type` (enumerated, required): `account_number`, `cash`, `credit_card`, `mobile_app`, `no_payment`, `paratransit`, `phone`, `voucher`, `test`
 - `fare_type` (enumerated, required): `meter_fare`, `upfront_pricing`, `flat_rate`. Indicator of which rate was charged.
 - `meter_fare_amount` (currency, conditionally required): if `upfront_pricing` is used as a `fare_type` include what the metered fare would have been if `meter_fare` would have been used. Allows cost comparison in evaluation of programs and pilots.
 - `tolls` (currency, optional) - Sum of any and all tolls charged for the trip, such as bridge tolls
@@ -125,11 +125,11 @@ The `fare_attributes` array **may** have the following key value pairs:
 
 ## Vehicle Properties
 
-_See more available vehicle attributes and accessibility options for any mode used in the [vehicles object](/data-types.md#vehicles)._
+_See more available vehicle attributes and accessibility attributes for any mode used in the [vehicles object](/data-types.md#vehicles)._
 
 ### Vehicle Attributes
 
-The `vehicle_attributes` array **may** have the following key value pairs:
+The `vehicle_attributes` object **may** have the following key value pairs:
 
 - `year` (integer, optional)
 - `make` (string, optional)
@@ -142,13 +142,13 @@ The `vehicle_attributes` array **may** have the following key value pairs:
 
 [Top][toc]
 
-### Accessibility Options
+### Accessibility Attributes
 
-This `accessibility_options` enum represents the accessibility options available on a given vehicle, or the accessibility options utilized for a given trip. 
+This `accessibility_attributes` enum represents the accessibility attributes available on a given vehicle, or the accessibility attributes utilized for a given trip. 
 
-| `accessibility_options` | Description                           |
-|-------------------------|---------------------------------------|
-| `wheelchair_accessible` | This vehicle is wheelchair accessible |
+| `accessibility_attributes` | Description                           |
+|----------------------------|---------------------------------------|
+| `wheelchair_accessible`    | This vehicle is wheelchair accessible |
 
 [Top][toc]
 
