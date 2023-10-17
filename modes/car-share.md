@@ -236,11 +236,13 @@ This is the list of `vehicle_state` and `event_type` pairings that constitute th
 | `removed`                | `non_contactable`      | N/A          | `comms_lost`             | The vehicle has gone out of comms while removed                                                                 |
 | `removed`                | `non_operational`      | N/A          | `maintenance_end`        | The vehicle maintenance work has ended                                                                          |
 | `removed`                | `non_operational`      | N/A          | `recommissioned`         | The vehicle has been re-added to the Provider's fleet after being previously `decommissioned`                   |
+| `reserved`               | `available`            | N/A          | `driver_cancellation`    | The driver has canceled the reservation                                                                         |
 | `reserved`               | `available`            | N/A          | `customer_cancellation` | The customer has canceled the reservation                                                                      |
 | `reserved`               | `available`            | N/A          | `provider_cancellation`  | The provider has canceled the reservation                                                                       |
 | `reserved`               | `elsewhere`            | N/A          | `trip_leave_jurisdiction`     | The vehicle has left the jurisdiction while in a reservation                                                    |
 | `reserved`               | `non_contactable`      | N/A          | `comms_lost`             | The vehicle went out of comms while being reserved by a passenger                                               |
-| `reserved`               | `stopped`              | `stopped`    | `reservation_stop`           | The customer has activated the vehicle                                                              |
+| `reserved`               | `stopped`              | `stopped`    | `reservation_stop`           | The customer has activated the vehicle                                                             |
+| `stopped`                | `available`            | N/A          | `driver_cancellation`    | The driver has canceled the trip                  |
 | `stopped`                | `available`            | N/A          | `customer_cancellation` | The customer has canceled the trip  |
 | `stopped`                | `available`            | N/A          | `provider_cancellation`  | The provider has canceled the trip           |
 | `stopped`                | `available`            | N/A          | `trip_end`               | The trip has been successfully completed                                                                        |
