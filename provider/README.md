@@ -168,22 +168,19 @@ For Timestamps, Vehicle Types, Propulsion Types, UUIDs, Costs, and Currencies, r
 
 ## Vehicles
 
-The `/vehicles` is a near-realtime endpoint and returns the current status of vehicles in an agency's [Jurisdiction](/general-information.md#definitions) and/or area of agency responsibility. All vehicles that are currently in any [`vehicle_state`][vehicle-states] should be returned in this payload. Since all states are returned, care should be taken to filter out states not in the [PROW](/general-information.md#definitions) if doing vehicle counts. For the states `elsewhere` and `removed` which include vehicles not in the [PROW](/general-information.md#definitions) but provide some operational clarity for agencies, these must only persist in the feed for 90 minutes before being removed. 
+There are two vehicles related endpoints:
 
-As with other MDS APIs, `/vehicles` is intended for use by regulators, not by the general public. `/vehicles` can be deployed by providers as a standalone MDS endpoint for agencies without requiring the use of other endpoints, due to the [modularity](/README.md#modularity) of MDS. See our [MDS Vehicles Guide](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Vehicles) for how this compares to GBFS `/free_bike_status`. Note that using authenticated `/vehicles` does not replace the role of a public [GBFS][gbfs] feed in enabling consumer-facing applications. If a provider is using both `/vehicles` and GBFS endpoints, the `/vehicles` endpoint should be considered source of truth regarding an agency's compliance checks.
+- `/vehicles` returns unchanging information about vehicles such as vehicle and propulsion type
+- `/vehicles/status` returns the current status of vehicles for real-time monitoring
 
-In addition to the standard [Provider payload wrapper](#response-format), responses from this endpoint should contain the last update timestamp and amount of time until the next update in accordance with the [Data Latency Requirements][data-latency]:
+As with other MDS APIs, the vehicles endpoints are intended for use by regulators, not by the general public. They can be deployed by providers as standalone MDS endpoints for agencies without requiring the use of other endpoints, due to the [modularity](/README.md#modularity) of MDS. See our [MDS Vehicles Guide](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Vehicles) for how this compares to GBFS `/free_bike_status`. Note that using authenticated vehicles endpoints does not replace the role of a public [GBFS][gbfs] feed in enabling consumer-facing applications. If a provider is using both the vehicles endpoints and GBFS endpoints, the vehicles endpoints should be considered source of truth regarding an agency's compliance checks.
 
-```json
-{
-    "version": "x.y.z",
-    "last_updated": "12345",
-    "ttl": "12345",
-    "vehicles": []
-}
-```
+### Vehicle Information
 
-The `/vehicles` endpoint returns the specified vehicle (if a device_id is provided) or a list of known vehicles. Contains vehicle properties that do not change often.
+The `/vehicles` endpoint returns the specified vehicle (if a device_id is provided) or a list of known vehicles.
+It contains vehicle properties that do not change often.
+When `/vehicles` is called without specifying a device ID it should return every vehicle that has
+ever been deployed in an agency's [Jurisdiction](/general-information.md#definitions) and/or area of agency responsibility.
 
 **Endpoint:** `/vehicles/{device_id}`  
 **Method:** `GET`  
@@ -228,7 +225,21 @@ See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schem
 
 ### Vehicle Status
 
-The `/vehicles/status` endpoint returns the specified vehicle (if a device_id is provided) or a list of known vehicles. Contains specific vehicle status records that are updated frequently.
+The `/vehicles/status` endpoint is a near-realtime endpoint and returns the current status of vehicles in an agency's [Jurisdiction](/general-information.md#definitions) and/or area of agency responsibility. All vehicles that are currently in any [PROW](/general-information.md#definitions) state [`vehicle_state`][vehicle-states] should be returned in this payload. Since all states are returned, care should be taken to filter out states not in the [PROW](/general-information.md#definitions) if doing vehicle counts. For the states `elsewhere`,  `removed`, and `missing`, which include vehicles not in the [PROW](/general-information.md#definitions) but provide some operational clarity for agencies, these vehicles must only persist in the feed for 90 minutes before being removed (and should persist in the feed for at least 90 minutes).
+
+The `/vehicles/status` endpoint returns the specified vehicle (if a device_id is provided) or a list of known vehicles.
+It contains specific vehicle status records that are updated frequently.
+
+In addition to the standard [Provider payload wrapper](#response-format), responses from this endpoint should contain the last update timestamp and amount of time until the next update in accordance with the [Data Latency Requirements][data-latency]:
+
+```json
+{
+    "version": "x.y.z",
+    "last_updated": "12345",
+    "ttl": "12345",
+    "vehicles": []
+}
+```
 
 **Endpoint:** `/vehicles/status/{device_id}`  
 **Method:** `GET`  
