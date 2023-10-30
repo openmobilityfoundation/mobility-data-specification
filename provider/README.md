@@ -395,7 +395,7 @@ The `/events/historical` API uses the following query parameter:
 
 | Query Parameter    | Format | Expected Output |
 | ---------    | ------ | --------------- |
-| `event_time` | `YYYY-MM-DDTHH`, an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) extended datetime representing an UTC hour between 00 and 23. | All status changes with an event time occurring within the hour. For example, requesting `event_time=2019-10-01T07` returns all status changes where `2019-10-01T07:00:00 <= status_change.event_time < 2019-10-01T08:00:00` UTC. |
+| `event_time` | `YYYY-MM-DDTHH`, an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) extended datetime representing an UTC hour between 00 and 23. | All events with an event time occurring within the hour. For example, requesting `event_time=2019-10-01T07` returns all events where `2019-10-01T07:00:00 <= event.timestamp < 2019-10-01T08:00:00` UTC. |
 
 Without an `event_time` query parameter, `/events` shall return a `400 Bad Request` error.
 
@@ -411,14 +411,14 @@ processing for that hour:
 * For hours that are in the past but for which data is not yet available
   the API shall return a `202 Accepted` response.
 * For all other hours the API shall return a `200 OK` response with a fully
-  populated body, even for hours that contain no status changes to report.
-  If the hour has no status changes to report the response shall contain an
-  empty array of status changes:
+  populated body, even for hours that contain no events to report.
+  If the hour has no events to report the response shall contain an
+  empty array of events:
   
     ```json
     {
         "version": "x.y.z",
-        "status_changes": []
+        "events": []
     }
     ```
 
