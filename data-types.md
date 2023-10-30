@@ -247,7 +247,7 @@ A Report is defined by the following structure:
 | Column Name          | Type                                      | Comments                                         |
 |----------------------| ----------------------------------------- | ------------------------------------------------ |
 | `provider_id`        | UUID                                      | A UUID for the Provider, unique within MDS. See MDS provider_id in [provider list](/providers.csv). |
-| `start_date`         | date                                      | Start date of trip the data row, ISO 8601 date format, i.e. YYYY-MM-DD |
+| `start_date`         | date                                      | Start date of the [Trip](#trips) data row, in ISO 8601 date format, i.e. YYYY-MM-DD |
 | `duration`           | string                                    | Value is always `P1M` for monthly. Based on [ISO 8601 duration](https://en.wikipedia.org/wiki/ISO_8601#Durations) |
 | `special_group_type` | [Special Group Type](#special-group-type) | Type that applies to this row                    |
 | `geography_id`       | [Geography](/geography)                   | ID that applies to this row. Includes all IDs in /geography. When there is no /geography then return `null` for this value and return counts based on the entire operating area. |
