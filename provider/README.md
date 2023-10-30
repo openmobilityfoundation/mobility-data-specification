@@ -189,7 +189,7 @@ The `/vehicles` endpoint returns the specified vehicle (if a device_id is provid
 **Method:** `GET`  
 **[Beta feature][beta]:** No (as of 1.2.0)  
 **Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.   
-**`data` Payload:** `{ "vehicles": [] }`, an array of [Vehicle][vehicles] objects
+**Payload:** `{ "vehicles": [] }`, an array of [Vehicle][vehicles] objects
 
 _Path Parameters:_
 
@@ -234,7 +234,7 @@ The `/vehicles/status` endpoint returns the specified vehicle (if a device_id is
 **Method:** `GET`  
 **[Beta feature][beta]:** No (as of 1.2.0)  
 **Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.  
-**`data` Payload:** `{ "vehicles_status": [] }`, an array of [Vehicle Status][vehicle-status] objects
+**Payload:** `{ "vehicles_status": [] }`, an array of [Vehicle Status][vehicle-status] objects
 
 _Path Parameters:_
 
@@ -283,7 +283,7 @@ Unless stated otherwise by the municipality, the trips endpoint must return all 
 **Method:** `GET`  
 **[Beta feature][beta]:** No  
 **Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.   
-**`data` Payload:** `{ "trips": [] }`, an array of [Trip][trips] objects
+**Payload:** `{ "trips": [] }`, an array of [Trip][trips] objects
 
 ### Trips - Query Parameters
 
@@ -348,7 +348,7 @@ Telemetry for a [trip](#trip) must include at least 2 points: the start point an
 **Endpoint:** `/telemetry`  
 **Method:** `GET`  
 **Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.  
-**`data` Payload:** `{ "telemetry": [] }`, an array of [Vehicle Telemetry][vehicle-telemetry] objects
+**Payload:** `{ "telemetry": [] }`, an array of [Vehicle Telemetry][vehicle-telemetry] objects
 
 [Top][toc]
 
@@ -385,7 +385,7 @@ Unless stated otherwise by the municipality, this endpoint must return only thos
 **Method:** `GET`  
 **[Beta feature][beta]:** No  
 **Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.  
-**`data` Payload:** `{ "events": [] }`, an array of [Events](/data-types.md#events) object
+**Payload:** `{ "events": [] }`, an array of [Events](/data-types.md#events) object
 
 [Top][toc]
 
@@ -447,7 +447,7 @@ See also [Stop-based Geographic Data][stop-based-geo].
 **Method:** `GET`  
 **[Beta feature][beta]:** No (as of 1.0.0)  
 **Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.  
-**`data` Payload:** `{ "events": [] }`, an array of [Events](/data-types.md#events) object objects
+**Payload:** `{ "events": [] }`, an array of [Events](/data-types.md#events) object objects
 
 #### Recent Events - Query Parameters
 
@@ -494,7 +494,7 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 **Method:** `GET`  
 **[Beta feature][beta]:** Yes (as of 1.0.0). [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/638)  
 **Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.    
-**`data` Payload:** `{ "stops": [] }`, an array of [Stops][stops]
+**Payload:** `{ "stops": [] }`, an array of [Stops][stops]
 
 In the case that a `stop_id` path parameter is specified, the `stops` array returned will only have one entry. In the case that no `stop_id` query parameter is specified, all stops will be returned.
 
@@ -527,8 +527,8 @@ The authenticated reports are monthly, historic flat files that may be pre-gener
 **[Beta feature][beta]:** No (as of 2.0.0). [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/672)  
 **Usage note:** This endpoint uses media-type `text/vnd.mds+csv` instead of `application/vnd.mds+json`, see [Versioning][versioning].
 **Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.  
-**`data` Filename:** monthly file named by year and month, e.g. `/reports/YYYY-MM.csv`  
-**`data` Payload:** monthly CSV files of [Report](/data-types.md#Reports) objects 
+**Filename:** monthly file named by year and month, e.g. `/reports/YYYY-MM.csv`  
+**Payload:** monthly CSV files of [Report](/data-types.md#Reports) objects 
 
 #### Responses
 
