@@ -247,7 +247,7 @@ If `device_id` is specified, `GET` will return an array with a vehicle status re
 ```json
 {
     "version": "x.y.z",
-    "vehicles": [ ... ]
+    "vehicles_status": [ ... ]
     "links": {
         "first": "https://...",
         "last": "https://...",
