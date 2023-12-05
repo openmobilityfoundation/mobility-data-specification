@@ -5,11 +5,11 @@ This MDS data types page catalogs the objects (fields, types, requirements, desc
 ## Table of Contents
 
 - [Vehicles](#vehicles)
-  - [Vehicle Types][vehicle-types]
+  - [Vehicle Types](#vehicle-types)
   - [Propulsion Types](#propulsion-types)
   - [Vehicle Status](#vehicle-status)
 - [Events](#events)
-  - [Event Types](/modes/event_types.md)
+  - [Event Times](#event-times)
 - [Telemetry](#telemetry)
   - [GPS Data][gps]
 - [Stops](#stops)
@@ -108,7 +108,7 @@ Events represent changes in vehicle status.
 | `event_types` | Enum[] | Required | Vehicle [event types][vehicle-events] for state change, with allowable values determined by `vehicle_state` |
 | `timestamp` | [Timestamp][ts] | Required | Date/time that event occurred at. See [Event Times][event-times] |
 | `publication_time` | [Timestamp][ts] | Optional | Date/time that event became available through the status changes endpoint |
-| `location` | [GPS][gps] | Required | See also [Stop-based Geographic Data][stop-based-geo]. |
+| `location` | [GPS][gps] | Required | See also [Telemetry][telemetry]. |
 | `event_geographies` | UUID[] | Optional | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 2.0.0)*. Array of Geography UUIDs consisting of every Geography that contains the location of the status change. See [Geography Driven Events][geography-driven-events]. Required if `location` is not present. |
 | `battery_percent`       | Integer          | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 100 |
 | `fuel_percent`       | Integer          | Required if Applicable | Percent fuel in vehicle, expressed between 0 and 100 |
@@ -302,8 +302,8 @@ Other special group types may be added in future MDS releases as relevant agency
 [iso4217]: https://en.wikipedia.org/wiki/ISO_4217#Active_codes
 [modes]: /modes/README.md
 [propulsion-types]: #propulsion-types
-[stop-based-geo]: /general-information.md#stop-based-geographic-data
 [stops]: #stops
+[telemetry]: #telemetry
 [toc]: #table-of-contents
 [ts]: /general-information.md#timestamps
 [vehicle-states]: /general-information.md#vehicle-states
