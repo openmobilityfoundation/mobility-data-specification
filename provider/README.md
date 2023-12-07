@@ -170,17 +170,20 @@ For Timestamps, Vehicle Types, Propulsion Types, UUIDs, Costs, and Currencies, r
 
 There are two vehicles related endpoints:
 
-- `/vehicles` returns unchanging information about vehicles such as vehicle and propulsion type
+- `/vehicles` returns rarely changed information about vehicles such as vehicle and propulsion type
 - `/vehicles/status` returns the current status of vehicles for real-time monitoring
 
 As with other MDS APIs, the vehicles endpoints are intended for use by regulators, not by the general public. They can be deployed by providers as standalone MDS endpoints for agencies without requiring the use of other endpoints, due to the [modularity](/README.md#modularity) of MDS. See our [MDS Vehicles Guide](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Vehicles) for how this compares to GBFS `/free_bike_status`. Note that using authenticated vehicles endpoints does not replace the role of a public [GBFS][gbfs] feed in enabling consumer-facing applications. If a provider is using both the vehicles endpoints and GBFS endpoints, the vehicles endpoints should be considered source of truth regarding an agency's compliance checks.
 
 ### Vehicle Information
 
-The `/vehicles` endpoint returns the specified vehicle (if a device_id is provided) or a list of known vehicles.
+The `/vehicles` endpoint returns the specified vehicle (if a `device_id` is provided) or a list of vehicles.
 It contains vehicle properties that do not change often.
 When `/vehicles` is called without specifying a device ID it should return every vehicle that has
-ever been deployed in an agency's [Jurisdiction](/general-information.md#definitions) and/or area of agency responsibility.
+been deployed in an agency's [Jurisdiction](/general-information.md#definitions) and/or area of agency responsibility
+in the last 30 days.
+Vehicle information about all device IDs present in other MDS endpoints must be acessible via the
+`/vehicles/{device_id}` style call regardless of when they were deployed.
 
 **Endpoint:** `/vehicles/{device_id}`  
 **Method:** `GET`  
