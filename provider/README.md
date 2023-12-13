@@ -287,7 +287,7 @@ See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schem
 
 ## Trips
 
-A [trip][trips-general-info] represents a journey taken by a *mobility as a service* customer with a geo-tagged start and stop point.
+A [trip][trips] represents a journey taken by a *mobility as a service* customer with a geo-tagged start and stop point.
 
 The trips endpoint allows a user to query historical trip data.
 
@@ -455,7 +455,7 @@ See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schem
 
 The `/events/recent` endpoint is a near-realtime feed of events less than two weeks old.
 
-See also [Stop-based Geographic Data][stop-based-geo].
+See also [Telemetry][telemetry].
 
 **Endpoint:** `/events/recent`  
 **Method:** `GET`  
@@ -588,12 +588,10 @@ See [Provider examples](examples.md#reports).
 [responses]: /general-information.md#responses
 [schema]: /schema/
 [stops]: /data-types.md#stops
-[stop-based-geo]: /general-information.md#stop-based-geographic-data
 [telemetry]: /data-types.md#telemetry
 [telemetry---query-parameters]: #telemetry-query-parameters
 [toc]: #table-of-contents
 [trips]: /data-types.md#trips
-[trips-general-info]: /general-information.md#stop-based-geographic-data
 [ts]: /general-information.md#timestamps
 [vehicles]: /data-types.md#vehicles
 [vehicle-types]: /data-types.md#vehicle-types

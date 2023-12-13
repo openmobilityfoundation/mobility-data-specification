@@ -9,7 +9,7 @@ This MDS data types page catalogs the objects (fields, types, requirements, desc
   - [Propulsion Types](#propulsion-types)
   - [Vehicle Status](#vehicle-status)
 - [Events](#events)
-  - [Event Types](#event-times)
+  - [Event Times](#event-times)
 - [Telemetry](#telemetry)
   - [GPS Data][gps]
 - [Stops](#stops)
@@ -108,7 +108,7 @@ Events represent changes in vehicle status.
 | `event_types` | Enum[] | Required | Vehicle [event types][vehicle-events] for state change, with allowable values determined by `vehicle_state` |
 | `timestamp` | [Timestamp][ts] | Required | Date/time that event occurred at. See [Event Times][event-times] |
 | `publication_time` | [Timestamp][ts] | Optional | Date/time that event became available through the status changes endpoint |
-| `location` | [GPS][gps] | Required | See also [Stop-based Geographic Data][stop-based-geo]. |
+| `location` | [GPS][gps] | Required | See also [Telemetry][telemetry]. |
 | `event_geographies` | UUID[] | Optional | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 2.0.0)*. Array of Geography UUIDs consisting of every Geography that contains the location of the status change. See [Geography Driven Events][geography-driven-events]. Required if `location` is not present. |
 | `battery_percent`       | Integer          | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 100 |
 | `fuel_percent`       | Integer          | Required if Applicable | Percent fuel in vehicle, expressed between 0 and 100 |
@@ -251,7 +251,7 @@ A Report is defined by the following structure:
 | `duration`           | string                                    | Value is always `P1M` for monthly. Based on [ISO 8601 duration](https://en.wikipedia.org/wiki/ISO_8601#Durations) |
 | `special_group_type` | [Special Group Type](#special-group-type) | Type that applies to this row                    |
 | `geography_id`       | [Geography](/geography)                   | ID that applies to this row. Includes all IDs in /geography. When there is no /geography then return `null` for this value and return counts based on the entire operating area. |
-| `vehicle_type`       | [Vehicle Type](/general-information.md#vehicle-types)      | Type that applies to this row                    |
+| `vehicle_type`       | [Vehicle Type][vehicle-types]      | Type that applies to this row                    |
 | `trip_count`         | integer                                   | Count of trips taken for this row                |
 | `rider_count`        | integer                                   | Count of unique riders for this row              |
 
@@ -294,18 +294,18 @@ Other special group types may be added in future MDS releases as relevant agency
 [Top][toc]
 
 [costs-and-currencies]: /general-information.md#costs-and-currencies
-[event-times]: /general-information.md#event-times
+[event-times]: #event-times
 [gbfs-station-info]: https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_informationjson
 [gbfs-station-status]: https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_statusjson
 [geography-driven-events]: /general-information.md#geography-driven-events
 [gps]: #gps-data
 [iso4217]: https://en.wikipedia.org/wiki/ISO_4217#Active_codes
 [modes]: /modes/README.md
-[propulsion-types]: /general-information.md#propulsion-types
-[stop-based-geo]: #stop-based-geographic-data
+[propulsion-types]: #propulsion-types
 [stops]: #stops
+[telemetry]: #telemetry
 [toc]: #table-of-contents
 [ts]: /general-information.md#timestamps
-[vehicle-states]: /modes#vehicle-states
-[vehicle-events]: /modes#event-types
-[vehicle-types]: /general-information.md#vehicle-types
+[vehicle-states]: /general-information.md#vehicle-states
+[vehicle-events]: /general-information.md#event-types
+[vehicle-types]: #vehicle-types
