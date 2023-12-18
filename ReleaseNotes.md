@@ -1,3 +1,31 @@
+## 2.0.1
+
+> Release 2023-12-18
+
+The 2.0.1 release fixes some minor issues and typos to help make the specifcation clearer.
+
+### CHANGES
+
+See the closed PRs tagged with [Milestone 2.0.1](https://github.com/openmobilityfoundation/mobility-data-specification/pulls?q=is%3Apr+is%3Aclosed+milestone%3A2.0.1) and [Issues](https://github.com/openmobilityfoundation/mobility-data-specification/issues?q=is%3Aissue+milestone%3A2.0.1+is%3Aclosed) for a full list of changes.
+
+**Minor updates**
+
+- [#879](https://github.com/openmobilityfoundation/mobility-data-specification/issues/879) Clarify which vehicles are included in the MDS 2.0 /vehicles endpoint
+- [#868](https://github.com/openmobilityfoundation/mobility-data-specification/issues/868) Correction of description vehicle events (car sharing) bug Car Share 
+
+**Typos and wording clarifications**
+
+- [#880](https://github.com/openmobilityfoundation/mobility-data-specification/issues/880) Remove word "data" from provider response payload descriptions 
+- [#894](https://github.com/openmobilityfoundation/mobility-data-specification/issues/894) Fixing broken links in data-types markdown document
+- [#876](https://github.com/openmobilityfoundation/mobility-data-specification/issues/876) Reports endpoint - START_DATE clarification
+- [#884](https://github.com/openmobilityfoundation/mobility-data-specification/issues/884) Fix JSON key in /vehicles/status example response 
+- [#878](https://github.com/openmobilityfoundation/mobility-data-specification/issues/878) Update "status changes" to "events" in provider
+
+**Identifier updates**
+
+- [#872](https://github.com/openmobilityfoundation/mobility-data-specification/issues/872) Add GBFS endpoint for Whoosh 
+- [#890](https://github.com/openmobilityfoundation/mobility-data-specification/issues/890) Add Nextbike
+
 ## 2.0.0
 
 > Released 2023-05-09
