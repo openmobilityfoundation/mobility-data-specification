@@ -241,10 +241,10 @@ This is the list of `vehicle_state` and `event_type` pairings that constitute th
 | `reserved`               | `available`            | N/A          | `provider_cancellation`  | The provider has canceled the reservation                                                                       |
 | `reserved`               | `elsewhere`            | N/A          | `trip_leave_jurisdiction`     | The vehicle has left the jurisdiction while in a reservation                                                    |
 | `reserved`               | `non_contactable`      | N/A          | `comms_lost`             | The vehicle went out of comms while being reserved by a passenger                                               |
-| `reserved`               | `stopped`              | `stopped`    | `reservation_stop`           | The vehicle has stopped to pick up the passenger                                                                |
-| `stopped`                | `available`            | N/A          | `driver_cancellation`    | The driver has canceled the trip while either waiting for the passenger, or dropping them off                   |
-| `stopped`                | `available`            | N/A          | `customer_cancellation` | The customer has canceled the trip while the vehicle is waiting to pick them up, or they are being dropped off |
-| `stopped`                | `available`            | N/A          | `provider_cancellation`  | The provider has canceled the trip while the vehicle is waiting for a passenger, or dropping them off           |
+| `reserved`               | `stopped`              | `stopped`    | `reservation_stop`           | The customer has activated the vehicle                                                             |
+| `stopped`                | `available`            | N/A          | `driver_cancellation`    | The driver has canceled the trip                  |
+| `stopped`                | `available`            | N/A          | `customer_cancellation` | The customer has canceled the trip  |
+| `stopped`                | `available`            | N/A          | `provider_cancellation`  | The provider has canceled the trip           |
 | `stopped`                | `available`            | N/A          | `trip_end`               | The trip has been successfully completed                                                                        |
 | `stopped`                | `non_contactable`      | N/A          | `comms_lost`             | The vehicle has went out of comms while stopped                                                                 |
 | `stopped`                | `on_trip`              | `on_trip`    | `trip_resume`            | Resume a trip that was previously stopped (e.g. picking up a friend to go to the airport with)                  |

@@ -46,7 +46,8 @@ Troopy,micromobility,2b684c7c-f8ad-4c65-92f0-b9e57aaa7dd3,https://www.troopy.com
 BCycle,micromobility,938D9F8B-B8D3-46CC-9276-F4A8C4FA3610,https://www.bcycle.com,https://mds.bcycle.com,https://gbfs.bcycle.com
 Tembici,micromobility,46b28e68-8ecb-4875-b97e-836fd5e1930f,https://www.tembici.com.br/,https://api.tembici.com.br/mds,https://api.tembici.com.br/gbfs
 POPPY Mobility,micromobility,5c869736-797f-4244-9132-fb50a22d1bfd,https://www.poppy.be/,https://poppy.red/mds,
-Whoosh,micromobility,3f8908a7-86fa-450d-8889-5d49077e06cd,https://whoosh.bike,https://mds.whoosh.bike,
+Whoosh,micromobility,3f8908a7-86fa-450d-8889-5d49077e06cd,https://whoosh.bike,https://mds.whoosh.bike,https://gbfs.whoosh.bike
 Telofun,micromobility,3dd253d3-557c-4fcb-98da-9af3edeaaae6,https://www.tel-o-fun.co.il/,https://mds.fsmctmobility.com/api/mds/v1/,
 Gbike,micromobility,a50b796e-bca2-11ed-afa1-0242ac120002,https://gcoo.io/,https://mds.gcoo.io/,https://mds.gcoo.io/gbfs
 SURF,micromobility,66c43ccb-f9f9-4f70-9707-37301b9f49a8,https://www.surfingscooters.com,https://api.app.surf/mds,https://api.app.surf/gbfs/en
+Nextbike,micromobility,31e54f5a-66c4-4a4c-bb6e-236351c90312,https://www.nextbike.de,https://platform-services.tier-services.io/data-sharing/mds/,https://api.nextbike.net/maps/gbfs/

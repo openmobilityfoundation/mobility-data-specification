@@ -168,28 +168,28 @@ For Timestamps, Vehicle Types, Propulsion Types, UUIDs, Costs, and Currencies, r
 
 ## Vehicles
 
-The `/vehicles` is a near-realtime endpoint and returns the current status of vehicles in an agency's [Jurisdiction](/general-information.md#definitions) and/or area of agency responsibility. All vehicles that are currently in any [`vehicle_state`][vehicle-states] should be returned in this payload. Since all states are returned, care should be taken to filter out states not in the [PROW](/general-information.md#definitions) if doing vehicle counts. For the states `elsewhere` and `removed` which include vehicles not in the [PROW](/general-information.md#definitions) but provide some operational clarity for agencies, these must only persist in the feed for 90 minutes before being removed. 
+There are two vehicles related endpoints:
 
-As with other MDS APIs, `/vehicles` is intended for use by regulators, not by the general public. `/vehicles` can be deployed by providers as a standalone MDS endpoint for agencies without requiring the use of other endpoints, due to the [modularity](/README.md#modularity) of MDS. See our [MDS Vehicles Guide](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Vehicles) for how this compares to GBFS `/free_bike_status`. Note that using authenticated `/vehicles` does not replace the role of a public [GBFS][gbfs] feed in enabling consumer-facing applications. If a provider is using both `/vehicles` and GBFS endpoints, the `/vehicles` endpoint should be considered source of truth regarding an agency's compliance checks.
+- `/vehicles` returns rarely changed information about vehicles such as vehicle and propulsion type
+- `/vehicles/status` returns the current status of vehicles for real-time monitoring
 
-In addition to the standard [Provider payload wrapper](#response-format), responses from this endpoint should contain the last update timestamp and amount of time until the next update in accordance with the [Data Latency Requirements][data-latency]:
+As with other MDS APIs, the vehicles endpoints are intended for use by regulators, not by the general public. They can be deployed by providers as standalone MDS endpoints for agencies without requiring the use of other endpoints, due to the [modularity](/README.md#modularity) of MDS. See our [MDS Vehicles Guide](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Vehicles) for how this compares to GBFS `/free_bike_status`. Note that using authenticated vehicles endpoints does not replace the role of a public [GBFS][gbfs] feed in enabling consumer-facing applications. If a provider is using both the vehicles endpoints and GBFS endpoints, the vehicles endpoints should be considered source of truth regarding an agency's compliance checks.
 
-```json
-{
-    "version": "x.y.z",
-    "last_updated": "12345",
-    "ttl": "12345",
-    "vehicles": []
-}
-```
+### Vehicle Information
 
-The `/vehicles` endpoint returns the specified vehicle (if a device_id is provided) or a list of known vehicles. Contains vehicle properties that do not change often.
+The `/vehicles` endpoint returns the specified vehicle (if a `device_id` is provided) or a list of vehicles.
+It contains vehicle properties that do not change often.
+When `/vehicles` is called without specifying a device ID it should return every vehicle that has
+been deployed in an agency's [Jurisdiction](/general-information.md#definitions) and/or area of agency responsibility
+in the last 30 days.
+Vehicle information about all device IDs present in other MDS endpoints must be acessible via the
+`/vehicles/{device_id}` style call regardless of when they were deployed.
 
 **Endpoint:** `/vehicles/{device_id}`  
 **Method:** `GET`  
 **[Beta feature][beta]:** No (as of 1.2.0)  
 **Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.   
-**`data` Payload:** `{ "vehicles": [] }`, an array of [Vehicle][vehicles] objects
+**Payload:** `{ "vehicles": [] }`, an array of [Vehicle][vehicles] objects
 
 _Path Parameters:_
 
@@ -228,13 +228,27 @@ See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schem
 
 ### Vehicle Status
 
-The `/vehicles/status` endpoint returns the specified vehicle (if a device_id is provided) or a list of known vehicles. Contains specific vehicle status records that are updated frequently.
+The `/vehicles/status` endpoint is a near-realtime endpoint and returns the current status of vehicles in an agency's [Jurisdiction](/general-information.md#definitions) and/or area of agency responsibility. All vehicles that are currently in any [PROW](/general-information.md#definitions) state [`vehicle_state`][vehicle-states] should be returned in this payload. Since all states are returned, care should be taken to filter out states not in the [PROW](/general-information.md#definitions) if doing vehicle counts. For the states `elsewhere`,  `removed`, and `missing`, which include vehicles not in the [PROW](/general-information.md#definitions) but provide some operational clarity for agencies, these vehicles must only persist in the feed for 90 minutes before being removed (and should persist in the feed for at least 90 minutes).
+
+The `/vehicles/status` endpoint returns the specified vehicle (if a device_id is provided) or a list of known vehicles.
+It contains specific vehicle status records that are updated frequently.
+
+In addition to the standard [Provider payload wrapper](#response-format), responses from this endpoint should contain the last update timestamp and amount of time until the next update in accordance with the [Data Latency Requirements][data-latency]:
+
+```json
+{
+    "version": "x.y.z",
+    "last_updated": "12345",
+    "ttl": "12345",
+    "vehicles": []
+}
+```
 
 **Endpoint:** `/vehicles/status/{device_id}`  
 **Method:** `GET`  
 **[Beta feature][beta]:** No (as of 1.2.0)  
 **Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.  
-**`data` Payload:** `{ "vehicles_status": [] }`, an array of [Vehicle Status][vehicle-status] objects
+**Payload:** `{ "vehicles_status": [] }`, an array of [Vehicle Status][vehicle-status] objects
 
 _Path Parameters:_
 
@@ -247,7 +261,7 @@ If `device_id` is specified, `GET` will return an array with a vehicle status re
 ```json
 {
     "version": "x.y.z",
-    "vehicles": [ ... ]
+    "vehicles_status": [ ... ]
     "links": {
         "first": "https://...",
         "last": "https://...",
@@ -273,7 +287,7 @@ See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schem
 
 ## Trips
 
-A [trip][trips-general-info] represents a journey taken by a *mobility as a service* customer with a geo-tagged start and stop point.
+A [trip][trips] represents a journey taken by a *mobility as a service* customer with a geo-tagged start and stop point.
 
 The trips endpoint allows a user to query historical trip data.
 
@@ -283,7 +297,7 @@ Unless stated otherwise by the municipality, the trips endpoint must return all 
 **Method:** `GET`  
 **[Beta feature][beta]:** No  
 **Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.   
-**`data` Payload:** `{ "trips": [] }`, an array of [Trip][trips] objects
+**Payload:** `{ "trips": [] }`, an array of [Trip][trips] objects
 
 ### Trips - Query Parameters
 
@@ -348,7 +362,7 @@ Telemetry for a [trip](#trip) must include at least 2 points: the start point an
 **Endpoint:** `/telemetry`  
 **Method:** `GET`  
 **Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.  
-**`data` Payload:** `{ "telemetry": [] }`, an array of [Vehicle Telemetry][vehicle-telemetry] objects
+**Payload:** `{ "telemetry": [] }`, an array of [Vehicle Telemetry][vehicle-telemetry] objects
 
 [Top][toc]
 
@@ -385,7 +399,7 @@ Unless stated otherwise by the municipality, this endpoint must return only thos
 **Method:** `GET`  
 **[Beta feature][beta]:** No  
 **Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.  
-**`data` Payload:** `{ "events": [] }`, an array of [Events](/data-types.md#events) object
+**Payload:** `{ "events": [] }`, an array of [Events](/data-types.md#events) object
 
 [Top][toc]
 
@@ -395,7 +409,7 @@ The `/events/historical` API uses the following query parameter:
 
 | Query Parameter    | Format | Expected Output |
 | ---------    | ------ | --------------- |
-| `event_time` | `YYYY-MM-DDTHH`, an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) extended datetime representing an UTC hour between 00 and 23. | All status changes with an event time occurring within the hour. For example, requesting `event_time=2019-10-01T07` returns all status changes where `2019-10-01T07:00:00 <= status_change.event_time < 2019-10-01T08:00:00` UTC. |
+| `event_time` | `YYYY-MM-DDTHH`, an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) extended datetime representing an UTC hour between 00 and 23. | All events with an event time occurring within the hour. For example, requesting `event_time=2019-10-01T07` returns all events where `2019-10-01T07:00:00 <= event.timestamp < 2019-10-01T08:00:00` UTC. |
 
 Without an `event_time` query parameter, `/events` shall return a `400 Bad Request` error.
 
@@ -411,14 +425,14 @@ processing for that hour:
 * For hours that are in the past but for which data is not yet available
   the API shall return a `202 Accepted` response.
 * For all other hours the API shall return a `200 OK` response with a fully
-  populated body, even for hours that contain no status changes to report.
-  If the hour has no status changes to report the response shall contain an
-  empty array of status changes:
+  populated body, even for hours that contain no events to report.
+  If the hour has no events to report the response shall contain an
+  empty array of events:
   
     ```json
     {
         "version": "x.y.z",
-        "status_changes": []
+        "events": []
     }
     ```
 
@@ -441,13 +455,13 @@ See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schem
 
 The `/events/recent` endpoint is a near-realtime feed of events less than two weeks old.
 
-See also [Stop-based Geographic Data][stop-based-geo].
+See also [Telemetry][telemetry].
 
 **Endpoint:** `/events/recent`  
 **Method:** `GET`  
 **[Beta feature][beta]:** No (as of 1.0.0)  
 **Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.  
-**`data` Payload:** `{ "events": [] }`, an array of [Events](/data-types.md#events) object objects
+**Payload:** `{ "events": [] }`, an array of [Events](/data-types.md#events) object objects
 
 #### Recent Events - Query Parameters
 
@@ -494,7 +508,7 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 **Method:** `GET`  
 **[Beta feature][beta]:** Yes (as of 1.0.0). [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/638)  
 **Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.    
-**`data` Payload:** `{ "stops": [] }`, an array of [Stops][stops]
+**Payload:** `{ "stops": [] }`, an array of [Stops][stops]
 
 In the case that a `stop_id` path parameter is specified, the `stops` array returned will only have one entry. In the case that no `stop_id` query parameter is specified, all stops will be returned.
 
@@ -527,8 +541,8 @@ The authenticated reports are monthly, historic flat files that may be pre-gener
 **[Beta feature][beta]:** No (as of 2.0.0). [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/672)  
 **Usage note:** This endpoint uses media-type `text/vnd.mds+csv` instead of `application/vnd.mds+json`, see [Versioning][versioning].
 **Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.  
-**`data` Filename:** monthly file named by year and month, e.g. `/reports/YYYY-MM.csv`  
-**`data` Payload:** monthly CSV files of [Report](/data-types.md#Reports) objects 
+**Filename:** monthly file named by year and month, e.g. `/reports/YYYY-MM.csv`  
+**Payload:** monthly CSV files of [Report](/data-types.md#Reports) objects 
 
 #### Responses
 
@@ -574,12 +588,10 @@ See [Provider examples](examples.md#reports).
 [responses]: /general-information.md#responses
 [schema]: /schema/
 [stops]: /data-types.md#stops
-[stop-based-geo]: /general-information.md#stop-based-geographic-data
 [telemetry]: /data-types.md#telemetry
 [telemetry---query-parameters]: #telemetry-query-parameters
 [toc]: #table-of-contents
 [trips]: /data-types.md#trips
-[trips-general-info]: /general-information.md#stop-based-geographic-data
 [ts]: /general-information.md#timestamps
 [vehicles]: /data-types.md#vehicles
 [vehicle-types]: /data-types.md#vehicle-types
