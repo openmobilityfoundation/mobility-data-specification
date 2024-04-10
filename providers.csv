@@ -52,3 +52,4 @@ Gbike,micromobility,a50b796e-bca2-11ed-afa1-0242ac120002,https://gcoo.io/,https:
 SURF,micromobility,66c43ccb-f9f9-4f70-9707-37301b9f49a8,https://www.surfingscooters.com,https://api.app.surf/mds,https://api.app.surf/gbfs/en
 Nextbike,micromobility,31e54f5a-66c4-4a4c-bb6e-236351c90312,https://www.nextbike.de,https://platform-services.tier-services.io/data-sharing/mds/,https://api.nextbike.net/maps/gbfs/
 Starship Technologies,delivery-robots,4a1524f3-8182-4b55-90c2-023c0cac84b9,https://www.starship.xyz/,https://mds-provider.starship.xyz/api/v1/mds/,
+Deutsche Bahn Connect,micromobility,dcd47d65-b290-4bd6-adf2-24578fbd9110,https://www.deutschebahnconnect.com/,https://bike-prod.msp.dbrent.net/mds/,https://apis.deutschebahn.com/db-api-marketplace/apis/shared-mobility-gbfs/2-2/de/CallABike/gbfs/
