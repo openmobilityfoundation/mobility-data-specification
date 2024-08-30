@@ -31,9 +31,6 @@ This specification describes the digital relationship between _mobility as a ser
   - [Rule Types](#rule-types)
   - [Rule Units](#rule-units)
   - [Rates](#rates)
-    - [Rate Amounts](#rate-amounts)
-    - [Rate Recurrences](#rate-recurrences)
-    - [Rate Applies When](#rate-applies-when)
   - [Messages](#messages)
   - [Value URL](#value-url)
   - [Order of Operations](#order-of-operations)
@@ -333,9 +330,7 @@ An individual `Rule` object is defined by the following fields:
 | `maximum`          | integer                     | Optional   | Maximum value, if applicable (default unlimited) |
 | `inclusive_minimum` | boolean                    | Optional   | Whether the rule `minimum` is considered in-bounds (default `true`) |
 | `inclusive_maximum` | boolean                    | Optional   | Whether the rule `maximum` is considered in-bounds (default `true`) |
-| `rate_amount`      | integer                     | Optional   | Amount of the rate (see [Rate Amounts](#rate-amounts)) |
-| `rate_recurrence`  | enum                        | Optional   | Recurrence of the rate (see [Rate Recurrences](#rate-recurrences)) |
-| `rate_applies_when` | enum                       | Optional   | Specifies when a rate is applied to a rule (see [Rate Applies When](#rate-applies-when)) (defaults to `out_of_bounds`) |
+| `rate`             | Rate[]                      | Optional   | An array of [Rates](#rates).  |
 | `start_time`       | ISO 8601 time `hh:mm:ss`    | Optional   | Beginning time-of-day when the rule is in effect (default 00:00:00). |
 | `end_time`         | ISO 8601 time `hh:mm:ss`    | Optional   | Ending time-of-day when the rule is in effect (default 23:59:59). |
 | `days`             | day[]                       | Optional   | Days `["sun", "mon", "tue", "wed", "thu", "fri", "sat"]` when the rule is in effect (default all) |
@@ -374,40 +369,21 @@ An individual `Rule` object is defined by the following fields:
 ### Rates
 
 Rate-related properties can currently be specified on all rule types except `user`, i.e. any rule that can be measured.
+It is a JSON object with the following fields:
 
 **[Beta feature](/general-information.md#beta-features)**: *No (as of 2.0.0)*.
 
-#### Rate Amounts
-
-The amount of a rate applied when this rule applies, if applicable (default zero). A positive integer rate amount represents a fee, while a negative integer represents a subsidy. Rate amounts are given in the `currency` defined in the [Policy](#policy).
-
-[Top][toc]
-
-#### Rate Recurrences
-
-Rate recurrences specify how a rate is applied – either once, or periodically according to a `time_unit` specified using [Rule Units](#rule-units). A `time_unit` refers to a unit of time as measured in local time for the jurisdiction – a day begins at midnight local time, an hour begins at the top of the hour, etc.
-
-| Name                        | Description                                                                                                                                                       |
-| --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `once_on_match`             | Rate is applied once when a vehicle transitions **into** a matching status from a non-matching status.                                                            |
-| `once_on_unmatch`           | Rate is applied once a vehicle transitions **out of** a matching status to a non-matching status.                                                                 |
-| `each_time_unit`            | During each `time_unit`, rate is applied once to vehicles entering or remaining in a matching status. Requires a `time_unit` to be specified using `rule_units`.  |
-| `per_complete_time_unit`    | Rate is applied once per complete `time_unit` that vehicles remain in a matching status. Requires a `time_unit` to be specified using `rule_units`.               |
-
-[Top][toc]
-
-#### Rate Applies When
-
-The `rate_applies_when` field specifies when a rate should be applied to an event or count,
-e.g. is it when the event is within the Rule bounds or when it is outside?
-It defaults to `out_of_bounds`.
-
-The `rate_applies_when` field may take the following values:
-
-| Name            | Description |
-| --------------- | ----------- |
-| `in_bounds`     | Rate applies when an event or count is within the rule `minimum` and `maximum` |
-| `out_of_bounds` | Rate applies when an event or count is outside of the rule `minimum` and `maximum` |
+| Name   | Type   | Required/Optional   | Description   |
+| ------ | ------ | ------------------- | ------------- |
+| `rate` | Integer | Required | The rate for this space in cents (or the smallest denomination of local currency) per `rate_unit`. |
+| `rate_unit` | Enum | Required | The unit of time associated with the rate. One of "second", "minute", "hour", "day", "week", "month", "quarter", "year". |
+| `rate_unit_period` | Enum | Optional | The period of time that the `rate_unit` covers. One of "rolling" or "calendar". If not specified, **defaults** to "rolling". When **rolling**, the `rate_unit` begins (inclusive) at the timestamp of the event and ends (exclusive) when one full `rate_unit` has elapsed. For example, with `{"rate_unit": "month", "rate_unit_period": "rolling"}` the `rate_unit` for an event starting at `2022-02-25 19:25:52` would be interpreted as ranging from the start of the event - `2022-02-25 19:25:52` (inclusive) - to the timestamp when one "month" has elapsed: `2022-03-25 19:25:52` (exclusive). E.g. from the 25th of one month to the 25th of the next month. When **calendar**, the `rate_unit` begins (inclusive) at the start of the `rate_unit` in question and ends (exclusive) when one full `rate_unit` has elapsed. For example, with `{"rate_unit": "month", "rate_unit_period": "calendar"}` the `rate_unit` for an event starting at `2022-02-25 19:25:52` would be interpreted as ranging from the start of the "month" - `2022-02-01 00:00:00` (inclusive) - to the end of the "month": `2022-03-01 00:00:00` (exclusive). E.g. from the 25th of the month to the end of the current calendar month only. The "week" `rate_unit` is defined as starting on Monday, per the ISO 8601 standard. See [example](/curbs/examples.md#curb-policy-rate-units) for other scenarios in action. | 
+| `increment_duration` | Integer | Optional | If specified, this is the smallest number of `rate_unit`s a user can pay for (e.g., if `increment_duration` is `15` and `rate_unit` is `minute`, a user can pay for 15, 30, 45, etc. minutes). |
+| `increment_amount` | Integer | Optional | If specified, the rate for this space is rounded up to the nearest increment of this amount, specified in the same currency units as `rate`. |
+| `start_duration` | Integer | Optional | The number of `rate_unit`s the vehicle must have already been present in the Curb Zone before this rate starts applying (_inclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). If not specified, this rate starts when the vehicle arrives. |
+| `end_duration` | Integer | Optional | The number of `rate_unit`s after which the rate stops applying (_exclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). If not specified, this rate ends when the vehicle departs. |
+| `maximum_fee` | Integer | Optional | The maximum amount in cents a user of a curb can pay for a particular parking event. |
+| `rate_applies_when` | Enum | Optional | Specifies when a rate should be applied to an event or count, e.g. is it when the event is within the Rule bounds or when it is outside? May be `in_bounds` or `out_of_bouds`. It defaults to `out_of_bounds`. |
 
 [Top][toc]
 
