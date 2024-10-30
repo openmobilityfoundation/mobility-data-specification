@@ -56,4 +56,4 @@ Deutsche Bahn Connect,micromobility,dcd47d65-b290-4bd6-adf2-24578fbd9110,https:/
 MyWheels,micromobility,ce0320e3-0e4b-4884-b31a-45319c0768d6,https://mywheels.nl,https://mds.mywheels.nl,
 Flamingo,micromobility,a32f88c4-ad9b-4bf1-b5d8-e0262fa8a582,https://rideflamingo.com/,https://data.rideflamingo.com/mds/,https://data.rideflamingo.com/gbfs/3/manifest.json
 3KM,micromobility,fd32a231-f373-4049-9b73-14686a24ed06,https://ario.ai,https://mds.ario.ai,
-
+GoSharing,micromobility,1f859479-4427-4f52-8220-05c786436314,https://www.binbin.tech/,https://complianceapi.binbinapp.com/api/mds/,https://complianceapi.binbinapp.com/api/gbfs/
