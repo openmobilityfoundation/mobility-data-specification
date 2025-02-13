@@ -1,7 +1,7 @@
 provider_name,mode_id,provider_id,url,mds_api_url,gbfs_api_url,gtfs_api_url
 JUMP,micromobility,c20e08cf-8488-46a6-a66c-5d8fb827f7e0,https://jump.com,https://api.uber.com/v0.2/emobility/mds,,
 Lime,micromobility,63f13c48-34ff-49d2-aca7-cf6a5b6171c3,https://li.me,https://data.lime.bike/api/partners/v1/mds,,
-Bird,micromobility,2411d395-04f2-47c9-ab66-d09e9e3c3251,https://www.bird.co,https://mds.bird.co,https://mds.bird.co/gbfs,,
+Bird,micromobility,2411d395-04f2-47c9-ab66-d09e9e3c3251,https://www.bird.co,https://mds.bird.co,https://mds.bird.co/gbfs,
 Razor,micromobility,6ddcc0ad-1d66-4046-bba4-d1d96bb8ca4d,https://www.razor.com/share,https://razor-200806.appspot.com/api/v2/mds,,
 Lyft,micromobility,e714f168-ce56-4b41-81b7-0b6a4bd26128,https://www.lyft.com,https://api.lyft.com/v1/last-mile/mds,,
 Skip,micromobility,d73fcf80-22b1-450f-b535-042b4e30aac7,https://www.skipscooters.com,https://api.skipscooters.com/mds,,
@@ -69,7 +69,7 @@ Royal Coach Tours,passenger-services,095da27f-7bbd-45f1-b00b-eb52b244ccd4,http:/
 Storer,passenger-services,eee92c25-89f5-4e03-a4c7-b6dac883732a,https://storercoachways.com/,,,
 We Drive U Inc,passenger-services,5488c6d1-baa8-4994-8763-a2c48090631a,https://wedriveu.com/,,,
 Samsara,passenger-services,aa055687-5947-4921-ae1d-70d7755609ae,https://samsara.com/,,,
-Tripshot,passenger-services,e154cf80-df89-4d7e-b5e7-2ee8050a6e9c,https://www.tripshot.com/,,
-Trakk,passenger-services,6a907d9d-1e3c-4cb6-991c-f9738d30337b,https://gettrakk.com/,,
-Swoop,passenger-services,08ad2b21-8115-4d18-874f-48082e8e50fb,https://www.swoopapp.com/,,
-GoSharing,micromobility,1f859479-4427-4f52-8220-05c786436314,https://www.binbin.tech/,https://complianceapi.binbinapp.com/api/mds/,https://complianceapi.binbinapp.com/api/gbfs/
+Tripshot,passenger-services,e154cf80-df89-4d7e-b5e7-2ee8050a6e9c,https://www.tripshot.com/,,,
+Trakk,passenger-services,6a907d9d-1e3c-4cb6-991c-f9738d30337b,https://gettrakk.com/,,,
+Swoop,passenger-services,08ad2b21-8115-4d18-874f-48082e8e50fb,https://www.swoopapp.com/,,,
+GoSharing,micromobility,1f859479-4427-4f52-8220-05c786436314,https://www.binbin.tech/,https://complianceapi.binbinapp.com/api/mds/,https://complianceapi.binbinapp.com/api/gbfs/,
