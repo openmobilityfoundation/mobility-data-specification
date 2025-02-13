@@ -115,7 +115,8 @@ Events represent changes in vehicle status.
 | `trip_ids` | UUID[] | Required if Applicable | Trip UUIDs (foreign key to /trips endpoint), required if `event_types` contains `trip_start`, `trip_end`, `trip_cancel`, `trip_enter_jurisdiction`, or `trip_leave_jurisdiction` |
 | `associated_ticket` | String | Optional | Identifier for an associated ticket inside an Agency-maintained 311 or CRM system |
 | `stop_sequence` | Integer | Required if Applicable | Order of stops for a particular trip. The values must increase along the trip, but do not need to be consecutive. |
-| `route_id` | UUID | Required if Applicable | A unique route ID for the associated route and stops |
+| `route_id` | UUID | Required if Applicable | A unique route ID for the associated route and stops. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `route_id` |
+| `service_id` | UUID | Required if Applicable | A unique service ID for the set of dates when service is available for a route. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `service_id` |
 
 ### Event Times
 
@@ -142,7 +143,9 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | `battery_percent` | Integer         | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 100 |
 | `fuel_percent`    | Integer         | Required if Applicable | Percent fuel in vehicle, expressed between 0 and 100 |
 | `tipped_over`     | Boolean         | Required if Known      | If detectable and known, is the device tipped over or not? Default is 'false'. |
-| `route_id` | UUID | Required if Applicable | A unique route ID for the associated route and stops |
+| `stop_sequence` | Integer | Required if Applicable | Order of stops for a particular trip. The values must increase along the trip, but do not need to be consecutive. |
+| `route_id` | UUID | Required if Applicable | A unique route ID for the associated route and stops. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `route_id` |
+| `service_id` | UUID | Required if Applicable | A unique service ID for the set of dates when service is available for a route. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `service_id` |
 
 ### GPS Data
 
@@ -241,7 +244,8 @@ A Trip is defined by the following structure:
 | `actual_cost`            | Integer         | Optional | The actual cost, in the currency defined in `currency`, paid by the customer of the *mobility as a service* provider (see [Costs & Currencies][costs-and-currencies]) |
 | `currency`               | String          | Optional, USD cents is implied if null.| An [ISO 4217 Alphabetic Currency Code][iso4217] representing the currency of the payee (see [Costs & Currencies][costs-and-currencies]) |
 | `stop_sequence` | Integer | Required if Applicable | Order of stops for a particular trip. The values must increase along the trip, but do not need to be consecutive. |
-| `route_id` | UUID | Required if Applicable | A unique route ID for the associated route and stops |
+| `route_id` | UUID | Required if Applicable | A unique route ID for the associated route and stops. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `route_id` |
+| `service_id` | UUID | Required if Applicable | A unique service ID for the set of dates when service is available for a route. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `service_id` |
 
 [Top][toc]
 
