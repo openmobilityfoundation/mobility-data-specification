@@ -1,75 +1,75 @@
-provider_name,mode_id,provider_id,url,mds_api_url,gbfs_api_url,gtfs_api_url
-JUMP,micromobility,c20e08cf-8488-46a6-a66c-5d8fb827f7e0,https://jump.com,https://api.uber.com/v0.2/emobility/mds,,
-Lime,micromobility,63f13c48-34ff-49d2-aca7-cf6a5b6171c3,https://li.me,https://data.lime.bike/api/partners/v1/mds,,
-Bird,micromobility,2411d395-04f2-47c9-ab66-d09e9e3c3251,https://www.bird.co,https://mds.bird.co,https://mds.bird.co/gbfs,
-Razor,micromobility,6ddcc0ad-1d66-4046-bba4-d1d96bb8ca4d,https://www.razor.com/share,https://razor-200806.appspot.com/api/v2/mds,,
-Lyft,micromobility,e714f168-ce56-4b41-81b7-0b6a4bd26128,https://www.lyft.com,https://api.lyft.com/v1/last-mile/mds,,
-Skip,micromobility,d73fcf80-22b1-450f-b535-042b4e30aac7,https://www.skipscooters.com,https://api.skipscooters.com/mds,,
-HOPR,micromobility,2e4cb206-b475-4a9d-80fb-0880c9a033e0,https://gohopr.com,https://gbfs.hopr.city/api/mds,,
-Wheels,micromobility,b79f8687-526d-4ae6-80bf-89b4c44dc071,https://wheels.co,https://mds.getwheelsapp.com,,
-Spin,micromobility,70aa475d-1fcd-4504-b69c-2eeb2107f7be,https://www.spin.app,https://web.spin.pm/api/mds/v1,,
-WIND,micromobility,d56d2df6-fa92-43de-ab61-92c3a84acd7d,https://www.wind.co,https://partners.wind.co/v1/mds,,
-Tier,micromobility,264aad41-b47c-415d-8585-0208d436516e,https://www.tier.app,https://partner.tier-services.io/mds,,
-Cloud,micromobility,bf95148b-d1d1-464e-a140-6d2563ac43d4,https://www.cloud.tt,https://mds.cloud.tt,https://mds.cloud.tt/gbfs,
-BlueLA,micromobility,f3c5a65d-fd85-463e-9564-fc95ea473f7d,https://www.bluela.com,https://api.bluela.com/mds/v0,https://api.bluela.com/gbfs/v1/meta,
-Bolt,micromobility,3291c288-c9c8-42f1-bc3e-8502b077cd7f,https://www.micromobility.com/,https://bolt.miami/bolt2/api/mds,,
-CLEVR,micromobility,daecbe87-a9f2-4a5a-b5df-8e3e14180513,https://clevrmobility.com,https://portal.clevrmobility.com/api/mds,,
-SherpaLA,micromobility,3c95765d-4da6-41c6-b61e-1954472ec6c9,,https://mds.bird.co,https://mds.bird.co/gbfs/platform-partner/sherpa-la,
-OjO Electric,micromobility,8d293326-8464-4256-8312-617ebcd0efad,https://www.ojoelectric.com,https://api.ojoelectric.com/api/mds,https://api.ojoelectric.com/api/mds/gbfs.json,
-VOI,micromobility,1f129e3f-158f-4df5-af9c-a80de238e334,https://www.voiscooters.com/,https://mds.voiapp.io,https://mds.voiapp.io/v1/gbfs,
-MOVO,micromobility,40dad54c-e199-4fd8-9f5b-cff93ffced63,https://movo.me,https://mds.movo.me,https://gbfs.movo.me,
-Baus,micromobility,638ba503-4006-4c53-bf34-cd625cc03d61,https://bausmoves.com,https://mds.bird.co,https://mds.bird.co/gbfs/platform-partner/v2/baus,
-Bolt Technology,micromobility,7ea695ca-9de7-4b3b-9f3c-241b2045a1fe,https://bolt.eu,https://mds.bolt.eu,https://mds.bolt.eu/gbfs/1,
-Grin,micromobility,8a0ecfce-5fb3-451e-8069-434b79c8b01a,https://ongrin.com,https://open-data.grow.mobi/mds/,https://open-data.grow.mobi/api/v1/gbfs/,
-Dott,micromobility,0a899e3a-705a-46f2-9189-d78cc83a2db4,https://ridedott.com,https://mds.api.ridedott.com,https://gbfs.api.ridedott.com,
-Superpedestrian,micromobility,420e6e94-55a6-4946-b6b3-4398fe22e912,https://www.superpedestrian.com,https://mds.linkyour.city/mds,,
-Circ,micromobility,03d5d605-e5c9-45a1-a1dd-144aa8649525,https://www.circ.com,https://mds.bird.co,,
-GIG,car-share,42475742-8618-4fc0-aa8f-3b3948b84b85,https://gigcarshare.com/,https://global.us.prod.svc.ridecell.io/reporting/api/mds,,
-Zisch,micromobility,fb62cfe6-757c-4e5b-a264-18b43b3fc40b,https://www.e-zisch.ch,https://mds.bird.co,,
-Seven Group,micromobility,7fca7812-c718-48dd-b9f2-d1ae160f2ae4,https://www.group-seven.ch,https://mds.bird.co,,
-Pony,micromobility,f190d330-b49e-4590-871b-0bcbec565a8c,https://getapony.com/,https://mds.getapony.com/v1,,
-SHARE-NOW,car-share,d8f880d6-96d8-4cdc-8069-32a683b2bce6,https://www.share-now.com,https://external.share-now.com/api/rental/mds/,https://external.share-now.com/api/rental/mds/gbfs/,
-Boaz Bikes,micromobility,7c96bc58-fb63-433a-b77f-84ccb1c9d737,https://www.boazbikes.com/,https://mds.movatic.co/,https://gbsf.movatic.co/en/1.1/576347857979998215,
-VeoRide INC.,micromobility,6e39f9db-751b-5cea-ae7e-486f579a56bc,https://www.veoride.com/,https://cluster-prod.veoride.com/api/shares/mds,https://cluster-prod.veoride.com/api/shares/gbfs,
-LEO Ride,micromobility,b0eedf6-c7a5-4262-9222-ab2484ad214e,https://leoride.co/,https://mobile.leoriders.com/mds,https://mobile.leoriders.com/gbpf,
-LEO Explore,micromobility,7c653014-2f33-4f5b-98de-30ea66430986,https://leoride.co/,,,
-ATOM Mobility,micromobility,4d88272c-032e-487c-9f58-ab5951a23427,https://atommobility.com/,https://mds.rideatom.com/mds,,
-Zig Zag Sharing,micromobility,39977af0-4b94-11ec-81d3-0242ac130003,https://www.zigzagsharing.com/,https://mds.zigzagsharing.com/,,
-TukTuk,micromobility,1a99bf67-14a0-48a1-98d1-77147a88c3d2,https://tuktukscooters.com/,https://app.tuktukscooters.com/mds-feed,,
-Helbiz,micromobility,3aece8c6-416a-4d39-bcc4-d02524cb8004,https://helbiz.com,https://mds.helbiz.com,,
-Kiwibot,delivery-robots,5f19acae-d7e9-4b57-96bd-f6406712d654,https://www.kiwibot.com/,,,
-Yego,micromobility,da99028e-28b7-4dd3-ad23-41b7a045db8a,https://www.rideyego.com/,https://mds.yego.app/mds,https://services.rideyego.com/gbfs,
-Leo&Go,micromobility,84b174c4-eb74-5d07-bdeb-27f4215d2aa9,https://www.leoandgo.com,https://mds.vulog.io/mds/fleets/LEONGO-FRLIO,,
-Scoot,micromobility,07a25fe6-d0be-11e8-a8d5-f2801f1b9fd1,https://scoot.co/san-francisco/,https://mds.bird.co/,https://mds.bird.co/gbfs/,
-Revel,micromobility,89301314-1210-4126-a213-3c41423f2ac5,https://gorevel.com/,https://opendata.gorevel.com/opendata/mds/,https://gbfs.gorevel.com/gbfs/v2/,
-Troopy,micromobility,2b684c7c-f8ad-4c65-92f0-b9e57aaa7dd3,https://www.troopy.com,https://mds.vulog.io/mds/fleets/TROOPY-FRPAR,https://gbfs.vulog.io/mds/fleets/TROOPY-FRPAR/gbfs,
-BCycle,micromobility,938D9F8B-B8D3-46CC-9276-F4A8C4FA3610,https://www.bcycle.com,https://mds.bcycle.com,https://gbfs.bcycle.com,
-Tembici,micromobility,46b28e68-8ecb-4875-b97e-836fd5e1930f,https://www.tembici.com.br/,https://api.tembici.com.br/mds,https://api.tembici.com.br/gbfs,
-POPPY Mobility,micromobility,5c869736-797f-4244-9132-fb50a22d1bfd,https://www.poppy.be/,https://poppy.red/mds,,
-Whoosh,micromobility,3f8908a7-86fa-450d-8889-5d49077e06cd,https://whoosh.bike,https://mds.whoosh.bike,https://gbfs.whoosh.bike,
-Telofun,micromobility,3dd253d3-557c-4fcb-98da-9af3edeaaae6,https://www.tel-o-fun.co.il/,https://mds.fsmctmobility.com/api/mds/v1/,,
-Gbike,micromobility,a50b796e-bca2-11ed-afa1-0242ac120002,https://gcoo.io/,https://mds.gcoo.io/,https://mds.gcoo.io/gbfs,
-SURF,micromobility,66c43ccb-f9f9-4f70-9707-37301b9f49a8,https://www.surfingscooters.com,https://api.app.surf/mds,https://api.app.surf/gbfs/en,
-Nextbike,micromobility,31e54f5a-66c4-4a4c-bb6e-236351c90312,https://www.nextbike.de,https://platform-services.tier-services.io/data-sharing/mds/,https://api.nextbike.net/maps/gbfs/,
-Starship Technologies,delivery-robots,4a1524f3-8182-4b55-90c2-023c0cac84b9,https://www.starship.xyz/,https://mds-provider.starship.xyz/api/v1/mds/,,
-Deutsche Bahn Connect,micromobility,dcd47d65-b290-4bd6-adf2-24578fbd9110,https://www.deutschebahnconnect.com/,https://bike-prod.msp.dbrent.net/mds/,https://apis.deutschebahn.com/db-api-marketplace/apis/shared-mobility-gbfs/2-2/de/CallABike/gbfs/,
-MyWheels,micromobility,ce0320e3-0e4b-4884-b31a-45319c0768d6,https://mywheels.nl,https://mds.mywheels.nl,,
-Flamingo,micromobility,a32f88c4-ad9b-4bf1-b5d8-e0262fa8a582,https://rideflamingo.com/,https://data.rideflamingo.com/mds/,https://data.rideflamingo.com/gbfs/3/manifest.json,
-3KM,micromobility,fd32a231-f373-4049-9b73-14686a24ed06,https://ario.ai,https://mds.ario.ai,,
-Bauer's Intelligent Transportation,passenger-services,46454118-168c-40e1-93bb-53e68e3f03bf,https://bauersit.com,,,
-MV Transportation,passenger-services,e4722796-4e0e-4203-8ae9-546bdcc4aa52,https://www.missionbaytma.org/,,,
-CLS Global Transportation,passenger-services,64477ac9-0c53-4031-98a4-ffe83bd94590,https://clsgt.com/,,,
-Compass Transportation,passenger-services,f00500e6-55b9-4cdf-afe9-68db2822a3e2,https://www.compasstransportation.net/,,,
-Corinthian International,passenger-services,0666cc3c-a346-4413-aa16-241c48281afb,http://corinthianparking.com/,,,
-Hallcon,passenger-services,d6354b9d-4179-465f-b663-648a6fc054a5,https://hallcon.com/,,,
-Kaiser Permanente,passenger-services,5e96f9c3-bd41-4337-a436-475fc9747621,https://kp.org/,,,
-Lux Bus America,passenger-services,0697d1bb-1678-4375-b8c6-9e09e363cbfa,https://luxbusamerica.com/,,,
-Lux Leasing,passenger-services,fe7a26bc-a0bb-4943-b335-cd334d4f5fab,https://luxbusamerica.com/,,,
-Royal Coach Tours,passenger-services,095da27f-7bbd-45f1-b00b-eb52b244ccd4,http://royal-coach.com,,,
-Storer,passenger-services,eee92c25-89f5-4e03-a4c7-b6dac883732a,https://storercoachways.com/,,,
-We Drive U Inc,passenger-services,5488c6d1-baa8-4994-8763-a2c48090631a,https://wedriveu.com/,,,
-Samsara,passenger-services,aa055687-5947-4921-ae1d-70d7755609ae,https://samsara.com/,,,
-Tripshot,passenger-services,e154cf80-df89-4d7e-b5e7-2ee8050a6e9c,https://www.tripshot.com/,,,
-Trakk,passenger-services,6a907d9d-1e3c-4cb6-991c-f9738d30337b,https://gettrakk.com/,,,
-Swoop,passenger-services,08ad2b21-8115-4d18-874f-48082e8e50fb,https://www.swoopapp.com/,,,
-GoSharing,micromobility,1f859479-4427-4f52-8220-05c786436314,https://www.binbin.tech/,https://complianceapi.binbinapp.com/api/mds/,https://complianceapi.binbinapp.com/api/gbfs/,
+provider_name,mode_id,provider_id,url,mds_api_url,gbfs_api_url
+JUMP,micromobility,c20e08cf-8488-46a6-a66c-5d8fb827f7e0,https://jump.com,https://api.uber.com/v0.2/emobility/mds,
+Lime,micromobility,63f13c48-34ff-49d2-aca7-cf6a5b6171c3,https://li.me,https://data.lime.bike/api/partners/v1/mds,
+Bird,micromobility,2411d395-04f2-47c9-ab66-d09e9e3c3251,https://www.bird.co,https://mds.bird.co,https://mds.bird.co/gbfs
+Razor,micromobility,6ddcc0ad-1d66-4046-bba4-d1d96bb8ca4d,https://www.razor.com/share,https://razor-200806.appspot.com/api/v2/mds,
+Lyft,micromobility,e714f168-ce56-4b41-81b7-0b6a4bd26128,https://www.lyft.com,https://api.lyft.com/v1/last-mile/mds,
+Skip,micromobility,d73fcf80-22b1-450f-b535-042b4e30aac7,https://www.skipscooters.com,https://api.skipscooters.com/mds,
+HOPR,micromobility,2e4cb206-b475-4a9d-80fb-0880c9a033e0,https://gohopr.com,https://gbfs.hopr.city/api/mds,
+Wheels,micromobility,b79f8687-526d-4ae6-80bf-89b4c44dc071,https://wheels.co,https://mds.getwheelsapp.com,
+Spin,micromobility,70aa475d-1fcd-4504-b69c-2eeb2107f7be,https://www.spin.app,https://web.spin.pm/api/mds/v1,
+WIND,micromobility,d56d2df6-fa92-43de-ab61-92c3a84acd7d,https://www.wind.co,https://partners.wind.co/v1/mds,
+Tier,micromobility,264aad41-b47c-415d-8585-0208d436516e,https://www.tier.app,https://partner.tier-services.io/mds,
+Cloud,micromobility,bf95148b-d1d1-464e-a140-6d2563ac43d4,https://www.cloud.tt,https://mds.cloud.tt,https://mds.cloud.tt/gbfs
+BlueLA,micromobility,f3c5a65d-fd85-463e-9564-fc95ea473f7d,https://www.bluela.com,https://api.bluela.com/mds/v0,https://api.bluela.com/gbfs/v1/meta
+Bolt,micromobility,3291c288-c9c8-42f1-bc3e-8502b077cd7f,https://www.micromobility.com/,https://bolt.miami/bolt2/api/mds,
+CLEVR,micromobility,daecbe87-a9f2-4a5a-b5df-8e3e14180513,https://clevrmobility.com,https://portal.clevrmobility.com/api/mds,
+SherpaLA,micromobility,3c95765d-4da6-41c6-b61e-1954472ec6c9,,https://mds.bird.co,https://mds.bird.co/gbfs/platform-partner/sherpa-la
+OjO Electric,micromobility,8d293326-8464-4256-8312-617ebcd0efad,https://www.ojoelectric.com,https://api.ojoelectric.com/api/mds,https://api.ojoelectric.com/api/mds/gbfs.json
+VOI,micromobility,1f129e3f-158f-4df5-af9c-a80de238e334,https://www.voiscooters.com/,https://mds.voiapp.io,https://mds.voiapp.io/v1/gbfs
+MOVO,micromobility,40dad54c-e199-4fd8-9f5b-cff93ffced63,https://movo.me,https://mds.movo.me,https://gbfs.movo.me
+Baus,micromobility,638ba503-4006-4c53-bf34-cd625cc03d61,https://bausmoves.com,https://mds.bird.co,https://mds.bird.co/gbfs/platform-partner/v2/baus
+Bolt Technology,micromobility,7ea695ca-9de7-4b3b-9f3c-241b2045a1fe,https://bolt.eu,https://mds.bolt.eu,https://mds.bolt.eu/gbfs/1
+Grin,micromobility,8a0ecfce-5fb3-451e-8069-434b79c8b01a,https://ongrin.com,https://open-data.grow.mobi/mds/,https://open-data.grow.mobi/api/v1/gbfs/
+Dott,micromobility,0a899e3a-705a-46f2-9189-d78cc83a2db4,https://ridedott.com,https://mds.api.ridedott.com,https://gbfs.api.ridedott.com
+Superpedestrian,micromobility,420e6e94-55a6-4946-b6b3-4398fe22e912,https://www.superpedestrian.com,https://mds.linkyour.city/mds,
+Circ,micromobility,03d5d605-e5c9-45a1-a1dd-144aa8649525,https://www.circ.com,https://mds.bird.co,
+GIG,car-share,42475742-8618-4fc0-aa8f-3b3948b84b85,https://gigcarshare.com/,https://global.us.prod.svc.ridecell.io/reporting/api/mds,
+Zisch,micromobility,fb62cfe6-757c-4e5b-a264-18b43b3fc40b,https://www.e-zisch.ch,https://mds.bird.co,
+Seven Group,micromobility,7fca7812-c718-48dd-b9f2-d1ae160f2ae4,https://www.group-seven.ch,https://mds.bird.co,
+Pony,micromobility,f190d330-b49e-4590-871b-0bcbec565a8c,https://getapony.com/,https://mds.getapony.com/v1,
+SHARE-NOW,car-share,d8f880d6-96d8-4cdc-8069-32a683b2bce6,https://www.share-now.com,https://external.share-now.com/api/rental/mds/,https://external.share-now.com/api/rental/mds/gbfs/
+Boaz Bikes,micromobility,7c96bc58-fb63-433a-b77f-84ccb1c9d737,https://www.boazbikes.com/,https://mds.movatic.co/,https://gbsf.movatic.co/en/1.1/576347857979998215
+VeoRide INC.,micromobility,6e39f9db-751b-5cea-ae7e-486f579a56bc,https://www.veoride.com/,https://cluster-prod.veoride.com/api/shares/mds,https://cluster-prod.veoride.com/api/shares/gbfs
+LEO Ride,micromobility,b0eedf6-c7a5-4262-9222-ab2484ad214e,https://leoride.co/,https://mobile.leoriders.com/mds,https://mobile.leoriders.com/gbpf
+LEO Explore,micromobility,7c653014-2f33-4f5b-98de-30ea66430986,https://leoride.co/,,
+ATOM Mobility,micromobility,4d88272c-032e-487c-9f58-ab5951a23427,https://atommobility.com/,https://mds.rideatom.com/mds,
+Zig Zag Sharing,micromobility,39977af0-4b94-11ec-81d3-0242ac130003,https://www.zigzagsharing.com/,https://mds.zigzagsharing.com/,
+TukTuk,micromobility,1a99bf67-14a0-48a1-98d1-77147a88c3d2,https://tuktukscooters.com/,https://app.tuktukscooters.com/mds-feed,
+Helbiz,micromobility,3aece8c6-416a-4d39-bcc4-d02524cb8004,https://helbiz.com,https://mds.helbiz.com,
+Kiwibot,delivery-robots,5f19acae-d7e9-4b57-96bd-f6406712d654,https://www.kiwibot.com/,,
+Yego,micromobility,da99028e-28b7-4dd3-ad23-41b7a045db8a,https://www.rideyego.com/,https://mds.yego.app/mds,https://services.rideyego.com/gbfs
+Leo&Go,micromobility,84b174c4-eb74-5d07-bdeb-27f4215d2aa9,https://www.leoandgo.com,https://mds.vulog.io/mds/fleets/LEONGO-FRLIO,
+Scoot,micromobility,07a25fe6-d0be-11e8-a8d5-f2801f1b9fd1,https://scoot.co/san-francisco/,https://mds.bird.co/,https://mds.bird.co/gbfs/
+Revel,micromobility,89301314-1210-4126-a213-3c41423f2ac5,https://gorevel.com/,https://opendata.gorevel.com/opendata/mds/,https://gbfs.gorevel.com/gbfs/v2/
+Troopy,micromobility,2b684c7c-f8ad-4c65-92f0-b9e57aaa7dd3,https://www.troopy.com,https://mds.vulog.io/mds/fleets/TROOPY-FRPAR,https://gbfs.vulog.io/mds/fleets/TROOPY-FRPAR/gbfs
+BCycle,micromobility,938D9F8B-B8D3-46CC-9276-F4A8C4FA3610,https://www.bcycle.com,https://mds.bcycle.com,https://gbfs.bcycle.com
+Tembici,micromobility,46b28e68-8ecb-4875-b97e-836fd5e1930f,https://www.tembici.com.br/,https://api.tembici.com.br/mds,https://api.tembici.com.br/gbfs
+POPPY Mobility,micromobility,5c869736-797f-4244-9132-fb50a22d1bfd,https://www.poppy.be/,https://poppy.red/mds,
+Whoosh,micromobility,3f8908a7-86fa-450d-8889-5d49077e06cd,https://whoosh.bike,https://mds.whoosh.bike,https://gbfs.whoosh.bike
+Telofun,micromobility,3dd253d3-557c-4fcb-98da-9af3edeaaae6,https://www.tel-o-fun.co.il/,https://mds.fsmctmobility.com/api/mds/v1/,
+Gbike,micromobility,a50b796e-bca2-11ed-afa1-0242ac120002,https://gcoo.io/,https://mds.gcoo.io/,https://mds.gcoo.io/gbfs
+SURF,micromobility,66c43ccb-f9f9-4f70-9707-37301b9f49a8,https://www.surfingscooters.com,https://api.app.surf/mds,https://api.app.surf/gbfs/en
+Nextbike,micromobility,31e54f5a-66c4-4a4c-bb6e-236351c90312,https://www.nextbike.de,https://platform-services.tier-services.io/data-sharing/mds/,https://api.nextbike.net/maps/gbfs/
+Starship Technologies,delivery-robots,4a1524f3-8182-4b55-90c2-023c0cac84b9,https://www.starship.xyz/,https://mds-provider.starship.xyz/api/v1/mds/,
+Deutsche Bahn Connect,micromobility,dcd47d65-b290-4bd6-adf2-24578fbd9110,https://www.deutschebahnconnect.com/,https://bike-prod.msp.dbrent.net/mds/,https://apis.deutschebahn.com/db-api-marketplace/apis/shared-mobility-gbfs/2-2/de/CallABike/gbfs/
+MyWheels,micromobility,ce0320e3-0e4b-4884-b31a-45319c0768d6,https://mywheels.nl,https://mds.mywheels.nl,
+Flamingo,micromobility,a32f88c4-ad9b-4bf1-b5d8-e0262fa8a582,https://rideflamingo.com/,https://data.rideflamingo.com/mds/,https://data.rideflamingo.com/gbfs/3/manifest.json
+3KM,micromobility,fd32a231-f373-4049-9b73-14686a24ed06,https://ario.ai,https://mds.ario.ai,
+Bauer's Intelligent Transportation,passenger-services,46454118-168c-40e1-93bb-53e68e3f03bf,https://bauersit.com,,
+MV Transportation,passenger-services,e4722796-4e0e-4203-8ae9-546bdcc4aa52,https://www.missionbaytma.org/,,
+CLS Global Transportation,passenger-services,64477ac9-0c53-4031-98a4-ffe83bd94590,https://clsgt.com/,,
+Compass Transportation,passenger-services,f00500e6-55b9-4cdf-afe9-68db2822a3e2,https://www.compasstransportation.net/,,
+Corinthian International,passenger-services,0666cc3c-a346-4413-aa16-241c48281afb,http://corinthianparking.com/,,
+Hallcon,passenger-services,d6354b9d-4179-465f-b663-648a6fc054a5,https://hallcon.com/,,
+Kaiser Permanente,passenger-services,5e96f9c3-bd41-4337-a436-475fc9747621,https://kp.org/,,
+Lux Bus America,passenger-services,0697d1bb-1678-4375-b8c6-9e09e363cbfa,https://luxbusamerica.com/,,
+Lux Leasing,passenger-services,fe7a26bc-a0bb-4943-b335-cd334d4f5fab,https://luxbusamerica.com/,,
+Royal Coach Tours,passenger-services,095da27f-7bbd-45f1-b00b-eb52b244ccd4,http://royal-coach.com,,
+Storer,passenger-services,eee92c25-89f5-4e03-a4c7-b6dac883732a,https://storercoachways.com/,,
+We Drive U Inc,passenger-services,5488c6d1-baa8-4994-8763-a2c48090631a,https://wedriveu.com/,,
+Samsara,passenger-services,aa055687-5947-4921-ae1d-70d7755609ae,https://samsara.com/,,
+Tripshot,passenger-services,e154cf80-df89-4d7e-b5e7-2ee8050a6e9c,https://www.tripshot.com/,,
+Trakk,passenger-services,6a907d9d-1e3c-4cb6-991c-f9738d30337b,https://gettrakk.com/,,
+Swoop,passenger-services,08ad2b21-8115-4d18-874f-48082e8e50fb,https://www.swoopapp.com/,,
+GoSharing,micromobility,1f859479-4427-4f52-8220-05c786436314,https://www.binbin.tech/,https://complianceapi.binbinapp.com/api/mds/,https://complianceapi.binbinapp.com/api/gbfs/
