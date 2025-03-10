@@ -57,7 +57,7 @@ The following information applies to all `policy` API endpoints.
 
 ### Background
 
-The goal of the Policy API specification is to enable agencies to create, revise, and publish machine-readable policies, as sets of rules for individual and collective device behavior exhibited by both _mobility as a service_ providers and riders / users. [Examples](./examples/README.md) of policies include:
+The goal of the Policy API specification is to enable agencies to create, revise, and publish machine-readable policies (in real-time if needed), as sets of rules for individual and collective device behavior exhibited by both _mobility as a service_ providers and riders / users. [Examples](./examples/README.md) of policies include:
 
 - City-wide and localized caps (e.g. "Minimum 500 and maximum 3000 scooters within city boundaries")
 - Exclusion zones (e.g. "No scooters are permitted in this district on weekends")
@@ -65,6 +65,8 @@ The goal of the Policy API specification is to enable agencies to create, revise
 - Speed-limit restrictions (e.g. "15 mph outside of downtown, 10 mph downtown")
 - Idle-time and disabled-time limitations (e.g. "5 days idle while rentable, 12 hours idle while unrentable, per device")
 - Trip fees and subsidies (e.g. "A 25 cent fee applied when a trip ends downtown")
+- Real-time emergency notifications (e.g. "A no travel geofence around a fire reported by a 911 call")
+- Large event policy rules (e.g. "No AVs or carshare near a planned stadium event, but 25 cent bikeshare subsidy when trips end near event")
 
 The machine-readable format allows Providers to obtain policies and compute compliance where it can be determined entirely by data obtained internally, and know what data is required from them and provided to them.
 
@@ -85,6 +87,8 @@ The Policy endpoints should be made public. Authorization is not required.
 ### Update Frequency
 
 The publishing agency should establish beforehand and communicate to providers how frequently the Policy endpoints are expected to change, how often they should be polled to get the latest information, and expectations around emergency updates.
+
+For real-time uses of MDS Policy, public agencies should set a recommended minimum threshold (eg, every 1 minute at most).
 
 [Top][toc]
 
@@ -116,6 +120,7 @@ Policies should be re-fetched whenever:
 
 1. a policy expires (via its `end_date`), or
 2. at an interval specified by the regulatory body, e.g. "daily at midnight".
+3. when the `last_updated` timestamp is newer than the previously fetched timestamp
 
 Flat files have an optional `end_date` field that will apply to the file as a whole.
 
@@ -127,7 +132,7 @@ Among other use-cases, configuring a REST API allows an Agency to:
 
 1. Dynamically adjust caps
 2. Set Provider specific policies
-3. Adjust other attributes in closer to real time
+3. Adjust other attributes in close to real-time
 4. Enumerate when policies are set to change
 
 Responses must set the `Content-Type` header, as specified in the [versioning][versioning] section.
@@ -159,6 +164,8 @@ _Query Parameters:_
 | `policy_id`         | UUID      | Optional    | If provided, returns one policy object with the matching UUID; default is to return all policy objects.                       |
 | `start_date` | [timestamp][ts] | Optional    | Beginning date of the queried time range; the default value is the request time |
 | `end_date`   | [timestamp][ts] | Optional    | Ending date of the queried time range; the default value is null, which captures all policies that are effective in the future|
+| `last_updated`   | Boolean | Optional    | If true, the endpoint only returns three fields: `version`, `last_updated`, "end_date`. Useful to quickly check when any data in the file has last been changed, without downloading the entire Policy payload. |
+| `active_only`   | Boolean | Optional    | If true, return only the current active and future policies, not the retired/previous policies. Any policy that is a prev_policies would not be returned. However, the array of prev_policies still will be returned for reference as part of any relevant active policy. Useful to reduce the Policy payload size for use cases where you do not need to know the previous policy details. |
 
 `start_date` and `end_date` are only considered when no `id` parameter is provided. They should return any policy whose effectiveness overlaps with or is contained with this range. Suppose there's a policy with a `start_date` of 1/1/21 and `end_date` of 1/31/21. Assuming an `end_date` that is null, 12/1/20 and 1/5/21 `start_dates` will return the policy, but 2/10/21 wouldn't. Assuming a `start_date` parameter of say, 11/1/20, then an `end_date` of 12/1/20 wouldn't return the policy, but 1/5/21 and 2/10/21 would. Lastly, a `start_date` of 1/5/21 and `end_date` of 1/6/21 would also return the policy. Please note also that while dates in the format MM:DD:YY are being used here, `start_date` and `end_date` must be numbers representing milliseconds since the Unix epoch time.
 
