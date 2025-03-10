@@ -115,10 +115,10 @@ Events represent changes in vehicle status.
 | `trip_ids` | UUID[] | Required if Applicable | Trip UUIDs (foreign key to /trips endpoint), required if `event_types` contains `trip_start`, `trip_end`, `trip_cancel`, `trip_enter_jurisdiction`, or `trip_leave_jurisdiction` |
 | `associated_ticket` | String | Optional | Identifier for an associated ticket inside an Agency-maintained 311 or CRM system |
 | `stop_sequence` | Integer | Required if Applicable | Order of stops for a particular trip. The values must increase along the trip, but do not need to be consecutive. |
-| `gtfs_route_id` | String | Required if Applicable | A unique route ID for the associated scheduled GTFS route-trip. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `route_id` |
-| `gtfs_service_id` | UUID | Required if Applicable | A unique service ID for the set of dates when service is available for a scheduled GTFS route-trip. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `service_id` |
-| `gtfs_trip_id` | UUID | Required if Applicable | A unique trip ID for the associated scheduled GTFS route-trip. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `trip_id` |
-| `gtfs_api_url` | String | Required if Applicable | Full https:// URL where associated [GTFS](https://gtfs.org/documentation/schedule/reference/) feeds are located |
+| `gtfs_route_id` | String | Required if Applicable | A unique route ID for the associated scheduled GTFS route-trip. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `route_id` in routes.txt and trips.txt files. |
+| `gtfs_service_id` | UUID | Required if Applicable | A unique service ID for the set of dates when service is available for a scheduled GTFS route-trip. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `service_id` in calendar.txt file. |
+| `gtfs_trip_id` | UUID | Required if Applicable | A unique trip ID for the associated scheduled GTFS route-trip. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `trip_id` in the trips.txt and other files.|
+| `gtfs_api_url` | String | Required if Applicable | Full URL to the location where the associated [GTFS](https://gtfs.org/documentation/schedule/reference/) dataset zip files are located. |
 
 ### Event Times
 
@@ -145,9 +145,9 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | `battery_percent` | Integer         | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 100 |
 | `fuel_percent`    | Integer         | Required if Applicable | Percent fuel in vehicle, expressed between 0 and 100 |
 | `tipped_over`     | Boolean         | Required if Known      | If detectable and known, is the device tipped over or not? Default is 'false'. |
-| `gtfs_route_id` | String | Required if Applicable | A unique route ID for the associated scheduled GTFS route-trip. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `route_id` |
-| `gtfs_service_id` | UUID | Required if Applicable | A unique service ID for the set of dates when service is available for a scheduled GTFS route-trip. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `service_id` |
-| `gtfs_trip_id` | UUID | Required if Applicable | A unique trip ID for the associated scheduled GTFS route-trip. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `trip_id` |
+| `gtfs_route_id` | String | Required if Applicable | A unique route ID for the associated scheduled GTFS route-trip. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `route_id` in routes.txt and trips.txt files. |
+| `gtfs_service_id` | UUID | Required if Applicable | A unique service ID for the set of dates when service is available for a scheduled GTFS route-trip. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `service_id` in calendar.txt file. |
+| `gtfs_trip_id` | UUID | Required if Applicable | A unique trip ID for the associated scheduled GTFS route-trip. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `trip_id` in the trips.txt and other files. |
 
 ### GPS Data
 
@@ -245,11 +245,11 @@ A Trip is defined by the following structure:
 | `standard_cost`          | Integer         | Optional | The cost, in the currency defined in `currency`, to perform that trip in the standard operation of the System (see [Costs & Currencies][costs-and-currencies]) |
 | `actual_cost`            | Integer         | Optional | The actual cost, in the currency defined in `currency`, paid by the customer of the *mobility as a service* provider (see [Costs & Currencies][costs-and-currencies]) |
 | `currency`               | String          | Optional, USD cents is implied if null.| An [ISO 4217 Alphabetic Currency Code][iso4217] representing the currency of the payee (see [Costs & Currencies][costs-and-currencies]) |
-| `gtfs_route_id` | String | Required if Applicable | A unique route ID for the associated scheduled GTFS route-trip. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `route_id` |
-| `gtfs_service_id` | UUID | Required if Applicable | A unique service ID for the set of dates when service is available for a scheduled GTFS route-trip. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `service_id` |
-| `gtfs_shape_id` | UUID | Required if Applicable | A unique shape ID describing the shape of an individual trip for mapping purposes. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `shape_id` |
-| `gtfs_trip_id` | UUID | Required if Applicable | A unique trip ID for the associated scheduled GTFS route-trip. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `trip_id` |
-| `gtfs_api_url` | String | Required if Applicable | Full https:// URL where associated [GTFS](https://gtfs.org/documentation/schedule/reference/) feeds are located |
+| `gtfs_route_id` | String | Required if Applicable | A unique route ID for the associated scheduled GTFS route-trip. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `route_id` in routes.txt and trips.txt files. |
+| `gtfs_service_id` | UUID | Required if Applicable | A unique service ID for the set of dates when service is available for a scheduled GTFS route-trip. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `service_id` in calendar.txt file. |
+| `gtfs_shape_id` | UUID | Required if Applicable | A unique shape ID describing the shape of an individual trip for mapping purposes. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `shape_id` in the shapes.txt file. |
+| `gtfs_trip_id` | UUID | Required if Applicable | A unique trip ID for the associated scheduled GTFS route-trip. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `trip_id` in the trips.txt and other files.|
+| `gtfs_api_url` | String | Required if Applicable | Full URL to the location where the associated [GTFS](https://gtfs.org/documentation/schedule/reference/) dataset zip files are located. |
 
 [Top][toc]
 
