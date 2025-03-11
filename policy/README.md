@@ -37,12 +37,12 @@ This specification describes the digital relationship between _mobility as a ser
   - [Messages](#messages)
   - [Value URL](#value-url)
   - [Order of Operations](#order-of-operations)
+  - [Policy Relationship Diagram](#policy-relationship-diagram)
   - [Requirement](#requirement)
     - [Examples](#examples)
     - [Public Hosting](#public-hosting)
     - [Update Frequency](#requirement-update-frequency)
     - [Version Tracking](#version-tracking)
-    - [Beta Limitations](#beta-limitations)
     - [Format](#requirement-format)
     - [Metadata](#requirement-metadata)
     - [Programs](#requirement-programs)
@@ -57,7 +57,7 @@ The following information applies to all `policy` API endpoints.
 
 ### Background
 
-The goal of the Policy API specification is to enable agencies to create, revise, and publish machine-readable policies (in real-time if needed), as sets of rules for individual and collective device behavior exhibited by both _mobility as a service_ providers and riders / users. [Examples](./examples/README.md) of policies include:
+The goal of the Policy API specification is to enable public agencies to create, revise, and publish machine-readable policies (in near real-time if needed), as sets of rules for individual and collective device behavior exhibited by both _mobility as a service_ providers and riders / users. [Examples](./examples/README.md) of policies include:
 
 - City-wide and localized caps (e.g. "Minimum 500 and maximum 3000 scooters within city boundaries")
 - Exclusion zones (e.g. "No scooters are permitted in this district on weekends")
@@ -80,7 +80,7 @@ See the [Policy Examples](./examples/README.md) for ways Policy can be implement
 
 ### Authorization
 
-The Policy endpoints should be made public. Authorization is not required.
+The Policy endpoints should be made public. Authorization is not required. Agencies may make reasonable accommodations to manage their endpoints, for example, using an API key that has a clear, public way to obtain.
 
 [Top][toc]
 
@@ -113,6 +113,8 @@ To revoke or end a policy, create a new policy with empty rules, and list the en
 Policies shall be published by regulatory bodies or their authorized delegates as JSON objects. These JSON objects shall be served by either [flat files](#flat-files) or via [REST API endpoints](#rest-endpoints). In either case, policy data shall follow the [schema](#schema) outlined below.
 
 Policies typically refer to one or more associated geographies. Geographic information is obtained from the MDS [Geography](/geography) API.  Each policy and geography shall have a unique ID (UUID).
+
+Policies must be unique. A Policy may not have the exact same [Policy](#policy) object field values with a different `policy_id`. For example if the `mode_id`, `provider_ids`, `start_date`, `end_date`, and `rules` fields have the same values, that is the same Policy and must not be duplicated as two different policies in the Policy payload.
 
 Geographical data shall be represented as GeoJSON `Feature` objects. No part of the geographical data should be outside the [municipality boundary][muni-boundary].
 
@@ -164,7 +166,7 @@ _Query Parameters:_
 | `policy_id`         | UUID      | Optional    | If provided, returns one policy object with the matching UUID; default is to return all policy objects.                       |
 | `start_date` | [timestamp][ts] | Optional    | Beginning date of the queried time range; the default value is the request time |
 | `end_date`   | [timestamp][ts] | Optional    | Ending date of the queried time range; the default value is null, which captures all policies that are effective in the future|
-| `last_updated`   | Boolean | Optional    | If true, the endpoint only returns three fields: `version`, `last_updated`, "end_date`. Useful to quickly check when any data in the file has last been changed, without downloading the entire Policy payload. |
+| `last_updated`   | Boolean | Optional    | If true, the endpoint only returns two fields: `version`, `last_updated`. Useful to quickly check when any data in the file has last been changed, without downloading the entire Policy payload. |
 | `active_only`   | Boolean | Optional    | If true, return only the current active and future policies, not the retired/previous policies. Any policy that is a prev_policies would not be returned. However, the array of prev_policies still will be returned for reference as part of any relevant active policy. Useful to reduce the Policy payload size for use cases where you do not need to know the previous policy details. |
 
 `start_date` and `end_date` are only considered when no `id` parameter is provided. They should return any policy whose effectiveness overlaps with or is contained with this range. Suppose there's a policy with a `start_date` of 1/1/21 and `end_date` of 1/31/21. Assuming an `end_date` that is null, 12/1/20 and 1/5/21 `start_dates` will return the policy, but 2/10/21 wouldn't. Assuming a `start_date` parameter of say, 11/1/20, then an `end_date` of 12/1/20 wouldn't return the policy, but 1/5/21 and 2/10/21 would. Lastly, a `start_date` of 1/5/21 and `end_date` of 1/6/21 would also return the policy. Please note also that while dates in the format MM:DD:YY are being used here, `start_date` and `end_date` must be numbers representing milliseconds since the Unix epoch time.
@@ -464,6 +466,38 @@ If a vehicle is matched with a rule, then it _will not_ be considered in the sub
 The internal mechanics of ordering are up to the Policy editing and hosting software.
 
 [Top][toc]
+
+### Policy Relationship Diagram
+
+```mermaid
+---
+title: MDS Policy relationships
+---
+classDiagram
+    Policy <|-- Rules
+    Policy <|-- Previous_Policies
+    Rules <|-- Rule_Type
+    Rules <|-- Rule_Units
+    Rules <|-- Geographies
+    class Policy{
+        Policy ID
+        Rule IDs
+        Mode ID
+        Provider ID
+        Start Date
+        End Date
+        ...
+    }
+    class Rules{
+        Rule Type
+        Rule Units
+        Geographies
+        States
+        ...
+    }
+```
+[Top][toc]
+
 
 ### Requirement
 
