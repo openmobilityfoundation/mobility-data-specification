@@ -80,7 +80,7 @@ See the [Policy Examples](./examples/README.md) for ways Policy can be implement
 
 ### Authorization
 
-The Policy endpoints should be made public. Authorization is not required. Agencies may make reasonable accommodations to manage their endpoints, for example, using an API key that has a clear, public way to obtain.
+The Policy endpoints should be made public. Authorization is not required. Agencies may make reasonable accommodations to manage their endpoints, for example, using an API key that has a clear, public way to obtain. Agencies may make reasonable accommodations to manage their endpoints, for example, using an API key that has a clear, public way to obtain - this can be useful for rate limiting requests, ensure proper use, tracking access per requestor, and/or customization of the Policy tailored to the requestor.
 
 [Top][toc]
 
