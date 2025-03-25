@@ -113,7 +113,9 @@ Events represent changes in vehicle status.
 | `battery_percent`       | Integer          | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 100 |
 | `fuel_percent`       | Integer          | Required if Applicable | Percent fuel in vehicle, expressed between 0 and 100 |
 | `trip_ids` | UUID[] | Required if Applicable | Trip UUIDs (foreign key to /trips endpoint), required if `event_types` contains `trip_start`, `trip_end`, `trip_cancel`, `trip_enter_jurisdiction`, or `trip_leave_jurisdiction` |
+| `stop_id`         | UUID            | Required if Applicable | Stop that the vehicle is currently located at. See [Stops][stops] |
 | `associated_ticket` | String | Optional | Identifier for an associated ticket inside an Agency-maintained 311 or CRM system |
+| `gtfs_stop_id` | UUID | Optional | A unique stop ID to be recorded when a vehicle makes a stop event at a location. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `stop_id` |
 
 ### Event Times
 
@@ -140,6 +142,7 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | `battery_percent` | Integer         | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 100 |
 | `fuel_percent`    | Integer         | Required if Applicable | Percent fuel in vehicle, expressed between 0 and 100 |
 | `tipped_over`     | Boolean         | Required if Known      | If detectable and known, is the device tipped over or not? Default is 'false'. |
+| `gtfs_stop_id` | UUID | Optional | A unique stop ID to be recorded when a vehicle makes a stop event at a location. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `stop_id` |
 
 ### GPS Data
 
@@ -237,6 +240,8 @@ A Trip is defined by the following structure:
 | `standard_cost`          | Integer         | Optional | The cost, in the currency defined in `currency`, to perform that trip in the standard operation of the System (see [Costs & Currencies][costs-and-currencies]) |
 | `actual_cost`            | Integer         | Optional | The actual cost, in the currency defined in `currency`, paid by the customer of the *mobility as a service* provider (see [Costs & Currencies][costs-and-currencies]) |
 | `currency`               | String          | Optional, USD cents is implied if null.| An [ISO 4217 Alphabetic Currency Code][iso4217] representing the currency of the payee (see [Costs & Currencies][costs-and-currencies]) |
+| `gtfs_trip_id` | UUID | Required if Applicable | A unique trip ID for the associated scheduled GTFS route-trip. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `trip_id` in the trips.txt and other files.|
+| `gtfs_api_url` | String | Required if Applicable | Full URL to the location where the associated [GTFS](https://gtfs.org/documentation/schedule/reference/) dataset zip files are located. |
 
 [Top][toc]
 
