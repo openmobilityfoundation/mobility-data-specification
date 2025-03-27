@@ -511,7 +511,7 @@ Requirements can also be used to define a scaled-down MDS implementation in situ
 
 #### Examples
 
-See [Policy Requirements Examples](/policy/examples/requirements.md) for ideas on how this can be implemented.
+See the [MDS Policy Examples](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Policy-Examples) wiki page for code examples of specific MDS Policy use cases, ideas on how Policy can be implemented.
 
 [Top][toc]
 
