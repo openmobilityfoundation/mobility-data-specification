@@ -74,7 +74,7 @@ The machine-readable format allows Providers to obtain policies and compute comp
 
 ### Policy Examples
 
-See the [Policy Examples](./examples/README.md) for ways Policy can be implemented.
+See the [MDS Policy Examples](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Policy-Examples) wiki page for code examples of specific MDS Policy use cases, ideas on how Policy can be implemented.
 
 [Top][toc]
 
@@ -511,7 +511,7 @@ Requirements can also be used to define a scaled-down MDS implementation in situ
 
 #### Examples
 
-See the [MDS Policy Examples](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Policy-Examples) wiki page for code examples of specific MDS Policy use cases, ideas on how Policy can be implemented.
+See the [MDS Policy Examples](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Policy-Requirements-Examples) wiki page for code examples of specific MDS Policy Requirements use cases, ideas on how Requirements can be implemented.
 
 [Top][toc]
 
