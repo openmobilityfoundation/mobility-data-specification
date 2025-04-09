@@ -481,7 +481,7 @@ classDiagram
     Rules <|-- Rule_Type
     Rules <|-- Rule_Units
     Rules <|-- Geographies
-    class Policy{
+    class Policy {
         Name *
         Mode ID * 
         Policy ID *
@@ -517,6 +517,7 @@ classDiagram
     class Geographies{
        IDs *
     }
+    classDef default color:#373737,fill:#2af1be,stroke:#373737,stroke-width:2px;
 ```
 [Top][toc]
 
