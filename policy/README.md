@@ -482,20 +482,40 @@ classDiagram
     Rules <|-- Rule_Units
     Rules <|-- Geographies
     class Policy{
-        Policy ID
-        Rule IDs
-        Mode ID
+        Name *
+        Mode ID * 
+        Policy ID *
+        Description *
+        Start Date *
+        Published Date *
+        Rule IDs *
         Provider ID
-        Start Date
         End Date
-        ...
+        Currency
+        Previous Policy IDs
     }
     class Rules{
-        Rule Type
-        Rule Units
-        Geographies
-        States
+        Name *
+        Rule ID *
+        Rule Type *
+        Geographies *
+        States *
+        Rule Units *
+        Vehicle Type
+        Propultion Type
         ...
+    }
+    class Rule_Units{
+       Name *
+    }
+    class Rule_Type{
+       Name *
+    }
+    class Previous_Policies{
+       IDs *
+    }
+    class Geographies{
+       IDs *
     }
 ```
 [Top][toc]
