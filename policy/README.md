@@ -737,7 +737,6 @@ You may also show which APIs, endpoints, and fields your agency is serving to pr
 | `required_endpoints` | Array | Required | Array of optional endpoints required by the agency. At least one is required. Endpoints not listed will not be available to the agency. |
 | `required_fields`    | Array | Optional | Array of optional field names required by the agency. Can be omitted if no optional fields are required. Use dot notation for nested fields. See **special notes** below. |
 | `disallowed_fields`  | Array | Optional | Array of optional field names which must not be returned by in the endpoint, even if required in MDS. Use dot notation for nested fields. See **special notes** below. |
-| `geographies`        | Array | Optional | Array of relevant geographies to the endpoint (sourced from the Agency's Geographies API) |
 
 **Agency Endpoints** - Specific to the `available_apis` array
 
