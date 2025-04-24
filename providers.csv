@@ -51,3 +51,4 @@ Telofun,micromobility,3dd253d3-557c-4fcb-98da-9af3edeaaae6,https://www.tel-o-fun
 Gbike,micromobility,a50b796e-bca2-11ed-afa1-0242ac120002,https://gcoo.io/,https://mds.gcoo.io/,https://mds.gcoo.io/gbfs
 SURF,micromobility,66c43ccb-f9f9-4f70-9707-37301b9f49a8,https://www.surfingscooters.com,https://api.app.surf/mds,https://api.app.surf/gbfs/en
 Nextbike,micromobility,31e54f5a-66c4-4a4c-bb6e-236351c90312,https://www.nextbike.de,https://platform-services.tier-services.io/data-sharing/mds/,https://api.nextbike.net/maps/gbfs/
+Scooty,micromobility,f4ac8ed2-d6c3-4e6f-b000-f69050e8a616,https://www.otoride.co/,https://oto-api.otoride.co/api/v2/mds/,
