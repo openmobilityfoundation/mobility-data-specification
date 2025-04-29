@@ -240,7 +240,7 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
     "version": "x.y.z",
     "last_updated": "12345",
     "ttl": "12345",
-    "vehicles": []
+    "vehicles_status": []
 }
 ```
 
