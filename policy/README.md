@@ -114,7 +114,7 @@ Policies shall be published by regulatory bodies or their authorized delegates a
 
 Policies typically refer to one or more associated geographies. Geographic information is obtained from the MDS [Geography](/geography) API.  Each policy and geography shall have a unique ID (UUID).
 
-Policies must be unique. A Policy may not have the exact same [Policy](#policy) object field values with a different `policy_id`. For example if the `mode_id`, `provider_ids`, `start_date`, `end_date`, and `rules` fields have the same values, that is the same Policy and must not be duplicated as two different policies in the Policy payload.
+Policies must be unique. A Policy may not have the exact same [Policy](#policy) object field values with a different `policy_id`. For example if the required or optional fields have the same values (either exactly identical or functionally identical), it is considered the same Policy and must not be duplicated as two different policies in the Policy payload.
 
 Geographical data shall be represented as GeoJSON `Feature` objects. No part of the geographical data should be outside the [municipality boundary][muni-boundary].
 
