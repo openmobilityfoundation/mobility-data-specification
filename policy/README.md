@@ -2,7 +2,7 @@
 
 <a href="/policy/"><img src="https://i.imgur.com/66QXveN.png" width="120" align="right" alt="MDS Policy Icon" border="0"></a>
 
-The Policy API endpoints are intended to be implemented by regulatory agencies and consumed by mobility providers. Providers query the Policy API to get information about local rules that may affect the operation of their mobility service or which may be used to determine compliance.
+The Policy API endpoints are intended to be implemented by regulatory agencies and consumed by mobility providers across all supported MDS [modes](../modes#list-of-supported-modes) and services (scooters, bikeshare, car share, delivery robots, taxis, TNCs, autonomous vehicles, agency fleets, commuter shuttles, etc). Providers query the Policy API to get information about local rules that may affect the operation of their mobility service or which may be used to determine compliance.
 
 This specification describes the digital relationship between _mobility as a service_ providers and the agencies that regulate them. The Policy API communicates municipal policies (such as as vehicle deployment caps and speed limits) in a clear, consistent manner.
 
@@ -37,12 +37,12 @@ This specification describes the digital relationship between _mobility as a ser
   - [Messages](#messages)
   - [Value URL](#value-url)
   - [Order of Operations](#order-of-operations)
+  - [Policy Relationship Diagram](#policy-relationship-diagram)
   - [Requirement](#requirement)
     - [Examples](#examples)
     - [Public Hosting](#public-hosting)
     - [Update Frequency](#requirement-update-frequency)
     - [Version Tracking](#version-tracking)
-    - [Beta Limitations](#beta-limitations)
     - [Format](#requirement-format)
     - [Metadata](#requirement-metadata)
     - [Programs](#requirement-programs)
@@ -57,7 +57,7 @@ The following information applies to all `policy` API endpoints.
 
 ### Background
 
-The goal of the Policy API specification is to enable agencies to create, revise, and publish machine-readable policies, as sets of rules for individual and collective device behavior exhibited by both _mobility as a service_ providers and riders / users. [Examples](./examples/README.md) of policies include:
+The goal of the Policy API specification is to enable public agencies to create, revise, and publish machine-readable policies (in near real-time if needed), as sets of rules for individual and collective device behavior exhibited by both _mobility as a service_ providers and riders / users. [Examples](./examples/README.md) of policies include:
 
 - City-wide and localized caps (e.g. "Minimum 500 and maximum 3000 scooters within city boundaries")
 - Exclusion zones (e.g. "No scooters are permitted in this district on weekends")
@@ -65,6 +65,8 @@ The goal of the Policy API specification is to enable agencies to create, revise
 - Speed-limit restrictions (e.g. "15 mph outside of downtown, 10 mph downtown")
 - Idle-time and disabled-time limitations (e.g. "5 days idle while rentable, 12 hours idle while unrentable, per device")
 - Trip fees and subsidies (e.g. "A 25 cent fee applied when a trip ends downtown")
+- Real-time emergency notifications (e.g. "A no travel geofence around a fire reported by a 911 call")
+- Large event policy rules (e.g. "No AVs or carshare near a planned stadium event, but 25 cent bikeshare subsidy when trips end near event")
 
 The machine-readable format allows Providers to obtain policies and compute compliance where it can be determined entirely by data obtained internally, and know what data is required from them and provided to them.
 
@@ -72,19 +74,21 @@ The machine-readable format allows Providers to obtain policies and compute comp
 
 ### Policy Examples
 
-See the [Policy Examples](./examples/README.md) for ways Policy can be implemented.
+See the [MDS Policy Examples](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Policy-Examples) wiki page for code examples of specific MDS Policy use cases, ideas on how Policy can be implemented.
 
 [Top][toc]
 
 ### Authorization
 
-The Policy endpoints should be made public. Authorization is not required.
+The Policy endpoints should be made public. Authorization is not required. Agencies may make reasonable accommodations to manage their endpoints, for example, using an API key that has a clear, public way to obtain - this can be useful for rate limiting requests, ensure proper use, tracking access per requestor, and/or customization of the Policy tailored to the requestor.
 
 [Top][toc]
 
 ### Update Frequency
 
 The publishing agency should establish beforehand and communicate to providers how frequently the Policy endpoints are expected to change, how often they should be polled to get the latest information, and expectations around emergency updates.
+
+For real-time uses of MDS Policy, public agencies should set a recommended minimum threshold (eg, every 1 minute at most).
 
 [Top][toc]
 
@@ -110,12 +114,15 @@ Policies shall be published by regulatory bodies or their authorized delegates a
 
 Policies typically refer to one or more associated geographies. Geographic information is obtained from the MDS [Geography](/geography) API.  Each policy and geography shall have a unique ID (UUID).
 
+Policies must be unique. A Policy may not have the exact same [Policy](#policy) object field values with a different `policy_id`. For example if the required or optional fields have the same values (either exactly identical or functionally identical), it is considered the same Policy and must not be duplicated as two different policies in the Policy payload.
+
 Geographical data shall be represented as GeoJSON `Feature` objects. No part of the geographical data should be outside the [municipality boundary][muni-boundary].
 
 Policies should be re-fetched whenever:
 
 1. a policy expires (via its `end_date`), or
 2. at an interval specified by the regulatory body, e.g. "daily at midnight".
+3. when the `last_updated` timestamp is newer than the previously fetched timestamp
 
 Flat files have an optional `end_date` field that will apply to the file as a whole.
 
@@ -127,7 +134,7 @@ Among other use-cases, configuring a REST API allows an Agency to:
 
 1. Dynamically adjust caps
 2. Set Provider specific policies
-3. Adjust other attributes in closer to real time
+3. Adjust other attributes in close to real-time
 4. Enumerate when policies are set to change
 
 Responses must set the `Content-Type` header, as specified in the [versioning][versioning] section.
@@ -159,6 +166,8 @@ _Query Parameters:_
 | `policy_id`         | UUID      | Optional    | If provided, returns one policy object with the matching UUID; default is to return all policy objects.                       |
 | `start_date` | [timestamp][ts] | Optional    | Beginning date of the queried time range; the default value is the request time |
 | `end_date`   | [timestamp][ts] | Optional    | Ending date of the queried time range; the default value is null, which captures all policies that are effective in the future|
+| `last_updated`   | Boolean | Optional    | If true, the endpoint only returns two fields: `version`, `last_updated`. Useful to quickly check when any data in the file has last been changed, without downloading the entire Policy payload. See the [Schema](#schema) section for an example. If not provided, value is false. |
+| `active_only`   | Boolean | Optional    | If true, return only the current active and future policies, not the retired/previous policies. Any policy that is a prev_policies would not be returned. However, the array of prev_policies still will be returned for reference as part of any relevant active policy. Useful to reduce the Policy payload size for use cases where you do not need to know the previous policy details. If not provided, value is false. |
 
 `start_date` and `end_date` are only considered when no `id` parameter is provided. They should return any policy whose effectiveness overlaps with or is contained with this range. Suppose there's a policy with a `start_date` of 1/1/21 and `end_date` of 1/31/21. Assuming an `end_date` that is null, 12/1/20 and 1/5/21 `start_dates` will return the policy, but 2/10/21 wouldn't. Assuming a `start_date` parameter of say, 11/1/20, then an `end_date` of 12/1/20 wouldn't return the policy, but 1/5/21 and 2/10/21 would. Lastly, a `start_date` of 1/5/21 and `end_date` of 1/6/21 would also return the policy. Please note also that while dates in the format MM:DD:YY are being used here, `start_date` and `end_date` must be numbers representing milliseconds since the Unix epoch time.
 
@@ -285,6 +294,8 @@ Response bodies must be a `UTF-8` encoded JSON object and must minimally include
   // endpoint/file specific payload
 }
 ```
+
+Note that `data` payload will not be returned if the `last_updated` query string parameter is set to true. 
 
 ### Data Schema
 
@@ -458,6 +469,59 @@ The internal mechanics of ordering are up to the Policy editing and hosting soft
 
 [Top][toc]
 
+### Policy Relationship Diagram
+
+```mermaid
+---
+title: MDS Policy relationships
+---
+classDiagram
+    Policy <|-- Rules
+    Policy <|-- Previous_Policies
+    Rules <|-- Rule_Type
+    Rules <|-- Rule_Units
+    Rules <|-- Geographies
+    class Policy {
+        Name *
+        Mode ID * 
+        Policy ID *
+        Description *
+        Start Date *
+        Published Date *
+        Rule IDs *
+        Provider ID
+        End Date
+        Currency
+        Previous Policy IDs
+    }
+    class Rules{
+        Name *
+        Rule ID *
+        Rule Type *
+        Geographies *
+        States *
+        Rule Units *
+        Vehicle Type
+        Propultion Type
+        ...
+    }
+    class Rule_Units{
+       Name *
+    }
+    class Rule_Type{
+       Name *
+    }
+    class Previous_Policies{
+       IDs *
+    }
+    class Geographies{
+       IDs *
+    }
+    classDef default color:#373737,fill:#2af1be,stroke:#373737,stroke-width:2px;
+```
+[Top][toc]
+
+
 ### Requirement
 
 A public agency's Policy program Requirements endpoint enumerates all of the parts of MDS, [CDS](https://github.com/openmobilityfoundation/curb-data-specification), GBFS, and other specifications that an agency requires from providers for certain programs, including APIs, endpoints, and optional fields, as well as information for providers about the APIs the agency is hosting. The program requirements are specific to the needs and use cases of each agency, and ensure there is clarity on what data is being asked for in operating policy documents from providers, reducing the burden on both. This also allows additional public transparency and accountability around data requirements from agencies, and encourages privacy by allowing agencies to ask for only the data they need.
@@ -468,7 +532,7 @@ Requirements can also be used to define a scaled-down MDS implementation in situ
 
 #### Examples
 
-See [Policy Requirements Examples](/policy/examples/requirements.md) for ideas on how this can be implemented.
+See the [MDS Policy Examples](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Policy-Requirements-Examples) wiki page for code examples of specific MDS Policy Requirements use cases, ideas on how Requirements can be implemented.
 
 [Top][toc]
 
