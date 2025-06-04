@@ -86,9 +86,9 @@ _See more available vehicle attributes and accessibility attributes for any mode
 
 The `vehicle_attributes` object **may** have the following key value pairs:
 
-- `year` (integer, [Optional](./general-information.md#optional-fields])
-- `make` (string, [Optional](./general-information.md#optional-fields])
-- `model` (string, [Optional](./general-information.md#optional-fields])
+- `year` (integer, [Optional](../general-information.md#optional-fields))
+- `make` (string, [Optional](../general-information.md#optional-fields))
+- `model` (string, [Optional](../general-information.md#optional-fields))
 
 [Top][toc]
 
