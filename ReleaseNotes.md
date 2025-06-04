@@ -1,3 +1,16 @@
+## 2.0.2
+
+> Release 2025.06.04
+
+The 2.0.2 release fixes some minor issues and typos to help make the specifcation clearer.
+
+### CHANGES
+
+**Full [Release Notes](https://github.com/openmobilityfoundation/mobility-data-specification/releases/tag/2.0.2)**
+
+See the closed PRs tagged with [Milestone 2.0.2](https://github.com/openmobilityfoundation/mobility-data-specification/pulls?q=is%3Apr+is%3Aclosed+milestone%3A2.0.2) and [Issues](https://github.com/openmobilityfoundation/mobility-data-specification/issues?q=is%3Aissue+milestone%3A2.0.2+is%3Aclosed) for a full list of changes.
+
+
 ## 2.0.1
 
 > Release 2023-12-18
