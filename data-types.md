@@ -25,10 +25,10 @@ A vehicle record is as follows:
 | -------------------- | -------- | --------------------- | -------- |
 | `device_id`          | UUID     | Required              | A unique device ID in UUID format, should match this device in Provider |
 | `provider_id`        | UUID     | Required              | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
-| `data_provider_id`   | UUID     | Optional              | If different than `provider_id`, a UUID for the data solution provider managing the data feed in this endpoint. See MDS [provider list](/providers.csv) which includes both service operators and data solution providers. |
+| `data_provider_id`   | UUID     | [Optional](./general-information.md#optional-fields) | If different than `provider_id`, a UUID for the data solution provider managing the data feed in this endpoint. See MDS [provider list](/providers.csv) which includes both service operators and data solution providers. |
 | `vehicle_id`         | String   | Required              | A unique vehicle identifier (visible code, license plate, etc), visible on the vehicle itself |
 | `vehicle_type`       | Enum     | Required              | The [vehicle type][vehicle-types] |
-| `vehicle_attributes` | Map      | Optional              | **[Mode](/modes#list-of-supported-modes) Specific**. [Vehicle attributes](/modes#vehicle-attributes) given as mode-specific unordered key-value pairs |
+| `vehicle_attributes` | Map      | [Optional](./general-information.md#optional-fields) | **[Mode](/modes#list-of-supported-modes) Specific**. [Vehicle attributes](/modes#vehicle-attributes) given as mode-specific unordered key-value pairs |
 | `propulsion_types`   | Enum[]   | Required              | Array of [propulsion types][propulsion-types]; allows multiple values |
 | `accessibility_attributes` | Enum[] | Required if Available | **[Mode](/modes#list-of-supported-modes) Specific**. [Accessibility attributes](/modes#accessibility-attributes) given as an array of enumerated values. List of any accessibility attributes **available on the vehicle**. |
 | `battery_capacity`   | Integer  | Required if Available | Capacity of battery expressed as milliamp hours (mAh) |
@@ -88,7 +88,7 @@ A vehicle status record represents the current or last-known event and telemetry
 | ----- | ---- | ----------------- | -------- |
 | `device_id` | UUID | Required | A unique device ID in UUID format, should match this device in Provider |
 | `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
-| `data_provider_id` | UUID | Optional | If different than `provider_id`, a UUID for the data solution provider managing the data feed in this endpoint. See MDS [provider list](/providers.csv) which includes both service operators and data solution providers. |
+| `data_provider_id` | UUID | [Optional](./general-information.md#optional-fields) | If different than `provider_id`, a UUID for the data solution provider managing the data feed in this endpoint. See MDS [provider list](/providers.csv) which includes both service operators and data solution providers. |
 | `last_event` | Event | Required | Most recent [Event](#events) for this device based on `timestamp` |
 | `last_telemetry` | Telemetry | Required | Most recent [Telemetry](#telemetry) for this device based on `timestamp` |
 
@@ -102,20 +102,20 @@ Events represent changes in vehicle status.
 | ----- | ---- | ----------------- | -------- |
 | `device_id` | UUID | Required | A unique device ID in UUID format |
 | `provider_id` | UUID | Required | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
-| `data_provider_id` | UUID | Optional | If different than `provider_id`, a UUID for the data solution provider managing the data feed in this endpoint. See MDS [provider list](/providers.csv) which includes both service operators and data solution providers. |
+| `data_provider_id` | UUID | [Optional](./general-information.md#optional-fields) | If different than `provider_id`, a UUID for the data solution provider managing the data feed in this endpoint. See MDS [provider list](/providers.csv) which includes both service operators and data solution providers. |
 | `event_id` | UUID | Required | A unique event ID |
 | `vehicle_state` | Enum | Required | See [vehicle state][vehicle-states] table |
 | `event_types` | Enum[] | Required | Vehicle [event types][vehicle-events] for state change, with allowable values determined by `vehicle_state` |
 | `timestamp` | [Timestamp][ts] | Required | Date/time that event occurred at. See [Event Times][event-times] |
-| `publication_time` | [Timestamp][ts] | Optional | Date/time that event became available through the status changes endpoint |
+| `publication_time` | [Timestamp][ts] | [Optional](./general-information.md#optional-fields) | Date/time that event became available through the status changes endpoint |
 | `location` | [GPS][gps] | Required | See also [Telemetry][telemetry]. |
-| `event_geographies` | UUID[] | Optional | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 2.0.0)*. Array of Geography UUIDs consisting of every Geography that contains the location of the status change. See [Geography Driven Events][geography-driven-events]. Required if `location` is not present. |
+| `event_geographies` | UUID[] | [Optional](./general-information.md#optional-fields) | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 2.0.0)*. Array of Geography UUIDs consisting of every Geography that contains the location of the status change. See [Geography Driven Events][geography-driven-events]. Required if `location` is not present. |
 | `battery_percent`       | Integer          | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 100 |
 | `fuel_percent`       | Integer          | Required if Applicable | Percent fuel in vehicle, expressed between 0 and 100 |
 | `trip_ids` | UUID[] | Required if Applicable | Trip UUIDs (foreign key to /trips endpoint), required if `event_types` contains `trip_start`, `trip_end`, `trip_cancel`, `trip_enter_jurisdiction`, or `trip_leave_jurisdiction` |
 | `stop_id`         | UUID            | Required if Applicable | Stop that the vehicle is currently located at. See [Stops][stops] |
-| `associated_ticket` | String | Optional | Identifier for an associated ticket inside an Agency-maintained 311 or CRM system |
-| `gtfs_stop_id` | String | Optional | A unique stop ID to be recorded when a vehicle makes a stop event at a location. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `stop_id` |
+| `associated_ticket` | String | [Optional](./general-information.md#optional-fields) | Identifier for an associated ticket inside an Agency-maintained 311 or CRM system |
+| `gtfs_stop_id` | String | [Optional](./general-information.md#optional-fields) | A unique stop ID to be recorded when a vehicle makes a stop event at a location. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `stop_id` |
 
 ### Event Times
 
@@ -131,7 +131,7 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | -----             | ----            | -----------------      | ----------------- |
 | `device_id`       | UUID            | Required               | A unique device ID in UUID format                     |
 | `provider_id`     | UUID            | Required               | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
-| `data_provider_id`| UUID            | Optional               | If different than `provider_id`, a UUID for the data solution provider managing the data feed in this endpoint. See MDS [provider list](/providers.csv) which includes both service operators and data solution providers. |
+| `data_provider_id`| UUID            | [Optional](./general-information.md#optional-fields) | If different than `provider_id`, a UUID for the data solution provider managing the data feed in this endpoint. See MDS [provider list](/providers.csv) which includes both service operators and data solution providers. |
 | `telemetry_id`    | UUID            | Required               | ID used for uniquely-identifying a Telemetry entry |
 | `timestamp`       | [Timestamp][ts] | Required               | Date/time that event occurred. Based on GPS or GNSS clock            |
 | `trip_ids`        | UUID[]          | Required               | If telemetry occurred during a trip, the ID of the trip(s).  If not in a trip, `null`.
@@ -142,7 +142,7 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | `battery_percent` | Integer         | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 100 |
 | `fuel_percent`    | Integer         | Required if Applicable | Percent fuel in vehicle, expressed between 0 and 100 |
 | `tipped_over`     | Boolean         | Required if Known      | If detectable and known, is the device tipped over or not? Default is 'false'. |
-| `gtfs_stop_id` | String | Optional | A unique stop ID to be recorded when a vehicle makes a stop event at a location. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `stop_id` |
+| `gtfs_stop_id` | String | [Optional](./general-information.md#optional-fields) | A unique stop ID to be recorded when a vehicle makes a stop event at a location. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `stop_id` |
 
 ### GPS Data
 
@@ -173,20 +173,20 @@ Stops describe vehicle trip start and end locations in a pre-designated physical
 | `capacity`               | {vehicle_type: number}                                | Required | Number of total places per vehicle_type |
 | `num_vehicles_available` | {vehicle_type: number}                                | Required | How many vehicles are available per vehicle_type at this stop? |
 | `num_vehicles_disabled`  | {vehicle_type: number}                                | Required | How many vehicles are unavailable/reserved per vehicle_type at this stop? |
-| `provider_id`            | UUID                                                  | Optional | UUID for the Provider managing this stop. Null/undefined if managed by an Agency.  See MDS [provider list](/providers.csv). |
-| `data_provider_id`       | UUID                                                  | Optional | UUID for the data provider managing the data coming from this stop. Null/undefined if managed by an agency or a provider.  See MDS [provider list](/providers.csv). |
-| `geography_id`           | UUID                                                  | Optional | Pointer to the [Geography](/geography) that represents the Stop geospatially via Polygon or MultiPolygon. |
-| `region_id`              | string                                                | Optional | ID of the region where station is located, see [GBFS Station Information][gbfs-station-info] |
-| `short_name`             | String                                                | Optional | Abbreviated stop name |
-| `address`                | String                                                | Optional | Postal address (useful for directions) |
-| `post_code`              | String                                                | Optional | Postal code (e.g. `10036`) |
-| `rental_methods`         | [Enum[]][gbfs-station-info]                           | Optional | List of payment methods accepted at stop, see [GBFS Rental Methods][gbfs-station-info] |
-| `cross_street`           | String                                                | Optional | Cross street of where the station is located. |
-| `num_places_available`   | {vehicle_type: number}                                | Conditionally Required | How many places are free to be populated with vehicles at this stop? Required if the program has station based availability requirements or service level agreements pertaining to stations.|
-| `num_places_disabled`    | {vehicle_type: number}                                | Conditionally Required | How many places are disabled and unable to accept vehicles at this stop? Required if the program has station based availability requirements or service level agreements pertaining to stations.|
-| `parent_stop`            | UUID                                                  | Optional | Describe a basic hierarchy of stops (e.g.a stop inside of a greater stop) |
-| `devices`                | UUID[]                                                | Conditionally Required | List of device_ids for vehicles which are currently at this stop. Required if the program has station based availability requirements or service level agreements pertaining to stations. |
-| `image_url`              | URL                                                   | Optional | Link to an image, photo, or diagram of the stop. Could be used by providers to help riders find or use the stop. |
+| `provider_id`            | UUID                                                  | [Optional](./general-information.md#optional-fields) | UUID for the Provider managing this stop. Null/undefined if managed by an Agency.  See MDS [provider list](/providers.csv). |
+| `data_provider_id`       | UUID                                                  | [Optional](./general-information.md#optional-fields) | UUID for the data provider managing the data coming from this stop. Null/undefined if managed by an agency or a provider.  See MDS [provider list](/providers.csv). |
+| `geography_id`           | UUID                                                  | [Optional](./general-information.md#optional-fields) | Pointer to the [Geography](/geography) that represents the Stop geospatially via Polygon or MultiPolygon. |
+| `region_id`              | string                                                | [Optional](./general-information.md#optional-fields) | ID of the region where station is located, see [GBFS Station Information][gbfs-station-info] |
+| `short_name`             | String                                                | [Optional](./general-information.md#optional-fields) | Abbreviated stop name |
+| `address`                | String                                                | [Optional](./general-information.md#optional-fields) | Postal address (useful for directions) |
+| `post_code`              | String                                                | [Optional](./general-information.md#optional-fields) | Postal code (e.g. `10036`) |
+| `rental_methods`         | [Enum[]][gbfs-station-info]                           | [Optional](./general-information.md#optional-fields) | List of payment methods accepted at stop, see [GBFS Rental Methods][gbfs-station-info] |
+| `cross_street`           | String                                                | [Optional](./general-information.md#optional-fields) | Cross street of where the station is located. |
+| `num_places_available`   | {vehicle_type: number}                                | [Conditionally Required](./general-information.md#conditionally-required-fields) | How many places are free to be populated with vehicles at this stop? Required if the program has station based availability requirements or service level agreements pertaining to stations.|
+| `num_places_disabled`    | {vehicle_type: number}                                | [Conditionally Required](./general-information.md#conditionally-required-fields) | How many places are disabled and unable to accept vehicles at this stop? Required if the program has station based availability requirements or service level agreements pertaining to stations.|
+| `parent_stop`            | UUID                                                  | [Optional](./general-information.md#optional-fields) | Describe a basic hierarchy of stops (e.g.a stop inside of a greater stop) |
+| `devices`                | UUID[]                                                | [Conditionally Required](./general-information.md#conditionally-required-fields) | List of device_ids for vehicles which are currently at this stop. Required if the program has station based availability requirements or service level agreements pertaining to stations. |
+| `image_url`              | URL                                                   | [Optional](./general-information.md#optional-fields) | Link to an image, photo, or diagram of the stop. Could be used by providers to help riders find or use the stop. |
 
 [Top][toc]
 
@@ -219,27 +219,27 @@ A Trip is defined by the following structure:
 | Field                    | Type            | Required/Optional      | Comments |
 | -----                    | ----            | -----------------      | -------- |
 | `provider_id`            | UUID            | Required               | A UUID for the Provider, unique within MDS. See MDS [provider list](/providers.csv). |
-| `data_provider_id`       | UUID            | Optional               | If different than `provider_id`, a UUID for the data solution provider managing this data endpoint. See MDS [provider list](/providers.csv) which includes both service operators and data solution providers. |
+| `data_provider_id`       | UUID            | [Optional](./general-information.md#optional-fields) | If different than `provider_id`, a UUID for the data solution provider managing this data endpoint. See MDS [provider list](/providers.csv) which includes both service operators and data solution providers. |
 | `device_id`              | UUID            | Required               | A unique device ID in UUID format. Cross reference with `/vehicles` for more device details. |
-| `journey_id`             | UUID            | Optional               | A unique [journey ID](/modes#journey-id) for associating collections of trips for its [mode][modes] |
-| `journey_attributes`     | Map             | Optional | **[Mode](/modes#list-of-supported-modes) Specific**. [Journey attributes](/modes#journey-attributes) given as unordered key-value pairs |
+| `journey_id`             | UUID            | [Optional](./general-information.md#optional-fields) | A unique [journey ID](/modes#journey-id) for associating collections of trips for its [mode][modes] |
+| `journey_attributes`     | Map             | [Optional](./general-information.md#optional-fields) | **[Mode](/modes#list-of-supported-modes) Specific**. [Journey attributes](/modes#journey-attributes) given as unordered key-value pairs |
 | `trip_id`                | UUID            | Required | A unique ID for each trip |
-| `trip_type`              | Enum            | Optional | **[Mode](/modes#list-of-supported-modes) Specific**. The [trip type](/modes#trip-type) describing the purpose of a trip segment |
-| `trip_attributes`        | Map             | Optional | **[Mode](/modes#list-of-supported-modes) Specific**. [Trip attributes](/modes#trip-attributes) given as unordered key-value pairs |
-| `fare_attributes`        | Map             | Optional | **[Mode](/modes#list-of-supported-modes) Specific**. [Fare attributes](/modes#fare-attributes) given as unordered key-value pairs |
+| `trip_type`              | Enum            | [Optional](./general-information.md#optional-fields) | **[Mode](/modes#list-of-supported-modes) Specific**. The [trip type](/modes#trip-type) describing the purpose of a trip segment |
+| `trip_attributes`        | Map             | [Optional](./general-information.md#optional-fields) | **[Mode](/modes#list-of-supported-modes) Specific**. [Trip attributes](/modes#trip-attributes) given as unordered key-value pairs |
+| `fare_attributes`        | Map             | [Optional](./general-information.md#optional-fields) | **[Mode](/modes#list-of-supported-modes) Specific**. [Fare attributes](/modes#fare-attributes) given as unordered key-value pairs |
 | `start_time`             | [Timestamp][ts] | Required | Start of the passenger/driver trip |
 | `end_time`               | [Timestamp][ts] | Required | End of the passenger/driver trip |
 | `start_location`         | [GPS][gps]      | Required | Location of the start of the trip. |
 | `end_location`           | [GPS][gps]      | Required | Location of the end of the trip. |
 | `duration`               | Integer         | Required | Time, in Seconds |
 | `distance`               | Integer         | Required | Trip Distance, in Meters |
-| `publication_time`       | [Timestamp][ts] | Optional | Date/time that trip became available through the trips endpoint |
+| `publication_time`       | [Timestamp][ts] | [Optional](./general-information.md#optional-fields) | Date/time that trip became available through the trips endpoint |
 | `accessibility_attributes` | Enum[]        | Required if Available | **[Mode](/modes#list-of-supported-modes) Specific**. [Accessibility attributes](/modes#accessibility-attributes) given as an array of enumerated values. List of any accessibility attributes **used during the trip**. |
-| `parking_verification_url` | URL           | Optional | A URL to a photo (or other evidence) of proper vehicle parking at the end of a trip, provided by customer or operator. |
-| `parking_category`       | Enum            | Optional | The type of parking location detected or provided and the end of a trip. One of `corral`, `curb`, `rack`, `other_valid`, `invalid`. Note that `other_valid` covers any other allowed parking location beyond what is enumerated, and `invalid` is any improper parking based on agency parking rules.
-| `standard_cost`          | Integer         | Optional | The cost, in the currency defined in `currency`, to perform that trip in the standard operation of the System (see [Costs & Currencies][costs-and-currencies]) |
-| `actual_cost`            | Integer         | Optional | The actual cost, in the currency defined in `currency`, paid by the customer of the *mobility as a service* provider (see [Costs & Currencies][costs-and-currencies]) |
-| `currency`               | String          | Optional, USD cents is implied if null.| An [ISO 4217 Alphabetic Currency Code][iso4217] representing the currency of the payee (see [Costs & Currencies][costs-and-currencies]) |
+| `parking_verification_url` | URL           | [Optional](./general-information.md#optional-fields) | A URL to a photo (or other evidence) of proper vehicle parking at the end of a trip, provided by customer or operator. |
+| `parking_category`       | Enum            | [Optional](./general-information.md#optional-fields) | The type of parking location detected or provided and the end of a trip. One of `corral`, `curb`, `rack`, `other_valid`, `invalid`. Note that `other_valid` covers any other allowed parking location beyond what is enumerated, and `invalid` is any improper parking based on agency parking rules.
+| `standard_cost`          | Integer         | [Optional](./general-information.md#optional-fields) | The cost, in the currency defined in `currency`, to perform that trip in the standard operation of the System (see [Costs & Currencies][costs-and-currencies]) |
+| `actual_cost`            | Integer         | [Optional](./general-information.md#optional-fields) | The actual cost, in the currency defined in `currency`, paid by the customer of the *mobility as a service* provider (see [Costs & Currencies][costs-and-currencies]) |
+| `currency`               | String          | [Optional](./general-information.md#optional-fields), USD cents is implied if null.| An [ISO 4217 Alphabetic Currency Code][iso4217] representing the currency of the payee (see [Costs & Currencies][costs-and-currencies]) |
 | `gtfs_trip_id` | String | Required if Applicable | A unique trip ID for the associated scheduled GTFS route-trip. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `trip_id` in the trips.txt and other files.|
 | `gtfs_api_url` | URL | Required if Applicable | Full URL to the location where the associated [GTFS](https://gtfs.org/documentation/schedule/reference/) dataset zip files are located. |
 
