@@ -54,7 +54,7 @@ The `journey_id` field shall have a consistent value in overlapping trips for a 
 
 The `journey_attributes` object **may** have the following key value pairs:
 
-- `reservation_id` (UUID, optional): unique identifier for an entire car share reservation, tied across multiple journeys and therefore trips.
+- `reservation_id` (UUID, [Optional](./general-information.md#optional-fields]): unique identifier for an entire car share reservation, tied across multiple journeys and therefore trips.
 
 [Top][toc]
 
@@ -81,9 +81,9 @@ The `trip_type` field **must** have one of the following enumerated values:
 The `trip_attributes` object **may** have the following key value pairs:
 
 - `reservation_type` (enumerated, required): how was the vehicle reserved, one of `phone_dispatch`, `phone`, `text`, `app`
-- `app_name` (text, optional): name of the app used to reserve the vehicle which could be provider's app or 3rd party app
-- `permit_license_number` (string, optional) - The permit license number of the organization that dispatched the vehicle
-- `driver_id` (string, optional): Universal identifier of a specific driver, static across operators, like a driver's license number, for company employees in `reservation` or `empty` trip types, not `private` trips. Could also be used as a lookup in an agency's internal driver system.
+- `app_name` (text, [Optional](./general-information.md#optional-fields]): name of the app used to reserve the vehicle which could be provider's app or 3rd party app
+- `permit_license_number` (string, [Optional](./general-information.md#optional-fields]) - The permit license number of the organization that dispatched the vehicle
+- `driver_id` (string, [Optional](./general-information.md#optional-fields]): Universal identifier of a specific driver, static across operators, like a driver's license number, for company employees in `reservation` or `empty` trip types, not `private` trips. Could also be used as a lookup in an agency's internal driver system.
 
 [Top][toc]
 
@@ -93,14 +93,14 @@ The `fare_attributes` object **may** have the following key value pairs:
 
 - `payment_type` (enumerated, required): `account_number`, `cash`, `credit_card`, `mobile_app`, `no payment`, `phone`, `voucher`, `test`
 - `fare_type` (enumerated, required): `meter_fare`, `upfront_pricing`, `flat_rate`. Indicator of which rate was charged.
-- `tolls` (currency, optional) - Sum of any and all tolls charged for the trip, such as bridge tolls
-- `base_rate` (currency, optional) - Minimum fare to be charged as soon as the trip starts.
-- `exit_fee` (currency, optional) - Fee to exit location, like an airport
-- `other_fees` (currency, optional) - amount of any fees charged to the customer. Includes baggage fees, cleaning fee. Excludes other fees returned.
-- `tip` (currency, optional) - amount of tip paid by customer
-- `extra_amount` (currency, optional) - miscellaneous extra amounts charged to customer not covered by other fields.
-- `taxes` (currency, optional) - amount of taxes paid for the ride
-- `surcharge` (currency, optional) - any surcharge pricing
+- `tolls` (currency, [Optional](./general-information.md#optional-fields]) - Sum of any and all tolls charged for the trip, such as bridge tolls
+- `base_rate` (currency, [Optional](./general-information.md#optional-fields]) - Minimum fare to be charged as soon as the trip starts.
+- `exit_fee` (currency, [Optional](./general-information.md#optional-fields]) - Fee to exit location, like an airport
+- `other_fees` (currency, [Optional](./general-information.md#optional-fields]) - amount of any fees charged to the customer. Includes baggage fees, cleaning fee. Excludes other fees returned.
+- `tip` (currency, [Optional](./general-information.md#optional-fields]) - amount of tip paid by customer
+- `extra_amount` (currency, [Optional](./general-information.md#optional-fields]) - miscellaneous extra amounts charged to customer not covered by other fields.
+- `taxes` (currency, [Optional](./general-information.md#optional-fields]) - amount of taxes paid for the ride
+- `surcharge` (currency, [Optional](./general-information.md#optional-fields]) - any surcharge pricing
 
 [Top][toc]
 
@@ -118,23 +118,23 @@ The `vehicle_attributes` object **may** have the following key value pairs:
 - `color` (string, required)
 - `vin` (string, required) - the Vehicle Identification Number of the vehicle
 - `license_plate` (string, required) - the registered external license plate number of the vehicle
-- `inspection_date` (date YYYY-MM-DD, optional) - the date of the last inspection of the vehicle
-- `snow_shovel` (boolean, optional) - shovel for removing snow or ice from around vehicle or vehicle path
-- `snow_brush` (boolean, optional) - brushes for removing snow or ice from vehicle
-- `bike_rack` (boolean, optional) - car roof or trunk mounted bike rack
-- `park_access` (boolean, optional) - access pass to a national/regional/municipal park system
-- `toll_transponder` (boolean, optional) - toll transponder for national/regional toll system
-- `phone_charger` (boolean, optional) - a place to charge your phone
-- `sunshade` (boolean, optional) - sunshade available (i.e. for windshield)
-- `cargo_volume_capacity` (integer, optional) - Cargo volume available in the vehicle, expressed in liters. For cars, it corresponds to the space between the boot floor, including the storage under the hatch, to the rear shelf in the trunk.
-- `cargo_load_capacity` (integer, optional) - The capacity of the vehicle cargo space (excluding passengers), expressed in kilograms.
-- `door_count` (integer, optional) - number of doors this vehicle type has
-- `wheel_count` (integer, optional) - number of wheels this vehicle type has
-- `air_conditioning` (boolean, optional) - vehicle has air conditioning
-- `gear_switch` (enum, optional) - one of `automatic`, `manual`
-- `convertible` (boolean, optional) - vehicle has a retractable roof
-- `cruise_control` (boolean, optional) - vehicle has a cruise control system
-- `navigation` (boolean, optional) - vehicle has a built-in navigation system
+- `inspection_date` (date YYYY-MM-DD, [Optional](./general-information.md#optional-fields]) - the date of the last inspection of the vehicle
+- `snow_shovel` (boolean, [Optional](./general-information.md#optional-fields]) - shovel for removing snow or ice from around vehicle or vehicle path
+- `snow_brush` (boolean, [Optional](./general-information.md#optional-fields]) - brushes for removing snow or ice from vehicle
+- `bike_rack` (boolean, [Optional](./general-information.md#optional-fields]) - car roof or trunk mounted bike rack
+- `park_access` (boolean, [Optional](./general-information.md#optional-fields]) - access pass to a national/regional/municipal park system
+- `toll_transponder` (boolean, [Optional](./general-information.md#optional-fields]) - toll transponder for national/regional toll system
+- `phone_charger` (boolean, [Optional](./general-information.md#optional-fields]) - a place to charge your phone
+- `sunshade` (boolean, [Optional](./general-information.md#optional-fields]) - sunshade available (i.e. for windshield)
+- `cargo_volume_capacity` (integer, [Optional](./general-information.md#optional-fields]) - Cargo volume available in the vehicle, expressed in liters. For cars, it corresponds to the space between the boot floor, including the storage under the hatch, to the rear shelf in the trunk.
+- `cargo_load_capacity` (integer, [Optional](./general-information.md#optional-fields]) - The capacity of the vehicle cargo space (excluding passengers), expressed in kilograms.
+- `door_count` (integer, [Optional](./general-information.md#optional-fields]) - number of doors this vehicle type has
+- `wheel_count` (integer, [Optional](./general-information.md#optional-fields]) - number of wheels this vehicle type has
+- `air_conditioning` (boolean, [Optional](./general-information.md#optional-fields]) - vehicle has air conditioning
+- `gear_switch` (enum, [Optional](./general-information.md#optional-fields]) - one of `automatic`, `manual`
+- `convertible` (boolean, [Optional](./general-information.md#optional-fields]) - vehicle has a retractable roof
+- `cruise_control` (boolean, [Optional](./general-information.md#optional-fields]) - vehicle has a cruise control system
+- `navigation` (boolean, [Optional](./general-information.md#optional-fields]) - vehicle has a built-in navigation system
 
 Note many of these attributes come from fields in [GBFS vehicle_types](https://github.com/MobilityData/gbfs/blob/v2.3/gbfs.md#vehicle_typesjson). 
 
