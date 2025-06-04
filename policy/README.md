@@ -336,7 +336,7 @@ An individual `Rule` object is defined by the following fields:
 | `rule_type`        | enum                        | Required   | Type of policy (see [Rule Types](#rule-types)) |
 | `geographies`      | UUID[]                      | Required   | List of [Geography](/geography#general-information) UUIDs (non-overlapping) specifying the covered geography |
 | `states`           | `{ state: event[] }`        | Required   | [Vehicle state][vehicle-states] to which this rule applies. Optionally provide a list of specific [vehicle events][vehicle-events] as a subset of a given status for the rule to apply to. An empty list or `null`/absent defaults to "all". |
-| `rule_units`       | enum                        | [Conditionally Required](./general-information.md#conditionally-required-fields]   | Measured units of policy (see [Rule Units](#rule-units)) |
+| `rule_units`       | enum                        | [Conditionally Required](./general-information.md#conditionally-required-fields)   | Measured units of policy (see [Rule Units](#rule-units)) |
 | `accessibility_options` | [AccessibilityOption][accessibility-options][] | Applicable vehicle [accessibility options][accessibility-options], default any (or none) |
 | `vehicle_types`    | `vehicle_type[]`            | [Optional](../general-information.md#optional-fields)   | Applicable vehicle types, default "all". |
 | `propulsion_types` | `propulsion_type[]`         | [Optional](../general-information.md#optional-fields)   | Applicable vehicle [propulsion types][propulsion-types], default "all". |
@@ -723,8 +723,8 @@ For each combination of items in a program, you can specify the data specs, APIs
 | `data_spec_name`     | Enum   | Required | Name of the data spec required. Supported values are: '[MDS](https://github.com/openmobilityfoundation/mobility-data-specification/tree/ms-requirements)', '[CDS](https://github.com/openmobilityfoundation/curb-data-specification)' '[GBFS](https://github.com/NABSA/gbfs/tree/v2.2)'. Others like GOFS, GTFS, TOMP-API, etc may also be referenced now by agencies and officially standardized here in the future -- leave your feedback on [this issue](https://github.com/openmobilityfoundation/mobility-data-specification/issues/682). |
 | `version`            | Text   | Required | Version number of the data spec required. E.g. '1.2.0' |
 | `mode_id`               | Text   | [Optional](../general-information.md#optional-fields) | The [mode list][modes] shortname for MDS. E.g. 'passenger-services' |
-| `required_apis`      | Array  | [Conditionally Required](./general-information.md#conditionally-required-fields] | Name of the [Requirement APIs](#requirement-apis) that need to be served by providers. At least one API is required. APIs not listed will not be available to the agency. |
-| `available_apis`     | Array  | [Conditionally Required](./general-information.md#conditionally-required-fields] | Name of the [Requirement APIs](#requirement-apis) that are being served by agencies.  Not applicable to GBFS. APIs not listed will not be available to the provider. |
+| `required_apis`      | Array  | [Conditionally Required](./general-information.md#conditionally-required-fields) | Name of the [Requirement APIs](#requirement-apis) that need to be served by providers. At least one API is required. APIs not listed will not be available to the agency. |
+| `available_apis`     | Array  | [Conditionally Required](./general-information.md#conditionally-required-fields) | Name of the [Requirement APIs](#requirement-apis) that are being served by agencies.  Not applicable to GBFS. APIs not listed will not be available to the provider. |
 
 [Top][toc]
 
