@@ -10,6 +10,10 @@ This document contains specifications that are shared between the various MDS [A
 - [Data Types](#data-types)
 - [Definitions](#definitions)
 - [Devices](#devices)
+- [Field Types](#field-types)
+  - [Conditionally Required Fields](#conditionally-required-fields)
+  - [Optional Fields](#optional-fields)
+  - [Required if Applicable](#required-if-applicable-fields)
 - [GBFS Compatibility](#gbfs-compatibility)
 - [Geographic Data](#geographic-data)
   - [Intersection Operation](#intersection-operation)
@@ -80,6 +84,26 @@ Despite this, MDS users are highly encouraged to use beta features. New features
 Beta features may be suitable for enabling some new tools and analysis, but may not be appropriate for mission-critical applications or regulatory decisions where certainty and reliability are essential. In subsequent releases existing beta features may include breaking changes, even in a minor release. Note that [schemas](/schema) may not be defined for some beta features until they are promoted out of beta.
 
 Working Groups and their Steering Committees are expected to review beta designated features and [feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues?q=is%3Aissue+is%3Aopen+label%3Abeta) with each release cycle and determine whether the feature has reached the level of stability and maturity needed to remove the beta designation. In a case where a beta feature fails to reach substantial adoption after an extended time, Working Group Steering Committees should discuss whether or not the feature should remain in the specification.
+
+[Top][toc]
+
+## Field Types
+
+### Conditionally Required Fields
+
+Conditionally required fields **must** be provided in MDS data feeds from operators if the data is available from the operator, and/or the public agency requests it as part of its permit, RFP, contract, operating agreement, SLA, [Requirements](./policy#requirement) file, or via other authority. Or as part of the conditional requirement as stated in the field's descritpion.
+
+[Top][toc]
+
+### Optional Fields
+
+Optional fields **may** be provided in MDS data feeds from operators if the data is available from the operator, and/or the public agency requests it as part of its permit, RFP, contract, operating agreement, SLA, [Requirements](./policy#requirement) file, or via other authority. 
+
+[Top][toc]
+
+### Required if Applicable Fields
+
+Required if Applicable fields **must** be provided in MDS data feeds from operators if the data is available from the operator, and/or the public agency requests it as part of its permit, RFP, contract, operating agreement, SLA, [Requirements](./policy#requirement) file, or via other authority, and/or the field is relevant to the current provider/mode/program as defined by the public agency. 
 
 [Top][toc]
 

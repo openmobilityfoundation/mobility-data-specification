@@ -2,7 +2,7 @@
 
 <a href="/policy/"><img src="https://i.imgur.com/66QXveN.png" width="120" align="right" alt="MDS Policy Icon" border="0"></a>
 
-The Policy API endpoints are intended to be implemented by regulatory agencies and consumed by mobility providers. Providers query the Policy API to get information about local rules that may affect the operation of their mobility service or which may be used to determine compliance.
+The Policy API endpoints are intended to be implemented by regulatory agencies and consumed by mobility providers across all supported MDS [modes](../modes#list-of-supported-modes) and services (scooters, bikeshare, car share, delivery robots, taxis, TNCs, autonomous vehicles, agency fleets, commuter shuttles, etc). Providers query the Policy API to get information about local rules that may affect the operation of their mobility service or which may be used to determine compliance.
 
 This specification describes the digital relationship between _mobility as a service_ providers and the agencies that regulate them. The Policy API communicates municipal policies (such as as vehicle deployment caps and speed limits) in a clear, consistent manner.
 
@@ -37,12 +37,12 @@ This specification describes the digital relationship between _mobility as a ser
   - [Messages](#messages)
   - [Value URL](#value-url)
   - [Order of Operations](#order-of-operations)
+  - [Policy Relationship Diagram](#policy-relationship-diagram)
   - [Requirement](#requirement)
     - [Examples](#examples)
     - [Public Hosting](#public-hosting)
     - [Update Frequency](#requirement-update-frequency)
     - [Version Tracking](#version-tracking)
-    - [Beta Limitations](#beta-limitations)
     - [Format](#requirement-format)
     - [Metadata](#requirement-metadata)
     - [Programs](#requirement-programs)
@@ -57,7 +57,7 @@ The following information applies to all `policy` API endpoints.
 
 ### Background
 
-The goal of the Policy API specification is to enable agencies to create, revise, and publish machine-readable policies, as sets of rules for individual and collective device behavior exhibited by both _mobility as a service_ providers and riders / users. [Examples](./examples/README.md) of policies include:
+The goal of the Policy API specification is to enable public agencies to create, revise, and publish machine-readable policies (in near real-time if needed), as sets of rules for individual and collective device behavior exhibited by both _mobility as a service_ providers and riders / users. [Examples](./examples/README.md) of policies include:
 
 - City-wide and localized caps (e.g. "Minimum 500 and maximum 3000 scooters within city boundaries")
 - Exclusion zones (e.g. "No scooters are permitted in this district on weekends")
@@ -65,6 +65,8 @@ The goal of the Policy API specification is to enable agencies to create, revise
 - Speed-limit restrictions (e.g. "15 mph outside of downtown, 10 mph downtown")
 - Idle-time and disabled-time limitations (e.g. "5 days idle while rentable, 12 hours idle while unrentable, per device")
 - Trip fees and subsidies (e.g. "A 25 cent fee applied when a trip ends downtown")
+- Real-time emergency notifications (e.g. "A no travel geofence around a fire reported by a 911 call")
+- Large event policy rules (e.g. "No AVs or carshare near a planned stadium event, but 25 cent bikeshare subsidy when trips end near event")
 
 The machine-readable format allows Providers to obtain policies and compute compliance where it can be determined entirely by data obtained internally, and know what data is required from them and provided to them.
 
@@ -72,19 +74,21 @@ The machine-readable format allows Providers to obtain policies and compute comp
 
 ### Policy Examples
 
-See the [Policy Examples](./examples/README.md) for ways Policy can be implemented.
+See the [MDS Policy Examples](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Policy-Examples) wiki page for code examples of specific MDS Policy use cases, ideas on how Policy can be implemented.
 
 [Top][toc]
 
 ### Authorization
 
-The Policy endpoints should be made public. Authorization is not required.
+The Policy endpoints should be made public. Authorization is not required. Agencies may make reasonable accommodations to manage their endpoints, for example, using an API key that has a clear, public way to obtain - this can be useful for rate limiting requests, ensure proper use, tracking access per requestor, and/or customization of the Policy tailored to the requestor.
 
 [Top][toc]
 
 ### Update Frequency
 
 The publishing agency should establish beforehand and communicate to providers how frequently the Policy endpoints are expected to change, how often they should be polled to get the latest information, and expectations around emergency updates.
+
+For real-time uses of MDS Policy, public agencies should set a recommended minimum threshold (eg, every 1 minute at most).
 
 [Top][toc]
 
@@ -110,12 +114,15 @@ Policies shall be published by regulatory bodies or their authorized delegates a
 
 Policies typically refer to one or more associated geographies. Geographic information is obtained from the MDS [Geography](/geography) API.  Each policy and geography shall have a unique ID (UUID).
 
+Policies must be unique. A Policy may not have the exact same [Policy](#policy) object field values with a different `policy_id`. For example if the required or optional fields have the same values (either exactly identical or functionally identical), it is considered the same Policy and must not be duplicated as two different policies in the Policy payload.
+
 Geographical data shall be represented as GeoJSON `Feature` objects. No part of the geographical data should be outside the [municipality boundary][muni-boundary].
 
 Policies should be re-fetched whenever:
 
 1. a policy expires (via its `end_date`), or
 2. at an interval specified by the regulatory body, e.g. "daily at midnight".
+3. when the `last_updated` timestamp is newer than the previously fetched timestamp
 
 Flat files have an optional `end_date` field that will apply to the file as a whole.
 
@@ -127,7 +134,7 @@ Among other use-cases, configuring a REST API allows an Agency to:
 
 1. Dynamically adjust caps
 2. Set Provider specific policies
-3. Adjust other attributes in closer to real time
+3. Adjust other attributes in close to real-time
 4. Enumerate when policies are set to change
 
 Responses must set the `Content-Type` header, as specified in the [versioning][versioning] section.
@@ -159,6 +166,8 @@ _Query Parameters:_
 | `policy_id`         | UUID      | Optional    | If provided, returns one policy object with the matching UUID; default is to return all policy objects.                       |
 | `start_date` | [timestamp][ts] | Optional    | Beginning date of the queried time range; the default value is the request time |
 | `end_date`   | [timestamp][ts] | Optional    | Ending date of the queried time range; the default value is null, which captures all policies that are effective in the future|
+| `last_updated`   | Boolean | Optional    | If true, the endpoint only returns two fields: `version`, `last_updated`. Useful to quickly check when any data in the file has last been changed, without downloading the entire Policy payload. See the [Schema](#schema) section for an example. If not provided, value is false. |
+| `active_only`   | Boolean | Optional    | If true, return only the current active and future policies, not the retired/previous policies. Any policy that is a prev_policies would not be returned. However, the array of prev_policies still will be returned for reference as part of any relevant active policy. Useful to reduce the Policy payload size for use cases where you do not need to know the previous policy details. If not provided, value is false. |
 
 `start_date` and `end_date` are only considered when no `id` parameter is provided. They should return any policy whose effectiveness overlaps with or is contained with this range. Suppose there's a policy with a `start_date` of 1/1/21 and `end_date` of 1/31/21. Assuming an `end_date` that is null, 12/1/20 and 1/5/21 `start_dates` will return the policy, but 2/10/21 wouldn't. Assuming a `start_date` parameter of say, 11/1/20, then an `end_date` of 12/1/20 wouldn't return the policy, but 1/5/21 and 2/10/21 would. Lastly, a `start_date` of 1/5/21 and `end_date` of 1/6/21 would also return the policy. Please note also that while dates in the format MM:DD:YY are being used here, `start_date` and `end_date` must be numbers representing milliseconds since the Unix epoch time.
 
@@ -286,6 +295,8 @@ Response bodies must be a `UTF-8` encoded JSON object and must minimally include
 }
 ```
 
+Note that `data` payload will not be returned if the `last_updated` query string parameter is set to true. 
+
 ### Data Schema
 
 See the [Endpoints](#endpoints) below for information on their specific schema, and the [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for full details and interactive documentation.
@@ -303,13 +314,13 @@ An individual `Policy` object is defined by the following fields:
 | `name`           | String          | Required   | Name of policy                                                                      |
 | `mode_id`         | [Mode][modes]  | Required   | Mode this rule should apply, see MDS [mode list][modes] for options. Default `micromobility` for backwards compatibility (this default will likely be removed in a subsequent MDS release)                |
 | `policy_id`      | UUID            | Required   | Unique ID of policy                                                                 |
-| `provider_ids`   | UUID[]          | Optional   | Providers for whom this policy is applicable; empty arrays and `null`/absent implies all Providers. See MDS [provider list](/providers.csv). |
+| `provider_ids`   | UUID[]          | [Optional](../general-information.md#optional-fields)   | Providers for whom this policy is applicable; empty arrays and `null`/absent implies all Providers. See MDS [provider list](/providers.csv). |
 | `description`    | String          | Required   | Description of policy                                                               |
-| `currency`       | String          | Optional   | An ISO 4217 Alphabetic Currency Code representing the [currency](../general-information.md#costs-and-currencies) of all Rules with a `rate_amount`.|
+| `currency`       | String          | [Optional](../general-information.md#optional-fields)   | An ISO 4217 Alphabetic Currency Code representing the [currency](../general-information.md#costs-and-currencies) of all Rules with a `rate_amount`.|
 | `start_date`     | [timestamp][ts] | Required   | Beginning date/time of policy enforcement. In order to give providers sufficient time to poll, `start_date` must be at least 20 minutes after `published_date`.                                           |
-| `end_date`       | [timestamp][ts] | Optional    | End date/time of policy enforcement                                                 |
+| `end_date`       | [timestamp][ts] | [Optional](../general-information.md#optional-fields)    | End date/time of policy enforcement                                                 |
 | `published_date` | [timestamp][ts] | Required   | Timestamp that the policy was published                                             |
-| `prev_policies`  | UUID[]          | Optional    | Unique IDs of prior policies replaced by this one                                   |
+| `prev_policies`  | UUID[]          | [Optional](../general-information.md#optional-fields)    | Unique IDs of prior policies replaced by this one                                   |
 | `rules`          | Rule[]          | Required   | List of applicable [Rule](#rules) objects |
 
 [Top][toc]
@@ -325,22 +336,22 @@ An individual `Rule` object is defined by the following fields:
 | `rule_type`        | enum                        | Required   | Type of policy (see [Rule Types](#rule-types)) |
 | `geographies`      | UUID[]                      | Required   | List of [Geography](/geography#general-information) UUIDs (non-overlapping) specifying the covered geography |
 | `states`           | `{ state: event[] }`        | Required   | [Vehicle state][vehicle-states] to which this rule applies. Optionally provide a list of specific [vehicle events][vehicle-events] as a subset of a given status for the rule to apply to. An empty list or `null`/absent defaults to "all". |
-| `rule_units`       | enum                        | Conditionally Required   | Measured units of policy (see [Rule Units](#rule-units)) |
+| `rule_units`       | enum                        | [Conditionally Required](../general-information.md#conditionally-required-fields)   | Measured units of policy (see [Rule Units](#rule-units)) |
 | `accessibility_options` | [AccessibilityOption][accessibility-options][] | Applicable vehicle [accessibility options][accessibility-options], default any (or none) |
-| `vehicle_types`    | `vehicle_type[]`            | Optional   | Applicable vehicle types, default "all". |
-| `propulsion_types` | `propulsion_type[]`         | Optional   | Applicable vehicle [propulsion types][propulsion-types], default "all". |
-| `minimum`          | integer                     | Optional   | Minimum value, if applicable (default 0) |
-| `maximum`          | integer                     | Optional   | Maximum value, if applicable (default unlimited) |
-| `inclusive_minimum` | boolean                    | Optional   | Whether the rule `minimum` is considered in-bounds (default `true`) |
-| `inclusive_maximum` | boolean                    | Optional   | Whether the rule `maximum` is considered in-bounds (default `true`) |
-| `rate_amount`      | integer                     | Optional   | Amount of the rate (see [Rate Amounts](#rate-amounts)) |
-| `rate_recurrence`  | enum                        | Optional   | Recurrence of the rate (see [Rate Recurrences](#rate-recurrences)) |
-| `rate_applies_when` | enum                       | Optional   | Specifies when a rate is applied to a rule (see [Rate Applies When](#rate-applies-when)) (defaults to `out_of_bounds`) |
-| `start_time`       | ISO 8601 time `hh:mm:ss`    | Optional   | Beginning time-of-day when the rule is in effect (default 00:00:00). |
-| `end_time`         | ISO 8601 time `hh:mm:ss`    | Optional   | Ending time-of-day when the rule is in effect (default 23:59:59). |
-| `days`             | day[]                       | Optional   | Days `["sun", "mon", "tue", "wed", "thu", "fri", "sat"]` when the rule is in effect (default all) |
-| `messages`         | `{ String:String }`         | Optional   | Message to rider user, if desired, in various languages, keyed by language tag (see [Messages](#messages)) |
-| `value_url`        | URL                         | Optional   | URL to an API endpoint that can provide dynamic information for the measured value (see [Value URL](#value-url)) |
+| `vehicle_types`    | `vehicle_type[]`            | [Optional](../general-information.md#optional-fields)   | Applicable vehicle types, default "all". |
+| `propulsion_types` | `propulsion_type[]`         | [Optional](../general-information.md#optional-fields)   | Applicable vehicle [propulsion types][propulsion-types], default "all". |
+| `minimum`          | integer                     | [Optional](../general-information.md#optional-fields)   | Minimum value, if applicable (default 0) |
+| `maximum`          | integer                     | [Optional](../general-information.md#optional-fields)   | Maximum value, if applicable (default unlimited) |
+| `inclusive_minimum` | boolean                    | [Optional](../general-information.md#optional-fields)   | Whether the rule `minimum` is considered in-bounds (default `true`) |
+| `inclusive_maximum` | boolean                    | [Optional](../general-information.md#optional-fields)   | Whether the rule `maximum` is considered in-bounds (default `true`) |
+| `rate_amount`      | integer                     | [Optional](../general-information.md#optional-fields)   | Amount of the rate (see [Rate Amounts](#rate-amounts)) |
+| `rate_recurrence`  | enum                        | [Optional](../general-information.md#optional-fields)   | Recurrence of the rate (see [Rate Recurrences](#rate-recurrences)) |
+| `rate_applies_when` | enum                       | [Optional](../general-information.md#optional-fields)   | Specifies when a rate is applied to a rule (see [Rate Applies When](#rate-applies-when)) (defaults to `out_of_bounds`) |
+| `start_time`       | ISO 8601 time `hh:mm:ss`    | [Optional](../general-information.md#optional-fields)   | Beginning time-of-day when the rule is in effect (default 00:00:00). |
+| `end_time`         | ISO 8601 time `hh:mm:ss`    | [Optional](../general-information.md#optional-fields)   | Ending time-of-day when the rule is in effect (default 23:59:59). |
+| `days`             | day[]                       | [Optional](../general-information.md#optional-fields)   | Days `["sun", "mon", "tue", "wed", "thu", "fri", "sat"]` when the rule is in effect (default all) |
+| `messages`         | `{ String:String }`         | [Optional](../general-information.md#optional-fields)   | Message to rider user, if desired, in various languages, keyed by language tag (see [Messages](#messages)) |
+| `value_url`        | URL                         | [Optional](../general-information.md#optional-fields)   | URL to an API endpoint that can provide dynamic information for the measured value (see [Value URL](#value-url)) |
 
 [Top][toc]
 
@@ -458,6 +469,59 @@ The internal mechanics of ordering are up to the Policy editing and hosting soft
 
 [Top][toc]
 
+### Policy Relationship Diagram
+
+```mermaid
+---
+title: MDS Policy relationships
+---
+classDiagram
+    Policy <|-- Rules
+    Policy <|-- Previous_Policies
+    Rules <|-- Rule_Type
+    Rules <|-- Rule_Units
+    Rules <|-- Geographies
+    class Policy {
+        Name *
+        Mode ID * 
+        Policy ID *
+        Description *
+        Start Date *
+        Published Date *
+        Rule IDs *
+        Provider ID
+        End Date
+        Currency
+        Previous Policy IDs
+    }
+    class Rules{
+        Name *
+        Rule ID *
+        Rule Type *
+        Geographies *
+        States *
+        Rule Units *
+        Vehicle Type
+        Propultion Type
+        ...
+    }
+    class Rule_Units{
+       Name *
+    }
+    class Rule_Type{
+       Name *
+    }
+    class Previous_Policies{
+       IDs *
+    }
+    class Geographies{
+       IDs *
+    }
+    classDef default color:#373737,fill:#2af1be,stroke:#373737,stroke-width:2px;
+```
+[Top][toc]
+
+
 ### Requirement
 
 A public agency's Policy program Requirements endpoint enumerates all of the parts of MDS, [CDS](https://github.com/openmobilityfoundation/curb-data-specification), GBFS, and other specifications that an agency requires from providers for certain programs, including APIs, endpoints, and optional fields, as well as information for providers about the APIs the agency is hosting. The program requirements are specific to the needs and use cases of each agency, and ensure there is clarity on what data is being asked for in operating policy documents from providers, reducing the burden on both. This also allows additional public transparency and accountability around data requirements from agencies, and encourages privacy by allowing agencies to ask for only the data they need.
@@ -468,7 +532,7 @@ Requirements can also be used to define a scaled-down MDS implementation in situ
 
 #### Examples
 
-See [Policy Requirements Examples](/policy/examples/requirements.md) for ideas on how this can be implemented.
+See the [MDS Policy Examples](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Policy-Requirements-Examples) wiki page for code examples of specific MDS Policy Requirements use cases, ideas on how Requirements can be implemented.
 
 [Top][toc]
 
@@ -618,9 +682,9 @@ Unique combinations for data specs, specific providers, vehicle types, policies,
 | ---------------------------- | --------------- | -------- | ----------------------------------- |
 | `description`                | text            | Required | Simple agency program description of this combination of MDS, providers, vehicles, and time frame. |
 | `program_website_url`        | URL             | Required | URL of the agency's transportation policy page. E.g. "https://www.cityname.gov/transportation/shared-devices.htm" |
-| `program_document_url`        | URL             | Optional | URL of the agency's operating permit rules that mention data requirements. E.g. "https://www.cityname.gov/mds_data_policy.pdf" |
+| `program_document_url`        | URL            | [Optional](../general-information.md#optional-fields) | URL of the agency's operating permit rules that mention data requirements. E.g. "https://www.cityname.gov/mds_data_policy.pdf" |
 | `provider_ids`               | UUID[]          | Required | Array of provider UUIDs that apply to this group the requirements |
-| `vehicle_type`               | Enum            | Optional | Array of [Vehicle Types](/general-information.md#vehicle-types) that apply to this requirement. If absent it applies to all vehicle types. |
+| `vehicle_type`               | Enum            | [Optional](../general-information.md#optional-fields) | Array of [Vehicle Types](/general-information.md#vehicle-types) that apply to this requirement. If absent it applies to all vehicle types. |
 | `start_date`                 | [timestamp][ts] | Required | Beginning date/time of requirements |
 | `end_date`                   | [timestamp][ts] | Required | End date/time of requirements. Can be null. Keep data at least one year past `end_date` before removing. |
 | `required_data_specs`        | Array           | Required | Array of required [Data Specs](#requirement-data-specs) |
@@ -658,9 +722,9 @@ For each combination of items in a program, you can specify the data specs, APIs
 | -------------------- | ------ | -------- | ----------------------------------- |
 | `data_spec_name`     | Enum   | Required | Name of the data spec required. Supported values are: '[MDS](https://github.com/openmobilityfoundation/mobility-data-specification/tree/ms-requirements)', '[CDS](https://github.com/openmobilityfoundation/curb-data-specification)' '[GBFS](https://github.com/NABSA/gbfs/tree/v2.2)'. Others like GOFS, GTFS, TOMP-API, etc may also be referenced now by agencies and officially standardized here in the future -- leave your feedback on [this issue](https://github.com/openmobilityfoundation/mobility-data-specification/issues/682). |
 | `version`            | Text   | Required | Version number of the data spec required. E.g. '1.2.0' |
-| `mode_id`               | Text   | Optional | The [mode list][modes] shortname for MDS. E.g. 'passenger-services' |
-| `required_apis`      | Array  | Conditionally Required | Name of the [Requirement APIs](#requirement-apis) that need to be served by providers. At least one API is required. APIs not listed will not be available to the agency. |
-| `available_apis`     | Array  | Conditionally Required | Name of the [Requirement APIs](#requirement-apis) that are being served by agencies.  Not applicable to GBFS. APIs not listed will not be available to the provider. |
+| `mode_id`               | Text   | [Optional](../general-information.md#optional-fields) | The [mode list][modes] shortname for MDS. E.g. 'passenger-services' |
+| `required_apis`      | Array  | [Conditionally Required](../general-information.md#conditionally-required-fields) | Name of the [Requirement APIs](#requirement-apis) that need to be served by providers. At least one API is required. APIs not listed will not be available to the agency. |
+| `available_apis`     | Array  | [Conditionally Required](../general-information.md#conditionally-required-fields) | Name of the [Requirement APIs](#requirement-apis) that are being served by agencies.  Not applicable to GBFS. APIs not listed will not be available to the provider. |
 
 [Top][toc]
 
@@ -726,7 +790,7 @@ You may also show which APIs, endpoints, and fields your agency is serving to pr
 | -------------------- | ----- | -------- | ----------------------------------- |
 | `api_name`           | Text  | Required | Name of the applicable API required. At least one API is required. APIs not listed will not be available to the agency. E.g. for MDS: 'provider', or 'agency'. For GBFS, this field is omitted since GBFS starts at the `endpoint` level. |
 | `endpoint_name`      | Text  | Required | Name of the required endpoint under the API. At least one endpoint is required. E.g. for MDS 'provider': 'trips' |
-| `use_cases`      | Object with Array  | Optional | The list of policy uses cases that this data standard's information covers for your program. Includes an `external_url` to a HTTP reference list or database (e.g. to the [OMF Use Case Database](https://airtable.com/shrPf4QvORkjZmHIs/tblzFfU6fxQm5Sdhm)), **and** an array of `ids` of each applicable use case (e.g. "OMF-MDS-31"). You may enumerate multiple external use case sources and ids. |
+| `use_cases`      | Object with Array  | [Optional](../general-information.md#optional-fields) | The list of policy uses cases that this data standard's information covers for your program. Includes an `external_url` to a HTTP reference list or database (e.g. to the [OMF Use Case Database](https://airtable.com/shrPf4QvORkjZmHIs/tblzFfU6fxQm5Sdhm)), **and** an array of `ids` of each applicable use case (e.g. "OMF-MDS-31"). You may enumerate multiple external use case sources and ids. |
 
 [Top][toc]
 
@@ -735,16 +799,17 @@ You may also show which APIs, endpoints, and fields your agency is serving to pr
 | Name                 | Type  | Required/Optional | Description                |
 | -------------------- | ----- | -------- | ----------------------------------- |
 | `required_endpoints` | Array | Required | Array of optional endpoints required by the agency. At least one is required. Endpoints not listed will not be available to the agency. |
-| `required_fields`    | Array | Optional | Array of optional field names required by the agency. Can be omitted if no optional fields are required. Use dot notation for nested fields. See **special notes** below. |
-| `disallowed_fields`  | Array | Optional | Array of optional field names which must not be returned by in the endpoint, even if required in MDS. Use dot notation for nested fields. See **special notes** below. |
+| `required_fields`    | Array | [Optional](../general-information.md#optional-fields) | Array of optional field names required by the agency. Can be omitted if no optional fields are required. Use dot notation for nested fields. See **special notes** below. |
+| `disallowed_fields`  | Array | [Optional](../general-information.md#optional-fields) | Array of optional field names which must not be returned by in the endpoint, even if required in MDS. Use dot notation for nested fields. See **special notes** below. |
+| `report_geographies`        | Array | [Optional](../general-information.md#optional-fields) | Array of geography UUIDs (sourced from the Agency's Geographies API) that are the only geographies to be returned in Provider [Reports](../provider#reports). |
 
 **Agency Endpoints** - Specific to the `available_apis` array
 
 | Name                 | Type  | Required/Optional | Description                |
 | -------------------- | ----- | -------- | ----------------------------------- |
 | `available_endpoints`| Array | Required | Array of endpoints provided by the agency. At least one is required. Endpoints not listed will not be available to the provider. |
-| `url`                | URL   | Optional | Location of API endpoint url. Required if the API is unauthenticated and public, optional if endpoint is authenticated and private. E.g. "https://mds.cityname.gov/geographies/geography/1.1.0"  |
-| `available_fields`   | Array | Optional | Array of optional field names provided by the agency. Can be omitted if none are required. Use dot notation for nested fields. See **special notes** below. |
+| `url`                | URL   | [Optional](../general-information.md#optional-fields) | Location of API endpoint url. Required if the API is unauthenticated and public, optional if endpoint is authenticated and private. E.g. "https://mds.cityname.gov/geographies/geography/1.1.0"  |
+| `available_fields`   | Array | [Optional](../general-information.md#optional-fields) | Array of optional field names provided by the agency. Can be omitted if none are required. Use dot notation for nested fields. See **special notes** below. |
 
 **Special notes about `required_fields` and `disallowed_fields`.**
 
