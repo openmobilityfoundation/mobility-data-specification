@@ -87,12 +87,12 @@ The `trip_type` field **must** have one of the following enumerated values:
 The `trip_attributes` object **may** have the following key value pairs:
 
 - `driver_type` (enum, required): type of driver operating the device: `human`, `semi_autonomous`, `autonomous`
-- `driver_id` (UUID, optional): consistent unique identifier of the primary driver. Could be based on software version or an internal human driver id.
-- `app_name` (text, optional): name of the app used to reserve the trip which could be provider's app or 3rd party app
-- `requested_time` ([Timestamp][ts], optional): when the customer requested the trip
-- `has_payload` (boolean, optional): is there any payload for any delivery included in the device at trip start. 1 = loaded, 0 = empty
-- `range` (integer, optional): estimated range in meters based on energy levels in device at trip start
-- `identification_required` (boolean, optional): does the cargo require providing customer identification before trip start or upon delivery?
+- `driver_id` (UUID, [Optional](./general-information.md#optional-fields]): consistent unique identifier of the primary driver. Could be based on software version or an internal human driver id.
+- `app_name` (text, [Optional](./general-information.md#optional-fields]): name of the app used to reserve the trip which could be provider's app or 3rd party app
+- `requested_time` ([Timestamp][ts], [Optional](./general-information.md#optional-fields]): when the customer requested the trip
+- `has_payload` (boolean, [Optional](./general-information.md#optional-fields]): is there any payload for any delivery included in the device at trip start. 1 = loaded, 0 = empty
+- `range` (integer, [Optional](./general-information.md#optional-fields]): estimated range in meters based on energy levels in device at trip start
+- `identification_required` (boolean, [Optional](./general-information.md#optional-fields]): does the cargo require providing customer identification before trip start or upon delivery?
 
 [Top][toc]
 
@@ -100,8 +100,8 @@ The `trip_attributes` object **may** have the following key value pairs:
 
 The `fare_attributes` object **may** have the following key value pairs:
 
-- `payment_type` (enumerated, optional): `account_number`, `cash`, `credit_card`, `mobile_app`, `no payment`, `phone`, `voucher`, `test`
-- `price` (currency, optional): Total price of the order
+- `payment_type` (enumerated, [Optional](./general-information.md#optional-fields]): `account_number`, `cash`, `credit_card`, `mobile_app`, `no payment`, `phone`, `voucher`, `test`
+- `price` (currency, [Optional](./general-information.md#optional-fields]): Total price of the order
 
 [Top][toc]
 
@@ -113,20 +113,20 @@ _See more available vehicle attributes and accessibility attributes for any mode
 
 The `vehicle_attributes` object **may** have the following key value pairs:
 
-- `year` (integer, optional)
-- `make` (string, optional)
-- `model` (string, optional)
-- `color` (string, optional)
-- `inspection_date` (date YYYY-MM-DD, optional): the date of the last inspection of the vehicle
-- `equipped_cameras` (integer, optional): number of cameras equipped on device
-- `equipped_lighting` (integer, optional): number of lights used to illuminate the environment on the the device
-- `wheel_count` (integer, optional): number of wheels on the device
-- `width` (integer, optional): width in meters of the device
-- `length` (integer, optional): length in meters of the device
-- `height` (integer, optional): height in meters of the device (minus flexible elements like flags)
-- `weight` (integer, optional): weight in kilograms rounded up of the device not including cargo
-- `top_speed` (integer, optional): theoretical top speed in meters per second of the device
-- `storage_capacity` (integer, optional): cubic centimeters of cargo space available not including any cargo
+- `year` (integer, [Optional](./general-information.md#optional-fields])
+- `make` (string, [Optional](./general-information.md#optional-fields])
+- `model` (string, [Optional](./general-information.md#optional-fields])
+- `color` (string, [Optional](./general-information.md#optional-fields])
+- `inspection_date` (date YYYY-MM-DD, [Optional](./general-information.md#optional-fields]): the date of the last inspection of the vehicle
+- `equipped_cameras` (integer, [Optional](./general-information.md#optional-fields]): number of cameras equipped on device
+- `equipped_lighting` (integer, [Optional](./general-information.md#optional-fields]): number of lights used to illuminate the environment on the the device
+- `wheel_count` (integer, [Optional](./general-information.md#optional-fields]): number of wheels on the device
+- `width` (integer, [Optional](./general-information.md#optional-fields]): width in meters of the device
+- `length` (integer, [Optional](./general-information.md#optional-fields]): length in meters of the device
+- `height` (integer, [Optional](./general-information.md#optional-fields]): height in meters of the device (minus flexible elements like flags)
+- `weight` (integer, [Optional](./general-information.md#optional-fields]): weight in kilograms rounded up of the device not including cargo
+- `top_speed` (integer, [Optional](./general-information.md#optional-fields]): theoretical top speed in meters per second of the device
+- `storage_capacity` (integer, [Optional](./general-information.md#optional-fields]): cubic centimeters of cargo space available not including any cargo
 
 [Top][toc]
 
@@ -134,9 +134,9 @@ The `vehicle_attributes` object **may** have the following key value pairs:
 
 The `accessibility_attributes` object **may** have the following key value pairs:
 
-- `audio_cue` (boolean, optional): is the device equipped with audio cues upon delivery
-- `visual_cue` (boolean, optional): is the device equipped with visual cues upon delivery
-- `remote_open` (boolean, optional): can the device door be remotely opened to retrieve cargo upon delivery
+- `audio_cue` (boolean, [Optional](./general-information.md#optional-fields]): is the device equipped with audio cues upon delivery
+- `visual_cue` (boolean, [Optional](./general-information.md#optional-fields]): is the device equipped with visual cues upon delivery
+- `remote_open` (boolean, [Optional](./general-information.md#optional-fields]): can the device door be remotely opened to retrieve cargo upon delivery
 
 [Top][toc]
 
