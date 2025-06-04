@@ -6,16 +6,18 @@ This document contains specifications that are shared between the various MDS [A
 
 - [Authorization](#authorization)
 - [Beta Features](#beta-features)
-- [Conditionally Required Fields](#conditionally-required-fields)
 - [Costs and Currencies](#costs-and-currencies)
 - [Data Types](#data-types)
 - [Definitions](#definitions)
 - [Devices](#devices)
+- [Field Types](#field-types)
+  - [Conditionally Required Fields](#conditionally-required-fields)
+  - [Optional Fields](#optional-fields)
+  - [Required if Applicable](#required-if-applicable-fields)
 - [GBFS Compatibility](#gbfs-compatibility)
 - [Geographic Data](#geographic-data)
   - [Intersection Operation](#intersection-operation)
 - [Geography-Driven Events](#geography-driven-events)
-- [Optional Fields](#optional-fields)
 - [Responses](#responses)
   - [Error Messages](#error-messages)
   - [Bulk Responses](#bulk-responses)
@@ -85,9 +87,23 @@ Working Groups and their Steering Committees are expected to review beta designa
 
 [Top][toc]
 
-## Conditionally Required Fields
+## Field Types
+
+### Conditionally Required Fields
 
 Conditionally required fields **must** be provided in MDS data feeds from operators if the data is available from the operator, and/or the public agency requests it as part of its permit, RFP, contract, operating agreement, SLA, [Requirements](./policy#requirement) file, or via other authority. Or as part of the conditional requirement as stated in the field's descritpion.
+
+[Top][toc]
+
+### Optional Fields
+
+Optional fields **may** be provided in MDS data feeds from operators if the data is available from the operator, and/or the public agency requests it as part of its permit, RFP, contract, operating agreement, SLA, [Requirements](./policy#requirement) file, or via other authority. 
+
+[Top][toc]
+
+### Required if Applicable Fields
+
+Required if Applicable fields **must** be provided in MDS data feeds from operators if the data is available from the operator, and/or the public agency requests it as part of its permit, RFP, contract, operating agreement, SLA, [Requirements](./policy#requirement) file, or via other authority, and/or the field is relevant to the current provider/mode/program as defined by the public agency. 
 
 [Top][toc]
 
@@ -172,12 +188,6 @@ Here's how it works in practice:
 Agencies that wish to use Geography-Driven Events do so by requiring a new `event_geographies` field in status events. When an Agency is using Geography-Driven Events, Providers must emit a new `changed_geographies` status event whenever a vehicle in a trip enters or leaves a Geography managed by a Policy.
 
 During the Beta period for this feature, location and telemetry data remain required fields. This allows Agencies to test Geography-Driven Events, measuring its accuracy and efficacy against regulatory systems based on precise location data. After the beta period, if Geography-Driven Events is deemed by the OMF to be accurate and effective, the specification will evolve to allow cities to use Geography-Driven Events in lieu of location or telemetry data.
-
-[Top][toc]
-
-## Optional Fields
-
-Optional fields **may** be provided in MDS data feeds from operators if the data is available from the operator, and/or the public agency requests it as part of its permit, RFP, contract, operating agreement, SLA, [Requirements](./policy#requirement) file, or via other authority. 
 
 [Top][toc]
 
