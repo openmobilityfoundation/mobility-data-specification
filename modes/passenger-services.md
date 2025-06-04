@@ -88,17 +88,17 @@ The `trip_attributes` object **may** have the following key value pairs:
 - `app_name` (text, optional): name of the app used to reserve the trip which could be provider's app or 3rd party app
 - `passenger_count` (integer, required): unique count of passengers transported during trip duration
 - `requested_time` ([Timestamp][ts], required): when the passenger requested the trip
-- `requested_trip_start_location` ([GPS](gps), [Conditionally Required](./general-information.md#conditionally-required-fields]):  Location where the customer requested the trip to start (required if this is within jurisdictional boundaries) 
+- `requested_trip_start_location` ([GPS](gps), [Conditionally Required](../general-information.md#conditionally-required-fields)):  Location where the customer requested the trip to start (required if this is within jurisdictional boundaries) 
 - `quoted_trip_start_time` ([Timestamp][ts], Required): Time the trip was estimated or scheduled to start, that was provided to the passenger 
-- `dispatch_time` ([Timestamp][ts], [Conditionally Required](./general-information.md#conditionally-required-fields]): Time the vehicle was dispatched to the customer (required if trip was dispatched) 
-- `trip_wait_time` (milliseconds, [Optional](./general-information.md#optional-fields]): part of the passenger trip where the vehicle was moving slow or stopped (e.g. <12mph), which is a different fare rate in some jurisdictions
-- `trip_fare_time` (milliseconds, [Optional](./general-information.md#optional-fields]): part of the passenger trip where the vehicle was moving more quickly (e.g. >12mph), which is a different fare rate in some jurisdictions
-- `pickup_address` (text, [Optional](./general-information.md#optional-fields]): street address where the trip originated from
-- `dropoff_address` (text, [Optional](./general-information.md#optional-fields]): street address where the trip ended
-- `permit_license_number` (string, [Optional](./general-information.md#optional-fields]) - The permit license number of the organization that dispatched the vehicle
-- `driver_id` (string, [Optional](./general-information.md#optional-fields]): Universal identifier of a specific driver, static across operators, like a driver's license number. Could also be used as a lookup in an agency's internal driver system.
-- `wheelchair_transported` (boolean, [Optional](./general-information.md#optional-fields]) - was a wheelchair transported as part of this trip?
-- `cancellation_reason` (String, [Conditionally Required](./general-information.md#conditionally-required-fields]): The reason why a *driver* cancelled a reservation. (required if a driver cancelled a trip, and a `driver_cancellation` event_type was part of the trip) 
+- `dispatch_time` ([Timestamp][ts], [Conditionally Required](../general-information.md#conditionally-required-fields)): Time the vehicle was dispatched to the customer (required if trip was dispatched) 
+- `trip_wait_time` (milliseconds, [Optional](../general-information.md#optional-fields)): part of the passenger trip where the vehicle was moving slow or stopped (e.g. <12mph), which is a different fare rate in some jurisdictions
+- `trip_fare_time` (milliseconds, [Optional](../general-information.md#optional-fields)): part of the passenger trip where the vehicle was moving more quickly (e.g. >12mph), which is a different fare rate in some jurisdictions
+- `pickup_address` (text, [Optional](../general-information.md#optional-fields)): street address where the trip originated from
+- `dropoff_address` (text, [Optional](../general-information.md#optional-fields)): street address where the trip ended
+- `permit_license_number` (string, [Optional](../general-information.md#optional-fields)) - The permit license number of the organization that dispatched the vehicle
+- `driver_id` (string, [Optional](../general-information.md#optional-fields)): Universal identifier of a specific driver, static across operators, like a driver's license number. Could also be used as a lookup in an agency's internal driver system.
+- `wheelchair_transported` (boolean, [Optional](../general-information.md#optional-fields)) - was a wheelchair transported as part of this trip?
+- `cancellation_reason` (String, [Conditionally Required](../general-information.md#conditionally-required-fields)): The reason why a *driver* cancelled a reservation. (required if a driver cancelled a trip, and a `driver_cancellation` event_type was part of the trip) 
 
 [Top][toc]
 
@@ -108,18 +108,18 @@ The `fare_attributes` object **may** have the following key value pairs:
 
 - `payment_type` (enumerated, required): `account_number`, `cash`, `credit_card`, `mobile_app`, `no_payment`, `paratransit`, `phone`, `voucher`, `test`
 - `fare_type` (enumerated, required): `meter_fare`, `upfront_pricing`, `flat_rate`. Indicator of which rate was charged.
-- `meter_fare_amount` (currency, [Conditionally Required](./general-information.md#conditionally-required-fields]): if `upfront_pricing` is used as a `fare_type` include what the metered fare would have been if `meter_fare` would have been used. Allows cost comparison in evaluation of programs and pilots.
-- `tolls` (currency, [Optional](./general-information.md#optional-fields]) - Sum of any and all tolls charged for the trip, such as bridge tolls
-- `base_rate` (currency, [Optional](./general-information.md#optional-fields]) - Minimum fare to be charged as soon as the trip starts.
-- `exit_fee` (currency, [Optional](./general-information.md#optional-fields]) - Fee to exit location, like an airport
-- `other_fees` (currency, [Optional](./general-information.md#optional-fields]) - amount of any fees charged to the customer. Includes baggage fees, cleaning fee. Excludes other fees returned.
-- `tip` (currency, [Optional](./general-information.md#optional-fields]) - amount of tip paid by customer
-- `extra_amount` (currency, [Optional](./general-information.md#optional-fields]) - miscellaneous extra amounts charged to customer not covered by other fields.
-- `taxes` (currency, [Optional](./general-information.md#optional-fields]) - amount of taxes paid for the ride
-- `surcharge` (currency, [Optional](./general-information.md#optional-fields]) - any surcharge pricing
-- `commission` (currency, [Optional](./general-information.md#optional-fields]) - any extra commission for the ride
-- `driver_trip_pay` (currency, [Optional](./general-information.md#optional-fields]) - The payment the driver received for the trip 
-- `rate_code_id` (enumerated, [Optional](./general-information.md#optional-fields]) - one of `meter_fare`, `shared`, `out_of_town`, `disabled`, `upfront_pricing`, `promo_rate`
+- `meter_fare_amount` (currency, [Conditionally Required](../general-information.md#conditionally-required-fields)): if `upfront_pricing` is used as a `fare_type` include what the metered fare would have been if `meter_fare` would have been used. Allows cost comparison in evaluation of programs and pilots.
+- `tolls` (currency, [Optional](../general-information.md#optional-fields)) - Sum of any and all tolls charged for the trip, such as bridge tolls
+- `base_rate` (currency, [Optional](../general-information.md#optional-fields)) - Minimum fare to be charged as soon as the trip starts.
+- `exit_fee` (currency, [Optional](../general-information.md#optional-fields)) - Fee to exit location, like an airport
+- `other_fees` (currency, [Optional](../general-information.md#optional-fields)) - amount of any fees charged to the customer. Includes baggage fees, cleaning fee. Excludes other fees returned.
+- `tip` (currency, [Optional](../general-information.md#optional-fields)) - amount of tip paid by customer
+- `extra_amount` (currency, [Optional](../general-information.md#optional-fields)) - miscellaneous extra amounts charged to customer not covered by other fields.
+- `taxes` (currency, [Optional](../general-information.md#optional-fields)) - amount of taxes paid for the ride
+- `surcharge` (currency, [Optional](../general-information.md#optional-fields)) - any surcharge pricing
+- `commission` (currency, [Optional](../general-information.md#optional-fields)) - any extra commission for the ride
+- `driver_trip_pay` (currency, [Optional](../general-information.md#optional-fields)) - The payment the driver received for the trip 
+- `rate_code_id` (enumerated, [Optional](../general-information.md#optional-fields)) - one of `meter_fare`, `shared`, `out_of_town`, `disabled`, `upfront_pricing`, `promo_rate`
 
 [Top][toc]
 
@@ -131,14 +131,14 @@ _See more available vehicle attributes and accessibility attributes for any mode
 
 The `vehicle_attributes` object **may** have the following key value pairs:
 
-- `year` (integer, [Optional](./general-information.md#optional-fields])
-- `make` (string, [Optional](./general-information.md#optional-fields])
-- `model` (string, [Optional](./general-information.md#optional-fields])
-- `color` (string, [Optional](./general-information.md#optional-fields])
-- `vin` (string, [Optional](./general-information.md#optional-fields]) - the Vehicle Identification Number of the vehicle
-- `placard_number` (string, [Optional](./general-information.md#optional-fields]) - the registered placard number of the vehicle
-- `license_plate` (string, [Optional](./general-information.md#optional-fields]) - the registered vehicle license/number/registration plate identifier on the vehicle
-- `inspection_date` (date YYYY-MM-DD, [Optional](./general-information.md#optional-fields]) - the date of the last inspection of the vehicle
+- `year` (integer, [Optional](../general-information.md#optional-fields))
+- `make` (string, [Optional](../general-information.md#optional-fields))
+- `model` (string, [Optional](../general-information.md#optional-fields))
+- `color` (string, [Optional](../general-information.md#optional-fields))
+- `vin` (string, [Optional](../general-information.md#optional-fields)) - the Vehicle Identification Number of the vehicle
+- `placard_number` (string, [Optional](../general-information.md#optional-fields)) - the registered placard number of the vehicle
+- `license_plate` (string, [Optional](../general-information.md#optional-fields)) - the registered vehicle license/number/registration plate identifier on the vehicle
+- `inspection_date` (date YYYY-MM-DD, [Optional](../general-information.md#optional-fields)) - the date of the last inspection of the vehicle
 
 [Top][toc]
 
