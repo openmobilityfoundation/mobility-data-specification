@@ -34,6 +34,9 @@ A vehicle record is as follows:
 | `battery_capacity`   | Integer  | Required if Available | Capacity of battery expressed as milliamp hours (mAh) |
 | `fuel_capacity`      | Integer  | Required if Available | Capacity of fuel tank (liquid, solid, gaseous) expressed in liters |
 | `maximum_speed`      | Integer  | Required if Available | Maximum speed (kph) possible with vehicle under normal, flat incline, smooth surface conditions. Applicable if the device has a built-in or intelligent speed limiter/governor. |
+|`service_start`       |Timestamp | Conditionally Required   | Date/time the vehicle starts providing service. Required if asked for by public agency. |
+|`service_end`         |Timestamp | Required if Available | Date/time the vehicle stops providing service. Required if the vehicle is retired |
+
 
 [Top][toc]
 
