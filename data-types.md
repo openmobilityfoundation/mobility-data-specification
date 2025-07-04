@@ -110,10 +110,10 @@ Events represent changes in vehicle status.
 | `publication_time` | [Timestamp][ts] | [Optional](./general-information.md#optional-fields) | Date/time that event became available through the status changes endpoint |
 | `location` | [GPS][gps] | Required | See also [Telemetry][telemetry]. |
 | `event_geographies` | UUID[] | [Optional](./general-information.md#optional-fields) | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 2.0.0)*. Array of Geography UUIDs consisting of every Geography that contains the location of the status change. See [Geography Driven Events][geography-driven-events]. Required if `location` is not present. |
-| `battery_percent`       | Integer          | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 100 |
-| `fuel_percent`       | Integer          | Required if Applicable | Percent fuel in vehicle, expressed between 0 and 100 |
-| `trip_ids` | UUID[] | Required if Applicable | Trip UUIDs (foreign key to /trips endpoint), required if `event_types` contains `trip_start`, `trip_end`, `trip_cancel`, `trip_enter_jurisdiction`, or `trip_leave_jurisdiction` |
-| `stop_id`         | UUID            | Required if Applicable | Stop that the vehicle is currently located at. See [Stops][stops] |
+| `battery_percent`       | Integer          | [Required if Applicable](./general-information.md#required-if-applicable-fields) | Percent battery charge of vehicle, expressed between 0 and 100 |
+| `fuel_percent`       | Integer          | [Required if Applicable](./general-information.md#required-if-applicable-fields)  | Percent fuel in vehicle, expressed between 0 and 100 |
+| `trip_ids` | UUID[] | [Required if Applicable](./general-information.md#required-if-applicable-fields)  | Trip UUIDs (foreign key to /trips endpoint), required if `event_types` contains `trip_start`, `trip_end`, `trip_cancel`, `trip_enter_jurisdiction`, or `trip_leave_jurisdiction` |
+| `stop_id`         | UUID            | [Required if Applicable](./general-information.md#required-if-applicable-fields)  | Stop that the vehicle is currently located at. See [Stops][stops] |
 | `associated_ticket` | String | [Optional](./general-information.md#optional-fields) | Identifier for an associated ticket inside an Agency-maintained 311 or CRM system |
 | `gtfs_stop_id` | String | [Optional](./general-information.md#optional-fields) | A unique stop ID to be recorded when a vehicle makes a stop event at a location. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `stop_id` |
 
@@ -136,11 +136,11 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | `timestamp`       | [Timestamp][ts] | Required               | Date/time that event occurred. Based on GPS or GNSS clock            |
 | `trip_ids`        | UUID[]          | Required               | If telemetry occurred during a trip, the ID of the trip(s).  If not in a trip, `null`.
 | `journey_id`      | UUID            | Required               | If telemetry occurred during a trip and journeys are used for the mode, the ID of the journey.  If not in a trip, `null`.
-| `stop_id`         | UUID            | Required if Applicable | Stop that the vehicle is currently located at. See [Stops][stops] |
+| `stop_id`         | UUID            | [Required if Applicable](./general-information.md#required-if-applicable-fields)  | Stop that the vehicle is currently located at. See [Stops][stops] |
 | `location`        | [GPS][gps]      | Required               | Telemetry position data |
 | `location_type`   | Enum            | Required if Known      | If detectable and known, what type of location the device is on or in. One of `street`, `sidewalk`, `crosswalk`, `garage`, `bike_lane`.   |
-| `battery_percent` | Integer         | Required if Applicable | Percent battery charge of vehicle, expressed between 0 and 100 |
-| `fuel_percent`    | Integer         | Required if Applicable | Percent fuel in vehicle, expressed between 0 and 100 |
+| `battery_percent` | Integer         | [Required if Applicable](./general-information.md#required-if-applicable-fields)  | Percent battery charge of vehicle, expressed between 0 and 100 |
+| `fuel_percent`    | Integer         | [Required if Applicable](./general-information.md#required-if-applicable-fields)  | Percent fuel in vehicle, expressed between 0 and 100 |
 | `tipped_over`     | Boolean         | Required if Known      | If detectable and known, is the device tipped over or not? Default is 'false'. |
 | `gtfs_stop_id` | String | [Optional](./general-information.md#optional-fields) | A unique stop ID to be recorded when a vehicle makes a stop event at a location. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `stop_id` |
 
