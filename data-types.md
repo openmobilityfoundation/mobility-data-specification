@@ -250,16 +250,18 @@ A Trip is defined by the following structure:
 
  Incidents are used in both [Provider](/provider#stops) and [Agency](/agency#stops) telemetry data, whether on or off a Trip. 
 
-| Field           | Type            | Required/Optional      | Comments |
-| ----            | ----            | ----                   | ----     |
-| `incident_id`   | UUID            | Required               | ID used for uniquely identifying an Incident |
-| `incident_type` | Enum            | Required               | The type of incident. One of `unplanned_stop`, `remote_takeover`, `tip_over`, `harsh_stopping`, `harsh_starting`, `near_miss`, `vandalism`, `crash`. |
-| `description`   | String          | Optional               | Text description of the incident. |
-| `severity`      | String          | Optional               | Description of the severity of the incident. |
-| `report_id`     | String          | Optional               | Identifier of an external report, from a police report, citation, internal system, service request, etc. The report source is communicated by the operator to the agency outside of MDS. |
-| `report_type`   | String          | Optional               | Description of the type of report referenced by the `report_id`, eg. police, customer, remote operator, 311 call, etc. |
-| `contact_info`  | String          | Optional               | Description of any relevant contact information about the incident the operator can provide. |
-| `preliminary`   | Boolean         | Optional               | If `true`, then this information in this Incident is only preliminary, with more details and/or validation coming at a later date. If 'false`, the information provided here is deemed valed with no more updates expected. |
+| Field              | Type            | Required/Optional      | Comments |
+| ----               | ----            | ----                   | ----     |
+| `incident_id`      | UUID            | Required               | ID used for uniquely identifying an Incident. |
+| `incident_type`    | Enum            | Required               | The type of incident. One of `unplanned_stop`, `remote_takeover`, `tip_over`, `harsh_stopping` (e.g. braking), `harsh_starting` (e.g. acceleration), `near_miss`, `vandalism`, `crash`. |
+| `publication_time` | [Timestamp][ts] | Required               | Date/time that incident became available through the Incident endpoint. The time of incident occurance is found in the Telemetry data points that reference this `incident_id`. |
+| `last_updated`     | [Timestamp][ts] | Required               | Date/time that incident was last updated in the Incident endpoint. |
+| `description`      | String          | Optional               | Text description of the incident. |
+| `severity`         | String          | Optional               | Description of the severity of the incident. |
+| `report_id`        | String          | Optional               | Identifier of an external report, from a police report, citation, internal system, service request, etc. The report source is communicated by the operator to the agency outside of MDS. |
+| `report_type`      | String          | Optional               | Description of the type of report referenced by the `report_id`, eg. police, customer, remote operator, 311 call, etc. |
+| `contact_info`     | String          | Optional               | Description of any relevant contact information about the incident the operator can provide. |
+| `preliminary`      | Boolean         | Optional               | If `true`, then this information in this Incident is only preliminary, with more details and/or validation coming at a later date. If 'false`, the information provided here is deemed valed with no more updates expected. |
 
 [Top][toc]
 
