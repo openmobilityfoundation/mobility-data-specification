@@ -33,6 +33,7 @@ This specification contains a data standard for *mobility as a service* provider
   * [Recent Events - Query Parameters](#recent-events---query-parameters)
 * [Stops](#stops)
 * [Incidents](#incidents)
+  * [Incidents - Query Parameters](#incidents---query-parameters) 
 * [Reports](#reports)
   * [Reports - Response](#reports---response)
   * [Reports - Example](#reports---example)
