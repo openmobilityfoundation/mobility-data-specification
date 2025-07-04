@@ -32,6 +32,7 @@ This specification contains a data standard for *mobility as a service* provider
   * [Recent Events](#recent-events)
   * [Recent Events - Query Parameters](#recent-events---query-parameters)
 * [Stops](#stops)
+* [Incidents](#incidents)
 * [Reports](#reports)
   * [Reports - Response](#reports---response)
   * [Reports - Example](#reports---example)
@@ -526,6 +527,44 @@ See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schem
 
 [Top][toc]
 
+## Incidents
+
+The `/incidents` endpoint is a feed of various incident data from vehicles and devices that are the public agency's jurisdition, and are connected to the [Telemetry](#telemetry) endpoint which includes geolocation with timestamp, and other information. Included if part of a [Trip](#trips), as long as any part of the trip [intersects][intersection] with the [municipality boundary][muni-boundary].
+
+Incidents should be created as close to real-time as possible, and then updated when new information or changes happen.
+
+**Endpoint:** `/incidents`  
+**Method:** `GET`  
+**Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.  
+**Payload:** `{ "incidents": [] }`, an array of [Incidents][incidents] objects
+
+[Top][toc]
+
+### Incidents - Query Parameters
+
+| Query Parameter | Type | Expected Output |
+| ----- | ---- | -------- |
+| `incident_id` | UUID | Return details only about a specific incident. |
+| `incident_type` | String | Return details only about a specific incident type. |
+| `publication_start_time` | [timestamp][ts] | Incidents where `publication_start_time <= incident.publication_time` |
+| `publication_end_time` | [timestamp][ts] | Incidents where `incident.publication_time < publication_end_time` |
+| `last_updated_start` | [timestamp][ts] | Incidents where `last_updated_start <= incident.last_updated` |
+| `last_updated_end` | [timestamp][ts] | Incidents where `incident.last_updated < last_updated_end` |
+
+#### Responses
+
+_Possible HTTP Status Codes_: 
+200,
+400 (with parameter),
+401,
+406,
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
+
+[Top][toc]
+
+
 ## Reports
 
 Reports are information that providers can send back to agencies containing aggregated data that is not contained within other MDS endpoints, like counts of special groups of riders. These supplemental reports are not a substitute for other MDS Provider endpoints.
@@ -577,6 +616,7 @@ See [Provider examples](examples.md#reports).
 [geography-driven-events]: /general-information.md#geography-driven-events
 [geojson-feature-collection]: https://tools.ietf.org/html/rfc7946#section-3.3
 [iana]: https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
+[incidents]: /data-types.md#incidents
 [intersection]: /general-information.md#intersection-operation
 [iso4217]: https://en.wikipedia.org/wiki/ISO_4217#Active_codes
 [json-api-pagination]: http://jsonapi.org/format/#fetching-pagination
