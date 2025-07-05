@@ -144,7 +144,7 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | `fuel_percent`    | Integer         | [Required if Applicable](./general-information.md#required-if-applicable-fields)  | Percent fuel in vehicle, expressed between 0 and 100 |
 | `tipped_over`     | Boolean         | Required if Known      | If detectable and known, is the device tipped over or not? Default is 'false'. |
 | `gtfs_stop_id` | String | [Optional](./general-information.md#optional-fields) | A unique stop ID to be recorded when a vehicle makes a stop event at a location. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `stop_id` |
-| `incident_ids`    | Array of UUIDs  | Optional               | Array of one or more [Incident](#incident) IDs that are connected to this telemetry data point. |
+| `incident_ids`    | UUID[]          | Optional               | Array of one or more [Incident](#incidents) IDs that are connected to this telemetry data point. |
 
 ### GPS Data
 
