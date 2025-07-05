@@ -26,6 +26,9 @@ This specification contains a collection of RESTful APIs used to specify the dig
   * [Stops - Register](#stops---register)
   * [Stops - Update](#stops---update)
   * [Stops - Readback](#stops---readback)
+* [Incidents](#incidents)
+  * [Incident - Create](#incident---create)
+  * [Incident - Update](#incident---update)
 * [Reports](#reports)
   * [Reports - Register](#reports---register)
 
@@ -423,6 +426,69 @@ _Possible HTTP Status Codes_:
 500
 
 See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
+
+[Top][toc]
+
+## Incidents
+
+The `/incidents` endpoints allow providers to create and update the details of incidents.
+
+### Incident - Create
+
+The `/incidents` create endpoint is used to create incident reports that occur with provider devices.
+
+**Endpoint**: `/incidents`  
+**Method:** `POST`  
+**Payload:** An array of [Incidents](/data-types.md#incidents)  
+
+#### Responses
+
+_Possible HTTP Status Codes_: 
+201,
+400,
+401,
+406,
+409,
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
+
+[Top][toc]
+
+#### Error Codes:
+
+| `error`              | `error_description`                               | `error_details`[]               |
+| -------------------- | ------------------------------------------------- | ------------------------------- |
+| `bad_param`          | A validation error occurred                       | Array of parameters with errors |
+| `missing_param`      | A required parameter is missing                   | Array of missing parameters     |
+| `already_created`    | An incident with `incident_id` is already careated |                                 |
+
+### Incident - Update
+
+The `/incidents` update endpoint is used to change incident information, should some aspect of the incident change. Each incident must already be created.
+
+**Endpoint**: `/incidents`  
+**Method:** `PUT`  
+**Payload:** An array of [Incidents](/data-types.md#incidents)  
+
+#### Responses
+
+_Possible HTTP Status Codes_: 
+200,
+400,
+401,
+406,
+409,
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
+
+#### Error Codes:
+
+| `error`              | `error_description`                               | `error_details`[]               |
+| -------------------- | ------------------------------------------------- | ------------------------------- |
+| `bad_param`          | A validation error occurred                       | Array of parameters with errors |
+| `unregistered`       | This `incident_id` is unregistered                |                                 |
 
 [Top][toc]
 
