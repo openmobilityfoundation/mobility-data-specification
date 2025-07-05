@@ -249,7 +249,7 @@ A Trip is defined by the following structure:
 
 ## Incidents
 
- Incidents are used in both [Provider](/provider#stops) and [Agency](/agency#stops) telemetry data, whether on or off a Trip. 
+ Incidents are used in both [Provider](/provider#incidents) and [Agency](/agency#incidents) telemetry data, whether on or off a Trip. 
 
 | Field              | Type            | Required/Optional      | Comments |
 | ----               | ----            | ----                   | ----     |
