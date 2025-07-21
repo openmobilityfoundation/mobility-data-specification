@@ -148,6 +148,8 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 
 ### GPS Data
 
+Includes GPS device data and data from other relevant sensors.
+
 | Field      | Type           | Required/Optional     | Field Description                                            |
 | ---------- | -------------- | --------------------- | ------------------------------------------------------------ |
 | `lat`      | Double         | Required              | Latitude of the location                                     |
@@ -155,9 +157,12 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | `altitude` | Double         | Required if Available | Altitude above mean sea level in meters                      |
 | `heading`  | Double         | Required if Available | Degrees - clockwise starting at 0 degrees at true North      |
 | `speed`    | Float          | Required if Available | Estimated speed in meters / sec as reported by the GPS chipset |
-| `horizontal_accuracy` | Float          | Required if Available | Horizontal accuracy, in meters                               |
-| `vertical_accuracy` | Float          | Required if Available | Vertical accuracy, in meters                               |
+| `horizontal_accuracy` | Float | Required if Available | Horizontal accuracy, in meters                               |
+| `vertical_accuracy` | Float | Required if Available | Vertical accuracy, in meters                                 |
 | `satellites` | Integer      | Required if Available | Number of GPS or GNSS satellites                             |
+| `accelerometer_x` | Float   | Required if Available | The x-axis acceleration in G's (gravitational force).        |
+| `accelerometer_y` | Float   | Required if Available | The y-axis acceleration in G's (gravitational force).        |
+| `accelerometer_z` | Float   | Required if Available | The z-axis acceleration in G's (gravitational force).        |
 
 [Top][toc]
 
