@@ -254,13 +254,15 @@ A Trip is defined by the following structure:
 | Field              | Type            | Required/Optional      | Comments |
 | ----               | ----            | ----                   | ----     |
 | `incident_id`      | UUID            | Required               | ID used for uniquely identifying an Incident. |
-| `incident_type`    | Enum            | Required               | The type of incident. One of `unplanned_stop`, `remote_takeover`, `tip_over`, `harsh_stopping` (e.g. braking), `harsh_starting` (e.g. acceleration), `near_miss`, `vandalism`, `crash`. |
+| `incident_type`    | Enum            | Required               | The type of incident. One of `unplanned_stop`, `remote_takeover`, `ads_engaged` (Automated Driving System), `ads_disengaged`, `tip_over`, `harsh_stopping` (e.g. braking), `harsh_starting` (e.g. acceleration), `near_miss`, `vandalism`, `theft`, `crash`. Exact definitions, and when and if which incident types are sent, come from the agency. |
 | `incident_time`    | [Timestamp][ts] | Required               | Date/time that incident first occurred. Note that this timestamp of the incident first occurance is independent of one or more Telemetry timestamps referenced via `incident_id`. Note that more frequent telemetry data points may be required when an incident is first discovered and occuring. |
 | `discovery_time`   | [Timestamp][ts] | Required               | Date/time that incident was first discovered by the operator. This may be at the same moment of the `incident_time`, or may have been discovered later. |
-| `publication_time` | [Timestamp][ts] | Required               | Date/time that incident became first available through the Incident endpoint. |
+| `publication_time` | [Timestamp][ts] | Required               | Date/time that incident became first available to an agency through an Incident endpoint. |
 | `last_updated`     | [Timestamp][ts] | Required               | Date/time that incident was last updated in the Incident endpoint. |
 | `description`      | String          | Optional               | Text description of the incident. |
-| `severity`         | String          | Optional               | Description of the severity of the incident. |
+| `severity`         | String          | Optional               | Text description of the severity of the incident. |
+| `medical_dispatch` | Boolean         | Optional               | If `true`, a medical dispatch occured connected to the incident. |
+| `medical_transport` | Boolean        | Optional               | If `true`, one or more individuals was transported via an ambulance or emergency response vehicle because of the incident. |
 | `report_id`        | String          | Optional               | Identifier of an external report, from a police report, citation, internal system, service request, etc. The report source is communicated by the operator to the agency outside of MDS. |
 | `report_type`      | String          | Optional               | Description of the type of report referenced by the `report_id`, eg. police, customer, remote operator, 311 call, etc. |
 | `contact_info`     | String          | Optional               | Description of any relevant contact information about the incident the operator can provide. |
