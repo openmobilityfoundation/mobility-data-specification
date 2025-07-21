@@ -255,7 +255,9 @@ A Trip is defined by the following structure:
 | ----               | ----            | ----                   | ----     |
 | `incident_id`      | UUID            | Required               | ID used for uniquely identifying an Incident. |
 | `incident_type`    | Enum            | Required               | The type of incident. One of `unplanned_stop`, `remote_takeover`, `tip_over`, `harsh_stopping` (e.g. braking), `harsh_starting` (e.g. acceleration), `near_miss`, `vandalism`, `crash`. |
-| `publication_time` | [Timestamp][ts] | Required               | Date/time that incident became available through the Incident endpoint. The time of incident occurance is found in the Telemetry data points that reference this `incident_id`. |
+| `incident_time`    | [Timestamp][ts] | Required               | Date/time that incident first occurred. Note that this timestamp of the incident first occurance is independent of one or more Telemetry timestamps referenced via `incident_id`. Note that more frequent telemetry data points may be required when an incident is first discovered and occuring. |
+| `discovery_time`   | [Timestamp][ts] | Required               | Date/time that incident was first discovered by the operator. This may be at the same moment of the `incident_time`, or may have been discovered later. |
+| `publication_time` | [Timestamp][ts] | Required               | Date/time that incident became first available through the Incident endpoint. |
 | `last_updated`     | [Timestamp][ts] | Required               | Date/time that incident was last updated in the Incident endpoint. |
 | `description`      | String          | Optional               | Text description of the incident. |
 | `severity`         | String          | Optional               | Description of the severity of the incident. |
