@@ -355,7 +355,7 @@ See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schem
 
 ## Telemetry
 
-The `/telemetry` endpoint is a feed of vehicle telemetry data for publishing all available location data.  For privacy reasons, in-trip telemetry may be delayed at the discretion of the regulating body.
+The `/telemetry` endpoint is a feed of vehicle telemetry data for publishing all available location data. Telemetry data occurs whether a vehicle is on a trip or not. The frequency of the telemetry data points is determined by the agency for the specific mobility program and the technical abilities of the vehicles, operator, connectivity, etc. This frequency may be clearly specified with the [Provider Requirements](../policy/README.md#requirement-apis) `update_interval` field. For privacy reasons, in-trip telemetry may be delayed at the discretion of the regulating agency.
 
 To represent [trip](#trip) telemetry, the data should include every [observed point][point-geo] in the trip, even those which occur outside the [municipality boundary][muni-boundary], as long as any part of the trip [intersects][intersection] with the [municipality boundary][muni-boundary].
 
