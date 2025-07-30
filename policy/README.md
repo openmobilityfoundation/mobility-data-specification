@@ -151,7 +151,7 @@ See the [Responses section][responses] for information on valid MDS response cod
 
 #### Policies - Get
 
-Allows operators to pull a list of active policies from agencies. 
+Allows operators to pull a list of active policies from agencies, similar to the Provider API. 
 
 **Endpoint**: `/policies/{policy_id}`  
 **Method**: `GET`  
@@ -196,11 +196,35 @@ See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schem
 
 #### Policies - Create
 
-Allows agencies to push a newly created policies from agencies. 
+Allows agencies to push a newly created policies from agencies, similar to the Agency API. This push method creates the opportunity for near real-time communication of policy changes. Endpoint producers **SHALL** provide authorization for API endpoints via a bearer token based auth system specified in the MDS [Authorization section](/general-information.md#authorization), to allow handshake communication and response confirmation.
+
+**Endpoint**: `/policies/`  
+**Method:** `POST`  
+**Payload:** An array of [Policy](#policy) objects  
 
 **Responses**
 
+_Possible HTTP Status Codes_: 
+201,
+400,
+401,
+406,
+409,
+500
 
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
+
+[Top][toc]
+
+#### Error Codes:
+
+| `error`              | `error_description`                            | `error_details`[]               |
+| -------------------- | -----------------------------------------------| ------------------------------- |
+| `bad_param`          | A validation error occurred                    | Array of parameters with errors |
+| `missing_param`      | A required parameter is missing                | Array of missing parameters     |
+| `already_created`    | A policy with `policy_id` is already created   |                                 |
+
+Note that you may only create a new MDS Policy. Retired policies are simply referenced in `prev_policies`. See [Updating or Ending Policies](#updating-or-ending-policies) for details.
 
 [Top][toc]
 
