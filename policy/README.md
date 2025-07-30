@@ -82,7 +82,7 @@ See the [MDS Policy Examples](https://github.com/openmobilityfoundation/mobility
 
 In most cases, the Policy endpoints should be made public. Authorization is not required in such cases. Agencies may make reasonable accommodations to manage their endpoints, for example, using an API key that has a clear, public way to obtain - this can be useful for rate limiting requests, ensure proper use, tracking access per requestor, and/or customization of the Policy tailored to the requestor.
 
-In some cases though, it can be justified to use Authorization for the Policy API (some agencies may decide to make it authenticated for privacy programs or functional purposes). Authorization may then be used for the Policy API. It should then rely on the standard Authorization methods used in other MDS APIs. 
+In some cases though, it can be justified to use Authorization for the Policy API (some agencies may decide to make it authenticated for privacy programs or functional purposes). Authorization may then be used for the Policy API. It should then rely on the standard [Authorization](../general-information.md#authorization) methods used in other MDS APIs. 
 
 [Top][toc]
 
