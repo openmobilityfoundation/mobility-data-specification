@@ -270,7 +270,7 @@ A Trip is defined by the following structure:
 | `medical_transport` | Boolean        | Optional          | If `true`, one or more individuals was transported via an ambulance or emergency response vehicle because of the incident. |
 | `report_id`        | String          | Optional          | Identifier of an external report, from a police report, citation, internal system, service request, etc. The report source is communicated by the operator to the agency outside of MDS. |
 | `report_type`      | String          | Optional          | Description of the type of report referenced by the `report_id`, eg. police, customer, remote operator, 311 call, etc. |
-| `external_references` | Array of [External Reference][external-reference] objects | Optional | One or more references to external data feeds impacting or related to this Incident, as they become available. |
+| `external_references` | Array of [External Reference][external-reference] objects | Optional | One or more references to external data feeds, links, reports, or documents impacting or related to this Incident, as they become available. |
 | `contact_info`     | String          | Optional          | Description of any relevant contact information about the incident the operator can provide. |
 | `preliminary`      | Boolean         | Optional          | If `true`, then this information in this Incident is only preliminary, with more details and/or validation coming at a later date. If `false`, the information provided here is deemed valed with no more updates expected. |
 
