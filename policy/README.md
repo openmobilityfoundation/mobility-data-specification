@@ -19,6 +19,8 @@ This specification describes the digital relationship between _mobility as a ser
 - [REST Endpoints](#rest-endpoints)
   - [Responses and Error Messages](#responses-and-error-messages)
   - [Policies](#policies)
+    - [Policies - Get](policies---get)
+    - [Policies - Create](policies---create)
   - [Geographies](#geographies)
   - [Requirements](#requirements)
 - [Flat Files](#flat-files)
@@ -147,6 +149,8 @@ See the [Responses section][responses] for information on valid MDS response cod
 
 ### Policies
 
+#### Policies - Get
+
 **Endpoint**: `/policies/{policy_id}`  
 **Method**: `GET`  
 **Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.    
@@ -175,7 +179,7 @@ Policies will be returned in order of effective date (see schema below), with pa
 
 `provider_id` is an implicit parameter and will be encoded in the authentication mechanism, or a complete list of policies should be produced. If the Agency decides that Provider-specific policy documents should not be shared with other Providers (e.g. punitive policy in response to violations), an Agency should filter policy objects before serving them via this endpoint.
 
-### Responses
+**Responses**
 
 _Possible HTTP Status Codes_: 
 200,
@@ -185,6 +189,16 @@ _Possible HTTP Status Codes_:
 500
 
 See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
+
+[Top][toc]
+
+#### Policies - Create
+
+
+
+**Responses**
+
+
 
 [Top][toc]
 
