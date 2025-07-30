@@ -202,7 +202,10 @@ Endpoint producers **SHALL** provide authorization for API endpoints via a beare
 
 **Endpoint**: `/policies/`  
 **Method:** `POST`  
+**Authorization**: required  
 **Payload:** An array of [Policy](#policy) objects  
+
+_Optional endpoint, as required by public agencies; if not implemented, the server should reply with `501 Not Implemented`._
 
 **Responses**
 
@@ -212,7 +215,8 @@ _Possible HTTP Status Codes_:
 401,
 406,
 409,
-500
+500, 
+501
 
 See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
 
