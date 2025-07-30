@@ -117,6 +117,7 @@ Events represent changes in vehicle status.
 | `stop_id`         | UUID            | [Required if Applicable](./general-information.md#required-if-applicable-fields)  | Stop that the vehicle is currently located at. See [Stops][stops] |
 | `associated_ticket` | String | [Optional](./general-information.md#optional-fields) | Identifier for an associated ticket inside an Agency-maintained 311 or CRM system |
 | `gtfs_stop_id` | String | [Optional](./general-information.md#optional-fields) | A unique stop ID to be recorded when a vehicle makes a stop event at a location. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `stop_id` |
+| `external_references` | Array of [External Reference][external-reference] objects | Optional | One or more references impacting or related to this Trip. |
 
 ### Event Times
 
@@ -188,6 +189,7 @@ Stops describe vehicle trip start and end locations in a pre-designated physical
 | `parent_stop`            | UUID                                                  | [Optional](./general-information.md#optional-fields) | Describe a basic hierarchy of stops (e.g.a stop inside of a greater stop) |
 | `devices`                | UUID[]                                                | [Conditionally Required](./general-information.md#conditionally-required-fields) | List of device_ids for vehicles which are currently at this stop. Required if the program has station based availability requirements or service level agreements pertaining to stations. |
 | `image_url`              | URL                                                   | [Optional](./general-information.md#optional-fields) | Link to an image, photo, or diagram of the stop. Could be used by providers to help riders find or use the stop. |
+| `external_references` | Array of [External Reference][external-reference] objects | Optional | One or more references impacting or related to this Trip. |
 
 [Top][toc]
 
@@ -243,6 +245,7 @@ A Trip is defined by the following structure:
 | `currency`               | String          | [Optional](./general-information.md#optional-fields), USD cents is implied if null.| An [ISO 4217 Alphabetic Currency Code][iso4217] representing the currency of the payee (see [Costs & Currencies][costs-and-currencies]) |
 | `gtfs_trip_id` | String | Required if Applicable | A unique trip ID for the associated scheduled GTFS route-trip. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `trip_id` in the trips.txt and other files.|
 | `gtfs_api_url` | URL | Required if Applicable | Full URL to the location where the associated [GTFS](https://gtfs.org/documentation/schedule/reference/) dataset zip files are located. |
+| `external_references` | Array of [External Reference][external-reference] objects | Optional | One or more references impacting or related to this Trip. |
 
 [Top][toc]
 
