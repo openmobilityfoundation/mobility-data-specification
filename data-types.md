@@ -304,7 +304,7 @@ Other special group types may be added in future MDS releases as relevant agency
 
 ## External Reference
 
-An External Reference object describes a specific feature from a data feed or API that is relevant to the curb place via an external reference. This allows MDS users to reference other data feeds, documents, websites, or URLs that impact or provide information, and see more details in an external URL. Data feeds can be any existing standard (CDS, WZDx, CWZ, GTFS, GBFS, MDS, etc), custom feed, document, web page, etc.
+An External Reference object describes a specific feature from an external data source that is relevant to a part of MDS data. This allows MDS users to reference other data sources that impact or provide information about an MDS object, and see more details at an external URL. Data feeds can be anythin available via a URL, including an existing data standard (CDS, WZDx, CWZ, GTFS, GBFS, MDS, etc), a custom feed, API, document, web page, report, etc.
 
 An `external_reference` is a JSON *array* with the following fields within objects:
 
