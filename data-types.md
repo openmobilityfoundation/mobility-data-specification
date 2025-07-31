@@ -320,6 +320,7 @@ An `external_reference` is a JSON *array* with the following fields within objec
 
 [costs-and-currencies]: /general-information.md#costs-and-currencies
 [event-times]: #event-times
+[external-reference]: ../data-types.md#external-reference
 [gbfs-station-info]: https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_informationjson
 [gbfs-station-status]: https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_statusjson
 [geography-driven-events]: /general-information.md#geography-driven-events
