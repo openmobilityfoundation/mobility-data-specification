@@ -304,17 +304,17 @@ Other special group types may be added in future MDS releases as relevant agency
 
 ## External Reference
 
-An External Reference object describes a specific feature from an external data source that is relevant to a part of MDS data. This allows MDS users to reference other data sources that impact or provide information about an MDS object, and see more details at an external URL. Data feeds can be anythin available via a URL, including an existing data standard (CDS, WZDx, CWZ, GTFS, GBFS, MDS, etc), a custom feed, API, document, web page, report, etc.
+An External Reference object describes a specific feature from an external data source that is relevant to a part of MDS data. This allows MDS users to reference other data sources that impact or provide information about an MDS object, and see more details at an external URL. Data feeds can be anything available via a URL, including an existing data standard (CDS, WZDx, CWZ, GTFS, GBFS, MDS, etc), a custom feed, API, document, web page, report, etc.
 
 An `external_reference` is a JSON *array* with the following fields within objects:
 
 | Name   | Type   | Required/Optional   | Description   |
 | ------ | ------ | ------------------- | ------------- |
-| `data_feed_url` | URL | Required | A web-accessible identifier for the source of the publicly or privately accessible data feed, document, website, or URL. This MUST be a full HTTPS URL pointing to a location which contains more information impacting or explaining the location or policy. |
-| `name` | String | Optional | Name of the data feed for reference. E.g. "WZDx", "CWZ", "CDS", "GBFS", "GTFS", "MDS". |
-| `public` | Boolean | Optional | Is this data feed able to be viewed with out any sort of authentication? If `true`, the `data_feed_url` is public. If `false`, the `data_feed_url` requires some sort of authentication, authorization, or API key to access. This is an informational field to set access expectations for the feed user, and does not provide any credentials directly unless explicitly contained in the `data_feed_url` URL string. |
-| `identifier_name` | String | Optional | The name of the data field or object that is referenced by the unique `ids`. E.g. "id", "report_id", "trip_id", "vehicle_id", "RoadEventFeature", etc, if relevant and available in the URL. |
-| `ids` | Array of Strings | Optional | An array of one or more **ids** from the data feed that impacts the use of or relationship to part of MDS, e.g. Trips, Events, Stops, etc. The **ids** and their details are be found in the referenced `data_feed_url`. |
+| `data_source_url` | URL | Required | A web-accessible identifier for the source of the publicly or privately accessible data feed, document, website, or URL. This MUST be a full HTTPS URL pointing to a location which contains more information impacting or explaining the location, event, or policy. |
+| `name` | String | Optional | Name of the data source for reference. E.g. "WZDx", "CWZ", "CDS", "GBFS", "GTFS", "MDS". |
+| `public` | Boolean | Optional | Is this data feed able to be viewed with out any sort of authentication? If `true`, the `data_feed_url` is public. If `false`, the `data_feed_url` requires some sort of authentication, authorization, or API key to access. This is an informational field to set access expectations for the data source user, and does not provide any credentials directly unless explicitly contained in the `data_feed_url` URL string. |
+| `identifier_name` | String | Optional | The name of the data source identifier or object that is referenced by the unique `ids`. E.g. "id", "report_id", "trip_id", "vehicle_id", "RoadEventFeature", etc, if relevant and available in the URL. |
+| `ids` | Array of Strings | Optional | An array of one or more **ids** from the data sources that impacts the use of or relationship to part of MDS, e.g. Trips, Events, Stops, etc. The **ids** and their details are be found in the referenced `data_source_url`. |
 
 [Top][toc]
 
