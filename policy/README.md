@@ -198,7 +198,7 @@ See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schem
 
 Allows agencies to push a newly created policies to operators, similar to the Agency API. This push method creates the opportunity for near real-time communication of policy changes.
 
-Note that once an update is communicated via a policy push, the agency should pull from the relevant [Geography API](../geography) endpoint to see if there are new or changed geographic areas. 
+Note that once an update is communicated via a policy push, the agency should push or pull from the relevant [Geography API](../geography) endpoint to get the latest information on new or changed geographic areas. 
 
 Endpoint producers **SHALL** provide authorization for API endpoints via a bearer token based auth system specified in the MDS [Authorization section](/general-information.md#authorization), to allow handshake communication and response confirmation.
 
@@ -207,7 +207,7 @@ Endpoint producers **SHALL** provide authorization for API endpoints via a beare
 **Authorization**: required  
 **Payload:** An array of [Policy](#policy) objects  
 
-_Optional endpoint, as required by public agencies; if not implemented, the server should reply with `501 Not Implemented`._
+_Optional endpoint, as required by public agencies; if not implemented, the server should reply with `501 Not Implemented` if possible._
 
 **Responses**
 
