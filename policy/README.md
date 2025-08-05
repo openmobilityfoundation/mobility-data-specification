@@ -152,7 +152,7 @@ See the [Responses section][responses] for information on valid MDS response cod
 **Endpoint**: `/policies/{policy_id}`  
 **Method**: `GET`  
 **Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.    
-**Authorization**: public  
+**Authorization**: public _or_ authenticated (see [Authorization](#authorization)) 
 **`data` Payload**: `{ "policies": [] }`, an array of objects with the structure [outlined below](#policy).
 
 _Path Parameters:_
@@ -201,7 +201,7 @@ See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schem
 **Endpoint**: `/requirements/`  
 **Method**: `GET`  
 **[Beta feature](/general-information.md#beta-features)**: *No (as of 2.0.0)*. 
-**Authorization**: public  
+**Authorization**: public
 **Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.  
 **`data` Payload**: `{ requirements: [] }`, JSON objects that follow the schema [outlined here](#requirement).  
 
