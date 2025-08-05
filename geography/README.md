@@ -296,9 +296,9 @@ See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schem
 | -------------------- | -----------------------------------------------| ------------------------------- |
 | `bad_param`          | A validation error occurred                    | Array of parameters with errors |
 | `missing_param`      | A required parameter is missing                | Array of missing parameters     |
-| `already_created`    | A geography with `geography_id` is already created   |                                 |
+| `already_created`    | A geography with `geography_id` is already created   |                           |
 
-Note that you may only create a new MDS Policy. Retired policies are simply referenced in `prev_policies`. See [Updating or Ending Policies](#updating-or-ending-policies) for details.
+Note that you may only create a new MDS Geography. Retired geographies are simply referenced in `prev_geographies`. See [Distribution](#distribution) for details.
 
 [Top][toc]
 
