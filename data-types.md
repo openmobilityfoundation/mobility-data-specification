@@ -17,7 +17,7 @@ This MDS data types page catalogs the objects (fields, types, requirements, desc
 - [Trips](#trips)
 - [Reports](#reports)
 - [External Reference](#external-reference)
-- 
+ 
 ## Vehicles
 
 A vehicle record is as follows:
@@ -117,6 +117,7 @@ Events represent changes in vehicle status.
 | `stop_id`         | UUID            | [Required if Applicable](./general-information.md#required-if-applicable-fields)  | Stop that the vehicle is currently located at. See [Stops][stops] |
 | `associated_ticket` | String | [Optional](./general-information.md#optional-fields) | Identifier for an associated ticket inside an Agency-maintained 311 or CRM system |
 | `gtfs_stop_id` | String | [Optional](./general-information.md#optional-fields) | A unique stop ID to be recorded when a vehicle makes a stop event at a location. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `stop_id` |
+| `external_references` | Array of [External Reference][external-reference] objects | [Optional](./general-information.md#optional-fields) | One or more references impacting or related to this Event. |
 
 ### Event Times
 
@@ -188,6 +189,7 @@ Stops describe vehicle trip start and end locations in a pre-designated physical
 | `parent_stop`            | UUID                                                  | [Optional](./general-information.md#optional-fields) | Describe a basic hierarchy of stops (e.g.a stop inside of a greater stop) |
 | `devices`                | UUID[]                                                | [Conditionally Required](./general-information.md#conditionally-required-fields) | List of device_ids for vehicles which are currently at this stop. Required if the program has station based availability requirements or service level agreements pertaining to stations. |
 | `image_url`              | URL                                                   | [Optional](./general-information.md#optional-fields) | Link to an image, photo, or diagram of the stop. Could be used by providers to help riders find or use the stop. |
+| `external_references` | Array of [External Reference][external-reference] objects | [Optional](./general-information.md#optional-fields) | One or more references impacting or related to this Stop. |
 
 [Top][toc]
 
@@ -243,6 +245,7 @@ A Trip is defined by the following structure:
 | `currency`               | String          | [Optional](./general-information.md#optional-fields), USD cents is implied if null.| An [ISO 4217 Alphabetic Currency Code][iso4217] representing the currency of the payee (see [Costs & Currencies][costs-and-currencies]) |
 | `gtfs_trip_id` | String | Required if Applicable | A unique trip ID for the associated scheduled GTFS route-trip. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `trip_id` in the trips.txt and other files.|
 | `gtfs_api_url` | URL | Required if Applicable | Full URL to the location where the associated [GTFS](https://gtfs.org/documentation/schedule/reference/) dataset zip files are located. |
+| `external_references` | Array of [External Reference][external-reference] objects | [Optional](./general-information.md#optional-fields) | One or more references impacting or related to this Trip. |
 
 [Top][toc]
 
@@ -301,22 +304,23 @@ Other special group types may be added in future MDS releases as relevant agency
 
 ## External Reference
 
-An External Reference object describes a specific feature from a data feed or API that is relevant to the curb place via an external reference. This allows CDS users to reference other data feeds, documents, websites, or URLs that impact or provide information, and see more details in an external URL. Data feeds can be any existing standard (MDS, WZDx, CWZ, GTFS, GBFS, CDS, etc), custom feed, document, web page, etc.
+An External Reference object describes a specific feature from an external data source that is relevant to a part of MDS data. This allows MDS users to reference other data sources that impact or provide information about an MDS object, and see more details at an external URL. Data sources can be anything available via a URL, including an existing data standard (CDS, WZDx, CWZ, GTFS, GBFS, MDS, etc), a custom feed, API, document, web page, report, etc.
 
 An `external_reference` is a JSON *array* with the following fields within objects:
 
 | Name   | Type   | Required/Optional   | Description   |
 | ------ | ------ | ------------------- | ------------- |
-| `data_feed_url` | URL | Required | A web-accessible identifier for the source of the publicly or privately accessible data feed, document, website, or URL. This MUST be a full HTTPS URL pointing to a location which contains more information impacting or explaining the location or policy. |
-| `name` | String | Optional | Name of the data feed for reference. E.g. "WZDx", "CWZ", "MDS", "GBFS", "GTFS", "CDS". |
-| `public` | Boolean | Optional | Is this data feed able to be viewed with out any sort of authentication? If `true`, the `data_feed_url` is public. If `false`, the `data_feed_url` requires some sort of authentication, authorization, or API key to access. This is an informational field to set access expectations for the feed user, and does not provide any credentials directly unless explicitly contained in the `data_feed_url` URL string. |
-| `identifier_name` | String | Optional | The name of the data field or object that is referenced by the unique `ids`. E.g. "id", "report_id", "trip_id", "vehicle_id", "RoadEventFeature", etc, if relevant and available in the URL. |
-| `ids` | Array of Strings | Optional | An array of one or more **ids** from the data feed that impacts the use of or relationship to part of CDS, e.g. a curb zone, curb space, curb area, curb event, etc. The **ids** and their details are be found in the referenced `data_feed_url`. |
+| `reference_url` | URL | Required | A web-accessible identifier URL for the source of the publicly or privately accessible data feed, document, website, etc. This MUST be a full HTTPS URL pointing to a location which contains more information impacting or explaining the location, event, or policy, etc. |
+| `name` | String | [Optional](./general-information.md#optional-fields) | Name of the data source for reference. E.g. "WZDx", "CWZ", "CDS", "GBFS", "GTFS", "MDS". |
+| `public` | Boolean | [Optional](./general-information.md#optional-fields) | Is this data source able to be viewed with out any sort of authentication? If `true`, the `reference_url` is public. If `false`, the `reference_url` requires some sort of authentication, authorization, or API key to access. This is an informational field to set access expectations for the data source user, and does not provide any credentials directly unless explicitly contained in the `reference_url`. |
+| `identifier_name` | String | [Optional](./general-information.md#optional-fields) | The name of the data field identifier or object that is referenced by the unique `ids`. E.g. "id", "report_id", "trip_id", "vehicle_id", "RoadEventFeature", etc, if relevant and available in `reference_url`. |
+| `ids` | Array of Strings | [Optional](./general-information.md#optional-fields) | An array of one or more **ids** from the data sources that impacts the use of or relationship to part of MDS, e.g. Trips, Events, Stops, etc. The **ids** and their details are be found in the referenced `reference_url`. |
 
 [Top][toc]
 
 [costs-and-currencies]: /general-information.md#costs-and-currencies
 [event-times]: #event-times
+[external-reference]: ../data-types.md#external-reference
 [gbfs-station-info]: https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_informationjson
 [gbfs-station-status]: https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_statusjson
 [geography-driven-events]: /general-information.md#geography-driven-events

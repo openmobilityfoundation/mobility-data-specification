@@ -322,6 +322,7 @@ An individual `Policy` object is defined by the following fields:
 | `published_date` | [timestamp][ts] | Required   | Timestamp that the policy was published                                             |
 | `prev_policies`  | UUID[]          | [Optional](../general-information.md#optional-fields)    | Unique IDs of prior policies replaced by this one                                   |
 | `rules`          | Rule[]          | Required   | List of applicable [Rule](#rules) objects |
+| `external_references` | Array of [External Reference][external-reference] objects | Optional | One or more references impacting or related to this Policy. |
 
 [Top][toc]
 
