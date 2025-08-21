@@ -17,7 +17,8 @@ This MDS data types page catalogs the objects (fields, types, requirements, desc
 - [Trips](#trips)
 - [Incidents](#incidents)
 - [Reports](#reports)
-
+- [External Reference](#external-reference)
+ 
 ## Vehicles
 
 A vehicle record is as follows:
@@ -117,6 +118,7 @@ Events represent changes in vehicle status.
 | `stop_id`         | UUID            | [Required if Applicable](./general-information.md#required-if-applicable-fields)  | Stop that the vehicle is currently located at. See [Stops][stops] |
 | `associated_ticket` | String | [Optional](./general-information.md#optional-fields) | Identifier for an associated ticket inside an Agency-maintained 311 or CRM system |
 | `gtfs_stop_id` | String | [Optional](./general-information.md#optional-fields) | A unique stop ID to be recorded when a vehicle makes a stop event at a location. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `stop_id` |
+| `external_references` | Array of [External Reference][external-reference] objects | [Optional](./general-information.md#optional-fields) | One or more references impacting or related to this Event. |
 
 ### Event Times
 
@@ -194,6 +196,7 @@ Stops describe vehicle trip start and end locations in a pre-designated physical
 | `parent_stop`            | UUID                                                  | [Optional](./general-information.md#optional-fields) | Describe a basic hierarchy of stops (e.g.a stop inside of a greater stop) |
 | `devices`                | UUID[]                                                | [Conditionally Required](./general-information.md#conditionally-required-fields) | List of device_ids for vehicles which are currently at this stop. Required if the program has station based availability requirements or service level agreements pertaining to stations. |
 | `image_url`              | URL                                                   | [Optional](./general-information.md#optional-fields) | Link to an image, photo, or diagram of the stop. Could be used by providers to help riders find or use the stop. |
+| `external_references` | Array of [External Reference][external-reference] objects | [Optional](./general-information.md#optional-fields) | One or more references impacting or related to this Stop. |
 
 [Top][toc]
 
@@ -249,6 +252,7 @@ A Trip is defined by the following structure:
 | `currency`               | String          | [Optional](./general-information.md#optional-fields), USD cents is implied if null.| An [ISO 4217 Alphabetic Currency Code][iso4217] representing the currency of the payee (see [Costs & Currencies][costs-and-currencies]) |
 | `gtfs_trip_id` | String | Required if Applicable | A unique trip ID for the associated scheduled GTFS route-trip. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `trip_id` in the trips.txt and other files.|
 | `gtfs_api_url` | URL | Required if Applicable | Full URL to the location where the associated [GTFS](https://gtfs.org/documentation/schedule/reference/) dataset zip files are located. |
+| `external_references` | Array of [External Reference][external-reference] objects | [Optional](./general-information.md#optional-fields) | One or more references impacting or related to this Trip. |
 
 [Top][toc]
 
@@ -326,6 +330,22 @@ Here are the possible values for the `special_group_type` dimension field:
 | all_riders       | All riders from any group                                                                                             |
 
 Other special group types may be added in future MDS releases as relevant agency and provider use cases are identified. When additional special group types or metrics are proposed, a thorough review of utility and relevance in program oversight, evaluation, and policy development should be done by OMF Working Groups, as well as any privacy implications by the OMF Privacy Committee.
+
+[Top][toc]
+
+## External Reference
+
+An External Reference object describes a specific feature from an external data source that is relevant to a part of MDS data. This allows MDS users to reference other data sources that impact or provide information about an MDS object, and see more details at an external URL. Data sources can be anything available via a URL, including an existing data standard (CDS, WZDx, CWZ, GTFS, GBFS, MDS, etc), a custom feed, API, document, web page, report, etc.
+
+An `external_reference` is a JSON *array* with the following fields within objects:
+
+| Name   | Type   | Required/Optional   | Description   |
+| ------ | ------ | ------------------- | ------------- |
+| `reference_url` | URL | Required | A web-accessible identifier URL for the source of the publicly or privately accessible data feed, document, website, etc. This MUST be a full HTTPS URL pointing to a location which contains more information impacting or explaining the location, event, or policy, etc. |
+| `name` | String | [Optional](./general-information.md#optional-fields) | Name of the data source for reference. E.g. "WZDx", "CWZ", "CDS", "GBFS", "GTFS", "MDS". |
+| `public` | Boolean | [Optional](./general-information.md#optional-fields) | Is this data source able to be viewed with out any sort of authentication? If `true`, the `reference_url` is public. If `false`, the `reference_url` requires some sort of authentication, authorization, or API key to access. This is an informational field to set access expectations for the data source user, and does not provide any credentials directly unless explicitly contained in the `reference_url`. |
+| `identifier_name` | String | [Optional](./general-information.md#optional-fields) | The name of the data field identifier or object that is referenced by the unique `ids`. E.g. "id", "report_id", "trip_id", "vehicle_id", "RoadEventFeature", etc, if relevant and available in `reference_url`. |
+| `ids` | Array of Strings | [Optional](./general-information.md#optional-fields) | An array of one or more **ids** from the data sources that impacts the use of or relationship to part of MDS, e.g. Trips, Events, Stops, etc. The **ids** and their details are be found in the referenced `reference_url`. |
 
 [Top][toc]
 
