@@ -406,10 +406,11 @@ An individual `Rule` object is defined by the following fields:
 
 ### Rule Types
 
-| Name    | Description                                                                                                   |
+| Name      | Description                                                                                                   |
 | ------- | ------------------------------------------------------------------------------------------------------------- |
 | `count` | Fleet counts based on regions. Rule `minimum`/`maximum` refers to number of devices in [Rule Units](#rule-units).                                  |
 | `time`  | Individual limitations or fees based upon time spent in one or more vehicle states. Rule `minimum`/`maximum` refers to increments of time in [Rule Units](#rule-units). |
+| `distance`  | Individual limitations or fees based upon distance travelled during one or more trips. Rule `minimum`/`maximum` refers to increments of distance in [Rule Units](#rule-units). |
 | `speed` | Global or local speed limits. Rule `minimum`/`maximum` refers to speed in [Rule Units](#rule-units).                  |
 | `user`  | Information for users, e.g. about helmet laws. Generally can't be enforced via events and telemetry.          |
 
@@ -423,6 +424,8 @@ An individual `Rule` object is defined by the following fields:
 | `minutes` | `time`         | Minutes             |
 | `hours`   | `time`         | Hours               |
 | `days`    | `time`         | Days                |
+| `km`      | `distance`     | Kilometers          |
+| `miles`   | `distance`     | Miles               |
 | `mph`     | `speed`        | Miles per hour      |
 | `kph`     | `speed`        | Kilometers per hour |
 | `devices` | `count`        | Devices             |
