@@ -19,6 +19,8 @@ This specification describes the digital relationship between _mobility as a ser
 - [REST Endpoints](#rest-endpoints)
   - [Responses and Error Messages](#responses-and-error-messages)
   - [Policies](#policies)
+    - [Policies - Get](#policies---get)
+    - [Policies - Create](#policies---create)
   - [Geographies](#geographies)
   - [Requirements](#requirements)
 - [Flat Files](#flat-files)
@@ -147,6 +149,10 @@ See the [Responses section][responses] for information on valid MDS response cod
 
 ### Policies
 
+#### Policies - Get
+
+Allows operators to pull a list of active policies from agencies, similar to the Provider API. 
+
 **Endpoint**: `/policies/{policy_id}`  
 **Method**: `GET`  
 **Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.    
@@ -175,7 +181,7 @@ Policies will be returned in order of effective date (see schema below), with pa
 
 `provider_id` is an implicit parameter and will be encoded in the authentication mechanism, or a complete list of policies should be produced. If the Agency decides that Provider-specific policy documents should not be shared with other Providers (e.g. punitive policy in response to violations), an Agency should filter policy objects before serving them via this endpoint.
 
-### Responses
+**Responses**
 
 _Possible HTTP Status Codes_: 
 200,
@@ -185,6 +191,48 @@ _Possible HTTP Status Codes_:
 500
 
 See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
+
+[Top][toc]
+
+#### Policies - Create
+
+Allows agencies to push a newly created policies to operators, similar to the Agency API. This push method creates the opportunity for near real-time communication of policy changes.
+
+Note that once an update is communicated via a policy push, the agency should push or pull from the relevant [Geography API](../geography) endpoint to get the latest information on new or changed geographic areas. 
+
+Endpoint producers **SHALL** provide authorization for API endpoints via a bearer token based auth system specified in the MDS [Authorization section](/general-information.md#authorization), to allow handshake communication and response confirmation.
+
+**Endpoint**: `/policies/`  
+**Method:** `POST`  
+**Authorization**: required  
+**Payload:** An array of [Policy](#policy) objects  
+
+_Optional endpoint, as required by public agencies; if not implemented, the server should reply with `501 Not Implemented` if possible._
+
+**Responses**
+
+_Possible HTTP Status Codes_: 
+201,
+400,
+401,
+406,
+409,
+500, 
+501
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
+
+[Top][toc]
+
+#### Error Codes:
+
+| `error`              | `error_description`                            | `error_details`[]               |
+| -------------------- | -----------------------------------------------| ------------------------------- |
+| `bad_param`          | A validation error occurred                    | Array of parameters with errors |
+| `missing_param`      | A required parameter is missing                | Array of missing parameters     |
+| `already_created`    | A policy with `policy_id` is already created   |                                 |
+
+Note that you may only create a new MDS Policy. Retired policies are simply referenced in `prev_policies`. See [Updating or Ending Policies](#updating-or-ending-policies) for details.
 
 [Top][toc]
 
