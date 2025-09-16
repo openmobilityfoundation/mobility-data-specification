@@ -842,6 +842,7 @@ You may also show which APIs, endpoints, and fields your agency is serving to pr
 | -------------------- | ----- | -------- | ----------------------------------- |
 | `api_name`           | Text  | Required | Name of the applicable API required. At least one API is required. APIs not listed will not be available to the agency. E.g. for MDS: 'provider', or 'agency'. For GBFS, this field is omitted since GBFS starts at the `endpoint` level. |
 | `endpoint_name`      | Text  | Required | Name of the required endpoint under the API. At least one endpoint is required. E.g. for MDS 'provider': 'trips' |
+| `update_interval`    | duration         | [Optional](../general-information.md#optional-fields) | The expected minimum frequency with which this endpoint should could be updated. [ISO 8601 duration](https://en.wikipedia.org/wiki/ISO_8601#Durations). E.g. "T1M" |
 | `use_cases`      | Object with Array  | [Optional](../general-information.md#optional-fields) | The list of policy uses cases that this data standard's information covers for your program. Includes an `external_url` to a HTTP reference list or database (e.g. to the [OMF Use Case Database](https://airtable.com/shrPf4QvORkjZmHIs/tblzFfU6fxQm5Sdhm)), **and** an array of `ids` of each applicable use case (e.g. "OMF-MDS-31"). You may enumerate multiple external use case sources and ids. |
 
 [Top][toc]

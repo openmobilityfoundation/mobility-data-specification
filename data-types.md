@@ -15,6 +15,7 @@ This MDS data types page catalogs the objects (fields, types, requirements, desc
 - [Stops](#stops)
   - [Stop Status](#stop-status)
 - [Trips](#trips)
+- [Incidents](#incidents)
 - [Reports](#reports)
 - [External Reference](#external-reference)
  
@@ -145,8 +146,11 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | `fuel_percent`    | Integer         | [Required if Applicable](./general-information.md#required-if-applicable-fields)  | Percent fuel in vehicle, expressed between 0 and 100 |
 | `tipped_over`     | Boolean         | Required if Known      | If detectable and known, is the device tipped over or not? Default is 'false'. |
 | `gtfs_stop_id` | String | [Optional](./general-information.md#optional-fields) | A unique stop ID to be recorded when a vehicle makes a stop event at a location. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `stop_id` |
+| `incident_ids`    | UUID[]          | Optional               | Array of one or more [Incident](#incidents) IDs that are connected to this telemetry data point. |
 
 ### GPS Data
+
+Includes GPS device data and data from other relevant sensors.
 
 | Field      | Type           | Required/Optional     | Field Description                                            |
 | ---------- | -------------- | --------------------- | ------------------------------------------------------------ |
@@ -155,9 +159,12 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | `altitude` | Double         | Required if Available | Altitude above mean sea level in meters                      |
 | `heading`  | Double         | Required if Available | Degrees - clockwise starting at 0 degrees at true North      |
 | `speed`    | Float          | Required if Available | Estimated speed in meters / sec as reported by the GPS chipset |
-| `horizontal_accuracy` | Float          | Required if Available | Horizontal accuracy, in meters                               |
-| `vertical_accuracy` | Float          | Required if Available | Vertical accuracy, in meters                               |
+| `horizontal_accuracy` | Float | Required if Available | Horizontal accuracy, in meters                               |
+| `vertical_accuracy` | Float | Required if Available | Vertical accuracy, in meters                                 |
 | `satellites` | Integer      | Required if Available | Number of GPS or GNSS satellites                             |
+| `accelerometer_x` | Float   | Required if Available | The x-axis acceleration in G's (gravitational force).        |
+| `accelerometer_y` | Float   | Required if Available | The y-axis acceleration in G's (gravitational force).        |
+| `accelerometer_z` | Float   | Required if Available | The z-axis acceleration in G's (gravitational force).        |
 
 [Top][toc]
 
@@ -249,6 +256,30 @@ A Trip is defined by the following structure:
 
 [Top][toc]
 
+## Incidents
+
+ Incidents are used in both [Provider](/provider#incidents) and [Agency](/agency#incidents) telemetry data, whether on or off a Trip. 
+
+| Field              | Type            | Required/Optional | Comments |
+| ----               | ----            | ----              | ----     |
+| `incident_id`      | UUID            | Required          | ID used for uniquely identifying an Incident. |
+| `incident_type`    | Enum            | Required          | The type of incident. One of `unplanned_stop`, `remote_takeover`, `ads_engaged` (Automated Driving System), `ads_disengaged`, `tip_over`, `harsh_stopping` (e.g. braking), `harsh_starting` (e.g. acceleration), `near_miss`, `vandalism`, `theft`, `crash`. Exact definitions, and when and if which incident types are sent, come from the agency. |
+| `incident_time`    | [Timestamp][ts] | Required          | Date/time that incident first occurred. Note that this timestamp of the incident first occurance is independent of one or more Telemetry timestamps referenced via `incident_id`. Note that more frequent telemetry data points may be required when an incident is first discovered and occuring. |
+| `discovery_time`   | [Timestamp][ts] | Required          | Date/time that incident was first discovered by the operator. This may be at the same moment of the `incident_time`, or may have been discovered later. |
+| `publication_time` | [Timestamp][ts] | Required          | Date/time that incident became first available to an agency through an Incident endpoint. |
+| `last_updated`     | [Timestamp][ts] | Required          | Date/time that incident was last updated in the Incident endpoint. |
+| `description`      | String          | Optional          | Text description of the incident. |
+| `severity`         | String          | Optional          | Text description of the severity of the incident. |
+| `medical_dispatch` | Boolean         | Optional          | If `true`, a medical dispatch occured connected to the incident. |
+| `medical_transport` | Boolean        | Optional          | If `true`, one or more individuals was transported via an ambulance or emergency response vehicle because of the incident. |
+| `report_id`        | String          | Optional          | Identifier of an external report, from a police report, citation, internal system, service request, etc. The report source is communicated by the operator to the agency outside of MDS. |
+| `report_type`      | String          | Optional          | Description of the type of report referenced by the `report_id`, eg. police, customer, remote operator, 311 call, etc. |
+| `external_references` | Array of [External Reference][external-reference] objects | Optional | One or more references to external data feeds, links, reports, or documents impacting or related to this Incident, as they become available. |
+| `contact_info`     | String          | Optional          | Description of any relevant contact information about the incident the operator can provide. |
+| `preliminary`      | Boolean         | Optional          | If `true`, then this information in this Incident is only preliminary, with more details and/or validation coming at a later date. If `false`, the information provided here is deemed valed with no more updates expected. |
+
+[Top][toc]
+
 ## Reports
 
 A Report is defined by the following structure:
@@ -320,7 +351,7 @@ An `external_reference` is a JSON *array* with the following fields within objec
 
 [costs-and-currencies]: /general-information.md#costs-and-currencies
 [event-times]: #event-times
-[external-reference]: ../data-types.md#external-reference
+[external-reference]: #external-reference
 [gbfs-station-info]: https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_informationjson
 [gbfs-station-status]: https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_statusjson
 [geography-driven-events]: /general-information.md#geography-driven-events
