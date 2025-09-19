@@ -181,9 +181,12 @@ As with other MDS APIs, the vehicles endpoints are intended for use by regulator
 
 The `/vehicles` endpoint returns the specified vehicle (if a `device_id` is provided) or a list of vehicles.
 It contains vehicle properties that do not change often.
-When `/vehicles` is called without specifying a device ID it should return every vehicle that has
+When `/vehicles` is called without specifying a device ID it must return every vehicle that has
 been deployed in an agency's [Jurisdiction](/general-information.md#definitions) and/or area of agency responsibility
-in the last 30 days.
+in the last 30 days and it must include every vehicle included when calling the `/vehicles/status`
+endpoint at the same time without specifying a specific vehicle. (In other words, if someone
+retrieves `/vehicles/status` and `/vehicles` at the same time, they must be able to find every
+vehicle in the `/vehicles/status` response in the `/vehicles` response.)
 Vehicle information about all device IDs present in other MDS endpoints must be acessible via the
 `/vehicles/{device_id}` style call regardless of when they were deployed.
 
