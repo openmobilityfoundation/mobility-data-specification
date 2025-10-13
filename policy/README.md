@@ -82,7 +82,11 @@ See the [MDS Policy Examples](https://github.com/openmobilityfoundation/mobility
 
 ### Authorization
 
-The Policy endpoints should be made public. Authorization is not required. Agencies may make reasonable accommodations to manage their endpoints, for example, using an API key that has a clear, public way to obtain - this can be useful for rate limiting requests, ensure proper use, tracking access per requestor, and/or customization of the Policy tailored to the requestor.
+In most cases, the Policy endpoints should be made public. Authorization is not required in such cases, as this information should be made public and easily accessible. 
+
+Agencies may make reasonable accommodations to manage their endpoints by, for example, using a free to acquire API key that has a clear, public way to obtain. This can be useful for rate limiting requests, prevent abuse, ensure proper use, tracking access per requestor, for certain mobility programs or pilots, and/or customization of the Policy tailored to the requestor.
+
+In some cases though, it can be justified to use Authorization for the Policy API (some agencies may decide to make it authenticated for privacy programs or functional purposes). Authorization may then be used for the Policy API. It should then rely on the standard [Authorization](../general-information.md#authorization) methods used in other MDS APIs. 
 
 [Top][toc]
 
@@ -155,9 +159,9 @@ Allows operators to pull a list of active policies from agencies, similar to the
 
 **Endpoint**: `/policies/{policy_id}`  
 **Method**: `GET`  
-**Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.    
-**Authorization**: public  
-**`data` Payload**: `{ "policies": [] }`, an array of objects with the structure [outlined below](#policy).
+**Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.  
+**Authorization**: public _or_ authenticated (see [Authorization](#authorization))  
+**`data` Payload**: `{ "policies": [] }`, an array of objects with the structure [outlined below](#policy).  
 
 _Path Parameters:_
 
@@ -246,7 +250,7 @@ Note that you may only create a new MDS Policy. Retired policies are simply refe
 
 **Endpoint**: `/requirements/`  
 **Method**: `GET`  
-**[Beta feature](/general-information.md#beta-features)**: *No (as of 2.0.0)*. 
+**[Beta feature](/general-information.md#beta-features)**: *No (as of 2.0.0)*.  
 **Authorization**: public  
 **Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.  
 **`data` Payload**: `{ requirements: [] }`, JSON objects that follow the schema [outlined here](#requirement).  
