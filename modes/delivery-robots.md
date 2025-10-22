@@ -1,14 +1,14 @@
-# Mobility Data Specification: **Delivery Robots**
+# Mobility Data Specification: **Delivery**
 
 <img src="https://i.imgur.com/f8iMepu.png" width="120" align="right" alt="MDS Modes - Delivery Robots" border="0">
 
-**Delivery Robots** refers to autonomous and remotely driven goods delivery devices. There can be one or multiple orders on different trips at the same time. The state machine tracks the trip states of the orders separately from the vehicle state.  
+**Delivery** refers to human, autonomous, and remotely driven goods, food, and freight delivery devices, vehicles, and services. No human passengers are transported in this mode.
+
+There can be one or multiple orders on different trips at the same time, connected via the journey identifier. The state machine tracks the trip states of the orders separately from the vehicle state.  
 
 See the [modes overview](/modes) for how the mode specific information below applies across MDS.
 
-## Robots Vs Other Delivery Types
-
-Autonomous and remotely piloted delivery robots do not require a driver, whereas other forms of deliveries may, e.g. in a commercial or private car, truck, bike, etc. For this MDS release, this mode is limited to deliveries where a human driver is not on board the vehicle doing the delivery, and human passengers are not being transported. 
+_Note: Any refences in the specification code or links to only "Delivery Robots" will be updated to the broader "Delivery" scope in the next MDS 3.0 release._
 
 ## Table of Contents
 
@@ -34,7 +34,7 @@ Autonomous and remotely piloted delivery robots do not require a driver, whereas
 
 ### Mode ID
 
-The short name identifier for deliveries used across MDS is `delivery-robots`.
+The short name identifier for deliveries used across MDS is `delivery-robots`. _To be `delivery` in the next breaking release._
 
 [Top][toc]
 
@@ -55,16 +55,15 @@ The `journey_id` field shall have a consistent value in overlapping trips. Journ
 
 ### Journey Attributes
 
-The `journey_attributes` object is not used in this mode.
+The `journey_attributes` object **may** have the following key value pairs:
 
+- `shift_id` (UUID, optional): unique identifier for an entire driver's work shift, tied across multiple journeys and therefore trips.
 
 [Top][toc]
 
 ### Trip ID Requirements
 
 Events require a valid `trip_id` in events where `event_types` contains `reservation_start`, `reservation_stop`, `trip_start`, `trip_pause`, `trip_resume`, `trip_end`,`trip_cancel`, `customer_cancellation`, `provider_cancellation`, or `driver_cancellation`. 
-
-For the robots, the notion of driver does not exist, even when remotely operated.
 
 Additionally, `trip_id` is required if `event_types` contains a `trip_enter_jurisdiction` or `trip_leave_jurisdiction` event pertaining to a trip. 
 
@@ -79,6 +78,7 @@ The `trip_type` field **must** have one of the following enumerated values:
 - `advertising`: displaying advertising and not making a delivery
 - `mapping`: mapping the environment and not making a delivery
 - `roaming`: moving in right of way but not in another trip_type
+- `testing`: vehicle is making a test trip
 
 [Top][toc]
 
@@ -87,9 +87,12 @@ The `trip_type` field **must** have one of the following enumerated values:
 The `trip_attributes` object **may** have the following key value pairs:
 
 - `driver_type` (enum, required): type of driver operating the device: `human`, `semi_autonomous`, `autonomous`
-- `driver_id` (UUID, [Optional](../general-information.md#optional-fields)): consistent unique identifier of the primary driver. Could be based on software version or an internal human driver id.
+- `driver_id` (UUID, [Optional](../general-information.md#optional-fields)): consistent unique identifier of the primary driver. Universal identifier of a specific driver, static across operators, like a driver's license number. Could also be used as a lookup in an agency's internal driver system. For autonomous or remote operations, could be based on software version, or an internal remote human driver id.
+- `permit_number` (string, [Optional](../general-information.md#optional-fields)) - The permit number of the individual or organization that is operating the vehicle
 - `app_name` (text, [Optional](../general-information.md#optional-fields)): name of the app used to reserve the trip which could be provider's app or 3rd party app
 - `requested_time` ([Timestamp][ts], [Optional](../general-information.md#optional-fields)): when the customer requested the trip
+- `pickup_address` (text, [Optional](../general-information.md#optional-fields)): street address where the trip originated from
+- `dropoff_address` (text, [Optional](../general-information.md#optional-fields)): street address where the trip ended
 - `has_payload` (boolean, [Optional](../general-information.md#optional-fields)): is there any payload for any delivery included in the device at trip start. 1 = loaded, 0 = empty
 - `range` (integer, [Optional](../general-information.md#optional-fields)): estimated range in meters based on energy levels in device at trip start
 - `identification_required` (boolean, [Optional](../general-information.md#optional-fields)): does the cargo require providing customer identification before trip start or upon delivery?
@@ -102,6 +105,8 @@ The `fare_attributes` object **may** have the following key value pairs:
 
 - `payment_type` (enumerated, [Optional](../general-information.md#optional-fields)): `account_number`, `cash`, `credit_card`, `mobile_app`, `no payment`, `phone`, `voucher`, `test`
 - `price` (currency, [Optional](../general-information.md#optional-fields)): Total price of the order
+- `tip` (currency, [Optional](../general-information.md#optional-fields)) - amount of tip paid by customer
+- `taxes` (currency, [Optional](../general-information.md#optional-fields)) - amount of taxes paid for the trip
 
 [Top][toc]
 
@@ -259,9 +264,9 @@ This is the list of `vehicle_state` and `event_type` pairings that constitute th
 
 This *State Machine Diagram* shows how `vehicle_state` and `event_type` relate to each other and how vehicles can transition between states. See [Google Slides](https://docs.google.com/presentation/d/1fHdq1efbN5GSFDLF4en-oA_BYPXQKbbIbHff6iROJKA/edit#slide=id.g207ec9d0152_0_0) for the source file.
 
-![Delivery Robots State Machine Diagram](delivery-robots-state-machine-diagram.svg)
+![Delivery State Machine Diagram](delivery-robots-state-machine-diagram.svg)
 
-#### Delivery Robots State Notes
+#### Delivery State Notes
 
 When there is only one trip ongoing, `trip_state == vehicle_state`
 
