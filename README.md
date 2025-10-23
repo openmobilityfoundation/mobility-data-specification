@@ -21,7 +21,7 @@
 
 # About
 
-The Mobility Data Specification (**MDS**), a project of the [Open Mobility Foundation](http://www.openmobilityfoundation.org) (**OMF**), is a set of Application Programming Interfaces (APIs) that helps cities better manage transportation in the public right of way, standardizing communication and data-sharing between cities and mobility providers, allowing cities to share and validate policy digitally, and enabling vehicle management and better outcomes for residents. Inspired in part by projects like [GTFS](https://developers.google.com/transit/gtfs/reference/) and [GBFS](https://github.com/MobilityData/gbfs), MDS is focused on managing mobility services such as dockless scooters, bicycles, mopeds, car share, delivery robots, fixed route services and shuttles, fleets, and passenger services. 
+The Mobility Data Specification (**MDS**), a project of the [Open Mobility Foundation](http://www.openmobilityfoundation.org) (**OMF**), is a set of Application Programming Interfaces (APIs) that helps cities better manage transportation in the public right of way, standardizing communication and data-sharing between cities and mobility providers, allowing cities to share and validate policy digitally, and enabling vehicle management and better outcomes for residents. Inspired in part by projects like [GTFS](https://developers.google.com/transit/gtfs/reference/) and [GBFS](https://github.com/MobilityData/gbfs), MDS is focused on managing mobility services such as dockless scooters, bicycles, mopeds, car share, food and goods delivery, sidewalk robots, fixed route services and shuttles, fleets, busses, and passenger services. 
 
 **MDS** is a key piece of digital infrastructure that supports the effective implementation of mobility policies in cities around the world. For a high level overview and visuals, see the [About MDS](https://www.openmobilityfoundation.org/about-mds/) page on the OMF website.
 
@@ -83,7 +83,7 @@ You can read more in our **[Understanding the different MDS APIs](https://github
 
 ## GBFS Requirement
 
-All MDS compatible Provider and/or Agency feeds must also expose a public [GBFS](https://github.com/MobilityData/gbfs) feed for the micromobility and car share [modes](/modes) (passenger services and delivery robots may be optionally supported at the discretion of the agency running the program). Compatibility with [GBFS 3.0](https://github.com/MobilityData/gbfs/blob/v3.0/gbfs.md) or greater is advised, or the version recommended per MobilityData's [supported releases](https://github.com/MobilityData/gbfs?tab=readme-ov-file#current-version-recommended) guidance. Read MobilityData's RFP recommendations and required files list in their [GBFS and Shared Mobility Data Policy guide](https://gbfs.org/learn/data-policy/).
+All MDS compatible Provider and/or Agency feeds must also expose a public [GBFS](https://github.com/MobilityData/gbfs) feed for the micromobility and car share [modes](/modes) (passenger services and delivery may be optionally supported at the discretion of the agency running the program). Compatibility with [GBFS 3.0](https://github.com/MobilityData/gbfs/blob/v3.0/gbfs.md) or greater is advised, or the version recommended per MobilityData's [supported releases](https://github.com/MobilityData/gbfs?tab=readme-ov-file#current-version-recommended) guidance. Read MobilityData's RFP recommendations and required files list in their [GBFS and Shared Mobility Data Policy guide](https://gbfs.org/learn/data-policy/).
 
 See our [MDS Vehicles Guide](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Vehicles) for how MDS Provider/Agency `/vehicles` can be used by regulators instead of the public GBFS `/vehicle_status` (formerly `/free_bike_status`). Additional information on MDS and GBFS can be found in this [guidance document](https://github.com/openmobilityfoundation/governance/blob/main/technical/GBFS_and_MDS.md).
 
@@ -96,13 +96,13 @@ MDS supports multiple "modes", defined as a distinct regulatory framework for a 
 - **[Micromobility](/modes/micromobility.md)** - dockless or docked small devices such as e-scooters and bikes.
 - **[Passenger services](/modes/passenger-services.md)** - transporting individuals with a vehicle driven by another entity, including taxis, TNCs, and microtransit
 - **[Car share](/modes/car-share.md)** - shared point-to-point and station-based multi-passenger vehicles.
-- **[Delivery robots](/modes/delivery-robots.md)** - autonomous and remotely driven goods delivery devices
+- **[Delivery](/modes/delivery-robots.md)** - human, autonomous, and remotely driven goods, food, and freight delivery devices, vehicles, and services.
 
 <p align="center">
 <a href="/modes/micromobility.md"><img src="https://i.imgur.com/tl99weM.png" alt="MDS Mode - Micromobility" style="float: left; border: 0; width: 150px;"></a> &nbsp; &nbsp; &nbsp;
 <a href="/modes/passenger-services.md"><img src="https://i.imgur.com/3iAkYBC.png" alt="MDS Mode - Passenger Services" style="float: left; border: 0; width: 150px;"></a> &nbsp; &nbsp; &nbsp; 
 <a href="/modes/car-share.md"><img src="https://i.imgur.com/cCQTge5.png" alt="MDS Mode - Car Share" style="float: left; border: 0; width: 150px;"></a> &nbsp; &nbsp; &nbsp;
-<a href="/modes/delivery-robots.md"><img src="https://i.imgur.com/u2HgctV.png" alt="MDS Mode - Delivery Robots" style="float: left; border: 0; width: 150px;"></a>
+<a href="/modes/delivery-robots.md"><img src="https://i.imgur.com/u2HgctV.png" alt="MDS Mode - Delivery" style="float: left; border: 0; width: 150px;"></a>
 </p>
 <br clear="both"/>
 
