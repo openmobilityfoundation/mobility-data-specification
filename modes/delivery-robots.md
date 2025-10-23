@@ -8,7 +8,7 @@ There can be one or multiple orders on different trips at the same time, connect
 
 See the [modes overview](/modes) for how the mode specific information below applies across MDS.
 
-_Note: Any refences in the specification code or links to only "Delivery Robots" will be updated to the broader "Delivery" scope in the next MDS 3.0 release._
+_Note: Any references in the specification code or links to only "Delivery Robots" will be updated to the broader "Delivery" scope in the next MDS 3.0 release._
 
 ## Table of Contents
 
@@ -57,7 +57,7 @@ The `journey_id` field shall have a consistent value in overlapping trips. Journ
 
 The `journey_attributes` object **may** have the following key value pairs:
 
-- `shift_id` (UUID, optional): unique identifier for an entire driver's work shift, tied across multiple journeys and therefore trips.
+- `shift_id` (UUID, optional): unique identifier for a driver or operator's working shift, tied across multiple journeys and therefore trips.
 
 [Top][toc]
 
@@ -92,8 +92,12 @@ The `trip_attributes` object **may** have the following key value pairs:
 - `app_name` (text, [Optional](../general-information.md#optional-fields)): name of the app used to reserve the trip which could be provider's app or 3rd party app
 - `requested_time` ([Timestamp][ts], [Optional](../general-information.md#optional-fields)): when the customer requested the trip
 - `pickup_address` (text, [Optional](../general-information.md#optional-fields)): street address where the trip originated from
+- `origin_type` (string, [Optional](../general-information.md#optional-fields)): the name of the origin type for this delivery, e.g. ghost kitchen, individual restaurant, retail store, private delivery-courier, etc.
 - `dropoff_address` (text, [Optional](../general-information.md#optional-fields)): street address where the trip ended
+- `destination_type` (string, [Optional](../general-information.md#optional-fields)): the name of the destination type for this delivery, e.g. restaurant, residential, commerical, etc.
+- `destination_
 - `has_payload` (boolean, [Optional](../general-information.md#optional-fields)): is there any payload for any delivery included in the device at trip start. 1 = loaded, 0 = empty
+- `payload_type` (string, [Optional](../general-information.md#optional-fields)): the type or cargo or payload for this delivery, e.g. prepared food, parcel, medical, alcohol, grocery, etc. Could affect `fees`.
 - `range` (integer, [Optional](../general-information.md#optional-fields)): estimated range in meters based on energy levels in device at trip start
 - `identification_required` (boolean, [Optional](../general-information.md#optional-fields)): does the cargo require providing customer identification before trip start or upon delivery?
 
@@ -107,6 +111,7 @@ The `fare_attributes` object **may** have the following key value pairs:
 - `price` (currency, [Optional](../general-information.md#optional-fields)): Total price of the order
 - `tip` (currency, [Optional](../general-information.md#optional-fields)) - amount of tip paid by customer
 - `taxes` (currency, [Optional](../general-information.md#optional-fields)) - amount of taxes paid for the trip
+- `fees` (currency, [Optional](../general-information.md#optional-fields)): any additional fees (positive) or incentives/discounts (negative) for this trip
 
 [Top][toc]
 
@@ -123,8 +128,9 @@ The `vehicle_attributes` object **may** have the following key value pairs:
 - `model` (string, [Optional](../general-information.md#optional-fields))
 - `color` (string, [Optional](../general-information.md#optional-fields))
 - `inspection_date` (date YYYY-MM-DD, [Optional](../general-information.md#optional-fields)): the date of the last inspection of the vehicle
+- `software_version` (string, [Optional](../general-information.md#optional-fields)): the version of the software being used on this trip
 - `equipped_cameras` (integer, [Optional](../general-information.md#optional-fields)): number of cameras equipped on device
-- `equipped_lighting` (integer, [Optional](../general-information.md#optional-fields)): number of lights used to illuminate the environment on the the device
+- `equipped_lighting` (integer, [Optional](../general-information.md#optional-fields)): number of lights used to illuminate the environment on the device
 - `wheel_count` (integer, [Optional](../general-information.md#optional-fields)): number of wheels on the device
 - `width` (integer, [Optional](../general-information.md#optional-fields)): width in meters of the device
 - `length` (integer, [Optional](../general-information.md#optional-fields)): length in meters of the device
@@ -248,7 +254,7 @@ This is the list of `vehicle_state` and `event_type` pairings that constitute th
 | `reserved`               | `available`            | N/A          | `driver_cancellation`   | The driver has canceled the reservation                                                       |
 | `reserved`               | `available`            | N/A          | `provider_cancellation` | The provider has canceled the reservation                                                     |
 | `reserved`               | `elsewhere`            | N/A          | `trip_leave_jurisdiction` | The vehicle has left the jurisdiction while in a reservation                                  |
-| `reserved`               | `non_contactable`      | N/A          | `comms_lost`            | The vehicle has gone of comms while being reserved by a customer                              |
+| `reserved`               | `non_contactable`      | N/A          | `comms_lost`            | The vehicle has gone out of comms while being reserved by a customer                              |
 | `reserved`               | `stopped`              | `stopped`    | `reservation_stop`      | The vehicle has stopped to pickup reservation                                                 |
 | `stopped`                | `available`            | N/A          | `customer_cancellation` | The customer has canceled the trip while the vehicle is waiting                               |
 | `stopped`                | `available`            | N/A          | `driver_cancellation`   | The driver has canceled the trip while waiting                                                |
