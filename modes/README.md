@@ -42,13 +42,13 @@ MDS is intended to be used for multiple transportation modes, including its orig
 - **[Micromobility](/modes/micromobility.md)** (`micromobility`) - dockless or docked small devices such as e-scooters and bikes.
 - **[Passenger services](/modes/passenger-services.md)** (`passenger-services`) - transporting individuals with a vehicle driven by another entity, including taxis, TNCs, and microtransit
 - **[Car share](/modes/car-share.md)** (`car-share`) - shared point-to-point and station-based multi-passenger vehicles.
-- **[Delivery robots](/modes/delivery-robots.md)** (`delivery-robots`) - autonomous and remotely driven goods delivery devices
+- **[Delivery](/modes/delivery-robots.md)** (`delivery-robots`) - human, autonomous, and remotely driven goods, food, and freight delivery devices, vehicles, and services. 
 
 <p align="center">
 <a href="/modes/micromobility.md"><img src="https://i.imgur.com/tl99weM.png" alt="MDS Mode - Micromobility" style="float: left; border: 0; width: 150px;"></a> &nbsp; &nbsp; &nbsp;
 <a href="/modes/passenger-services.md"><img src="https://i.imgur.com/mzbughz.png" alt="MDS Mode - Passenger Services" style="float: left; border: 0; width: 150px;"></a> &nbsp; &nbsp; &nbsp; 
 <a href="/modes/car-share.md"><img src="https://i.imgur.com/cCQTge5.png" alt="MDS Mode - Car Share" style="float: left; border: 0; width: 150px;"></a> &nbsp; &nbsp; &nbsp;
-<a href="/modes/delivery-robots.md"><img src="https://i.imgur.com/u2HgctV.png" alt="MDS Mode - Delivery Robots" style="float: left; border: 0; width: 150px;"></a>
+<a href="/modes/delivery-robots.md"><img src="https://i.imgur.com/u2HgctV.png" alt="MDS Mode - Delivery" style="float: left; border: 0; width: 150px;"></a>
 </p>
 <br clear="both"/>
 
