@@ -48,7 +48,7 @@ MDS is intended to be used for multiple transportation modes, including its orig
 <a href="/modes/micromobility.md"><img src="https://i.imgur.com/tl99weM.png" alt="MDS Mode - Micromobility" style="float: left; border: 0; width: 150px;"></a> &nbsp; &nbsp; &nbsp;
 <a href="/modes/passenger-services.md"><img src="https://i.imgur.com/mzbughz.png" alt="MDS Mode - Passenger Services" style="float: left; border: 0; width: 150px;"></a> &nbsp; &nbsp; &nbsp; 
 <a href="/modes/car-share.md"><img src="https://i.imgur.com/cCQTge5.png" alt="MDS Mode - Car Share" style="float: left; border: 0; width: 150px;"></a> &nbsp; &nbsp; &nbsp;
-<a href="/modes/delivery-robots.md"><img src="https://i.imgur.com/JgIhdbC.png" alt="MDS Mode - Delivery" style="float: left; border: 0; width: 150px;"></a>
+<a href="/modes/delivery-robots.md"><img src="https://i.imgur.com/NsXx1dD.png" alt="MDS Mode - Delivery" style="float: left; border: 0; width: 150px;"></a>
 </p>
 <br clear="both"/>
 
