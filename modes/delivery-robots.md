@@ -1,6 +1,6 @@
 # Mobility Data Specification: **Delivery**
 
-<img src="https://i.imgur.com/f8iMepu.png" width="120" align="right" alt="MDS Modes - Delivery Robots" border="0">
+<img src="https://i.imgur.com/JgIhdbC.png" width="120" align="right" alt="MDS Modes - Delivery Robots" border="0">
 
 **Delivery** refers to human, autonomous, and remotely driven goods, food, and freight delivery devices, vehicles, and services. No human passengers are transported in this mode.
 
