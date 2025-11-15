@@ -1,8 +1,8 @@
 # Mobility Data Specification: **Delivery**
 
-<img src="https://i.imgur.com/JgIhdbC.png" width="120" align="right" alt="MDS Modes - Delivery Robots" border="0">
+<img src="https://i.imgur.com/bw2O9t8.png" width="150" align="right" alt="MDS Modes - Delivery Robots" border="0">
 
-**Delivery** refers to human, autonomous, and remotely driven goods, food, and freight delivery devices, vehicles, and services. No human passengers are transported in this mode.
+**Delivery** refers to employees and contractors, autonomous, and remotely operated sidewalk robots, app delivery, packages, freight, goods, food, private hire vehicles, postal service, medicine, and other delivery services.
 
 There can be one or multiple orders on different trips at the same time, connected via the journey identifier. The state machine tracks the trip states of the orders separately from the vehicle state.  
 
