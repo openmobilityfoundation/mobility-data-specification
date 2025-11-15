@@ -7,6 +7,7 @@
   - [Modularity](#modularity)
   - [GBFS Requirement](#gbfs-requirement)
 - [Modes](#modes)
+  - [Future Modes](#future-modes)
 - [Versions](#versions)
   - [Technical Information](#technical-information)
   - [Data Validation](#data-validation)
@@ -93,18 +94,16 @@ See our [MDS Vehicles Guide](https://github.com/openmobilityfoundation/mobility-
 
 MDS supports multiple "modes", defined as a distinct regulatory framework for a type of mobility service. See the [modes overview](/modes) or get started with a specific mode:
 
-- **[Micromobility](/modes/micromobility.md)** - dockless or docked small devices such as e-scooters and bikes.
-- **[Passenger services](/modes/passenger-services.md)** - transporting individuals with a vehicle driven by another entity, including taxis, TNCs, and microtransit
-- **[Car share](/modes/car-share.md)** - shared point-to-point and station-based multi-passenger vehicles.
-- **[Delivery](/modes/delivery-robots.md)** - human, autonomous, and remotely driven goods, food, and freight delivery devices, vehicles, and services.
+- **[Micromobility](/modes/micromobility.md)** - customer operated dockless or docked small devices moving customers and goods, such as scooters, bikeshare, cargo bikes, adaptive scooters, docked bikes, mopeds, trikes, and quadracycles.
+- **[Passenger](/modes/passenger-services.md)** - employees and contractors, autonomous, and remotely operated transporting individuals or goods with a vehicle driven by another entity, including taxis, AV robotaxis, busses, transportation network companies (TNCs), commercial transport apps (CTAs), and private hire vehicles (PHVs), shuttles, paratransit, on demand vehicles, limosines, and microtransit.
+- **[Fleet](/modes/car-share.md)** - customer, employees and contractors, autonomous, and remotely operated shared point-to-point, station-based, or free-floating multi-passenger or cargo vehicles like consumer car share, sanitation vehicles (garbage, recycling), city fleets, vehicle rentals, street sweepers, snow plows, utility services, construction, emergency response (police, fire, ambulance), tree maintenance, inspection and permitting vehicles, mobile health clinics, and heavy maintenance vehicles.
+- **[Delivery](/modes/delivery-robots.md)** - employees and contractors, autonomous, and remotely operated sidewalk robots, app delivery, packages, freight, goods, food, private hire vehicles, postal service, medicine, and other delivery services.
 
-<p align="center">
-<a href="/modes/micromobility.md"><img src="https://i.imgur.com/tl99weM.png" alt="MDS Mode - Micromobility" style="float: left; border: 0; width: 150px;"></a> &nbsp; &nbsp; &nbsp;
-<a href="/modes/passenger-services.md"><img src="https://i.imgur.com/3iAkYBC.png" alt="MDS Mode - Passenger Services" style="float: left; border: 0; width: 150px;"></a> &nbsp; &nbsp; &nbsp; 
-<a href="/modes/car-share.md"><img src="https://i.imgur.com/cCQTge5.png" alt="MDS Mode - Car Share" style="float: left; border: 0; width: 150px;"></a> &nbsp; &nbsp; &nbsp;
-<a href="/modes/delivery-robots.md"><img src="https://i.imgur.com/NsXx1dD.png" alt="MDS Mode - Delivery" style="float: left; border: 0; width: 150px;"></a>
-</p>
-<br clear="both"/>
+<img src="https://i.imgur.com/hL4oQdD.png" alt="MDS Modes: Micromobility, Passenger, Fleet, Delivery" />
+
+## Future Modes 
+
+Support for other shared modes, services, programs, and vehicles has been discussed for MDS, and could be created by public agencies and company requests in the future with non-breaking modifications in new MDS versions, for drone delivery, EVTOL air taxis, ferries, gondolas, subway, trolleys, trains, water taxis, helicopters, and planes. If interested, browse our [current conversations](https://github.com/openmobilityfoundation/mobility-data-specification/issues) or [start your own](https://github.com/openmobilityfoundation/mobility-data-specification/issues/new?template=feature-request---proposal.md).
 
 [Top][toc]
 
