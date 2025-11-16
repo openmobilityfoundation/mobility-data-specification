@@ -1,10 +1,12 @@
-# Mobility Data Specification: **Car Share**
+# Mobility Data Specification: **Fleet**
 
-<img src="https://i.imgur.com/HSL9F0h.png" width="120" align="right" alt="MDS Modes - Car Share" border="0">
+<img src="https://i.imgur.com/OTl1hIv.png" width="200" align="right" alt="MDS Modes - Fleet" border="0">
 
-**Car Share** refers to shared point-to-point and station-based mutli-passenger vehicles.  Car Share typically has a driver who is the customer, and possibly one or more passengers or cargo.  
+**Fleet** refers to shared customer, employees and contractors, autonomous, and remotely operated shared point-to-point, station-based, or free-floating multi-passenger or cargo vehicles like consumer car share, sanitation vehicles (garbage, recycling), city fleets, vehicle rentals, street sweepers, snow plows, utility services, construction, emergency response (police, fire, ambulance), tree maintenance, inspection and permitting vehicles, mobile health clinics, and heavy maintenance vehicles.
 
 See the [modes overview](/modes) for how the mode specific information below applies across MDS.
+
+_Note: Formerly called "Car Share". Any references in the specification code or links to only "Car Share" will be updated to the broader "Fleet" scope in the next MDS 3.0 release._
 
 ## Table of Contents
 
@@ -30,7 +32,7 @@ See the [modes overview](/modes) for how the mode specific information below app
 
 ### Mode ID
 
-The short name identifier for Car Share used across MDS is `car-share`.
+The short name identifier for Fleet used across MDS is `car-share`. In a future release this will be updated to `fleet`.
 
 [Top][toc]
 
@@ -54,7 +56,7 @@ The `journey_id` field shall have a consistent value in overlapping trips for a 
 
 The `journey_attributes` object **may** have the following key value pairs:
 
-- `reservation_id` (UUID, [Optional](../general-information.md#optional-fields)): unique identifier for an entire car share reservation, tied across multiple journeys and therefore trips.
+- `reservation_id` (UUID, [Optional](../general-information.md#optional-fields)): unique identifier for an entire vehicle reservation, tied across multiple journeys and therefore trips.
 
 [Top][toc]
 
@@ -154,7 +156,7 @@ This `accessibility_attributes` enum represents the accessibility attributes ava
 
 ### Vehicle States
 
-Valid car share vehicle states are 
+Valid fleet vehicle states are 
 
 - `removed`
 - `available` 
@@ -171,7 +173,7 @@ See [Vehicle States][vehicle-states] for descriptions.
 
 ### Event Types
 
-Valid car share vehicle event types are 
+Valid fleet vehicle event types are 
 
 - `charging_start`
 - `charging_end`
@@ -262,7 +264,7 @@ This is the list of `vehicle_state` and `event_type` pairings that constitute th
 
 This *State Machine Diagram* shows how `vehicle_state` and `event_type` relate to each other and how vehicles can transition between states. See [Google Slides](https://docs.google.com/presentation/d/1fHdq1efbN5GSFDLF4en-oA_BYPXQKbbIbHff6iROJKA/edit#slide=id.g2072486e468_1_300) for the source file.
 
-![Car Share State Machine Diagram](car-share-state-machine-diagram.svg)
+![Fleet State Machine Diagram](car-share-state-machine-diagram.svg)
 
 [Top][toc]
 
