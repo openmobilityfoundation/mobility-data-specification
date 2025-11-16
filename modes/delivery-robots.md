@@ -1,6 +1,6 @@
 # Mobility Data Specification: **Delivery**
 
-<img src="https://i.imgur.com/bw2O9t8.png" width="150" align="right" alt="MDS Modes - Delivery Robots" border="0">
+<img src="https://i.imgur.com/bw2O9t8.png" width="200" align="right" alt="MDS Modes - Delivery Robots" border="0">
 
 **Delivery** refers to employees and contractors, autonomous, and remotely operated sidewalk robots, app delivery, packages, freight, goods, food, private hire vehicles, postal service, medicine, and other delivery services.
 
@@ -8,7 +8,7 @@ There can be one or multiple orders on different trips at the same time, connect
 
 See the [modes overview](/modes) for how the mode specific information below applies across MDS.
 
-_Note: Any references in the specification code or links to only "Delivery Robots" will be updated to the broader "Delivery" scope in the next MDS 3.0 release._
+_Note: Formerly called "Delivery Robots". Any references in the specification code or links to only "Delivery Robots" will be updated to the broader "Delivery" scope in the next MDS 3.0 release._
 
 ## Table of Contents
 
