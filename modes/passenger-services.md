@@ -2,7 +2,7 @@
 
 <img src="https://i.imgur.com/beefGup.png" width="200" align="right" alt="MDS Modes - Passenger" border="0">
 
-**Passenger** refers to taxis, transportation network companies (TNCs), commercial transport apps (CTAs), and private hire vehicles (PHVs).  Passenger services typically have a driver, one or more passengers, and multiple passengers may be on different trips.  The state machine tracks the trip states of the passengers separately from the vehicle state.  
+**Passenger** refers to employees and contractors, autonomous, and remotely operated transporting individuals or goods with a vehicle driven by another entity, including taxis, AV robotaxis, busses, transportation network companies (TNCs), commercial transport apps (CTAs), and private hire vehicles (PHVs), shuttles, paratransit, on demand vehicles, limosines, and microtransit.   
 
 See the [modes overview](/modes) for how the mode specific information below applies across MDS.
 
