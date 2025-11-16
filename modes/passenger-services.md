@@ -1,14 +1,16 @@
-# Mobility Data Specification: **Passenger Services**
+# Mobility Data Specification: **Passenger**
 
-<img src="https://i.imgur.com/plW2Hon.png" width="120" align="right" alt="MDS Modes - Passenger Services" border="0">
+<img src="https://i.imgur.com/beefGup.png" width="200" align="right" alt="MDS Modes - Passenger" border="0">
 
-**Passenger Services** refers to taxis, transportation network companies (TNCs), commercial transport apps (CTAs), and private hire vehicles (PHVs).  Passenger Services typically have a driver, one or more passengers, and multiple passengers may be on different trips.  The state machine tracks the trip states of the passengers separately from the vehicle state.  
+**Passenger** refers to taxis, transportation network companies (TNCs), commercial transport apps (CTAs), and private hire vehicles (PHVs).  Passenger services typically have a driver, one or more passengers, and multiple passengers may be on different trips.  The state machine tracks the trip states of the passengers separately from the vehicle state.  
 
 See the [modes overview](/modes) for how the mode specific information below applies across MDS.
 
-## Taxi vs. TNC implementation differences
+_Note: Formerly called "Passenger Services". Any references in the specification code or links to "Passenger Services" will be updated to the shorter "Passenger" scope in the next MDS 3.0 release._
 
-Taxis typically require explicit tracking of maintenance while TNCs typically do not. Public agency regulations, legal authority, differ based on local, state, and federal laws and jurisdictions between taxis, TNCs, CTAs, PHV, etc.
+## Implementation differences
+
+Taxis and similar traditionally regulated services typically require explicit tracking of maintenance and labor, while TNCs or other contract driver services may not. Public agency regulations, legal authority, differ based on local, state, and federal laws and jurisdictions between taxis, TNCs, CTAs, PHV, AVs, etc.
 
 ## Table of Contents
 
@@ -34,7 +36,7 @@ Taxis typically require explicit tracking of maintenance while TNCs typically do
 
 ### Mode ID
 
-The short name identifier for Passenger Services used across MDS is `passenger-services`.
+The short name identifier for Passenger mode used across MDS is `passenger-services`.  In a future release this will be updated to `passenger`.
 
 [Top][toc]
 
@@ -156,7 +158,7 @@ This `accessibility_attributes` enum represents the accessibility attributes ava
 
 ### Vehicle States
 
-Valid passenger services vehicle states are 
+Valid passenger vehicle states are 
 
 - `removed`
 - `available` 
@@ -173,7 +175,7 @@ See [Vehicle States][vehicle-states] for descriptions.
 
 ### Event Types
 
-Valid passenger services vehicle event types are 
+Valid passenger vehicle event types are 
 
 - `comms_lost`
 - `comms_restored`
@@ -255,11 +257,11 @@ This is the list of `vehicle_state` and `event_type` pairings that constitute th
 
 This *State Machine Diagram* shows how `vehicle_state` and `event_type` relate to each other and how vehicles can transition between states. See [Google Slides](https://docs.google.com/presentation/d/1fHdq1efbN5GSFDLF4en-oA_BYPXQKbbIbHff6iROJKA/edit#slide=id.g2072486e468_1_19) for the source file.
 
-![Passenger Services State Machine Diagram](passenger-services-state-machine-diagram.svg)
+![Passenger State Machine Diagram](passenger-services-state-machine-diagram.svg)
 
 [Top][toc]
 
-#### Passenger Services State Notes
+#### Passenger State Notes
 
 When there is only one trip ongoing, `trip_state == vehicle_state`
 
