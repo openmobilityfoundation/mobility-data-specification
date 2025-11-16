@@ -99,7 +99,13 @@ MDS supports multiple "modes", defined as a distinct regulatory framework for a 
 - **[Fleet](/modes/car-share.md)** - customer, employees and contractors, autonomous, and remotely operated shared point-to-point, station-based, or free-floating multi-passenger or cargo vehicles like consumer car share, sanitation vehicles (garbage, recycling), city fleets, vehicle rentals, street sweepers, snow plows, utility services, construction, emergency response (police, fire, ambulance), tree maintenance, inspection and permitting vehicles, mobile health clinics, and heavy maintenance vehicles.
 - **[Delivery](/modes/delivery-robots.md)** - employees and contractors, autonomous, and remotely operated sidewalk robots, app delivery, packages, freight, goods, food, private hire vehicles, postal service, medicine, and other delivery services.
 
-<img src="https://i.imgur.com/hL4oQdD.png" alt="MDS Modes: Micromobility, Passenger, Fleet, Delivery" />
+<p align="center">
+<a href="/modes/micromobility.md"><img src="https://i.imgur.com/bKGsiXz.png" alt="MDS Mode - Micromobility" style="float: left; border: 0; width: 170px;"></a> &nbsp; &nbsp; &nbsp;
+<a href="/modes/passenger-services.md"><img src="https://i.imgur.com/beefGup.png" alt="MDS Mode - Passenger" style="float: left; border: 0; width: 170px;"></a> &nbsp; &nbsp; &nbsp; 
+<a href="/modes/car-share.md"><img src="https://i.imgur.com/OTl1hIv.png" alt="MDS Mode - Fleet" style="float: left; border: 0; width: 170px;"></a> &nbsp; &nbsp; &nbsp;
+<a href="/modes/delivery-robots.md"><img src="https://i.imgur.com/bw2O9t8.png" alt="MDS Mode - Delivery" style="float: left; border: 0; width: 170px;"></a>
+</p>
+<br clear="both"/>
 
 ## Future Modes 
 
