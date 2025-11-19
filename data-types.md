@@ -339,7 +339,7 @@ Other special group types may be added in future MDS releases as relevant agency
 
 ## Enforcement
 
-The Enforcement object describes a specific set of features relevant to an enforcement [Incident](#incident). 
+The Enforcement object describes a specific set of features relevant to an enforcement [Incident](#incidents). 
 
 Where a citation could represent multiple violations, an enforcement object contains an array that enumerates the violations for a single citation. Where a citation can only represent a single violation, multiple Incidents may be published, each with a single violation in the array.
 
@@ -358,7 +358,7 @@ The `enforcement` object is a JSON *object* with the following fields:
 
 ### Violations
 
-The Violations object describes the violations associated to an enforcement action that can occur as part of a [Enforcement](#enforcement) on an [Incident](#incident). 
+The Violations object describes the violations associated to an enforcement action that can occur as part of a [Enforcement](#enforcement) on an [Incident](#incidents). 
 
 The `violations` object is a JSON *object* with the following fields:
 
