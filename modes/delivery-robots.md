@@ -89,19 +89,21 @@ The `trip_type` field **must** have one of the following enumerated values:
 
 The `trip_attributes` object **may** have the following key value pairs:
 
-- `driver_type` (enum, required): type of driver operating the device: `human`, `semi_autonomous`, `autonomous`
+- `driver_type` (enum, required): type of driver operating the device: `human`, `semi_autonomous`, `autonomous`, `remote`
 - `driver_id` (UUID, [Optional](../general-information.md#optional-fields)): consistent unique identifier of the primary driver. Universal identifier of a specific driver, static across operators, like a driver's license number. Could also be used as a lookup in an agency's internal driver system. For autonomous or remote operations, could be based on software version, or an internal remote human driver id.
 - `permit_number` (string, [Optional](../general-information.md#optional-fields)) - The permit number of the individual or organization that is operating the vehicle
-- `app_name` (string, [Optional](../general-information.md#optional-fields)): name of the app used to reserve the trip which could be provider's app or 3rd party app
-- `requested_time` ([Timestamp][ts], [Optional](../general-information.md#optional-fields)): when the customer requested the trip
-- `pickup_address` (string, [Optional](../general-information.md#optional-fields)): street address where the trip originated from
-- `origin_type` (string, [Optional](../general-information.md#optional-fields)): the name of the origin type for this delivery, e.g. ghost kitchen, individual restaurant, retail store, private delivery-courier, etc.
-- `dropoff_address` (string, [Optional](../general-information.md#optional-fields)): street address where the trip ended
-- `destination_type` (string, [Optional](../general-information.md#optional-fields)): the name of the destination type for this delivery, e.g. restaurant, residential, commerical, etc.
 - `has_payload` (boolean, [Optional](../general-information.md#optional-fields)): is there any payload for any delivery included in the device at trip start. 1 = loaded, 0 = empty
-- `payload_type` (string, [Optional](../general-information.md#optional-fields)): the type or cargo or payload for this delivery, e.g. prepared food, parcel, medical, alcohol, grocery, etc. Could affect `fees`.
 - `range` (integer, [Optional](../general-information.md#optional-fields)): estimated range in meters based on energy levels in device at trip start
-- `identification_required` (boolean, [Optional](../general-information.md#optional-fields)): does the cargo require providing customer identification before trip start or upon delivery?
+- `order` (Array, [Optional](../general-information.md#optional-fields)): Array of one or more orders with details for this trip:
+   - `order_id` (string, [Optional](../general-information.md#optional-fields)): identifier for this order, which could be used to cross reference in external system
+   - `app_name` (string, [Optional](../general-information.md#optional-fields)): name of the app used to reserve the trip which could be provider's app or 3rd party app
+   - `requested_time` ([Timestamp][ts], [Optional](../general-information.md#optional-fields)): when the customer requested the trip
+   - `pickup_address` (string, [Optional](../general-information.md#optional-fields)): street address where the trip originated from
+   - `origin_type` (string, [Optional](../general-information.md#optional-fields)): the name of the origin type for this delivery, e.g. ghost kitchen, individual restaurant, retail store, private delivery-courier, etc.
+   - `dropoff_address` (string, [Optional](../general-information.md#optional-fields)): street address where the trip ended
+   - `payload_type` (string, [Optional](../general-information.md#optional-fields)): the type or cargo or payload for this delivery, e.g. prepared food, parcel, medical, alcohol, grocery, etc. Could affect `fees`.
+   - `identification_required` (boolean, [Optional](../general-information.md#optional-fields)): does the cargo require providing customer identification before trip start or upon delivery?
+   - `destination_type` (string, [Optional](../general-information.md#optional-fields)): the name of the destination type for this delivery, e.g. restaurant, residential, commerical, etc.
 
 [Top][toc]
 
@@ -109,11 +111,12 @@ The `trip_attributes` object **may** have the following key value pairs:
 
 The `fare_attributes` object **may** have the following key value pairs:
 
-- `payment_type` (enumerated, [Optional](../general-information.md#optional-fields)): `account_number`, `cash`, `credit_card`, `mobile_app`, `no payment`, `phone`, `voucher`, `test`
-- `price` (currency, [Optional](../general-information.md#optional-fields)): Total price of the order
-- `tip` (currency, [Optional](../general-information.md#optional-fields)) - amount of tip paid by customer
-- `taxes` (currency, [Optional](../general-information.md#optional-fields)) - amount of taxes paid for the trip
-- `fees` (currency, [Optional](../general-information.md#optional-fields)): any additional fees (positive) or incentives/discounts (negative) for this trip
+- `fare_order` (Array, [Optional](../general-information.md#optional-fields)): Array of one or more orders with details for this trip:
+   - `payment_type` (enumerated, [Optional](../general-information.md#optional-fields)): `account_number`, `cash`, `credit_card`, `mobile_app`, `no payment`, `phone`, `voucher`, `test`
+   - `price` (currency, [Optional](../general-information.md#optional-fields)): Total price of the order
+   - `tip` (currency, [Optional](../general-information.md#optional-fields)) - amount of tip paid by customer
+   - `taxes` (currency, [Optional](../general-information.md#optional-fields)) - amount of taxes paid for the trip
+   - `fees` (currency, [Optional](../general-information.md#optional-fields)): any additional fees (positive) or incentives/discounts (negative) for this trip
 
 [Top][toc]
 
