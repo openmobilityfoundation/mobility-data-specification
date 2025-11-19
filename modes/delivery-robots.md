@@ -80,30 +80,37 @@ gantt
 
 ```mermaid
 gantt
-    title Example 3: delivery trips (w/ multiple orders) and journeys in the same longer route
+    title Example 3: delivery trips (w/ multiple orders) and journeys in 2 routes and 1 driver shift
     dateFormat HH:mm
     axisFormat %H:%M
 
-    section Route
-    Route Start : vert, v1, 17:00, 2m
-    Route : done, a, 17:00, 70m
+    section Routes
+    Shift Start : vert, v1, 17:00, 2m
+    Shift : active, crit, a, 17:00, 90m
+    Route 1 : done, a, 17:00, 70m
+    Route 2: done, a, 18:10, 20m
 
     section Journey 1
     Journey : active, a, 17:00, 50m
     Trip, delivery : b, 17:00, 10m
-    Trip, delivery : b, 17:10, 15m
-    Trip, delivery : b, 17:25, 20m
-    Order 1: crit, done, c, 17:35, 5m
-    Order 2: crit, done, c, 17:40, 3m
-    Order 3: crit, done, c, 17:40, 5m
-    Trip, return : b, 17:45, 5m
+    Trip, delivery : b, 17:10, 10m
+    Trip, delivery : b, 17:20, 20m
+    Order 1: crit, done, c, 17:25, 5m
+    Order 2: crit, done, c, 17:30, 5m
+    Order 3: crit, done, c, 17:30, 10m
+    Trip, return : b, 17:40, 10m
 
     section Journey 2
     Journey : active, a, 17:50, 20m
     Trip, delivery : b, 17:50, 10m
     Trip, return : b, 18:00, 10m
 
-    Route End : vert, v1, 18:10, 5m
+    section Journey 3
+    Journey : active, a, 18:10, 20m
+    Trip, delivery : b, 18:10, 12m
+    Trip, return : b, 18:22, 8m
+
+    Shift End : vert, v1, 18:30, 5m
 ```
 
 [Top][toc]
