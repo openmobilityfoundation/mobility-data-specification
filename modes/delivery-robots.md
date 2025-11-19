@@ -44,7 +44,7 @@ _See more available trip and fare attributes for any mode used in the [trips obj
 
 ### Journey ID
 
-The `journey_id` field shall have a consistent value in overlapping trips. Journeys may be point-to-point, multi-segment, or multi-segment overlapping.
+The `journey_id` field shall have a consistent value in overlapping trips. Journeys may be point-to-point, multi-segment, or multi-segment overlapping. Note that multiple journeys can be tied together with `shift_id` or `route_id` in [Journey Attributes](#journey-attributes).
 
 - **Example 1**: delivery to a single location, then return
 - **Example 2**: three overlapping delivery trips in the same journey
@@ -58,6 +58,9 @@ The `journey_id` field shall have a consistent value in overlapping trips. Journ
 The `journey_attributes` object **may** have the following key value pairs:
 
 - `shift_id` (UUID, optional): unique identifier for a driver or operator's working shift, tied across multiple journeys and therefore trips.
+- `route_id` (UUID, optional): unique identifier for a planned delivery or passenger route, tied across multiple journeys and therefore trips.
+
+Shifts and routes are made up of journeys, and journeys are made up of trips, so these can be connected in various ways as needed.
 
 [Top][toc]
 
