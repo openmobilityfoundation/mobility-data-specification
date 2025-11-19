@@ -159,7 +159,8 @@ The `trip_attributes` object **may** have the following key value pairs:
 - `order` (Array, [Optional](../general-information.md#optional-fields)): Array of one or more orders with details for this trip:
    - `order_id` (string, [Optional](../general-information.md#optional-fields)): identifier for this order, which could be used to cross reference in external system
    - `app_name` (string, [Optional](../general-information.md#optional-fields)): name of the app used to reserve the trip which could be provider's app or 3rd party app
-   - `requested_time` ([Timestamp][ts], [Optional](../general-information.md#optional-fields)): when the customer requested the trip
+   - `requested_time` ([Timestamp][ts], [Optional](../general-information.md#optional-fields)): when the customer requested the order
+   - `delivery_time` ([Timestamp][ts], [Optional](../general-information.md#optional-fields)): when the order was delivered (e.g. customer received their order, package was left, etc). 
    - `pickup_address` (string, [Optional](../general-information.md#optional-fields)): street address where the trip originated from
    - `origin_type` (string, [Optional](../general-information.md#optional-fields)): the name of the origin type for this delivery, e.g. ghost kitchen, individual restaurant, retail store, private delivery-courier, etc.
    - `dropoff_address` (string, [Optional](../general-information.md#optional-fields)): street address where the trip ended
