@@ -46,10 +46,65 @@ _See more available trip and fare attributes for any mode used in the [trips obj
 
 The `journey_id` field shall have a consistent value in overlapping trips. Journeys may be point-to-point, multi-segment, or multi-segment overlapping. Note that multiple journeys can be tied together with `shift_id` or `route_id` in [Journey Attributes](#journey-attributes).
 
-- **Example 1**: delivery to a single location, then return
-- **Example 2**: three overlapping delivery trips in the same journey
+```mermaid
+gantt
+    title Example 1: delivery to a single location, then return
+    dateFormat HH:mm
+    axisFormat %H:%M
 
-![Journey Diagram](https://i.imgur.com/Mx8jVQq.png)
+    section Journey
+    Journey Start : vert, v1, 17:00, 2m
+    Journey : active, a, 17:00, 40m
+    Trip, delivery : b, 17:00, 20m
+    Trip, return : b, 17:20, 20m
+
+    Journey End : vert, v1, 17:40, 5m
+```
+
+```mermaid
+gantt
+    title Example 2: three overlapping delivery trips in the same journey
+    dateFormat HH:mm
+    axisFormat %H:%M
+
+    section Journey
+    Journey Start : vert, v1, 17:00, 2m
+    Journey : active, a, 17:00, 50m
+    Trip, delivery : b, 17:00, 10m
+    Trip, delivery : b, 17:10, 20m
+    Trip, delivery : b, 17:30, 15m
+    Trip, return : b, 17:45, 5m
+
+    Journey End : vert, v1, 17:50, 5m
+```
+
+```mermaid
+gantt
+    title Example 3: delivery trips (w/ multiple orders) and journeys in the same longer route
+    dateFormat HH:mm
+    axisFormat %H:%M
+
+    section Route
+    Route Start : vert, v1, 17:00, 2m
+    Route : done, a, 17:00, 70m
+
+    section Journey 1
+    Journey : active, a, 17:00, 50m
+    Trip, delivery : b, 17:00, 10m
+    Trip, delivery : b, 17:10, 15m
+    Trip, delivery : b, 17:25, 20m
+    Order 1: crit, done, c, 17:35, 5m
+    Order 2: crit, done, c, 17:40, 3m
+    Order 3: crit, done, c, 17:40, 5m
+    Trip, return : b, 17:45, 5m
+
+    section Journey 2
+    Journey : active, a, 17:50, 20m
+    Trip, delivery : b, 17:50, 10m
+    Trip, return : b, 18:00, 10m
+
+    Route End : vert, v1, 18:10, 5m
+```
 
 [Top][toc]
 
