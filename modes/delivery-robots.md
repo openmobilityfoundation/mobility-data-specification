@@ -52,28 +52,35 @@ gantt
     dateFormat HH:mm
     axisFormat %H:%M
 
-    section Journey
-    Journey Start : vert, v1, 17:00, 2m
-    Journey : active, a, 17:00, 40m
-    Trip, delivery : b, 17:00, 20m
-    Trip, return : b, 17:20, 20m
+    Start : vert, v1, 17:00, 2m
 
-    Journey End : vert, v1, 17:40, 5m
+    Trip - delivery : b, 17:00, 20m
+    Trip - return : b, 17:20, 20m
+
+    End : vert, v1, 17:40, 5m
 ```
 
 ```mermaid
 gantt
-    title Example 2: three overlapping delivery trips in the same journey
+    title Example 2: four overlapping delivery trips in the same journey
     dateFormat HH:mm
     axisFormat %H:%M
 
     section Journey
     Journey Start : vert, v1, 17:00, 2m
+
     Journey : active, a, 17:00, 50m
-    Trip, delivery : b, 17:00, 10m
-    Trip, delivery : b, 17:10, 20m
-    Trip, delivery : b, 17:30, 15m
-    Trip, return : b, 17:45, 5m
+    Trip - delivery : b, 17:00, 10m
+    Stop 1 : vert, v1, 17:10, 2m
+    Trip - roaming : b, 17:10, 10m
+    Stop 2 : vert, v1, 17:20, 2m
+    Trip - delivery : b, 17:20, 15m
+    Trip - delivery : b, 17:20, 20m
+    Trip - delivery : b, 17:20, 25m
+    Stop 3 : vert, v1, 17:35, 2m
+    Stop 4 : vert, v1, 17:40, 2m
+    Stop 5 : vert, v1, 17:45, 2m
+    Trip - return : b, 17:45, 5m
 
     Journey End : vert, v1, 17:50, 5m
 ```
@@ -92,25 +99,25 @@ gantt
 
     section Journey 1
     Journey : active, a, 17:00, 50m
-    Trip, delivery : b, 17:00, 10m
-    Trip, delivery : b, 17:10, 10m
-    Trip, delivery : b, 17:20, 20m
+    Trip - delivery : b, 17:00, 10m
+    Trip - delivery : b, 17:10, 10m
+    Trip - delivery : b, 17:20, 20m
     Order 1: crit, done, c, 17:25, 5m
     Order 2: crit, done, c, 17:30, 5m
     Order 3: crit, done, c, 17:30, 10m
-    Trip, return : b, 17:40, 10m
+    Trip - return : b, 17:40, 10m
 
     section Journey 2
     Journey : active, a, 17:50, 20m
-    Trip, delivery : b, 17:50, 10m
-    Trip, return : b, 18:00, 10m
+    Trip - delivery : b, 17:50, 10m
+    Trip - return : b, 18:00, 10m
 
     section Journey 3
     Journey : active, a, 18:10, 20m
-    Trip, delivery : b, 18:10, 12m
-    Trip, return : b, 18:22, 8m
+    Trip - delivery : b, 18:10, 12m
+    Trip - return : b, 18:22, 8m
 
-    Shift End : vert, v1, 18:30, 5m
+    Shift End : vert, v1, 18:30, 10m
 ```
 
 [Top][toc]
