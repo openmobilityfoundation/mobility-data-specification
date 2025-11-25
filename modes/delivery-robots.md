@@ -47,6 +47,25 @@ _See more available trip and fare attributes for any mode used in the [trips obj
 The `journey_id` field shall have a consistent value in overlapping trips. Journeys may be point-to-point, multi-segment, or multi-segment overlapping. Note that multiple journeys can be tied together with `shift_id` or `route_id` in [Journey Attributes](#journey-attributes).
 
 ```mermaid
+---
+config:
+        theme: 'base'
+        themeVariables:
+          'activeTaskBkgColor': '#155654'
+          'activeTaskBorderColor': '#2AF1BE'
+          'critBorderColor': '#2AF1BE'
+          'doneTaskBkgColor': '#299c90'
+          'doneTaskBorderColor': '#373737'
+          'taskBkgColor': '#2AF1BE'
+          'taskBorderColor': '#373737'
+          'taskTextColor': '#373737'
+          'taskTextDarkColor': 'white'
+          'taskTextLightColor': '#373737'
+          'vertLineColor': '#155654'
+          'sectionBkgColor': '#ddd'
+          'altSectionBkgColor': '#aaa'
+          'sectionBkgColor2': '#777'
+---
 gantt
     title Example 1: delivery to a single location, then return
     dateFormat HH:mm
@@ -61,6 +80,26 @@ gantt
 ```
 
 ```mermaid
+---
+displayMode: compact
+config:
+        theme: 'base'
+        themeVariables:
+          'activeTaskBkgColor': '#155654'
+          'activeTaskBorderColor': '#2AF1BE'
+          'critBorderColor': '#2AF1BE'
+          'doneTaskBkgColor': '#299c90'
+          'doneTaskBorderColor': '#373737'
+          'taskBkgColor': '#2AF1BE'
+          'taskBorderColor': '#373737'
+          'taskTextColor': '#373737'
+          'taskTextDarkColor': 'white'
+          'taskTextLightColor': '#373737'
+          'vertLineColor': '#155654'
+          'sectionBkgColor': '#ddd'
+          'altSectionBkgColor': '#aaa'
+          'sectionBkgColor2': '#777'
+---
 gantt
     title Example 2: four overlapping delivery trips in the same journey
     dateFormat HH:mm
@@ -86,6 +125,25 @@ gantt
 ```
 
 ```mermaid
+---
+config:
+        theme: 'base'
+        themeVariables:
+          'activeTaskBkgColor': '#155654'
+          'activeTaskBorderColor': '#2AF1BE'
+          'critBorderColor': '#2AF1BE'
+          'doneTaskBkgColor': '#299c90'
+          'doneTaskBorderColor': '#373737'
+          'taskBkgColor': '#2AF1BE'
+          'taskBorderColor': '#373737'
+          'taskTextColor': '#373737'
+          'taskTextDarkColor': 'white'
+          'taskTextLightColor': '#373737'
+          'vertLineColor': '#155654'
+          'sectionBkgColor': '#ddd'
+          'altSectionBkgColor': '#aaa'
+          'sectionBkgColor2': '#777'
+---
 gantt
     title Example 3: delivery trips (w/ multiple orders) and journeys in 2 routes and 1 driver shift
     dateFormat HH:mm
@@ -94,7 +152,7 @@ gantt
     section Routes
     Shift Start : vert, v1, 17:00, 2m
     Shift : active, crit, a, 17:00, 90m
-    Route 1 : done, a, 17:00, 70m
+    Route 1: done, a, 17:00, 70m
     Route 2: done, a, 18:10, 20m
 
     section Journey 1
