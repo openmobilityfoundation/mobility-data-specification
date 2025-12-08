@@ -226,6 +226,8 @@ The `trip_attributes` object **may** have the following key value pairs:
    - `order_id` (string, [Optional](../general-information.md#optional-fields)): identifier for this order, which could be used to cross reference in external system
    - `app_name` (string, [Optional](../general-information.md#optional-fields)): name of the app used to reserve the trip which could be provider's app or 3rd party app
    - `requested_time` ([Timestamp][ts], [Optional](../general-information.md#optional-fields)): when the customer requested the order
+   - `order_acceptance_time` ([Timestamp][ts], [Optional](../general-information.md#optional-fields)): when the driver has accepted the order, either in person or virtually
+   - `order_pickup_time` ([Timestamp][ts], [Optional](../general-information.md#optional-fields)): when the driver has physicaly picked up the order
    - `unload_time` ([Timestamp][ts], [Optional](../general-information.md#optional-fields)): when the order was unloaded from the vehicle to finish delivery 
    - `delivery_time` ([Timestamp][ts], [Optional](../general-information.md#optional-fields)): when the order was delivered (e.g. customer received their order, package was left, etc).
    - `pickup_location_name` (string, [Optional](../general-information.md#optional-fields)): name of the location where the order originated from
