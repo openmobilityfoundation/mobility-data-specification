@@ -237,7 +237,7 @@ A Trip is defined by the following structure:
 | `journey_id`             | UUID            | [Optional](./general-information.md#optional-fields) | A unique [journey ID](/modes#journey-id) for associating collections of trips for its [mode][modes] |
 | `journey_attributes`     | Map             | [Optional](./general-information.md#optional-fields) | **[Mode](/modes#list-of-supported-modes) Specific**. [Journey attributes](/modes#journey-attributes) given as unordered key-value pairs |
 | `trip_id`                | UUID            | Required | A unique ID for each trip |
-| `trip_type`              | Enum            | [Optional](./general-information.md#optional-fields) | **[Mode](/modes#list-of-supported-modes) Specific**. The [trip type](/modes#trip-type) describing the purpose of a trip segment |
+| `trip_type`              | Enum            | [Optional](./general-information.md#optional-fields) | **[Mode](/modes#list-of-supported-modes) Specific**. The [trip type](/modes#trip-type) describing the purpose of a trip segment. _Note: if not provided, only send trips of the **default** `trip_type`, as marked for each mode._ |
 | `trip_attributes`        | Map             | [Optional](./general-information.md#optional-fields) | **[Mode](/modes#list-of-supported-modes) Specific**. [Trip attributes](/modes#trip-attributes) given as unordered key-value pairs |
 | `fare_attributes`        | Map             | [Optional](./general-information.md#optional-fields) | **[Mode](/modes#list-of-supported-modes) Specific**. [Fare attributes](/modes#fare-attributes) given as unordered key-value pairs |
 | `start_time`             | [Timestamp][ts] | Required | Start of the passenger/driver trip |
