@@ -75,7 +75,7 @@ Additionally, `trip_id` is required if `event_types` contains a `trip_enter_juri
 
 The `trip_type` field **must** have one of the following enumerated values:
 
-- `private`: a private trip made by one paying customer with one or more guests
+- `private` (_default_): a private trip made by one paying customer with one or more guests
 - `shared`: a shared or pooled trip with more than one paying customer
 - `reservation`: en route to pickup a customer who has made a reservation, with no passengers in the vehicle
 - `empty`: vehicle movement with no passengers (outside of other `trip_type` values) that may need to be reported, e.g. for deadheading
