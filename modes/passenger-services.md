@@ -2,7 +2,7 @@
 
 <img src="https://i.imgur.com/beefGup.png" width="200" align="right" alt="MDS Modes - Passenger" border="0">
 
-**Passenger** refers to employees and contractors, autonomous, and remotely operated transporting individuals or goods with a vehicle driven by another entity, including taxis, AV robotaxis, busses, transportation network companies (TNCs), commercial transport apps (CTAs), and private hire vehicles (PHVs), shuttles, paratransit, on demand vehicles, limosines, and microtransit.   
+**Passenger** refers to employees and contractors, autonomous, and remotely operated transporting individuals or goods with a vehicle driven by another entity, including taxis, AV robotaxis, busses, transportation network companies (TNCs), commercial transport apps (CTAs), and private hire vehicles (PHVs), shuttles, paratransit, on demand vehicles, limousines, and microtransit.   
 
 See the [modes overview](/modes) for how the mode specific information below applies across MDS.
 
@@ -48,10 +48,91 @@ _See more available trip and fare attributes for any mode used in the [trips obj
 
 The `journey_id` field shall have a consistent value in overlapping trips, e.g. "pooled" or "shared" rides with different start and/or end locations. Journeys may be point-to-point, multi-segment, or multi-segment overlapping.
 
-- **Example 1**: one private trip with reservation, then return to depot
-- **Example 2**: three shared trips, some overlapping
+```mermaid
+---
+config:
+        theme: 'base'
+        themeVariables:
+          'activeTaskBkgColor': '#155654'
+          'activeTaskBorderColor': '#2AF1BE'
+          'critBorderColor': '#2AF1BE'
+          'doneTaskBkgColor': '#299c90'
+          'doneTaskBorderColor': '#373737'
+          'taskBkgColor': '#2AF1BE'
+          'taskBorderColor': '#373737'
+          'taskTextColor': '#373737'
+          'taskTextDarkColor': 'white'
+          'taskTextLightColor': '#373737'
+          'vertLineColor': '#155654'
+          'sectionBkgColor': '#ddd'
+          'altSectionBkgColor': '#aaa'
+          'sectionBkgColor2': '#777'
+---
+gantt
+    title Example 1: one private trip with reservation, then return to depot
+    dateFormat HH:mm
+    axisFormat %H:%M
 
-![Journey Diagram](https://i.imgur.com/ciNnDKC.png)
+    section Journey
+    Journey Start : vert, v1, 17:00, 2m
+
+    Journey : active, a, 17:00, 55m
+
+    Trip - reservation : b, 17:00, 10m
+    Trip - private : b, 17:10, 30m
+    Trip - empty : b, 17:40, 15m
+
+    Journey End : vert, v1, 17:55, 5m
+```
+
+
+```mermaid
+---
+config:
+        theme: 'base'
+        themeVariables:
+          'activeTaskBkgColor': '#155654'
+          'activeTaskBorderColor': '#2AF1BE'
+          'critBorderColor': '#2AF1BE'
+          'doneTaskBkgColor': '#299c90'
+          'doneTaskBorderColor': '#373737'
+          'taskBkgColor': '#2AF1BE'
+          'taskBorderColor': '#373737'
+          'taskTextColor': '#373737'
+          'taskTextDarkColor': 'white'
+          'taskTextLightColor': '#373737'
+          'vertLineColor': '#155654'
+          'sectionBkgColor': '#ddd'
+          'altSectionBkgColor': '#aaa'
+          'sectionBkgColor2': '#777'
+---
+gantt
+    title Example 2: three shared trips, some overlapping
+    dateFormat HH:mm
+    axisFormat %H:%M
+
+    section Journey
+
+    Journey : active, a, 17:00, 80m
+
+    Trip 1 - reservation : b, 17:00, 10m
+    Trip 1 - shared : b, 17:10, 30m
+    Trip 2 - reservation : b, 17:20, 10m
+    Trip 2 - shared : b, 17:30, 30m
+    Trip 3 - reservation : b, 17:50, 20m
+    Trip 3 - private : b, 18:10, 10m
+
+    Reserve Trip 1 : vert, v1, 17:00, 2m
+    Pickup Trip 1 : vert, v1, 17:10, 5m
+    Reserve Trip 2 : vert, v1, 17:20, 2m
+    Pickup Trip 2: vert, v1, 17:30, 5m
+    Dropoff Trip 1 : vert, v1, 17:40, 5m
+    Reserve Trip 3 : vert, v1, 17:50, 2m
+    Dropoff Trip 2 : vert, v1, 18:00, 5m
+    Pickup Trip 3 : vert, v1, 18:10, 5m
+    Dropoff Trip 3 : vert, v1, 18:20, 5m
+```
+
 
 [Top][toc]
 
