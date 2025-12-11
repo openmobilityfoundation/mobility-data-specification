@@ -107,30 +107,29 @@ config:
           'sectionBkgColor2': '#777'
 ---
 gantt
-    title Example 2: three shared trips, some overlapping
+    title Example 2: three shared trips, some overlapping, from airport to hotels
     dateFormat HH:mm
     axisFormat %H:%M
 
     section Journey
 
-    Journey : active, a, 17:00, 80m
-
+    Journey - airport to hotels : active, a, 17:00, 80m
     Trip 1 - reservation : b, 17:00, 10m
-    Trip 1 - shared : b, 17:10, 30m
-    Trip 2 - reservation : b, 17:20, 10m
-    Trip 2 - shared : b, 17:30, 30m
-    Trip 3 - reservation : b, 17:50, 20m
-    Trip 3 - private : b, 18:10, 10m
-
     Reserve Trip 1 : vert, v1, 17:00, 2m
-    Pickup Trip 1 : vert, v1, 17:10, 5m
+    Trip 1 - shared : b, 17:10, 30m
+    Pickup Trip 1 : vert, v1, 17:10, 1m
+    Trip 2 - reservation : b, 17:20, 10m
     Reserve Trip 2 : vert, v1, 17:20, 2m
-    Pickup Trip 2: vert, v1, 17:30, 5m
-    Dropoff Trip 1 : vert, v1, 17:40, 5m
+    Trip 2 - shared : b, 17:30, 30m
+    Pickup Trip 2: vert, v1, 17:30, 2m
+    Dropoff Trip 1 : vert, v1, 17:40, 2m
+    Trip 3 - reservation : b, 17:50, 20m
     Reserve Trip 3 : vert, v1, 17:50, 2m
-    Dropoff Trip 2 : vert, v1, 18:00, 5m
-    Pickup Trip 3 : vert, v1, 18:10, 5m
+    Dropoff Trip 2 : vert, v1, 18:00, 2m
+    Trip 3 - private : b, 18:10, 10m
+    Pickup Trip 3 : vert, v1, 18:10, 2m
     Dropoff Trip 3 : vert, v1, 18:20, 5m
+
 ```
 
 
