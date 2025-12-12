@@ -44,7 +44,7 @@ MDS is intended to be used for multiple transportation modes, including its orig
 - **[Fleet](/modes/car-share.md)** (`car-share`) - customer, employees and contractors, autonomous, and remotely operated shared point-to-point, station-based, or free-floating multi-passenger or cargo vehicles like consumer car share, sanitation vehicles (garbage, recycling), city fleets, vehicle rentals, street sweepers, snow plows, utility services, construction, emergency response (police, fire, ambulance), tree maintenance, inspection and permitting vehicles, mobile health clinics, and heavy maintenance vehicles. _Note: this will use the `fleet` short name in the next breaking release._
 - **[Delivery](/modes/delivery-robots.md)** (`delivery-robots`) - employees and contractors, autonomous, and remotely operated sidewalk robots, app delivery, packages, freight, goods, food, private hire vehicles, postal service, medicine, and other delivery services. _Note: this will use the `delivery` short name in the next breaking release._
 
-<img src="https://i.imgur.com/hL4oQdD.png" alt="MDS Modes: Micromobility, Passenger, Fleet, Delivery" />
+<img src="https://i.imgur.com/OIKoyGL.png" alt="MDS Modes: Micromobility, Passenger, Fleet, Delivery" />
 
 [Top][toc]
 
