@@ -139,7 +139,7 @@ gantt
 
 The `journey_attributes` object **may** have the following key value pairs:
 
-- `shift_id` (UUID, optional): unique identifier for an entire driver's work shift, tied across multiple journeys and therefore trips.
+- `shift_id` (UUID, [Optional](../general-information.md#optional-fields)): unique identifier for an entire driver's work shift, tied across multiple journeys and therefore trips.
 
 [Top][toc]
 
@@ -167,7 +167,7 @@ The `trip_type` field **must** have one of the following enumerated values:
 The `trip_attributes` object **may** have the following key value pairs:
 
 - `hail_type` (enumerated, required): `street_hail`, `phone_dispatch`, `phone`, `text`, `app`
-- `app_name` (text, optional): name of the app used to reserve the trip which could be provider's app or 3rd party app
+- `app_name` (text, [Optional](../general-information.md#optional-fields)): name of the app used to reserve the trip which could be provider's app or 3rd party app
 - `passenger_count` (integer, required): unique count of passengers transported during trip duration
 - `requested_time` ([Timestamp][ts], required): when the passenger requested the trip
 - `requested_trip_start_location` ([GPS](gps), [Conditionally Required](../general-information.md#conditionally-required-fields)):  Location where the customer requested the trip to start (required if this is within jurisdictional boundaries) 
