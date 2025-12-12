@@ -81,7 +81,7 @@ gantt
 
 ```mermaid
 ---
-displayMode: compact
+
 config:
         theme: 'base'
         themeVariables:
@@ -184,8 +184,8 @@ gantt
 
 The `journey_attributes` object **may** have the following key value pairs:
 
-- `shift_id` (UUID, optional): unique identifier for a driver or operator's working shift, tied across multiple journeys and therefore trips.
-- `route_id` (UUID, optional): unique identifier for a planned delivery or passenger route, tied across multiple journeys and therefore trips.
+- `shift_id` (UUID, [Optional](../general-information.md#optional-fields)): unique identifier for a driver or operator's working shift, tied across multiple journeys and therefore trips.
+- `route_id` (UUID, [Optional](../general-information.md#optional-fields)): unique identifier for a planned delivery or passenger route, tied across multiple journeys and therefore trips.
 
 Shifts and routes are made up of journeys, and journeys are made up of trips, so these can be connected in various ways as needed.
 
