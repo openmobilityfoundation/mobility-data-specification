@@ -39,18 +39,12 @@ MDS is intended to be used for multiple transportation modes, including its orig
 
 ## List of Supported Modes
 
-- **[Micromobility](/modes/micromobility.md)** (`micromobility`) - dockless or docked small devices such as e-scooters and bikes.
-- **[Passenger services](/modes/passenger-services.md)** (`passenger-services`) - transporting individuals with a vehicle driven by another entity, including taxis, TNCs, and microtransit
-- **[Car share](/modes/car-share.md)** (`car-share`) - shared point-to-point and station-based multi-passenger vehicles.
-- **[Delivery robots](/modes/delivery-robots.md)** (`delivery-robots`) - autonomous and remotely driven goods delivery devices
+- **[Micromobility](/modes/micromobility.md)** (`micromobility`) - customer operated dockless or docked small devices moving customers and goods, such as scooters, bikeshare, cargo bikes, adaptive scooters, docked bikes, mopeds, trikes, and quadracycles.
+- **[Passenger](/modes/passenger-services.md)** (`passenger-services`) - employees and contractors, autonomous, and remotely operated transporting individuals or goods with a vehicle driven by another entity, including taxis, AV robotaxis, busses, transportation network companies (TNCs), commercial transport apps (CTAs), and private hire vehicles (PHVs), shuttles, paratransit, on demand vehicles, limosines, and microtransit. _Note: this will use the `passenger` short name in the next breaking release._
+- **[Fleet](/modes/car-share.md)** (`car-share`) - customer, employees and contractors, autonomous, and remotely operated shared point-to-point, station-based, or free-floating multi-passenger or cargo vehicles like consumer car share, sanitation vehicles (garbage, recycling), city fleets, vehicle rentals, street sweepers, snow plows, utility services, construction, emergency response (police, fire, ambulance), tree maintenance, inspection and permitting vehicles, mobile health clinics, and heavy maintenance vehicles. _Note: this will use the `fleet` short name in the next breaking release._
+- **[Delivery](/modes/delivery-robots.md)** (`delivery-robots`) - employees and contractors, autonomous, and remotely operated sidewalk robots, app delivery, packages, freight, goods, food, private hire vehicles, postal service, medicine, and other delivery services. _Note: this will use the `delivery` short name in the next breaking release._
 
-<p align="center">
-<a href="/modes/micromobility.md"><img src="https://i.imgur.com/tl99weM.png" alt="MDS Mode - Micromobility" style="float: left; border: 0; width: 150px;"></a> &nbsp; &nbsp; &nbsp;
-<a href="/modes/passenger-services.md"><img src="https://i.imgur.com/mzbughz.png" alt="MDS Mode - Passenger Services" style="float: left; border: 0; width: 150px;"></a> &nbsp; &nbsp; &nbsp; 
-<a href="/modes/car-share.md"><img src="https://i.imgur.com/cCQTge5.png" alt="MDS Mode - Car Share" style="float: left; border: 0; width: 150px;"></a> &nbsp; &nbsp; &nbsp;
-<a href="/modes/delivery-robots.md"><img src="https://i.imgur.com/u2HgctV.png" alt="MDS Mode - Delivery Robots" style="float: left; border: 0; width: 150px;"></a>
-</p>
-<br clear="both"/>
+<img src="https://i.imgur.com/OIKoyGL.png" alt="MDS Modes: Micromobility, Passenger, Fleet, Delivery" />
 
 [Top][toc]
 

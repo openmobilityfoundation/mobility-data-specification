@@ -17,6 +17,8 @@ This MDS data types page catalogs the objects (fields, types, requirements, desc
 - [Trips](#trips)
 - [Incidents](#incidents)
 - [Reports](#reports)
+- [Enforcement](#enforcement)
+  - [Violations](#violations)
 - [External Reference](#external-reference)
  
 ## Vehicles
@@ -111,7 +113,8 @@ Events represent changes in vehicle status.
 | `timestamp` | [Timestamp][ts] | Required | Date/time that event occurred at. See [Event Times][event-times] |
 | `publication_time` | [Timestamp][ts] | [Optional](./general-information.md#optional-fields) | Date/time that event became available through the status changes endpoint |
 | `location` | [GPS][gps] | Required | See also [Telemetry][telemetry]. |
-| `event_geographies` | UUID[] | [Optional](./general-information.md#optional-fields) | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 2.0.0)*. Array of Geography UUIDs consisting of every Geography that contains the location of the status change. See [Geography Driven Events][geography-driven-events]. Required if `location` is not present. |
+| `event_geographies` | UUID[] | [Optional](./general-information.md#optional-fields) | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 2.0.0)*. Array of Geography UUIDs consisting of every Geography that contains the location of the status change. See [Geography Driven Events][geography-driven-events]. Required if `location` and `statistical_area_ids` are not present. |
+| `statistical_areas` | Strings[] | [Optional](./general-information.md#optional-fields) | Array of statistical area identifier(s) where the event occurred. e.g. US census area IDs (tract, block group, block, etc), Canadian dissemination blocks or areas, UK output areas, etc, or any other pre-defined standard district, area, sector, neighborhood, etc. Details of the type and meaning of these identifiers are communicated between the public agency and operator outside of MDS. Note that instead of these pre-defined areas, custom geographic areas can be defined using `event_geographies`. Required if `location` and `event_geographies` are not present. |
 | `battery_percent`       | Integer          | [Required if Applicable](./general-information.md#required-if-applicable-fields) | Percent battery charge of vehicle, expressed between 0 and 100 |
 | `fuel_percent`       | Integer          | [Required if Applicable](./general-information.md#required-if-applicable-fields)  | Percent fuel in vehicle, expressed between 0 and 100 |
 | `trip_ids` | UUID[] | [Required if Applicable](./general-information.md#required-if-applicable-fields)  | Trip UUIDs (foreign key to /trips endpoint), required if `event_types` contains `trip_start`, `trip_end`, `trip_cancel`, `trip_enter_jurisdiction`, or `trip_leave_jurisdiction` |
@@ -234,7 +237,7 @@ A Trip is defined by the following structure:
 | `journey_id`             | UUID            | [Optional](./general-information.md#optional-fields) | A unique [journey ID](/modes#journey-id) for associating collections of trips for its [mode][modes] |
 | `journey_attributes`     | Map             | [Optional](./general-information.md#optional-fields) | **[Mode](/modes#list-of-supported-modes) Specific**. [Journey attributes](/modes#journey-attributes) given as unordered key-value pairs |
 | `trip_id`                | UUID            | Required | A unique ID for each trip |
-| `trip_type`              | Enum            | [Optional](./general-information.md#optional-fields) | **[Mode](/modes#list-of-supported-modes) Specific**. The [trip type](/modes#trip-type) describing the purpose of a trip segment |
+| `trip_type`              | Enum            | [Optional](./general-information.md#optional-fields) | **[Mode](/modes#list-of-supported-modes) Specific**. The [trip type](/modes#trip-type) describing the purpose of a trip segment. _Note: if not provided, only send trips of the **default** `trip_type`, as marked for each mode._ |
 | `trip_attributes`        | Map             | [Optional](./general-information.md#optional-fields) | **[Mode](/modes#list-of-supported-modes) Specific**. [Trip attributes](/modes#trip-attributes) given as unordered key-value pairs |
 | `fare_attributes`        | Map             | [Optional](./general-information.md#optional-fields) | **[Mode](/modes#list-of-supported-modes) Specific**. [Fare attributes](/modes#fare-attributes) given as unordered key-value pairs |
 | `start_time`             | [Timestamp][ts] | Required | Start of the passenger/driver trip |
@@ -263,7 +266,7 @@ A Trip is defined by the following structure:
 | Field              | Type            | Required/Optional | Comments |
 | ----               | ----            | ----              | ----     |
 | `incident_id`      | UUID            | Required          | ID used for uniquely identifying an Incident. |
-| `incident_type`    | Enum            | Required          | The type of incident. One of `unplanned_stop`, `remote_takeover`, `ads_engaged` (Automated Driving System), `ads_disengaged`, `tip_over`, `harsh_stopping` (e.g. braking), `harsh_starting` (e.g. acceleration), `near_miss`, `vandalism`, `theft`, `crash`. Exact definitions, and when and if which incident types are sent, come from the agency. |
+| `incident_type`    | Enum            | Required          | The type of incident. One of `unplanned_stop`, `remote_takeover`, `ads_engaged` (Automated Driving System), `ads_disengaged`, `tip_over`, `harsh_stopping` (e.g. braking), `harsh_starting` (e.g. acceleration), `near_miss`, `vandalism`, `theft`, `violation`, `crash`. Exact definitions, and when and if which incident types are sent, come from the public agency. |
 | `incident_time`    | [Timestamp][ts] | Required          | Date/time that incident first occurred. Note that this timestamp of the incident first occurance is independent of one or more Telemetry timestamps referenced via `incident_id`. Note that more frequent telemetry data points may be required when an incident is first discovered and occuring. |
 | `discovery_time`   | [Timestamp][ts] | Required          | Date/time that incident was first discovered by the operator. This may be at the same moment of the `incident_time`, or may have been discovered later. |
 | `publication_time` | [Timestamp][ts] | Required          | Date/time that incident became first available to an agency through an Incident endpoint. |
@@ -274,6 +277,7 @@ A Trip is defined by the following structure:
 | `medical_transport` | Boolean        | Optional          | If `true`, one or more individuals was transported via an ambulance or emergency response vehicle because of the incident. |
 | `report_id`        | String          | Optional          | Identifier of an external report, from a police report, citation, internal system, service request, etc. The report source is communicated by the operator to the agency outside of MDS. |
 | `report_type`      | String          | Optional          | Description of the type of report referenced by the `report_id`, eg. police, customer, remote operator, 311 call, etc. |
+| `enforcement`      | [Enforcement](#enforcement) | Optional | Enforcement and violation information related to this incident. Can be used for any `incident_type`. |
 | `external_references` | Array of [External Reference][external-reference] objects | Optional | One or more references to external data feeds, links, reports, or documents impacting or related to this Incident, as they become available. |
 | `contact_info`     | String          | Optional          | Description of any relevant contact information about the incident the operator can provide. |
 | `preliminary`      | Boolean         | Optional          | If `true`, then this information in this Incident is only preliminary, with more details and/or validation coming at a later date. If `false`, the information provided here is deemed valed with no more updates expected. |
@@ -330,6 +334,39 @@ Here are the possible values for the `special_group_type` dimension field:
 | all_riders       | All riders from any group                                                                                             |
 
 Other special group types may be added in future MDS releases as relevant agency and provider use cases are identified. When additional special group types or metrics are proposed, a thorough review of utility and relevance in program oversight, evaluation, and policy development should be done by OMF Working Groups, as well as any privacy implications by the OMF Privacy Committee.
+
+[Top][toc]
+
+## Enforcement
+
+The Enforcement object describes a specific set of features relevant to an enforcement [Incident](#incidents). 
+
+Where a citation could represent multiple violations, an enforcement object contains an array that enumerates the violations for a single citation. Where a citation can only represent a single violation, multiple Incidents may be published, each with a single violation in the array.
+
+The `enforcement` object is a JSON *object* with the following fields:
+
+| Name             | Type    | Required/Optional | Description   |
+| ---------------- | ------- | ----------------- | ------------- |
+| `enforcement_id` | UUID    | Required          | An identifier unique to the enforcement incident, generated the first time an enforcement event is recorded, and referenced in future related enforcement events. Multiple Incidents (ex: `crash`, `violation`, or `vandalism`) that relate to the same enforcement activity can share the same `enforcement_id`. | 
+| `citation_id`    | String  | Optional          | A unique id which represents a single citation. |
+| `is_warning`     | Boolean | Optional          | A boolean value to indicate if the enforcement action is being processed as a warning.  |
+| `action_taken`   | String  | Optional          | Indicates how the violation was enforced. Typical well-known values are `citation_registered`, `citation_posted`, `citation_served`, or `citation_emailed`. |
+| `citation_cost`  | String  | Optional          | The total cost of all violations associated to this enforcement action. |
+| `violations`     | Array of [Violations](#violations) | Optional          | An array of Violation objects that indicate the one-to-many violations associated to this enforcement event. |
+
+[Top][toc]
+
+### Violations
+
+The Violations object describes the violations associated to an enforcement action that can occur as part of a [Enforcement](#enforcement) on an [Incident](#incidents). 
+
+The `violations` object is a JSON *object* with the following fields:
+
+| Name             | Type   | Required/Optional | Description   |
+| ---------------- | ------ | ----------------- | ------------- |
+| `violation_code` | String | Optional          | The unique code created by the municipality, city, county, state, federal, or enforcement agency to identify the type of rule being enforced. |
+| `violation_name` | String | Optional          | The city/municipal, county, state, provincial, or federal code that was violated. |
+| `violation_cost` | String | Optional          | The original cost associated with the violation. |
 
 [Top][toc]
 

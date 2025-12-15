@@ -1,10 +1,12 @@
-# Mobility Data Specification: **Car Share**
+# Mobility Data Specification: **Fleet**
 
-<img src="https://i.imgur.com/HSL9F0h.png" width="120" align="right" alt="MDS Modes - Car Share" border="0">
+<img src="https://i.imgur.com/OTl1hIv.png" width="200" align="right" alt="MDS Modes - Fleet" border="0">
 
-**Car Share** refers to shared point-to-point and station-based mutli-passenger vehicles.  Car Share typically has a driver who is the customer, and possibly one or more passengers or cargo.  
+**Fleet** refers to shared customer, employees and contractors, autonomous, and remotely operated shared point-to-point, station-based, or free-floating multi-passenger or cargo vehicles like consumer car share, sanitation vehicles (garbage, recycling), city fleets, vehicle rentals, street sweepers, snow plows, utility services, construction, emergency response (police, fire, ambulance), tree maintenance, inspection and permitting vehicles, mobile health clinics, and heavy maintenance vehicles.
 
 See the [modes overview](/modes) for how the mode specific information below applies across MDS.
+
+_Note: Formerly called "Car Share". Any references in the specification code or links to only "Car Share" will be updated to the broader "Fleet" scope in the next MDS 3.0 release._
 
 ## Table of Contents
 
@@ -30,7 +32,7 @@ See the [modes overview](/modes) for how the mode specific information below app
 
 ### Mode ID
 
-The short name identifier for Car Share used across MDS is `car-share`.
+The short name identifier for Fleet used across MDS is `car-share`. In a future release this will be updated to `fleet`.
 
 [Top][toc]
 
@@ -42,11 +44,129 @@ _See more available trip and fare attributes for any mode used in the [trips obj
 
 The `journey_id` field shall have a consistent value in overlapping trips for a single reservation period, e.g. trips taken by a customer between ignition states over the duration of their reservation. A reservation is the duration the customer has continuous exclusive access to the vehicle whether parked or in motion. Journeys may be point-to-point or multi-segment.
 
-- **Example 1**: customer makes a reservation and company delivers vehicle to customer, then one trip point-to-point by customer, ending reservation at destination
-- **Example 2**: customer reservation for multiple days with trips for errands, gas, entertainment, etc
-- **Example 3**: one trip point-to-point with an employee moving the vehicle to a new location for maintenance
+```mermaid
+---
+config:
+        theme: 'base'
+        themeVariables:
+          'activeTaskBkgColor': '#155654'
+          'activeTaskBorderColor': '#2AF1BE'
+          'critBorderColor': '#2AF1BE'
+          'doneTaskBkgColor': '#299c90'
+          'doneTaskBorderColor': '#373737'
+          'taskBkgColor': '#2AF1BE'
+          'taskBorderColor': '#373737'
+          'taskTextColor': '#373737'
+          'taskTextDarkColor': 'white'
+          'taskTextLightColor': '#373737'
+          'vertLineColor': '#155654'
+          'sectionBkgColor': '#ddd'
+          'altSectionBkgColor': '#aaa'
+          'sectionBkgColor2': '#777'
+---
+gantt
+    title Example 1: car share single journey, company delivers vehicle to customer, one trip point-to-point by customer
+    dateFormat HH:mm
+    axisFormat %H:%M
 
-![Journey Diagram](https://i.imgur.com/FHxQLps.png)
+    section Journey
+    Journey Start : vert, v1, 17:00, 2m
+
+    Journey : active, a, 17:00, 55m
+
+    Trip - reservation : b, 17:00, 10m
+    Trip - private : b, 17:10, 45m
+
+    Journey End : vert, v1, 17:55, 5m
+
+```
+
+```mermaid
+---
+config:
+        theme: 'base'
+        themeVariables:
+          'activeTaskBkgColor': '#155654'
+          'activeTaskBorderColor': '#2AF1BE'
+          'critBorderColor': '#2AF1BE'
+          'doneTaskBkgColor': '#299c90'
+          'doneTaskBorderColor': '#373737'
+          'taskBkgColor': '#2AF1BE'
+          'taskBorderColor': '#373737'
+          'taskTextColor': '#373737'
+          'taskTextDarkColor': 'white'
+          'taskTextLightColor': '#373737'
+          'vertLineColor': '#155654'
+          'sectionBkgColor': '#ddd'
+          'altSectionBkgColor': '#aaa'
+          'sectionBkgColor2': '#777'
+---
+gantt
+    title Example 2: customer car share reservation for 4 days with a trip daily for errands, gas, entertainment, etc
+    dateFormat MM-DD
+
+    section Reservation
+    Reservation Start : vert, v1, 03-20, 2m
+
+    Reservation : done, a, 03-20, 4d
+
+    Trip - private : b, 03-20, 1d
+    Trip - private : b, 03-21, 1d
+    Trip - private : b, 03-22, 1d
+    Trip - private : b, 03-23, 1d
+    
+    Reservation End : vert, v1, 03-24, 12h
+```
+
+```mermaid
+---
+config:
+        theme: 'base'
+        themeVariables:
+          'activeTaskBkgColor': '#155654'
+          'activeTaskBorderColor': '#2AF1BE'
+          'critBorderColor': '#2AF1BE'
+          'doneTaskBkgColor': '#299c90'
+          'doneTaskBorderColor': '#373737'
+          'taskBkgColor': '#2AF1BE'
+          'taskBorderColor': '#373737'
+          'taskTextColor': '#373737'
+          'taskTextDarkColor': 'white'
+          'taskTextLightColor': '#373737'
+          'vertLineColor': '#155654'
+          'sectionBkgColor': '#ddd'
+          'altSectionBkgColor': '#aaa'
+          'sectionBkgColor2': '#777'
+---
+gantt
+    title Example 3: a shift of a city snow plow driver, showing journeys from a central location, and trips inside the journeys
+    dateFormat HH:mm
+    axisFormat %H:%M
+
+    section Shift
+    Shift Start : vert, v1, 17:00, 2m
+    Shift : done, a, 17:00, 90m
+
+    section Journey 1
+    Journey 1 : active, a, 17:00, 50m
+    Trip - private : b, 17:00, 10m
+    Trip - private : b, 17:10, 10m
+    Trip - private : b, 17:20, 20m
+    Trip - empty : b, 17:40, 10m
+
+    section Journey 2
+    Journey 2 : active, a, 17:50, 20m
+    Trip - private : b, 17:50, 10m
+    Trip - empty : b, 18:00, 10m
+
+    section Journey 3
+    Journey 3 : active, a, 18:10, 20m
+    Trip - private : b, 18:10, 12m
+    Trip - empty : b, 18:22, 8m
+
+    Shift End : vert, v1, 18:30, 10m
+```
+
 
 [Top][toc]
 
@@ -54,7 +174,8 @@ The `journey_id` field shall have a consistent value in overlapping trips for a 
 
 The `journey_attributes` object **may** have the following key value pairs:
 
-- `reservation_id` (UUID, [Optional](../general-information.md#optional-fields)): unique identifier for an entire car share reservation, tied across multiple journeys and therefore trips.
+- `reservation_id` (UUID, [Optional](../general-information.md#optional-fields)): unique identifier for an entire vehicle reservation, tied across multiple journeys and therefore trips.
+- `shift_id` (UUID, [Optional](../general-information.md#optional-fields)): unique identifier for a driver or operator's working shift, tied across multiple journeys and therefore trips.
 
 [Top][toc]
 
@@ -70,9 +191,9 @@ Additionally, `trip_id` is required if `event_types` contains a `trip_enter_juri
 
 The `trip_type` field **must** have one of the following enumerated values:
 
-- `private`: a private trip made by one paying customer with one or more guests
-- `reservation`: en route to pickup a customer who has made a reservation, with no passengers in the vehicle
-- `empty`: vehicle movement with no customer (outside of other `trip_type` values) that may need to be reported, e.g. for maintenance
+- `private` (_default_): a private trip made by one paying customer with one or more guests, or a driver using the vehicle
+- `reservation`: en route to pickup a customer who has made a reservation, or movement before starting an official task
+- `empty`: vehicle movement with no customer or work (outside of other `trip_type` values) that may need to be reported, e.g. for maintenance, returning, etc
 
 [Top][toc]
 
@@ -154,7 +275,7 @@ This `accessibility_attributes` enum represents the accessibility attributes ava
 
 ### Vehicle States
 
-Valid car share vehicle states are 
+Valid fleet vehicle states are 
 
 - `removed`
 - `available` 
@@ -171,7 +292,7 @@ See [Vehicle States][vehicle-states] for descriptions.
 
 ### Event Types
 
-Valid car share vehicle event types are 
+Valid fleet vehicle event types are 
 
 - `charging_start`
 - `charging_end`
@@ -262,7 +383,7 @@ This is the list of `vehicle_state` and `event_type` pairings that constitute th
 
 This *State Machine Diagram* shows how `vehicle_state` and `event_type` relate to each other and how vehicles can transition between states. See [Google Slides](https://docs.google.com/presentation/d/1fHdq1efbN5GSFDLF4en-oA_BYPXQKbbIbHff6iROJKA/edit#slide=id.g2072486e468_1_300) for the source file.
 
-![Car Share State Machine Diagram](car-share-state-machine-diagram.svg)
+![Fleet State Machine Diagram](car-share-state-machine-diagram.svg)
 
 [Top][toc]
 

@@ -1,14 +1,16 @@
-# Mobility Data Specification: **Passenger Services**
+# Mobility Data Specification: **Passenger**
 
-<img src="https://i.imgur.com/plW2Hon.png" width="120" align="right" alt="MDS Modes - Passenger Services" border="0">
+<img src="https://i.imgur.com/beefGup.png" width="200" align="right" alt="MDS Modes - Passenger" border="0">
 
-**Passenger Services** refers to taxis, transportation network companies (TNCs), commercial transport apps (CTAs), and private hire vehicles (PHVs).  Passenger Services typically have a driver, one or more passengers, and multiple passengers may be on different trips.  The state machine tracks the trip states of the passengers separately from the vehicle state.  
+**Passenger** refers to employees and contractors, autonomous, and remotely operated transporting individuals or goods with a vehicle driven by another entity, including taxis, AV robotaxis, busses, transportation network companies (TNCs), commercial transport apps (CTAs), and private hire vehicles (PHVs), shuttles, paratransit, on demand vehicles, limousines, and microtransit.   
 
 See the [modes overview](/modes) for how the mode specific information below applies across MDS.
 
-## Taxi vs. TNC implementation differences
+_Note: Formerly called "Passenger Services". Any references in the specification code or links to "Passenger Services" will be updated to the shorter "Passenger" scope in the next MDS 3.0 release._
 
-Taxis typically require explicit tracking of maintenance while TNCs typically do not. Public agency regulations, legal authority, differ based on local, state, and federal laws and jurisdictions between taxis, TNCs, CTAs, PHV, etc.
+## Implementation differences
+
+Taxis and similar traditionally regulated services typically require explicit tracking of maintenance and labor, while TNCs or other contract driver services may not. Public agency regulations, legal authority, differ based on local, state, and federal laws and jurisdictions between taxis, TNCs, CTAs, PHV, AVs, etc.
 
 ## Table of Contents
 
@@ -34,7 +36,7 @@ Taxis typically require explicit tracking of maintenance while TNCs typically do
 
 ### Mode ID
 
-The short name identifier for Passenger Services used across MDS is `passenger-services`.
+The short name identifier for Passenger mode used across MDS is `passenger-services`.  In a future release this will be updated to `passenger`.
 
 [Top][toc]
 
@@ -46,10 +48,90 @@ _See more available trip and fare attributes for any mode used in the [trips obj
 
 The `journey_id` field shall have a consistent value in overlapping trips, e.g. "pooled" or "shared" rides with different start and/or end locations. Journeys may be point-to-point, multi-segment, or multi-segment overlapping.
 
-- **Example 1**: one private trip with reservation, then return to depot
-- **Example 2**: three shared trips, some overlapping
+```mermaid
+---
+config:
+        theme: 'base'
+        themeVariables:
+          'activeTaskBkgColor': '#155654'
+          'activeTaskBorderColor': '#2AF1BE'
+          'critBorderColor': '#2AF1BE'
+          'doneTaskBkgColor': '#299c90'
+          'doneTaskBorderColor': '#373737'
+          'taskBkgColor': '#2AF1BE'
+          'taskBorderColor': '#373737'
+          'taskTextColor': '#373737'
+          'taskTextDarkColor': 'white'
+          'taskTextLightColor': '#373737'
+          'vertLineColor': '#155654'
+          'sectionBkgColor': '#ddd'
+          'altSectionBkgColor': '#aaa'
+          'sectionBkgColor2': '#777'
+---
+gantt
+    title Example 1: one private trip with reservation, then return to depot
+    dateFormat HH:mm
+    axisFormat %H:%M
 
-![Journey Diagram](https://i.imgur.com/ciNnDKC.png)
+    section Journey
+    Journey Start : vert, v1, 17:00, 2m
+
+    Journey : active, a, 17:00, 55m
+
+    Trip - reservation : b, 17:00, 10m
+    Trip - private : b, 17:10, 30m
+    Trip - empty : b, 17:40, 15m
+
+    Journey End : vert, v1, 17:55, 5m
+```
+
+
+```mermaid
+---
+config:
+        theme: 'base'
+        themeVariables:
+          'activeTaskBkgColor': '#155654'
+          'activeTaskBorderColor': '#2AF1BE'
+          'critBorderColor': '#2AF1BE'
+          'doneTaskBkgColor': '#299c90'
+          'doneTaskBorderColor': '#373737'
+          'taskBkgColor': '#2AF1BE'
+          'taskBorderColor': '#373737'
+          'taskTextColor': '#373737'
+          'taskTextDarkColor': 'white'
+          'taskTextLightColor': '#373737'
+          'vertLineColor': '#155654'
+          'sectionBkgColor': '#ddd'
+          'altSectionBkgColor': '#aaa'
+          'sectionBkgColor2': '#777'
+---
+gantt
+    title Example 2: three shared trips, some overlapping, from airport to hotels
+    dateFormat HH:mm
+    axisFormat %H:%M
+
+    section Journey
+
+    Journey - airport to hotels : active, a, 17:00, 80m
+    Trip 1 - reservation : b, 17:00, 10m
+    Reserve Trip 1 : vert, v1, 17:00, 2m
+    Trip 1 - shared : b, 17:10, 30m
+    Pickup Trip 1 : vert, v1, 17:10, 1m
+    Trip 2 - reservation : b, 17:20, 10m
+    Reserve Trip 2 : vert, v1, 17:20, 2m
+    Trip 2 - shared : b, 17:30, 30m
+    Pickup Trip 2: vert, v1, 17:30, 2m
+    Dropoff Trip 1 : vert, v1, 17:40, 2m
+    Trip 3 - reservation : b, 17:50, 20m
+    Reserve Trip 3 : vert, v1, 17:50, 2m
+    Dropoff Trip 2 : vert, v1, 18:00, 2m
+    Trip 3 - private : b, 18:10, 10m
+    Pickup Trip 3 : vert, v1, 18:10, 2m
+    Dropoff Trip 3 : vert, v1, 18:20, 5m
+
+```
+
 
 [Top][toc]
 
@@ -57,7 +139,7 @@ The `journey_id` field shall have a consistent value in overlapping trips, e.g. 
 
 The `journey_attributes` object **may** have the following key value pairs:
 
-- `shift_id` (UUID, optional): unique identifier for an entire driver's work shift, tied across multiple journeys and therefore trips.
+- `shift_id` (UUID, [Optional](../general-information.md#optional-fields)): unique identifier for an entire driver's work shift, tied across multiple journeys and therefore trips.
 
 [Top][toc]
 
@@ -73,7 +155,7 @@ Additionally, `trip_id` is required if `event_types` contains a `trip_enter_juri
 
 The `trip_type` field **must** have one of the following enumerated values:
 
-- `private`: a private trip made by one paying customer with one or more guests
+- `private` (_default_): a private trip made by one paying customer with one or more guests
 - `shared`: a shared or pooled trip with more than one paying customer
 - `reservation`: en route to pickup a customer who has made a reservation, with no passengers in the vehicle
 - `empty`: vehicle movement with no passengers (outside of other `trip_type` values) that may need to be reported, e.g. for deadheading
@@ -85,7 +167,7 @@ The `trip_type` field **must** have one of the following enumerated values:
 The `trip_attributes` object **may** have the following key value pairs:
 
 - `hail_type` (enumerated, required): `street_hail`, `phone_dispatch`, `phone`, `text`, `app`
-- `app_name` (text, optional): name of the app used to reserve the trip which could be provider's app or 3rd party app
+- `app_name` (text, [Optional](../general-information.md#optional-fields)): name of the app used to reserve the trip which could be provider's app or 3rd party app
 - `passenger_count` (integer, required): unique count of passengers transported during trip duration
 - `requested_time` ([Timestamp][ts], required): when the passenger requested the trip
 - `requested_trip_start_location` ([GPS](gps), [Conditionally Required](../general-information.md#conditionally-required-fields)):  Location where the customer requested the trip to start (required if this is within jurisdictional boundaries) 
@@ -156,7 +238,7 @@ This `accessibility_attributes` enum represents the accessibility attributes ava
 
 ### Vehicle States
 
-Valid passenger services vehicle states are 
+Valid passenger vehicle states are 
 
 - `removed`
 - `available` 
@@ -173,7 +255,7 @@ See [Vehicle States][vehicle-states] for descriptions.
 
 ### Event Types
 
-Valid passenger services vehicle event types are 
+Valid passenger vehicle event types are 
 
 - `comms_lost`
 - `comms_restored`
@@ -255,11 +337,11 @@ This is the list of `vehicle_state` and `event_type` pairings that constitute th
 
 This *State Machine Diagram* shows how `vehicle_state` and `event_type` relate to each other and how vehicles can transition between states. See [Google Slides](https://docs.google.com/presentation/d/1fHdq1efbN5GSFDLF4en-oA_BYPXQKbbIbHff6iROJKA/edit#slide=id.g2072486e468_1_19) for the source file.
 
-![Passenger Services State Machine Diagram](passenger-services-state-machine-diagram.svg)
+![Passenger State Machine Diagram](passenger-services-state-machine-diagram.svg)
 
 [Top][toc]
 
-#### Passenger Services State Notes
+#### Passenger State Notes
 
 When there is only one trip ongoing, `trip_state == vehicle_state`
 
