@@ -250,7 +250,6 @@ Note that you may only create a new MDS Policy. Retired policies are simply refe
 
 **Endpoint**: `/requirements/`  
 **Method**: `GET`  
-**[Beta feature](/general-information.md#beta-features)**: *No (as of 2.0.0)*.  
 **Authorization**: public  
 **Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.  
 **`data` Payload**: `{ requirements: [] }`, JSON objects that follow the schema [outlined here](#requirement).  
@@ -441,8 +440,6 @@ An individual `Rule` object is defined by the following fields:
 ### Rates
 
 Rate-related properties can currently be specified on all rule types except `user`, i.e. any rule that can be measured.
-
-**[Beta feature](/general-information.md#beta-features)**: *No (as of 2.0.0)*.
 
 #### Rate Amounts
 
@@ -704,7 +701,7 @@ Contains metadata applicable to the agency and at the top of its [Requirement](#
 
 Contains information about an agency's programs, with links to policy documents, and a list of providers and data specs/APIs/endpoints/fields that the program applies to over a certain time frame in its [Requirement](#requirement) data feed in the `required_data_specs` section.
 
-Unique combinations for data specs, specific providers, vehicle types, policies, and dates (past, current, or future) can be defined. For example an agency can define MDS version 1.2.0 and GBFS 2.2 for Provider #1 in a pilot with beta endpoints and optional fields, MDS version 1.2.0 for other providers without beta features starting a month from now, and MDS version 1.1.0 for Provider #2 with docked bikeshare.
+Unique combinations for data specs, specific providers, vehicle types, policies, and dates (past, current, or future) can be defined. For example an agency can define MDS version 1.2.0 and GBFS 2.2 for Provider #1 in a pilot with testing endpoints and optional fields, MDS version 1.2.0 for other providers without testing features starting a month from now, and MDS version 1.1.0 for Provider #2 with docked bikeshare.
 
 ```jsonc
 // ...
