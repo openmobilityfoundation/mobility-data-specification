@@ -192,7 +192,6 @@ Vehicle information about all device IDs present in other MDS endpoints must be 
 
 **Endpoint:** `/vehicles/{device_id}`  
 **Method:** `GET`  
-**[Beta feature][beta]:** No (as of 1.2.0)  
 **Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.   
 **Payload:** `{ "vehicles": [] }`, an array of [Vehicle][vehicles] objects
 
@@ -251,7 +250,6 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 
 **Endpoint:** `/vehicles/status/{device_id}`  
 **Method:** `GET`  
-**[Beta feature][beta]:** No (as of 1.2.0)  
 **Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.  
 **Payload:** `{ "vehicles_status": [] }`, an array of [Vehicle Status][vehicle-status] objects
 
@@ -300,7 +298,6 @@ Unless stated otherwise by the municipality, the trips endpoint must return all 
 
 **Endpoint:** `/trips`  
 **Method:** `GET`  
-**[Beta feature][beta]:** No  
 **Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.   
 **Payload:** `{ "trips": [] }`, an array of [Trip][trips] objects
 
@@ -402,7 +399,6 @@ Unless stated otherwise by the municipality, this endpoint must return only thos
 
 **Endpoint:** `/events/historical`  
 **Method:** `GET`  
-**[Beta feature][beta]:** No  
 **Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.  
 **Payload:** `{ "events": [] }`, an array of [Events](/data-types.md#events) object
 
@@ -464,7 +460,6 @@ See also [Telemetry][telemetry].
 
 **Endpoint:** `/events/recent`  
 **Method:** `GET`  
-**[Beta feature][beta]:** No (as of 1.0.0)  
 **Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.  
 **Payload:** `{ "events": [] }`, an array of [Events](/data-types.md#events) object objects
 
@@ -511,7 +506,6 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 
 **Endpoint:** `/stops/{stop_id}`  
 **Method:** `GET`  
-**[Beta feature][beta]:** Yes (as of 1.0.0). [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/638)  
 **Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.    
 **Payload:** `{ "stops": [] }`, an array of [Stops][stops]
 
@@ -581,7 +575,6 @@ The authenticated reports are monthly, historic flat files that may be pre-gener
 
 **Endpoint:** `/reports`  
 **Method:** `GET`  
-**[Beta feature][beta]:** No (as of 2.0.0). [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/672)  
 **Usage note:** This endpoint uses media-type `text/vnd.mds+csv` instead of `application/vnd.mds+json`, see [Versioning][versioning].
 **Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.  
 **Filename:** monthly file named by year and month, e.g. `/reports/YYYY-MM.csv`  
