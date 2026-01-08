@@ -12,7 +12,6 @@ The Metrics API endpoints are intended to be implemented by regulatory agencies,
 - [Implementation](#implementation)
 - [Authorization](#authorization)
 - [Data Requirements](#data-requirements)
-- [Beta Feature](#beta-feature)
 - [Date and Time Format](#date-and-time-format)
 - [Data Schema](#data-schema)
 - [Data Redaction](#data-redaction)
@@ -83,14 +82,6 @@ Metrics may be a supplement for other more granular MDS data, and may be used to
 
 [Top][toc]
 
-## Beta Feature
-
-**[Beta feature](https://github.com/openmobilityfoundation/mobility-data-specification/blob/feature-metrics/general-information.md#beta-features)**: _Yes (as of 1.0.0)_. [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/671) 
-
-The Metrics API and all of its endpoints are marked as a [beta feature](https://github.com/openmobilityfoundation/mobility-data-specification/blob/feature-metrics/general-information.md#beta-features). It has not been tested in real world scenarios, and may be adjusted in future releases.
-
-[Top][toc]
-
 ## Date and Time Format
 
 All dates and times (datetime) are [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) formatted strings (YYYY-MM-DDTHHMM), with minute granularity supported and time zone (default UTC) or included offset. Dates and times may also be specified using a numeric *Unix epoch/timestamp* 
@@ -111,7 +102,7 @@ Some combinations of dimensions, filters, time, and geography may return a small
 
 **If the query returns fewer than `10` trips in a count, then that row's count value is returned as "-1".** Note "0" values are also returned as "-1" since the goal is to group both low and no count values together for privacy. 
 
-The OMF suggests a k-value of 10 is an appropriate starting point for safe anonymization, absent analysis and a further decision from the agency. As Metrics is in [beta](#beta-feature), this value may be adjusted in future releases and/or may become dynamic to account for specific categories of use cases and users. To improve the specification and to inform future guidance, beta users are encouraged to share their feedback and questions about k-values on this [discussion thread](https://github.com/openmobilityfoundation/mobility-data-specification/discussions/622).
+The OMF suggests a k-value of 10 is an appropriate starting point for safe anonymization, absent analysis and a further decision from the agency. This value may be adjusted in future releases and/or may become dynamic to account for specific categories of use cases and users. To improve the specification and to inform future guidance, users are encouraged to share their feedback and questions about k-values on this [discussion thread](https://github.com/openmobilityfoundation/mobility-data-specification/discussions/622).
 
 The k-value being used is always returned in the Metrics Query API [response](/metrics#response-1) to provide important context for the data consumer on the data redaction that is occurring.
 
