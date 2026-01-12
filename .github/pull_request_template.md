@@ -1,10 +1,3 @@
----
-name: Default
-about: Suggest changes to MDS
-title: <Insert Title>
-
----
-
 # MDS Pull Request
 
 Thank you for your contribution!  Please review our OMF [contributing page](https://github.com/openmobilityfoundation/governance/blob/main/CONTRIBUTING.md) to understand guidelines and policies for participation, and our [Code of Conduct page](https://github.com/openmobilityfoundation/governance/blob/main/CODE_OF_CONDUCT.md).
@@ -28,14 +21,22 @@ A breaking change would require consumers or implementors of the API to modify t
 * No, not breaking
 * I'm not sure
 
-## Impacted Spec
+## Impacted APIs
 
-Which spec(s) will this pull request impact?
+Which API(s) will this pull request impact?
 
 * `agency`
-* `policy`
 * `provider`
+* `policy`
+* `geography`
+* `jurisdiction`
+* `metrics`
 
 ## Additional context
 
 Add any other context or screenshots about the feature request here.
+
+## Licensing Agreement
+
+By submitting this pull request, you are signing the OMF's [Individual Contributor License Agreement](https://github.com/openmobilityfoundation/governance/raw/main/documents/OMF-Individual-CLA.pdf) (ICLA), and agree to the OMF's [contributing requirements](https://github.com/openmobilityfoundation/governance/blob/main/CONTRIBUTING.md), [participation policies](https://github.com/openmobilityfoundation/governance/raw/main/documents/OMFParticipationPolicies.pdf), and [code of conduct](https://github.com/openmobilityfoundation/governance/blob/main/CODE_OF_CONDUCT.md).
+
