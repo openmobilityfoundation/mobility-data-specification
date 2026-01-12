@@ -282,11 +282,14 @@ The `vehicle_attributes` object **may** have the following key value pairs:
 
 ### Accessibility Attributes
 
-The `accessibility_attributes` object **may** have the following key value pairs:
+The `accessibility_attributes`  enum represents the accessibility attributes available on a given vehicle, or the accessibility attributes utilized for a given trip.
 
-- `audio_cue` (boolean, [Optional](../general-information.md#optional-fields)): is the device equipped with audio cues upon delivery
-- `visual_cue` (boolean, [Optional](../general-information.md#optional-fields)): is the device equipped with visual cues upon delivery
-- `remote_open` (boolean, [Optional](../general-information.md#optional-fields)): can the device door be remotely opened to retrieve cargo upon delivery
+| `accessibility_attributes` |   | Description                          |
+|----------------------------|---|--------------------------------------|
+| `audio_cue`   | [Optional](../general-information.md#optional-fields) | is the device equipped with audio cues upon delivery |
+| `visual_cue`  | [Optional](../general-information.md#optional-fields) | is the device equipped with visual cues upon delivery |
+| `remote_open` | [Optional](../general-information.md#optional-fields) | can the device door be remotely opened to retrieve cargo upon delivery |
+
 
 [Top][toc]
 
