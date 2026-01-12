@@ -54,12 +54,15 @@ The list of allowed `vehicle_type` values in MDS.
 | `delivery_robot`   | A robot or remote-operated device intended for transporting goods |
 | `moped`            | A seated fully-motorized mobility device capable of travel at moderate or high speeds and suited for operation in general urban traffic |
 | `motorcycle`       | A seated fully-motorized mobility device capable of travel at high speeds and suited for operation in general urban traffic and highways |
+| `scooter`          | A standing _or_ seated fully-motorized mobility device intended for one rider, capable of travel at low or moderate speeds, and suited for operation in infrastructure shared with motorized bicycles |
 | `scooter_standing` | A standing fully-motorized mobility device without a seat intended for one rider, capable of travel at low or moderate speeds, and suited for operation in infrastructure shared with motorized bicycles |
 | `scooter_seated`   | A fully-motorized mobility device with a seat intended for one rider, capable of travel at low or moderate speeds, and suited for operation in infrastructure shared with motorized bicycles |
 | `truck`            | A truck or vehicle larger than a car or similar heavy-duty vehicle |
+| `van`            | A van with significant interior cargo space |
+| `freight`        | A large delivery truck with attached cab |
 | `other`            | A device that does not fit in the other categories |
 
-Values based off of `form_factor` in [GBFS vehicle_types](https://github.com/MobilityData/gbfs/blob/master/gbfs.md#vehicle_typesjson), with some additional to support MDS modes.
+Values based off of `form_factor` in [GBFS vehicle_types](https://github.com/MobilityData/gbfs/blob/master/gbfs.md#vehicle_typesjson) and [CDS vehicle types](https://github.com/openmobilityfoundation/curb-data-specification/blob/main/events/README.md#vehicle-type), with some modifications to support MDS modes.
 
 [Top][toc]
 
