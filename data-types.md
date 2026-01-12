@@ -401,5 +401,5 @@ An `external_reference` is a JSON *array* with the following fields within objec
 [toc]: #table-of-contents
 [ts]: /general-information.md#timestamps
 [vehicle-states]: /general-information.md#vehicle-states
-[vehicle-events]: /general-information.md#event-types
+[vehicle-events]: /modes/event_types.md
 [vehicle-types]: #vehicle-types
