@@ -158,6 +158,7 @@ The `trip_type` field **must** have one of the following enumerated values:
 - `private` (_default_): a private trip made by one paying customer with one or more guests
 - `shared`: a shared or pooled trip with more than one paying customer
 - `reservation`: en route to pickup a customer who has made a reservation, with no passengers in the vehicle
+- `mapping`: mapping the environment
 - `empty`: vehicle movement with no passengers (outside of other `trip_type` values) that may need to be reported, e.g. for deadheading
 
 [Top][toc]
