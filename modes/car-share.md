@@ -193,6 +193,7 @@ The `trip_type` field **must** have one of the following enumerated values:
 
 - `private` (_default_): a private trip made by one paying customer with one or more guests, or a driver using the vehicle
 - `reservation`: en route to pickup a customer who has made a reservation, or movement before starting an official task
+- `mapping`: primarily mapping the environment
 - `empty`: vehicle movement with no customer or work (outside of other `trip_type` values) that may need to be reported, e.g. for maintenance, returning, etc
 
 [Top][toc]
