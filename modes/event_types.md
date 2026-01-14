@@ -18,7 +18,7 @@ As with all MDS definitions, they should be described in a way that maximizes th
 | `compliance_pick_up`      | Pick up for compliance (rule violation)                                                         |
 | `customer_cancellation`   | Customer cancelled a trip                                                                       |
 | `decommissioned`          | Decommissioned                                                                                  |
-| `driver_cancellation`     | Driver cancelled a trip                                                                         |
+| `driver_cancellation`     | Driver cancelled a trip (if known, and more specific than `trip_cancel`)                        |
 | `fueling_start`           | Fueling starts                                                                                  |
 | `fueling_end`             | Fueling ends                                                                                    |
 | `located`                 | Location found (opposite of Missing)                                                            |
@@ -30,28 +30,28 @@ As with all MDS definitions, they should be described in a way that maximizes th
 | `on_hours`                | On hours - start of service                                                                     |
 | `order_drop_off`          | Pick up of the order at business                                                                |
 | `order_pick_up`           | Delivery of the order at the customer location                                                  |
-| `passenger_cancellation`  | Passenger cancelled a trip                                                                      |
-| `provider_cancellation`   | Provider cancelled a trip                                                                       |
+| `passenger_cancellation`  | Passenger cancelled a trip  (if known, and more specific than `trip_cancel`)                    |
+| `provider_cancellation`   | Provider cancelled a trip  (if known, and more specific than `trip_cancel`)                     |
 | `provider_drop_off`       | Drop off by the provider                                                                        |
 | `rebalance_pick_up`       | Pick up for rebalancing                                                                         |
 | `recommission`            | Recommissioned                                                                                  |
 | `remote_start`            | Remotely start the engine                                                                       |
 | `remote_end`              | Remotely stop the engine                                                                        |
-| `reservation_cancel`      | Reservation cancelled before trip                                                               |
+| `reservation_cancel`      | Reservation cancelled before trip (different than `trip_cancel` since the transaction hadn't started yet, and the reservation hold is let go) |
 | `reservation_start`       | Reservation started                                                                             |
 | `reservation_stop`        | Reservation stopped temporarily                                                                 |
 | `service_end`             | End of service                                                                                  |
 | `system_start`            | Start of service                                                                                |
 | `system_resume`           | Resume system operations, e.g. start of day                                                     |
 | `system_suspend`          | Suspend system operations, e.g. end of day                                                      |
-| `trip_cancel`             | Cancel trip                                                                                     |
-| `trip_end`                | End trip                                                                                        |
+| `trip_cancel`             | Cancel trip - trip is ended by anyone for some reason, either before or after motion starts (note: use more specific cancellation event types when possible) |
+| `trip_end`                | End trip - end of the trip and transaction                                                      |
 | `trip_enter_jurisdiction` | Trip enters a jurisdiction                                                                      |
 | `trip_leave_jurisdiction` | Trip leaves a jurisdiction                                                                      |
-| `trip_pause`              | Pause trip temporarily but do not end trip                                                      |
-| `trip_resume`             | Resume trip                                                                                     |
-| `trip_start`              | Start trip                                                                                      |
-| `trip_stop`               | Stop trip                                                                                       |
+| `trip_pause`              | Pause trip temporarily but do not end trip - trip intends to continue, but is paused in motion or transaction |
+| `trip_resume`             | Resume trip - trip resumes after a `trip_pause` (a pause is required before a resume can happen) |
+| `trip_start`              | Start trip - first start of a trip and transaction (required for any trip)                      |
+| `trip_stop`               | Stop trip - last movement in the trip, intending to end it (customer may be idling or interacting with devices to end trip) |
 | `unspecified`             | Unspecified                                                                                     |
 
 ### Limitations on the Use of Certain Values
