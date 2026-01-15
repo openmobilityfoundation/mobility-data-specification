@@ -249,14 +249,21 @@ The `vehicle_attributes` object **may** have the following key value pairs:
 - `phone_charger` (boolean, [Optional](../general-information.md#optional-fields)) - a place to charge your phone
 - `sunshade` (boolean, [Optional](../general-information.md#optional-fields)) - sunshade available (i.e. for windshield)
 - `cargo_volume_capacity` (integer, [Optional](../general-information.md#optional-fields)) - Cargo volume available in the vehicle, expressed in liters. For cars, it corresponds to the space between the boot floor, including the storage under the hatch, to the rear shelf in the trunk.
-- `cargo_load_capacity` (integer, [Optional](../general-information.md#optional-fields)) - The capacity of the vehicle cargo space (excluding passengers), expressed in kilograms.
+- `cargo_load_capacity` (integer, [Optional](../general-information.md#optional-fields)) - The capacity of the vehicle cargo space (excluding passengers), expressed in kilograms
 - `door_count` (integer, [Optional](../general-information.md#optional-fields)) - number of doors this vehicle type has
 - `wheel_count` (integer, [Optional](../general-information.md#optional-fields)) - number of wheels this vehicle type has
 - `air_conditioning` (boolean, [Optional](../general-information.md#optional-fields)) - vehicle has air conditioning
-- `gear_switch` (enum, [Optional](../general-information.md#optional-fields)) - one of `automatic`, `manual`
+- `gear_switch` (enum, [Optional](../general-information.md#optional-fields)) - one of `automatic` (automatic and semi-automatic), `manual` (single or dual clutch, intelligent manual), `variable` (Continuously Variable Transmission (CVT))
 - `convertible` (boolean, [Optional](../general-information.md#optional-fields)) - vehicle has a retractable roof
 - `cruise_control` (boolean, [Optional](../general-information.md#optional-fields)) - vehicle has a cruise control system
 - `navigation` (boolean, [Optional](../general-information.md#optional-fields)) - vehicle has a built-in navigation system
+- `wheel_drive` (string, [Optional](../general-information.md#optional-fields)) - type of wheel drive of the vehicle (e.g., 4WD, AWD, front wheel drive, back wheel drive)
+- `child_seat` (boolean, [Optional](../general-information.md#optional-fields)) - the vehicle is equipped with a children's seat
+- `pets_allowed` (boolean, [Optional](../general-information.md#optional-fields)) - pets are allowed in the vehicle
+- `rooftop_cargo_box` (boolean, [Optional](../general-information.md#optional-fields)) - the vehicle is equipped with a rooftop cargo box
+- `roof_rails` (boolean, [Optional](../general-information.md#optional-fields)) - the vehicle is equipped with roof rails
+- `ski_hatch` (boolean, [Optional](../general-information.md#optional-fields)) - the vehicle has a ski hatch in the rear seat row
+- `winter_tires` (boolean, [Optional](../general-information.md#optional-fields)) - the vehicle is equipped with winter tires
 
 Note many of these attributes come from fields in [GBFS vehicle_types](https://github.com/MobilityData/gbfs/blob/v2.3/gbfs.md#vehicle_typesjson). 
 
