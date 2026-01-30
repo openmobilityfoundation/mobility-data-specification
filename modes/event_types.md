@@ -39,7 +39,7 @@ As with all MDS definitions, they should be described in a way that maximizes th
 | `remote_end`              | Remotely stop the engine                                                                        |
 | `reservation_cancel`      | Reservation cancelled before trip (different than `trip_cancel` since the transaction hadn't started yet, and the reservation hold is let go) |
 | `reservation_start`       | Reservation started                                                                             |
-| `reservation_stop`        | Reservation stopped temporarily                                                                 |
+| `reservation_stop`        | Reservation stopped temporarily. If at the end of a trip, the time between `reserved` and `stopped` States is the customer wait time. |
 | `service_end`             | End of service                                                                                  |
 | `system_start`            | Start of service                                                                                |
 | `system_resume`           | Resume system operations, e.g. start of day                                                     |
