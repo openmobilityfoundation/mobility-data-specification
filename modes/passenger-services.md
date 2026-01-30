@@ -178,6 +178,8 @@ The `trip_attributes` object **may** have the following key value pairs:
 - `trip_fare_time` (milliseconds, [Optional](../general-information.md#optional-fields)): part of the passenger trip where the vehicle was moving more quickly (e.g. >12mph), which is a different fare rate in some jurisdictions
 - `pickup_address` (text, [Optional](../general-information.md#optional-fields)): street address where the trip originated from
 - `dropoff_address` (text, [Optional](../general-information.md#optional-fields)): street address where the trip ended
+- `passenger_pickup` (boolean, [Optional](../general-information.md#optional-fields)): One or more passengers were picked up at the start of this trip. If you need to record other pickups, do so in a different Trip.
+- `passenger_drop_off` (boolean, [Optional](../general-information.md#optional-fields)): One or more passengers were sropped off at the end of this trip. If you need to record other drop offs, do so in a different Trip.
 - `permit_license_number` (string, [Optional](../general-information.md#optional-fields)) - The permit license number of the organization that dispatched the vehicle
 - `driver_id` (string, [Optional](../general-information.md#optional-fields)): Universal identifier of a specific driver, static across operators, like a driver's license number. Could also be used as a lookup in an agency's internal driver system.
 - `wheelchair_transported` (boolean, [Optional](../general-information.md#optional-fields)) - was a wheelchair transported as part of this trip?
