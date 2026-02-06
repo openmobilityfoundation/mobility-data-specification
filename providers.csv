@@ -80,4 +80,4 @@ Code3,passenger-services,b49a32d7-a418-4a6a-9f81-b5227d6c7ef8,https://code3trans
 Track My Shuttle,passenger-services,dd7db795-09c0-402f-9441-360235da3025,https://trackmyshuttle.com/,,
 Greenwheels,car-share,5f88cd9e-2c7e-477a-a531-f68143121876,https://www.greenwheels.nl,,
 Sixt,car-share,df72d104-372f-4d98-a4c3-9b001967990e,https://sixt.com/,https://api.orange.sixt.com/v1/share-third-party-sources/mds,https://api.orange.sixt.com/v1/share-third-party-sources/gbfs
-Getaround,car-share,ede4d096-1641-4077-b986-37c602e881ae,https:getaround.com/,,https://getaround.com/gbfs/
+Getaround,car-share,ede4d096-1641-4077-b986-37c602e881ae,https:getaround.com/,,https://api-eu.getaround.com/gbfs/manifest?country_code=FR
