@@ -25,7 +25,7 @@ _Note: Formerly called "Car Share". Any references in the specification code or 
 - [State Machine](#state-machine)
   - [Vehicle States](#vehicle-states)
   - [Event Types](#event-types)
-  - [Vehicle State Events](#vehicle-states-events)
+  - [Vehicle States Events](#vehicle-states-events)
   - [State Machine Diagram](#state-machine-diagram)
 
 ## Mode Attributes
