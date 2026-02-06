@@ -62,6 +62,16 @@ MDS is intended to communicate the provider's best available information to regu
 
 The `unspecified` event type state transition means that the vehicle has moved from one state to another for an unspecified or unknown reason. It is used when there are multiple possible event types between states, but the reason for the transition is not clear. It is expected that `unspecified` will not be used frequently, and only for short periods of time. Cities may put in place specific limitations via an SLA. When more accurate information becomes available to the provider, it should be updated in the MDS data by sending a new event type state transition with the current timestamp.
 
+Generally, regulator Service-Level Agreements will limit the amount of time a vehicle's last event type may be `unspecified`.
+
+#### Multi State Transitions
+
+See the mode specific state-transition tables which descibe how the `vehicle_state` changes in response to each `event_type`. Most events will have a single `event_type`. However, if a single event has more than one ordered `event_type` entry, the intermediate `vehicle_state` value(s) are discarded. For example, if an event contains `[trip_end, battery_low]` then the vehicle transitions from `on_trip` through `available` to `non_operational` per the state machine, but the vehicle is never "in" the `available` state.
+
+#### Out of Order Events
+
+Note that to handle out-of-order events, the validity of the prior-state shall not be enforced at the time of ingest via Provider or Agency. Events received out-of-order may result in transient incorrect vehicle states.
+
 ---
 
 [Modes Overview][modes]
