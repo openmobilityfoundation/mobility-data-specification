@@ -22,6 +22,14 @@ MDS is intended to communicate the provider's best available information to regu
 
 It is expected that `non-contactable` will be used only for short periods of time and cities may put in place specific limitations via an SLA. As vehicles regain connectivity they should return to their prior state, and then send additional events to reflect any subsequent changes to that state. If vehicles remain `non-contactable` for over a specific limit as stated in the City SLA, then vehicles should be moved to `missing`.
 
+#### Multi State Transitions
+
+See the mode specific state-transition tables which descibe how the `vehicle_state` changes in response to each `event_type`. Most events will have a single `event_type`. However, if a single event has more than one ordered `event_type` entry, the intermediate `vehicle_state` value(s) are discarded. For example, if an event contains `[trip_end, battery_low]` then the vehicle transitions from `on_trip` through `available` to `non_operational` per the state machine, but the vehicle is never "in" the `available` state.
+
+#### Out of Order Events
+
+Note that to handle out-of-order events, the validity of the prior-state shall not be enforced at the time of ingest via Provider or Agency. Events received out-of-order may result in transient incorrect vehicle states.
+
 ---
 
 [Modes Overview][modes]
