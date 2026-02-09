@@ -241,6 +241,8 @@ For multi-record POST and PUT calls, e.g. sending Events using the Agency API, t
 
 ### Failure Details
 
+When there is a failure, stop processing the batch request, and return an error code relevant to the first error found. 
+
 | Field               | Type                 | Field Description                                   |
 | ------------------- | -------------------- | --------------------------------------------------- |
 | `item`              | Vehicle, Event, etc. | Invalid submitted item                              |

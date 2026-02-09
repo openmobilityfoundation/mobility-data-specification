@@ -20,6 +20,8 @@ This specification contains a data standard for *mobility as a service* provider
   * [Municipality Boundary](#municipality-boundary)
   * [Other Data Types](#other-data-types)
 * [Vehicles](#vehicles)
+  * [Vehicles - Get](#vehicles---get)
+  * [Vehicles - Post](#vehicles---post)
   * [Vehicle Status](#vehicle-status)
 * [Trips](#trips)
   * [Trips - Query Parameters](#trips---query-parameters)
@@ -190,6 +192,8 @@ vehicle in the `/vehicles/status` response in the `/vehicles` response.)
 Vehicle information about all device IDs present in other MDS endpoints must be acessible via the
 `/vehicles/{device_id}` style call regardless of when they were deployed.
 
+#### Vehicles - Get
+
 **Endpoint:** `/vehicles/{device_id}`  
 **Method:** `GET`  
 **Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.   
@@ -216,7 +220,7 @@ If `device_id` is specified, `GET` will return an array with a single vehicle re
 }
 ```
 
-#### Responses
+**Responses**  
 
 _Possible HTTP Status Codes_: 
 200,
@@ -224,6 +228,50 @@ _Possible HTTP Status Codes_:
 401,
 404,
 406,
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
+
+[Top][toc]
+
+#### Vehicles - Post
+
+The `/vehicles` POST endpoint takes a JSON body of `device_ids` UUIDs, and returns only information for those device ids. This may be useful to obtain a targetted list of vehicles deployed more than 30 days into the past, retrieving info on many vehicles that are not in the base `/vehicles` GET response. 
+
+**POST Body**  
+
+```json
+{"device_ids": ["a", "b", "c"]}
+```
+
+**Endpoint**: `/vehicles`  
+**Method:** `POST`  
+**Payload:** An array of [Vehicles](/data-types.md#vehicles)  
+
+Returned will be a list of vehicle records with pagination details per the [JSON API](https://jsonapi.org/format/#fetching-pagination) spec (recommmend 1,000 devices or less per page):
+
+```json
+{
+    "version": "x.y.z",
+    "vehicles": [ ... ]
+    "links": {
+        "first": "https://...",
+        "last": "https://...",
+        "prev": "https://...",
+        "next": "https://..."
+    }
+}
+```
+
+**Responses**  
+
+_Possible HTTP Status Codes_: 
+200,
+201,
+400,
+401,
+406,
+409,
 500
 
 See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.

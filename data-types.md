@@ -38,6 +38,8 @@ A vehicle record is as follows:
 | `battery_capacity`   | Integer  | Required if Available | Capacity of battery expressed as milliamp hours (mAh) |
 | `fuel_capacity`      | Integer  | Required if Available | Capacity of fuel tank (liquid, solid, gaseous) expressed in liters |
 | `maximum_speed`      | Integer  | Required if Available | Maximum speed (kph) possible with vehicle under normal, flat incline, smooth surface conditions. Applicable if the device has a built-in or intelligent speed limiter/governor. |
+| `commissioned`       | [Timestamp][ts] | Conditionally Required | Date/time the vehicle first starts providing service in the jurisdiction. Required if asked for by public agency. |
+| `decommissioned`     | [Timestamp][ts] | Conditionally Required | Date/time the vehicle stops providing service in the jurisdiction and is decommissioned. Required when the vehicle is retired from operations. |
 
 [Top][toc]
 
@@ -54,12 +56,15 @@ The list of allowed `vehicle_type` values in MDS.
 | `delivery_robot`   | A robot or remote-operated device intended for transporting goods |
 | `moped`            | A seated fully-motorized mobility device capable of travel at moderate or high speeds and suited for operation in general urban traffic |
 | `motorcycle`       | A seated fully-motorized mobility device capable of travel at high speeds and suited for operation in general urban traffic and highways |
+| `scooter`          | A standing _or_ seated fully-motorized mobility device intended for one rider, capable of travel at low or moderate speeds, and suited for operation in infrastructure shared with motorized bicycles |
 | `scooter_standing` | A standing fully-motorized mobility device without a seat intended for one rider, capable of travel at low or moderate speeds, and suited for operation in infrastructure shared with motorized bicycles |
 | `scooter_seated`   | A fully-motorized mobility device with a seat intended for one rider, capable of travel at low or moderate speeds, and suited for operation in infrastructure shared with motorized bicycles |
 | `truck`            | A truck or vehicle larger than a car or similar heavy-duty vehicle |
+| `van`            | A van with significant interior cargo space |
+| `freight`        | A large delivery truck with attached cab |
 | `other`            | A device that does not fit in the other categories |
 
-Values based off of `form_factor` in [GBFS vehicle_types](https://github.com/MobilityData/gbfs/blob/master/gbfs.md#vehicle_typesjson), with some additional to support MDS modes.
+Values based off of `form_factor` in [GBFS vehicle_types](https://github.com/MobilityData/gbfs/blob/master/gbfs.md#vehicle_typesjson) and [CDS vehicle types](https://github.com/openmobilityfoundation/curb-data-specification/blob/main/events/README.md#vehicle-type), with some modifications to support MDS modes.
 
 [Top][toc]
 
@@ -140,6 +145,7 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | `data_provider_id`| UUID            | [Optional](./general-information.md#optional-fields) | If different than `provider_id`, a UUID for the data solution provider managing the data feed in this endpoint. See MDS [provider list](/providers.csv) which includes both service operators and data solution providers. |
 | `telemetry_id`    | UUID            | Required               | ID used for uniquely-identifying a Telemetry entry |
 | `timestamp`       | [Timestamp][ts] | Required               | Date/time that event occurred. Based on GPS or GNSS clock            |
+| `publication_time`| [Timestamp][ts] | [Optional](./general-information.md#optional-fields) | Date/time that telemetry data became available through the telemetry endpoint |
 | `trip_ids`        | UUID[]          | Required               | If telemetry occurred during a trip, the ID of the trip(s).  If not in a trip, `null`.
 | `journey_id`      | UUID            | Required               | If telemetry occurred during a trip and journeys are used for the mode, the ID of the journey.  If not in a trip, `null`.
 | `stop_id`         | UUID            | [Required if Applicable](./general-information.md#required-if-applicable-fields)  | Stop that the vehicle is currently located at. See [Stops][stops] |
@@ -249,7 +255,7 @@ A Trip is defined by the following structure:
 | `publication_time`       | [Timestamp][ts] | [Optional](./general-information.md#optional-fields) | Date/time that trip became available through the trips endpoint |
 | `accessibility_attributes` | Enum[]        | Required if Available | **[Mode](/modes#list-of-supported-modes) Specific**. [Accessibility attributes](/modes#accessibility-attributes) given as an array of enumerated values. List of any accessibility attributes **used during the trip**. |
 | `parking_verification_url` | URL           | [Optional](./general-information.md#optional-fields) | A URL to a photo (or other evidence) of proper vehicle parking at the end of a trip, provided by customer or operator. |
-| `parking_category`       | Enum            | [Optional](./general-information.md#optional-fields) | The type of parking location detected or provided and the end of a trip. One of `corral`, `curb`, `rack`, `other_valid`, `invalid`. Note that `other_valid` covers any other allowed parking location beyond what is enumerated, and `invalid` is any improper parking based on agency parking rules.
+| `parking_category`       | Enum            | [Optional](./general-information.md#optional-fields) | The type of parking location detected or provided and the end of a trip. One of `corral`, `curb`, `rack`, `space`, `dock`, `other_valid`, `invalid`. Note that `other_valid` covers any other allowed parking location beyond what is enumerated, and `invalid` is any improper parking based on agency parking rules. Use `external_references` to specify more details, like a link to CDS Curb Zones. |
 | `standard_cost`          | Integer         | [Optional](./general-information.md#optional-fields) | The cost, in the currency defined in `currency`, to perform that trip in the standard operation of the System (see [Costs & Currencies][costs-and-currencies]) |
 | `actual_cost`            | Integer         | [Optional](./general-information.md#optional-fields) | The actual cost, in the currency defined in `currency`, paid by the customer of the *mobility as a service* provider (see [Costs & Currencies][costs-and-currencies]) |
 | `currency`               | String          | [Optional](./general-information.md#optional-fields), USD cents is implied if null.| An [ISO 4217 Alphabetic Currency Code][iso4217] representing the currency of the payee (see [Costs & Currencies][costs-and-currencies]) |
@@ -401,5 +407,5 @@ An `external_reference` is a JSON *array* with the following fields within objec
 [toc]: #table-of-contents
 [ts]: /general-information.md#timestamps
 [vehicle-states]: /general-information.md#vehicle-states
-[vehicle-events]: /general-information.md#event-types
+[vehicle-events]: /modes/event_types.md
 [vehicle-types]: #vehicle-types
