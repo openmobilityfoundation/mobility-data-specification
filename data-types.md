@@ -38,7 +38,7 @@ A vehicle record is as follows:
 | `battery_capacity`   | Integer  | Required if Available | Capacity of battery expressed as milliamp hours (mAh) |
 | `fuel_capacity`      | Integer  | Required if Available | Capacity of fuel tank (liquid, solid, gaseous) expressed in liters |
 | `maximum_speed`      | Integer  | Required if Available | Maximum speed (kph) possible with vehicle under normal, flat incline, smooth surface conditions. Applicable if the device has a built-in or intelligent speed limiter/governor. |
-| `hardware_model`     | String   | Required if Available | Number, identifier, or description of the main device hardware model. Can apply to and mode. |
+| `hardware_model`     | String   | Required if Available | Number, identifier, or description of the main device hardware model. Can apply to any mode. |
 | `commissioned`       | [Timestamp][ts] | Conditionally Required | Date/time the vehicle first starts providing service in the jurisdiction. Required if asked for by public agency. |
 | `decommissioned`     | [Timestamp][ts] | Conditionally Required | Date/time the vehicle stops providing service in the jurisdiction and is decommissioned. Required when the vehicle is retired from operations. |
 
@@ -119,8 +119,8 @@ Events represent changes in vehicle status.
 | `timestamp` | [Timestamp][ts] | Required | Date/time that event occurred at. See [Event Times][event-times] |
 | `publication_time` | [Timestamp][ts] | [Optional](./general-information.md#optional-fields) | Date/time that event became available through the status changes endpoint |
 | `location` | [GPS][gps] | Required | See also [Telemetry][telemetry]. |
-| `software_version` | String | [Optional](./general-information.md#optional-fields) | Software version the main device is running on |
-| `description` | String | [Optional](./general-information.md#optional-fields) | Description of the reason for the event, e.g. the type and reason for maintenance performed, software version upgrade, reason for system suspension, comms lost details, provider pickup reason, etc. |
+| `software_version` | String | [Optional](./general-information.md#optional-fields) | Software version the main device is running on. Can be provided only when there is an update. |
+| `description` | String | [Optional](./general-information.md#optional-fields) | Description of the reason for the event, e.g. the type and reason for maintenance performed, note a software version upgrade, reason for system suspension, comms lost details, provider pickup reason, inspection details, etc. |
 | `event_geographies` | UUID[] | [Optional](./general-information.md#optional-fields) | Array of Geography UUIDs consisting of every Geography that contains the location of the status change. See [Geography Driven Events][geography-driven-events]. Required if `location` and `statistical_area_ids` are not present. |
 | `statistical_areas` | Strings[] | [Optional](./general-information.md#optional-fields) | Array of statistical area identifier(s) where the event occurred. e.g. US census area IDs (tract, block group, block, etc), Canadian dissemination blocks or areas, UK output areas, etc, or any other pre-defined standard district, area, sector, neighborhood, etc. Details of the type and meaning of these identifiers are communicated between the public agency and operator outside of MDS. Note that instead of these pre-defined areas, custom geographic areas can be defined using `event_geographies`. Required if `location` and `event_geographies` are not present. |
 | `battery_percent`       | Integer          | [Required if Applicable](./general-information.md#required-if-applicable-fields) | Percent battery charge of vehicle, expressed between 0 and 100 |
