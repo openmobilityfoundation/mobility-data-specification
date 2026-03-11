@@ -74,7 +74,8 @@ The `trip_attributes` object is not used in this mode.
 
 ### Fare Attributes
 
-The `fare_attributes` object is not used in this mode.
+The `fare_attributes` object may have the following key value pairs:
+- `rate_code_id` (enumerated, Optional) - one of `standard`, `access`
 
 [Top][toc]
 
