@@ -82,3 +82,4 @@ Greenwheels,car-share,5f88cd9e-2c7e-477a-a531-f68143121876,https://www.greenwhee
 Sixt,car-share,df72d104-372f-4d98-a4c3-9b001967990e,https://sixt.com/,https://api.orange.sixt.com/v1/share-third-party-sources/mds,https://api.orange.sixt.com/v1/share-third-party-sources/gbfs
 Getaround,car-share,ede4d096-1641-4077-b986-37c602e881ae,https:getaround.com/,,https://api-eu.getaround.com/gbfs/manifest?country_code=FR
 Transwest,passenger-services,8cf2ebbb-f2d4-46a7-98d2-e10e229cf718,https://www.transwestco.com/,,
+Drop Mobility,micromobility,f219d244-5f62-45f1-8e79-fb0274ac58fe,https://dropmobility.com/,https://mds.dropmobility.com,https://gbfs.dropmobility.com
