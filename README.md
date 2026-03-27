@@ -32,7 +32,9 @@ The Mobility Data Specification (**MDS**), a project of the [Open Mobility Found
 
 ### History
 
-**MDS** is an open-source project originally created by the [Los Angeles Department of Transportation](http://ladot.io) (LADOT). In November 2019, stewardship of MDS and the ownership of this repository were transferred to the [Open Mobility Foundation](http://www.openmobilityfoundation.org). GitHub automatically redirects any links to this repository from the `CityOfLosAngeles` organization to the `openmobilityfoundation` instead. MDS continues to be used by LADOT and [many other municipalities](#cities-using-mds) and companies (confirmed over 200 mobility operators, operating in over 1,000 cities globally, and 2 billion trips sent).
+**MDS** is an open-source project originally created by the [Los Angeles Department of Transportation](http://ladot.io) (LADOT). In November 2019, stewardship of MDS and the ownership of this repository were transferred to the [Open Mobility Foundation](http://www.openmobilityfoundation.org). GitHub automatically redirects any links to this repository from the `CityOfLosAngeles` organization to the `openmobilityfoundation` instead. MDS continues to be used by LADOT and [many other municipalities](#cities-using-mds) and companies (confirmed over 200 mobility operators, operating in over 1,200 cities globally, and 2 billion trips sent) as a global standard.
+
+![MDS Global Map](https://i.imgur.com/Mx8qHwz.png)
 
 [Top][toc]
 
