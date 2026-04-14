@@ -121,7 +121,7 @@ Support for other shared modes, services, programs, and vehicles has been discus
 
 # Versions
 
-MDS has a **current release** (version 2.0.0), **previous releases** (both recommended and longer recommended for use), and **upcoming releases** in development. For a full list of releases, their status, recommended versions, and timelines, see the [Official MDS Releases](https://github.com/openmobilityfoundation/governance/wiki/Releases) page.
+MDS has a **current release** (version 2.1.0), **previous releases** (both recommended and longer recommended for use), and **upcoming releases** in development. For a full list of releases, their status, recommended versions, and timelines, see the [Official MDS Releases](https://github.com/openmobilityfoundation/governance/wiki/Releases) page.
 
 The OMF provides guidance on upgrading for cities, providers, and software companies, and sample permit language for cities. See our [MDS Version Guidance](https://github.com/openmobilityfoundation/governance/blob/main/technical/OMF-MDS-Version-Guidance.md) for best practices on how and when to upgrade MDS as new versions become available. Our complimentary [MDS Policy Language Guidance](https://github.com/openmobilityfoundation/governance/blob/main/technical/OMF-MDS-Policy-Language-Guidance.md) document is for cities writing MDS into their operating policy and includes sample policy language.
 
@@ -174,7 +174,7 @@ Read about [how to become an OMF member](https://www.openmobilityfoundation.org/
 
 # Cities Using MDS
 
-More than 200 cities and public agencies across 21 countries around the world are known to use MDS, and it has been implemented by most major [mobility service providers](#providers-using-mds).  
+More than 1,200 cities and public agencies across 21 countries around the world are known to use MDS, and it has been implemented by over 200 major [mobility service providers](#providers-using-mds).  
 - See our **[list of cities using MDS](https://www.openmobilityfoundation.org/mds-users/#cities-using-mds)** with links to public mobility websites and policy/permit documents.
 
 Please let us know [via our website](https://www.openmobilityfoundation.org/get-in-touch/) or in the [public discussion area](https://github.com/openmobilityfoundation/mobility-data-specification/discussions) if you are an agency using MDS so we can add you to the city resource list, especially if you have published your policies or documents publicly.
@@ -185,7 +185,7 @@ To add yourself to the [agency list](/agencies.csv) and add your [Policy Require
 
 # Providers Using MDS
 
-Over four dozen mobility service providers (MSPs) around the world use MDS, allowing them to create tools around a single data standard for multiple cities. 
+Over 200 mobility service providers (MSPs) around the world use MDS, allowing them to create tools around a single data standard for multiple cities globally. 
 
 - See our **[list of providers using MDS](https://www.openmobilityfoundation.org/mds-users/#mobility-providers-using-mds)**. For a table list with unique IDs, see the MDS [provider list](/providers.csv) which includes both service operators and data solution providers.
 - A provider needs a unique ID for each [mode](#modes) they operate under.
@@ -196,7 +196,7 @@ To add yourself to the provider list, please let us know [via our website](https
 
 # Software Companies Using MDS
 
-An open source approach to data specifications benefits cities and companies by creating a space for collaborative development, reducing costs, and nurturing a healthy, competitive ecosystem for mobility services and software tools. The open model promotes a competitive ecosystem for software tools built by dozens of software companies providing their services to cities, agencies, and providers.
+An open source approach to data specifications benefits cities and companies by creating a space for collaborative development, reducing costs, and nurturing a healthy, competitive ecosystem for mobility services and software tools. The open model promotes a competitive ecosystem for software tools built by dozens of software companies and vendors providing their services to cities, agencies, and providers.
 
 - See our **[list of third party software companies using MDS](https://www.openmobilityfoundation.org/mds-users/#software-companies-using-mds)** and an article about the [benefits of an open approach](https://www.openmobilityfoundation.org/why-open-behind-omfs-unique-open-source-model/).  
 - For a table list with unique IDs, see the MDS [provider list](/providers.csv) which includes both service operators and data solution providers.
@@ -234,7 +234,7 @@ How cities use MDS depends on a variety of factors: their transportation goals, 
 - **Resident Complaints:** Investigate and validate complaints from residents about operations, parking, riding, speed, etc, usually reported through 311
 - **Infrastructure Planning:** Determine where to place new bike/scooter lanes and drop zones based on usage and demand, start and end points, and trips taken
 
-A list of use cases is useful to show what's possible with MDS, to list what other cities are accomplishing with the data, to see many use cases up front for privacy considerations, and to use for policy discussions and policy language. More details and examples can be seen on the [OMF website](https://www.openmobilityfoundation.org/whats-possible-with-mds/) and our [Wiki Database](https://github.com/openmobilityfoundation/governance/wiki/MDS-Use-Cases). An agency may align their program to specific use cases by publishing [Policy Requirement use cases](/policy#requirement-apis).
+A list of more than 60 use cases is useful to show what's possible with MDS, to list what other cities are accomplishing with the data, to see many use cases up front for privacy considerations, and to use for policy discussions and policy language. More details and examples can be seen on the [OMF website](https://www.openmobilityfoundation.org/whats-possible-with-mds/) and our [Wiki Database](https://github.com/openmobilityfoundation/governance/wiki/MDS-Use-Cases). An agency may align their program to specific use cases by publishing [Policy Requirement use cases](/policy#requirement-apis).
 
 Please [let us know](https://docs.google.com/forms/d/e/1FAIpQLScrMPgeb1TKMYCjjKsJh3y1TPTJO8HR_y1NByrf1rDmTEJS7Q/viewform) if you have recommended updates or use cases to add.
 
