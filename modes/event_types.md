@@ -28,8 +28,8 @@ As with all MDS definitions, they should be described in a way that maximizes th
 | `not_located`             | Location unknown                                                                                |
 | `off_hours`               | Off hours - end of service                                                                      |
 | `on_hours`                | On hours - start of service                                                                     |
-| `order_drop_off`          | Pick up of the order at business                                                                |
-| `order_pick_up`           | Delivery of the order at the customer location                                                  |
+| `order_drop_off`          | Delivery of the order at the customer location                                                  |
+| `order_pick_up`           | Pick up of the order at business                                                                |
 | `passenger_cancellation`  | Passenger cancelled a trip  (if known, and more specific than `trip_cancel`)                    |
 | `provider_cancellation`   | Provider cancelled a trip  (if known, and more specific than `trip_cancel`)                     |
 | `provider_drop_off`       | Drop off by the provider                                                                        |
