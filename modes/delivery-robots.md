@@ -401,8 +401,8 @@ This is the list of `vehicle_state` and `event_type` pairings that constitute th
 |----------------------|--------------------|---------------------------|-----------------------------------------------------------------------------------------------|
 | `on_trip`            | `elsewhere`        | `trip_leave_jurisdiction` | The vehicle has left jurisdictional boundaries while on a trip                                |
 | `on_trip`            | `non_contactable`  | `comms_lost`              | The vehicle has gone out of comms while on a trip to pick up the order                        |
-| `on_trip`            | `stopped`          | `order_drop_off`          | The vehicle is at the customer's place and is waiting for them                                |
-| `on_trip`            | `stopped`          | `order_pick_up`           | The vehicle has come to pick up the order at the restaurant                                   |
+| `on_trip`            | `stopped`          | `order_drop_off`          | The vehicle is at the customer's place                                                        |
+| `on_trip`            | `stopped`          | `order_pick_up`           | The vehicle has come to pick up the order from the origin point                               |
 | `on_trip`            | `stopped`          | `trip_pause`              | The vehicle has paused while on a trip                                                        |
 
 | From `vehicle_state` | To `vehicle_state` | `event_type`              | Description                                                                                   |
