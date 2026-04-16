@@ -2,7 +2,7 @@
 
 <img src="https://i.imgur.com/bw2O9t8.png" width="200" align="right" alt="MDS Modes - Delivery Robots" border="0">
 
-**Delivery** refers to employees and contractors, autonomous, and remotely operated sidewalk robots, app delivery, packages, freight, goods, food, private hire vehicles, postal service, medicine, and other delivery services.
+**Delivery** refers to employees and contractors, autonomous, and remotely operated sidewalk robots, app delivery, packages, freight, goods, food, private hire vehicles, electric cargo bikes and trikes, mopeds and motorcycles, box trucks, bike and scooter couriers, cargo vans, semi-trucks and tractor-trailers, postal service, medicine, and other delivery services.
 
 There can be one or multiple orders on different trips at the same time, connected via the journey identifier. The state machine tracks the trip states of the orders separately from the vehicle state.  
 
