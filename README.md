@@ -32,7 +32,9 @@ The Mobility Data Specification (**MDS**), a project of the [Open Mobility Found
 
 ### History
 
-**MDS** is an open-source project originally created by the [Los Angeles Department of Transportation](http://ladot.io) (LADOT). In November 2019, stewardship of MDS and the ownership of this repository were transferred to the [Open Mobility Foundation](http://www.openmobilityfoundation.org). GitHub automatically redirects any links to this repository from the `CityOfLosAngeles` organization to the `openmobilityfoundation` instead. MDS continues to be used by LADOT and [many other municipalities](#cities-using-mds) and companies (confirmed over 200 mobility operators, operating in over 1,000 cities globally, and 2 billion trips sent).
+**MDS** is an open-source project originally created by the [Los Angeles Department of Transportation](http://ladot.io) (LADOT). In November 2019, stewardship of MDS and the ownership of this repository were transferred to the [Open Mobility Foundation](http://www.openmobilityfoundation.org). GitHub automatically redirects any links to this repository from the `CityOfLosAngeles` organization to the `openmobilityfoundation` instead. MDS continues to be used by LADOT and [many other municipalities](#cities-using-mds) and companies (confirmed over 200 mobility operators, operating in over 1,200 cities globally, and 2 billion trips sent) as a global standard.
+
+![MDS Global Map](https://i.imgur.com/Mx8qHwz.png)
 
 [Top][toc]
 
@@ -84,7 +86,7 @@ Many parts of the MDS definitions and APIs align across each other. In these cas
 
 You can read more in our **[Understanding the different MDS APIs](https://github.com/openmobilityfoundation/governance/blob/main/technical/Understanding-MDS-APIs.md)** guide. 
 
-![MDS APIs and Endpoints](https://i.imgur.com/i27Mmfw.png)
+![MDS APIs and Endpoints](https://i.imgur.com/4xVWwbj.png)
 
 ## GBFS Requirement
 
@@ -101,7 +103,7 @@ MDS supports multiple "modes", defined as a distinct regulatory framework for a 
 - **[Micromobility](/modes/micromobility.md)** - customer operated dockless or docked small devices moving customers and goods, such as scooters, bikeshare, cargo bikes, adaptive scooters, docked bikes, mopeds, trikes, and quadracycles.
 - **[Passenger](/modes/passenger-services.md)** - employees and contractors, autonomous, and remotely operated transporting individuals or goods with a vehicle driven by another entity, including taxis, for-hire AVs, robotaxis, busses, transportation network companies (TNCs), commercial transport apps (CTAs), and private hire vehicles (PHVs), shuttles, paratransit, on demand vehicles, limosines, and microtransit.
 - **[Fleet](/modes/car-share.md)** - customer, employees and contractors, autonomous, and remotely operated shared point-to-point, station-based, or free-floating multi-passenger or cargo vehicles like consumer car share, sanitation vehicles (garbage, recycling), city fleets, vehicle rentals, street sweepers, snow plows, utility services, construction, emergency response (police, fire, ambulance), tree maintenance, inspection and permitting vehicles, mobile health clinics, and heavy maintenance vehicles.
-- **[Delivery](/modes/delivery-robots.md)** - employees and contractors, autonomous, and remotely operated sidewalk robots, app delivery, packages, freight, goods, food, private hire vehicles, postal service, medicine, and other delivery services.
+- **[Delivery](/modes/delivery-robots.md)** - employees and contractors, autonomous, and remotely operated sidewalk robots, app delivery, packages, freight, goods, food, private hire vehicles, electric cargo bikes and trikes, mopeds and motorcycles, box trucks, bike and scooter couriers, cargo vans, semi-trucks and tractor-trailers, postal service, medicine, and other delivery services.
 
 <p align="center">
 <a href="/modes/micromobility.md"><img src="https://i.imgur.com/bKGsiXz.png" alt="MDS Mode - Micromobility" style="float: left; border: 0; width: 170px;"></a> &nbsp; &nbsp; &nbsp;
@@ -119,7 +121,7 @@ Support for other shared modes, services, programs, and vehicles has been discus
 
 # Versions
 
-MDS has a **current release** (version 2.0.0), **previous releases** (both recommended and longer recommended for use), and **upcoming releases** in development. For a full list of releases, their status, recommended versions, and timelines, see the [Official MDS Releases](https://github.com/openmobilityfoundation/governance/wiki/Releases) page.
+MDS has a **current release** (version 2.1.0), **previous releases** (both recommended and longer recommended for use), and **upcoming releases** in development. For a full list of releases, their status, recommended versions, and timelines, see the [Official MDS Releases](https://github.com/openmobilityfoundation/governance/wiki/Releases) page.
 
 The OMF provides guidance on upgrading for cities, providers, and software companies, and sample permit language for cities. See our [MDS Version Guidance](https://github.com/openmobilityfoundation/governance/blob/main/technical/OMF-MDS-Version-Guidance.md) for best practices on how and when to upgrade MDS as new versions become available. Our complimentary [MDS Policy Language Guidance](https://github.com/openmobilityfoundation/governance/blob/main/technical/OMF-MDS-Policy-Language-Guidance.md) document is for cities writing MDS into their operating policy and includes sample policy language.
 
@@ -172,7 +174,7 @@ Read about [how to become an OMF member](https://www.openmobilityfoundation.org/
 
 # Cities Using MDS
 
-More than 200 cities and public agencies across 21 countries around the world are known to use MDS, and it has been implemented by most major [mobility service providers](#providers-using-mds).  
+More than 1,200 cities and public agencies across 21 countries around the world are known to use MDS, and it has been implemented by over 200 major [mobility service providers](#providers-using-mds).  
 - See our **[list of cities using MDS](https://www.openmobilityfoundation.org/mds-users/#cities-using-mds)** with links to public mobility websites and policy/permit documents.
 
 Please let us know [via our website](https://www.openmobilityfoundation.org/get-in-touch/) or in the [public discussion area](https://github.com/openmobilityfoundation/mobility-data-specification/discussions) if you are an agency using MDS so we can add you to the city resource list, especially if you have published your policies or documents publicly.
@@ -183,7 +185,7 @@ To add yourself to the [agency list](/agencies.csv) and add your [Policy Require
 
 # Providers Using MDS
 
-Over four dozen mobility service providers (MSPs) around the world use MDS, allowing them to create tools around a single data standard for multiple cities. 
+Over 200 mobility service providers (MSPs) around the world use MDS, allowing them to create tools around a single data standard for multiple cities globally. 
 
 - See our **[list of providers using MDS](https://www.openmobilityfoundation.org/mds-users/#mobility-providers-using-mds)**. For a table list with unique IDs, see the MDS [provider list](/providers.csv) which includes both service operators and data solution providers.
 - A provider needs a unique ID for each [mode](#modes) they operate under.
@@ -194,7 +196,7 @@ To add yourself to the provider list, please let us know [via our website](https
 
 # Software Companies Using MDS
 
-An open source approach to data specifications benefits cities and companies by creating a space for collaborative development, reducing costs, and nurturing a healthy, competitive ecosystem for mobility services and software tools. The open model promotes a competitive ecosystem for software tools built by dozens of software companies providing their services to cities, agencies, and providers.
+An open source approach to data specifications benefits cities and companies by creating a space for collaborative development, reducing costs, and nurturing a healthy, competitive ecosystem for mobility services and software tools. The open model promotes a competitive ecosystem for software tools built by dozens of software companies and vendors providing their services to cities, agencies, and providers.
 
 - See our **[list of third party software companies using MDS](https://www.openmobilityfoundation.org/mds-users/#software-companies-using-mds)** and an article about the [benefits of an open approach](https://www.openmobilityfoundation.org/why-open-behind-omfs-unique-open-source-model/).  
 - For a table list with unique IDs, see the MDS [provider list](/providers.csv) which includes both service operators and data solution providers.
@@ -232,7 +234,7 @@ How cities use MDS depends on a variety of factors: their transportation goals, 
 - **Resident Complaints:** Investigate and validate complaints from residents about operations, parking, riding, speed, etc, usually reported through 311
 - **Infrastructure Planning:** Determine where to place new bike/scooter lanes and drop zones based on usage and demand, start and end points, and trips taken
 
-A list of use cases is useful to show what's possible with MDS, to list what other cities are accomplishing with the data, to see many use cases up front for privacy considerations, and to use for policy discussions and policy language. More details and examples can be seen on the [OMF website](https://www.openmobilityfoundation.org/whats-possible-with-mds/) and our [Wiki Database](https://github.com/openmobilityfoundation/governance/wiki/MDS-Use-Cases). An agency may align their program to specific use cases by publishing [Policy Requirement use cases](/policy#requirement-apis).
+A list of more than 60 use cases is useful to show what's possible with MDS, to list what other cities are accomplishing with the data, to see many use cases up front for privacy considerations, and to use for policy discussions and policy language. More details and examples can be seen on the [OMF website](https://www.openmobilityfoundation.org/whats-possible-with-mds/) and our [Wiki Database](https://github.com/openmobilityfoundation/governance/wiki/MDS-Use-Cases). An agency may align their program to specific use cases by publishing [Policy Requirement use cases](/policy#requirement-apis).
 
 Please [let us know](https://docs.google.com/forms/d/e/1FAIpQLScrMPgeb1TKMYCjjKsJh3y1TPTJO8HR_y1NByrf1rDmTEJS7Q/viewform) if you have recommended updates or use cases to add.
 
