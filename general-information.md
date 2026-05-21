@@ -91,7 +91,7 @@ Working Groups and their Steering Committees are expected to review beta designa
 
 ### Conditionally Required Fields
 
-Conditionally required fields **must** be provided in MDS data feeds from operators if the data is available from the operator, and/or the public agency requests it as part of its permit, RFP, contract, operating agreement, SLA, [Requirements](./policy#requirement) file, or via other authority. Or as part of the conditional requirement as stated in the field's descritpion.
+Conditionally required fields **must** be provided in MDS data feeds from operators if the data is available from the operator, and/or the public agency requests it as part of its permit, RFP, contract, operating agreement, SLA, [Requirements](./policy#requirement) file, or via other authority. Or as part of the conditional requirement as stated in the field's description.
 
 [Top][toc]
 
