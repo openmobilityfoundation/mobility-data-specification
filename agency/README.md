@@ -14,6 +14,7 @@ This specification contains a collection of RESTful APIs used to specify the dig
   * [Modes](#modes)
   * [Responses and Error Messages](#responses-and-error-messages)
   * [GBFS](#gbfs)
+  * [Data Schema](#data-schema)
 * [Vehicles](#vehicles)
   * [Vehicle - Register](#vehicle---register)
   * [Vehicle - Update](#vehicle---update)
@@ -80,7 +81,7 @@ See the [GBFS Requirement](/README.md#gbfs-requirement) language for more detail
 
 ### Data Schema
 
-See the general [REST Endpoints](./general-information.md#rest-endpoints) documentation and specific endpoints below for information on their data structure and schema, and the [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for full details and interactive documentation.
+See the general [REST Endpoints](../general-information.md#rest-endpoints) documentation and specific endpoints below for information on their data structure and schema, and the [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for full details and interactive documentation.
 
 [Top][toc]
 
