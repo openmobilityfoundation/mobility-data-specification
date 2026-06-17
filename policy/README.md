@@ -136,8 +136,6 @@ Flat files have an optional `end_date` field that will apply to the file as a wh
 
 ## REST Endpoints
 
-See the general [REST Endpoints](../general-information.md#rest-endpoints) documentation and specific endpoints below for information on their data structure and schema, and the [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for full details and interactive documentation.
-
 Among other use-cases, configuring a REST API allows an agency to:
 
 1. Dynamically adjust caps
@@ -353,7 +351,7 @@ Note that `data` payload will not be returned if the `last_updated` query string
 
 ### Data Schema
 
-See the [Endpoints](#endpoints) below for information on their specific schema, and the [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for full details and interactive documentation.
+See the general [REST Endpoints](../general-information.md#rest-endpoints) documentation and specific [Endpoints](#rest-endpoints) here for information on their data structure and schema, and the [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for full details and interactive documentation.
 
 Before publishing a new Policy document, the document should be validated against the schema to ensure it has the correct format and fields.
 
