@@ -261,14 +261,14 @@ Dynamic REST endpoints will return a JSON object containing some of the followin
 | ------ | ------ | ------------------- | ------------- |
 | `data` | _Endpoint-dependent_ | Required | The requested data objects. |
 | `version` | String | Required | The specification version that the API conforms to (e.g. `2.1.0`). |
-| `last_updated` | [timestamp][ts] | Required | The last time the data in this API was updated. |
-| `ttl` | Integer | Optional | Representing the number of milliseconds before the data in this feed will be updated again (0 if the data should always be refreshed). |
-| `time_zone` | String | Optional | The time zone that applies to parking regulations in this dataset. MUST be a valid [TZ database](https://www.iana.org/time-zones) time zone name (e.g. `"US/Eastern"` or `"Europe/Paris"`). |
-| `currency` | String | Optional | The ISO 4217 3-letter code for the currency in which rates for curb usage are denominated. All costs should be given as integers in the currency's smallest unit. As an example, to represent $1 USD, specify an amount of 100 (for 100 cents). |
-| `author` | String | Optional | The name of the organization that produces and maintains this data. |
-| `license_url` | URL | Optional | The licensing terms under which this data is provided. |
-| `links` | Object | Conditionally Required | Key value pairs for pagination links, where applicable. |
-| `custom_attributes_dictionary` | URL | Conditionally Required | The data dictionary containing information on the fields and values in [Custom Attributes](/data-types.md#custom-attributes). This should include the attribute name, data type, associated element if applicable, and description of what the attribute represents. Required if any Custom Attributes are provided in an endpoint. |
+| `last_updated` | [timestamp](#timestamps) | [Optional](./general-information.md#optional-fields) | The last time the data in this API was updated. |
+| `ttl` | Integer | [Optional](./general-information.md#optional-fields) | Representing the number of milliseconds before the data in this feed will be updated again (0 if the data should always be refreshed). |
+| `time_zone` | String | [Optional](./general-information.md#optional-fields) | The time zone that applies to parking regulations in this dataset. MUST be a valid [TZ database](https://www.iana.org/time-zones) time zone name (e.g. `"US/Eastern"` or `"Europe/Paris"`). |
+| `currency` | String | [Optional](./general-information.md#optional-fields) | The ISO 4217 3-letter code for the currency in which rates for curb usage are denominated. All costs should be given as integers in the currency's smallest unit. As an example, to represent $1 USD, specify an amount of 100 (for 100 cents). |
+| `author` | String | [Optional](./general-information.md#optional-fields) | The name of the organization that produces and maintains this data. |
+| `license_url` | URL | [Optional](./general-information.md#optional-fields) | The licensing terms under which this data is provided. |
+| `links` | Object | [Conditionally Required](./general-information.md#conditionally-required-fields) | Key value pairs for pagination links, where applicable. |
+| `custom_attributes_dictionary` | URL | [Conditionally Required](./general-information.md#conditionally-required-fields) | The data dictionary containing information on the fields and values in [Custom Attributes](/data-types.md#custom-attributes). This should include the attribute name, data type, associated element if applicable, and description of what the attribute represents. Required if any Custom Attributes are provided in an endpoint. |
 
 Servers SHOULD set the `Content-Type` header to `application/vnd.mds+json;version=1.0` to support
 versioning in the future.  Clients SHOULD specify an `Accept` header containing 
