@@ -81,7 +81,7 @@ See the [Responses][responses] and [Error Messages][error-messages] sections.
 
 ## Schema
 
-See the [Endpoints](#endpoints) below for links to specific data objects, and the [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for full details and interactive documentation.
+See the general [REST Endpoints](./general-information.md#rest-endpoints) documentation and specific [Endpoints](#endpoints) below for information on their data structure and schema, and the [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for full details and interactive documentation.
 
 [Top][toc]
 
