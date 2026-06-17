@@ -1,5 +1,7 @@
 # Mobility Data Specification
 
+![MDS Banner](https://i.imgur.com/pQzLDhx.png)
+
 ## Table of Contents
 
 - [About](#about)
