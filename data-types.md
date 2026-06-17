@@ -40,8 +40,8 @@ A vehicle record is as follows:
 | `fuel_capacity`      | Integer  | Required if Available | Capacity of fuel tank (liquid, solid, gaseous) expressed in liters |
 | `maximum_speed`      | Integer  | Required if Available | Maximum speed (kph) possible with vehicle under normal, flat incline, smooth surface conditions. Applicable if the device has a built-in or intelligent speed limiter/governor. |
 | `hardware_model`     | String   | Required if Available | Number, identifier, or description of the main device hardware model. Can apply to any mode. |
-| `commissioned`       | [Timestamp][ts] | Conditionally Required | Date/time the vehicle first starts providing service in the jurisdiction. Required if asked for by public agency. |
-| `decommissioned`     | [Timestamp][ts] | Conditionally Required | Date/time the vehicle stops providing service in the jurisdiction and is decommissioned. Required when the vehicle is retired from operations. |
+| `commissioned`       | [Timestamp][ts] | [Conditionally Required](./general-information.md#conditionally-required-fields) | Date/time the vehicle first starts providing service in the jurisdiction. Required if asked for by public agency. |
+| `decommissioned`     | [Timestamp][ts] | [Conditionally Required](./general-information.md#conditionally-required-fields) | Date/time the vehicle stops providing service in the jurisdiction and is decommissioned. Required when the vehicle is retired from operations. |
 | `custom_attributes`| [Custom Attributes](/data-types.md#custom-attributes) JSON Object | [Optional](./general-information.md#optional-fields) | Additional attributes (fields and data) to include in this [endpoint](/general-information.md#rest-endpoints). |
 
 [Top][toc]
@@ -161,7 +161,7 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | `fuel_percent`    | Integer         | [Required if Applicable](./general-information.md#required-if-applicable-fields)  | Percent fuel in vehicle, expressed between 0 and 100 |
 | `tipped_over`     | Boolean         | Required if Known      | If detectable and known, is the device tipped over or not? Default is 'false'. |
 | `gtfs_stop_id` | String | [Optional](./general-information.md#optional-fields) | A unique stop ID to be recorded when a vehicle makes a stop event at a location. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `stop_id` |
-| `incident_ids`    | UUID[]          | Optional               | Array of one or more [Incident](#incidents) IDs that are connected to this telemetry data point. |
+| `incident_ids`    | UUID[]          | [Optional](./general-information.md#optional-fields)               | Array of one or more [Incident](#incidents) IDs that are connected to this telemetry data point. |
 
 ### GPS Data
 
@@ -191,7 +191,7 @@ Stops describe vehicle trip start and end locations in a pre-designated physical
 | -----                    | ----                                                  |-------------------|-------------|
 | `stop_id`                | UUID                                                  | Required | Unique ID for stop |
 | `name`                   | String                                                | Required | Name of stop |
-| `last_updated`          | Timestamp                                             | Required | Date/Time that the stop was last updated |
+| `last_updated`           | Timestamp                                             | Required | Date/Time that the stop was last updated |
 | `location`               | [GPS][gps]                                            | Required | Simple centerpoint location of the Stop. The use of the optional `geography_id` is recommended to provide more detail. |
 | `status`                 | [Stop Status](#stop-status)                           | Required | Object representing the status of the Stop. See [Stop Status](#stop-status). |
 | `capacity`               | {vehicle_type: number}                                | Required | Number of total places per vehicle_type |
@@ -265,8 +265,8 @@ A Trip is defined by the following structure:
 | `standard_cost`          | Integer         | [Optional](./general-information.md#optional-fields) | The cost, in the currency defined in `currency`, to perform that trip in the standard operation of the System (see [Costs & Currencies][costs-and-currencies]) |
 | `actual_cost`            | Integer         | [Optional](./general-information.md#optional-fields) | The actual cost, in the currency defined in `currency`, paid by the customer of the *mobility as a service* provider (see [Costs & Currencies][costs-and-currencies]) |
 | `currency`               | String          | [Optional](./general-information.md#optional-fields), USD cents is implied if null.| An [ISO 4217 Alphabetic Currency Code][iso4217] representing the currency of the payee (see [Costs & Currencies][costs-and-currencies]) |
-| `gtfs_trip_id` | String | Required if Applicable | A unique trip ID for the associated scheduled GTFS route-trip. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `trip_id` in the trips.txt and other files.|
-| `gtfs_api_url` | URL | Required if Applicable | Full URL to the location where the associated [GTFS](https://gtfs.org/documentation/schedule/reference/) dataset zip files are located. |
+| `gtfs_trip_id` | String | [Required if Applicable](./general-information.md#required-if-applicable-fields)  | A unique trip ID for the associated scheduled GTFS route-trip. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `trip_id` in the trips.txt and other files.|
+| `gtfs_api_url` | URL | [Required if Applicable](./general-information.md#required-if-applicable-fields)  | Full URL to the location where the associated [GTFS](https://gtfs.org/documentation/schedule/reference/) dataset zip files are located. |
 | `external_references` | Array of [External Reference][external-reference] objects | [Optional](./general-information.md#optional-fields) | One or more references impacting or related to this Trip. |
 | `custom_attributes`| [Custom Attributes](/data-types.md#custom-attributes) JSON Object | [Optional](./general-information.md#optional-fields) | Additional attributes (fields and data) to include in this [endpoint](/general-information.md#rest-endpoints). |
 
@@ -284,16 +284,16 @@ A Trip is defined by the following structure:
 | `discovery_time`   | [Timestamp][ts] | Required          | Date/time that incident was first discovered by the operator. This may be at the same moment of the `incident_time`, or may have been discovered later. |
 | `publication_time` | [Timestamp][ts] | Required          | Date/time that incident became first available to an agency through an Incident endpoint. |
 | `last_updated`     | [Timestamp][ts] | Required          | Date/time that incident was last updated in the Incident endpoint. |
-| `description`      | String          | Optional          | Text description of the incident. |
-| `severity`         | String          | Optional          | Text description of the severity of the incident. |
-| `medical_dispatch` | Boolean         | Optional          | If `true`, a medical dispatch occured connected to the incident. |
-| `medical_transport` | Boolean        | Optional          | If `true`, one or more individuals was transported via an ambulance or emergency response vehicle because of the incident. |
-| `report_id`        | String          | Optional          | Identifier of an external report, from a police report, citation, internal system, service request, etc. The report source is communicated by the operator to the agency outside of MDS. |
-| `report_type`      | String          | Optional          | Description of the type of report referenced by the `report_id`, eg. police, customer, remote operator, 311 call, etc. |
-| `enforcement`      | [Enforcement](#enforcement) | Optional | Enforcement and violation information related to this incident. Can be used for any `incident_type`. |
-| `external_references` | Array of [External Reference][external-reference] objects | Optional | One or more references to external data feeds, links, reports, or documents impacting or related to this Incident, as they become available. |
-| `contact_info`     | String          | Optional          | Description of any relevant contact information about the incident the operator can provide. |
-| `preliminary`      | Boolean         | Optional          | If `true`, then this information in this Incident is only preliminary, with more details and/or validation coming at a later date. If `false`, the information provided here is deemed valed with no more updates expected. |
+| `description`      | String          | [Optional](./general-information.md#optional-fields)          | Text description of the incident. |
+| `severity`         | String          | [Optional](./general-information.md#optional-fields)          | Text description of the severity of the incident. |
+| `medical_dispatch` | Boolean         | [Optional](./general-information.md#optional-fields)          | If `true`, a medical dispatch occured connected to the incident. |
+| `medical_transport` | Boolean        | [Optional](./general-information.md#optional-fields)          | If `true`, one or more individuals was transported via an ambulance or emergency response vehicle because of the incident. |
+| `report_id`        | String          | [Optional](./general-information.md#optional-fields)          | Identifier of an external report, from a police report, citation, internal system, service request, etc. The report source is communicated by the operator to the agency outside of MDS. |
+| `report_type`      | String          | [Optional](./general-information.md#optional-fields)          | Description of the type of report referenced by the `report_id`, eg. police, customer, remote operator, 311 call, etc. |
+| `enforcement`      | [Enforcement](#enforcement) | [Optional](./general-information.md#optional-fields) | Enforcement and violation information related to this incident. Can be used for any `incident_type`. |
+| `external_references` | Array of [External Reference][external-reference] objects | [Optional](./general-information.md#optional-fields) | One or more references to external data feeds, links, reports, or documents impacting or related to this Incident, as they become available. |
+| `contact_info`     | String          | [Optional](./general-information.md#optional-fields)          | Description of any relevant contact information about the incident the operator can provide. |
+| `preliminary`      | Boolean         | [Optional](./general-information.md#optional-fields)          | If `true`, then this information in this Incident is only preliminary, with more details and/or validation coming at a later date. If `false`, the information provided here is deemed valed with no more updates expected. |
 | `custom_attributes`| [Custom Attributes](/data-types.md#custom-attributes) JSON Object | [Optional](./general-information.md#optional-fields) | Additional attributes (fields and data) to include in this [endpoint](/general-information.md#rest-endpoints). |
 
 [Top][toc]
@@ -362,11 +362,11 @@ The `enforcement` object is a JSON *object* with the following fields:
 | Name             | Type    | Required/Optional | Description   |
 | ---------------- | ------- | ----------------- | ------------- |
 | `enforcement_id` | UUID    | Required          | An identifier unique to the enforcement incident, generated the first time an enforcement event is recorded, and referenced in future related enforcement events. Multiple Incidents (ex: `crash`, `violation`, or `vandalism`) that relate to the same enforcement activity can share the same `enforcement_id`. | 
-| `citation_id`    | String  | Optional          | A unique id which represents a single citation. |
-| `is_warning`     | Boolean | Optional          | A boolean value to indicate if the enforcement action is being processed as a warning.  |
-| `action_taken`   | String  | Optional          | Indicates how the violation was enforced. Typical well-known values are `citation_registered`, `citation_posted`, `citation_served`, or `citation_emailed`. |
-| `citation_cost`  | String  | Optional          | The total cost of all violations associated to this enforcement action. |
-| `violations`     | Array of [Violations](#violations) | Optional          | An array of Violation objects that indicate the one-to-many violations associated to this enforcement event. |
+| `citation_id`    | String  | [Optional](./general-information.md#optional-fields)          | A unique id which represents a single citation. |
+| `is_warning`     | Boolean | [Optional](./general-information.md#optional-fields)          | A boolean value to indicate if the enforcement action is being processed as a warning.  |
+| `action_taken`   | String  | [Optional](./general-information.md#optional-fields)          | Indicates how the violation was enforced. Typical well-known values are `citation_registered`, `citation_posted`, `citation_served`, or `citation_emailed`. |
+| `citation_cost`  | String  | [Optional](./general-information.md#optional-fields)          | The total cost of all violations associated to this enforcement action. |
+| `violations`     | Array of [Violations](#violations) | [Optional](./general-information.md#optional-fields)          | An array of Violation objects that indicate the one-to-many violations associated to this enforcement event. |
 
 [Top][toc]
 
@@ -378,9 +378,9 @@ The `violations` object is a JSON *object* with the following fields:
 
 | Name             | Type   | Required/Optional | Description   |
 | ---------------- | ------ | ----------------- | ------------- |
-| `violation_code` | String | Optional          | The unique code created by the municipality, city, county, state, federal, or enforcement agency to identify the type of rule being enforced. |
-| `violation_name` | String | Optional          | The city/municipal, county, state, provincial, or federal code that was violated. |
-| `violation_cost` | String | Optional          | The original cost associated with the violation. |
+| `violation_code` | String | [Optional](./general-information.md#optional-fields)          | The unique code created by the municipality, city, county, state, federal, or enforcement agency to identify the type of rule being enforced. |
+| `violation_name` | String | [Optional](./general-information.md#optional-fields)          | The city/municipal, county, state, provincial, or federal code that was violated. |
+| `violation_cost` | String | [Optional](./general-information.md#optional-fields)          | The original cost associated with the violation. |
 
 [Top][toc]
 
