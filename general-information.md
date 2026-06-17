@@ -268,7 +268,7 @@ Dynamic REST endpoints will return a JSON object containing some of the followin
 | `author` | String | Optional | The name of the organization that produces and maintains this data. |
 | `license_url` | URL | Optional | The licensing terms under which this data is provided. |
 | `links` | Object | Conditionally Required | Key value pairs for pagination links, where applicable. |
-| `custom_attributes_dictionary` | URL | Conditionally Required | The data dictionary containing information on the fields and values in [Custom Attributes](/data-types.md#custom-attributes). This should include the attribute name, data type, associated CDS element if applicable, and description of what the attribute represents. Required if any Custom Attributes are provided in an endpoint. |
+| `custom_attributes_dictionary` | URL | Conditionally Required | The data dictionary containing information on the fields and values in [Custom Attributes](/data-types.md#custom-attributes). This should include the attribute name, data type, associated element if applicable, and description of what the attribute represents. Required if any Custom Attributes are provided in an endpoint. |
 
 Servers SHOULD set the `Content-Type` header to `application/vnd.mds+json;version=1.0` to support
 versioning in the future.  Clients SHOULD specify an `Accept` header containing 
