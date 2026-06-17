@@ -42,6 +42,7 @@ A vehicle record is as follows:
 | `hardware_model`     | String   | Required if Available | Number, identifier, or description of the main device hardware model. Can apply to any mode. |
 | `commissioned`       | [Timestamp][ts] | Conditionally Required | Date/time the vehicle first starts providing service in the jurisdiction. Required if asked for by public agency. |
 | `decommissioned`     | [Timestamp][ts] | Conditionally Required | Date/time the vehicle stops providing service in the jurisdiction and is decommissioned. Required when the vehicle is retired from operations. |
+| `custom_attributes`| [Custom Attributes](/data-types.md#custom-attributes) JSON Object | [Optional](./general-information.md#optional-fields) | Additional attributes (fields and data) to include in this [endpoint](/general-information.md#rest-endpoints). |
 
 [Top][toc]
 
@@ -131,6 +132,7 @@ Events represent changes in vehicle status.
 | `associated_ticket` | String | [Optional](./general-information.md#optional-fields) | Identifier for an associated ticket inside an Agency-maintained 311 or CRM system |
 | `gtfs_stop_id` | String | [Optional](./general-information.md#optional-fields) | A unique stop ID to be recorded when a vehicle makes a stop event at a location. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `stop_id` |
 | `external_references` | Array of [External Reference][external-reference] objects | [Optional](./general-information.md#optional-fields) | One or more references impacting or related to this Event. |
+| `custom_attributes`| [Custom Attributes](/data-types.md#custom-attributes) JSON Object | [Optional](./general-information.md#optional-fields) | Additional attributes (fields and data) to include in this [endpoint](/general-information.md#rest-endpoints). |
 
 ### Event Times
 
@@ -266,6 +268,7 @@ A Trip is defined by the following structure:
 | `gtfs_trip_id` | String | Required if Applicable | A unique trip ID for the associated scheduled GTFS route-trip. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `trip_id` in the trips.txt and other files.|
 | `gtfs_api_url` | URL | Required if Applicable | Full URL to the location where the associated [GTFS](https://gtfs.org/documentation/schedule/reference/) dataset zip files are located. |
 | `external_references` | Array of [External Reference][external-reference] objects | [Optional](./general-information.md#optional-fields) | One or more references impacting or related to this Trip. |
+| `custom_attributes`| [Custom Attributes](/data-types.md#custom-attributes) JSON Object | [Optional](./general-information.md#optional-fields) | Additional attributes (fields and data) to include in this [endpoint](/general-information.md#rest-endpoints). |
 
 [Top][toc]
 
@@ -291,6 +294,7 @@ A Trip is defined by the following structure:
 | `external_references` | Array of [External Reference][external-reference] objects | Optional | One or more references to external data feeds, links, reports, or documents impacting or related to this Incident, as they become available. |
 | `contact_info`     | String          | Optional          | Description of any relevant contact information about the incident the operator can provide. |
 | `preliminary`      | Boolean         | Optional          | If `true`, then this information in this Incident is only preliminary, with more details and/or validation coming at a later date. If `false`, the information provided here is deemed valed with no more updates expected. |
+| `custom_attributes`| [Custom Attributes](/data-types.md#custom-attributes) JSON Object | [Optional](./general-information.md#optional-fields) | Additional attributes (fields and data) to include in this [endpoint](/general-information.md#rest-endpoints). |
 
 [Top][toc]
 
