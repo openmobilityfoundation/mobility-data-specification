@@ -181,7 +181,7 @@ _Query Parameters:_
 
 `start_date` and `end_date` are only considered when no `id` parameter is provided. They should return any policy whose effectiveness overlaps with or is contained with this range. Suppose there's a policy with a `start_date` of 1/1/21 and `end_date` of 1/31/21. Assuming an `end_date` that is null, 12/1/20 and 1/5/21 `start_dates` will return the policy, but 2/10/21 wouldn't. Assuming a `start_date` parameter of say, 11/1/20, then an `end_date` of 12/1/20 wouldn't return the policy, but 1/5/21 and 2/10/21 would. Lastly, a `start_date` of 1/5/21 and `end_date` of 1/6/21 would also return the policy. Please note also that while dates in the format MM:DD:YY are being used here, `start_date` and `end_date` must be numbers representing milliseconds since the Unix epoch time.
 
-Policies will be returned in order of effective date (see schema below), with pagination as in the `agency` and `provider` specs.
+Policies will be returned in order of effective date (see schema below). Pagination is optional for this endpoint, and policies are typically returned in a single response. If pagination is used, it follows the same convention as the `agency` and `provider` specs (see [Pagination][pagination]).
 
 `provider_id` is an implicit parameter and will be encoded in the authentication mechanism, or a complete list of policies should be produced. If the Agency decides that Provider-specific policy documents should not be shared with other Providers (e.g. punitive policy in response to violations), an Agency should filter policy objects before serving them via this endpoint.
 
@@ -883,6 +883,7 @@ You may also show which APIs, endpoints, and fields your agency is serving to pr
 [json-schema]: #json-schema
 [modes]: /modes/README.md
 [muni-boundary]: /provider/README.md#municipality-boundary
+[pagination]: /general-information.md#pagination
 [propulsion-types]: /general-information.md#propulsion-types
 [responses]: /general-information.md#responses
 [schema]: /schema/

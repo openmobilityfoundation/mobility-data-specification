@@ -161,7 +161,7 @@ _Path Parameters:_
 | ------------ | ---- | ----------------- | ------------------------------------------- |
 | `device_id`  | UUID | Optional          | If provided, retrieve the specified vehicle |
 
-If `device_id` is specified, `GET` will return an array with a single vehicle record, otherwise it will be a list of vehicle records with pagination details per the [JSON API](https://jsonapi.org/format/#fetching-pagination) spec:
+If `device_id` is specified, `GET` will return an array with a single vehicle record, otherwise it will be a list of vehicle records with pagination details (see [Pagination][pagination]):
 
 ```json
 {
@@ -204,7 +204,7 @@ _Path Parameters:_
 | ------------ | ---- | ----------------- | ------------------------------------------- |
 | `device_id`  | UUID | Optional          | If provided, retrieve the specified vehicle |
 
-If `device_id` is specified, `GET` will return an array with a vehicle status record, otherwise it will be a list of vehicle records with pagination details per the [JSON API](https://jsonapi.org/format/#fetching-pagination) spec:
+If `device_id` is specified, `GET` will return an array with a vehicle status record, otherwise it will be a list of vehicle records with pagination details (see [Pagination][pagination]):
 
 ```json
 {
@@ -540,6 +540,7 @@ See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schem
 [hdop]: https://en.wikipedia.org/wiki/Dilution_of_precision_(navigation)
 [iana]: https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
 [modes]: /modes/README.md
+[pagination]: /general-information.md#pagination
 [propulsion-types]: /data-types.md#propulsion-types
 [reports]: /data-types.md#reports
 [responses]: /general-information.md#responses

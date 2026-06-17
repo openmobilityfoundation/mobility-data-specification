@@ -18,6 +18,7 @@ This document contains specifications that are shared between the various MDS [A
 - [Geographic Data](#geographic-data)
   - [Intersection Operation](#intersection-operation)
 - [Geography-Driven Events](#geography-driven-events)
+- [Pagination](#pagination)
 - [Responses](#responses)
   - [Error Messages](#error-messages)
   - [Bulk Responses](#bulk-responses)
@@ -187,6 +188,50 @@ Agencies that wish to use Geography-Driven Events do so by requiring a new `even
 
 [Top][toc]
 
+## Pagination
+
+Several MDS endpoints return collections of records that may be split across multiple pages (for example, the [Provider](/provider/README.md) and [Agency](/agency/README.md) `/vehicles` and `/vehicles/status` endpoints, and the [Policy](/policy/README.md) endpoint). When an endpoint uses pagination, it must comply with the page-based pagination convention defined by the [JSON:API][json-api-pagination] specification.
+
+Clients can request a page using the JSON:API page-based query parameters:
+
+| Query Parameter | Type    | Default            | Description                                  |
+| --------------- | ------- | ------------------ | -------------------------------------------- |
+| `page[number]`  | Integer | 1                  | 1-based index of the page to return.         |
+| `page[size]`    | Integer | 1000 (recommended) | Maximum number of records returned per page. |
+
+The following keys must be used for pagination links, in a top-level `links` object:
+
+| Key     | Description                        |
+| ------- | ---------------------------------- |
+| `first` | URL to the first page of data.     |
+| `last`  | URL to the last page of data.      |
+| `prev`  | URL to the previous page of data.  |
+| `next`  | URL to the next page of data.      |
+
+At a minimum, a paginated payload must include a `next` key, which must be set to `null` to indicate the last page of data.
+
+```jsonc
+{
+    "version": "x.y.z",
+    // ...the endpoint's data array, e.g. "vehicles", "vehicles_status", "policies"...
+    "links": {
+        "first": "https://...",
+        "last": "https://...",
+        "prev": "https://...",
+        "next": "https://..."
+    }
+}
+```
+
+To keep polling of large fleets efficient while remaining a non-breaking change, the following are **recommended** (not required):
+
+- A provider or agency **should** support a `page[size]` of at least `500`, so consumers can always request that many records per page.
+- The maximum supported `page[size]` is bound by the provider's or agency's infrastructure and **should** be documented in their API documentation.
+
+These recommendations apply to the [Agency](/agency/README.md), [Provider](/provider/README.md), and [Policy](/policy/README.md) APIs.
+
+[Top][toc]
+
 ## Responses
 
 - **200:** OK: operation successful.
@@ -338,6 +383,7 @@ If an unsupported or invalid version is requested, the API must respond with a s
 [Top][toc]
 
 [decimal-degrees]: https://en.wikipedia.org/wiki/Decimal_degrees
+[json-api-pagination]: https://jsonapi.org/format/#fetching-pagination
 [st-intersects]: https://postgis.net/docs/ST_Intersects.html
 [toc]: #table-of-contents
 [wgs84]: https://en.wikipedia.org/wiki/World_Geodetic_System
