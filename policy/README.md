@@ -136,12 +136,15 @@ Flat files have an optional `end_date` field that will apply to the file as a wh
 
 ## REST Endpoints
 
-Among other use-cases, configuring a REST API allows an Agency to:
+See the general [REST Endpoints](../general-information.md#rest-endpoints) documentation and specific endpoints below for information on their data structure and schema, and the [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for full details and interactive documentation.
+
+Among other use-cases, configuring a REST API allows an agency to:
 
 1. Dynamically adjust caps
-2. Set Provider specific policies
-3. Adjust other attributes in close to real-time
+2. Set Provider/Agency specific policies
+3. Adjust policies and other attributes in near real-time
 4. Enumerate when policies are set to change
+5. Announce geofencing speed and travel limits
 
 Responses must set the `Content-Type` header, as specified in the [versioning][versioning] section.
 
