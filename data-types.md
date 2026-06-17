@@ -20,6 +20,7 @@ This MDS data types page catalogs the objects (fields, types, requirements, desc
 - [Enforcement](#enforcement)
   - [Violations](#violations)
 - [External Reference](#external-reference)
+- [Custom Attributes](#custom-attributes)
  
 ## Vehicles
 
@@ -392,6 +393,16 @@ An `external_reference` is a JSON *array* with the following fields within objec
 | `public` | Boolean | [Optional](./general-information.md#optional-fields) | Is this data source able to be viewed with out any sort of authentication? If `true`, the `reference_url` is public. If `false`, the `reference_url` requires some sort of authentication, authorization, or API key to access. This is an informational field to set access expectations for the data source user, and does not provide any credentials directly unless explicitly contained in the `reference_url`. |
 | `identifier_name` | String | [Optional](./general-information.md#optional-fields) | The name of the data field identifier or object that is referenced by the unique `ids`. E.g. "id", "report_id", "trip_id", "vehicle_id", "RoadEventFeature", etc, if relevant and available in `reference_url`. |
 | `ids` | Array of Strings | [Optional](./general-information.md#optional-fields) | An array of one or more **ids** from the data sources that impacts the use of or relationship to part of MDS, e.g. Trips, Events, Stops, etc. The **ids** and their details are be found in the referenced `reference_url`. |
+
+[Top][toc]
+
+## Custom Attributes
+
+Custom Attributes are optional additional attributes that do not fit in other fields and objects in the specification. They are unique for the organizations created and consuming the endpoint, that may not apply to other jurisdictions. Examples include custom identifiers, information required by ordinance, vendor attributes, supplemental data, etc. 
+
+The format is one or more JSON name/value pairs, and the values must be a string. If a `custom_attributes` field is provided in specification API endpoints, then the relevant [endpoint](general-information.md#rest-endpoints) must contain the `custom_attribute_dictionary` field, which describes details of the custom fields provided.
+
+Before creating any custom attributes, the preference is to use existing fields and data objects first. If the fields and data you provide in custom attributes apply to multiple jurisdictions, vendors, and/or scenarios, please open an issue to include new fields in a future release.
 
 [Top][toc]
 
