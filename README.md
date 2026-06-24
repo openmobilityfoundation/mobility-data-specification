@@ -7,7 +7,7 @@
 - [About](#about)
 - [Endpoints](#endpoints)
   - [Modularity](#modularity)
-  - [GBFS Requirement](#gbfs-requirement)
+  - [Public Data Feed Requirements](#public-data-feed-requirements)
 - [Modes](#modes)
   - [Future Modes](#future-modes)
 - [Versions](#versions)
@@ -90,7 +90,7 @@ You can read more in our **[Understanding the different MDS APIs](https://github
 
 ![MDS APIs and Endpoints](https://i.imgur.com/4xVWwbj.png)
 
-## GBFS Requirement
+## Public Data Feed Requirements
 
 All MDS compatible Provider and/or Agency feeds must also expose a public [GBFS](https://github.com/MobilityData/gbfs) feed for the _micromobility_ and _fleet_ [modes](/modes), and [GOFS](https://gofs.org/) for _passenger_ mode. A public feed may be provided at the discretion of the agency running a _delivery_ mode program. Compatibility with the latest release recommended per MobilityData's [supported releases](https://github.com/MobilityData/gbfs?tab=readme-ov-file#current-version-recommended) guidance is recommended. Read MobilityData's RFP recommendations and required files list in their [GBFS and Shared Mobility Data Policy guide](https://gbfs.org/documentation/data-policy/).
 
