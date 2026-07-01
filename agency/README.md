@@ -14,6 +14,7 @@ This specification contains a collection of RESTful APIs used to specify the dig
   * [Modes](#modes)
   * [Responses and Error Messages](#responses-and-error-messages)
   * [GBFS](#gbfs)
+  * [Data Schema](#data-schema)
 * [Vehicles](#vehicles)
   * [Vehicle - Register](#vehicle---register)
   * [Vehicle - Update](#vehicle---update)
@@ -80,7 +81,7 @@ See the [GBFS Requirement](/README.md#gbfs-requirement) language for more detail
 
 ### Data Schema
 
-See the [Endpoints](#endpoints) below for information on their specific schema, and the [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for full details and interactive documentation.
+See the general [REST Endpoints](../general-information.md#rest-endpoints) documentation and specific endpoints below for information on their data structure and schema, and the [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for full details and interactive documentation.
 
 [Top][toc]
 
@@ -161,7 +162,7 @@ _Path Parameters:_
 | ------------ | ---- | ----------------- | ------------------------------------------- |
 | `device_id`  | UUID | Optional          | If provided, retrieve the specified vehicle |
 
-If `device_id` is specified, `GET` will return an array with a single vehicle record, otherwise it will be a list of vehicle records with pagination details per the [JSON API](https://jsonapi.org/format/#fetching-pagination) spec:
+If `device_id` is specified, `GET` will return an array with a single vehicle record, otherwise it will be a list of vehicle records with pagination details (see [Pagination][pagination]):
 
 ```json
 {
@@ -204,7 +205,7 @@ _Path Parameters:_
 | ------------ | ---- | ----------------- | ------------------------------------------- |
 | `device_id`  | UUID | Optional          | If provided, retrieve the specified vehicle |
 
-If `device_id` is specified, `GET` will return an array with a vehicle status record, otherwise it will be a list of vehicle records with pagination details per the [JSON API](https://jsonapi.org/format/#fetching-pagination) spec:
+If `device_id` is specified, `GET` will return an array with a vehicle status record, otherwise it will be a list of vehicle records with pagination details (see [Pagination][pagination]):
 
 ```json
 {
@@ -540,6 +541,7 @@ See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schem
 [hdop]: https://en.wikipedia.org/wiki/Dilution_of_precision_(navigation)
 [iana]: https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
 [modes]: /modes/README.md
+[pagination]: /general-information.md#pagination
 [propulsion-types]: /data-types.md#propulsion-types
 [reports]: /data-types.md#reports
 [responses]: /general-information.md#responses

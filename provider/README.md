@@ -117,7 +117,7 @@ ttl                 | Yes       | Integer representing the number of millisecond
 
 ### Data Schema
 
-See the [Endpoints](#endpoints) below for information on their specific schema, and the [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for full details and interactive documentation.
+See the general [REST Endpoints](../general-information.md#rest-endpoints) documentation and specific endpoints below for information on their data structure and schema, and the [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for full details and interactive documentation.
 
 [Top][toc]
 
@@ -125,32 +125,7 @@ See the [Endpoints](#endpoints) below for information on their specific schema, 
 
 The `/trips` and `/events/historical` endpoints must not use pagination.
 
-If Providers choose to use pagination for either of the `/events` or `/vehicles` endpoints, the pagination must comply with the [JSON API][json-api-pagination] specification.
-
-The following keys must be used for pagination links:
-
-* `first`: url to the first page of data
-* `last`: url to the last page of data
-* `prev`: url to the previous page of data
-* `next`: url to the next page of data
-
-At a minimum, paginated payloads must include a `next` key, which must be set to `null` to indicate the last page of data.
-
-```json
-{
-    "version": "x.y.z",
-    "trips": [{
-        "provider_id": "...",
-        "trip_id": "...",
-    }],
-    "links": {
-        "first": "https://...",
-        "last": "https://...",
-        "prev": "https://...",
-        "next": "https://..."
-    }
-}
-```
+If Providers choose to use pagination for the `/events`, `/vehicles`, or `/vehicles/status` endpoints, it must follow the page-based pagination convention described in [Pagination][pagination] in General Information, including the page-based query parameters (`page[number]`, `page[size]`), the `links` object, and the recommended minimum and default page sizes.
 
 [Top][toc]
 
@@ -205,7 +180,7 @@ _Path Parameters:_
 | ------------ | ---- | ----------------- | ------------------------------------------- |
 | `device_id`  | UUID | Optional          | If provided, retrieve the specified vehicle |
 
-If `device_id` is specified, `GET` will return an array with a single vehicle record, otherwise it will be a list of vehicle records with pagination details per the [JSON API](https://jsonapi.org/format/#fetching-pagination) spec:
+If `device_id` is specified, `GET` will return an array with a single vehicle record, otherwise it will be a list of vehicle records with pagination details (see [Pagination][pagination]):
 
 ```json
 {
@@ -248,7 +223,7 @@ The `/vehicles` POST endpoint takes a JSON body of `device_ids` UUIDs, and retur
 **Method:** `POST`  
 **Payload:** An array of [Vehicles](/data-types.md#vehicles)  
 
-Returned will be a list of vehicle records with pagination details per the [JSON API](https://jsonapi.org/format/#fetching-pagination) spec (recommmend 1,000 devices or less per page):
+Returned will be a list of vehicle records with pagination details (see [Pagination][pagination]):
 
 ```json
 {
@@ -307,7 +282,7 @@ _Path Parameters:_
 | ------------ | ---- | ----------------- | ------------------------------------------- |
 | `device_id`  | UUID | Optional          | If provided, retrieve the specified vehicle |
 
-If `device_id` is specified, `GET` will return an array with a vehicle status record, otherwise it will be a list of vehicle records with pagination details per the [JSON API](https://jsonapi.org/format/#fetching-pagination) spec:
+If `device_id` is specified, `GET` will return an array with a vehicle status record, otherwise it will be a list of vehicle records with pagination details (see [Pagination][pagination]):
 
 ```json
 {
@@ -664,10 +639,10 @@ See [Provider examples](examples.md#reports).
 [incidents]: /data-types.md#incidents
 [intersection]: /general-information.md#intersection-operation
 [iso4217]: https://en.wikipedia.org/wiki/ISO_4217#Active_codes
-[json-api-pagination]: http://jsonapi.org/format/#fetching-pagination
 [json-schema]: https://json-schema.org
 [muni-boundary]: #municipality-boundary
 [mode]: /modes/README.md
+[pagination]: /general-information.md#pagination
 [point-geo]: /data-types.md#gps-data
 [propulsion-types]: /general-information.md#propulsion-types
 [responses]: /general-information.md#responses
