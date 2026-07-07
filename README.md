@@ -46,19 +46,19 @@ The Mobility Data Specification (**MDS**), a project of the [Open Mobility Found
 
 <a href="/provider/"><img src="https://i.imgur.com/yzXrKpo.png" width="80" align="left" alt="MDS Provider Icon" border="0"></a>
 
-The [`provider`][provider] API endpoints are intended to be implemented by mobility providers and consumed by regulatory agencies. Data is **pulled** from providers by agencies. When a municipality queries information from a mobility provider, the Provider API provides historical and recent views of operations. First released in June 2018.
+The [`provider`][provider] API endpoints are intended to be implemented by mobility providers and consumed by regulatory agencies. Data is **pulled** from _providers_ by agencies. When a municipality queries information from a mobility provider, the Provider API provides historical and recent views of operations. First released in June 2018.
 
 ---
 
 <a href="/agency/"><img src="https://i.imgur.com/HzMWtaI.png" width="80" align="left" alt="MDS Agency Icon" border="0"></a>
 
-The [`agency`][agency] API endpoints are intended to be implemented by regulatory agencies and consumed by mobility providers. Data is **pushed** to agencies by providers. Providers query the Agency API when events (such as a trip start or vehicle status change) occur in their systems. First released in April 2019.
+The [`agency`][agency] API endpoints are intended to be implemented by regulatory agencies and consumed by mobility providers. Data is **pushed** to _agencies_ by providers. Agencies use the Agency API to see when events (such as a trip start or vehicle status change) occur in provider systems in real-time. First released in April 2019.
 
 ---
 
 <a href="/policy/"><img src="https://i.imgur.com/66QXveN.png" width="80" align="left" alt="MDS Policy Icon" border="0"></a>
 
-The [`policy`][policy] API endpoints are intended to be implemented by regulatory agencies and consumed by mobility providers. Providers query the Policy API to get information about local rules that may affect the operation of their mobility service or which may be used to determine compliance. First released in October 2019.
+The [`policy`][policy] API endpoints are intended to be implemented by regulatory agencies and consumed by mobility providers. Data is **pulled** from agencies or **pushed** to providers via the Policy API to get information about local rules, events, or emergencies that may affect the operation of mobility services or which may be used to determine compliance. First released in October 2019.
 
 ---
 
