@@ -1,6 +1,6 @@
 ## 2.1.0
 
-> Released: xxxx
+> Released: 2026.07.07
 
 The 2.1 release is a minor release.
 
