@@ -2,7 +2,7 @@
 
 <a href="/agency/"><img src="https://i.imgur.com/HzMWtaI.png" width="120" align="right" alt="MDS Agency Icon" border="0"></a>
 
-The Agency API endpoints are intended to be implemented by regulatory agencies and consumed by mobility providers. Data is **pushed** to agencies by providers. Providers query the Agency API when events (such as a trip start or vehicle status change) occur in their systems.
+The Agency API endpoints are intended to be implemented by regulatory agencies and consumed by mobility providers. Data is **pushed** to _agencies_ by providers. Agencies use the Agency API to see when events (such as a trip start or vehicle status change) occur in provider systems in real-time.
 
 This specification contains a collection of RESTful APIs used to specify the digital relationship between *mobility as a service* providers and the agencies that regulate them.
 
