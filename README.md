@@ -24,7 +24,7 @@
 
 # About
 
-The Mobility Data Specification (**MDS**), a project of the [Open Mobility Foundation](http://www.openmobilityfoundation.org) (**OMF**), is a set of Application Programming Interfaces (APIs) that helps cities better manage transportation in the public right of way, standardizing communication and data-sharing between cities and mobility providers, allowing cities to share and validate policy digitally, and enabling vehicle management and better outcomes for residents. Inspired in part by projects like [GTFS](https://developers.google.com/transit/gtfs/reference/) and [GBFS](https://github.com/MobilityData/gbfs), MDS is focused on managing mobility services such as dockless scooters, bicycles, mopeds, car share, food and goods delivery, sidewalk robots, fixed route services and shuttles, fleets, busses, and passenger services. 
+The Mobility Data Specification (**MDS**), a project of the [Open Mobility Foundation](http://www.openmobilityfoundation.org) (**OMF**), is a set of Application Programming Interfaces (APIs) that helps cities better manage transportation in the public right of way, standardizing communication and data-sharing between cities and mobility providers, allowing cities to share and validate policy digitally, and enabling vehicle management and better outcomes for residents. Inspired in part by projects like [GTFS](https://developers.google.com/transit/gtfs/reference/) and [GBFS](https://github.com/MobilityData/gbfs), MDS is focused on managing mobility services such as dockless scooters, bicycles, mopeds, car share, food and goods delivery, sidewalk robots, fixed route services and shuttles, fleets, busses, and passenger services like taxis, TNCs, and for-hire AVs.
 
 ![MDS Main Logo](https://i.imgur.com/AiUedl3.png)
 
@@ -34,7 +34,7 @@ The Mobility Data Specification (**MDS**), a project of the [Open Mobility Found
 
 ### History
 
-**MDS** is an open-source project originally created by the [Los Angeles Department of Transportation](http://ladot.io) (LADOT). In November 2019, stewardship of MDS and the ownership of this repository were transferred to the [Open Mobility Foundation](http://www.openmobilityfoundation.org). GitHub automatically redirects any links to this repository from the `CityOfLosAngeles` organization to the `openmobilityfoundation` instead. MDS continues to be used by LADOT and [many other municipalities](#cities-using-mds) and companies (confirmed over 200 mobility operators, operating in over 1,200 cities globally, and 2 billion trips sent) as a global standard.
+**MDS** is an open-source project originally created by the [Los Angeles Department of Transportation](http://ladot.io) (LADOT) in 2018. In November 2019, stewardship of MDS and the ownership of this repository were transferred to the [Open Mobility Foundation](http://www.openmobilityfoundation.org). GitHub automatically redirects any links to this repository from the `CityOfLosAngeles` organization to the `openmobilityfoundation` instead. MDS continues to be used by LADOT and [many other municipalities](#cities-using-mds) and companies (confirmed over 200 mobility operators, operating in over 1,200 cities globally, and over 2 billion trips sent) as a global standard.
 
 ![MDS Global Map](https://i.imgur.com/Mx8qHwz.png)
 
@@ -123,7 +123,7 @@ Support for other shared modes, services, programs, and vehicles has been discus
 
 # Versions
 
-MDS has a **current release** (version 2.1.0), **previous releases** (both recommended and longer recommended for use), and **upcoming releases** in development. For a full list of releases, their status, recommended versions, and timelines, see the [Official MDS Releases](https://github.com/openmobilityfoundation/governance/wiki/Releases) page.
+MDS has a **current release** (version 2.1.0), **previous releases** (both recommended and no longer recommended for use), and **upcoming releases** in development. For a full list of releases, their status, recommended versions, and timelines, see the [Official MDS Releases](https://github.com/openmobilityfoundation/governance/wiki/Releases) page.
 
 The OMF provides guidance on upgrading for cities, providers, and software companies, and sample permit language for cities. See our [MDS Version Guidance](https://github.com/openmobilityfoundation/governance/blob/main/technical/OMF-MDS-Version-Guidance.md) for best practices on how and when to upgrade MDS as new versions become available. Our complimentary [MDS Policy Language Guidance](https://github.com/openmobilityfoundation/governance/blob/main/technical/OMF-MDS-Policy-Language-Guidance.md) document is for cities writing MDS into their operating policy and includes sample policy language.
 
@@ -189,12 +189,12 @@ To add yourself to the [agency list](/agencies.csv) for your Agency ID, and add 
 
 # Providers Using MDS
 
-Over 200 mobility service providers (MSPs) around the world use MDS, allowing them to create tools around a single data standard for multiple cities globally. 
+Over 200 mobility service providers (MSPs) and operators around the world use MDS, allowing them to create tools around a single data standard for multiple cities globally. 
 
 - See our **[list of providers using MDS](https://www.openmobilityfoundation.org/mds-users/#mobility-providers-using-mds)**. For a table list with unique IDs, see the MDS [provider list](/providers.csv) which includes both service operators and data solution providers.
 - A provider needs a unique ID for each [mode](#modes) they operate under.
 
-If you use MDS, you are required to have a Provider ID to be spec compliant. To add yourself to the provider list, please let us know [via our website](https://www.openmobilityfoundation.org/get-in-touch/) or open an [Issue](https://github.com/openmobilityfoundation/mobility-data-specification/issues) or [Pull Request](https://github.com/openmobilityfoundation/mobility-data-specification/pulls). Find out how in our [Adding an Provider ID](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/Adding-an-MDS-Provider-ID) help document.
+If you use MDS, you are required to have a Provider ID to be spec compliant. To add yourself to the provider list, please let us know [via our website](https://www.openmobilityfoundation.org/get-in-touch/) or open an [Issue](https://github.com/openmobilityfoundation/mobility-data-specification/issues) or preferably a [Pull Request](https://github.com/openmobilityfoundation/mobility-data-specification/pulls). Find out how in our [Adding an Provider ID](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/Adding-an-MDS-Provider-ID) help document.
 
 [Top][toc]
 
@@ -205,7 +205,7 @@ An open source approach to data specifications benefits cities and companies by 
 - See our **[list of third party software companies using MDS](https://www.openmobilityfoundation.org/mds-users/#software-companies-using-mds)** and an article about the [benefits of an open approach](https://www.openmobilityfoundation.org/why-open-behind-omfs-unique-open-source-model/).  
 - For a table list with unique IDs, see the MDS [provider list](/providers.csv) which includes both service operators and data solution providers.
 
-To add yourself to the provider list (required as a data solution provider), please let us know [via our website](https://www.openmobilityfoundation.org/get-in-touch/) or open an [Issue](https://github.com/openmobilityfoundation/mobility-data-specification/issues) or [Pull Request](https://github.com/openmobilityfoundation/mobility-data-specification/pulls). Find out how in our [Adding an Provider ID](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/Adding-an-MDS-Provider-ID) help document.
+To add yourself to the provider list (required as a data solution provider), please let us know [via our website](https://www.openmobilityfoundation.org/get-in-touch/) or open an [Issue](https://github.com/openmobilityfoundation/mobility-data-specification/issues) or preferably a [Pull Request](https://github.com/openmobilityfoundation/mobility-data-specification/pulls). Find out how in our [Adding an Provider ID](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/Adding-an-MDS-Provider-ID) help document.
 
 Please [let us know](https://www.openmobilityfoundation.org/get-in-touch/) if you are using MDS in your company so we can add you to the list.
 
