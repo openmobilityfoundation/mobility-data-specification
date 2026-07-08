@@ -170,7 +170,7 @@ OMF Members (public agencies and commercial companies) have additional participa
   - [MDS Working Group](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Working-Group)
   - [Curb Working Group](https://github.com/openmobilityfoundation/curb-data-specification/wiki)
 
-Read about [how to become an OMF member](https://www.openmobilityfoundation.org/how-to-become-a-member/), [how to get involved and our governance model](https://www.openmobilityfoundation.org/how-to-get-involved-in-the-open-mobility-foundation/), and [contact us](https://mailchi.mp/openmobilityfoundation/membership) for more details. 
+Read about [how to become an OMF member](https://www.openmobilityfoundation.org/participate/), [how to get involved and our governance model](https://www.openmobilityfoundation.org/how-to-get-involved-in-the-open-mobility-foundation/), and [contact us](https://mailchi.mp/openmobilityfoundation/membership) for more details. 
 
 [Top][toc]
 
