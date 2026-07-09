@@ -18,10 +18,12 @@ This document contains specifications that are shared between the various MDS [A
 - [Geographic Data](#geographic-data)
   - [Intersection Operation](#intersection-operation)
 - [Geography-Driven Events](#geography-driven-events)
+- [Pagination](#pagination)
 - [Responses](#responses)
   - [Error Messages](#error-messages)
   - [Bulk Responses](#bulk-responses)
   - [Failure Details](#failure-details)
+- [REST Endpoints](#rest-endpoints)
 - [Strings](#strings)
 - [Timestamps](#timestamps)
 - [Trips](#trips)
@@ -91,7 +93,7 @@ Working Groups and their Steering Committees are expected to review beta designa
 
 ### Conditionally Required Fields
 
-Conditionally required fields **must** be provided in MDS data feeds from operators if the data is available from the operator, and/or the public agency requests it as part of its permit, RFP, contract, operating agreement, SLA, [Requirements](./policy#requirement) file, or via other authority. Or as part of the conditional requirement as stated in the field's descritpion.
+Conditionally required fields **must** be provided in MDS data feeds from operators if the data is available from the operator, and/or the public agency requests it as part of its permit, RFP, contract, operating agreement, SLA, [Requirements](./policy#requirement) file, or via other authority. Or as part of the conditional requirement as stated in the field's description.
 
 [Top][toc]
 
@@ -165,8 +167,6 @@ For the purposes of this specification, the intersection of two geographic datat
 
 ## Geography-Driven Events
 
-**[Beta feature](/general-information.md#beta-features):** _Yes (as of 1.1.0)_. [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/670)
-
 Geography-Driven Events (GDE) is an MDS feature for Agencies to perform complete Policy compliance monitoring without precise location data. Geography-Driven Events describe individual vehicles in realtime – not just aggregate data. However, rather than receiving the exact location of a vehicle, Agencies receive information about the vehicle's current geographic region. The regions used for Geography-Driven Events correspond to the Geographies in an Agency's current Policy. In this way, the data-shared using Geography-Driven Events is matched to an Agency's particular regulatory needs.
 
 See [this example](/policy/examples/requirements.md#geography-driven-events) for how to implement GDE using [Policy Requirements](/policy#requirement).
@@ -187,7 +187,49 @@ Here's how it works in practice:
 
 Agencies that wish to use Geography-Driven Events do so by requiring a new `event_geographies` field in status events. When an Agency is using Geography-Driven Events, Providers must emit a new `changed_geographies` status event whenever a vehicle in a trip enters or leaves a Geography managed by a Policy.
 
-During the Beta period for this feature, location and telemetry data remain required fields. This allows Agencies to test Geography-Driven Events, measuring its accuracy and efficacy against regulatory systems based on precise location data. After the beta period, if Geography-Driven Events is deemed by the OMF to be accurate and effective, the specification will evolve to allow cities to use Geography-Driven Events in lieu of location or telemetry data.
+[Top][toc]
+
+## Pagination
+
+Several MDS endpoints return collections of records that may be split across multiple pages (for example, the [Provider](/provider/README.md) and [Agency](/agency/README.md) `/vehicles` and `/vehicles/status` endpoints, and the [Policy](/policy/README.md) endpoint). When an endpoint uses pagination, it must comply with the page-based pagination convention defined by the [JSON:API][json-api-pagination] specification.
+
+Clients can request a page using the JSON:API page-based query parameters:
+
+| Query Parameter | Type    | Default            | Description                                  |
+| --------------- | ------- | ------------------ | -------------------------------------------- |
+| `page[number]`  | Integer | 1                  | 1-based index of the page to return.         |
+| `page[size]`    | Integer | 1000 (recommended) | Maximum number of records returned per page. |
+
+The following keys must be used for pagination links, in a top-level `links` object:
+
+| Key     | Description                        |
+| ------- | ---------------------------------- |
+| `first` | URL to the first page of data.     |
+| `last`  | URL to the last page of data.      |
+| `prev`  | URL to the previous page of data.  |
+| `next`  | URL to the next page of data.      |
+
+At a minimum, a paginated payload must include a `next` key, which must be set to `null` to indicate the last page of data.
+
+```jsonc
+{
+    "version": "x.y.z",
+    // ...the endpoint's data array, e.g. "vehicles", "vehicles_status", "policies"...
+    "links": {
+        "first": "https://...",
+        "last": "https://...",
+        "prev": "https://...",
+        "next": "https://..."
+    }
+}
+```
+
+To keep polling of large fleets efficient while remaining a non-breaking change, the following are **recommended** (not required):
+
+- A provider or agency **should** support a `page[size]` of at least `500`, so consumers can always request that many records per page.
+- The maximum supported `page[size]` is bound by the provider's or agency's infrastructure and **should** be documented in their API documentation.
+
+These recommendations apply to the [Agency](/agency/README.md), [Provider](/provider/README.md), and [Policy](/policy/README.md) APIs.
 
 [Top][toc]
 
@@ -245,12 +287,40 @@ For multi-record POST and PUT calls, e.g. sending Events using the Agency API, t
 
 ### Failure Details
 
+When there is a failure, stop processing the batch request, and return an error code relevant to the first error found. 
+
 | Field               | Type                 | Field Description                                   |
 | ------------------- | -------------------- | --------------------------------------------------- |
 | `item`              | Vehicle, Event, etc. | Invalid submitted item                              |
 | `error`             | Enum                 | Error code                                          |
 | `error_description` | String               | Human readable error description (can be localized) |
 | `error_details`     | String[]             | Array of fields with errors, if applicable          |
+
+[Top][toc]
+
+# REST Endpoints
+
+Dynamic REST endpoints will return a JSON object containing some of the following possible fields:
+
+| Name   | Type   | Required/Optional   | Description   |
+| ------ | ------ | ------------------- | ------------- |
+| `data` | _Endpoint-dependent_ | Required | The requested data objects. |
+| `version` | String | Required | The specification version that the API conforms to (e.g. `2.1.0`). |
+| `last_updated` | [timestamp](#timestamps) | [Optional](./general-information.md#optional-fields) | The last time the data in this API was updated. |
+| `ttl` | Integer | [Optional](./general-information.md#optional-fields) | Representing the number of milliseconds before the data in this feed will be updated again (0 if the data should always be refreshed). |
+| `time_zone` | String | [Optional](./general-information.md#optional-fields) | The time zone that applies to parking regulations in this dataset. MUST be a valid [TZ database](https://www.iana.org/time-zones) time zone name (e.g. `"US/Eastern"` or `"Europe/Paris"`). |
+| `currency` | String | [Optional](./general-information.md#optional-fields) | The ISO 4217 3-letter code for the currency in which rates for curb usage are denominated. All costs should be given as integers in the currency's smallest unit. As an example, to represent $1 USD, specify an amount of 100 (for 100 cents). |
+| `author` | String | [Optional](./general-information.md#optional-fields) | The name of the organization that produces and maintains this data. |
+| `license_url` | URL | [Optional](./general-information.md#optional-fields) | The licensing terms under which this data is provided. |
+| `links` | Object | [Conditionally Required](./general-information.md#conditionally-required-fields) | Key value pairs for pagination links, where applicable. |
+| `custom_attributes_dictionary` | URL | [Conditionally Required](./general-information.md#conditionally-required-fields) | The data dictionary containing information on the fields and values in [Custom Attributes](/data-types.md#custom-attributes). This should include the attribute name, data type, associated element if applicable, and description of what the attribute represents. Required if any Custom Attributes are provided in an endpoint. |
+
+Servers SHOULD set the `Content-Type` header to `application/vnd.mds+json;version=1.0` to support
+versioning in the future.  Clients SHOULD specify an `Accept` header containing 
+`application/vnd.mds+json;version=1.0`. If the server receives a request that contains an `Accept`
+header but does not include this value; it SHOULD respond with a status of `406 Not Acceptable`.
+
+Note: this section lists payload fields used throughout various MDS APIs and endpoints. See each endpoint for specific details of implementation, which may take precedence over the more general information here.
 
 [Top][toc]
 
@@ -340,6 +410,7 @@ If an unsupported or invalid version is requested, the API must respond with a s
 [Top][toc]
 
 [decimal-degrees]: https://en.wikipedia.org/wiki/Decimal_degrees
+[json-api-pagination]: https://jsonapi.org/format/#fetching-pagination
 [st-intersects]: https://postgis.net/docs/ST_Intersects.html
 [toc]: #table-of-contents
 [wgs84]: https://en.wikipedia.org/wiki/World_Geodetic_System

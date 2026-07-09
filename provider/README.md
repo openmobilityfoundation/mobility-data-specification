@@ -2,7 +2,7 @@
 
 <a href="/provider/"><img src="https://i.imgur.com/yzXrKpo.png" width="120" align="right" alt="MDS Provider Icon" border="0"></a>
 
-The Provider API endpoints are intended to be implemented by mobility providers and consumed by regulatory agencies. Data is **pulled** from providers by agencies. When a municipality queries information from a mobility provider, the Provider API has a historical view of operations in a standard format.
+The Provider API endpoints are intended to be implemented by mobility providers and consumed by regulatory agencies. Data is **pulled** from _providers_ by agencies. When a municipality queries information from a mobility provider, the Provider API provides historical and recent views of operations.
 
 This specification contains a data standard for *mobility as a service* providers to define a RESTful API for municipalities to access on-demand.
 
@@ -20,6 +20,8 @@ This specification contains a data standard for *mobility as a service* provider
   * [Municipality Boundary](#municipality-boundary)
   * [Other Data Types](#other-data-types)
 * [Vehicles](#vehicles)
+  * [Vehicles - Get](#vehicles---get)
+  * [Vehicles - Post](#vehicles---post)
   * [Vehicle Status](#vehicle-status)
 * [Trips](#trips)
   * [Trips - Query Parameters](#trips---query-parameters)
@@ -32,6 +34,8 @@ This specification contains a data standard for *mobility as a service* provider
   * [Recent Events](#recent-events)
   * [Recent Events - Query Parameters](#recent-events---query-parameters)
 * [Stops](#stops)
+* [Incidents](#incidents)
+  * [Incidents - Query Parameters](#incidents---query-parameters) 
 * [Reports](#reports)
   * [Reports - Response](#reports---response)
   * [Reports - Example](#reports---example)
@@ -113,7 +117,7 @@ ttl                 | Yes       | Integer representing the number of millisecond
 
 ### Data Schema
 
-See the [Endpoints](#endpoints) below for information on their specific schema, and the [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for full details and interactive documentation.
+See the general [REST Endpoints](../general-information.md#rest-endpoints) documentation and specific endpoints below for information on their data structure and schema, and the [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for full details and interactive documentation.
 
 [Top][toc]
 
@@ -121,32 +125,7 @@ See the [Endpoints](#endpoints) below for information on their specific schema, 
 
 The `/trips` and `/events/historical` endpoints must not use pagination.
 
-If Providers choose to use pagination for either of the `/events` or `/vehicles` endpoints, the pagination must comply with the [JSON API][json-api-pagination] specification.
-
-The following keys must be used for pagination links:
-
-* `first`: url to the first page of data
-* `last`: url to the last page of data
-* `prev`: url to the previous page of data
-* `next`: url to the next page of data
-
-At a minimum, paginated payloads must include a `next` key, which must be set to `null` to indicate the last page of data.
-
-```json
-{
-    "version": "x.y.z",
-    "trips": [{
-        "provider_id": "...",
-        "trip_id": "...",
-    }],
-    "links": {
-        "first": "https://...",
-        "last": "https://...",
-        "prev": "https://...",
-        "next": "https://..."
-    }
-}
-```
+If Providers choose to use pagination for the `/events`, `/vehicles`, or `/vehicles/status` endpoints, it must follow the page-based pagination convention described in [Pagination][pagination] in General Information, including the page-based query parameters (`page[number]`, `page[size]`), the `links` object, and the recommended minimum and default page sizes.
 
 [Top][toc]
 
@@ -179,15 +158,19 @@ As with other MDS APIs, the vehicles endpoints are intended for use by regulator
 
 The `/vehicles` endpoint returns the specified vehicle (if a `device_id` is provided) or a list of vehicles.
 It contains vehicle properties that do not change often.
-When `/vehicles` is called without specifying a device ID it should return every vehicle that has
+When `/vehicles` is called without specifying a device ID it must return every vehicle that has
 been deployed in an agency's [Jurisdiction](/general-information.md#definitions) and/or area of agency responsibility
-in the last 30 days.
+in the last 30 days and it must include every vehicle included when calling the `/vehicles/status`
+endpoint at the same time without specifying a specific vehicle. (In other words, if someone
+retrieves `/vehicles/status` and `/vehicles` at the same time, they must be able to find every
+vehicle in the `/vehicles/status` response in the `/vehicles` response.)
 Vehicle information about all device IDs present in other MDS endpoints must be acessible via the
 `/vehicles/{device_id}` style call regardless of when they were deployed.
 
+#### Vehicles - Get
+
 **Endpoint:** `/vehicles/{device_id}`  
 **Method:** `GET`  
-**[Beta feature][beta]:** No (as of 1.2.0)  
 **Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.   
 **Payload:** `{ "vehicles": [] }`, an array of [Vehicle][vehicles] objects
 
@@ -197,7 +180,7 @@ _Path Parameters:_
 | ------------ | ---- | ----------------- | ------------------------------------------- |
 | `device_id`  | UUID | Optional          | If provided, retrieve the specified vehicle |
 
-If `device_id` is specified, `GET` will return an array with a single vehicle record, otherwise it will be a list of vehicle records with pagination details per the [JSON API](https://jsonapi.org/format/#fetching-pagination) spec:
+If `device_id` is specified, `GET` will return an array with a single vehicle record, otherwise it will be a list of vehicle records with pagination details (see [Pagination][pagination]):
 
 ```json
 {
@@ -212,7 +195,7 @@ If `device_id` is specified, `GET` will return an array with a single vehicle re
 }
 ```
 
-#### Responses
+**Responses**  
 
 _Possible HTTP Status Codes_: 
 200,
@@ -220,6 +203,50 @@ _Possible HTTP Status Codes_:
 401,
 404,
 406,
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
+
+[Top][toc]
+
+#### Vehicles - Post
+
+The `/vehicles` POST endpoint takes a JSON body of `device_ids` UUIDs, and returns only information for those device ids. This may be useful to obtain a targetted list of vehicles deployed more than 30 days into the past, retrieving info on many vehicles that are not in the base `/vehicles` GET response. 
+
+**POST Body**  
+
+```json
+{"device_ids": ["a", "b", "c"]}
+```
+
+**Endpoint**: `/vehicles`  
+**Method:** `POST`  
+**Payload:** An array of [Vehicles](/data-types.md#vehicles)  
+
+Returned will be a list of vehicle records with pagination details (see [Pagination][pagination]):
+
+```json
+{
+    "version": "x.y.z",
+    "vehicles": [ ... ]
+    "links": {
+        "first": "https://...",
+        "last": "https://...",
+        "prev": "https://...",
+        "next": "https://..."
+    }
+}
+```
+
+**Responses**  
+
+_Possible HTTP Status Codes_: 
+200,
+201,
+400,
+401,
+406,
+409,
 500
 
 See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
@@ -246,7 +273,6 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 
 **Endpoint:** `/vehicles/status/{device_id}`  
 **Method:** `GET`  
-**[Beta feature][beta]:** No (as of 1.2.0)  
 **Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.  
 **Payload:** `{ "vehicles_status": [] }`, an array of [Vehicle Status][vehicle-status] objects
 
@@ -256,7 +282,7 @@ _Path Parameters:_
 | ------------ | ---- | ----------------- | ------------------------------------------- |
 | `device_id`  | UUID | Optional          | If provided, retrieve the specified vehicle |
 
-If `device_id` is specified, `GET` will return an array with a vehicle status record, otherwise it will be a list of vehicle records with pagination details per the [JSON API](https://jsonapi.org/format/#fetching-pagination) spec:
+If `device_id` is specified, `GET` will return an array with a vehicle status record, otherwise it will be a list of vehicle records with pagination details (see [Pagination][pagination]):
 
 ```json
 {
@@ -295,7 +321,6 @@ Unless stated otherwise by the municipality, the trips endpoint must return all 
 
 **Endpoint:** `/trips`  
 **Method:** `GET`  
-**[Beta feature][beta]:** No  
 **Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.   
 **Payload:** `{ "trips": [] }`, an array of [Trip][trips] objects
 
@@ -353,7 +378,7 @@ See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schem
 
 ## Telemetry
 
-The `/telemetry` endpoint is a feed of vehicle telemetry data for publishing all available location data.  For privacy reasons, in-trip telemetry may be delayed at the discretion of the regulating body.
+The `/telemetry` endpoint is a feed of vehicle telemetry data for publishing all available location data. Telemetry data occurs whether a vehicle is on a trip or not. The frequency of the telemetry data points is determined by the agency for the specific mobility program and the technical abilities of the vehicles, operator, connectivity, etc. This frequency may be clearly specified with the [Policy Requirements](../policy/README.md#requirement-apis) `update_interval` field. For privacy reasons, in-trip telemetry may be delayed at the discretion of the regulating agency.
 
 To represent [trip](#trip) telemetry, the data should include every [observed point][point-geo] in the trip, even those which occur outside the [municipality boundary][muni-boundary], as long as any part of the trip [intersects][intersection] with the [municipality boundary][muni-boundary].
 
@@ -397,7 +422,6 @@ Unless stated otherwise by the municipality, this endpoint must return only thos
 
 **Endpoint:** `/events/historical`  
 **Method:** `GET`  
-**[Beta feature][beta]:** No  
 **Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.  
 **Payload:** `{ "events": [] }`, an array of [Events](/data-types.md#events) object
 
@@ -459,7 +483,6 @@ See also [Telemetry][telemetry].
 
 **Endpoint:** `/events/recent`  
 **Method:** `GET`  
-**[Beta feature][beta]:** No (as of 1.0.0)  
 **Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.  
 **Payload:** `{ "events": [] }`, an array of [Events](/data-types.md#events) object objects
 
@@ -506,7 +529,6 @@ In addition to the standard [Provider payload wrapper](#response-format), respon
 
 **Endpoint:** `/stops/{stop_id}`  
 **Method:** `GET`  
-**[Beta feature][beta]:** Yes (as of 1.0.0). [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/638)  
 **Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.    
 **Payload:** `{ "stops": [] }`, an array of [Stops][stops]
 
@@ -526,6 +548,44 @@ See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schem
 
 [Top][toc]
 
+## Incidents
+
+The `/incidents` endpoint is a feed of various incident data from vehicles and devices that are the public agency's jurisdition, and are connected to the [Telemetry](#telemetry) endpoint which includes geolocation with timestamp, and other information. Included if part of a [Trip](#trips), as long as any part of the trip [intersects][intersection] with the [municipality boundary][muni-boundary].
+
+Incidents should be created as close to real-time as possible, and then updated when new information or changes happen.
+
+**Endpoint:** `/incidents`  
+**Method:** `GET`  
+**Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.  
+**Payload:** `{ "incidents": [] }`, an array of [Incidents][incidents] objects
+
+[Top][toc]
+
+### Incidents - Query Parameters
+
+| Query Parameter | Type | Expected Output |
+| ----- | ---- | -------- |
+| `incident_id` | UUID | Return details only about a specific incident. |
+| `incident_type` | String | Return details only about a specific incident type. |
+| `publication_start_time` | [timestamp][ts] | Incidents where `publication_start_time <= incident.publication_time` |
+| `publication_end_time` | [timestamp][ts] | Incidents where `incident.publication_time < publication_end_time` |
+| `last_updated_start` | [timestamp][ts] | Incidents where `last_updated_start <= incident.last_updated` |
+| `last_updated_end` | [timestamp][ts] | Incidents where `incident.last_updated < last_updated_end` |
+
+#### Responses
+
+_Possible HTTP Status Codes_: 
+200,
+400 (with parameter),
+401,
+406,
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
+
+[Top][toc]
+
+
 ## Reports
 
 Reports are information that providers can send back to agencies containing aggregated data that is not contained within other MDS endpoints, like counts of special groups of riders. These supplemental reports are not a substitute for other MDS Provider endpoints.
@@ -538,7 +598,6 @@ The authenticated reports are monthly, historic flat files that may be pre-gener
 
 **Endpoint:** `/reports`  
 **Method:** `GET`  
-**[Beta feature][beta]:** No (as of 2.0.0). [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/672)  
 **Usage note:** This endpoint uses media-type `text/vnd.mds+csv` instead of `application/vnd.mds+json`, see [Versioning][versioning].
 **Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.  
 **Filename:** monthly file named by year and month, e.g. `/reports/YYYY-MM.csv`  
@@ -577,12 +636,13 @@ See [Provider examples](examples.md#reports).
 [geography-driven-events]: /general-information.md#geography-driven-events
 [geojson-feature-collection]: https://tools.ietf.org/html/rfc7946#section-3.3
 [iana]: https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
+[incidents]: /data-types.md#incidents
 [intersection]: /general-information.md#intersection-operation
 [iso4217]: https://en.wikipedia.org/wiki/ISO_4217#Active_codes
-[json-api-pagination]: http://jsonapi.org/format/#fetching-pagination
 [json-schema]: https://json-schema.org
 [muni-boundary]: #municipality-boundary
 [mode]: /modes/README.md
+[pagination]: /general-information.md#pagination
 [point-geo]: /data-types.md#gps-data
 [propulsion-types]: /general-information.md#propulsion-types
 [responses]: /general-information.md#responses

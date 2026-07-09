@@ -1,12 +1,15 @@
 # Mobility Data Specification
 
+![MDS Banner](https://i.imgur.com/pQzLDhx.png)
+
 ## Table of Contents
 
 - [About](#about)
 - [Endpoints](#endpoints)
   - [Modularity](#modularity)
-  - [GBFS Requirement](#gbfs-requirement)
+  - [Public Data Feed Requirements](#public-data-feed-requirements)
 - [Modes](#modes)
+  - [Future Modes](#future-modes)
 - [Versions](#versions)
   - [Technical Information](#technical-information)
   - [Data Validation](#data-validation)
@@ -21,13 +24,19 @@
 
 # About
 
-The Mobility Data Specification (**MDS**), a project of the [Open Mobility Foundation](http://www.openmobilityfoundation.org) (**OMF**), is a set of Application Programming Interfaces (APIs) that helps cities better manage transportation in the public right of way, standardizing communication and data-sharing between cities and mobility providers, allowing cities to share and validate policy digitally, and enabling vehicle management and better outcomes for residents. Inspired in part by projects like [GTFS](https://developers.google.com/transit/gtfs/reference/) and [GBFS](https://github.com/MobilityData/gbfs), MDS is focused on managing mobility services such as dockless scooters, bicycles, mopeds, car share, delivery robots, fixed route services and shuttles, fleets, and passenger services. 
-
-**MDS** is a key piece of digital infrastructure that supports the effective implementation of mobility policies in cities around the world. For a high level overview and visuals, see the [About MDS](https://www.openmobilityfoundation.org/about-mds/) page on the OMF website.
+The Mobility Data Specification (**MDS**), a project of the [Open Mobility Foundation](http://www.openmobilityfoundation.org) (**OMF**), is a set of Application Programming Interfaces (APIs) that helps cities better manage transportation in the public right of way, standardizing communication and data-sharing between cities and mobility providers, allowing cities to share and validate policy digitally, and enabling vehicle management and better outcomes for residents. Inspired in part by projects like [GTFS](https://developers.google.com/transit/gtfs/reference/) and [GBFS](https://github.com/MobilityData/gbfs), MDS is focused on managing mobility services such as dockless scooters, bicycles, mopeds, car share, food and goods delivery, sidewalk robots, fixed route services and shuttles, fleets, busses, and passenger services like taxis, TNCs, and for-hire AVs.
 
 ![MDS Main Logo](https://i.imgur.com/AiUedl3.png)
 
-**MDS** is an open-source project originally created by the [Los Angeles Department of Transportation](http://ladot.io) (LADOT). In November 2019, stewardship of MDS and the ownership of this repository were transferred to the [Open Mobility Foundation](http://www.openmobilityfoundation.org). GitHub automatically redirects any links to this repository from the `CityOfLosAngeles` organization to the `openmobilityfoundation` instead. MDS continues to be used by LADOT and [many other municipalities](#cities-using-mds) and companies.
+**MDS** is a key piece of digital infrastructure that supports the effective implementation of mobility policies in cities around the world. For a high level overview and visuals, see the [About MDS](https://www.openmobilityfoundation.org/about-mds/) page on the OMF website.
+
+![MDS Overview Diagram](https://i.imgur.com/YsrCHPX.png)
+
+### History
+
+**MDS** is an open-source project originally created by the [Los Angeles Department of Transportation](http://ladot.io) (LADOT) in 2018. In November 2019, stewardship of MDS and the ownership of this repository were transferred to the [Open Mobility Foundation](http://www.openmobilityfoundation.org). GitHub automatically redirects any links to this repository from the `CityOfLosAngeles` organization to the `openmobilityfoundation` instead. MDS continues to be used by LADOT and [many other municipalities](#cities-using-mds) and companies (confirmed over 200 mobility operators, operating in over 1,200 cities globally, and over 2 billion trips sent) as a global standard.
+
+![MDS Global Map](https://i.imgur.com/Mx8qHwz.png)
 
 [Top][toc]
 
@@ -37,19 +46,19 @@ The Mobility Data Specification (**MDS**), a project of the [Open Mobility Found
 
 <a href="/provider/"><img src="https://i.imgur.com/yzXrKpo.png" width="80" align="left" alt="MDS Provider Icon" border="0"></a>
 
-The [`provider`][provider] API endpoints are intended to be implemented by mobility providers and consumed by regulatory agencies. Data is **pulled** from providers by agencies. When a municipality queries information from a mobility provider, the Provider API provides historical and recent views of operations. First released in June 2018.
+The [`provider`][provider] API endpoints are intended to be implemented by mobility providers and consumed by regulatory agencies. Data is **pulled** from _providers_ by agencies. When a municipality queries information from a mobility provider, the Provider API provides historical and recent views of operations. First released in June 2018.
 
 ---
 
 <a href="/agency/"><img src="https://i.imgur.com/HzMWtaI.png" width="80" align="left" alt="MDS Agency Icon" border="0"></a>
 
-The [`agency`][agency] API endpoints are intended to be implemented by regulatory agencies and consumed by mobility providers. Data is **pushed** to agencies by providers. Providers query the Agency API when events (such as a trip start or vehicle status change) occur in their systems. First released in April 2019.
+The [`agency`][agency] API endpoints are intended to be implemented by regulatory agencies and consumed by mobility providers. Data is **pushed** to _agencies_ by providers. Agencies use the Agency API to see when events (such as a trip start or vehicle status change) occur in provider systems in real-time. First released in April 2019.
 
 ---
 
 <a href="/policy/"><img src="https://i.imgur.com/66QXveN.png" width="80" align="left" alt="MDS Policy Icon" border="0"></a>
 
-The [`policy`][policy] API endpoints are intended to be implemented by regulatory agencies and consumed by mobility providers. Providers query the Policy API to get information about local rules that may affect the operation of their mobility service or which may be used to determine compliance. First released in October 2019.
+The [`policy`][policy] API endpoints are intended to be implemented by regulatory agencies and consumed by mobility providers. Data is **pulled** from agencies or **pushed** to providers via the Policy API to get information about local rules, events, or emergencies that may affect the operation of mobility services or which may be used to determine compliance. First released in October 2019.
 
 ---
 
@@ -79,13 +88,13 @@ Many parts of the MDS definitions and APIs align across each other. In these cas
 
 You can read more in our **[Understanding the different MDS APIs](https://github.com/openmobilityfoundation/governance/blob/main/technical/Understanding-MDS-APIs.md)** guide. 
 
-![MDS APIs and Endpoints](https://i.imgur.com/i27Mmfw.png)
+![MDS APIs and Endpoints](https://i.imgur.com/4xVWwbj.png)
 
-## GBFS Requirement
+## Public Data Feed Requirements
 
-All MDS compatible Provider and/or Agency feeds must also expose a public [GBFS](https://github.com/MobilityData/gbfs) feed for the micromobility and car share [modes](/modes) (passenger services and delivery robots may be optionally supported at the discretion of the agency running the program). Compatibility with [GBFS 3.0](https://github.com/MobilityData/gbfs/blob/v3.0/gbfs.md) or greater is advised, or the version recommended per MobilityData's [supported releases](https://github.com/MobilityData/gbfs?tab=readme-ov-file#current-version-recommended) guidance. Read MobilityData's RFP recommendations and required files list in their [GBFS and Shared Mobility Data Policy guide](https://gbfs.org/learn/data-policy/).
+All MDS compatible Provider and/or Agency feeds must also expose a public [GBFS](https://github.com/MobilityData/gbfs) feed for the _micromobility_ and _fleet_ [modes](/modes), and [GOFS](https://gofs.org/) for _passenger_ mode. A public feed may be provided at the discretion of the agency running a _delivery_ mode program. Compatibility with the latest release recommended per MobilityData's [supported releases](https://github.com/MobilityData/gbfs?tab=readme-ov-file#current-version-recommended) guidance is recommended. Read MobilityData's RFP recommendations and required files list in their [GBFS and Shared Mobility Data Policy guide](https://gbfs.org/documentation/data-policy/).
 
-See our [MDS Vehicles Guide](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Vehicles) for how MDS Provider/Agency `/vehicles` can be used by regulators instead of the public GBFS `/vehicle_status` (formerly `/free_bike_status`). Additional information on MDS and GBFS can be found in this [guidance document](https://github.com/openmobilityfoundation/governance/blob/main/technical/GBFS_and_MDS.md).
+See our [MDS Vehicles Guide](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Vehicles) for how MDS Provider/Agency `/vehicles` can be used by regulators to provide operational information, instead of using the public-facing GBFS `/vehicle_status` (formerly `/free_bike_status`). Additional information on MDS and GBFS can be found in this [guidance document](https://github.com/openmobilityfoundation/governance/blob/main/technical/GBFS_and_MDS.md).
 
 [Top][toc]
 
@@ -93,24 +102,28 @@ See our [MDS Vehicles Guide](https://github.com/openmobilityfoundation/mobility-
 
 MDS supports multiple "modes", defined as a distinct regulatory framework for a type of mobility service. See the [modes overview](/modes) or get started with a specific mode:
 
-- **[Micromobility](/modes/micromobility.md)** - dockless or docked small devices such as e-scooters and bikes.
-- **[Passenger services](/modes/passenger-services.md)** - transporting individuals with a vehicle driven by another entity, including taxis, TNCs, and microtransit
-- **[Car share](/modes/car-share.md)** - shared point-to-point and station-based multi-passenger vehicles.
-- **[Delivery robots](/modes/delivery-robots.md)** - autonomous and remotely driven goods delivery devices
+- **[Micromobility](/modes/micromobility.md)** - customer operated dockless or docked small devices moving customers and goods, such as scooters, bikeshare, cargo bikes, adaptive scooters, docked bikes, mopeds, trikes, and quadracycles.
+- **[Passenger](/modes/passenger-services.md)** - employees and contractors, autonomous, and remotely operated transporting individuals or goods with a vehicle driven by another entity, including taxis, for-hire AVs, robotaxis, busses, transportation network companies (TNCs), commercial transport apps (CTAs), and private hire vehicles (PHVs), shuttles, paratransit, on demand vehicles, limosines, and microtransit.
+- **[Fleet](/modes/car-share.md)** - customer, employees and contractors, autonomous, and remotely operated shared point-to-point, station-based, or free-floating multi-passenger or cargo vehicles like consumer car share, sanitation vehicles (garbage, recycling), city fleets, vehicle rentals, street sweepers, snow plows, utility services, construction, emergency response (police, fire, ambulance), tree maintenance, inspection and permitting vehicles, mobile health clinics, and heavy maintenance vehicles.
+- **[Delivery](/modes/delivery-robots.md)** - employees and contractors, autonomous, and remotely operated sidewalk robots, app delivery, packages, freight, goods, food, private hire vehicles, electric cargo bikes and trikes, mopeds and motorcycles, box trucks, bike and scooter couriers, cargo vans, semi-trucks and tractor-trailers, postal service, medicine, and other delivery services.
 
 <p align="center">
-<a href="/modes/micromobility.md"><img src="https://i.imgur.com/tl99weM.png" alt="MDS Mode - Micromobility" style="float: left; border: 0; width: 150px;"></a> &nbsp; &nbsp; &nbsp;
-<a href="/modes/passenger-services.md"><img src="https://i.imgur.com/3iAkYBC.png" alt="MDS Mode - Passenger Services" style="float: left; border: 0; width: 150px;"></a> &nbsp; &nbsp; &nbsp; 
-<a href="/modes/car-share.md"><img src="https://i.imgur.com/cCQTge5.png" alt="MDS Mode - Car Share" style="float: left; border: 0; width: 150px;"></a> &nbsp; &nbsp; &nbsp;
-<a href="/modes/delivery-robots.md"><img src="https://i.imgur.com/u2HgctV.png" alt="MDS Mode - Delivery Robots" style="float: left; border: 0; width: 150px;"></a>
+<a href="/modes/micromobility.md"><img src="https://i.imgur.com/bKGsiXz.png" alt="MDS Mode - Micromobility" style="float: left; border: 0; width: 170px;"></a> &nbsp; &nbsp; &nbsp;
+<a href="/modes/passenger-services.md"><img src="https://i.imgur.com/beefGup.png" alt="MDS Mode - Passenger" style="float: left; border: 0; width: 170px;"></a> &nbsp; &nbsp; &nbsp; 
+<a href="/modes/car-share.md"><img src="https://i.imgur.com/OTl1hIv.png" alt="MDS Mode - Fleet" style="float: left; border: 0; width: 170px;"></a> &nbsp; &nbsp; &nbsp;
+<a href="/modes/delivery-robots.md"><img src="https://i.imgur.com/bw2O9t8.png" alt="MDS Mode - Delivery" style="float: left; border: 0; width: 170px;"></a>
 </p>
 <br clear="both"/>
+
+## Future Modes 
+
+Support for other shared modes, services, programs, and vehicles has been discussed for MDS, and could be created by public agencies and company requests in the future with non-breaking modifications in new MDS versions, for drone delivery, EVTOL air taxis, ferries, gondolas, subway, trolleys, trains, water taxis, helicopters, and planes. If interested, browse our [current conversations](https://github.com/openmobilityfoundation/mobility-data-specification/issues) or [start your own](https://github.com/openmobilityfoundation/mobility-data-specification/issues/new?template=feature-request---proposal.md).
 
 [Top][toc]
 
 # Versions
 
-MDS has a **current release** (version 2.0.0), **previous releases** (both recommended and longer recommended for use), and **upcoming releases** in development. For a full list of releases, their status, recommended versions, and timelines, see the [Official MDS Releases](https://github.com/openmobilityfoundation/governance/wiki/Releases) page.
+MDS has a **current release** (version 2.1.0), **previous releases** (both recommended and no longer recommended for use), and **upcoming releases** in development. For a full list of releases, their status, recommended versions, and timelines, see the [Official MDS Releases](https://github.com/openmobilityfoundation/governance/wiki/Releases) page.
 
 The OMF provides guidance on upgrading for cities, providers, and software companies, and sample permit language for cities. See our [MDS Version Guidance](https://github.com/openmobilityfoundation/governance/blob/main/technical/OMF-MDS-Version-Guidance.md) for best practices on how and when to upgrade MDS as new versions become available. Our complimentary [MDS Policy Language Guidance](https://github.com/openmobilityfoundation/governance/blob/main/technical/OMF-MDS-Policy-Language-Guidance.md) document is for cities writing MDS into their operating policy and includes sample policy language.
 
@@ -157,40 +170,42 @@ OMF Members (public agencies and commercial companies) have additional participa
   - [MDS Working Group](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Working-Group)
   - [Curb Working Group](https://github.com/openmobilityfoundation/curb-data-specification/wiki)
 
-Read about [how to become an OMF member](https://www.openmobilityfoundation.org/how-to-become-a-member/), [how to get involved and our governance model](https://www.openmobilityfoundation.org/how-to-get-involved-in-the-open-mobility-foundation/), and [contact us](https://mailchi.mp/openmobilityfoundation/membership) for more details. 
+Read about [how to become an OMF member](https://www.openmobilityfoundation.org/participate/), [how to get involved and our governance model](https://www.openmobilityfoundation.org/how-to-get-involved-in-the-open-mobility-foundation/), and [contact us](https://mailchi.mp/openmobilityfoundation/membership) for more details. 
 
 [Top][toc]
 
+![MDS Banner](https://i.imgur.com/pQzLDhx.png)
+
 # Cities Using MDS
 
-More than 200 cities and public agencies across 21 countries around the world are known to use MDS, and it has been implemented by most major [mobility service providers](#providers-using-mds).  
+More than 1,200 cities and public agencies across 76 countries around the world are known to use MDS, and it has been implemented by over 200 major [mobility service providers](#providers-using-mds).  
 - See our **[list of cities using MDS](https://www.openmobilityfoundation.org/mds-users/#cities-using-mds)** with links to public mobility websites and policy/permit documents.
 
 Please let us know [via our website](https://www.openmobilityfoundation.org/get-in-touch/) or in the [public discussion area](https://github.com/openmobilityfoundation/mobility-data-specification/discussions) if you are an agency using MDS so we can add you to the city resource list, especially if you have published your policies or documents publicly.
 
-To add yourself to the [agency list](/agencies.csv) and add your [Policy Requirement link](/provider.md#requirements), please let us know [via our website](https://www.openmobilityfoundation.org/get-in-touch/) or open an [Issue](https://github.com/openmobilityfoundation/mobility-data-specification/issues) or [Pull Request](https://github.com/openmobilityfoundation/mobility-data-specification/pulls). Find out how in our [Adding an Agency ID](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/Adding-an-MDS-Agency-ID) help document.
+To add yourself to the [agency list](/agencies.csv) for your Agency ID, and add your [Policy Requirement link](/provider.md#requirements), please let us know [via our website](https://www.openmobilityfoundation.org/get-in-touch/) or open an [Issue](https://github.com/openmobilityfoundation/mobility-data-specification/issues) or [Pull Request](https://github.com/openmobilityfoundation/mobility-data-specification/pulls). Find out how in our [Adding an Agency ID](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/Adding-an-MDS-Agency-ID) help document.
 
 [Top][toc]
 
 # Providers Using MDS
 
-Over four dozen mobility service providers (MSPs) around the world use MDS, allowing them to create tools around a single data standard for multiple cities. 
+Over 200 mobility service providers (MSPs) and operators around the world use MDS, allowing them to create tools around a single data standard for multiple cities globally. 
 
 - See our **[list of providers using MDS](https://www.openmobilityfoundation.org/mds-users/#mobility-providers-using-mds)**. For a table list with unique IDs, see the MDS [provider list](/providers.csv) which includes both service operators and data solution providers.
 - A provider needs a unique ID for each [mode](#modes) they operate under.
 
-To add yourself to the provider list, please let us know [via our website](https://www.openmobilityfoundation.org/get-in-touch/) or open an [Issue](https://github.com/openmobilityfoundation/mobility-data-specification/issues) or [Pull Request](https://github.com/openmobilityfoundation/mobility-data-specification/pulls). Find out how in our [Adding an Provider ID](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/Adding-an-MDS-Provider-ID) help document.
+If you use MDS, you are required to have a Provider ID to be spec compliant. To add yourself to the provider list, please let us know [via our website](https://www.openmobilityfoundation.org/get-in-touch/) or open an [Issue](https://github.com/openmobilityfoundation/mobility-data-specification/issues) or preferably a [Pull Request](https://github.com/openmobilityfoundation/mobility-data-specification/pulls). Find out how in our [Adding an Provider ID](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/Adding-an-MDS-Provider-ID) help document.
 
 [Top][toc]
 
 # Software Companies Using MDS
 
-An open source approach to data specifications benefits cities and companies by creating a space for collaborative development, reducing costs, and nurturing a healthy, competitive ecosystem for mobility services and software tools. The open model promotes a competitive ecosystem for software tools built by dozens of software companies providing their services to cities, agencies, and providers.
+An open source approach to data specifications benefits cities and companies by creating a space for collaborative development, reducing costs, and nurturing a healthy, competitive ecosystem for mobility services and software tools. The open model promotes a competitive ecosystem for software tools built by dozens of software companies and vendors providing their services to cities, agencies, and providers.
 
 - See our **[list of third party software companies using MDS](https://www.openmobilityfoundation.org/mds-users/#software-companies-using-mds)** and an article about the [benefits of an open approach](https://www.openmobilityfoundation.org/why-open-behind-omfs-unique-open-source-model/).  
 - For a table list with unique IDs, see the MDS [provider list](/providers.csv) which includes both service operators and data solution providers.
 
-To add yourself to the provider list (as a data solution providers), please let us know [via our website](https://www.openmobilityfoundation.org/get-in-touch/) or open an [Issue](https://github.com/openmobilityfoundation/mobility-data-specification/issues) or [Pull Request](https://github.com/openmobilityfoundation/mobility-data-specification/pulls). Find out how in our [Adding an Provider ID](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/Adding-an-MDS-Provider-ID) help document.
+To add yourself to the provider list (required as a data solution provider), please let us know [via our website](https://www.openmobilityfoundation.org/get-in-touch/) or open an [Issue](https://github.com/openmobilityfoundation/mobility-data-specification/issues) or preferably a [Pull Request](https://github.com/openmobilityfoundation/mobility-data-specification/pulls). Find out how in our [Adding an Provider ID](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/Adding-an-MDS-Provider-ID) help document.
 
 Please [let us know](https://www.openmobilityfoundation.org/get-in-touch/) if you are using MDS in your company so we can add you to the list.
 
@@ -223,7 +238,7 @@ How cities use MDS depends on a variety of factors: their transportation goals, 
 - **Resident Complaints:** Investigate and validate complaints from residents about operations, parking, riding, speed, etc, usually reported through 311
 - **Infrastructure Planning:** Determine where to place new bike/scooter lanes and drop zones based on usage and demand, start and end points, and trips taken
 
-A list of use cases is useful to show what's possible with MDS, to list what other cities are accomplishing with the data, to see many use cases up front for privacy considerations, and to use for policy discussions and policy language. More details and examples can be seen on the [OMF website](https://www.openmobilityfoundation.org/whats-possible-with-mds/) and our [Wiki Database](https://github.com/openmobilityfoundation/governance/wiki/MDS-Use-Cases). An agency may align their program to specific use cases by publishing [Policy Requirement use cases](/policy#requirement-apis).
+A list of more than 60 use cases is useful to show what's possible with MDS, to list what other cities are accomplishing with the data, to see many use cases up front for privacy considerations, and to use for policy discussions and policy language. More details and examples can be seen on the [OMF website](https://www.openmobilityfoundation.org/whats-possible-with-mds/) and our [Wiki Database](https://github.com/openmobilityfoundation/governance/wiki/MDS-Use-Cases). An agency may align their program to specific use cases by publishing [Policy Requirement use cases](/policy#requirement-apis).
 
 Please [let us know](https://docs.google.com/forms/d/e/1FAIpQLScrMPgeb1TKMYCjjKsJh3y1TPTJO8HR_y1NByrf1rDmTEJS7Q/viewform) if you have recommended updates or use cases to add.
 

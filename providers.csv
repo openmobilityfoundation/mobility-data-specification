@@ -50,7 +50,7 @@ Whoosh,micromobility,3f8908a7-86fa-450d-8889-5d49077e06cd,https://whoosh.bike,ht
 Telofun,micromobility,3dd253d3-557c-4fcb-98da-9af3edeaaae6,https://www.tel-o-fun.co.il/,https://mds.fsmctmobility.com/api/mds/v1/,
 Gbike,micromobility,a50b796e-bca2-11ed-afa1-0242ac120002,https://gcoo.io/,https://mds.gcoo.io/,https://mds.gcoo.io/gbfs
 SURF,micromobility,66c43ccb-f9f9-4f70-9707-37301b9f49a8,https://www.surfingscooters.com,https://api.app.surf/mds,https://api.app.surf/gbfs/en
-Nextbike,micromobility,31e54f5a-66c4-4a4c-bb6e-236351c90312,https://www.nextbike.de,https://platform-services.tier-services.io/data-sharing/mds/,https://api.nextbike.net/maps/gbfs/
+Nextbike,micromobility,31e54f5a-66c4-4a4c-bb6e-236351c90312,https://www.nextbike.de,https://mds-provider-api.nextbike.net,https://api.nextbike.net/maps/gbfs/
 Scooty,micromobility,f4ac8ed2-d6c3-4e6f-b000-f69050e8a616,https://www.otoride.co/,https://oto-api.otoride.co/api/v2/mds/,
 Starship Technologies,delivery-robots,4a1524f3-8182-4b55-90c2-023c0cac84b9,https://www.starship.xyz/,https://mds-provider.starship.xyz/api/v1/mds/,
 Deutsche Bahn Connect,micromobility,dcd47d65-b290-4bd6-adf2-24578fbd9110,https://www.deutschebahnconnect.com/,https://bike-prod.msp.dbrent.net/mds/,https://apis.deutschebahn.com/db-api-marketplace/apis/shared-mobility-gbfs/2-2/de/CallABike/gbfs/
@@ -75,4 +75,16 @@ Tripshot,passenger-services,e154cf80-df89-4d7e-b5e7-2ee8050a6e9c,https://www.tri
 Trakk,passenger-services,6a907d9d-1e3c-4cb6-991c-f9738d30337b,https://gettrakk.com/,,
 Swoop,passenger-services,08ad2b21-8115-4d18-874f-48082e8e50fb,https://www.swoopapp.com/,,
 GoSharing,micromobility,1f859479-4427-4f52-8220-05c786436314,https://www.binbin.tech/,https://complianceapi.binbinapp.com/api/mds/,https://complianceapi.binbinapp.com/api/gbfs/
-
+Mosaic Global,passenger-services,74ba2b64-c44f-474a-afbd-c2030fe162a6,https://mosaicglobaltransportation.com/,,
+Code3,passenger-services,b49a32d7-a418-4a6a-9f81-b5227d6c7ef8,https://code3transportation.com/,,
+Track My Shuttle,passenger-services,dd7db795-09c0-402f-9441-360235da3025,https://trackmyshuttle.com/,,
+Greenwheels,car-share,5f88cd9e-2c7e-477a-a531-f68143121876,https://www.greenwheels.nl,,
+Sixt,car-share,df72d104-372f-4d98-a4c3-9b001967990e,https://sixt.com/,https://api.orange.sixt.com/v1/share-third-party-sources/mds,https://api.orange.sixt.com/v1/share-third-party-sources/gbfs
+Getaround,car-share,ede4d096-1641-4077-b986-37c602e881ae,https:getaround.com/,,https://api-eu.getaround.com/gbfs/manifest?country_code=FR
+Transwest,passenger-services,8cf2ebbb-f2d4-46a7-98d2-e10e229cf718,https://www.transwestco.com/,,
+Drop Mobility,micromobility,f219d244-5f62-45f1-8e79-fb0274ac58fe,https://dropmobility.com/,https://mds.dropmobility.com,https://gbfs.dropmobility.com
+DoorDash,delivery-robots,6728346d-5ad1-4ddb-81d6-161c915a3d35,https://www.doordash.com/,,
+Peak Transit,passenger-services,b0a0cc68-6248-4d5c-b514-bc44fbfb5d96,https://www.peaktransit.com/,,
+Grubhub,delivery,7e56185f-790c-4ace-9ec7-7223a31f9df6,https://www.grubhub.com/,,
+Flexigo,passenger-services,82e08190-6ba0-432b-9230-89f4fc3ddd85,https://www.flexigo.com/en/,,
+Hop,micromobility,0f8b9e2a-1c3d-4e5f-8a7b-9c0d1e2f3a4b,https://hoplagit.com/,https://api.hoplagit.com/mds/,

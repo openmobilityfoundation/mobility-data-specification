@@ -2,7 +2,7 @@
 
 <a href="/agency/"><img src="https://i.imgur.com/HzMWtaI.png" width="120" align="right" alt="MDS Agency Icon" border="0"></a>
 
-The Agency API endpoints are intended to be implemented by regulatory agencies and consumed by mobility providers. Data is **pushed** to agencies by providers. Providers query the Agency API when events (such as a trip start or vehicle status change) occur in their systems.
+The Agency API endpoints are intended to be implemented by regulatory agencies and consumed by mobility providers. Data is **pushed** to _agencies_ by providers. Agencies use the Agency API to see when events (such as a trip start or vehicle status change) occur in provider systems in real-time.
 
 This specification contains a collection of RESTful APIs used to specify the digital relationship between *mobility as a service* providers and the agencies that regulate them.
 
@@ -14,6 +14,7 @@ This specification contains a collection of RESTful APIs used to specify the dig
   * [Modes](#modes)
   * [Responses and Error Messages](#responses-and-error-messages)
   * [GBFS](#gbfs)
+  * [Data Schema](#data-schema)
 * [Vehicles](#vehicles)
   * [Vehicle - Register](#vehicle---register)
   * [Vehicle - Update](#vehicle---update)
@@ -26,6 +27,9 @@ This specification contains a collection of RESTful APIs used to specify the dig
   * [Stops - Register](#stops---register)
   * [Stops - Update](#stops---update)
   * [Stops - Readback](#stops---readback)
+* [Incidents](#incidents)
+  * [Incident - Create](#incident---create)
+  * [Incident - Update](#incident---update)
 * [Reports](#reports)
   * [Reports - Register](#reports---register)
 
@@ -77,7 +81,7 @@ See the [GBFS Requirement](/README.md#gbfs-requirement) language for more detail
 
 ### Data Schema
 
-See the [Endpoints](#endpoints) below for information on their specific schema, and the [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for full details and interactive documentation.
+See the general [REST Endpoints](../general-information.md#rest-endpoints) documentation and specific endpoints below for information on their data structure and schema, and the [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for full details and interactive documentation.
 
 [Top][toc]
 
@@ -158,7 +162,7 @@ _Path Parameters:_
 | ------------ | ---- | ----------------- | ------------------------------------------- |
 | `device_id`  | UUID | Optional          | If provided, retrieve the specified vehicle |
 
-If `device_id` is specified, `GET` will return an array with a single vehicle record, otherwise it will be a list of vehicle records with pagination details per the [JSON API](https://jsonapi.org/format/#fetching-pagination) spec:
+If `device_id` is specified, `GET` will return an array with a single vehicle record, otherwise it will be a list of vehicle records with pagination details (see [Pagination][pagination]):
 
 ```json
 {
@@ -201,7 +205,7 @@ _Path Parameters:_
 | ------------ | ---- | ----------------- | ------------------------------------------- |
 | `device_id`  | UUID | Optional          | If provided, retrieve the specified vehicle |
 
-If `device_id` is specified, `GET` will return an array with a vehicle status record, otherwise it will be a list of vehicle records with pagination details per the [JSON API](https://jsonapi.org/format/#fetching-pagination) spec:
+If `device_id` is specified, `GET` will return an array with a vehicle status record, otherwise it will be a list of vehicle records with pagination details (see [Pagination][pagination]):
 
 ```json
 {
@@ -426,6 +430,69 @@ See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schem
 
 [Top][toc]
 
+## Incidents
+
+The `/incidents` endpoints allow providers to create and update the details of incidents.
+
+### Incident - Create
+
+The `/incidents` create endpoint is used to create incident reports that occur with provider devices.
+
+**Endpoint**: `/incidents`  
+**Method:** `POST`  
+**Payload:** An array of [Incidents](/data-types.md#incidents)  
+
+#### Responses
+
+_Possible HTTP Status Codes_: 
+201,
+400,
+401,
+406,
+409,
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
+
+[Top][toc]
+
+#### Error Codes:
+
+| `error`              | `error_description`                               | `error_details`[]               |
+| -------------------- | ------------------------------------------------- | ------------------------------- |
+| `bad_param`          | A validation error occurred                       | Array of parameters with errors |
+| `missing_param`      | A required parameter is missing                   | Array of missing parameters     |
+| `already_created`    | An incident with `incident_id` is already careated |                                 |
+
+### Incident - Update
+
+The `/incidents` update endpoint is used to change incident information, should some aspect of the incident change. Each incident must already be created.
+
+**Endpoint**: `/incidents`  
+**Method:** `PUT`  
+**Payload:** An array of [Incidents](/data-types.md#incidents)  
+
+#### Responses
+
+_Possible HTTP Status Codes_: 
+200,
+400,
+401,
+406,
+409,
+500
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
+
+#### Error Codes:
+
+| `error`              | `error_description`                               | `error_details`[]               |
+| -------------------- | ------------------------------------------------- | ------------------------------- |
+| `bad_param`          | A validation error occurred                       | Array of parameters with errors |
+| `unregistered`       | This `incident_id` is unregistered                |                                 |
+
+[Top][toc]
+
 ## Reports
 
 Reports are information that providers can send back to agencies containing aggregated data that is not contained within other MDS endpoints, like counts of special groups of riders. These supplemental reports are not a substitute for other MDS Provider endpoints.
@@ -474,6 +541,7 @@ See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schem
 [hdop]: https://en.wikipedia.org/wiki/Dilution_of_precision_(navigation)
 [iana]: https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
 [modes]: /modes/README.md
+[pagination]: /general-information.md#pagination
 [propulsion-types]: /data-types.md#propulsion-types
 [reports]: /data-types.md#reports
 [responses]: /general-information.md#responses

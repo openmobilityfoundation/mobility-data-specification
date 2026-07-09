@@ -24,6 +24,7 @@ Geographical data will be stored as GeoJSON and read from either `geographies.js
 - [Endpoints](#endpoints)
   - [Geography](#geography)
   - [Geographies](#geographies)
+  - [Geographies - Create](#geographies---create)
 - [Examples](#examples)
 
 ## General Information
@@ -80,7 +81,7 @@ See the [Responses][responses] and [Error Messages][error-messages] sections.
 
 ## Schema
 
-See the [Endpoints](#endpoints) below for links to specific data objects, and the [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for full details and interactive documentation.
+See the general [REST Endpoints](../general-information.md#rest-endpoints) documentation and specific [Endpoints](#endpoints) below for information on their data structure and schema, and the [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for full details and interactive documentation.
 
 [Top][toc]
 
@@ -180,6 +181,7 @@ The Geography API consists of the following endpoints:
 **Endpoint**: `/geographies/{geography_id}`  
 **Method**: `GET`  
 **Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.  
+**Authorization**: public  
 
 #### Path Parameters
 
@@ -225,6 +227,7 @@ See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schem
 **Endpoint**: `/geographies`  
 **Method**: `GET`  
 **Schema:** See [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for schema.  
+**Authorization**: public  
 
 Returns: All geography objects
 
@@ -254,6 +257,48 @@ _Possible HTTP Status Codes_:
 500
 
 See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
+
+[Top][toc]
+
+### Geographies - Create
+
+Allows agencies to push a newly created policies to geographies, similar to the Agency API. This push method creates the opportunity for near real-time communication of geography changes.
+
+Note that when an update is communicated via a geography push, the agency should pull or push from the relevant [Policy API](../policy) endpoint to see if there are new or changed policies related to this geographic area. 
+
+Endpoint producers **SHALL** provide authorization for API endpoints via a bearer token based auth system specified in the MDS [Authorization section](/general-information.md#authorization), to allow handshake communication and response confirmation.
+
+**Endpoint**: `/geographies/`  
+**Method:** `POST`  
+**Authorization**: required  
+**Payload:** An array of [Geography](#schema) objects  
+
+_Optional endpoint, as required by public agencies; if not implemented, the server should reply with `501 Not Implemented` if possible._
+
+#### Responses
+
+_Possible HTTP Status Codes_: 
+201,
+400,
+401,
+406,
+409,
+500, 
+501
+
+See [Responses][responses], [Bulk Responses][bulk-responses], and [schema][schema] for details.
+
+[Top][toc]
+
+#### Error Codes:
+
+| `error`              | `error_description`                            | `error_details`[]               |
+| -------------------- | -----------------------------------------------| ------------------------------- |
+| `bad_param`          | A validation error occurred                    | Array of parameters with errors |
+| `missing_param`      | A required parameter is missing                | Array of missing parameters     |
+| `already_created`    | A geography with `geography_id` is already created   |                           |
+
+Note that you may only create a new MDS Geography. Retired geographies are simply referenced in `prev_geographies`. See [Distribution](#distribution) for details.
 
 [Top][toc]
 

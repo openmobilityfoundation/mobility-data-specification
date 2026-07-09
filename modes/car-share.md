@@ -1,10 +1,12 @@
-# Mobility Data Specification: **Car Share**
+# Mobility Data Specification: **Fleet**
 
-<img src="https://i.imgur.com/HSL9F0h.png" width="120" align="right" alt="MDS Modes - Car Share" border="0">
+<img src="https://i.imgur.com/OTl1hIv.png" width="200" align="right" alt="MDS Modes - Fleet" border="0">
 
-**Car Share** refers to shared point-to-point and station-based mutli-passenger vehicles.  Car Share typically has a driver who is the customer, and possibly one or more passengers or cargo.  
+**Fleet** refers to shared customer, employees and contractors, autonomous, and remotely operated shared point-to-point, station-based, or free-floating multi-passenger or cargo vehicles like consumer car share, sanitation vehicles (garbage, recycling), city fleets, vehicle rentals, street sweepers, snow plows, utility services, construction, emergency response (police, fire, ambulance), tree maintenance, inspection and permitting vehicles, mobile health clinics, and heavy maintenance vehicles.
 
 See the [modes overview](/modes) for how the mode specific information below applies across MDS.
+
+_Note: Formerly called "Car Share". Any references in the specification code or links to only "Car Share" will be updated to the broader "Fleet" scope in the next MDS 3.0 release._
 
 ## Table of Contents
 
@@ -23,14 +25,14 @@ See the [modes overview](/modes) for how the mode specific information below app
 - [State Machine](#state-machine)
   - [Vehicle States](#vehicle-states)
   - [Event Types](#event-types)
-  - [Vehicle State Events](#vehicle-states-events)
+  - [Vehicle States Events](#vehicle-states-events)
   - [State Machine Diagram](#state-machine-diagram)
 
 ## Mode Attributes
 
 ### Mode ID
 
-The short name identifier for Car Share used across MDS is `car-share`.
+The short name identifier for Fleet used across MDS is `car-share`. In a future release this will be updated to `fleet`.
 
 [Top][toc]
 
@@ -42,11 +44,129 @@ _See more available trip and fare attributes for any mode used in the [trips obj
 
 The `journey_id` field shall have a consistent value in overlapping trips for a single reservation period, e.g. trips taken by a customer between ignition states over the duration of their reservation. A reservation is the duration the customer has continuous exclusive access to the vehicle whether parked or in motion. Journeys may be point-to-point or multi-segment.
 
-- **Example 1**: customer makes a reservation and company delivers vehicle to customer, then one trip point-to-point by customer, ending reservation at destination
-- **Example 2**: customer reservation for multiple days with trips for errands, gas, entertainment, etc
-- **Example 3**: one trip point-to-point with an employee moving the vehicle to a new location for maintenance
+```mermaid
+---
+config:
+        theme: 'base'
+        themeVariables:
+          'activeTaskBkgColor': '#155654'
+          'activeTaskBorderColor': '#2AF1BE'
+          'critBorderColor': '#2AF1BE'
+          'doneTaskBkgColor': '#299c90'
+          'doneTaskBorderColor': '#373737'
+          'taskBkgColor': '#2AF1BE'
+          'taskBorderColor': '#373737'
+          'taskTextColor': '#373737'
+          'taskTextDarkColor': 'white'
+          'taskTextLightColor': '#373737'
+          'vertLineColor': '#155654'
+          'sectionBkgColor': '#ddd'
+          'altSectionBkgColor': '#aaa'
+          'sectionBkgColor2': '#777'
+---
+gantt
+    title Example 1: car share single journey, company delivers vehicle to customer, one trip point-to-point by customer
+    dateFormat HH:mm
+    axisFormat %H:%M
 
-![Journey Diagram](https://i.imgur.com/FHxQLps.png)
+    section Journey
+    Journey Start : vert, v1, 17:00, 2m
+
+    Journey : active, a, 17:00, 55m
+
+    Trip - reservation : b, 17:00, 10m
+    Trip - private : b, 17:10, 45m
+
+    Journey End : vert, v1, 17:55, 5m
+
+```
+
+```mermaid
+---
+config:
+        theme: 'base'
+        themeVariables:
+          'activeTaskBkgColor': '#155654'
+          'activeTaskBorderColor': '#2AF1BE'
+          'critBorderColor': '#2AF1BE'
+          'doneTaskBkgColor': '#299c90'
+          'doneTaskBorderColor': '#373737'
+          'taskBkgColor': '#2AF1BE'
+          'taskBorderColor': '#373737'
+          'taskTextColor': '#373737'
+          'taskTextDarkColor': 'white'
+          'taskTextLightColor': '#373737'
+          'vertLineColor': '#155654'
+          'sectionBkgColor': '#ddd'
+          'altSectionBkgColor': '#aaa'
+          'sectionBkgColor2': '#777'
+---
+gantt
+    title Example 2: customer car share reservation for 4 days with a trip daily for errands, gas, entertainment, etc
+    dateFormat MM-DD
+
+    section Reservation
+    Reservation Start : vert, v1, 03-20, 2m
+
+    Reservation : done, a, 03-20, 4d
+
+    Trip - private : b, 03-20, 1d
+    Trip - private : b, 03-21, 1d
+    Trip - private : b, 03-22, 1d
+    Trip - private : b, 03-23, 1d
+    
+    Reservation End : vert, v1, 03-24, 12h
+```
+
+```mermaid
+---
+config:
+        theme: 'base'
+        themeVariables:
+          'activeTaskBkgColor': '#155654'
+          'activeTaskBorderColor': '#2AF1BE'
+          'critBorderColor': '#2AF1BE'
+          'doneTaskBkgColor': '#299c90'
+          'doneTaskBorderColor': '#373737'
+          'taskBkgColor': '#2AF1BE'
+          'taskBorderColor': '#373737'
+          'taskTextColor': '#373737'
+          'taskTextDarkColor': 'white'
+          'taskTextLightColor': '#373737'
+          'vertLineColor': '#155654'
+          'sectionBkgColor': '#ddd'
+          'altSectionBkgColor': '#aaa'
+          'sectionBkgColor2': '#777'
+---
+gantt
+    title Example 3: a shift of a city snow plow driver, showing journeys from a central location, and trips inside the journeys
+    dateFormat HH:mm
+    axisFormat %H:%M
+
+    section Shift
+    Shift Start : vert, v1, 17:00, 2m
+    Shift : done, a, 17:00, 90m
+
+    section Journey 1
+    Journey 1 : active, a, 17:00, 50m
+    Trip - private : b, 17:00, 10m
+    Trip - private : b, 17:10, 10m
+    Trip - private : b, 17:20, 20m
+    Trip - empty : b, 17:40, 10m
+
+    section Journey 2
+    Journey 2 : active, a, 17:50, 20m
+    Trip - private : b, 17:50, 10m
+    Trip - empty : b, 18:00, 10m
+
+    section Journey 3
+    Journey 3 : active, a, 18:10, 20m
+    Trip - private : b, 18:10, 12m
+    Trip - empty : b, 18:22, 8m
+
+    Shift End : vert, v1, 18:30, 10m
+```
+
 
 [Top][toc]
 
@@ -54,7 +174,8 @@ The `journey_id` field shall have a consistent value in overlapping trips for a 
 
 The `journey_attributes` object **may** have the following key value pairs:
 
-- `reservation_id` (UUID, [Optional](../general-information.md#optional-fields)): unique identifier for an entire car share reservation, tied across multiple journeys and therefore trips.
+- `reservation_id` (UUID, [Optional](../general-information.md#optional-fields)): unique identifier for an entire vehicle reservation, tied across multiple journeys and therefore trips.
+- `shift_id` (UUID, [Optional](../general-information.md#optional-fields)): unique identifier for a driver or operator's working shift, tied across multiple journeys and therefore trips.
 
 [Top][toc]
 
@@ -70,9 +191,10 @@ Additionally, `trip_id` is required if `event_types` contains a `trip_enter_juri
 
 The `trip_type` field **must** have one of the following enumerated values:
 
-- `private`: a private trip made by one paying customer with one or more guests
-- `reservation`: en route to pickup a customer who has made a reservation, with no passengers in the vehicle
-- `empty`: vehicle movement with no customer (outside of other `trip_type` values) that may need to be reported, e.g. for maintenance
+- `private` (_default_): a private trip made by one paying customer with one or more guests, or a driver using the vehicle
+- `reservation`: en route to pickup a customer who has made a reservation, or movement before starting an official task
+- `mapping`: primarily mapping the environment
+- `empty`: vehicle movement with no customer or work (outside of other `trip_type` values) that may need to be reported, e.g. for maintenance, returning, etc
 
 [Top][toc]
 
@@ -127,14 +249,21 @@ The `vehicle_attributes` object **may** have the following key value pairs:
 - `phone_charger` (boolean, [Optional](../general-information.md#optional-fields)) - a place to charge your phone
 - `sunshade` (boolean, [Optional](../general-information.md#optional-fields)) - sunshade available (i.e. for windshield)
 - `cargo_volume_capacity` (integer, [Optional](../general-information.md#optional-fields)) - Cargo volume available in the vehicle, expressed in liters. For cars, it corresponds to the space between the boot floor, including the storage under the hatch, to the rear shelf in the trunk.
-- `cargo_load_capacity` (integer, [Optional](../general-information.md#optional-fields)) - The capacity of the vehicle cargo space (excluding passengers), expressed in kilograms.
+- `cargo_load_capacity` (integer, [Optional](../general-information.md#optional-fields)) - The capacity of the vehicle cargo space (excluding passengers), expressed in kilograms
 - `door_count` (integer, [Optional](../general-information.md#optional-fields)) - number of doors this vehicle type has
 - `wheel_count` (integer, [Optional](../general-information.md#optional-fields)) - number of wheels this vehicle type has
 - `air_conditioning` (boolean, [Optional](../general-information.md#optional-fields)) - vehicle has air conditioning
-- `gear_switch` (enum, [Optional](../general-information.md#optional-fields)) - one of `automatic`, `manual`
+- `gear_switch` (enum, [Optional](../general-information.md#optional-fields)) - one of `automatic` (automatic and semi-automatic), `manual` (single or dual clutch, intelligent manual), `variable` (Continuously Variable Transmission (CVT))
 - `convertible` (boolean, [Optional](../general-information.md#optional-fields)) - vehicle has a retractable roof
 - `cruise_control` (boolean, [Optional](../general-information.md#optional-fields)) - vehicle has a cruise control system
 - `navigation` (boolean, [Optional](../general-information.md#optional-fields)) - vehicle has a built-in navigation system
+- `wheel_drive` (string, [Optional](../general-information.md#optional-fields)) - type of wheel drive of the vehicle (e.g., 4WD, AWD, front wheel drive, back wheel drive)
+- `child_seat` (boolean, [Optional](../general-information.md#optional-fields)) - the vehicle is equipped with a children's seat
+- `pets_allowed` (boolean, [Optional](../general-information.md#optional-fields)) - pets are allowed in the vehicle
+- `rooftop_cargo_box` (boolean, [Optional](../general-information.md#optional-fields)) - the vehicle is equipped with a rooftop cargo box
+- `roof_rails` (boolean, [Optional](../general-information.md#optional-fields)) - the vehicle is equipped with roof rails
+- `ski_hatch` (boolean, [Optional](../general-information.md#optional-fields)) - the vehicle has a ski hatch in the rear seat row
+- `winter_tires` (boolean, [Optional](../general-information.md#optional-fields)) - the vehicle is equipped with winter tires
 
 Note many of these attributes come from fields in [GBFS vehicle_types](https://github.com/MobilityData/gbfs/blob/v2.3/gbfs.md#vehicle_typesjson). 
 
@@ -154,7 +283,7 @@ This `accessibility_attributes` enum represents the accessibility attributes ava
 
 ### Vehicle States
 
-Valid car share vehicle states are 
+Valid fleet vehicle states are 
 
 - `removed`
 - `available` 
@@ -171,7 +300,7 @@ See [Vehicle States][vehicle-states] for descriptions.
 
 ### Event Types
 
-Valid car share vehicle event types are 
+Valid fleet vehicle event types are 
 
 - `charging_start`
 - `charging_end`
@@ -206,63 +335,84 @@ See vehicle [Event Types][vehicle-events] for descriptions.
 
 This is the list of `vehicle_state` and `event_type` pairings that constitute the valid transitions of the vehicle state machine.
 
-| **From** `vehicle_state` | **To** `vehicle_state` | `trip_state` | `event_type`             | Description                                                                                                     |
-| ------------------------ | ---------------------- | ------------ | ------------------------ | --------------------------------------------------------------------------------------------------------------- |
-| `available`              | `elsewhere`            | N/A          | `trip_leave_jurisdiction`     | The vehicle has left jurisdictional boundaries while available for-hire                                         |
-| `available`              | `non_contactable`      | N/A          | `comms_lost`             | The vehicle has went out of comms while available for-use                                                       |
-| `available`              | `non_operational`      | N/A          | `service_end`            | The vehicle has went out of service (is unavailable for-hire)                                                   |
-| `available`              | `reserved`             | `reserved`   | `reservation_start`                | The vehicle was reserved by a passenger                                                                         |
-| `elsewhere`              | `available`            | N/A          | `trip_enter_jurisdiction`     | The vehicle has entered jurisdictional boundaries while available for-hire                                      |
-| `elsewhere`              | `non_contactable`      | N/A          | `comms_lost`             | The vehicle has went out of comms while outside of jurisdictional boundaries                                    |
-| `elsewhere`              | `non_operational`      | N/A          | `trip_enter_jurisdiction`     | The vehicle has entered jurisdictional boundaries while not operating commercially                              |
-| `elsewhere`              | `on_trip`              | `on_trip`    | `trip_enter_jurisdiction`     | The vehicle has entered jurisdictional boundaries while on a trip                                               |
-| `elsewhere`              | `reserved`             | N/A          | `trip_enter_jurisdiction`     | The vehicle has entered jurisdictional boundaries while reserved by a customer                                  |
-| `non_contactable`        | `available`            | N/A          | `comms_restored`         | The vehicle has come back into comms while available for-hire                                                   |
-| `non_contactable`        | `elsewhere`            | N/A          | `comms_restored`         | The vehicle has come back into comms while outside of jurisdictional boundaries                                 |
-| `non_contactable`        | `non_operational`      | N/A          | `comms_restored`         | The vehicle has come back into comms while not operating commercially                                           |
-| `non_contactable`        | `on_trip`              | `on_trip`    | `comms_restored`         | The vehicle has come back into comms while on a trip                                                            |
-| `non_contactable`        | `removed`              | N/A          | `comms_restored`         | The vehicle has come back into comms while removed                                                              |
-| `non_contactable`        | `reserved`             | `reserved`   | `comms_restored`         | The vehicle has come back into comms while reserved by a passenger                                              |
-| `non_contactable`        | `stopped`              | `stopped`    | `comms_restored`         | The vehicle has come back into comms while stopped                                                              |
-| `non_operational`        | `available`            | N/A          | `service_start`          | The vehicle has went into service (is available for-hire)                                                       |
-| `non_operational`        | `elsewhere`            | N/A          | `trip_leave_jurisdiction`     | The vehicle has left jurisdictional boundaries while not operating commercially                                 |
-| `non_operational`        | `non_contactable`      | N/A          | `comms_lost`             | The vehicle has went out of comms while not operating commercially                                              |
-| `non_operational`        | `removed`              | N/A          | `decommissioned`         | The vehicle has been removed from the Provider's fleet                                                          |
-| `non_operational`        | `removed`              | N/A          | `maintenance_pick_up`    | The vehicle has entered the depot for maintenance                                                               |
-| `non_operational`        | `removed`              | N/A          | `maintenance`            | The vehicle is undergoing maintenance on site                                                                   |
-| `on_trip`                | `elsewhere`            | N/A          | `trip_leave_jurisdiction`     | The vehicle has left jurisdictional boundaries while on a trip                                                  |
-| `on_trip`                | `non_contactable`      | N/A          | `comms_lost`             | The vehicle has gone out of comms while on a trip                                                               |
-| `on_trip`                | `stopped`              | `stopped`    | `trip_stop`              | The vehicle has stopped while on a trip                                                                         |
-| `removed`                | `non_contactable`      | N/A          | `comms_lost`             | The vehicle has gone out of comms while removed                                                                 |
-| `removed`                | `non_operational`      | N/A          | `maintenance_end`        | The vehicle maintenance work has ended                                                                          |
-| `removed`                | `non_operational`      | N/A          | `recommissioned`         | The vehicle has been re-added to the Provider's fleet after being previously `decommissioned`                   |
-| `reserved`               | `available`            | N/A          | `driver_cancellation`    | The driver has canceled the reservation                                                                         |
-| `reserved`               | `available`            | N/A          | `customer_cancellation` | The customer has canceled the reservation                                                                      |
-| `reserved`               | `available`            | N/A          | `provider_cancellation`  | The provider has canceled the reservation                                                                       |
-| `reserved`               | `elsewhere`            | N/A          | `trip_leave_jurisdiction`     | The vehicle has left the jurisdiction while in a reservation                                                    |
-| `reserved`               | `non_contactable`      | N/A          | `comms_lost`             | The vehicle went out of comms while being reserved by a passenger                                               |
-| `reserved`               | `stopped`              | `stopped`    | `reservation_stop`           | The customer has activated the vehicle                                                             |
-| `stopped`                | `available`            | N/A          | `driver_cancellation`    | The driver has canceled the trip                  |
-| `stopped`                | `available`            | N/A          | `customer_cancellation` | The customer has canceled the trip  |
-| `stopped`                | `available`            | N/A          | `provider_cancellation`  | The provider has canceled the trip           |
-| `stopped`                | `available`            | N/A          | `trip_end`               | The trip has been successfully completed                                                                        |
-| `stopped`                | `non_contactable`      | N/A          | `comms_lost`             | The vehicle has went out of comms while stopped                                                                 |
-| `stopped`                | `on_trip`              | `on_trip`    | `trip_resume`            | Resume a trip that was previously stopped (e.g. picking up a friend to go to the airport with)                  |
-| `stopped`                | `on_trip`              | `on_trip`    | `trip_start`             | Start a trip                                                                                                    |
-| `stopped`                | `stopped`              | `stopped`    | `charging_end`           | End charging the device battery                                                                                 |
-| `stopped`                | `stopped`              | `stopped`    | `charging_start`         | Start charging the device battery                                                                               |
-| `stopped`                | `stopped`              | `stopped`    | `fueling_end`            | End fueling the device with physical fuel                                                                       |
-| `stopped`                | `stopped`              | `stopped`    | `fueling_start`          | Start fueling the device with physical fuel                                                                     |
-| `stopped`                | `stopped`              | `stopped`    | `remote_end`             | Remotely stop the engine while vehicle is already stopped                                                       |
-| `stopped`                | `stopped`              | `stopped`    | `remote_start`           | Remotely start the engine while vehicle is stopped, usually to charge battery or warm up                        |
+| From `vehicle_state` | To `vehicle_state` | `event_type`              | Description                                                                                    |
+|----------------------|--------------------|---------------------------|------------------------------------------------------------------------------------------------|
+| `available`          | `elsewhere`        | `trip_leave_jurisdiction` | The vehicle has left jurisdictional boundaries while available for-hire                        |
+| `available`          | `non_contactable`  | `comms_lost`              | The vehicle has went out of comms while available for-use                                      |
+| `available`          | `non_operational`  | `service_end`             | The vehicle has went out of service (is unavailable for-hire)                                  |
+| `available`          | `reserved`         | `reservation_start`       | The vehicle was reserved by a passenger                                                        |
+
+| From `vehicle_state` | To `vehicle_state` | `event_type`              | Description                                                                                    |
+|----------------------|--------------------|---------------------------|------------------------------------------------------------------------------------------------|
+| `elsewhere`          | `available`        | `trip_enter_jurisdiction` | The vehicle has entered jurisdictional boundaries while available for-hire                     |
+| `elsewhere`          | `non_contactable`  | `comms_lost`              | The vehicle has went out of comms while outside of jurisdictional boundaries                   |
+| `elsewhere`          | `non_operational`  | `trip_enter_jurisdiction` | The vehicle has entered jurisdictional boundaries while not operating commercially             |
+| `elsewhere`          | `on_trip`          | `trip_enter_jurisdiction` | The vehicle has entered jurisdictional boundaries while on a trip                              |
+| `elsewhere`          | `reserved`         | `trip_enter_jurisdiction` | The vehicle has entered jurisdictional boundaries while reserved by a customer                 |
+
+| From `vehicle_state` | To `vehicle_state` | `event_type`              | Description                                                                                    |
+|----------------------|--------------------|---------------------------|------------------------------------------------------------------------------------------------|
+| `non_contactable`    | `available`        | `comms_restored`          | The vehicle has come back into comms while available for-hire                                  |
+| `non_contactable`    | `elsewhere`        | `comms_restored`          | The vehicle has come back into comms while outside of jurisdictional boundaries                |
+| `non_contactable`    | `non_operational`  | `comms_restored`          | The vehicle has come back into comms while not operating commercially                          |
+| `non_contactable`    | `on_trip`          | `comms_restored`          | The vehicle has come back into comms while on a trip                                           |
+| `non_contactable`    | `removed`          | `comms_restored`          | The vehicle has come back into comms while removed                                             |
+| `non_contactable`    | `reserved`         | `comms_restored`          | The vehicle has come back into comms while reserved by a passenger                             |
+| `non_contactable`    | `stopped`          | `comms_restored`          | The vehicle has come back into comms while stopped                                             |
+
+| From `vehicle_state` | To `vehicle_state` | `event_type`              | Description                                                                                    |
+|----------------------|--------------------|---------------------------|------------------------------------------------------------------------------------------------|
+| `non_operational`    | `available`        | `service_start`           | The vehicle has went into service (is available for-hire)                                      |
+| `non_operational`    | `elsewhere`        | `trip_leave_jurisdiction` | The vehicle has left jurisdictional boundaries while not operating commercially                |
+| `non_operational`    | `non_contactable`  | `comms_lost`              | The vehicle has went out of comms while not operating commercially                             |
+| `non_operational`    | `removed`          | `decommissioned`          | The vehicle has been removed from the Provider's fleet                                         |
+| `non_operational`    | `removed`          | `maintenance_pick_up`     | The vehicle has entered the depot for maintenance                                              |
+| `non_operational`    | `removed`          | `maintenance`             | The vehicle is undergoing maintenance on site                                                  |
+
+| From `vehicle_state` | To `vehicle_state` | `event_type`              | Description                                                                                    |
+|----------------------|--------------------|---------------------------|------------------------------------------------------------------------------------------------|
+| `on_trip`            | `elsewhere`        | `trip_leave_jurisdiction` | The vehicle has left jurisdictional boundaries while on a trip                                 |
+| `on_trip`            | `non_contactable`  | `comms_lost`              | The vehicle has gone out of comms while on a trip                                              |
+| `on_trip`            | `stopped`          | `trip_stop`               | The vehicle has stopped while on a trip                                                        |
+
+| From `vehicle_state` | To `vehicle_state` | `event_type`              | Description                                                                                    |
+|----------------------|--------------------|---------------------------|------------------------------------------------------------------------------------------------|
+| `removed`            | `non_contactable`  | `comms_lost`              | The vehicle has gone out of comms while removed                                                |
+| `removed`            | `non_operational`  | `maintenance_end`         | The vehicle maintenance work has ended                                                         |
+| `removed`            | `non_operational`  | `recommissioned`          | The vehicle has been re-added to the Provider's fleet after being previously `decommissioned`  |
+
+| From `vehicle_state` | To `vehicle_state` | `event_type`              | Description                                                                                    |
+|----------------------|--------------------|---------------------------|------------------------------------------------------------------------------------------------|
+| `reserved`           | `available`        | `driver_cancellation`     | The driver has canceled the reservation                                                        |
+| `reserved`           | `available`        | `customer_cancellation`   | The customer has canceled the reservation                                                      |
+| `reserved`           | `available`        | `provider_cancellation`   | The provider has canceled the reservation                                                      |
+| `reserved`           | `elsewhere`        | `trip_leave_jurisdiction` | The vehicle has left the jurisdiction while in a reservation                                   |
+| `reserved`           | `non_contactable`  | `comms_lost`              | The vehicle went out of comms while being reserved by a passenger                              |
+| `reserved`           | `stopped`          | `reservation_stop`        | The customer has activated the vehicle                                                         |
+
+| From `vehicle_state` | To `vehicle_state` | `event_type`              | Description                                                                                    |
+|----------------------|--------------------|---------------------------|------------------------------------------------------------------------------------------------|
+| `stopped`            | `available`        | `driver_cancellation`     | The driver has canceled the trip                                                               |
+| `stopped`            | `available`        | `customer_cancellation`   | The customer has canceled the trip                                                             |
+| `stopped`            | `available`        | `provider_cancellation`   | The provider has canceled the trip                                                             |
+| `stopped`            | `available`        | `trip_end`                | The trip has been successfully completed                                                       |
+| `stopped`            | `non_contactable`  | `comms_lost`              | The vehicle has went out of comms while stopped                                                |
+| `stopped`            | `on_trip`          | `trip_resume`             | Resume a trip that was previously stopped (e.g. picking up a friend to go to the airport with) |
+| `stopped`            | `on_trip`          | `trip_start`              | Start a trip                                                                                   |
+| `stopped`            | `stopped`          | `charging_end`            | End charging the device battery                                                                |
+| `stopped`            | `stopped`          | `charging_start`          | Start charging the device battery                                                              |
+| `stopped`            | `stopped`          | `fueling_end`             | End fueling the device with physical fuel                                                      |
+| `stopped`            | `stopped`          | `fueling_start`           | Start fueling the device with physical fuel                                                    |
+| `stopped`            | `stopped`          | `remote_end`              | Remotely stop the engine while vehicle is already stopped                                      |
+| `stopped`            | `stopped`          | `remote_start`            | Remotely start the engine while vehicle is stopped, usually to charge battery or warm up       |
 
 [Top][toc]
 
 ### State Machine Diagram
 
-This *State Machine Diagram* shows how `vehicle_state` and `event_type` relate to each other and how vehicles can transition between states. See [Google Slides](https://docs.google.com/presentation/d/1fHdq1efbN5GSFDLF4en-oA_BYPXQKbbIbHff6iROJKA/edit#slide=id.g2072486e468_1_300) for the source file.
+This *State Machine Diagram* shows how `vehicle_state` and `event_type` relate to each other and how vehicles can transition between states. See [Google Slides](https://docs.google.com/presentation/d/1FCrBCtNQyoIcchaGx6zw4BpLCquQaWmBHsEU6fUdUoo/edit?slide=id.g2072486e468_1_300#slide=id.g2072486e468_1_300) for the source file.
 
-![Car Share State Machine Diagram](car-share-state-machine-diagram.svg)
+![Fleet State Machine Diagram](car-share-state-machine-diagram.svg)
 
 [Top][toc]
 

@@ -15,8 +15,13 @@ This MDS data types page catalogs the objects (fields, types, requirements, desc
 - [Stops](#stops)
   - [Stop Status](#stop-status)
 - [Trips](#trips)
+- [Incidents](#incidents)
 - [Reports](#reports)
-
+- [Enforcement](#enforcement)
+  - [Violations](#violations)
+- [External Reference](#external-reference)
+- [Custom Attributes](#custom-attributes)
+ 
 ## Vehicles
 
 A vehicle record is as follows:
@@ -34,6 +39,10 @@ A vehicle record is as follows:
 | `battery_capacity`   | Integer  | Required if Available | Capacity of battery expressed as milliamp hours (mAh) |
 | `fuel_capacity`      | Integer  | Required if Available | Capacity of fuel tank (liquid, solid, gaseous) expressed in liters |
 | `maximum_speed`      | Integer  | Required if Available | Maximum speed (kph) possible with vehicle under normal, flat incline, smooth surface conditions. Applicable if the device has a built-in or intelligent speed limiter/governor. |
+| `hardware_model`     | String   | Required if Available | Number, identifier, or description of the main device hardware model. Can apply to any mode. |
+| `commissioned`       | [Timestamp][ts] | [Conditionally Required](./general-information.md#conditionally-required-fields) | Date/time the vehicle first starts providing service in the jurisdiction. Required if asked for by public agency. |
+| `decommissioned`     | [Timestamp][ts] | [Conditionally Required](./general-information.md#conditionally-required-fields) | Date/time the vehicle stops providing service in the jurisdiction and is decommissioned. Required when the vehicle is retired from operations. |
+| `custom_attributes`| [Custom Attributes](/data-types.md#custom-attributes) JSON Object | [Optional](./general-information.md#optional-fields) | Additional attributes (fields and data) to include in this [endpoint](/general-information.md#rest-endpoints). |
 
 [Top][toc]
 
@@ -50,12 +59,15 @@ The list of allowed `vehicle_type` values in MDS.
 | `delivery_robot`   | A robot or remote-operated device intended for transporting goods |
 | `moped`            | A seated fully-motorized mobility device capable of travel at moderate or high speeds and suited for operation in general urban traffic |
 | `motorcycle`       | A seated fully-motorized mobility device capable of travel at high speeds and suited for operation in general urban traffic and highways |
+| `scooter`          | A standing _or_ seated fully-motorized mobility device intended for one rider, capable of travel at low or moderate speeds, and suited for operation in infrastructure shared with motorized bicycles |
 | `scooter_standing` | A standing fully-motorized mobility device without a seat intended for one rider, capable of travel at low or moderate speeds, and suited for operation in infrastructure shared with motorized bicycles |
 | `scooter_seated`   | A fully-motorized mobility device with a seat intended for one rider, capable of travel at low or moderate speeds, and suited for operation in infrastructure shared with motorized bicycles |
 | `truck`            | A truck or vehicle larger than a car or similar heavy-duty vehicle |
+| `van`            | A van with significant interior cargo space |
+| `freight`        | A large delivery truck with attached cab |
 | `other`            | A device that does not fit in the other categories |
 
-Values based off of `form_factor` in [GBFS vehicle_types](https://github.com/MobilityData/gbfs/blob/master/gbfs.md#vehicle_typesjson), with some additional to support MDS modes.
+Values based off of `form_factor` in [GBFS vehicle_types](https://github.com/MobilityData/gbfs/blob/master/gbfs.md#vehicle_typesjson) and [CDS vehicle types](https://github.com/openmobilityfoundation/curb-data-specification/blob/main/events/README.md#vehicle-type), with some modifications to support MDS modes.
 
 [Top][toc]
 
@@ -109,12 +121,18 @@ Events represent changes in vehicle status.
 | `timestamp` | [Timestamp][ts] | Required | Date/time that event occurred at. See [Event Times][event-times] |
 | `publication_time` | [Timestamp][ts] | [Optional](./general-information.md#optional-fields) | Date/time that event became available through the status changes endpoint |
 | `location` | [GPS][gps] | Required | See also [Telemetry][telemetry]. |
-| `event_geographies` | UUID[] | [Optional](./general-information.md#optional-fields) | **[Beta feature](/general-information.md#beta-features):** *Yes (as of 2.0.0)*. Array of Geography UUIDs consisting of every Geography that contains the location of the status change. See [Geography Driven Events][geography-driven-events]. Required if `location` is not present. |
+| `software_version` | String | [Optional](./general-information.md#optional-fields) | Software version the main device is running on. Can be provided only when there is an update. |
+| `description` | String | [Optional](./general-information.md#optional-fields) | Description of the reason for the event, e.g. the type and reason for maintenance performed, note a software version upgrade, reason for system suspension, comms lost details, provider pickup reason, inspection details, etc. |
+| `event_geographies` | UUID[] | [Optional](./general-information.md#optional-fields) | Array of Geography UUIDs consisting of every Geography that contains the location of the status change. See [Geography Driven Events][geography-driven-events]. Required if `location` and `statistical_area_ids` are not present. |
+| `statistical_areas` | Strings[] | [Optional](./general-information.md#optional-fields) | Array of statistical area identifier(s) where the event occurred. e.g. US census area IDs (tract, block group, block, etc), Canadian dissemination blocks or areas, UK output areas, etc, or any other pre-defined standard district, area, sector, neighborhood, etc. Details of the type and meaning of these identifiers are communicated between the public agency and operator outside of MDS. Note that instead of these pre-defined areas, custom geographic areas can be defined using `event_geographies`. Required if `location` and `event_geographies` are not present. |
 | `battery_percent`       | Integer          | [Required if Applicable](./general-information.md#required-if-applicable-fields) | Percent battery charge of vehicle, expressed between 0 and 100 |
 | `fuel_percent`       | Integer          | [Required if Applicable](./general-information.md#required-if-applicable-fields)  | Percent fuel in vehicle, expressed between 0 and 100 |
 | `trip_ids` | UUID[] | [Required if Applicable](./general-information.md#required-if-applicable-fields)  | Trip UUIDs (foreign key to /trips endpoint), required if `event_types` contains `trip_start`, `trip_end`, `trip_cancel`, `trip_enter_jurisdiction`, or `trip_leave_jurisdiction` |
 | `stop_id`         | UUID            | [Required if Applicable](./general-information.md#required-if-applicable-fields)  | Stop that the vehicle is currently located at. See [Stops][stops] |
 | `associated_ticket` | String | [Optional](./general-information.md#optional-fields) | Identifier for an associated ticket inside an Agency-maintained 311 or CRM system |
+| `gtfs_stop_id` | String | [Optional](./general-information.md#optional-fields) | A unique stop ID to be recorded when a vehicle makes a stop event at a location. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `stop_id` |
+| `external_references` | Array of [External Reference][external-reference] objects | [Optional](./general-information.md#optional-fields) | One or more references impacting or related to this Event. |
+| `custom_attributes`| [Custom Attributes](/data-types.md#custom-attributes) JSON Object | [Optional](./general-information.md#optional-fields) | Additional attributes (fields and data) to include in this [endpoint](/general-information.md#rest-endpoints). |
 
 ### Event Times
 
@@ -133,6 +151,7 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | `data_provider_id`| UUID            | [Optional](./general-information.md#optional-fields) | If different than `provider_id`, a UUID for the data solution provider managing the data feed in this endpoint. See MDS [provider list](/providers.csv) which includes both service operators and data solution providers. |
 | `telemetry_id`    | UUID            | Required               | ID used for uniquely-identifying a Telemetry entry |
 | `timestamp`       | [Timestamp][ts] | Required               | Date/time that event occurred. Based on GPS or GNSS clock            |
+| `publication_time`| [Timestamp][ts] | [Optional](./general-information.md#optional-fields) | Date/time that telemetry data became available through the telemetry endpoint |
 | `trip_ids`        | UUID[]          | Required               | If telemetry occurred during a trip, the ID of the trip(s).  If not in a trip, `null`.
 | `journey_id`      | UUID            | Required               | If telemetry occurred during a trip and journeys are used for the mode, the ID of the journey.  If not in a trip, `null`.
 | `stop_id`         | UUID            | [Required if Applicable](./general-information.md#required-if-applicable-fields)  | Stop that the vehicle is currently located at. See [Stops][stops] |
@@ -141,8 +160,12 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | `battery_percent` | Integer         | [Required if Applicable](./general-information.md#required-if-applicable-fields)  | Percent battery charge of vehicle, expressed between 0 and 100 |
 | `fuel_percent`    | Integer         | [Required if Applicable](./general-information.md#required-if-applicable-fields)  | Percent fuel in vehicle, expressed between 0 and 100 |
 | `tipped_over`     | Boolean         | Required if Known      | If detectable and known, is the device tipped over or not? Default is 'false'. |
+| `gtfs_stop_id` | String | [Optional](./general-information.md#optional-fields) | A unique stop ID to be recorded when a vehicle makes a stop event at a location. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `stop_id` |
+| `incident_ids`    | UUID[]          | [Optional](./general-information.md#optional-fields)               | Array of one or more [Incident](#incidents) IDs that are connected to this telemetry data point. |
 
 ### GPS Data
+
+Includes GPS device data and data from other relevant sensors.
 
 | Field      | Type           | Required/Optional     | Field Description                                            |
 | ---------- | -------------- | --------------------- | ------------------------------------------------------------ |
@@ -151,9 +174,12 @@ A standard point of vehicle telemetry. References to latitude and longitude impl
 | `altitude` | Double         | Required if Available | Altitude above mean sea level in meters                      |
 | `heading`  | Double         | Required if Available | Degrees - clockwise starting at 0 degrees at true North      |
 | `speed`    | Float          | Required if Available | Estimated speed in meters / sec as reported by the GPS chipset |
-| `horizontal_accuracy` | Float          | Required if Available | Horizontal accuracy, in meters                               |
-| `vertical_accuracy` | Float          | Required if Available | Vertical accuracy, in meters                               |
+| `horizontal_accuracy` | Float | Required if Available | Horizontal accuracy, in meters                               |
+| `vertical_accuracy` | Float | Required if Available | Vertical accuracy, in meters                                 |
 | `satellites` | Integer      | Required if Available | Number of GPS or GNSS satellites                             |
+| `accelerometer_x` | Float   | Required if Available | The x-axis acceleration in G's (gravitational force).        |
+| `accelerometer_y` | Float   | Required if Available | The y-axis acceleration in G's (gravitational force).        |
+| `accelerometer_z` | Float   | Required if Available | The z-axis acceleration in G's (gravitational force).        |
 
 [Top][toc]
 
@@ -165,7 +191,7 @@ Stops describe vehicle trip start and end locations in a pre-designated physical
 | -----                    | ----                                                  |-------------------|-------------|
 | `stop_id`                | UUID                                                  | Required | Unique ID for stop |
 | `name`                   | String                                                | Required | Name of stop |
-| `last_updated`          | Timestamp                                             | Required | Date/Time that the stop was last updated |
+| `last_updated`           | Timestamp                                             | Required | Date/Time that the stop was last updated |
 | `location`               | [GPS][gps]                                            | Required | Simple centerpoint location of the Stop. The use of the optional `geography_id` is recommended to provide more detail. |
 | `status`                 | [Stop Status](#stop-status)                           | Required | Object representing the status of the Stop. See [Stop Status](#stop-status). |
 | `capacity`               | {vehicle_type: number}                                | Required | Number of total places per vehicle_type |
@@ -185,6 +211,7 @@ Stops describe vehicle trip start and end locations in a pre-designated physical
 | `parent_stop`            | UUID                                                  | [Optional](./general-information.md#optional-fields) | Describe a basic hierarchy of stops (e.g.a stop inside of a greater stop) |
 | `devices`                | UUID[]                                                | [Conditionally Required](./general-information.md#conditionally-required-fields) | List of device_ids for vehicles which are currently at this stop. Required if the program has station based availability requirements or service level agreements pertaining to stations. |
 | `image_url`              | URL                                                   | [Optional](./general-information.md#optional-fields) | Link to an image, photo, or diagram of the stop. Could be used by providers to help riders find or use the stop. |
+| `external_references` | Array of [External Reference][external-reference] objects | [Optional](./general-information.md#optional-fields) | One or more references impacting or related to this Stop. |
 
 [Top][toc]
 
@@ -222,7 +249,7 @@ A Trip is defined by the following structure:
 | `journey_id`             | UUID            | [Optional](./general-information.md#optional-fields) | A unique [journey ID](/modes#journey-id) for associating collections of trips for its [mode][modes] |
 | `journey_attributes`     | Map             | [Optional](./general-information.md#optional-fields) | **[Mode](/modes#list-of-supported-modes) Specific**. [Journey attributes](/modes#journey-attributes) given as unordered key-value pairs |
 | `trip_id`                | UUID            | Required | A unique ID for each trip |
-| `trip_type`              | Enum            | [Optional](./general-information.md#optional-fields) | **[Mode](/modes#list-of-supported-modes) Specific**. The [trip type](/modes#trip-type) describing the purpose of a trip segment |
+| `trip_type`              | Enum            | [Optional](./general-information.md#optional-fields) | **[Mode](/modes#list-of-supported-modes) Specific**. The [trip type](/modes#trip-type) describing the purpose of a trip segment. _Note: if not provided, only send trips of the **default** `trip_type`, as marked for each mode._ |
 | `trip_attributes`        | Map             | [Optional](./general-information.md#optional-fields) | **[Mode](/modes#list-of-supported-modes) Specific**. [Trip attributes](/modes#trip-attributes) given as unordered key-value pairs |
 | `fare_attributes`        | Map             | [Optional](./general-information.md#optional-fields) | **[Mode](/modes#list-of-supported-modes) Specific**. [Fare attributes](/modes#fare-attributes) given as unordered key-value pairs |
 | `start_time`             | [Timestamp][ts] | Required | Start of the passenger/driver trip |
@@ -234,10 +261,40 @@ A Trip is defined by the following structure:
 | `publication_time`       | [Timestamp][ts] | [Optional](./general-information.md#optional-fields) | Date/time that trip became available through the trips endpoint |
 | `accessibility_attributes` | Enum[]        | Required if Available | **[Mode](/modes#list-of-supported-modes) Specific**. [Accessibility attributes](/modes#accessibility-attributes) given as an array of enumerated values. List of any accessibility attributes **used during the trip**. |
 | `parking_verification_url` | URL           | [Optional](./general-information.md#optional-fields) | A URL to a photo (or other evidence) of proper vehicle parking at the end of a trip, provided by customer or operator. |
-| `parking_category`       | Enum            | [Optional](./general-information.md#optional-fields) | The type of parking location detected or provided and the end of a trip. One of `corral`, `curb`, `rack`, `other_valid`, `invalid`. Note that `other_valid` covers any other allowed parking location beyond what is enumerated, and `invalid` is any improper parking based on agency parking rules.
+| `parking_category`       | Enum            | [Optional](./general-information.md#optional-fields) | The type of parking location detected or provided and the end of a trip. One of `corral`, `curb`, `rack`, `space`, `dock`, `other_valid`, `invalid`. Note that `other_valid` covers any other allowed parking location beyond what is enumerated, and `invalid` is any improper parking based on agency parking rules. Use `external_references` to specify more details, like a link to CDS Curb Zones. |
 | `standard_cost`          | Integer         | [Optional](./general-information.md#optional-fields) | The cost, in the currency defined in `currency`, to perform that trip in the standard operation of the System (see [Costs & Currencies][costs-and-currencies]) |
 | `actual_cost`            | Integer         | [Optional](./general-information.md#optional-fields) | The actual cost, in the currency defined in `currency`, paid by the customer of the *mobility as a service* provider (see [Costs & Currencies][costs-and-currencies]) |
 | `currency`               | String          | [Optional](./general-information.md#optional-fields), USD cents is implied if null.| An [ISO 4217 Alphabetic Currency Code][iso4217] representing the currency of the payee (see [Costs & Currencies][costs-and-currencies]) |
+| `gtfs_trip_id` | String | [Required if Applicable](./general-information.md#required-if-applicable-fields)  | A unique trip ID for the associated scheduled GTFS route-trip. Matches [GTFS](https://gtfs.org/documentation/schedule/reference/) `trip_id` in the trips.txt and other files.|
+| `gtfs_api_url` | URL | [Required if Applicable](./general-information.md#required-if-applicable-fields)  | Full URL to the location where the associated [GTFS](https://gtfs.org/documentation/schedule/reference/) dataset zip files are located. |
+| `external_references` | Array of [External Reference][external-reference] objects | [Optional](./general-information.md#optional-fields) | One or more references impacting or related to this Trip. |
+| `custom_attributes`| [Custom Attributes](/data-types.md#custom-attributes) JSON Object | [Optional](./general-information.md#optional-fields) | Additional attributes (fields and data) to include in this [endpoint](/general-information.md#rest-endpoints). |
+
+[Top][toc]
+
+## Incidents
+
+ Incidents are used in both [Provider](/provider#incidents) and [Agency](/agency#incidents) telemetry data, whether on or off a Trip. 
+
+| Field              | Type            | Required/Optional | Comments |
+| ----               | ----            | ----              | ----     |
+| `incident_id`      | UUID            | Required          | ID used for uniquely identifying an Incident. |
+| `incident_type`    | Enum            | Required          | The type of incident. One of `unplanned_stop`, `remote_takeover`, `ads_engaged` (Automated Driving System), `ads_disengaged`, `tip_over`, `obstruction`, `harsh_stopping` (e.g. braking), `harsh_starting` (e.g. acceleration), `near_miss`, `vandalism`, `theft`, `violation`, `crash`. Exact definitions, and when and if which incident types are sent, come from the public agency. |
+| `incident_time`    | [Timestamp][ts] | Required          | Date/time that incident first occurred. Note that this timestamp of the incident first occurance is independent of one or more Telemetry timestamps referenced via `incident_id`. Note that more frequent telemetry data points may be required when an incident is first discovered and occuring. |
+| `discovery_time`   | [Timestamp][ts] | Required          | Date/time that incident was first discovered by the operator. This may be at the same moment of the `incident_time`, or may have been discovered later. |
+| `publication_time` | [Timestamp][ts] | Required          | Date/time that incident became first available to an agency through an Incident endpoint. |
+| `last_updated`     | [Timestamp][ts] | Required          | Date/time that incident was last updated in the Incident endpoint. |
+| `description`      | String          | [Optional](./general-information.md#optional-fields)          | Text description of the incident. |
+| `severity`         | String          | [Optional](./general-information.md#optional-fields)          | Text description of the severity of the incident. |
+| `medical_dispatch` | Boolean         | [Optional](./general-information.md#optional-fields)          | If `true`, a medical dispatch occured connected to the incident. |
+| `medical_transport` | Boolean        | [Optional](./general-information.md#optional-fields)          | If `true`, one or more individuals was transported via an ambulance or emergency response vehicle because of the incident. |
+| `report_id`        | String          | [Optional](./general-information.md#optional-fields)          | Identifier of an external report, from a police report, citation, internal system, service request, etc. The report source is communicated by the operator to the agency outside of MDS. |
+| `report_type`      | String          | [Optional](./general-information.md#optional-fields)          | Description of the type of report referenced by the `report_id`, eg. police, customer, remote operator, 311 call, etc. |
+| `enforcement`      | [Enforcement](#enforcement) | [Optional](./general-information.md#optional-fields) | Enforcement and violation information related to this incident. Can be used for any `incident_type`. |
+| `external_references` | Array of [External Reference][external-reference] objects | [Optional](./general-information.md#optional-fields) | One or more references to external data feeds, links, reports, or documents impacting or related to this Incident, as they become available. |
+| `contact_info`     | String          | [Optional](./general-information.md#optional-fields)          | Description of any relevant contact information about the incident the operator can provide. |
+| `preliminary`      | Boolean         | [Optional](./general-information.md#optional-fields)          | If `true`, then this information in this Incident is only preliminary, with more details and/or validation coming at a later date. If `false`, the information provided here is deemed valed with no more updates expected. |
+| `custom_attributes`| [Custom Attributes](/data-types.md#custom-attributes) JSON Object | [Optional](./general-information.md#optional-fields) | Additional attributes (fields and data) to include in this [endpoint](/general-information.md#rest-endpoints). |
 
 [Top][toc]
 
@@ -294,8 +351,68 @@ Other special group types may be added in future MDS releases as relevant agency
 
 [Top][toc]
 
+## Enforcement
+
+The Enforcement object describes a specific set of features relevant to an enforcement [Incident](#incidents). 
+
+Where a citation could represent multiple violations, an enforcement object contains an array that enumerates the violations for a single citation. Where a citation can only represent a single violation, multiple Incidents may be published, each with a single violation in the array.
+
+The `enforcement` object is a JSON *object* with the following fields:
+
+| Name             | Type    | Required/Optional | Description   |
+| ---------------- | ------- | ----------------- | ------------- |
+| `enforcement_id` | UUID    | Required          | An identifier unique to the enforcement incident, generated the first time an enforcement event is recorded, and referenced in future related enforcement events. Multiple Incidents (ex: `crash`, `violation`, or `vandalism`) that relate to the same enforcement activity can share the same `enforcement_id`. | 
+| `citation_id`    | String  | [Optional](./general-information.md#optional-fields)          | A unique id which represents a single citation. |
+| `is_warning`     | Boolean | [Optional](./general-information.md#optional-fields)          | A boolean value to indicate if the enforcement action is being processed as a warning.  |
+| `action_taken`   | String  | [Optional](./general-information.md#optional-fields)          | Indicates how the violation was enforced. Typical well-known values are `citation_registered`, `citation_posted`, `citation_served`, or `citation_emailed`. |
+| `citation_cost`  | String  | [Optional](./general-information.md#optional-fields)          | The total cost of all violations associated to this enforcement action. |
+| `violations`     | Array of [Violations](#violations) | [Optional](./general-information.md#optional-fields)          | An array of Violation objects that indicate the one-to-many violations associated to this enforcement event. |
+
+[Top][toc]
+
+### Violations
+
+The Violations object describes the violations associated to an enforcement action that can occur as part of a [Enforcement](#enforcement) on an [Incident](#incidents). 
+
+The `violations` object is a JSON *object* with the following fields:
+
+| Name             | Type   | Required/Optional | Description   |
+| ---------------- | ------ | ----------------- | ------------- |
+| `violation_code` | String | [Optional](./general-information.md#optional-fields)          | The unique code created by the municipality, city, county, state, federal, or enforcement agency to identify the type of rule being enforced. |
+| `violation_name` | String | [Optional](./general-information.md#optional-fields)          | The city/municipal, county, state, provincial, or federal code that was violated. |
+| `violation_cost` | String | [Optional](./general-information.md#optional-fields)          | The original cost associated with the violation. |
+
+[Top][toc]
+
+## External Reference
+
+An External Reference object describes a specific feature from an external data source that is relevant to a part of MDS data. This allows MDS users to reference other data sources that impact or provide information about an MDS object, and see more details at an external URL. Data sources can be anything available via a URL, including an existing data standard (CDS, WZDx, CWZ, GTFS, GBFS, MDS, etc), a custom feed, API, document, web page, report, etc.
+
+An `external_reference` is a JSON *array* with the following fields within objects:
+
+| Name   | Type   | Required/Optional   | Description   |
+| ------ | ------ | ------------------- | ------------- |
+| `reference_url` | URL | Required | A web-accessible identifier URL for the source of the publicly or privately accessible data feed, document, website, etc. This MUST be a full HTTPS URL pointing to a location which contains more information impacting or explaining the location, event, or policy, etc. |
+| `name` | String | [Optional](./general-information.md#optional-fields) | Name of the data source for reference. E.g. "WZDx", "CWZ", "GBFS", "GTFS", "Waze CIF", "TOMP", "OCPI", "NEVI", "DATEX", "TODS", "TIDES", even across to "CDS", and back to "MDS". |
+| `public` | Boolean | [Optional](./general-information.md#optional-fields) | Is this data source able to be viewed with out any sort of authentication? If `true`, the `reference_url` is public. If `false`, the `reference_url` requires some sort of authentication, authorization, or API key to access. This is an informational field to set access expectations for the data source user, and does not provide any credentials directly unless explicitly contained in the `reference_url`. |
+| `identifier_name` | String | [Optional](./general-information.md#optional-fields) | The name of the data field identifier or object that is referenced by the unique `ids`. E.g. "id", "report_id", "trip_id", "vehicle_id", "RoadEventFeature", etc, if relevant and available in `reference_url`. |
+| `ids` | Array of Strings | [Optional](./general-information.md#optional-fields) | An array of one or more **ids** from the data sources that impacts the use of or relationship to part of MDS, e.g. Trips, Events, Stops, etc. The **ids** and their details are be found in the referenced `reference_url`. |
+
+[Top][toc]
+
+## Custom Attributes
+
+Custom Attributes are optional additional attributes that do not fit in other fields and objects in the specification. They are unique for the organizations created and consuming the endpoint, that may not apply to other jurisdictions. Examples include custom identifiers, information required by ordinance, vendor attributes, supplemental data, etc. 
+
+The format is one or more JSON name/value pairs, and the values must be a string. If a `custom_attributes` field is provided in specification API endpoints, then the relevant [endpoint](general-information.md#rest-endpoints) must contain the `custom_attribute_dictionary` field, which describes details of the custom fields provided.
+
+Before creating any custom attributes, the preference is to use existing fields and data objects first. If the fields and data you provide in custom attributes apply to multiple jurisdictions, vendors, and/or scenarios, please open an issue to include new fields in a future release.
+
+[Top][toc]
+
 [costs-and-currencies]: /general-information.md#costs-and-currencies
 [event-times]: #event-times
+[external-reference]: #external-reference
 [gbfs-station-info]: https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_informationjson
 [gbfs-station-status]: https://github.com/NABSA/gbfs/blob/master/gbfs.md#station_statusjson
 [geography-driven-events]: /general-information.md#geography-driven-events
@@ -308,5 +425,5 @@ Other special group types may be added in future MDS releases as relevant agency
 [toc]: #table-of-contents
 [ts]: /general-information.md#timestamps
 [vehicle-states]: /general-information.md#vehicle-states
-[vehicle-events]: /general-information.md#event-types
+[vehicle-events]: /modes/event_types.md
 [vehicle-types]: #vehicle-types

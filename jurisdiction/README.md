@@ -7,7 +7,6 @@ This specification details the purpose, use cases, and schema for Jurisdictions.
 ## Table of Contents
 
 - [Background](#background)
-- [Beta Feature](#beta-feature)
 - [Authorization](#authorization)
 - [Use Cases](#use-cases)
 - [Distribution](#distribution)
@@ -34,14 +33,6 @@ A jurisdiction is:
 - Uniquely identified
 - Purview to make rules over physical boundaries and modal boundaries (e.g. a jurisdiction could be for taxis only)
 - A way of tracking revisions in an agency's authority
-
-[Top][toc]
-
-## Beta Feature
-
-The Jurisdictions API and all of its endpoints are marked as a [beta feature](https://github.com/openmobilityfoundation/mobility-data-specification/blob/feature-metrics/general-information.md#beta-features) starting in the 1.1.0 release. It has not been tested in real world scenarios, and may be adjusted in future releases.
-
-**[Beta feature](https://github.com/openmobilityfoundation/mobility-data-specification/blob/feature-metrics/general-information.md#beta-features)**: _Yes (as of 1.1.0)_. [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/673) 
 
 [Top][toc]
 
@@ -86,7 +77,7 @@ Jurisdictions can be served by agencies through the following REST API, or via [
 
 ## Schema
 
-See the [Endpoints](#endpoints) below for information on their specific schema, and the [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for full details and interactive documentation.
+See the general [REST Endpoints](../general-information.md#rest-endpoints) documentation and specific [Endpoints](#endpoints) below for information on their data structure and schema, and the [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for full details and interactive documentation.
 
 A Jurisdiction optionally contains a reference to a Geography object. 
 
@@ -144,7 +135,6 @@ Gets all of an agency's Jurisdictions. Served by agencies.
 
 **Endpoint:** `/jurisdictions/`  
 **Method:** `GET`  
-**[Beta feature][beta]:** _Yes (as of 1.1.0)_. [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/673)  
 **Schema:** [`jurisdiction` schema](#schema)  
 **`data` Payload:** `{ "jurisdiction": [] }`, an array of [jurisdiction](#schema) objects
 
@@ -173,7 +163,6 @@ Gets a single Jurisdictions. Served by agencies.
 
 **Endpoint:** `/jurisdictions/{jurisdiction_id}`  
 **Method:** `GET`  
-**[Beta feature][beta]:** _Yes (as of 1.1.0)_. [Leave feedback](https://github.com/openmobilityfoundation/mobility-data-specification/issues/673)  
 **Schema:** [`jurisdiction` schema](#schema)  
 **`data` Payload:** `{ "jurisdiction": [] }`, an array of [jurisdiction](#schema) objects
 
