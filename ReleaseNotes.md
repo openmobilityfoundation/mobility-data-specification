@@ -1,3 +1,15 @@
+## 2.1.0
+
+> Released: 2026.07.07
+
+The 2.1 release is a minor release.
+
+### CHANGES
+
+See the closed pull requests and issues [Milestone 2.1.0](https://github.com/openmobilityfoundation/mobility-data-specification/milestone/17?closed=1) for a full list of changes.
+
+**Full [Release Notes](https://github.com/openmobilityfoundation/mobility-data-specification/releases/tag/2.1.0)** for details.
+
 ## 2.0.2
 
 > Release 2025.06.04

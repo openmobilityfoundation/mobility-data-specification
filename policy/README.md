@@ -2,9 +2,9 @@
 
 <a href="/policy/"><img src="https://i.imgur.com/66QXveN.png" width="120" align="right" alt="MDS Policy Icon" border="0"></a>
 
-The Policy API endpoints are intended to be implemented by regulatory agencies and consumed by mobility providers across all supported MDS [modes](../modes#list-of-supported-modes) and services (scooters, bikeshare, car share, delivery robots, taxis, TNCs, autonomous vehicles, agency fleets, commuter shuttles, etc). Providers query the Policy API to get information about local rules that may affect the operation of their mobility service or which may be used to determine compliance.
+The Policy API endpoints are intended to be implemented by regulatory agencies and consumed by mobility providers across all supported MDS [modes](../modes#list-of-supported-modes) and services (scooters, bikeshare, car share, delivery robots, taxis, TNCs, autonomous vehicles, agency fleets, commuter shuttles, etc). Data is **pulled** from agencies or **pushed** to providers via the Policy API to get information about local rules, events, or emergencies that may affect the operation of mobility services or which may be used to determine compliance.
 
-This specification describes the digital relationship between _mobility as a service_ providers and the agencies that regulate them. The Policy API communicates municipal policies (such as as vehicle deployment caps and speed limits) in a clear, consistent manner.
+This specification describes the digital relationship between _mobility as a service_ providers and the agencies that regulate them. The Policy API communicates municipal policies (such as as vehicle deployment caps, speed limits, data sharing requirements, events, and emergencies) in a clear, consistent manner.
 
 ## Table of Contents
 
@@ -136,12 +136,13 @@ Flat files have an optional `end_date` field that will apply to the file as a wh
 
 ## REST Endpoints
 
-Among other use-cases, configuring a REST API allows an Agency to:
+Among other use-cases, configuring a REST API allows an agency to:
 
 1. Dynamically adjust caps
-2. Set Provider specific policies
-3. Adjust other attributes in close to real-time
+2. Set Provider/Agency specific policies
+3. Adjust policies and other attributes in near real-time
 4. Enumerate when policies are set to change
+5. Announce geofencing speed and travel limits
 
 Responses must set the `Content-Type` header, as specified in the [versioning][versioning] section.
 
@@ -167,21 +168,21 @@ _Path Parameters:_
 
 | Path Parameter | Type      | Required / Optional | Description                                    |
 | ------------ | --------- | --- | ---------------------------------------------- |
-| `policy_id`         | UUID      | Optional    | If provided, returns one policy object with the matching UUID; default is to return all policy objects.                       |
+| `policy_id`         | UUID      | [Optional](./general-information.md#optional-fields)    | If provided, returns one policy object with the matching UUID; default is to return all policy objects.                       |
 
 _Query Parameters:_
 
 | Query Parameter | Type      | Required / Optional | Description                                    |
 | ------------ | --------- | --- | ---------------------------------------------- |
-| `policy_id`         | UUID      | Optional    | If provided, returns one policy object with the matching UUID; default is to return all policy objects.                       |
-| `start_date` | [timestamp][ts] | Optional    | Beginning date of the queried time range; the default value is the request time |
-| `end_date`   | [timestamp][ts] | Optional    | Ending date of the queried time range; the default value is null, which captures all policies that are effective in the future|
-| `last_updated`   | Boolean | Optional    | If true, the endpoint only returns two fields: `version`, `last_updated`. Useful to quickly check when any data in the file has last been changed, without downloading the entire Policy payload. See the [Schema](#schema) section for an example. If not provided, value is false. |
-| `active_only`   | Boolean | Optional    | If true, return only the current active and future policies, not the retired/previous policies. Any policy that is a prev_policies would not be returned. However, the array of prev_policies still will be returned for reference as part of any relevant active policy. Useful to reduce the Policy payload size for use cases where you do not need to know the previous policy details. If not provided, value is false. |
+| `policy_id`         | UUID      | [Optional](./general-information.md#optional-fields)    | If provided, returns one policy object with the matching UUID; default is to return all policy objects.                       |
+| `start_date` | [timestamp][ts] | [Optional](./general-information.md#optional-fields)    | Beginning date of the queried time range; the default value is the request time |
+| `end_date`   | [timestamp][ts] | [Optional](./general-information.md#optional-fields)    | Ending date of the queried time range; the default value is null, which captures all policies that are effective in the future|
+| `last_updated`   | Boolean | [Optional](./general-information.md#optional-fields)    | If true, the endpoint only returns two fields: `version`, `last_updated`. Useful to quickly check when any data in the file has last been changed, without downloading the entire Policy payload. See the [Schema](#schema) section for an example. If not provided, value is false. |
+| `active_only`   | Boolean | [Optional](./general-information.md#optional-fields)    | If true, return only the current active and future policies, not the retired/previous policies. Any policy that is a prev_policies would not be returned. However, the array of prev_policies still will be returned for reference as part of any relevant active policy. Useful to reduce the Policy payload size for use cases where you do not need to know the previous policy details. If not provided, value is false. |
 
 `start_date` and `end_date` are only considered when no `id` parameter is provided. They should return any policy whose effectiveness overlaps with or is contained with this range. Suppose there's a policy with a `start_date` of 1/1/21 and `end_date` of 1/31/21. Assuming an `end_date` that is null, 12/1/20 and 1/5/21 `start_dates` will return the policy, but 2/10/21 wouldn't. Assuming a `start_date` parameter of say, 11/1/20, then an `end_date` of 12/1/20 wouldn't return the policy, but 1/5/21 and 2/10/21 would. Lastly, a `start_date` of 1/5/21 and `end_date` of 1/6/21 would also return the policy. Please note also that while dates in the format MM:DD:YY are being used here, `start_date` and `end_date` must be numbers representing milliseconds since the Unix epoch time.
 
-Policies will be returned in order of effective date (see schema below), with pagination as in the `agency` and `provider` specs.
+Policies will be returned in order of effective date (see schema below). Pagination is optional for this endpoint, and policies are typically returned in a single response. If pagination is used, it follows the same convention as the `agency` and `provider` specs (see [Pagination][pagination]).
 
 `provider_id` is an implicit parameter and will be encoded in the authentication mechanism, or a complete list of policies should be produced. If the Agency decides that Provider-specific policy documents should not be shared with other Providers (e.g. punitive policy in response to violations), an Agency should filter policy objects before serving them via this endpoint.
 
@@ -350,7 +351,7 @@ Note that `data` payload will not be returned if the `last_updated` query string
 
 ### Data Schema
 
-See the [Endpoints](#endpoints) below for information on their specific schema, and the [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for full details and interactive documentation.
+See the general [REST Endpoints](../general-information.md#rest-endpoints) documentation and specific [Endpoints](#rest-endpoints) here for information on their data structure and schema, and the [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for full details and interactive documentation.
 
 Before publishing a new Policy document, the document should be validated against the schema to ensure it has the correct format and fields.
 
@@ -883,6 +884,7 @@ You may also show which APIs, endpoints, and fields your agency is serving to pr
 [json-schema]: #json-schema
 [modes]: /modes/README.md
 [muni-boundary]: /provider/README.md#municipality-boundary
+[pagination]: /general-information.md#pagination
 [propulsion-types]: /general-information.md#propulsion-types
 [responses]: /general-information.md#responses
 [schema]: /schema/

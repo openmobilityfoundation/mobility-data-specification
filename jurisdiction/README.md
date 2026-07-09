@@ -77,7 +77,7 @@ Jurisdictions can be served by agencies through the following REST API, or via [
 
 ## Schema
 
-See the [Endpoints](#endpoints) below for information on their specific schema, and the [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for full details and interactive documentation.
+See the general [REST Endpoints](../general-information.md#rest-endpoints) documentation and specific [Endpoints](#endpoints) below for information on their data structure and schema, and the [`mds-openapi`](https://github.com/openmobilityfoundation/mds-openapi) repository for full details and interactive documentation.
 
 A Jurisdiction optionally contains a reference to a Geography object. 
 
